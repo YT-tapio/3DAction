@@ -1,17 +1,13 @@
 #include<iostream>
 #include"DxLib.h"
-#include"EffekseerForDXLib.h"
+#include"application.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-    if (DxLib_Init() == -1)    // ＤＸライブラリ初期化処理
-    {
-        return -1;    // エラーが起きたら直ちに終了
-    }
+    
+    std::shared_ptr<Application> app = std::make_shared<Application>();
 
-
-
-    DxLib_End();        // ＤＸライブラリ使用の終了処理
-
+    app->Update();
+    
     return 0;        // ソフトの終了
 }

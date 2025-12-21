@@ -13,10 +13,159 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\application">
+      <UniqueIdentifier>{29399b96-1af5-45cb-9a99-31a915f904f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\const_color">
+      <UniqueIdentifier>{3ba7d255-b3bb-4541-9bc7-cd7966550994}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\camera">
+      <UniqueIdentifier>{415ffd70-43f1-4eb1-af96-0b00e8264ceb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\collider">
+      <UniqueIdentifier>{0e1114c1-0743-4d50-94de-a72189f8921e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\collider\capsule">
+      <UniqueIdentifier>{899e73f3-d0f5-4c33-8380-4b565ecbd0e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\collider\collider_base">
+      <UniqueIdentifier>{97bf0bf2-8d4b-401a-bdd7-6e8210e907a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\collider\sphere">
+      <UniqueIdentifier>{333be882-9b1c-443c-a233-d21350977f6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\assistant">
+      <UniqueIdentifier>{fa78141d-485d-4e3f-8442-96a5a1b666d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\scene">
+      <UniqueIdentifier>{3e634bf6-0f2a-4a65-a0d6-ca0b9a7a2291}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\scene\game">
+      <UniqueIdentifier>{6e3f9bf9-4839-4f56-884a-9bb3ab5ce344}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\scene\manager">
+      <UniqueIdentifier>{e2db7807-895c-486e-9013-b48ab6021af7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Singleton">
+      <UniqueIdentifier>{04387e73-e934-4543-bf95-b5ed7674962b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\collider\mesh">
+      <UniqueIdentifier>{ad156dad-678e-41eb-a828-b86747d8ff98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object">
+      <UniqueIdentifier>{591c5946-4efb-458d-9c59-f20df8749c78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\character">
+      <UniqueIdentifier>{429de796-5276-4f6a-9e16-4a5215ff36ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\object_3D">
+      <UniqueIdentifier>{97d83aa5-a2e9-4a2a-9101-cd231583d4b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\stage">
+      <UniqueIdentifier>{343cc9ac-7a0d-4fea-bf80-5a51c24b7e2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\base">
+      <UniqueIdentifier>{ec74e67a-8f92-4ad6-921f-55c4945d8b3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="source\application.cpp">
+      <Filter>ソース ファイル\application</Filter>
+    </ClCompile>
+    <ClCompile Include="source\collider_base.cpp">
+      <Filter>ソース ファイル\collider\collider_base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\capsule.cpp">
+      <Filter>ソース ファイル\collider\capsule</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sphere.cpp">
+      <Filter>ソース ファイル\collider\sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="source\camera.cpp">
+      <Filter>ソース ファイル\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="source\scene_base.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="source\game.cpp">
+      <Filter>ソース ファイル\scene\game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\scene_manager.cpp">
+      <Filter>ソース ファイル\scene\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FPS.cpp">
+      <Filter>ソース ファイル\Singleton</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mesh.cpp">
+      <Filter>ソース ファイル\collider\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="source\character_base.cpp">
+      <Filter>ソース ファイル\object\character</Filter>
+    </ClCompile>
+    <ClCompile Include="source\object_3D.cpp">
+      <Filter>ソース ファイル\object\object_3D</Filter>
+    </ClCompile>
+    <ClCompile Include="source\stage.cpp">
+      <Filter>ソース ファイル\object\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="source\object_base.cpp">
+      <Filter>ソース ファイル\object\base</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\application.h">
+      <Filter>ソース ファイル\application</Filter>
+    </ClInclude>
+    <ClInclude Include="source\collider_base.h">
+      <Filter>ソース ファイル\collider\collider_base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\capsule.h">
+      <Filter>ソース ファイル\collider\capsule</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sphere.h">
+      <Filter>ソース ファイル\collider\sphere</Filter>
+    </ClInclude>
+    <ClInclude Include="source\color.h">
+      <Filter>ソース ファイル\const_color</Filter>
+    </ClInclude>
+    <ClInclude Include="source\camera.h">
+      <Filter>ソース ファイル\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="source\radian_assistant.h">
+      <Filter>ソース ファイル\assistant</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vector_assistant.h">
+      <Filter>ソース ファイル\assistant</Filter>
+    </ClInclude>
+    <ClInclude Include="source\scene_base.h">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="source\game.h">
+      <Filter>ソース ファイル\scene\game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\scene_manager.h">
+      <Filter>ソース ファイル\scene\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FPS.h">
+      <Filter>ソース ファイル\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mesh.h">
+      <Filter>ソース ファイル\collider\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="source\character_base.h">
+      <Filter>ソース ファイル\object\character</Filter>
+    </ClInclude>
+    <ClInclude Include="source\object_3D.h">
+      <Filter>ソース ファイル\object\object_3D</Filter>
+    </ClInclude>
+    <ClInclude Include="source\stage.h">
+      <Filter>ソース ファイル\object\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="source\object_base.h">
+      <Filter>ソース ファイル\object\base</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
