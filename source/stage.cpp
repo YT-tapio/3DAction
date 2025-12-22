@@ -3,9 +3,9 @@
 #include"stage.h"
 
 Stage::Stage()
-	:Object3D("data/model/stage/flat_stage.mv1", VGet(0.f, -10.f, 50.f), VectorAssistant::VGetZero(), VectorAssistant::VGetSame(100.f))
+	:Object3D("stage")
 {
-	
+	LoadFile();
 }
 
 Stage::~Stage()
@@ -28,3 +28,16 @@ void Stage::Draw()
 	MV1DrawModel(handle_);	
 }
 
+void Stage::Debug()
+{
+
+}
+
+void Stage::LoadFile()
+{
+	// データの読み込みの開始
+
+
+
+
+}

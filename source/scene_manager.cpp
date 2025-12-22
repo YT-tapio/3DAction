@@ -5,6 +5,7 @@
 #include"game.h"
 #include"FPS.h"
 #include"color.h"
+#include"Debug.h"
 
 SceneManager::SceneManager()
 {
@@ -23,13 +24,14 @@ void SceneManager::Update()
 {
 
 	FPS::GetInstance().Update();
+	Debug::GetInstance().Reset();
+	Debug::GetInstance().Update();
 
 	scene_->Update();
 
 	ClearDrawScreen();
 
 	scene_->Draw();
-	DrawString(100, 100, "•`‰æ¬Œ÷", Color::kWhite);
 
 	ScreenFlip();
 

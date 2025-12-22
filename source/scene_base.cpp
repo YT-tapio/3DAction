@@ -12,6 +12,10 @@ SceneBase::~SceneBase()
 
 }
 
+void SceneBase::Init()
+{
+
+}
 
 void SceneBase::Update()
 {

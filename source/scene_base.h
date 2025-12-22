@@ -8,6 +8,8 @@ public:
 
 	virtual ~SceneBase();
 
+	virtual void Init();
+
 	virtual void Update();
 
 	virtual void Draw();

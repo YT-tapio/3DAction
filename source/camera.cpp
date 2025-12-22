@@ -3,15 +3,19 @@
 #include"camera.h"
 #include"radian_assistant.h"
 #include"vector_assistant.h"
+#include"color.h"
+#include"debug.h"
 
 Camera::Camera()
 {
-	const float kRad = 75.f;
-	near_				= 0.1f;
+	const float kRad		= 75.f;
+	near_					= 0.1f;
 	far_					= 1000.f;
 	fov_					= RadianAssistant::TheNumRadian(kRad);
 	pos_					= VGet(0.f, 0.f, 0.f);
-	target_pos_		= VGet(0.f, 0.f, 10.f);
+	target_pos_				= VGet(0.f, 0.f, 10.f);
+
+	Setting();
 }
 
 Camera::~Camera()
@@ -22,6 +26,24 @@ Camera::~Camera()
 void Camera::Update()
 {
 	Setting();
+}
+
+void Camera::Debug()
+{
+	DrawSphere3D(target_pos_, 1.f, 20.f, Color::kWhite, Color::kWhite, TRUE);
+	DrawString(0, Debug::GetInstance().GetNowLineSize(), "------------camera----------", Color::kWhite);
+	Debug::GetInstance().Add();
+	
+	DrawString(0, Debug::GetInstance().GetNowLineSize(), "-----pos-----", Color::kWhite);
+	Debug::GetInstance().Add();
+	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "x : %.2f,y : %.2f,z : %.2f", pos_.x, pos_.y, pos_.z);
+	Debug::GetInstance().Add();
+
+	DrawString(0, Debug::GetInstance().GetNowLineSize(), "-----dir-----", Color::kWhite);
+	Debug::GetInstance().Add();
+	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "x : %.2f,y : %.2f,z : %.2f", dir_.x, dir_.y, dir_.z);
+	Debug::GetInstance().Add();
+
 }
 
 void Camera::Setting()

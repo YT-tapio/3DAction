@@ -31,7 +31,7 @@ void FPS::Update()
 {
 	now_time_ = GetNowHiPerformanceCount();
 
-	delta_time_ = ((now_time_ - prev_time_) / 100000.0f) * time_scale_;
+	delta_time_ = ((now_time_ - prev_time_) / 1000000.0f) * time_scale_;
 
 	if (count_ == kTargetFps)
 	{

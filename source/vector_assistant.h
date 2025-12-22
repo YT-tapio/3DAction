@@ -65,6 +65,27 @@ namespace VectorAssistant
 	}
 
 	/// <summary>
+	/// 平面の座標(yを無視した座標)を受け取る
+	/// </summary>
+	/// <param name="vec"></param>
+	/// <returns></returns>
+	inline VECTOR VGetFlat(const VECTOR& vec)
+	{
+		return VGet(vec.x, 0.f, vec.z);
+	}
+
+	inline float VGetTan(const VECTOR& vec)
+	{
+		float num = 0.f;
+
+		// yはむし
+
+		num = atan2f(vec.z, vec.x);
+
+		return num;
+	}
+
+	/// <summary>
 	/// 正射影ベクトル(meにうつる,otherの影)
 	/// </summary>
 	/// <param name="me"></param>

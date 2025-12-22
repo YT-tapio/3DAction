@@ -5,7 +5,7 @@ class Object3D : public ObjectBase
 {
 public:
 
-	Object3D(const char* path, const VECTOR& pos, const VECTOR& rot, const VECTOR& scale);
+	Object3D(const char* id);
 
 	virtual ~Object3D() override;
 
@@ -15,16 +15,23 @@ public:
 
 	virtual void Draw() override;
 
+	virtual void Debug() override;
+
 protected:
 
 	MATRIX mat_;
 	VECTOR scale_;
 
+	std::string path_;
+
 	int handle_;
+
+	void LoadModel();
 
 	void Setting();
 
 private:
 
+	void LoadFile();
 
 };

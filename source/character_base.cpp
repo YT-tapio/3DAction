@@ -4,8 +4,8 @@
 #include"vector_assistant.h"
 
 
-CharacterBase::CharacterBase(const char* kPath, const VECTOR& pos, const VECTOR& rot,const VECTOR& scale)
-	:Object3D(kPath,pos,rot,scale)
+CharacterBase::CharacterBase(const char* id)
+	:Object3D(id)
 {
 	
 }
@@ -28,4 +28,9 @@ void CharacterBase::Update()
 void CharacterBase::Draw()
 {
 	MV1DrawModel(handle_);
+}
+
+void CharacterBase::Debug()
+{
+
 }

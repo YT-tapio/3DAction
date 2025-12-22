@@ -5,7 +5,7 @@ class CharacterBase : public Object3D
 {
 public:
 
-	CharacterBase(const char* path, const VECTOR& pos, const VECTOR& rot, const VECTOR& scale);
+	CharacterBase(const char* id);
 
 	virtual ~CharacterBase() override;
 
@@ -15,9 +15,11 @@ public:
 
 	virtual void Draw() override;
 
+	virtual void Debug() override;
+
 protected:
 
-	// todo:アニメーションのをつけてください
+	// todo:アニメーションをつけてください
 
 private:
 

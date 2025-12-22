@@ -4,7 +4,7 @@ class ObjectBase
 {
 public:
 
-	ObjectBase(const VECTOR& pos, const VECTOR& rot);
+	ObjectBase();
 	
 	virtual ~ObjectBase();
 	
@@ -13,6 +13,8 @@ public:
 	virtual void Update();
 
 	virtual void Draw();
+
+	virtual void  Debug();
 
 protected:
 

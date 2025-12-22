@@ -4,7 +4,9 @@
 #include"game.h"
 #include"camera.h"
 #include"object_base.h"
+#include"player.h"
 #include"stage.h"
+#include"Debug.h"
 
 Game::Game()
 	: SceneBase()
@@ -12,11 +14,20 @@ Game::Game()
 	camera_ = std::make_shared<Camera>();
 
 	objects_.push_back(std::make_shared<Stage>());
+	objects_.push_back(std::make_shared<Player>(&camera_->dir_));
 }
 
 Game::~Game()
 {
 
+}
+
+void Game::Init()
+{
+	for (auto& obj : objects_)
+	{
+		obj->Init();
+	}
 }
 
 void Game::Update()
@@ -35,5 +46,15 @@ void Game::Draw()
 	for (auto& obj : objects_)
 	{
 		obj->Draw();
+	}
+
+	if (Debug::GetInstance().GetIsDisp())
+	{
+		for (auto& obj : objects_)
+		{
+			obj->Debug();
+		}
+
+		camera_->Debug();
 	}
 }

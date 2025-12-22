@@ -16,13 +16,15 @@ public:
 
 	void Draw() override;
 
+	void Debug() override;
+
 protected:
 
 
 
 private:
 
-	const char* kPath			= "a";
-	const VECTOR kPos		= VectorAssistant::VGetZero();
+
+	void LoadFile();
 
 };

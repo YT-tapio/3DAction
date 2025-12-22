@@ -67,6 +67,12 @@
     <Filter Include="ソース ファイル\object\base">
       <UniqueIdentifier>{ec74e67a-8f92-4ad6-921f-55c4945d8b3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\object\player">
+      <UniqueIdentifier>{1755a28b-071e-4f59-a76b-397601dea912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\collision">
+      <UniqueIdentifier>{03a6bd0a-1cd5-447e-8466-fb7c76844429}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -113,6 +119,15 @@
     </ClCompile>
     <ClCompile Include="source\object_base.cpp">
       <Filter>ソース ファイル\object\base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\player.cpp">
+      <Filter>ソース ファイル\object\player</Filter>
+    </ClCompile>
+    <ClCompile Include="source\debug.cpp">
+      <Filter>ソース ファイル\Singleton</Filter>
+    </ClCompile>
+    <ClCompile Include="source\rigid_body.cpp">
+      <Filter>ソース ファイル\collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +181,15 @@
     </ClInclude>
     <ClInclude Include="source\object_base.h">
       <Filter>ソース ファイル\object\base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\player.h">
+      <Filter>ソース ファイル\object\player</Filter>
+    </ClInclude>
+    <ClInclude Include="source\debug.h">
+      <Filter>ソース ファイル\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="source\rigid_body.h">
+      <Filter>ソース ファイル\collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -135,16 +135,19 @@
     <ClCompile Include="source\capsule.cpp" />
     <ClCompile Include="source\character_base.cpp" />
     <ClCompile Include="source\collider_base.cpp" />
+    <ClCompile Include="source\debug.cpp" />
     <ClCompile Include="source\FPS.cpp" />
     <ClCompile Include="source\game.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\mesh.cpp" />
     <ClCompile Include="source\object_3D.cpp" />
     <ClCompile Include="source\object_base.cpp" />
+    <ClCompile Include="source\rigid_body.cpp" />
     <ClCompile Include="source\scene_base.cpp" />
     <ClCompile Include="source\scene_manager.cpp" />
     <ClCompile Include="source\sphere.cpp" />
     <ClCompile Include="source\stage.cpp" />
+    <ClCompile Include="source\player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h" />
@@ -152,12 +155,15 @@
     <ClInclude Include="source\capsule.h" />
     <ClInclude Include="source\character_base.h" />
     <ClInclude Include="source\collider_base.h" />
+    <ClInclude Include="source\debug.h" />
     <ClInclude Include="source\FPS.h" />
     <ClInclude Include="source\game.h" />
     <ClInclude Include="source\mesh.h" />
     <ClInclude Include="source\object_3D.h" />
     <ClInclude Include="source\object_base.h" />
+    <ClInclude Include="source\player.h" />
     <ClInclude Include="source\radian_assistant.h" />
+    <ClInclude Include="source\rigid_body.h" />
     <ClInclude Include="source\scene_base.h" />
     <ClInclude Include="source\scene_manager.h" />
     <ClInclude Include="source\sphere.h" />
