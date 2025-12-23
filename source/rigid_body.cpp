@@ -5,7 +5,7 @@
 #include"object_base.h"
 #include"collider_base.h"
 #include"vector_assistant.h"
-
+#include"hit_interface.h"
 
 RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll, VECTOR* pos)
 {
@@ -20,9 +20,8 @@ RigidBody::~RigidBody()
 
 }
 
-void RigidBody::Init(void (*op)(std::shared_ptr<ObjectBase>), std::weak_ptr<ObjectBase> object)
+void RigidBody::Init(std::weak_ptr<IHit> object)
 {
-	hit = op;
 	object_ = object;
 }
 
@@ -32,3 +31,21 @@ void RigidBody::Update(const VECTOR& vel, const VECTOR& dir)
 	dir_ = dir;
 }
 
+void RigidBody::OnHit(std::shared_ptr<IHit> object)
+{
+	if (auto o = object_.lock()) 
+	{
+		o->OnHit(object);
+	}
+}
+
+std::shared_ptr<ColliderBase> RigidBody::GetCollider()
+{
+	return coll_;
+}
+
+std::shared_ptr<IHit> RigidBody::GetIHitObject()
+{
+	auto obj = object_.lock();
+	return obj;
+}

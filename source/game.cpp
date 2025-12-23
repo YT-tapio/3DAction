@@ -7,6 +7,7 @@
 #include"player.h"
 #include"stage.h"
 #include"Debug.h"
+#include"physics.h"
 
 Game::Game()
 	: SceneBase()
@@ -15,6 +16,12 @@ Game::Game()
 
 	objects_.push_back(std::make_shared<Stage>());
 	objects_.push_back(std::make_shared<Player>(&camera_->dir_));
+
+	for (auto& obj : objects_)
+	{
+		obj->Init();
+	}
+
 }
 
 Game::~Game()
@@ -38,6 +45,8 @@ void Game::Update()
 	{
 		obj->Update();
 	}
+
+	Physics::GetInstance().Update();
 
 }
 

@@ -1,9 +1,10 @@
 #pragma once
 #include"character_base.h"
+#include"hit_interface.h"
 
 class RigidBody;
 
-class Player : public CharacterBase
+class Player : public CharacterBase , public IHit
 {
 public:
 
@@ -18,6 +19,8 @@ public:
 	void Draw() override;
 
 	void Debug() override;
+
+	void OnHit(std::shared_ptr<IHit> obj) override;
 
 private:
 
@@ -40,7 +43,5 @@ private:
 	void LoadFile();
 
 	void Move();
-
-	void OnHit(std::shared_ptr<ObjectBase> obj);
 
 };

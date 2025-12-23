@@ -142,6 +142,7 @@
     <ClCompile Include="source\mesh.cpp" />
     <ClCompile Include="source\object_3D.cpp" />
     <ClCompile Include="source\object_base.cpp" />
+    <ClCompile Include="source\physics.cpp" />
     <ClCompile Include="source\rigid_body.cpp" />
     <ClCompile Include="source\scene_base.cpp" />
     <ClCompile Include="source\scene_manager.cpp" />
@@ -161,7 +162,9 @@
     <ClInclude Include="source\mesh.h" />
     <ClInclude Include="source\object_3D.h" />
     <ClInclude Include="source\object_base.h" />
+    <ClInclude Include="source\hit_interface.h" />
     <ClInclude Include="source\player.h" />
+    <ClInclude Include="source\physics.h" />
     <ClInclude Include="source\radian_assistant.h" />
     <ClInclude Include="source\rigid_body.h" />
     <ClInclude Include="source\scene_base.h" />

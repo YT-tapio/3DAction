@@ -8,15 +8,18 @@
 #include"vector_assistant.h"
 #include"Debug.h"
 #include"color.h"
+#include"physics.h"
+#include"stage.h"
 
 Player::Player(VECTOR* camera_dir)
 	: CharacterBase("player")
+	, IHit()
 {
 	camera_dir_ = camera_dir;
 	vel_		= VectorAssistant::VGetZero();
 	dir_		= VectorAssistant::VGetZero();
 	pos_		= VGet(0.f, 0.f, 30.f);
-	//rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(), &pos_);
+	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(5.f,10.f), &pos_);
 }
 
 Player::~Player()
@@ -26,7 +29,9 @@ Player::~Player()
 
 void Player::Init()
 {
-	//rigid_body_->Init(Hit, std::shared_from_this());
+	rigid_body_->Init(weak_from_this());
+	// physics‚Ì“o˜^
+	Physics::GetInstance().AddBody(rigid_body_);
 }
 
 void Player::Update()
@@ -92,9 +97,18 @@ void Player::Move()
 
 }
 
-void Player::OnHit(std::shared_ptr<ObjectBase> obj)
+void Player::OnHit(std::shared_ptr<IHit> object)
 {
 	//‰½‚©‚ª“–‚½‚Á‚½‚Ìˆ—
 
+	// ihit‚ğ‰½Ò‚©‚É•ÏŠ·
+
+	auto stage = std::dynamic_pointer_cast<Stage>(object);
+
+	if (stage != nullptr)
+	{
+		//printfDx("stage");
+		return;
+	}
 
 }

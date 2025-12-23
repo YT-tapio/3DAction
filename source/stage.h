@@ -1,8 +1,11 @@
 #pragma once
 #include"object_3D.h"
 #include"vector_assistant.h"
+#include"hit_interface.h"
 
-class Stage : public Object3D
+class RigidBody;
+
+class Stage : public Object3D , public IHit
 {
 public:
 
@@ -18,11 +21,15 @@ public:
 
 	void Debug() override;
 
+	void OnHit(std::shared_ptr<IHit> object) override;
+
 protected:
 
 
 
 private:
+
+	std::shared_ptr<RigidBody> rigid_body_;
 
 
 	void LoadFile();

@@ -1,7 +1,8 @@
 #pragma once
 
-class ColliderBase;
 class ObjectBase;
+class ColliderBase;
+class IHit;
 
 class RigidBody
 {
@@ -11,11 +12,15 @@ public:
 
 	~RigidBody();
 
-	void Init(void (*op)(std::shared_ptr<ObjectBase>), std::weak_ptr<ObjectBase> object);
+	void Init(std::weak_ptr<IHit> object);
 
 	void Update(const VECTOR& vel,const VECTOR& dir);
 
-	void (*hit)(std::shared_ptr<ObjectBase>);
+	void OnHit(std::shared_ptr<IHit> object);
+
+	std::shared_ptr<ColliderBase> GetCollider();
+
+	std::shared_ptr<IHit> GetIHitObject();
 
 private:
 
@@ -24,6 +29,6 @@ private:
 	VECTOR dir_;
 
 	std::shared_ptr<ColliderBase>	coll_;		// 自分の当たり判定
-	std::weak_ptr<ObjectBase>		object_;	// 自分のことを知っているobjeの登録
+	std::weak_ptr<IHit>				object_;	// インターフェースを継承したオブジェクト
 
 };
