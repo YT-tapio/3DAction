@@ -74,6 +74,11 @@ namespace VectorAssistant
 		return VGet(vec.x, 0.f, vec.z);
 	}
 
+	inline float VGetDistSize(const VECTOR& vec, const VECTOR& vec2)
+	{
+		return VSize(VSub(vec, vec2));
+	}
+
 	inline float VGetTan(const VECTOR& vec)
 	{
 		float num = 0.f;

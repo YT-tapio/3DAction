@@ -1,8 +1,10 @@
 #include"DxLib.h"
 #include"mesh.h"
 
+
 Mesh::Mesh(int handle)
-	:handle_(handle)
+	: ColliderBase(ColliderName::kMesh)
+	, handle_(handle)
 {
 
 }

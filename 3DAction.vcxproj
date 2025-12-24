@@ -143,6 +143,7 @@
     <ClCompile Include="source\object_3D.cpp" />
     <ClCompile Include="source\object_base.cpp" />
     <ClCompile Include="source\physics.cpp" />
+    <ClCompile Include="source\physics_interface.cpp" />
     <ClCompile Include="source\rigid_body.cpp" />
     <ClCompile Include="source\scene_base.cpp" />
     <ClCompile Include="source\scene_manager.cpp" />
@@ -156,13 +157,17 @@
     <ClInclude Include="source\capsule.h" />
     <ClInclude Include="source\character_base.h" />
     <ClInclude Include="source\collider_base.h" />
+    <ClInclude Include="source\collider_name.h" />
+    <ClInclude Include="source\collision.h" />
     <ClInclude Include="source\debug.h" />
     <ClInclude Include="source\FPS.h" />
     <ClInclude Include="source\game.h" />
+    <ClInclude Include="source\foot_interface.h" />
     <ClInclude Include="source\mesh.h" />
     <ClInclude Include="source\object_3D.h" />
     <ClInclude Include="source\object_base.h" />
     <ClInclude Include="source\hit_interface.h" />
+    <ClInclude Include="source\physics_interface.h" />
     <ClInclude Include="source\player.h" />
     <ClInclude Include="source\physics.h" />
     <ClInclude Include="source\radian_assistant.h" />

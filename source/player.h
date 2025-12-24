@@ -1,10 +1,10 @@
 #pragma once
 #include"character_base.h"
-#include"hit_interface.h"
+#include"physics_interface.h"
 
 class RigidBody;
 
-class Player : public CharacterBase , public IHit
+class Player : public CharacterBase , public IPhysicsEventReceiver
 {
 public:
 
@@ -20,13 +20,17 @@ public:
 
 	void Debug() override;
 
-	void OnHit(std::shared_ptr<IHit> obj) override;
+	void OnHit(std::shared_ptr<IPhysicsEventReceiver> obj) override;
+
+	void OnGrounded() override;
+
+	void OnUnGrounded() override;
 
 private:
 
 
 
-	const float kSpeed = 1.f;
+	const float kSpeed = 0.5f;
 
 	std::shared_ptr<RigidBody> rigid_body_;
 
@@ -38,7 +42,7 @@ private:
 
 
 
-	// ŠÖ”ŒR
+	// ŠÖ”ŒQ
 
 	void LoadFile();
 

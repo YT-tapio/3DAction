@@ -1,0 +1,92 @@
+#pragma once
+#include<iostream>
+#include"DxLib.h"
+#include"rigid_body.h"
+#include"collider_base.h"
+#include"sphere.h"
+#include"capsule.h"
+//#include"AABB.h"
+//#include"OBB.h"
+#include"mesh.h"
+
+#include"vector_assistant.h"
+
+
+//当たっているかの検地をおこないます
+namespace Collision
+{
+
+	/// <summary>
+	/// 球と球
+	/// </summary>
+	/// <param name="sphere1_pos"></param>
+	/// <param name="sphere1_r"></param>
+	/// <param name="sphere2_pos"></param>
+	/// <param name="sphere2_r"></param>
+	/// <returns></returns>
+	inline bool SphereToSphere(const VECTOR& sphere1_pos,const float& sphere1_r,const  VECTOR& sphere2_pos, const float& sphere2_r)
+	{
+		float all_size = sphere1_r + sphere2_r;
+
+		float dist = VectorAssistant::VGetDistSize(sphere1_pos, sphere2_pos);
+
+		// 2つの半径を足したsizeよりも低いとき
+		return (all_size > dist);
+	}
+	
+	/// <summary>
+	/// 球とカプセル
+	/// </summary>
+	/// <param name="sphere_pos"></param>
+	/// <param name="sphere_r"></param>
+	/// <param name="capsule_start_pos"></param>
+	/// <param name="capsule_end_pos"></param>
+	/// <param name="capsule_r"></param>
+	/// <returns></returns>
+	inline bool SphereToCapsule(const VECTOR& sphere_pos,const float& sphere_r, const VECTOR& capsule_start_pos, const VECTOR& capsule_end_pos, const float& capsule_r)
+	{
+		float all_size = sphere_r + capsule_r;
+		VECTOR start_to_dist = VSub(sphere_pos,capsule_start_pos);
+		VECTOR start_to_end_dist = VSub(capsule_end_pos, capsule_start_pos);
+		VECTOR proj_vel = VectorAssistant::VGetProj(start_to_end_dist, start_to_dist);
+
+		//startのposからproj_velを足した場所の距離を見る
+		// 一番近い場所までの距離
+		float near_dist = VectorAssistant::VGetDistSize(sphere_pos, VAdd(capsule_start_pos, proj_vel));
+
+		return (all_size > near_dist);
+	}
+
+	/// <summary>
+	/// カプセルとカプセル
+	/// </summary>
+	/// <param name="capsule1_start_pos"></param>
+	/// <param name="capsule1_end_pos"></param>
+	/// <param name="capsule1_r"></param>
+	/// <param name="capsule2_start_pos"></param>
+	/// <param name="capsule2_end_pos"></param>
+	/// <param name="capsule2_r"></param>
+	/// <returns></returns>
+	inline bool CapsuleToCapsule(const VECTOR& capsule1_start_pos, const VECTOR &capsule1_end_pos,const float& capsule1_r, 
+		const VECTOR& capsule2_start_pos, const VECTOR& capsule2_end_pos, const float& capsule2_r)
+	{
+
+		
+
+		return FALSE;
+	}
+
+	inline bool SphereToMesh()
+	{
+
+		// 何かと当たっているなら
+		return TRUE;
+	}
+
+	inline bool CapsuleToMesh()
+	{
+
+
+		return FALSE;
+	}
+}

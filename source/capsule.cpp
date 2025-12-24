@@ -2,9 +2,12 @@
 #include"capsule.h"
 #include"color.h"
 
-Capsule::Capsule(float r,float vertical)
-	: r_(r)
+
+Capsule::Capsule(float r,float vertical,VECTOR offset_vel)
+	: ColliderBase(ColliderName::kCapsule)
+	, r_(r)
 	, vertical_(vertical)
+	, offset_vel_(offset_vel)
 {
 
 }
@@ -22,4 +25,19 @@ void Capsule::Draw(const VECTOR& pos)
 	const int kDivNum = 20;
 
 	DrawCapsule3D(start, end, r_, kDivNum, Color::kWhite, Color::kWhite, FALSE);
+}
+
+const float Capsule::GetRadius() const
+{
+	return r_;
+}
+
+const float Capsule::GetVertical() const
+{
+	return vertical_;
+}
+
+const VECTOR Capsule::GetOffsetVel() const
+{
+	return offset_vel_;
 }

@@ -3,6 +3,7 @@
 #include"player.h"
 #include"collider_base.h"
 #include"capsule.h"
+#include"sphere.h"
 #include"rigid_body.h"
 #include"FPS.h"
 #include"vector_assistant.h"
@@ -13,13 +14,17 @@
 
 Player::Player(VECTOR* camera_dir)
 	: CharacterBase("player")
-	, IHit()
+	, IPhysicsEventReceiver()
 {
 	camera_dir_ = camera_dir;
 	vel_		= VectorAssistant::VGetZero();
 	dir_		= VectorAssistant::VGetZero();
-	pos_		= VGet(0.f, 0.f, 30.f);
-	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(5.f,10.f), &pos_);
+	pos_		= VGet(0.f, -2.f,10.f);
+	scale_ = VectorAssistant::VGetSame(0.05f);
+	handle_ = MV1LoadModel("data/model/player/Lola_B_Styperek.mv1");
+	if (handle_ == -1) { printfDx("ì«Ç›çûÇ›ÉGÉâÅ[\n"); }
+	Setting();
+	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(5.f, 10.f, VectorAssistant::VGetZero()), std::make_shared<Sphere>(4.9f, VGet(0.f, -0.3f, 0.f)), &pos_, TRUE, 1.f);
 }
 
 Player::~Player()
@@ -38,6 +43,7 @@ void Player::Update()
 {
 	Move();
 
+	rigid_body_->Update(vel_, dir_);
 	Setting();
 }
 
@@ -97,7 +103,7 @@ void Player::Move()
 
 }
 
-void Player::OnHit(std::shared_ptr<IHit> object)
+void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 	//âΩÇ©Ç™ìñÇΩÇ¡ÇΩéûÇÃèàóù
 
@@ -110,5 +116,15 @@ void Player::OnHit(std::shared_ptr<IHit> object)
 		//printfDx("stage");
 		return;
 	}
+
+}
+
+void Player::OnGrounded()
+{
+
+}
+
+void Player::OnUnGrounded()
+{
 
 }

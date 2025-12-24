@@ -35,5 +35,4 @@ private:
 	void FixPos(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> other);
 
 	std::list<std::shared_ptr<RigidBody>> rigid_bodies_;		//各オブジェクトに付随している当たり判定たち
-
 };

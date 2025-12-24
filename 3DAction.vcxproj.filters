@@ -79,6 +79,9 @@
     <Filter Include="ソース ファイル\collision\physics">
       <UniqueIdentifier>{c69306c1-fb7c-41b1-9c02-56cf0898eb06}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\collision\rigid_body">
+      <UniqueIdentifier>{711f2137-c906-4d21-8e81-fbbc9f940422}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -132,11 +135,14 @@
     <ClCompile Include="source\debug.cpp">
       <Filter>ソース ファイル\Singleton</Filter>
     </ClCompile>
-    <ClCompile Include="source\rigid_body.cpp">
-      <Filter>ソース ファイル\collision</Filter>
-    </ClCompile>
     <ClCompile Include="source\physics.cpp">
       <Filter>ソース ファイル\collision\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="source\rigid_body.cpp">
+      <Filter>ソース ファイル\collision\rigid_body</Filter>
+    </ClCompile>
+    <ClCompile Include="source\physics_interface.cpp">
+      <Filter>ソース ファイル\interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,14 +203,26 @@
     <ClInclude Include="source\debug.h">
       <Filter>ソース ファイル\Singleton</Filter>
     </ClInclude>
-    <ClInclude Include="source\rigid_body.h">
-      <Filter>ソース ファイル\collision</Filter>
-    </ClInclude>
     <ClInclude Include="source\hit_interface.h">
       <Filter>ソース ファイル\interface</Filter>
     </ClInclude>
     <ClInclude Include="source\physics.h">
       <Filter>ソース ファイル\collision\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="source\foot_interface.h">
+      <Filter>ソース ファイル\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="source\collider_name.h">
+      <Filter>ソース ファイル\collider</Filter>
+    </ClInclude>
+    <ClInclude Include="source\rigid_body.h">
+      <Filter>ソース ファイル\collision\rigid_body</Filter>
+    </ClInclude>
+    <ClInclude Include="source\collision.h">
+      <Filter>ソース ファイル\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="source\physics_interface.h">
+      <Filter>ソース ファイル\interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

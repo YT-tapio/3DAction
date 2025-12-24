@@ -5,14 +5,17 @@
 #include"object_base.h"
 #include"collider_base.h"
 #include"vector_assistant.h"
-#include"hit_interface.h"
+#include"physics_interface.h"
 
-RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll, VECTOR* pos)
+RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll, std::shared_ptr<ColliderBase> foot_coll,VECTOR* pos,bool gravity, float mass)
 {
 	pos_ = pos;
 	vel_ = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
 	coll_ = coll;
+	foot_coll_ = foot_coll;
+	use_gravity_ = gravity;
+	mass_ = mass;
 }
 
 RigidBody::~RigidBody()
@@ -20,7 +23,7 @@ RigidBody::~RigidBody()
 
 }
 
-void RigidBody::Init(std::weak_ptr<IHit> object)
+void RigidBody::Init(std::weak_ptr<IPhysicsEventReceiver> object)
 {
 	object_ = object;
 }
@@ -31,12 +34,27 @@ void RigidBody::Update(const VECTOR& vel, const VECTOR& dir)
 	dir_ = dir;
 }
 
-void RigidBody::OnHit(std::shared_ptr<IHit> object)
+void RigidBody::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 {
-	if (auto o = object_.lock()) 
+	if (auto obj = object_.lock()) 
 	{
-		o->OnHit(object);
+		obj->OnHit(object);
 	}
+}
+
+const VECTOR RigidBody::GetPosition() const
+{
+	return *pos_;
+}
+
+const VECTOR RigidBody::GetVelocity() const
+{
+	return vel_;
+}
+
+const bool RigidBody::GetUseGravity() const
+{
+	return use_gravity_;
 }
 
 std::shared_ptr<ColliderBase> RigidBody::GetCollider()
@@ -44,7 +62,12 @@ std::shared_ptr<ColliderBase> RigidBody::GetCollider()
 	return coll_;
 }
 
-std::shared_ptr<IHit> RigidBody::GetIHitObject()
+std::shared_ptr<ColliderBase> RigidBody::GetFootCollider()
+{
+	return foot_coll_;
+}
+
+std::shared_ptr<IPhysicsEventReceiver> RigidBody::GetIPhysicsObject()
 {
 	auto obj = object_.lock();
 	return obj;

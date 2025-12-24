@@ -1,11 +1,11 @@
 #pragma once
 #include"object_3D.h"
 #include"vector_assistant.h"
-#include"hit_interface.h"
+#include"physics_interface.h"
 
 class RigidBody;
 
-class Stage : public Object3D , public IHit
+class Stage : public Object3D , public IPhysicsEventReceiver
 {
 public:
 
@@ -21,7 +21,7 @@ public:
 
 	void Debug() override;
 
-	void OnHit(std::shared_ptr<IHit> object) override;
+	void OnHit(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
 protected:
 
