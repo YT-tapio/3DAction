@@ -122,4 +122,40 @@ namespace VectorAssistant
 		return proj;
 	}
 
+	/// <summary>
+	/// 外積
+	/// </summary>
+	/// <param name="vec1"></param>
+	/// <param name="vec2"></param>
+	/// <returns></returns>
+	inline VECTOR VGetCross(const VECTOR& vec1, const VECTOR& vec2)
+	{
+		VECTOR cross_vec = VGetZero();
+
+		cross_vec.x = ((vec1.y * vec2.z) - (vec1.z * vec2.y));
+		cross_vec.y = ((vec1.z * vec2.x) - (vec1.x * vec2.z));
+		cross_vec.z = ((vec1.x * vec2.y) - (vec1.y * vec2.x));
+
+		return cross_vec;
+	}
+
+	/// <summary>
+	/// 二つの線分の距離を出す
+	/// </summary>
+	/// <param name="vec1"></param>
+	/// <param name="vec2"></param>
+	/// <param name="vec1_to_vec2_dist">1つめの始点から2つめの始点までの距離</param>
+	/// <returns></returns>
+	inline float VGetLineNearDist(const VECTOR& vec1, const VECTOR& vec2, const VECTOR& vec1_to_vec2_dist)
+	{
+		float near_dist_size = 0.f;
+
+		//法線ベクトル
+		VECTOR norm_vec = VGetCross(vec1, vec2);
+
+		near_dist_size = VDot(norm_vec, vec1_to_vec2_dist);
+
+		return near_dist_size;
+	}
+
 }

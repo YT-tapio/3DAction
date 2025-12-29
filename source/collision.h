@@ -46,6 +46,11 @@ namespace Collision
 	inline bool SphereToCapsule(const VECTOR& sphere_pos,const float& sphere_r, const VECTOR& capsule_start_pos, const VECTOR& capsule_end_pos, const float& capsule_r)
 	{
 		float all_size = sphere_r + capsule_r;
+
+		// 最初に球と球の当たり判定を行う
+		if (SphereToSphere(sphere_pos, sphere_r, capsule_start_pos, capsule_r)) { return TRUE; }
+		if (SphereToSphere(sphere_pos, sphere_r, capsule_end_pos, capsule_r)) { return TRUE; }
+
 		VECTOR start_to_dist = VSub(sphere_pos,capsule_start_pos);
 		VECTOR start_to_end_dist = VSub(capsule_end_pos, capsule_start_pos);
 		VECTOR proj_vel = VectorAssistant::VGetProj(start_to_end_dist, start_to_dist);
@@ -70,16 +75,38 @@ namespace Collision
 	inline bool CapsuleToCapsule(const VECTOR& capsule1_start_pos, const VECTOR &capsule1_end_pos,const float& capsule1_r, 
 		const VECTOR& capsule2_start_pos, const VECTOR& capsule2_end_pos, const float& capsule2_r)
 	{
-
+		float all_size = capsule1_r * capsule2_r;
 		
+		if (FALSE)
+		{
+			
+			// 近いとことの距離 : 最初は絶対当たらないように
+			VECTOR near_vel = VectorAssistant::VGetSame(all_size);
+			// カプセル1のレイ(線分)を取る
+			VECTOR capsule1_start_to_dist = VSub(capsule1_end_pos, capsule1_start_pos);
 
-		return FALSE;
+			// カプセル1のstart_posからカプセル2のstart_posとの距離を取る
+			VECTOR capsule1_start_to_capsule2_start = VSub(capsule2_start_pos, capsule1_start_pos);
+			VECTOR capsule1_start_to_capsule2_end = VSub(capsule2_end_pos, capsule1_start_pos);
+
+			//VECTOR
+		}
+		float dist_size = 0.f;
+		VECTOR capsule1_segment = VSub(capsule1_end_pos,capsule1_start_pos);
+		VECTOR capsule2_segment = VSub(capsule2_end_pos, capsule2_start_pos);
+		VECTOR capsule1_start_to_capsule2_start_dist = VSub(capsule2_start_pos, capsule1_start_pos);
+
+		dist_size = VectorAssistant::VGetLineNearDist(capsule1_segment, capsule2_segment, capsule1_start_to_capsule2_start_dist);
+
+		return (all_size > dist_size);
 	}
 
 	inline bool SphereToMesh()
 	{
 
-		// 何かと当たっているなら
+
+
+		
 		return TRUE;
 	}
 
