@@ -104,7 +104,6 @@ namespace VectorAssistant
 		float denominator = 0.f;
 
 		//vector‚ÌƒTƒCƒY‚ğó‚¯æ‚é
-
 		float vec_size = VSize(me);
 
 		denominator = vec_size * vec_size;
