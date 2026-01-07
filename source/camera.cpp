@@ -29,9 +29,10 @@ void Camera::Update()
 
 	if (CheckHitKey(KEY_INPUT_UP)) { dir = VAdd(dir, VGet(0, 1, 0)); }
 	if (CheckHitKey(KEY_INPUT_DOWN)) { dir = VAdd(dir, VGet(0, -1, 0)); }
-	if (CheckHitKey(KEY_INPUT_RIGHT)) { dir = VAdd(dir, VGet(-1, 0, 0)); }
-	if (CheckHitKey(KEY_INPUT_LEFT)) { dir = VAdd(dir, VGet(1, 0, 0)); }
+	if (CheckHitKey(KEY_INPUT_RIGHT)) { dir = VAdd(dir, VGet(1, 0, 0)); }
+	if (CheckHitKey(KEY_INPUT_LEFT)) { dir = VAdd(dir, VGet(-1, 0, 0)); }
 
+	target_pos_ = VAdd(target_pos_, dir);
 	pos_ = VAdd(pos_, dir);
 
 	Setting();

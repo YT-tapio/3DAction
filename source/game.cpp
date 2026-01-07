@@ -61,6 +61,7 @@ void Game::Update()
 
 	VECTOR capsule_end_pos = VAdd(capsule_pos, VGet(0, vertical, 0));
 	VECTOR capsule2_end_pos = VAdd(capsule2_pos, VGet(capsule2_vertical, 0, 0));
+
 	if (Collision::CapsuleToCapsule(capsule_pos,capsule_end_pos,capsule_r,capsule2_pos, capsule2_end_pos,capsule2_r))
 	{
 		printfDx("“–‚½‚Á‚Ä‚é\n");

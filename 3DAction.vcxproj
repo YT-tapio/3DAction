@@ -164,6 +164,7 @@
     <ClInclude Include="source\game.h" />
     <ClInclude Include="source\foot_interface.h" />
     <ClInclude Include="source\mesh.h" />
+    <ClInclude Include="source\my_math.h" />
     <ClInclude Include="source\object_3D.h" />
     <ClInclude Include="source\object_base.h" />
     <ClInclude Include="source\hit_interface.h" />
@@ -171,6 +172,7 @@
     <ClInclude Include="source\player.h" />
     <ClInclude Include="source\physics.h" />
     <ClInclude Include="source\radian_assistant.h" />
+    <ClInclude Include="source\resolve.h" />
     <ClInclude Include="source\rigid_body.h" />
     <ClInclude Include="source\scene_base.h" />
     <ClInclude Include="source\scene_manager.h" />

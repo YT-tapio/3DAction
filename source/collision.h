@@ -75,45 +75,39 @@ namespace Collision
 	inline bool CapsuleToCapsule(const VECTOR& capsule1_start_pos, const VECTOR &capsule1_end_pos,const float& capsule1_r, 
 		const VECTOR& capsule2_start_pos, const VECTOR& capsule2_end_pos, const float& capsule2_r)
 	{
-		float all_size = capsule1_r * capsule2_r;
-		
-		if (FALSE)
-		{
-			
-			// 近いとことの距離 : 最初は絶対当たらないように
-			VECTOR near_vel = VectorAssistant::VGetSame(all_size);
-			// カプセル1のレイ(線分)を取る
-			VECTOR capsule1_start_to_dist = VSub(capsule1_end_pos, capsule1_start_pos);
+		float all_size = capsule1_r + capsule2_r;
 
-			// カプセル1のstart_posからカプセル2のstart_posとの距離を取る
-			VECTOR capsule1_start_to_capsule2_start = VSub(capsule2_start_pos, capsule1_start_pos);
-			VECTOR capsule1_start_to_capsule2_end = VSub(capsule2_end_pos, capsule1_start_pos);
 
-			//VECTOR
-		}
 		float dist_size = 0.f;
 		VECTOR capsule1_segment = VSub(capsule1_end_pos,capsule1_start_pos);
 		VECTOR capsule2_segment = VSub(capsule2_end_pos, capsule2_start_pos);
-		VECTOR capsule1_start_to_capsule2_start_dist = VSub(capsule2_start_pos, capsule1_start_pos);
 
-		dist_size = VectorAssistant::VGetLineNearDist(capsule1_segment, capsule2_segment, capsule1_start_to_capsule2_start_dist);
+		// 垂直の例外処理
+		if (VectorAssistant::IsParallel(capsule1_segment, capsule2_segment))
+		{
+			// 始点からの距離を見て判別
+			float dist = VSize(VSub(capsule1_start_pos, capsule2_start_pos));
+			return (dist < all_size);
+		}
+
+		dist_size = VectorAssistant::VGetSegmentDist(capsule1_start_pos, capsule1_end_pos, capsule2_start_pos, capsule2_end_pos);
 
 		return (all_size > dist_size);
 	}
 
-	inline bool SphereToMesh()
+	inline bool SphereToMesh(const VECTOR& pos,const float& r,const int& mesh)
 	{
+		auto poly = MV1CollCheck_Sphere(mesh, -1, pos, r);
+		bool is_hit = (poly.HitNum != 0);
 
-
-
-		
-		return TRUE;
+		return is_hit;
 	}
 
-	inline bool CapsuleToMesh()
+	inline bool CapsuleToMesh(const VECTOR& start_pos, const VECTOR& end_pos,const float& r,const int& mesh)
 	{
+		auto poly = MV1CollCheck_Capsule(mesh, -1, start_pos, end_pos, r);
+		bool is_hit = (poly.HitNum != 0);
 
-
-		return FALSE;
+		return is_hit;
 	}
 }
