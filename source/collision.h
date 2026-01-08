@@ -1,5 +1,6 @@
 #pragma once
 #include<iostream>
+#include<map>
 #include"DxLib.h"
 #include"rigid_body.h"
 #include"collider_base.h"
@@ -95,19 +96,77 @@ namespace Collision
 		return (all_size > dist_size);
 	}
 
+	inline bool SegmentToMesh(const VECTOR& start_pos, const VECTOR& end_pos, const int& mesh)
+	{
+		auto poly = MV1CollCheck_Line(mesh, -1, start_pos, end_pos);
+		return poly.HitFlag;
+	}
+
+	// 移動を考慮しない
 	inline bool SphereToMesh(const VECTOR& pos,const float& r,const int& mesh)
 	{
 		auto poly = MV1CollCheck_Sphere(mesh, -1, pos, r);
 		bool is_hit = (poly.HitNum != 0);
-
 		return is_hit;
 	}
 
+	// 移動を考慮しない
 	inline bool CapsuleToMesh(const VECTOR& start_pos, const VECTOR& end_pos,const float& r,const int& mesh)
 	{
 		auto poly = MV1CollCheck_Capsule(mesh, -1, start_pos, end_pos, r);
 		bool is_hit = (poly.HitNum != 0);
-
 		return is_hit;
 	}
+
+	// 移動を考慮した関数
+	inline bool IsMoveSphereToMesh(const VECTOR& pos, const VECTOR& velocity,const float& r, const int& mesh)
+	{
+		// 球の移動はカプセルになる
+		bool is_hit = CapsuleToMesh(pos, VAdd(pos, velocity), r, mesh);
+		return is_hit;
+	}
+
+	// 移動を加味した関数
+	inline bool IsMoveCapsuleToMesh(const VECTOR& start_pos, const VECTOR& end_pos, const VECTOR& velocity,const float& r, const int& mesh)
+	{
+		VECTOR capsule_segment	= VSub(end_pos, start_pos);
+		VECTOR future_start_pos = VAdd(start_pos, velocity);
+
+		// 移動前後のカプセルが当たっているかを判定
+		
+		if (CapsuleToMesh(start_pos, end_pos, r, mesh)) { return TRUE; }
+		if (CapsuleToMesh(future_start_pos, VAdd(future_start_pos, capsule_segment), r, mesh)) { return TRUE; }
+
+		// どちらも当たらないなら
+		const int kDefaultCapsuleNum = 2;
+		const int kDiameter = r * 2;			// 直径
+		const int kDetectionCapsuleMax = 100;	// カプセルの量に最大値を設ける
+		// 移動量を直径分引いておく
+		float dist = VSize(velocity) - kDiameter;
+
+		int capsule_num = dist / kDiameter + 1;	//最低1個はある
+		
+		if (capsule_num < kDetectionCapsuleMax)
+		{
+			for (int i = 0; i < capsule_num; i++)
+			{
+				int num = i + 1;					// 例 : ●〇〇〇● (〇)以外は検出済みなのでその分プラス
+				float ratio = num / (capsule_num + 1);	// 比を作る
+
+				VECTOR offset_capsule_start_pos = VAdd(start_pos, VScale(velocity, ratio));
+				if (CapsuleToMesh(offset_capsule_start_pos, VAdd(offset_capsule_start_pos, capsule_segment), r, mesh)) { return TRUE; }
+			}
+		}
+		else
+		{
+			// セグメントの当たり判定する
+			bool is_hit = FALSE;
+			is_hit = SegmentToMesh(start_pos, VAdd(start_pos, velocity), mesh);
+			if (is_hit) { return TRUE; }
+			is_hit = SegmentToMesh(end_pos, VAdd(end_pos, velocity), mesh);
+			return is_hit;
+		}
+		return FALSE;
+	}
+
 }

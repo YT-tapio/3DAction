@@ -12,6 +12,15 @@ namespace VectorAssistant
 		return VGet(0.f, 0.f, 0.f);
 	}
 
+	inline VECTOR VDevide(const VECTOR& vec,const float& num)
+	{
+		VECTOR result_vec = VGetZero();
+		result_vec.x = vec.x / num;
+		result_vec.y = vec.y / num;
+		result_vec.z = vec.z / num;
+		return result_vec;
+	}
+
 	/// <summary>
 	/// ”¼•ª‚ð•Ô‚·
 	/// </summary>
