@@ -8,6 +8,7 @@
 #include"stage.h"
 #include"Debug.h"
 #include"physics.h"
+#include"object_setter.h"
 #include"collision.h"
 
 Game::Game()
@@ -42,14 +43,15 @@ void Game::Update()
 {
 	camera_->Update();
 
-	/*
+	
 	for (auto& obj : objects_)
 	{
 		obj->Update();
 	}
 
 	Physics::GetInstance().Update();
-	*/
+	ObjectSetter::GetInstance().Update();
+	/*
 	VECTOR dir = VGet(0, 0, 0);
 
 	if (CheckHitKey(KEY_INPUT_W)) { dir = VAdd(dir, VGet(0, 1, 0)); }
@@ -72,15 +74,17 @@ void Game::Update()
 	}
 	
 
+	*/
+	
 }
 
 void Game::Draw()
 {
 
-	DrawCapsule3D(capsule_pos, VAdd(capsule_pos,VGet(0,vertical,0)), capsule_r, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
-	DrawCapsule3D(capsule2_pos, VAdd(capsule2_pos,VGet(capsule2_vertical,0.f,0.f)),capsule2_r, 20, GetColor(255, 0, 0), GetColor(255, 255, 255), FALSE);
+	//DrawCapsule3D(capsule_pos, VAdd(capsule_pos,VGet(0,vertical,0)), capsule_r, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
+	//DrawCapsule3D(capsule2_pos, VAdd(capsule2_pos,VGet(capsule2_vertical,0.f,0.f)),capsule2_r, 20, GetColor(255, 0, 0), GetColor(255, 255, 255), FALSE);
 
-	/*
+	
 	for (auto& obj : objects_)
 	{
 		obj->Draw();
@@ -95,6 +99,6 @@ void Game::Draw()
 
 		camera_->Debug();
 	}
-	*/
+	
 	
 }

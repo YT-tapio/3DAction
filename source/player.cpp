@@ -10,6 +10,7 @@
 #include"Debug.h"
 #include"color.h"
 #include"physics.h"
+#include"object_setter.h"
 #include"stage.h"
 
 Player::Player(VECTOR* camera_dir)
@@ -24,7 +25,7 @@ Player::Player(VECTOR* camera_dir)
 	handle_ = MV1LoadModel("data/model/player/Lola_B_Styperek.mv1");
 	if (handle_ == -1) { printfDx("ì«Ç›çûÇ›ÉGÉâÅ[\n"); }
 	Setting();
-	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(5.f, 10.f, VectorAssistant::VGetZero()), std::make_shared<Sphere>(4.9f, VGet(0.f, -0.3f, 0.f)), &pos_, TRUE, 1.f);
+	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(5.f, 10.f, VectorAssistant::VGetZero()), std::make_shared<Sphere>(4.9f, VGet(0.f, -0.3f, 0.f)), &pos_,&mat_, TRUE, FALSE, 1.f);
 }
 
 Player::~Player()
@@ -37,13 +38,15 @@ void Player::Init()
 	rigid_body_->Init(weak_from_this());
 	// physicsÇÃìoò^
 	Physics::GetInstance().AddBody(rigid_body_);
+	// setterÇ÷ÇÃìoò^
+	ObjectSetter::GetInstance().AddResource(handle_, &mat_);
 }
 
 void Player::Update()
 {
 	Move();
 
-	rigid_body_->Update(vel_, dir_);
+	rigid_body_->Update(vel_);
 	Setting();
 }
 
@@ -72,6 +75,8 @@ void Player::Debug()
 	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "x : %.2f, y : %.2f, z : %.2f", camera_dir_->x, camera_dir_->y, camera_dir_->z);
 	Debug::GetInstance().Add();
 
+	
+
 }
 
 void Player::LoadFile()
@@ -99,7 +104,7 @@ void Player::Move()
 	vel_ = VScale(dir_, kSpeed);
 	vel_ = VScale(vel_, (FPS::GetInstance().GetDeltaTime() * 60));
 
-	pos_ = VAdd(pos_, vel_);
+	//pos_ = VAdd(pos_, vel_);
 
 }
 

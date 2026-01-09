@@ -34,5 +34,11 @@ private:
 
 	void FixPos(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> other);
 
+	void Resistance();
+
+	void CheckGround();
+
+	const float kResistanceNum = 0.98f;	//抵抗の強さ
+
 	std::list<std::shared_ptr<RigidBody>> rigid_bodies_;		//各オブジェクトに付随している当たり判定たち
 };

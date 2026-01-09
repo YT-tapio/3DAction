@@ -88,6 +88,9 @@
     <Filter Include="ソース ファイル\resolve">
       <UniqueIdentifier>{4c78b66a-c625-4ef1-806d-b4f221da9c48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\object_setter">
+      <UniqueIdentifier>{f0fbd2fb-9140-4a45-b860-f0a3eff25530}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -149,6 +152,12 @@
     </ClCompile>
     <ClCompile Include="source\physics_interface.cpp">
       <Filter>ソース ファイル\interface</Filter>
+    </ClCompile>
+    <ClCompile Include="source\object_setter.cpp">
+      <Filter>ソース ファイル\object_setter</Filter>
+    </ClCompile>
+    <ClCompile Include="source\set_object.cpp">
+      <Filter>ソース ファイル\object_setter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -235,6 +244,12 @@
     </ClInclude>
     <ClInclude Include="source\resolve.h">
       <Filter>ソース ファイル\resolve</Filter>
+    </ClInclude>
+    <ClInclude Include="source\object_setter.h">
+      <Filter>ソース ファイル\object_setter</Filter>
+    </ClInclude>
+    <ClInclude Include="source\set_object.h">
+      <Filter>ソース ファイル\object_setter</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

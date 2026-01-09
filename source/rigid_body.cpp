@@ -7,14 +7,17 @@
 #include"vector_assistant.h"
 #include"physics_interface.h"
 
-RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll, std::shared_ptr<ColliderBase> foot_coll,VECTOR* pos,bool gravity, float mass)
+RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll, std::shared_ptr<ColliderBase> foot_coll,VECTOR* pos,MATRIX* mat,bool gravity, bool kinematic,float mass)
 {
-	pos_ = pos;
-	vel_ = VectorAssistant::VGetZero();
-	dir_ = VectorAssistant::VGetZero();
+	pos_		= pos;
+	mat_		= mat;
+	vel_		= VectorAssistant::VGetZero();
+	dir_		= VectorAssistant::VGetZero();
+	before_vel_ = VectorAssistant::VGetZero();
 	coll_ = coll;
 	foot_coll_ = foot_coll;
 	use_gravity_ = gravity;
+	is_kinematic_ = kinematic;
 	mass_ = mass;
 }
 
@@ -28,10 +31,15 @@ void RigidBody::Init(std::weak_ptr<IPhysicsEventReceiver> object)
 	object_ = object;
 }
 
-void RigidBody::Update(const VECTOR& vel, const VECTOR& dir)
+void RigidBody::Update(const VECTOR& vel)
 {
 	vel_ = vel;
-	dir_ = dir;
+	dir_ = VNorm(vel);
+}
+
+void RigidBody::SetPos()
+{
+	*pos_ = VAdd(*pos_, vel_);
 }
 
 void RigidBody::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
@@ -52,9 +60,27 @@ const VECTOR RigidBody::GetVelocity() const
 	return vel_;
 }
 
+const VECTOR RigidBody::GetBeforeVelocity() const
+{
+	return before_vel_;
+}
+
+const bool RigidBody::IsMove() const
+{
+	// åªç›Ç‡ëOÇ‡ìÆÇ¢ÇƒÇ¢Ç»Ç¢Ç∆Ç´ÇÕ
+	if (VSize(vel_) == 0.f) { return TRUE; }
+	if (VSize(before_vel_) == 0.f) { return TRUE; }
+	return FALSE;
+}
+
 const bool RigidBody::GetUseGravity() const
 {
 	return use_gravity_;
+}
+
+const bool RigidBody::GetIsKinematic() const
+{
+	return is_kinematic_;
 }
 
 std::shared_ptr<ColliderBase> RigidBody::GetCollider()
