@@ -18,7 +18,7 @@ public:
 	ObjectSetter& operator = (const ObjectSetter&) = delete;
 	
 
-	void AddResource(const int& handle, MATRIX* mat_);
+	void AddResource(const int& handle, VECTOR* pos, VECTOR* rot, VECTOR* scale);
 
 	void Update();
 

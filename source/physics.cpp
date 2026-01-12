@@ -30,7 +30,11 @@ void Physics::Update()
 				target_body->OnHit(main_body->GetIPhysicsObject());
 				FixPos(main_body, target_body);
 			}
+
 		}
+
+		main_body->SetPos();
+
 	}
 
 	//’…’n”»’è
@@ -88,7 +92,6 @@ void Physics::Resistance()
 	{
 		// “K‰ž‚ðŽó‚¯‚È‚¢‚à‚Ì
 		if (!body->GetIsKinematic()) { continue; }
-
 		// “®‚¢‚Ä‚¢‚È‚¢
 		if (!body->IsMove()) { continue; }
 

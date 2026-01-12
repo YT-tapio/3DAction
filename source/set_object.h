@@ -4,7 +4,7 @@ class SetObject
 {
 public:
 
-	SetObject(const int& handle, MATRIX* mat);
+	SetObject(const int& handle, VECTOR* pos,VECTOR* rot,VECTOR* scale);
 
 	~SetObject();
 
@@ -13,5 +13,7 @@ public:
 private:
 
 	int handle_;
-	MATRIX* mat_;
+	VECTOR* pos_;
+	VECTOR* rot_;
+	VECTOR* scale_;
 };

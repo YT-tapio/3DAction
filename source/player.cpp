@@ -25,7 +25,7 @@ Player::Player(VECTOR* camera_dir)
 	handle_ = MV1LoadModel("data/model/player/Lola_B_Styperek.mv1");
 	if (handle_ == -1) { printfDx("ì«Ç›çûÇ›ÉGÉâÅ[\n"); }
 	Setting();
-	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(5.f, 10.f, VectorAssistant::VGetZero()), std::make_shared<Sphere>(4.9f, VGet(0.f, -0.3f, 0.f)), &pos_,&mat_, TRUE, FALSE, 1.f);
+	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(5.f, 10.f, VectorAssistant::VGetZero()), std::make_shared<Sphere>(4.9f, VGet(0.f, -0.3f, 0.f)), &pos_, TRUE, FALSE, 1.f);
 }
 
 Player::~Player()
@@ -39,7 +39,7 @@ void Player::Init()
 	// physicsÇÃìoò^
 	Physics::GetInstance().AddBody(rigid_body_);
 	// setterÇ÷ÇÃìoò^
-	ObjectSetter::GetInstance().AddResource(handle_, &mat_);
+	ObjectSetter::GetInstance().AddResource(handle_, &pos_,&rot_,&scale_);
 }
 
 void Player::Update()

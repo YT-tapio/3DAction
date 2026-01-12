@@ -4,6 +4,7 @@
 #include"rigid_body.h"
 #include"mesh.h"
 #include"physics.h"
+#include"object_setter.h"
 
 Stage::Stage()
 	:Object3D("stage")
@@ -18,7 +19,7 @@ Stage::Stage()
 	}
 	pos_ = VGet(0.f, -10.f, 30.f);
 	scale_ = VectorAssistant::VGetSame(15.f);
-	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Mesh>(handle_), nullptr, &pos_,&mat_, FALSE, TRUE, 20.f);
+	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Mesh>(handle_), nullptr, &pos_, FALSE, TRUE, 20.f);
 }
 
 Stage::~Stage()
@@ -31,6 +32,7 @@ void Stage::Init()
 	rigid_body_->Init(weak_from_this());
 	// RigidBody‚Ì“o˜^
 	Physics::GetInstance().AddBody(rigid_body_);
+	ObjectSetter::GetInstance().AddResource(handle_, &pos_, &rot_, &scale_);
 }
 
 void Stage::Update()

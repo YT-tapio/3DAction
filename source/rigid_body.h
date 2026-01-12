@@ -8,7 +8,7 @@ class RigidBody
 {
 public:
 
-	RigidBody(std::shared_ptr<ColliderBase> coll, std::shared_ptr<ColliderBase> foot_coll,VECTOR* pos, MATRIX* mat,bool gravity, bool kinematic, float mass);
+	RigidBody(std::shared_ptr<ColliderBase> coll, std::shared_ptr<ColliderBase> foot_coll,VECTOR* pos, bool gravity, bool kinematic, float mass);
 
 	~RigidBody();
 
@@ -39,8 +39,6 @@ public:
 	std::shared_ptr<IPhysicsEventReceiver> GetIPhysicsObject();
 
 private:
-
-	MATRIX* mat_;
 
 	VECTOR* pos_;
 	VECTOR vel_;

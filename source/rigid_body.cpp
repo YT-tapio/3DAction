@@ -7,10 +7,9 @@
 #include"vector_assistant.h"
 #include"physics_interface.h"
 
-RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll, std::shared_ptr<ColliderBase> foot_coll,VECTOR* pos,MATRIX* mat,bool gravity, bool kinematic,float mass)
+RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll, std::shared_ptr<ColliderBase> foot_coll,VECTOR* pos,bool gravity, bool kinematic,float mass)
 {
 	pos_		= pos;
-	mat_		= mat;
 	vel_		= VectorAssistant::VGetZero();
 	dir_		= VectorAssistant::VGetZero();
 	before_vel_ = VectorAssistant::VGetZero();
