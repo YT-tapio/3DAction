@@ -32,7 +32,12 @@ void Camera::Update()
 	if (CheckHitKey(KEY_INPUT_RIGHT)) { dir = VAdd(dir, VGet(1, 0, 0)); }
 	if (CheckHitKey(KEY_INPUT_LEFT)) { dir = VAdd(dir, VGet(-1, 0, 0)); }
 
-	target_pos_ = VAdd(target_pos_, dir);
+	if (VSize(dir) > 0.f)
+	{
+		//dir = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(dir_), VectorAssistant::VGetTan(dir));
+	}
+	if(CheckHitKey(KEY_INPUT_LSHIFT)){ target_pos_ = VAdd(target_pos_, dir); }
+	
 	pos_ = VAdd(pos_, dir);
 
 	Setting();

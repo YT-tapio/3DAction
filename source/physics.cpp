@@ -28,6 +28,10 @@ void Physics::Update()
 			{
 				main_body->OnHit(target_body->GetIPhysicsObject());
 				target_body->OnHit(main_body->GetIPhysicsObject());
+
+				if (main_body->GetIsKinematic()) { continue; }
+
+				// ‰Ÿ‚µ–ß‚µ
 				FixPos(main_body, target_body);
 			}
 
@@ -91,23 +95,34 @@ void Physics::Resistance()
 	for (auto& body : rigid_bodies_)
 	{
 		// “K‰ž‚ðŽó‚¯‚È‚¢‚à‚Ì
-		if (!body->GetIsKinematic()) { continue; }
+		if (body->GetIsKinematic()) { continue; }
 		// “®‚¢‚Ä‚¢‚È‚¢
 		if (!body->IsMove()) { continue; }
 
 		VECTOR offset_vel = VectorAssistant::VGetZero();
-
-		//‘S‘Ì‚ÌˆÚ“®—Ê
+		// ‘S‘Ì‚ÌˆÚ“®—Ê
 		VECTOR vel = VAdd(VectorAssistant::VGetFlat(body->GetVelocity()), VectorAssistant::VGetFlat(body->GetBeforeVelocity()));
-
-		// offset_vel‚Ì‹t‚ÌƒxƒNƒgƒ‹‚ð³‹K‰»‚µA’ïR‚Ì‹­‚³‚ð‚©‚¯‚é
+		// vel‚Ì‹t‚ÌƒxƒNƒgƒ‹‚ð³‹K‰»‚µA’ïR‚Ì‹­‚³‚ð‚©‚¯‚é
 		VECTOR resistance_vel = VScale(VNorm(VectorAssistant::VGetReverce(vel)), kResistanceNum);
-		// offset_vel‚É‘«‚·
-		offset_vel = VAdd(offset_vel, resistance_vel);
-		//‚»‚µ‚Ä‚à‚Æ‚à‚Æ‚Ìy‚ÌˆÚ“®—Ê‚É‚·‚é
-		offset_vel.y = body->GetVelocity().y;
 
+		// Å‘å‚ÌˆÚ“®—Ê
+		//offset_vel = VectorAssistant::VMaxf(offset_vel, VSize(VectorAssistant::VGetFlat(body->GetVelocity())));
+		// vel‚É‘«‚·
+		offset_vel = VAdd(vel, resistance_vel);
+		// –€ŽC‚É‚æ‚Á‚Ä•ûŒü‚ª•Ï‚í‚ç‚È‚¢‚æ‚¤’²®‚·‚é
+		// Œü‚«‚ªˆê‚©‚Ç‚¤‚©
+		if (VectorAssistant::IsSameDir(offset_vel, resistance_vel))
+		{
+			if (!VectorAssistant::IsEmpty(VectorAssistant::VGetFlat(body->GetBeforeVelocity())))
+			{
+				offset_vel = VectorAssistant::VGetZero();
+			}
+		}
+
+		// ‚»‚µ‚Ä‚à‚Æ‚à‚Æ‚Ìy‚ÌˆÚ“®—Ê‚É‚·‚é
+		offset_vel.y = body->GetVelocity().y;
 		body->Update(offset_vel);
+		
 	}
 }
 

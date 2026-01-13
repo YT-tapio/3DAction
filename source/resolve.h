@@ -26,7 +26,7 @@ namespace Resolve
 
 		// 正射影ベクトルを取る
 		VECTOR reverce_norm			= VectorAssistant::VGetReverce(norm);	// 法線を反転
-		VECTOR proj_vec				= VectorAssistant::VGetProj(norm, center_to_end_pos);	
+		VECTOR proj_vec				= VectorAssistant::VGetProj(norm, center_to_end_pos);
 
 		// 終点からの押し戻し量
 		VECTOR offset_pos = VSub(end_pos, proj_vec);

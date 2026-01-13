@@ -5,6 +5,8 @@
 #include"mesh.h"
 #include"physics.h"
 #include"object_setter.h"
+#include"debug.h"
+#include"color.h"
 
 Stage::Stage()
 	:Object3D("stage")
@@ -18,7 +20,7 @@ Stage::Stage()
 		printfDx("ì«Ç›çûÇ›Ç≈Ç´Ç»Ç¢\n");
 	}
 	pos_ = VGet(0.f, -10.f, 30.f);
-	scale_ = VectorAssistant::VGetSame(15.f);
+	scale_ = VectorAssistant::VGetSame(0.1f);
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Mesh>(handle_), nullptr, &pos_, FALSE, TRUE, 20.f);
 }
 
@@ -42,13 +44,19 @@ void Stage::Update()
 
 void Stage::Draw()
 {
-	DrawSphere3D(pos_, 1.f, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
-	MV1DrawModel(handle_);	
+	DrawSphere3D(pos_, 0.01f, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
+	MV1DrawModel(handle_);
 }
 
 void Stage::Debug()
 {
+	DrawString(0, Debug::GetInstance().GetNowLineSize(), "----------stage-----------", Color::kWhite);
+	Debug::GetInstance().Add();
 
+	DrawString(0, Debug::GetInstance().GetNowLineSize(), "pos", Color::kWhite);
+	Debug::GetInstance().Add();
+	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "x : %.2f, y : %.2f, z : %.2f", pos_.x, pos_.y, pos_.z);
+	Debug::GetInstance().Add();
 }
 
 void Stage::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)

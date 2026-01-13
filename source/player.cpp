@@ -62,20 +62,19 @@ void Player::Debug()
 
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "pos", Color::kWhite);
 	Debug::GetInstance().Add();
-	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "x : %.2f, y : %.2f, z : %.2f", pos_.x, pos_.y, pos_.z);
-	Debug::GetInstance().Add();
+	Debug::GetInstance().DrawVector(pos_);
 
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "dir", Color::kWhite);
 	Debug::GetInstance().Add();
-	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "x : %.2f, y : %.2f, z : %.2f", dir_.x, dir_.y, dir_.z);
+	Debug::GetInstance().DrawVector(dir_);
+
+	DrawString(0, Debug::GetInstance().GetNowLineSize(), "vel", Color::kWhite);
 	Debug::GetInstance().Add();
+	Debug::GetInstance().DrawVector(vel_);
 
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "camera_dir", Color::kWhite);
 	Debug::GetInstance().Add();
-	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "x : %.2f, y : %.2f, z : %.2f", camera_dir_->x, camera_dir_->y, camera_dir_->z);
-	Debug::GetInstance().Add();
-
-	
+	Debug::GetInstance().DrawVector(*camera_dir_);
 
 }
 
@@ -86,19 +85,18 @@ void Player::LoadFile()
 
 void Player::Move()
 {
-	//Input‚ðì‚Á‚½‚ç‚±‚Ìˆ—‚ÍÁ‚µ‚Ä‚­‚¾‚³‚¢
+	VECTOR dir = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
-	
-	if (CheckHitKey(KEY_INPUT_W)) { dir_ = VAdd(dir_, VGet(0.f, 0.f, 1.f));  }
-	if (CheckHitKey(KEY_INPUT_S)) { dir_ = VAdd(dir_, VGet(0.f, 0.f, -1.f)); }
-	if (CheckHitKey(KEY_INPUT_D)) { dir_ = VAdd(dir_, VGet(1.f, 0.f, 0.f));  }
-	if (CheckHitKey(KEY_INPUT_A)) { dir_ = VAdd(dir_, VGet(-1.f, 0.f, 0.f)); }
 
-	if (VSize(dir_) > 0) 
+	//Input‚ðì‚Á‚½‚ç‚±‚Ìˆ—‚ÍÁ‚µ‚Ä‚­‚¾‚³‚¢
+	if (CheckHitKey(KEY_INPUT_W)) { dir = VAdd(dir, VGet(0.f, 0.f, 1.f));  }
+	if (CheckHitKey(KEY_INPUT_S)) { dir = VAdd(dir, VGet(0.f, 0.f, -1.f)); }
+	if (CheckHitKey(KEY_INPUT_D)) { dir = VAdd(dir, VGet(1.f, 0.f, 0.f));  }
+	if (CheckHitKey(KEY_INPUT_A)) { dir = VAdd(dir, VGet(-1.f, 0.f, 0.f)); }
+
+	if (VSize(dir) > 0) 
 	{
-		float constant = VectorAssistant::VGetTan(*camera_dir_);
-		dir_ = VScale(dir_, constant);
-		dir_ = VNorm(dir_);
+		dir_ = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(*camera_dir_), VectorAssistant::VGetTan(dir));
 	}
 
 	vel_ = VScale(dir_, kSpeed);

@@ -1,6 +1,7 @@
 #pragma once
 #include"DxLib.h"
 #include"my_math.h"
+#include"radian_assistant.h"
 namespace VectorAssistant
 {
 	/// <summary>
@@ -63,6 +64,34 @@ namespace VectorAssistant
 	}
 
 	/// <summary>
+	/// y²‰ñ“]‚³‚¹‚½‚Ìvector(ƒ‰ƒWƒAƒ“Šp‚Å‚Í‚È‚­À”’l)
+	/// </summary>
+	/// <param name="me"></param>
+	/// <param name="num">(-3.14`3.14)</param>
+	/// <returns></returns>
+	inline VECTOR VGetRotPiY(const VECTOR& me, const float num)
+	{
+		VECTOR value = VGetZero();
+
+		value.x = (me.x * cosf(num)) + (me.z * sinf(num));
+		value.y = me.y;
+		value.z = (-me.x * sinf(num)) + (me.z * cosf(num));
+
+		return value;
+	}
+
+	/// <summary>
+	/// y²‰ñ“]‚µ‚½‚Æ‚«‚Ìvector
+	/// </summary>
+	/// <param name="me">q‚ÌƒxƒNƒgƒ‹‚ğ‰ñ“]</param>
+	/// <param name="rad">ƒ‰ƒWƒAƒ“Šp(-180`180)</param>
+	/// <returns></returns>
+	inline VECTOR VGetRotRadY(const VECTOR& me, const float rad)
+	{
+		return VGetRotPiY(me, RadianAssistant::kOneRad * rad);
+	}
+
+	/// <summary>
 	/// other‚Ü‚Å‚ÌŒü‚«‚ğ•Ô‚·
 	/// </summary>
 	/// <param name="me"></param>
@@ -94,9 +123,87 @@ namespace VectorAssistant
 
 		// y‚Í‚Ş‚µ
 
-		num = atan2f(vec.z, vec.x);
+		num = atan2f(vec.x, vec.z);
 
 		return num;
+	}
+
+	/// <summary>
+	/// vector“¯m‚Å‚Ì’l‚Ì’²®
+	/// </summary>
+	/// <param name="me"></param>
+	/// <param name="max"></param>
+	/// <returns></returns>
+	inline VECTOR VMax(const VECTOR& me, const VECTOR& max)
+	{
+		return (VSize(me) > VSize(max)) ? max : me;
+	}
+
+	/// <summary>
+	/// vector“¯m‚Å‚Ì’l‚Ì’²®
+	/// </summary>
+	/// <param name="me"></param>
+	/// <param name="min"></param>
+	/// <returns></returns>
+	inline VECTOR VMin(const VECTOR& me, const VECTOR& min)
+	{
+		return (VSize(me) < VSize(min)) ? min : me;
+	}
+
+	/// <summary>
+	/// vector“¯m‚Å‚Ì’l‚Ì’²®
+	/// </summary>
+	/// <param name="me"></param>
+	/// <param name="max"></param>
+	/// <param name="min"></param>
+	/// <returns></returns>
+	inline VECTOR VClamp(const VECTOR& me, const VECTOR& max, const VECTOR min)
+	{
+		VECTOR value = me;
+
+		value = VMax(me, max);
+		value = VMin(me, min);
+
+		return value;
+	}
+
+	/// <summary>
+	/// floatŒ^‚Åvector‚Ì’l‚ğ’²®
+	/// </summary>
+	/// <param name="me"></param>
+	/// <param name="max"></param>
+	/// <returns></returns>
+	inline VECTOR VMaxf(const VECTOR& me, const float max)
+	{
+		return (VSize(me) > max) ? VScale(VNorm(me), max) : me;
+	}
+
+	/// <summary>
+	/// floatŒ^‚Åvector‚Ì’l‚ğ’²®
+	/// </summary>
+	/// <param name="me"></param>
+	/// <param name="min"></param>
+	/// <returns></returns>
+	inline VECTOR VMinf(const VECTOR& me, const float min)
+	{
+		return (VSize(me) < min) ? VScale(VNorm(me), min) : me;
+	}
+
+	/// <summary>
+	/// floatŒ^‚Å‚Ì’l‚ğ’²®
+	/// </summary>
+	/// <param name="me"></param>
+	/// <param name="max"></param>
+	/// <param name="min"></param>
+	/// <returns></returns>
+	inline VECTOR VClampf(const VECTOR& me, const float max,const float min)
+	{
+		VECTOR value = me;
+
+		value = VMaxf(me, max);
+		value = VMinf(me, min);
+
+		return value;
 	}
 
 	/// <summary>
@@ -196,18 +303,49 @@ namespace VectorAssistant
 	/// <summary>
 	/// “ñ‚Â‚ÌƒxƒNƒgƒ‹‚ª•½s‚©‚Ç‚¤‚©
 	/// </summary>
-	/// <param name="vec1"></param>
-	/// <param name="vec2"></param>
+	/// <param name="vec1">³‹K‰»‚µ‚È‚­‚Ä‚à‚¢‚¢</param>
+	/// <param name="vec2">³‹K‰»‚µ‚È‚­‚Ä‚à‚¢‚¢</param>
 	/// <return></return>
 	inline bool IsParallel(const VECTOR& vec1, const VECTOR& vec2)
 	{
+		const float kParallelNum = 1.f;
+
 		// ³‹K‰»
 		VECTOR norm_vec1 = VNorm(vec1);
 		VECTOR norm_vec2 = VNorm(vec2);
 
 		// “àÏ
 		float num = VDot(norm_vec1, norm_vec2);
-		return (num == 1.f);
+		return (num == kParallelNum || num == -kParallelNum);
+	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="vec1">³‹K‰»‚µ‚È‚­‚Ä‚à‚¢‚¢</param>
+	/// <param name="vec2">³‹K‰»‚µ‚È‚­‚Ä‚à‚¢‚¢</param>
+	/// <returns></returns>
+	inline bool IsSameDir(const VECTOR& vec1, const VECTOR& vec2)
+	{
+		const float kSameDirNum = 1.f;
+
+		// ³‹K‰»
+		VECTOR norm_vec1 = VNorm(vec1);
+		VECTOR norm_vec2 = VNorm(vec2);
+
+		// “àÏ
+		float num = VDot(norm_vec1, norm_vec2);
+		return (num == kSameDirNum);
+	}
+
+	/// <summary>
+	/// —v‘f‚ª0
+	/// </summary>
+	/// <param name="vec"></param>
+	/// <returns></returns>
+	inline bool IsEmpty(const VECTOR& vec)
+	{
+		return (VSize(vec) == 0.f);
 	}
 
 }

@@ -20,6 +20,12 @@ public:
 	// デバッグしたときの要素のカウント
 	void Add();
 
+	/// <summary>
+	/// 引数で受け取ったvectorの要素の書き出し(カウントもこの中でしてるよ)
+	/// </summary>
+	/// <param name="vec"></param>
+	void DrawVector(const VECTOR& vec);
+
 	const int GetLineSize() const;
 
 	const int GetNum() const;

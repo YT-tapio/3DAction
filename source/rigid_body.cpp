@@ -32,6 +32,7 @@ void RigidBody::Init(std::weak_ptr<IPhysicsEventReceiver> object)
 
 void RigidBody::Update(const VECTOR& vel)
 {
+	before_vel_ = vel_;
 	vel_ = vel;
 	dir_ = VNorm(vel);
 }
@@ -67,8 +68,8 @@ const VECTOR RigidBody::GetBeforeVelocity() const
 const bool RigidBody::IsMove() const
 {
 	// åªç›Ç‡ëOÇ‡ìÆÇ¢ÇƒÇ¢Ç»Ç¢Ç∆Ç´ÇÕ
-	if (VSize(vel_) == 0.f) { return TRUE; }
-	if (VSize(before_vel_) == 0.f) { return TRUE; }
+	if (VSize(vel_) != 0.f) { return TRUE; }
+	if (VSize(before_vel_) != 0.f) { return TRUE; }
 	return FALSE;
 }
 
