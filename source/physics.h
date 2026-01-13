@@ -32,6 +32,8 @@ private:
 	
 	bool CheckHit(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> other);
 
+	bool CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidBody> other);
+
 	void FixPos(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> other);
 
 	void Resistance();

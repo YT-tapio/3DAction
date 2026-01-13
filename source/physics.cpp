@@ -82,6 +82,41 @@ bool Physics::CheckHit(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> 
 	return FALSE;
 }
 
+bool Physics::CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidBody> other)
+{
+
+	auto me_coll = me->GetFootCollider();
+	auto other_coll = other->GetCollider();
+
+	auto me_name = other_coll->GetName();
+
+	switch (me_name)
+	{
+	case ColliderName::kSphere:
+		return TRUE;
+		break;
+
+	case ColliderName::kCapsule:
+		return TRUE;
+		break;
+
+	case ColliderName::kAABB:
+		return TRUE;
+		break;
+
+	case ColliderName::kOBB:
+		return TRUE;
+		break;
+
+	case ColliderName::kMesh:
+		return TRUE;
+		break;
+	}
+
+
+	return FALSE;
+}
+
 
 
 void Physics::FixPos(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> other)
@@ -135,7 +170,11 @@ void Physics::CheckGround()
 
 		for (auto& target_body : rigid_bodies_)
 		{
-
+			// rigid_body内の足元検知用のcolliderのと周りのオブジェクトとの当たり判定を行う
+			if (CheckHitFoot(main_body, target_body))
+			{
+				
+			}
 		}
 	}
 
