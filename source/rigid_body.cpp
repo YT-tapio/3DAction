@@ -7,14 +7,13 @@
 #include"vector_assistant.h"
 #include"physics_interface.h"
 
-RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll, std::shared_ptr<ColliderBase> foot_coll,VECTOR* pos,bool gravity, bool kinematic,float mass)
+RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll,VECTOR* pos,bool gravity, bool kinematic,float mass)
 {
 	pos_		= pos;
 	vel_		= VectorAssistant::VGetZero();
 	dir_		= VectorAssistant::VGetZero();
 	before_vel_ = VectorAssistant::VGetZero();
 	coll_ = coll;
-	foot_coll_ = foot_coll;
 	use_gravity_ = gravity;
 	is_kinematic_ = kinematic;
 	mass_ = mass;
@@ -88,10 +87,6 @@ std::shared_ptr<ColliderBase> RigidBody::GetCollider()
 	return coll_;
 }
 
-std::shared_ptr<ColliderBase> RigidBody::GetFootCollider()
-{
-	return foot_coll_;
-}
 
 std::shared_ptr<IPhysicsEventReceiver> RigidBody::GetIPhysicsObject()
 {

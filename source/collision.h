@@ -17,6 +17,57 @@
 namespace Collision
 {
 
+	inline bool RayToTriangle(const VECTOR& ray_start_pos, const VECTOR& ray_dir, const VECTOR& tri_pos1, const VECTOR& tri_pos2, const VECTOR& tri_pos3)
+	{
+		const float kTolerance = 0.000001f;
+
+		VECTOR edge1 = VSub(tri_pos2, tri_pos1);
+		VECTOR edge2 = VSub(tri_pos3, tri_pos1);
+
+		VECTOR dir_edge2_cross = VectorAssistant::VGetCross(ray_dir, edge2);
+
+
+	}
+
+
+
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="segment_start_pos1"></param>
+	/// <param name="segment_length1"></param>
+	/// <param name="segment_start_pos2"></param>
+	/// <param name="segment_length2"></param>
+	/// <returns></returns>
+	inline bool SegmentToSegment(const VECTOR& segment_start_pos1, const VECTOR& segment_length1, const VECTOR& segment_start_pos2, const VECTOR& segment_length2)
+	{
+		VECTOR segment_to_ray_vel = VSub(segment_start_pos2, segment_start_pos1);
+		
+		// 外積
+		VECTOR segment_cross			= VectorAssistant::VGetCross(segment_length1,segment_length2);  //セグメントの長さ同士の
+		VECTOR start_to_start_cross	= VectorAssistant::VGetCross(segment_length1, segment_length2); //セグメントとセグメントの始点から始点までのvectorの
+
+		if (VSize(start_to_start_cross) == 0.f) { return TRUE; }
+		VECTOR cross_cross = VectorAssistant::VGetCross(segment_cross, start_to_start_cross);	// 外積
+		if (VSize(segment_cross) > 0 && VSize(cross_cross) == 0) { return TRUE; }
+
+		return FALSE;
+	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="segment_start_pos"></param>
+	/// <param name="segment_length"></param>
+	/// <param name="dot_pos"></param>
+	/// <returns></returns>
+	inline bool SegmentToPoint(const VECTOR& segment_start_pos, const VECTOR& segment_length,const VECTOR& point_pos)
+	{
+		VECTOR start_to_dot = VSub(point_pos, segment_start_pos);
+		return VectorAssistant::IsParallel(segment_length, start_to_dot);
+	}
+
 	/// <summary>
 	/// 球と球
 	/// </summary>

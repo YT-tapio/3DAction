@@ -85,33 +85,6 @@ bool Physics::CheckHit(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> 
 bool Physics::CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidBody> other)
 {
 
-	auto me_coll = me->GetFootCollider();
-	auto other_coll = other->GetCollider();
-
-	auto me_name = other_coll->GetName();
-
-	switch (me_name)
-	{
-	case ColliderName::kSphere:
-		return TRUE;
-		break;
-
-	case ColliderName::kCapsule:
-		return TRUE;
-		break;
-
-	case ColliderName::kAABB:
-		return TRUE;
-		break;
-
-	case ColliderName::kOBB:
-		return TRUE;
-		break;
-
-	case ColliderName::kMesh:
-		return TRUE;
-		break;
-	}
 
 
 	return FALSE;
