@@ -4,7 +4,7 @@
 #include"rigid_body.h"
 #include"collider_base.h"
 #include"vector_assistant.h"
-
+#include"collider_name.h"
 void Physics::AddBody(std::shared_ptr<RigidBody> body)
 {
 	rigid_bodies_.push_back(body);

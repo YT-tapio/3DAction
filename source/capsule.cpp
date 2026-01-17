@@ -1,7 +1,7 @@
 #include"DxLib.h"
 #include"capsule.h"
 #include"color.h"
-
+#include"collider_name.h"
 
 Capsule::Capsule(float r,float vertical,VECTOR offset_vel)
 	: ColliderBase(ColliderName::kCapsule)

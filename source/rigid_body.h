@@ -3,6 +3,7 @@
 class ObjectBase;
 class ColliderBase;
 class IPhysicsEventReceiver;
+class ColliderGroup;
 
 class RigidBody
 {

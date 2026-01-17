@@ -1,6 +1,6 @@
 #include"DxLib.h"
 #include"mesh.h"
-
+#include"collider_name.h"
 
 Mesh::Mesh(int handle)
 	: ColliderBase(ColliderName::kMesh)

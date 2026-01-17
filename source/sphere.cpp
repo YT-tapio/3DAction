@@ -1,7 +1,7 @@
 #include"DxLib.h"
 #include"sphere.h"
 #include"color.h"
-
+#include"collider_name.h"
 
 Sphere::Sphere(float r, VECTOR offset_vel)
 	:ColliderBase(ColliderName::kSphere)

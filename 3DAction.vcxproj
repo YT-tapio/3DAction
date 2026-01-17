@@ -135,6 +135,7 @@
     <ClCompile Include="source\capsule.cpp" />
     <ClCompile Include="source\character_base.cpp" />
     <ClCompile Include="source\collider_base.cpp" />
+    <ClCompile Include="source\collider_group.cpp" />
     <ClCompile Include="source\debug.cpp" />
     <ClCompile Include="source\FPS.cpp" />
     <ClCompile Include="source\game.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="source\color.h" />
     <ClInclude Include="source\stage.h" />
     <ClInclude Include="source\vector_assistant.h" />
+    <ClInclude Include="source\collider_group.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

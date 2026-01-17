@@ -1,15 +1,11 @@
 #pragma once
-#include<iostream>
 #include<map>
 #include"DxLib.h"
 #include"rigid_body.h"
 #include"collider_base.h"
 #include"sphere.h"
 #include"capsule.h"
-//#include"AABB.h"
-//#include"OBB.h"
 #include"mesh.h"
-
 #include"vector_assistant.h"
 
 

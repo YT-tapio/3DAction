@@ -91,6 +91,9 @@
     <Filter Include="ソース ファイル\object_setter">
       <UniqueIdentifier>{f0fbd2fb-9140-4a45-b860-f0a3eff25530}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\collider\collider_group">
+      <UniqueIdentifier>{322eb42f-61cb-4052-8d04-c39efa94151d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -158,6 +161,9 @@
     </ClCompile>
     <ClCompile Include="source\set_object.cpp">
       <Filter>ソース ファイル\object_setter</Filter>
+    </ClCompile>
+    <ClCompile Include="source\collider_group.cpp">
+      <Filter>ソース ファイル\collider\collider_group</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +256,9 @@
     </ClInclude>
     <ClInclude Include="source\set_object.h">
       <Filter>ソース ファイル\object_setter</Filter>
+    </ClInclude>
+    <ClInclude Include="source\collider_group.h">
+      <Filter>ソース ファイル\collider\collider_group</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
