@@ -22,10 +22,8 @@ namespace Collision
 
 		VECTOR dir_edge2_cross = VectorAssistant::VGetCross(ray_dir, edge2);
 
-
+		return TRUE;
 	}
-
-
 
 
 	/// <summary>
@@ -38,7 +36,7 @@ namespace Collision
 	/// <returns></returns>
 	inline bool SegmentToSegment(const VECTOR& segment_start_pos1, const VECTOR& segment_length1, const VECTOR& segment_start_pos2, const VECTOR& segment_length2)
 	{
-		VECTOR segment_to_ray_vel = VSub(segment_start_pos2, segment_start_pos1);
+		VECTOR segment_to_segment_vel = VSub(segment_start_pos2, segment_start_pos1);
 		
 		// 外積
 		VECTOR segment_cross			= VectorAssistant::VGetCross(segment_length1,segment_length2);  //セグメントの長さ同士の
@@ -58,11 +56,32 @@ namespace Collision
 	/// <param name="segment_length"></param>
 	/// <param name="dot_pos"></param>
 	/// <returns></returns>
-	inline bool SegmentToPoint(const VECTOR& segment_start_pos, const VECTOR& segment_length,const VECTOR& point_pos)
+	inline bool SegmentToPoint(const VECTOR& segment_start_pos, const VECTOR& segment_end_pos,const VECTOR& point_pos)
 	{
 		VECTOR start_to_dot = VSub(point_pos, segment_start_pos);
+		VECTOR segment_length = VSub(segment_end_pos, segment_start_pos);
 		return VectorAssistant::IsParallel(segment_length, start_to_dot);
 	}
+
+	inline bool SegmentToSphere(const VECTOR& segment_start_pos, const VECTOR& segment_end, const VECTOR& sphere_pos, const float& r)
+	{
+		VECTOR start_to_sphere = VSub(sphere_pos, segment_start_pos);
+		VECTOR segment_length = VSub(segment_end, segment_start_pos);
+		// 正射影で落とす
+		VECTOR proj = VectorAssistant::VGetProj(segment_length, start_to_sphere);
+
+		//正射影のサイズが半径サイズなら
+		return VSize(proj) < r;
+	}
+
+	inline bool SegmentToCapsule(const VECTOR& segment_start_pos, const VECTOR& segment_length, const VECTOR& capsule_start_pos, const VECTOR& capsule_end_pos, const float& r)
+	{
+
+
+		return TRUE;
+	}
+
+	
 
 	/// <summary>
 	/// 球と球

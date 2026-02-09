@@ -30,7 +30,7 @@ private:
 
 
 
-	const float kSpeed = 0.5f;
+	const float kSpeed = 0.3f;
 
 	std::shared_ptr<RigidBody> rigid_body_;
 

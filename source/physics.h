@@ -39,8 +39,8 @@ private:
 	void Resistance();
 
 	void CheckGround();
-
-	const float kResistanceNum = 0.2f;	//抵抗の強さ
+	//0.2
+	const float kResistanceNum = 0.18f;	//抵抗の強さ
 
 	std::list<std::shared_ptr<RigidBody>> rigid_bodies_;		//各オブジェクトに付随している当たり判定たち
 };

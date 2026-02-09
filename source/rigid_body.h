@@ -21,6 +21,8 @@ public:
 
 	void OnHit(std::shared_ptr<IPhysicsEventReceiver> object);
 
+	const float GetMaxSpeed() const;
+
 	const VECTOR GetPosition()const;
 
 	const VECTOR GetVelocity()const;
@@ -38,6 +40,8 @@ public:
 	std::shared_ptr<IPhysicsEventReceiver> GetIPhysicsObject();
 
 private:
+
+	const float kMaxSpeed = 3.f;
 
 	VECTOR* pos_;
 	VECTOR vel_;

@@ -88,6 +88,8 @@ void Player::Move()
 	VECTOR dir = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
 
+	float speed = kSpeed;
+
 	//Input‚ðì‚Á‚½‚ç‚±‚Ìˆ—‚ÍÁ‚µ‚Ä‚­‚¾‚³‚¢
 	if (CheckHitKey(KEY_INPUT_W)) { dir = VAdd(dir, VGet(0.f, 0.f, 1.f));  }
 	if (CheckHitKey(KEY_INPUT_S)) { dir = VAdd(dir, VGet(0.f, 0.f, -1.f)); }
@@ -97,10 +99,13 @@ void Player::Move()
 	if (VSize(dir) > 0) 
 	{
 		dir_ = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(*camera_dir_), VectorAssistant::VGetTan(dir));
+		dir_ = VNorm(dir_);
 	}
+	if (CheckHitKey(KEY_INPUT_LSHIFT)) { speed *= 2.5f; }
 
-	vel_ = VScale(dir_, kSpeed);
-	vel_ = VScale(vel_, (FPS::GetInstance().GetDeltaTime() * 60));
+
+	vel_ = VScale(dir_, speed);
+	vel_ = VScale(vel_, (FPS::GetInstance().GetDeltaTime() * 60.f));
 
 	//pos_ = VAdd(pos_, vel_);
 

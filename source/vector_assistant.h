@@ -316,7 +316,7 @@ namespace VectorAssistant
 
 		// ì‡êœ
 		float num = VDot(norm_vec1, norm_vec2);
-		return (num == kParallelNum || num == -kParallelNum);
+		return (num == kParallelNum);
 	}
 
 	/// <summary>
@@ -345,7 +345,7 @@ namespace VectorAssistant
 	/// <returns></returns>
 	inline bool IsEmpty(const VECTOR& vec)
 	{
-		return (VSize(vec) == 0.f);
+		return (VSize(vec) < 0.01f);
 	}
 
 }

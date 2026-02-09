@@ -49,6 +49,11 @@ void RigidBody::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 	}
 }
 
+const float RigidBody::GetMaxSpeed() const
+{
+	return kMaxSpeed * VSize(vel_);
+}
+
 const VECTOR RigidBody::GetPosition() const
 {
 	return *pos_;
