@@ -94,6 +94,9 @@
     <Filter Include="ソース ファイル\collider\collider_group">
       <UniqueIdentifier>{322eb42f-61cb-4052-8d04-c39efa94151d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\input">
+      <UniqueIdentifier>{7ec34071-291c-42c6-805d-6e375f0ca0b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -164,6 +167,15 @@
     </ClCompile>
     <ClCompile Include="source\collider_group.cpp">
       <Filter>ソース ファイル\collider\collider_group</Filter>
+    </ClCompile>
+    <ClCompile Include="source\input_base.cpp">
+      <Filter>ソース ファイル\input</Filter>
+    </ClCompile>
+    <ClCompile Include="source\pad.cpp">
+      <Filter>ソース ファイル\input</Filter>
+    </ClCompile>
+    <ClCompile Include="source\key.cpp">
+      <Filter>ソース ファイル\input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -259,6 +271,15 @@
     </ClInclude>
     <ClInclude Include="source\collider_group.h">
       <Filter>ソース ファイル\collider\collider_group</Filter>
+    </ClInclude>
+    <ClInclude Include="source\input_base.h">
+      <Filter>ソース ファイル\input</Filter>
+    </ClInclude>
+    <ClInclude Include="source\pad.h">
+      <Filter>ソース ファイル\input</Filter>
+    </ClInclude>
+    <ClInclude Include="source\key.h">
+      <Filter>ソース ファイル\input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,7 +5,17 @@
 namespace MyMath
 {
 	
-	inline float Clamp(const float& me, const float& min, const float& max)
+	inline int Clamp(const int& me, const int& min, const int& max)
+	{
+		int num = me;
+
+		if (me < min) { num = min; }
+		if (me > max) { num = max; }
+
+		return num;
+	}
+
+	inline float Clampf(const float& me, const float& min, const float& max)
 	{
 		float num = me;
 
@@ -14,6 +24,7 @@ namespace MyMath
 
 		return num;
 	}
+
 
 
 }
