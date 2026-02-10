@@ -6,6 +6,7 @@
 #include"collider_base.h"
 #include"vector_assistant.h"
 #include"physics_interface.h"
+#include"FPS.h"
 
 RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll,VECTOR* pos,bool gravity, bool kinematic,float mass)
 {
@@ -29,11 +30,32 @@ void RigidBody::Init(std::weak_ptr<IPhysicsEventReceiver> object)
 	object_ = object;
 }
 
+void RigidBody::SetVelocity(const VECTOR& vel)
+{
+	vel_ = vel;
+	dir_ = VNorm(vel_);
+}
+
 void RigidBody::Update(const VECTOR& vel)
 {
 	before_vel_ = vel_;
 	vel_ = vel;
 	dir_ = VNorm(vel);
+}
+
+void RigidBody::AddForce()
+{
+	// 重力処理
+	// 前回のも比べる
+	// 重さ
+	float gravity_speed = -((FPS::GetInstance().GetDeltaTime() * 60.f) * mass_);
+	gravity_speed = (gravity_speed + before_vel_.y);
+	vel_.y += (gravity_speed);
+}
+
+void RigidBody::ResetGravity()
+{
+	before_vel_.y = 0.f;
 }
 
 void RigidBody::SetPos()
@@ -72,8 +94,8 @@ const VECTOR RigidBody::GetBeforeVelocity() const
 const bool RigidBody::IsMove() const
 {
 	// 現在も前も動いていないときは
-	if (VSize(vel_) != 0.f) { return TRUE; }
-	if (VSize(before_vel_) != 0.f) { return TRUE; }
+	if (VSize(VectorAssistant::VGetFlat(vel_))			!= 0.f) { return TRUE; }
+	if (VSize(VectorAssistant::VGetFlat(before_vel_))	!= 0.f) { return TRUE; }
 	return FALSE;
 }
 

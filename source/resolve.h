@@ -57,5 +57,16 @@ namespace Resolve
 		return offset_vel;
 	}
 
+	inline VECTOR CapsuleMesh(const VECTOR& start_pos, const VECTOR& end_pos, const float& r, const VECTOR& velocity, const int& mesh)
+	{
+		auto hit_dim = MV1CollCheck_Capsule(mesh, 0, start_pos, end_pos, -1);
+
+		// •Ç‚©‚ç‚Ì“–‚½‚è”»’è‚É‚·‚é
+		// Ÿè‚ÉƒLƒƒƒXƒg‚µ‚Ä‚­‚ê‚éŠÖ”‚ğì‚è‚Ü‚·
+		
+
+
+	}
+
 
 }

@@ -153,6 +153,7 @@
     <ClCompile Include="source\scene_base.cpp" />
     <ClCompile Include="source\scene_manager.cpp" />
     <ClCompile Include="source\set_object.cpp" />
+    <ClCompile Include="source\sort_poly.cpp" />
     <ClCompile Include="source\sphere.cpp" />
     <ClCompile Include="source\stage.cpp" />
     <ClCompile Include="source\player.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="source\scene_base.h" />
     <ClInclude Include="source\scene_manager.h" />
     <ClInclude Include="source\set_object.h" />
+    <ClInclude Include="source\sort_poly.h" />
     <ClInclude Include="source\sphere.h" />
     <ClInclude Include="source\color.h" />
     <ClInclude Include="source\stage.h" />

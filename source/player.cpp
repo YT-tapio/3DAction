@@ -26,6 +26,8 @@ Player::Player(VECTOR* camera_dir)
 	if (handle_ == -1) { printfDx("ì«Ç›çûÇ›ÉGÉâÅ[\n"); }
 	Setting();
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(5.f, 10.f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f);
+	fall_speed_ = 0.f;
+	is_ground_ = FALSE;
 }
 
 Player::~Player()
@@ -46,7 +48,8 @@ void Player::Update()
 {
 	Move();
 
-	rigid_body_->Update(vel_);
+	rigid_body_->SetVelocity(vel_);
+	//Gravity();
 	Setting();
 }
 
@@ -103,12 +106,24 @@ void Player::Move()
 	}
 	if (CheckHitKey(KEY_INPUT_LSHIFT)) { speed *= 2.5f; }
 
+	
 
 	vel_ = VScale(dir_, speed);
+	if (!is_ground_)
+	{
+		fall_speed_ += 0.05f;
+		vel_ = VAdd(vel_, VGet(0.f, -fall_speed_, 0.f));
+	}
+	
 	vel_ = VScale(vel_, (FPS::GetInstance().GetDeltaTime() * 60.f));
-
+	
 	//pos_ = VAdd(pos_, vel_);
+}
 
+void Player::Gravity()
+{
+	if (is_ground_) { return; }
+	rigid_body_->AddForce();
 }
 
 void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
@@ -129,10 +144,12 @@ void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 
 void Player::OnGrounded()
 {
-
+	is_ground_ = TRUE;
+	fall_speed_ = 0.f;
+	//rigid_body_->ResetGravity();
 }
 
 void Player::OnUnGrounded()
 {
-
+	is_ground_ = FALSE;
 }

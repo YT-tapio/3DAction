@@ -85,9 +85,6 @@
     <Filter Include="ソース ファイル\clamp">
       <UniqueIdentifier>{071fc095-b105-4e7a-85a3-887fc0698ab7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\resolve">
-      <UniqueIdentifier>{4c78b66a-c625-4ef1-806d-b4f221da9c48}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\object_setter">
       <UniqueIdentifier>{f0fbd2fb-9140-4a45-b860-f0a3eff25530}</UniqueIdentifier>
     </Filter>
@@ -96,6 +93,12 @@
     </Filter>
     <Filter Include="ソース ファイル\input">
       <UniqueIdentifier>{7ec34071-291c-42c6-805d-6e375f0ca0b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\sort_poly">
+      <UniqueIdentifier>{03f5b62b-da1c-4c24-9580-15722bfeac10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\resolve">
+      <UniqueIdentifier>{4c78b66a-c625-4ef1-806d-b4f221da9c48}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +179,9 @@
     </ClCompile>
     <ClCompile Include="source\key.cpp">
       <Filter>ソース ファイル\input</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sort_poly.cpp">
+      <Filter>ソース ファイル\sort_poly</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -280,6 +286,9 @@
     </ClInclude>
     <ClInclude Include="source\key.h">
       <Filter>ソース ファイル\input</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sort_poly.h">
+      <Filter>ソース ファイル\sort_poly</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -15,7 +15,14 @@ public:
 
 	void Init(std::weak_ptr<IPhysicsEventReceiver> object);
 
+	void SetVelocity(const VECTOR& vel);
+
 	void Update(const VECTOR& vel);
+
+	//d—Íˆ—
+	void AddForce();
+
+	void ResetGravity();
 
 	void SetPos();
 

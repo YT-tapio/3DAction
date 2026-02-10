@@ -28,8 +28,6 @@ public:
 
 private:
 
-
-
 	const float kSpeed = 0.3f;
 
 	std::shared_ptr<RigidBody> rigid_body_;
@@ -37,9 +35,12 @@ private:
 	VECTOR dir_;
 	VECTOR vel_;
 
-
 	VECTOR* camera_dir_;
 
+
+	float fall_speed_;
+
+	bool is_ground_;
 
 
 	// ä÷êîåQ
@@ -47,5 +48,7 @@ private:
 	void LoadFile();
 
 	void Move();
+
+	void Gravity();
 
 };

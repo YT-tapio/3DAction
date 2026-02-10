@@ -2,6 +2,10 @@
 #include<list>
 class RigidBody;
 
+class ColliderBase;
+class Sphere;
+class Capsule;
+
 class Physics
 {
 public:
@@ -36,10 +40,15 @@ private:
 
 	void FixPos(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> other);
 
+	void SphereFixPos(std::shared_ptr<Sphere> me, std::shared_ptr<ColliderBase> other);
+
+	void CapsuleFixPos(std::shared_ptr<Capsule> me, std::shared_ptr<ColliderBase> other);
+
 	void Resistance();
 
-	void CheckGround();
-	//0.2
+	void CheckGround();	
+
+	//0.18
 	const float kResistanceNum = 0.18f;	//抵抗の強さ
 
 	std::list<std::shared_ptr<RigidBody>> rigid_bodies_;		//各オブジェクトに付随している当たり判定たち

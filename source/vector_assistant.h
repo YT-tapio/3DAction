@@ -13,6 +13,7 @@ namespace VectorAssistant
 		return VGet(0.f, 0.f, 0.f);
 	}
 
+	//num•ªŠ„‚Á‚Ä‚­‚ê‚é 
 	inline VECTOR VDevide(const VECTOR& vec,const float& num)
 	{
 		VECTOR result_vec = VGetZero();
@@ -346,6 +347,19 @@ namespace VectorAssistant
 	inline bool IsEmpty(const VECTOR& vec)
 	{
 		return (VSize(vec) < 0.01f);
+	}
+
+	 
+	inline float GetTwoVectorRad(const VECTOR& vec1, const VECTOR& vec2)
+	{
+		VECTOR vec1_norm = VNorm(vec1);
+		VECTOR vec2_norm = VNorm(vec2);
+
+		float rad_num = VDot(vec1_norm, vec2_norm);
+		float num = 0.f;
+		//ƒ‰ƒWƒAƒ“Šp‚É‚·‚é
+
+		return num;
 	}
 
 }

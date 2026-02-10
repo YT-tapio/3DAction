@@ -6,6 +6,10 @@
 #include"vector_assistant.h"
 #include"collider_name.h"
 #include"collision.h"
+#include"mesh.h"
+#include"physics_interface.h"
+#include"resolve.h"
+
 void Physics::AddBody(std::shared_ptr<RigidBody> body)
 {
 	rigid_bodies_.push_back(body);
@@ -14,7 +18,7 @@ void Physics::AddBody(std::shared_ptr<RigidBody> body)
 void Physics::Update()
 {
 	// 摩擦の適応
-	Resistance();
+	// Resistance();
 
 	for (auto& main_body : rigid_bodies_)
 	{
@@ -59,23 +63,23 @@ bool Physics::CheckHit(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> 
 	switch (me_name)
 	{
 	case ColliderName::kSphere:
-		return TRUE;
+		return FALSE;
 		break;
 
 	case ColliderName::kCapsule:
-		return TRUE;
+		return FALSE;
 		break;
 
 	case ColliderName::kAABB:
-		return TRUE;
+		return FALSE;
 		break;
 
 	case ColliderName::kOBB:
-		return TRUE;
+		return FALSE;
 		break;
 
 	case ColliderName::kMesh:
-		return TRUE;
+		return FALSE;
 		break;
 	}
 
@@ -85,38 +89,179 @@ bool Physics::CheckHit(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> 
 
 bool Physics::CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidBody> other)
 {
+	bool is_hit = FALSE;
 	// meのposから足元にレイを飛ばして他のものと当たっているのかを検知する
 	// 線分とotherとの当たり判定を行う
 	
 	// meから真下に線分を伸ばす
-	VECTOR segment_end_pos = VAdd(me->GetPosition(), VGet(0.f, -1.f, 0.f));
+	VECTOR segment_start_pos	= me->GetPosition();
+	VECTOR segment_end_pos		= VAdd(me->GetPosition(), VGet(0.f, -1.f, 0.f));
 
 	// そのrigidbodyが何のコライダーを持っているかの判別をする
 
-	auto other_collider = other->GetCollider();
+	std::shared_ptr<ColliderBase> other_collider = other->GetCollider();
 
 	switch (other_collider->GetName())
 	{
-	case ColliderName::kMesh:
-
-		//Collision::SegmentToMesh();
-
+	case ColliderName::kAABB:
+	{
+		/*
+		// 型変換をする
+		auto mesh = dynamic_cast<*>(other_collider.get());
+		is_hit = Collision::SegmentToMesh(segment_start_pos, segment_end_pos, mesh->GetHandle());// その型とセグメントの当たり判定を行う
+		*/
 		break;
-
-
+	}
+	case ColliderName::kOBB:
+	{
+		/*
+		// 型変換をする
+		auto mesh = dynamic_cast<Mesh*>(other_collider.get());
+		is_hit = Collision::SegmentToMesh(segment_start_pos, segment_end_pos, mesh->GetHandle());// その型とセグメントの当たり判定を行う
+		*/
+		break;
+	}
+	case ColliderName::kSphere:
+	{
+		// 型変換をする
+		auto sphere = dynamic_cast<Sphere*>(other_collider.get());
+		VECTOR center_pos = other->GetPosition();
+		is_hit = Collision::SegmentToSphere(segment_start_pos, segment_end_pos, center_pos, sphere->GetRadius());// その型とセグメントの当たり判定を行う
+		break;
+	}
+	case ColliderName::kCapsule:
+	{
+		// 型変換をする
+		auto capsule = dynamic_cast<Capsule*>(other_collider.get());
+		VECTOR capsule_start_pos	= VAdd(other->GetPosition(), capsule->GetOffsetVel());
+		VECTOR capsule_end_pos		= VAdd(capsule_start_pos, VGet(0.f, capsule->GetVertical(), 0.f));
+		is_hit = Collision::SegmentToCapsule(segment_start_pos, segment_end_pos, capsule_start_pos, capsule_end_pos, capsule->GetRadius());// その型とセグメントの当たり判定を行う
+		break;
+	}
+	case ColliderName::kMesh:
+	{
+		// 型変換をする
+		auto mesh = dynamic_cast<Mesh*>(other_collider.get());
+		is_hit = Collision::SegmentToMesh(segment_start_pos, segment_end_pos, mesh->GetHandle());// その型とセグメントの当たり判定を行う
+		break;
+	}
 	default:
+		printfDx("範囲外が参照されています。\n");
+		break;
 
 	}
 
-
-	return FALSE;
+	return is_hit;
 }
-
-
 
 void Physics::FixPos(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> other)
 {
-	
+	// 自分のcolliderが何かを取得
+
+	auto my_collider		= me->GetCollider();
+	auto other_collider		= other->GetCollider();
+
+	switch (my_collider->GetName())
+	{
+	case ColliderName::kAABB:
+
+		#pragma region 自分がAABBの当たり判定
+
+		#pragma endregion
+		break;
+
+	case ColliderName::kOBB:
+
+		#pragma region 自分がOBBの当たり判定
+
+		#pragma endregion
+
+		break;
+
+	case ColliderName::kSphere:
+
+#pragma region 自分がSphereの当たり判定
+	{
+		auto sphere = std::dynamic_pointer_cast<Sphere>(my_collider);	// sphereに変換
+		SphereFixPos(sphere, other_collider);
+	}
+#pragma endregion
+		break;
+
+	case ColliderName::kCapsule:
+
+#pragma region 自分がCapsuleの当たり判定
+	{
+		auto capsule = std::dynamic_pointer_cast<Capsule>(my_collider);
+		CapsuleFixPos(capsule, other_collider);
+	}
+		#pragma endregion
+
+		break;
+
+	case ColliderName::kMesh:
+
+		#pragma region 自分がmeshの当たり判定
+
+		#pragma endregion
+
+		break;
+
+	default:
+		printfDx("範囲外が参照されています\n");
+		break;
+	}
+
+
+}
+
+void Physics::SphereFixPos(std::shared_ptr<Sphere> me, std::shared_ptr<ColliderBase> other)
+{
+
+}
+
+void Physics::CapsuleFixPos(std::shared_ptr<Capsule> me, std::shared_ptr<ColliderBase> other)
+{
+	// otherのキャストを行う
+
+	switch (other->GetName())
+	{
+	case ColliderName::kAABB:
+	{
+		auto other_coll = std::dynamic_pointer_cast<Mesh>(other);
+	}
+		break;
+
+	case ColliderName::kOBB:
+	{
+		auto other_coll = std::dynamic_pointer_cast<Mesh>(other);
+	}
+		break;
+
+	case ColliderName::kSphere:
+	{
+		auto other_coll = std::dynamic_pointer_cast<Mesh>(other);
+	}
+		break;
+
+	case ColliderName::kCapsule:
+	{
+		auto other_coll = std::dynamic_pointer_cast<Mesh>(other);
+	}
+		break;
+
+	case ColliderName::kMesh:
+	{
+		auto other_coll = std::dynamic_pointer_cast<Mesh>(other);
+	}
+		break;
+
+	default:
+		printfDx("範囲外が参照されています\n");
+		break;
+	}
+
+
 }
 
 void Physics::Resistance()
@@ -160,7 +305,7 @@ void Physics::Resistance()
 		// そしてもともとのyの移動量にする
 		offset_vel.y = body->GetVelocity().y;
 
-		body->Update(offset_vel);
+		body->SetVelocity(offset_vel);
 		
 	}
 }
@@ -174,10 +319,19 @@ void Physics::CheckGround()
 
 		for (auto& target_body : rigid_bodies_)
 		{
+			if (main_body == target_body) { continue; }
+
+			// IPhysicsの足元当たり判定を呼びたい
+			auto body = main_body->GetIPhysicsObject().get();
+
 			// rigid_body内の足元検知用のレイと周りのオブジェクトとの当たり判定を行う
 			if (CheckHitFoot(main_body, target_body))
 			{
-				
+				body->OnGrounded();
+			}
+			else
+			{
+				body->OnUnGrounded();
 			}
 		}
 	}
