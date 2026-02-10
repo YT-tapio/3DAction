@@ -140,7 +140,7 @@ void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 
 	if (stage != nullptr)
 	{
-		printfDx("stage");
+		//printfDx("stage");
 		return;
 	}
 

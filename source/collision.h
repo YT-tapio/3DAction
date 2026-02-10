@@ -177,10 +177,14 @@ namespace Collision
 	}
 
 	// 移動を考慮しない
-	inline bool CapsuleToMesh(const VECTOR& start_pos, const VECTOR& end_pos,const float& r,const int& mesh)
+	inline bool CapsuleToMesh(const VECTOR& start_pos, const VECTOR& end_pos,const float& r,const int& mesh,Contact& contact)
 	{
 		auto poly = MV1CollCheck_Capsule(mesh, -1, start_pos, end_pos, r);
 		bool is_hit = (poly.HitNum != 0);
+		if (is_hit)
+		{
+			contact.hit_dim = poly;
+		}
 		return is_hit;
 	}
 
@@ -188,7 +192,7 @@ namespace Collision
 	inline bool IsMoveSphereToMesh(const VECTOR& pos, const VECTOR& velocity,const float& r, const int& mesh, Contact& contact)
 	{
 		// 球の移動はカプセルになる
-		bool is_hit = CapsuleToMesh(pos, VAdd(pos, velocity), r, mesh);
+		bool is_hit = CapsuleToMesh(pos, VAdd(pos, velocity), r, mesh,contact);
 		return is_hit;
 	}
 
@@ -200,8 +204,8 @@ namespace Collision
 
 		// 移動前後のカプセルが当たっているかを判定
 		
-		if (CapsuleToMesh(start_pos, end_pos, r, mesh)) { return TRUE; }
-		if (CapsuleToMesh(future_start_pos, VAdd(future_start_pos, capsule_segment), r, mesh)) { return TRUE; }
+		if (CapsuleToMesh(start_pos, end_pos, r, mesh,contact)) { return TRUE; }
+		if (CapsuleToMesh(future_start_pos, VAdd(future_start_pos, capsule_segment), r, mesh,contact)) { return TRUE; }
 
 		// どちらも当たらないなら
 		const int kDefaultCapsuleNum = 2;
@@ -220,7 +224,7 @@ namespace Collision
 				float ratio = num / (capsule_num + 1);	// 比を作る
 
 				VECTOR offset_capsule_start_pos = VAdd(start_pos, VScale(velocity, ratio));
-				if (CapsuleToMesh(offset_capsule_start_pos, VAdd(offset_capsule_start_pos, capsule_segment), r, mesh)) { return TRUE; }
+				if (CapsuleToMesh(offset_capsule_start_pos, VAdd(offset_capsule_start_pos, capsule_segment), r, mesh,contact)) { return TRUE; }
 			}
 		}
 		else

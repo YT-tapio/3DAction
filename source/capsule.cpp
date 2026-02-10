@@ -83,7 +83,7 @@ bool Capsule::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTO
 		}
 		else
 		{
-			is_hit = Collision::CapsuleToMesh(start_pos, end_pos, r_, mesh->GetHandle());
+			is_hit = Collision::CapsuleToMesh(start_pos, end_pos, r_, mesh->GetHandle(),contact);
 		}
 	}
 		break;
@@ -97,11 +97,13 @@ bool Capsule::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTO
 	return is_hit;
 }
 
-void Capsule::FixPos(const VECTOR& my_pos, const VECTOR& vel, const VECTOR& other_pos, std::shared_ptr<ColliderBase> other_coll, Contact& contact)
+VECTOR Capsule::FixPos(const VECTOR& my_pos, const VECTOR& vel, const VECTOR& other_pos, std::shared_ptr<ColliderBase> other_coll, Contact& contact)
 {
 	
 	VECTOR start_pos = VAdd(my_pos, VGet(0.f, r_, 0.f));
 	VECTOR end_pos = VAdd(start_pos, VGet(0.f, vertical_, 0.f));
+
+	VECTOR offset_vel = vel;
 
 	// colliderのキャッシュを行う
 
@@ -136,10 +138,11 @@ void Capsule::FixPos(const VECTOR& my_pos, const VECTOR& vel, const VECTOR& othe
 	break;
 	case ColliderName::kMesh:
 	{
+		printfDx("wow");
 		// 型変換
 		auto mesh = std::dynamic_pointer_cast<Mesh>(other_coll);
 		// 自分が動いているかの判断をする
-		Resolve::CapsuleMesh(start_pos, end_pos, r_, vel, mesh->GetHandle(), contact);
+		offset_vel = Resolve::CapsuleMesh(start_pos, end_pos, r_, vel, mesh->GetHandle(), contact);
 	}
 	break;
 
@@ -147,9 +150,10 @@ void Capsule::FixPos(const VECTOR& my_pos, const VECTOR& vel, const VECTOR& othe
 		printfDx("範囲外を参照しています\n");
 		break;
 	}
+	
+	
 
-
-
+	return offset_vel;
 }
 
 const float Capsule::GetRadius() const

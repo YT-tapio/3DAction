@@ -61,22 +61,68 @@ namespace Resolve
 	inline VECTOR CapsuleMesh(const VECTOR& start_pos, const VECTOR& end_pos, const float& r, const VECTOR& velocity, const int& mesh,Contact& contact)
 	{
 		VECTOR offset_vel = velocity;
-		auto hit_dim = contact.hit_dim;
+		
 		// 壁からの当たり判定にする
 		// 勝手にキャストしてくれる関数を作ります
 		
+		VECTOR old_start_pos = start_pos;
+		VECTOR next_start_pos = VAdd(old_start_pos, velocity);
 
-
-		for (int i = 0; i < hit_dim.HitNum; i++)
+		for (int j = 0;j < 16;j++)
 		{
-			auto poly = hit_dim.Dim[i];
-			
-			// 前のプロジェクトを参考に当たり判定をしましょう
-			// 一応もう一度当たっているのかを判断する
+			bool is_hit = FALSE;
 
+			// この中でソートした方がいいかも
+			auto hit_dim = contact.hit_dim;
+			for (int i = 0; i < hit_dim.HitNum; i++)
+			{
+				auto poly = hit_dim.Dim[i];
 
+				// 前のプロジェクトを参考に当たり判定をしましょう
+				// 当たっているものを持ってきているからそいつとの当たり判定
 
+				VECTOR poly_center_pos =
+					VGet((poly.Position[0].x + poly.Position[1].x + poly.Position[2].x) / 3,
+						(poly.Position[0].y + poly.Position[1].y + poly.Position[2].y) / 3,
+						(poly.Position[0].z + poly.Position[1].z + poly.Position[2].z) / 3);
+
+				VECTOR center_to_start = VSub(start_pos, poly_center_pos);
+				VECTOR center_to_next = VSub(next_start_pos, poly_center_pos);
+
+				VECTOR center_to_end_proj_vec = VectorAssistant::VGetZero();
+				VECTOR reverce_norm = VectorAssistant::VGetReverce(poly.Normal);
+				center_to_end_proj_vec = VectorAssistant::VGetProj(reverce_norm, center_to_end_proj_vec);
+
+				VECTOR offset_pos = VSub(next_start_pos, center_to_end_proj_vec);	// 押し戻し成功
+				offset_pos = VAdd(offset_pos, VScale(poly.Normal, r));						// 半径分押し戻す
+
+				next_start_pos = offset_pos;
+
+				// 移動した後にほかのものとぶつかっていないかを見る
+
+				for (int k = 0; k < hit_dim.HitNum; k++)
+				{
+					poly = hit_dim.Dim[k];
+
+					if (Collision::IsMoveCapsuleToMesh(old_start_pos, end_pos, offset_vel, r, mesh, contact))
+					{
+						// 当たっている
+						is_hit = TRUE;
+						break;
+					}
+				}
+
+			}
+
+			if (!is_hit)
+			{
+				break;
+			}
 		}
+
+		
+
+		offset_vel = VSub(next_start_pos, old_start_pos);	// 移動量分を計算する
 
 		return offset_vel;
 	}

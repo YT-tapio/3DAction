@@ -41,9 +41,13 @@ void Physics::Update()
 				if (main_body->GetIsKinematic()) { continue; }
 
 				// ‰Ÿ‚µ–ß‚µ
-				// my_coll->FixPos()
+				VECTOR offset_vel = my_coll->FixPos(main_body->GetPosition(), main_body->GetVelocity(), target_body->GetVelocity(), target_coll, contact);
+
+				main_body->Update(offset_vel);
+
 			}
 
+			MV1CollResultPolyDimTerminate(contact.hit_dim);
 		}
 
 		main_body->SetPos();
