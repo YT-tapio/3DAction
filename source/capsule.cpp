@@ -2,6 +2,11 @@
 #include"capsule.h"
 #include"color.h"
 #include"collider_name.h"
+#include"sphere.h"
+#include"mesh.h"
+#include"contact.h"
+#include"collision.h"
+#include"resolve.h"
 
 Capsule::Capsule(float r,float vertical,VECTOR offset_vel)
 	: ColliderBase(ColliderName::kCapsule)
@@ -25,6 +30,126 @@ void Capsule::Draw(const VECTOR& pos)
 	const int kDivNum = 20;
 
 	DrawCapsule3D(start, end, r_, kDivNum, Color::kWhite, Color::kWhite, FALSE);
+}
+
+bool Capsule::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR& other_pos, std::shared_ptr<ColliderBase> other_coll,Contact& contact)
+{
+
+	bool is_hit = FALSE;
+
+	VECTOR start_pos	= VAdd(my_pos,		VGet(0.f, r_, 0.f));
+	VECTOR end_pos		= VAdd(start_pos, VGet(0.f, vertical_, 0.f));
+
+	// collider‚ÌƒLƒƒƒbƒVƒ…‚ğs‚¤
+
+	switch (other_coll->GetName())
+	{
+	case ColliderName::kAABB:
+	{
+		// Œ^•ÏŠ·
+		// auto aabb = std::dynamic_pointer_cast<AABB>(other_coll);
+	}
+		break;
+	case ColliderName::kOBB:
+	{
+		// Œ^•ÏŠ·
+		// auto obb = std::dynamic_pointer_cast<OBB>(other_coll);
+	}
+		break;
+	case ColliderName::kSphere:
+	{
+		// Œ^•ÏŠ·
+		auto sphere = std::dynamic_pointer_cast<Sphere>(other_coll);
+		
+	}		
+		break;
+	case ColliderName::kCapsule:
+	{
+		// Œ^•ÏŠ·
+		auto capsule = std::dynamic_pointer_cast<Capsule>(other_coll);
+		
+
+	}
+		break;
+	case ColliderName::kMesh:
+	{
+		// Œ^•ÏŠ·
+		auto mesh = std::dynamic_pointer_cast<Mesh>(other_coll);
+		
+		// ©•ª‚ª“®‚¢‚Ä‚¢‚é‚©‚Ì”»’f‚ğ‚·‚é
+		if (VSize(vel) > 0.f)
+		{
+			is_hit = Collision::IsMoveCapsuleToMesh(start_pos,end_pos,vel,r_,mesh->GetHandle(),contact);
+		}
+		else
+		{
+			is_hit = Collision::CapsuleToMesh(start_pos, end_pos, r_, mesh->GetHandle());
+		}
+	}
+		break;
+
+	default:
+		printfDx("”ÍˆÍŠO‚ğQÆ‚µ‚Ä‚¢‚Ü‚·\n");
+		break;
+	}
+
+
+	return is_hit;
+}
+
+void Capsule::FixPos(const VECTOR& my_pos, const VECTOR& vel, const VECTOR& other_pos, std::shared_ptr<ColliderBase> other_coll, Contact& contact)
+{
+	
+	VECTOR start_pos = VAdd(my_pos, VGet(0.f, r_, 0.f));
+	VECTOR end_pos = VAdd(start_pos, VGet(0.f, vertical_, 0.f));
+
+	// collider‚ÌƒLƒƒƒbƒVƒ…‚ğs‚¤
+
+	switch (other_coll->GetName())
+	{
+	case ColliderName::kAABB:
+	{
+		// Œ^•ÏŠ·
+		// auto aabb = std::dynamic_pointer_cast<AABB>(other_coll);
+	}
+	break;
+	case ColliderName::kOBB:
+	{
+		// Œ^•ÏŠ·
+		// auto obb = std::dynamic_pointer_cast<OBB>(other_coll);
+	}
+	break;
+	case ColliderName::kSphere:
+	{
+		// Œ^•ÏŠ·
+		auto sphere = std::dynamic_pointer_cast<Sphere>(other_coll);
+
+	}
+	break;
+	case ColliderName::kCapsule:
+	{
+		// Œ^•ÏŠ·
+		auto capsule = std::dynamic_pointer_cast<Capsule>(other_coll);
+
+
+	}
+	break;
+	case ColliderName::kMesh:
+	{
+		// Œ^•ÏŠ·
+		auto mesh = std::dynamic_pointer_cast<Mesh>(other_coll);
+		// ©•ª‚ª“®‚¢‚Ä‚¢‚é‚©‚Ì”»’f‚ğ‚·‚é
+		Resolve::CapsuleMesh(start_pos, end_pos, r_, vel, mesh->GetHandle(), contact);
+	}
+	break;
+
+	default:
+		printfDx("”ÍˆÍŠO‚ğQÆ‚µ‚Ä‚¢‚Ü‚·\n");
+		break;
+	}
+
+
+
 }
 
 const float Capsule::GetRadius() const

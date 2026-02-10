@@ -16,10 +16,14 @@ public:
 
 	virtual void  Debug();
 
+	const bool GetIsActive() const;
+
 protected:
 
 	VECTOR pos_;
 	VECTOR rot_;
+
+	bool is_active_;
 
 private:
 

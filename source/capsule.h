@@ -1,6 +1,8 @@
 #pragma once
 #include"collider_base.h"
 
+struct Contact;
+
 class Capsule : public ColliderBase
 {
 public:
@@ -10,6 +12,10 @@ public:
 	~Capsule() override;
 
 	void Draw(const VECTOR& pos) override;
+
+	bool CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR& other_pos, std::shared_ptr<ColliderBase> other_coll, Contact& contact) override;
+
+	void FixPos(const VECTOR& my_pos, const VECTOR& vel, const VECTOR& other_pos, std::shared_ptr<ColliderBase> other_coll, Contact& contact) override;
 
 	const float GetRadius() const;
 

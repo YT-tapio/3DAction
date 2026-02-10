@@ -1,6 +1,7 @@
 #pragma once
 #include"DxLib.h"
 #include"vector_assistant.h"
+#include"contact.h"
 /// 押し戻しを行う
 /// velocityを返す
 namespace Resolve
@@ -57,15 +58,27 @@ namespace Resolve
 		return offset_vel;
 	}
 
-	inline VECTOR CapsuleMesh(const VECTOR& start_pos, const VECTOR& end_pos, const float& r, const VECTOR& velocity, const int& mesh)
+	inline VECTOR CapsuleMesh(const VECTOR& start_pos, const VECTOR& end_pos, const float& r, const VECTOR& velocity, const int& mesh,Contact& contact)
 	{
-		auto hit_dim = MV1CollCheck_Capsule(mesh, 0, start_pos, end_pos, -1);
-
+		VECTOR offset_vel = velocity;
+		auto hit_dim = contact.hit_dim;
 		// 壁からの当たり判定にする
 		// 勝手にキャストしてくれる関数を作ります
 		
 
 
+		for (int i = 0; i < hit_dim.HitNum; i++)
+		{
+			auto poly = hit_dim.Dim[i];
+			
+			// 前のプロジェクトを参考に当たり判定をしましょう
+			// 一応もう一度当たっているのかを判断する
+
+
+
+		}
+
+		return offset_vel;
 	}
 
 

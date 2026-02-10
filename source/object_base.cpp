@@ -7,6 +7,7 @@ ObjectBase::ObjectBase()
 {
 	pos_ = VectorAssistant::VGetZero();
 	rot_ = VectorAssistant::VGetZero();
+	is_active_ = TRUE;
 }
 
 ObjectBase::~ObjectBase()
@@ -32,4 +33,9 @@ void ObjectBase::Draw()
 void ObjectBase::Debug()
 {
 
+}
+
+const bool ObjectBase::GetIsActive() const
+{
+	return is_active_;
 }

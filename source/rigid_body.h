@@ -28,6 +28,8 @@ public:
 
 	void OnHit(std::shared_ptr<IPhysicsEventReceiver> object);
 
+	const void Debug() const;
+
 	const float GetMaxSpeed() const;
 
 	const VECTOR GetPosition()const;

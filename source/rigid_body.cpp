@@ -71,6 +71,11 @@ void RigidBody::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 	}
 }
 
+const void RigidBody::Debug() const
+{
+	coll_->Draw(*pos_);
+}
+
 const float RigidBody::GetMaxSpeed() const
 {
 	return kMaxSpeed * VSize(vel_);

@@ -9,6 +9,7 @@
 #include"mesh.h"
 #include"physics_interface.h"
 #include"resolve.h"
+#include"contact.h"
 
 void Physics::AddBody(std::shared_ptr<RigidBody> body)
 {
@@ -28,8 +29,11 @@ void Physics::Update()
 		for (auto& target_body : rigid_bodies_)
 		{
 			if (main_body == target_body) { continue; }
-
-			if (CheckHit(main_body, target_body))
+			Contact contact{};
+			// コライダーにhitの確認を行う
+			auto my_coll		= main_body->GetCollider();
+			auto target_coll	= target_body->GetCollider();
+			if (my_coll->CheckCollision(main_body->GetPosition(),main_body->GetVelocity(), target_body->GetPosition(),target_coll, contact))
 			{
 				main_body->OnHit(target_body->GetIPhysicsObject());
 				target_body->OnHit(main_body->GetIPhysicsObject());
@@ -37,7 +41,7 @@ void Physics::Update()
 				if (main_body->GetIsKinematic()) { continue; }
 
 				// 押し戻し
-				FixPos(main_body, target_body);
+				// my_coll->FixPos()
 			}
 
 		}

@@ -166,6 +166,7 @@
     <ClInclude Include="source\collider_base.h" />
     <ClInclude Include="source\collider_name.h" />
     <ClInclude Include="source\collision.h" />
+    <ClInclude Include="source\contact.h" />
     <ClInclude Include="source\debug.h" />
     <ClInclude Include="source\FPS.h" />
     <ClInclude Include="source\game.h" />

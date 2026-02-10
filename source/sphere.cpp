@@ -16,6 +16,18 @@ Sphere::~Sphere()
 
 }
 
+bool Sphere::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR& other_pos, std::shared_ptr<ColliderBase> other_coll,Contact& contact)
+{
+	bool is_hit = FALSE;
+
+	return is_hit;
+}
+
+void Sphere::FixPos(const VECTOR& my_pos, const VECTOR& vel, const VECTOR& other_pos, std::shared_ptr<ColliderBase> other_coll, Contact& contact)
+{
+
+}
+
 void Sphere::Draw(const VECTOR& pos)
 {
 	const int kDivNum = 20;

@@ -7,7 +7,7 @@
 #include"capsule.h"
 #include"mesh.h"
 #include"vector_assistant.h"
-
+#include"contact.h"
 
 //当たっているかの検地をおこないます
 namespace Collision
@@ -185,7 +185,7 @@ namespace Collision
 	}
 
 	// 移動を考慮した関数
-	inline bool IsMoveSphereToMesh(const VECTOR& pos, const VECTOR& velocity,const float& r, const int& mesh)
+	inline bool IsMoveSphereToMesh(const VECTOR& pos, const VECTOR& velocity,const float& r, const int& mesh, Contact& contact)
 	{
 		// 球の移動はカプセルになる
 		bool is_hit = CapsuleToMesh(pos, VAdd(pos, velocity), r, mesh);
@@ -193,7 +193,7 @@ namespace Collision
 	}
 
 	// 移動を加味した関数
-	inline bool IsMoveCapsuleToMesh(const VECTOR& start_pos, const VECTOR& end_pos, const VECTOR& velocity,const float& r, const int& mesh)
+	inline bool IsMoveCapsuleToMesh(const VECTOR& start_pos, const VECTOR& end_pos, const VECTOR& velocity,const float& r, const int& mesh,Contact& contact)
 	{
 		VECTOR capsule_segment	= VSub(end_pos, start_pos);
 		VECTOR future_start_pos = VAdd(start_pos, velocity);

@@ -1,6 +1,7 @@
 #include"DxLib.h"
 #include"mesh.h"
 #include"collider_name.h"
+#include"contact.h"
 
 Mesh::Mesh(int handle)
 	: ColliderBase(ColliderName::kMesh)
@@ -11,6 +12,18 @@ Mesh::Mesh(int handle)
 
 
 Mesh::~Mesh()
+{
+
+}
+
+bool Mesh::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR& other_pos, std::shared_ptr<ColliderBase> other_coll,Contact& contact)
+{
+	bool is_hit = FALSE;
+
+	return is_hit;
+}
+
+void Mesh::FixPos(const VECTOR& my_pos, const VECTOR& vel, const VECTOR& other_pos, std::shared_ptr<ColliderBase> other_coll, Contact& contact)
 {
 
 }

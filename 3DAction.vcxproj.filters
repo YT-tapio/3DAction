@@ -191,9 +191,6 @@
     <ClInclude Include="source\collider_base.h">
       <Filter>ソース ファイル\collider\collider_base</Filter>
     </ClInclude>
-    <ClInclude Include="source\capsule.h">
-      <Filter>ソース ファイル\collider\capsule</Filter>
-    </ClInclude>
     <ClInclude Include="source\sphere.h">
       <Filter>ソース ファイル\collider\sphere</Filter>
     </ClInclude>
@@ -289,6 +286,12 @@
     </ClInclude>
     <ClInclude Include="source\sort_poly.h">
       <Filter>ソース ファイル\sort_poly</Filter>
+    </ClInclude>
+    <ClInclude Include="source\contact.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\capsule.h">
+      <Filter>ソース ファイル\collider\capsule</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

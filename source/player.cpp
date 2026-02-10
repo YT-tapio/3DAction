@@ -25,7 +25,7 @@ Player::Player(VECTOR* camera_dir)
 	handle_ = MV1LoadModel("data/model/player/Lola_B_Styperek.mv1");
 	if (handle_ == -1) { printfDx("ì«Ç›çûÇ›ÉGÉâÅ[\n"); }
 	Setting();
-	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(5.f, 10.f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f);
+	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f);
 	fall_speed_ = 0.f;
 	is_ground_ = FALSE;
 }
@@ -60,6 +60,9 @@ void Player::Draw()
 
 void Player::Debug()
 {
+
+	rigid_body_->Debug();
+
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "----------player-----------", Color::kWhite);
 	Debug::GetInstance().Add();
 
@@ -78,6 +81,7 @@ void Player::Debug()
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "camera_dir", Color::kWhite);
 	Debug::GetInstance().Add();
 	Debug::GetInstance().DrawVector(*camera_dir_);
+
 
 }
 
@@ -136,7 +140,7 @@ void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 
 	if (stage != nullptr)
 	{
-		//printfDx("stage");
+		printfDx("stage");
 		return;
 	}
 
