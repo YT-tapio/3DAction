@@ -24,5 +24,9 @@ void SetObject::Update()
 	MATRIX scale_mat = MGetScale(*scale_);
 	MATRIX rot_mat = MMult(MMult(MGetRotX(rot_->x), MGetRotY(rot_->y)), MGetRotZ(rot_->z));
 	MATRIX mat = MMult(MMult(scale_mat, rot_mat), MGetTranslate(*pos_));
+
+	MV1SetupCollInfo(handle_);
 	MV1SetMatrix(handle_, mat);
+	MV1RefreshCollInfo(handle_);
+
 }

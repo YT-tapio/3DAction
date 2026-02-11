@@ -1,7 +1,9 @@
 #pragma once
-#include"DxLib.h"
+#include<vector>
+#include"poly_contact.h"
 
 struct Contact
 {
-	MV1_COLL_RESULT_POLY_DIM hit_dim = {};
+	std::vector<PolyContact> polys;
+	int hit_num = 0;
 };

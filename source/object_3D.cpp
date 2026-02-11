@@ -58,9 +58,9 @@ void Object3D::Setting()
 	auto scale_mat		= MGetScale(scale_);
 
 	mat_ = MMult(MMult(rot_mat, scale_mat), pos_mat);
-	//MV1SetMatrix(handle_, mat_);
-	MV1SetScale(handle_, scale_);
-	MV1SetPosition(handle_, pos_);
+	MV1SetMatrix(handle_, mat_);
+	// MV1SetScale(handle_, scale_);
+	// MV1SetPosition(handle_, pos_);
 }
 
 void Object3D::LoadFile()

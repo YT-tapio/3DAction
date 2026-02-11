@@ -13,7 +13,7 @@ Camera::Camera()
 	far_					= 1000.f;
 	fov_					= RadianAssistant::TheNumRadian(kRad);
 	pos_					= VGet(0.f, 0.f, 0.f);
-	target_pos_				= VGet(0.f, 0.f, 10.f);
+	target_pos_				= VGet(0.f, 0.f, 25.f);
 
 	Setting();
 }
@@ -25,20 +25,29 @@ Camera::~Camera()
 
 void Camera::Update()
 {
-	VECTOR dir = VGet(0,0,0);
+	VECTOR dir	= VectorAssistant::VGetZero();
+	VECTOR target_dir = VectorAssistant::VGetZero();
+	VECTOR move_dir = VectorAssistant::VGetZero();
+	VECTOR wa = VectorAssistant::VGetZero();
+	if (CheckHitKey(KEY_INPUT_UP)) { dir = VAdd(dir, VGet(0, 1, 0)); target_dir = VAdd(target_dir, VGet(0, 0, 1)); }
+	if (CheckHitKey(KEY_INPUT_DOWN))	{ dir = VAdd(dir, VGet(0, -1, 0)); target_dir = VAdd(target_dir, VGet(0, 0, -1));}
+	if (CheckHitKey(KEY_INPUT_RIGHT)) { dir = VAdd(dir, VGet(1, 0, 0)); target_dir = VAdd(target_dir, VGet(1, 0, 0));}
+	if (CheckHitKey(KEY_INPUT_LEFT)) {
+		dir = VAdd(dir, VGet(-1, 0, 0)); target_dir = VAdd(target_dir, VGet(-1, 0, 0));}
 
-	if (CheckHitKey(KEY_INPUT_UP)) { dir = VAdd(dir, VGet(0, 1, 0)); }
-	if (CheckHitKey(KEY_INPUT_DOWN)) { dir = VAdd(dir, VGet(0, -1, 0)); }
-	if (CheckHitKey(KEY_INPUT_RIGHT)) { dir = VAdd(dir, VGet(1, 0, 0)); }
-	if (CheckHitKey(KEY_INPUT_LEFT)) { dir = VAdd(dir, VGet(-1, 0, 0)); }
-
-	if (VSize(dir) > 0.f)
+	if (VSize(dir) > 0)
 	{
-		//dir = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(dir_), VectorAssistant::VGetTan(dir));
+		
 	}
-	if(CheckHitKey(KEY_INPUT_LSHIFT)){ target_pos_ = VAdd(target_pos_, dir); }
-	
-	pos_ = VAdd(pos_, dir);
+	if(CheckHitKey(KEY_INPUT_LSHIFT))
+	{ 
+		target_pos_ = VAdd(target_pos_, target_dir);
+		pos_ = VAdd(pos_, target_dir);
+	}
+	else
+	{
+		pos_ = VAdd(pos_, dir);
+	}
 
 	Setting();
 }

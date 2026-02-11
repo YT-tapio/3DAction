@@ -9,11 +9,20 @@
 #include"mesh.h"
 #include"physics_interface.h"
 #include"resolve.h"
-#include"contact.h"
 
 void Physics::AddBody(std::shared_ptr<RigidBody> body)
 {
 	rigid_bodies_.push_back(body);
+}
+
+void Physics::Debug()
+{
+	for (const auto& poly : contact.polys)
+	{
+
+		DrawTriangle3D(poly.position[0], poly.position[1], poly.position[2], GetColor(255, 0, 0), FALSE);
+
+	}
 }
 
 void Physics::Update()
@@ -29,7 +38,7 @@ void Physics::Update()
 		for (auto& target_body : rigid_bodies_)
 		{
 			if (main_body == target_body) { continue; }
-			Contact contact{};
+			contact.polys.clear();
 			// コライダーにhitの確認を行う
 			auto my_coll		= main_body->GetCollider();
 			auto target_coll	= target_body->GetCollider();
@@ -47,7 +56,7 @@ void Physics::Update()
 
 			}
 
-			MV1CollResultPolyDimTerminate(contact.hit_dim);
+			//MV1CollResultPolyDimTerminate(contact.hit_dim);
 		}
 
 		main_body->SetPos();
@@ -95,7 +104,7 @@ bool Physics::CheckHit(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> 
 	return FALSE;
 }
 
-bool Physics::CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidBody> other)
+bool Physics::CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidBody> other,Contact& contact)
 {
 	bool is_hit = FALSE;
 	// meのposから足元にレイを飛ばして他のものと当たっているのかを検知する
@@ -103,7 +112,7 @@ bool Physics::CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidB
 	
 	// meから真下に線分を伸ばす
 	VECTOR segment_start_pos	= me->GetPosition();
-	VECTOR segment_end_pos		= VAdd(me->GetPosition(), VGet(0.f, -1.f, 0.f));
+	VECTOR segment_end_pos		= VAdd(me->GetPosition(), VGet(0.f, -0.1f, 0.f));
 
 	// そのrigidbodyが何のコライダーを持っているかの判別をする
 
@@ -150,7 +159,7 @@ bool Physics::CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidB
 	{
 		// 型変換をする
 		auto mesh = dynamic_cast<Mesh*>(other_collider.get());
-		is_hit = Collision::SegmentToMesh(segment_start_pos, segment_end_pos, mesh->GetHandle());// その型とセグメントの当たり判定を行う
+		is_hit = Collision::SegmentToMesh(segment_start_pos, segment_end_pos, mesh->GetHandle(),contact);// その型とセグメントの当たり判定を行う
 		break;
 	}
 	default:
@@ -328,12 +337,12 @@ void Physics::CheckGround()
 		for (auto& target_body : rigid_bodies_)
 		{
 			if (main_body == target_body) { continue; }
-
+			Contact contact = {};
 			// IPhysicsの足元当たり判定を呼びたい
 			auto body = main_body->GetIPhysicsObject().get();
 
 			// rigid_body内の足元検知用のレイと周りのオブジェクトとの当たり判定を行う
-			if (CheckHitFoot(main_body, target_body))
+			if (CheckHitFoot(main_body, target_body,contact))
 			{
 				body->OnGrounded();
 			}

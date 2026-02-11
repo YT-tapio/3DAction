@@ -34,9 +34,6 @@
     <Filter Include="ソース ファイル\collider\sphere">
       <UniqueIdentifier>{333be882-9b1c-443c-a233-d21350977f6a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\assistant">
-      <UniqueIdentifier>{fa78141d-485d-4e3f-8442-96a5a1b666d3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\scene">
       <UniqueIdentifier>{3e634bf6-0f2a-4a65-a0d6-ca0b9a7a2291}</UniqueIdentifier>
     </Filter>
@@ -85,9 +82,6 @@
     <Filter Include="ソース ファイル\clamp">
       <UniqueIdentifier>{071fc095-b105-4e7a-85a3-887fc0698ab7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\object_setter">
-      <UniqueIdentifier>{f0fbd2fb-9140-4a45-b860-f0a3eff25530}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\collider\collider_group">
       <UniqueIdentifier>{322eb42f-61cb-4052-8d04-c39efa94151d}</UniqueIdentifier>
     </Filter>
@@ -99,6 +93,15 @@
     </Filter>
     <Filter Include="ソース ファイル\resolve">
       <UniqueIdentifier>{4c78b66a-c625-4ef1-806d-b4f221da9c48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\poly_contact_data">
+      <UniqueIdentifier>{c87782e5-7db0-45d0-8c05-1e709ed9e7cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\assistant">
+      <UniqueIdentifier>{fa78141d-485d-4e3f-8442-96a5a1b666d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object_setter">
+      <UniqueIdentifier>{f0fbd2fb-9140-4a45-b860-f0a3eff25530}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -287,11 +290,14 @@
     <ClInclude Include="source\sort_poly.h">
       <Filter>ソース ファイル\sort_poly</Filter>
     </ClInclude>
-    <ClInclude Include="source\contact.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="source\capsule.h">
       <Filter>ソース ファイル\collider\capsule</Filter>
+    </ClInclude>
+    <ClInclude Include="source\poly_contact.h">
+      <Filter>ソース ファイル\poly_contact_data</Filter>
+    </ClInclude>
+    <ClInclude Include="source\contact.h">
+      <Filter>ソース ファイル\poly_contact_data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

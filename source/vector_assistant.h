@@ -355,11 +355,10 @@ namespace VectorAssistant
 		VECTOR vec1_norm = VNorm(vec1);
 		VECTOR vec2_norm = VNorm(vec2);
 
-		float rad_num = VDot(vec1_norm, vec2_norm);
-		float num = 0.f;
-		//ƒ‰ƒWƒAƒ“Šp‚É‚·‚é
+		float dot_num = VDot(vec1_norm, vec2_norm);
+		float rad_num = acosf(dot_num);
 
-		return num;
+		return rad_num;
 	}
 
 }

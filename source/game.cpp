@@ -97,6 +97,7 @@ void Game::Draw()
 		{
 			obj->Debug();
 		}
+		Physics::GetInstance().Debug();
 
 		camera_->Debug();
 	}

@@ -1,10 +1,12 @@
 #pragma once
 #include<list>
+#include"contact.h"
 class RigidBody;
 
 class ColliderBase;
 class Sphere;
 class Capsule;
+struct Contact;
 
 class Physics
 {
@@ -25,10 +27,15 @@ public:
 	/// <param name="body"></param>
 	void AddBody(std::shared_ptr<RigidBody> body);
 
+	//
+	void Debug();
+
 	/// <summary>
 	/// アップデート
 	/// </summary>
 	void Update();
+
+	
 
 private:
 
@@ -36,7 +43,7 @@ private:
 	
 	bool CheckHit(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> other);
 
-	bool CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidBody> other);
+	bool CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidBody> other, Contact& contact);
 
 	void FixPos(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> other);
 
@@ -50,6 +57,8 @@ private:
 
 	//0.18
 	const float kResistanceNum = 0.18f;	//抵抗の強さ
+
+	Contact contact = {};
 
 	std::list<std::shared_ptr<RigidBody>> rigid_bodies_;		//各オブジェクトに付随している当たり判定たち
 };

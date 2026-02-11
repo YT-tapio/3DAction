@@ -67,8 +67,6 @@ bool Capsule::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTO
 	{
 		// Œ^•ÏŠ·
 		auto capsule = std::dynamic_pointer_cast<Capsule>(other_coll);
-		
-
 	}
 		break;
 	case ColliderName::kMesh:
@@ -132,13 +130,11 @@ VECTOR Capsule::FixPos(const VECTOR& my_pos, const VECTOR& vel, const VECTOR& ot
 	{
 		// Œ^•ÏŠ·
 		auto capsule = std::dynamic_pointer_cast<Capsule>(other_coll);
-
-
 	}
 	break;
 	case ColliderName::kMesh:
 	{
-		printfDx("wow");
+		//printfDx("wow");
 		// Œ^•ÏŠ·
 		auto mesh = std::dynamic_pointer_cast<Mesh>(other_coll);
 		// Ž©•ª‚ª“®‚¢‚Ä‚¢‚é‚©‚Ì”»’f‚ð‚·‚é

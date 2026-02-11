@@ -1,36 +1,57 @@
+#include<vector>
 #include"DxLib.h"
 #include"sort_poly.h"
+#include"contact.h"
+#include"poly_contact.h"
+#include"vector_assistant.h"
+#include"radian_assistant.h"
+
+
+Contact SortPoly::Sort(const Contact& contact)
+{
+	Contact all_con = {};	//Ç∑Ç◊ÇƒÇÃÉ|ÉäÉSÉìÇì¸ÇÍÇÈ
+	Contact floor_con = {};
+	int wall_num	= 0;
+	int floor_num	= 0;
+	for (auto& poly : contact.polys)
+	{
+		//ï«Ç©ÇÃîªífÇÇ∑ÇÈ
+		if (CheckWall(poly.normal))
+		{
+			all_con.polys.push_back(poly);
+			wall_num++;
+		}
+		else
+		{
+			floor_con.polys.push_back(poly);
+			floor_num++;
+		}
+	}
+	printfDx("wall_num : %d\n", wall_num);
+	printfDx("floor_num : %d\n", floor_num);
+
+	for (auto& poly : contact.polys)
+	{
+		// è∞ÇÃèÓïÒÇì¸ÇÍÇÈ
+		all_con.polys.push_back(poly);
+	}
+	
+	
+	all_con.hit_num = contact.hit_num;
+	return all_con;
+}
 
 SortPoly::SortPoly()
 {
 
 }
 
-SortPoly::~SortPoly()
+bool SortPoly::CheckWall(const VECTOR& norm)
 {
+	const VECTOR kVertical = VGet(0.f, 1.f, 0.f);
+	const float kWallRad = RadianAssistant::kOneRad * 80.f;
 
-}
-
-MV1_COLL_RESULT_POLY_DIM* SortPoly::Sort(MV1_COLL_RESULT_POLY_DIM* hit_dim)
-{
-	
-	MV1_COLL_RESULT_POLY_DIM* all_dim;
-
-	int wall_num	= 0;
-	int floor_num	= 0;
-
-	MV1_COLL_RESULT_POLY_DIM* wall_dim[kHitDimMax];
-	MV1_COLL_RESULT_POLY_DIM* floor_dim[kHitDimMax];
-
-
-	for (int i = 0; i < hit_dim->HitNum; i++)
-	{
-		auto poly = hit_dim->Dim[i];
-		poly.Normal;
-
-
-	}
-
-
-	return hit_dim;
+	// ñ@ê¸Ç≈åàÇﬂÇÈ
+	float rad = VectorAssistant::GetTwoVectorRad(kVertical, norm);
+	return (rad > kWallRad);
 }

@@ -13,7 +13,7 @@ Stage::Stage()
 {
 	LoadFile();
 
-	handle_ = MV1LoadModel("data/model/stage/flat_stage.mv1");
+	handle_ = MV1LoadModel("data/model/stage/prac_stage3.mv1");
 
 	if (handle_ == -1)
 	{
@@ -44,8 +44,10 @@ void Stage::Update()
 
 void Stage::Draw()
 {
+	SetUseLighting(FALSE);
 	DrawSphere3D(pos_, 0.01f, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
 	MV1DrawModel(handle_);
+	SetUseLighting(TRUE);
 }
 
 void Stage::Debug()

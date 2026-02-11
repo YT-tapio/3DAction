@@ -1,22 +1,31 @@
 #pragma once
-
+struct Contact;
 
 class SortPoly
 {
 public:
 
-	SortPoly();
+	static SortPoly& GetInstance()
+	{
+		static SortPoly instance;
+		return instance;
+	}
 
-	~SortPoly();
+	SortPoly(const SortPoly&) = delete;
+	SortPoly& operator = (const SortPoly&) = delete;
 
-	MV1_COLL_RESULT_POLY_DIM* Sort(MV1_COLL_RESULT_POLY_DIM* hit_dim);
+
+	Contact Sort(const Contact& contact);
 
 private:
-	
+
 	// •Ç‚Æ‚µ‚Ä”FŽ¯‚³‚ê‚é‚©‚Ç‚¤‚©
 	const float kWallRad = 10.f;
 
 	static const int kHitDimMax = 2048;
 
+	SortPoly();
+
+	bool CheckWall(const VECTOR& norm);
 
 };

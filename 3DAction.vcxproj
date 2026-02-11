@@ -183,6 +183,7 @@
     <ClInclude Include="source\physics_interface.h" />
     <ClInclude Include="source\player.h" />
     <ClInclude Include="source\physics.h" />
+    <ClInclude Include="source\poly_contact.h" />
     <ClInclude Include="source\radian_assistant.h" />
     <ClInclude Include="source\resolve.h" />
     <ClInclude Include="source\rigid_body.h" />

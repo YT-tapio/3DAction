@@ -92,6 +92,9 @@ void Player::LoadFile()
 
 void Player::Move()
 {
+
+	
+
 	VECTOR dir = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
 
@@ -121,6 +124,7 @@ void Player::Move()
 	
 	vel_ = VScale(vel_, (FPS::GetInstance().GetDeltaTime() * 60.f));
 	
+	if (CheckHitKey(KEY_INPUT_SPACE)) { pos_ = VGet(0.f, 0.f, 0.f); vel_ = VGet(0.f, 0.f, 0.f); is_ground_ = FALSE; fall_speed_ = 0.f;}
 	//pos_ = VAdd(pos_, vel_);
 }
 
