@@ -1,5 +1,7 @@
 #pragma once
+
 struct Contact;
+struct PolyContact;
 
 class SortPoly
 {
@@ -15,7 +17,7 @@ public:
 	SortPoly& operator = (const SortPoly&) = delete;
 
 
-	Contact Sort(const Contact& contact);
+	Contact Sort(const Contact& contact, const VECTOR& pos);
 
 private:
 
@@ -27,5 +29,8 @@ private:
 	SortPoly();
 
 	bool CheckWall(const VECTOR& norm);
+
+	//ãﬂÇ¢èáÇ…ï¿Ç◊ÇÈ
+	std::vector<PolyContact> ClosestOrder(std::vector<PolyContact> polys,const VECTOR& pos);
 
 };

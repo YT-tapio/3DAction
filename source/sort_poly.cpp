@@ -1,4 +1,7 @@
 #include<vector>
+#include<map>
+#include<algorithm>
+#include<iterator>
 #include"DxLib.h"
 #include"sort_poly.h"
 #include"contact.h"
@@ -7,10 +10,11 @@
 #include"radian_assistant.h"
 
 
-Contact SortPoly::Sort(const Contact& contact)
+Contact SortPoly::Sort(const Contact& contact,const VECTOR& coll_pos)
 {
 	Contact all_con = {};	//すべてのポリゴンを入れる
-	Contact floor_con = {};
+	std::vector<PolyContact> wall_polys;
+	std::vector<PolyContact> floor_polys;
 	int wall_num	= 0;
 	int floor_num	= 0;
 	for (auto& poly : contact.polys)
@@ -18,24 +22,25 @@ Contact SortPoly::Sort(const Contact& contact)
 		//壁かの判断をする
 		if (CheckWall(poly.normal))
 		{
-			all_con.polys.push_back(poly);
+			wall_polys.push_back(poly);
 			wall_num++;
 		}
 		else
 		{
-			floor_con.polys.push_back(poly);
+			floor_polys.push_back(poly);
 			floor_num++;
 		}
 	}
-	printfDx("wall_num : %d\n", wall_num);
-	printfDx("floor_num : %d\n", floor_num);
-
-	for (auto& poly : contact.polys)
-	{
-		// 床の情報を入れる
-		all_con.polys.push_back(poly);
-	}
 	
+	wall_polys		= ClosestOrder(wall_polys, coll_pos);	// 壁の中でも近いものをソートする
+	floor_polys		= ClosestOrder(floor_polys, coll_pos);	// 床の中でも近いものをソートする
+
+	//床の中でも近いものをソートする
+	//printfDx("wall_num : %d\n", wall_num);
+	//printfDx("floor_num : %d\n", floor_num);
+	
+	all_con.polys.insert(all_con.polys.end(), wall_polys.begin(), wall_polys.end());
+	all_con.polys.insert(all_con.polys.end(), floor_polys.begin(), floor_polys.end());
 	
 	all_con.hit_num = contact.hit_num;
 	return all_con;
@@ -48,10 +53,42 @@ SortPoly::SortPoly()
 
 bool SortPoly::CheckWall(const VECTOR& norm)
 {
-	const VECTOR kVertical = VGet(0.f, 1.f, 0.f);
-	const float kWallRad = RadianAssistant::kOneRad * 80.f;
+	const VECTOR kVertical	= VGet(0.f, 1.f, 0.f);
+	const float kWallRad	= RadianAssistant::kOneRad * 80.f;
 
 	// 法線で決める
 	float rad = VectorAssistant::GetTwoVectorRad(kVertical, norm);
 	return (rad > kWallRad);
+}
+
+std::vector<PolyContact> SortPoly::ClosestOrder(std::vector<PolyContact> polys,const VECTOR& pos)
+{
+	std::vector<PolyContact> return_polys;
+
+	// 最初に距離をとる
+	std::map<float, PolyContact> sort_polys_mp;	//マップに入れる、勝手にソートしてくれる
+
+	int i = 1;
+	for (auto& poly : polys)
+	{
+		// polyの頂点たちを見てその中でも一番距離が近いものを入れる
+		float vertex1_dist_size = VectorAssistant::VGetDistSize(pos, poly.position[0]);
+		float vertex2_dist_size = VectorAssistant::VGetDistSize(pos, poly.position[1]);
+		float vertex3_dist_size = VectorAssistant::VGetDistSize(pos, poly.position[2]);
+		// いちばんちいさいものにする
+		float	near_dist_size	= (vertex1_dist_size > vertex2_dist_size) ? vertex2_dist_size : vertex1_dist_size;
+				near_dist_size	= (near_dist_size	 > vertex3_dist_size) ? vertex3_dist_size : near_dist_size;
+		printfDx("%d個目 : %.2f\n", i, near_dist_size);
+		sort_polys_mp[near_dist_size] = poly;
+		i++;
+	}
+
+	
+
+	//mapのサイズを先に確保
+	return_polys.reserve(sort_polys_mp.size());
+	std::transform(sort_polys_mp.begin(), sort_polys_mp.end(), std::back_inserter(return_polys),
+		[](const auto& poly) {return poly.second; });		// mapの中身を繰り返す。secoundでvalueを取り出す
+
+	return return_polys;
 }

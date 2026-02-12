@@ -253,10 +253,11 @@ namespace Collision
 		VECTOR capsule_segment	= VSub(end_pos, start_pos);
 		VECTOR future_start_pos = VAdd(start_pos, velocity);
 
+		bool is_hit = FALSE;
+
 		// 移動前後のカプセルが当たっているかを判定
-		
-		//if (CapsuleToMesh(start_pos, end_pos, r, mesh,contact)) { return TRUE; }
-		if (CapsuleToMesh(future_start_pos, VAdd(future_start_pos, capsule_segment), r, mesh,contact)) { return TRUE; }
+		if (CapsuleToMesh(start_pos, end_pos, r, mesh,contact))											{ is_hit = TRUE; }
+		if (CapsuleToMesh(future_start_pos, VAdd(future_start_pos, capsule_segment), r, mesh, contact)) { is_hit = TRUE; }
 
 		// どちらも当たらないなら
 		const int kDefaultCapsuleNum	= 2;
@@ -271,16 +272,14 @@ namespace Collision
 			VECTOR capsule_next_end_pos		= VAdd(capsule_old_end_pos, velocity);
 			// セグメントの当たり判定を行う
 
-			bool is_hit = FALSE;
 
-			is_hit = SegmentToMesh(capsule_old_start_pos, capsule_next_start_pos, mesh, contact);
-			if (is_hit) { return TRUE; }
-			is_hit = SegmentToMesh(capsule_old_end_pos, capsule_next_end_pos, mesh, contact);
-			if (is_hit) { return TRUE; }
+			if (SegmentToMesh(capsule_old_start_pos, capsule_next_start_pos, mesh, contact)) { is_hit = TRUE; }
+			if (SegmentToMesh(capsule_old_end_pos, capsule_next_end_pos, mesh, contact)) { is_hit = TRUE; }
 
-			// カプセルを敷き詰める
-			float dist_size = VSize(velocity);
-			
+			// 同じものが当たっている場合はを考慮する
+
+			return is_hit;
+
 		}
 		else
 		{
@@ -318,6 +317,26 @@ namespace Collision
 		}
 		
 		return FALSE;
+	}
+
+	inline bool HitCheckCapsuleTriangle(const VECTOR& old_start_pos, const VECTOR& old_end_pos, const float& r, const VECTOR& velocity, const VECTOR& tri_pos1, const VECTOR& tri_pos2, const VECTOR& tri_pos3)
+	{
+		VECTOR next_start_pos	= VAdd(old_start_pos, velocity);
+		VECTOR next_end_pos		= VAdd(old_end_pos, velocity);
+		VECTOR capsule_segment	= VSub(old_end_pos, old_start_pos);
+	
+		// 未来のカプセルの当たり判定
+		if (HitCheck_Capsule_Triangle(next_start_pos, next_end_pos, r, tri_pos1, tri_pos2, tri_pos3)) { return TRUE; }
+		
+		float diameter				= (r * 2);	//直径
+		VECTOR velocity_center_pos	= VAdd(old_start_pos, VScale(velocity, 0.5f));//さきにvelocityの間のpos
+
+		float space_size			= VSize(velocity) - diameter;	// カプセルの間のサイズ
+		//スペースが直径よりも小さい場合 : 強制的に直径の大きさにする
+		if (space_size < diameter){ space_size = diameter; }
+
+		float space_r = space_size * 0.5f;
+		return HitCheck_Capsule_Triangle(velocity_center_pos, capsule_segment, space_r, tri_pos1, tri_pos2, tri_pos3);
 	}
 
 }

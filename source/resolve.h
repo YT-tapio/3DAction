@@ -81,16 +81,17 @@ namespace Resolve
 			bool is_hit = FALSE;
 
 			// この中でソートした方がいいかも
-			contact = SortPoly::GetInstance().Sort(contact);
+			contact = SortPoly::GetInstance().Sort(contact,old_start_pos);
 			for (auto& poly : contact.polys)
 			{
 				// 当たっているものを持ってきているからそいつとの当たり判定
 
 				// すでに押し戻されている可能性もあるため再度当たっているかの確認を行う
 				// segmentとの当たり判定 || 未来のcolliderの当たり判定
-				auto hit_check_capsule_triangle = HitCheck_Capsule_Triangle(next_start_pos, next_end_pos, r, poly.position[0], poly.position[1], poly.position[2]);
-				auto hit_check_segment_triangle = HitCheck_Line_Triangle(old_start_pos, next_start_pos, poly.position[0], poly.position[1], poly.position[2]).HitFlag;
-				if (hit_check_capsule_triangle == 1 || hit_check_segment_triangle == 1)
+				bool is_hit_triangle = Collision::HitCheckCapsuleTriangle(old_start_pos, old_end_pos, r, velocity, poly.position[0], poly.position[1], poly.position[2]);
+				// カプセルを真ん中に作る
+
+				if (is_hit_triangle)
 				{
 					offset_vel = CapsulePoly(old_start_pos, old_end_pos, r, offset_vel, poly.position[0], poly.position[1], poly.position[2], poly.normal);
 					next_start_pos = VAdd(old_start_pos, offset_vel);
