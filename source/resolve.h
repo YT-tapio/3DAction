@@ -3,8 +3,8 @@
 #include"vector_assistant.h"
 #include"contact.h"
 #include"sort_poly.h"
-/// 押し戻しを行う
-/// velocityを返す
+
+/// 押し戻しを行う(velocityを返す)
 namespace Resolve
 {
 
@@ -23,12 +23,11 @@ namespace Resolve
 				center_pos = VectorAssistant::VDevide(center_pos, 3);	// 重点を出す
 
 		// センターからの距離を取る
-		VECTOR center_to_start_pos	= VSub(start_pos, center_pos);	// 始点
-		VECTOR center_to_end_pos	= VSub(end_pos, center_pos);	// 終点
+		VECTOR center_to_end	= VSub(end_pos, center_pos);	// 終点
 
 		// 正射影ベクトルを取る
 		VECTOR reverce_norm			= VectorAssistant::VGetReverce(norm);	// 法線を反転
-		VECTOR proj_vec				= VectorAssistant::VGetProj(reverce_norm, center_to_end_pos);
+		VECTOR proj_vec				= VectorAssistant::VGetProj(reverce_norm, center_to_end);
 
 		// 終点からの押し戻し量
 		VECTOR offset_pos = VSub(end_pos, proj_vec);
@@ -79,32 +78,31 @@ namespace Resolve
 		for (int j = 0;j < 16;j++)
 		{
 			bool is_hit = FALSE;
-
 			// この中でソートした方がいいかも
-			contact = SortPoly::GetInstance().Sort(contact,old_start_pos);
+			CheckSamePoly(contact);		//contactの中に同じポリゴンの情報があれば除外する。
+			contact = SortPoly::GetInstance().Sort(contact,old_start_pos);	// ソート
 			for (auto& poly : contact.polys)
 			{
 				// 当たっているものを持ってきているからそいつとの当たり判定
-
 				// すでに押し戻されている可能性もあるため再度当たっているかの確認を行う
 				// segmentとの当たり判定 || 未来のcolliderの当たり判定
-				bool is_hit_triangle = Collision::HitCheckCapsuleTriangle(old_start_pos, old_end_pos, r, velocity, poly.position[0], poly.position[1], poly.position[2]);
-				// カプセルを真ん中に作る
+				bool is_hit_triangle = Collision::HitCheckCapsuleTriangle(old_start_pos, old_end_pos, r, offset_vel, poly.position[0], poly.position[1], poly.position[2]);
 
 				if (is_hit_triangle)
 				{
-					offset_vel = CapsulePoly(old_start_pos, old_end_pos, r, offset_vel, poly.position[0], poly.position[1], poly.position[2], poly.normal);
-					next_start_pos = VAdd(old_start_pos, offset_vel);
-					next_end_pos = VAdd(old_end_pos, offset_vel);
+					offset_vel		= CapsulePoly(old_start_pos, old_end_pos, r, offset_vel, poly.position[0], poly.position[1], poly.position[2], poly.normal);
+					next_start_pos	= VAdd(old_start_pos, offset_vel);
+					next_end_pos	= VAdd(old_end_pos, offset_vel);
 				}
 
 			}
 
-			contact.polys.clear();
-			if (!(Collision::IsMoveCapsuleToMesh(old_start_pos, old_end_pos, offset_vel, r, mesh, contact)))
+			/*
+			if (!is_hit)
 			{
 				break;
 			}
+			*/
 		}
 
 		return offset_vel;

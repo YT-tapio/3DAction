@@ -219,21 +219,15 @@ namespace VectorAssistant
 
 		//分母
 		float denominator = 0.f;
-
 		//vectorのサイズを受け取る
 		float vec_size = VSize(me);
-
 		denominator = vec_size * vec_size;
 
 		//分子
-		float molecule;
-
+		float molecule = 0.f;
 		molecule = VDot(me, other);
-
 		float num = (molecule / denominator);
-
 		proj = VScale(me, num);
-
 
 		return proj;
 	}
@@ -321,22 +315,31 @@ namespace VectorAssistant
 	}
 
 	/// <summary>
-	/// 
+	/// 同じ向き
 	/// </summary>
 	/// <param name="vec1">正規化しなくてもいい</param>
 	/// <param name="vec2">正規化しなくてもいい</param>
 	/// <returns></returns>
 	inline bool IsSameDir(const VECTOR& vec1, const VECTOR& vec2)
 	{
-		const float kSameDirNum = 1.f;
+		const float kSameDirNum = 0.999f;
 
 		// 正規化
 		VECTOR norm_vec1 = VNorm(vec1);
 		VECTOR norm_vec2 = VNorm(vec2);
 
 		// 内積
-		float num = VDot(norm_vec1, norm_vec2);
-		return (num == kSameDirNum);
+		float dot = VDot(norm_vec1, norm_vec2);
+		return (dot > kSameDirNum);
+	}
+
+	inline bool IsSamePos(const VECTOR& vec1, const VECTOR& vec2)
+	{
+		// 許容範囲
+		const float kToleranceRange = 1e-4f;
+
+		VECTOR diff = VSub(vec1, vec2);
+		return VSize(diff) < kToleranceRange;
 	}
 
 	/// <summary>

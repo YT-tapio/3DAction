@@ -74,15 +74,7 @@ bool Capsule::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTO
 		// Œ^•ÏŠ·
 		auto mesh = std::dynamic_pointer_cast<Mesh>(other_coll);
 		
-		// Ž©•ª‚ª“®‚¢‚Ä‚¢‚é‚©‚Ì”»’f‚ð‚·‚é
-		if (VSize(vel) > 0.f)
-		{
-			is_hit = Collision::IsMoveCapsuleToMesh(start_pos,end_pos,vel,r_,mesh->GetHandle(),contact);
-		}
-		else
-		{
-			is_hit = Collision::CapsuleToMesh(start_pos, end_pos, r_, mesh->GetHandle(),contact);
-		}
+		is_hit = Collision::IsMoveCapsuleToMesh(start_pos, end_pos, vel, r_, mesh->GetHandle(), contact);
 	}
 		break;
 

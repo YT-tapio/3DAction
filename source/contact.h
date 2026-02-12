@@ -1,6 +1,7 @@
 #pragma once
 #include<vector>
 #include<unordered_map>
+#include"vector_assistant.h"
 #include"poly_contact.h"
 
 struct Contact
@@ -14,26 +15,31 @@ inline void CheckSamePoly(Contact& contact)
 	Contact con = contact;		// contactの情報をコピー
 	con.polys.clear();			// conの要素を消去
 
-	//同じ情報を消去する
-	std::unordered_map<int, PolyContact> poly_mp;
+	//同じ情報をいれないもの
+	std::vector<PolyContact> not_same_polys;
 
-	int i = 0;
-	for (auto poly : contact.polys)
+	for (auto& target_poly : contact.polys)
 	{
-		if (i == 0)
-		{
-			poly_mp[i] = poly;
-		}
-
+		//要素がからの場合は最初に代入しておく
+		if (not_same_polys.empty()) { not_same_polys.push_back(target_poly); continue; }
 		//今までのpolyと一緒だとmapに入れない
-		for (auto map_poly = poly_mp.begin(); map_poly != poly_mp.end(); map_poly++)
+		bool is_same = FALSE;
+		for (auto& offset_poly : not_same_polys)
 		{
-			
+			// 各頂点、法線がすべて同じなら
+			if (VectorAssistant::IsSamePos(offset_poly.position[0]	, target_poly.position[0]) && 
+				VectorAssistant::IsSamePos(offset_poly.position[1]	, target_poly.position[1]) &&
+				VectorAssistant::IsSamePos(offset_poly.position[2]	, target_poly.position[2]) &&
+				VectorAssistant::IsSamePos(offset_poly.normal		, target_poly.normal))
+			{
+				is_same = TRUE;
+				break;
+			}
 		}
-
-
-		i++;
+		// 同じじゃない
+		if(!is_same) { not_same_polys.push_back(target_poly); }
 	}
-
+	con.polys = not_same_polys;
+	contact = con;
 
 }

@@ -270,13 +270,9 @@ namespace Collision
 			VECTOR capsule_old_end_pos		= end_pos;
 			VECTOR capsule_next_start_pos	= VAdd(capsule_old_start_pos, velocity);
 			VECTOR capsule_next_end_pos		= VAdd(capsule_old_end_pos, velocity);
-			// セグメントの当たり判定を行う
-
-
-			if (SegmentToMesh(capsule_old_start_pos, capsule_next_start_pos, mesh, contact)) { is_hit = TRUE; }
-			if (SegmentToMesh(capsule_old_end_pos, capsule_next_end_pos, mesh, contact)) { is_hit = TRUE; }
-
-			// 同じものが当たっている場合はを考慮する
+			
+			if (CapsuleToMesh(capsule_old_start_pos, capsule_next_start_pos, r,mesh, contact))	{ is_hit = TRUE; }
+			if (CapsuleToMesh(capsule_old_end_pos, capsule_next_end_pos, r,mesh, contact))		{ is_hit = TRUE; }
 
 			return is_hit;
 
@@ -321,12 +317,27 @@ namespace Collision
 
 	inline bool HitCheckCapsuleTriangle(const VECTOR& old_start_pos, const VECTOR& old_end_pos, const float& r, const VECTOR& velocity, const VECTOR& tri_pos1, const VECTOR& tri_pos2, const VECTOR& tri_pos3)
 	{
+
+		
 		VECTOR next_start_pos	= VAdd(old_start_pos, velocity);
 		VECTOR next_end_pos		= VAdd(old_end_pos, velocity);
 		VECTOR capsule_segment	= VSub(old_end_pos, old_start_pos);
 	
+		float check_hit_radius = r - 0.5f;
+
 		// 未来のカプセルの当たり判定
-		if (HitCheck_Capsule_Triangle(next_start_pos, next_end_pos, r, tri_pos1, tri_pos2, tri_pos3)) { return TRUE; }
+		if (HitCheck_Capsule_Triangle(next_start_pos, next_end_pos	, r				  , tri_pos1, tri_pos2, tri_pos3))		{ return TRUE; }
+		if (TRUE)
+		{
+			if (HitCheck_Capsule_Triangle(old_start_pos, next_start_pos, check_hit_radius, tri_pos1, tri_pos2, tri_pos3)) { return TRUE; }
+			if (HitCheck_Capsule_Triangle(old_end_pos, next_end_pos, check_hit_radius, tri_pos1, tri_pos2, tri_pos3)) { return TRUE; }
+		}
+		else
+		{
+			if (HitCheck_Line_Triangle(old_start_pos, next_start_pos,  tri_pos1, tri_pos2, tri_pos3).HitFlag) { return TRUE; }
+			if (HitCheck_Line_Triangle(old_end_pos, next_end_pos,  tri_pos1, tri_pos2, tri_pos3).HitFlag) { return TRUE; }
+		}
+		
 		
 		float diameter				= (r * 2);	//直径
 		VECTOR velocity_center_pos	= VAdd(old_start_pos, VScale(velocity, 0.5f));//さきにvelocityの間のpos
