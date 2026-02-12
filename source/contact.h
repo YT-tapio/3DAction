@@ -26,10 +26,10 @@ inline void CheckSamePoly(Contact& contact)
 		bool is_same = FALSE;
 		for (auto& offset_poly : not_same_polys)
 		{
-			// 各頂点、法線がすべて同じなら
-			if (VectorAssistant::IsSamePos(offset_poly.position[0]	, target_poly.position[0]) && 
-				VectorAssistant::IsSamePos(offset_poly.position[1]	, target_poly.position[1]) &&
-				VectorAssistant::IsSamePos(offset_poly.position[2]	, target_poly.position[2]) &&
+			VECTOR offset_center_pos = VectorAssistant::VDevide(VAdd(VAdd(offset_poly.position[0], offset_poly.position[1]), offset_poly.position[2]), 3);
+			VECTOR target_center_pos = VectorAssistant::VDevide(VAdd(VAdd(target_poly.position[0], target_poly.position[1]), target_poly.position[2]), 3);
+			// center_pos、法線がすべて同じなら
+			if (VectorAssistant::IsSamePos(offset_center_pos			,target_center_pos) &&
 				VectorAssistant::IsSamePos(offset_poly.normal		, target_poly.normal))
 			{
 				is_same = TRUE;

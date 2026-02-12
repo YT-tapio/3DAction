@@ -13,7 +13,7 @@ Stage::Stage()
 {
 	LoadFile();
 
-	handle_ = MV1LoadModel("data/model/stage/prac_stage3.mv1");
+	handle_ = MV1LoadModel("data/model/stage/prac_stage6.mv1");
 
 	if (handle_ == -1)
 	{

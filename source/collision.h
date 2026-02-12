@@ -254,9 +254,9 @@ namespace Collision
 		VECTOR future_start_pos = VAdd(start_pos, velocity);
 
 		bool is_hit = FALSE;
-
+		float offset_r = r - 0.1f;
 		// 移動前後のカプセルが当たっているかを判定
-		if (CapsuleToMesh(start_pos, end_pos, r, mesh,contact))											{ is_hit = TRUE; }
+		if (CapsuleToMesh(start_pos, end_pos, offset_r, mesh,contact))											{ is_hit = TRUE; }
 		if (CapsuleToMesh(future_start_pos, VAdd(future_start_pos, capsule_segment), r, mesh, contact)) { is_hit = TRUE; }
 
 		// どちらも当たらないなら
@@ -271,8 +271,8 @@ namespace Collision
 			VECTOR capsule_next_start_pos	= VAdd(capsule_old_start_pos, velocity);
 			VECTOR capsule_next_end_pos		= VAdd(capsule_old_end_pos, velocity);
 			
-			if (CapsuleToMesh(capsule_old_start_pos, capsule_next_start_pos, r,mesh, contact))	{ is_hit = TRUE; }
-			if (CapsuleToMesh(capsule_old_end_pos, capsule_next_end_pos, r,mesh, contact))		{ is_hit = TRUE; }
+			if (CapsuleToMesh(capsule_old_start_pos, capsule_next_start_pos, offset_r,mesh, contact))	{ is_hit = TRUE; }
+			if (CapsuleToMesh(capsule_old_end_pos, capsule_next_end_pos, offset_r,mesh, contact))		{ is_hit = TRUE; }
 
 			return is_hit;
 

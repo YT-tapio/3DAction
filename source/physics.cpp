@@ -9,6 +9,7 @@
 #include"mesh.h"
 #include"physics_interface.h"
 #include"resolve.h"
+#include"debug.h"
 
 void Physics::AddBody(std::shared_ptr<RigidBody> body)
 {
@@ -17,11 +18,27 @@ void Physics::AddBody(std::shared_ptr<RigidBody> body)
 
 void Physics::Debug()
 {
+	int i = 0;
+	DrawString(0, Debug::GetInstance().GetNowLineSize(), "---normal---", GetColor(255, 255, 255));
+	Debug::GetInstance().Add();
 	for (const auto& poly : contact.polys)
-	{
-
+	{ 
+		i++;
+		VECTOR center_pos = VectorAssistant::VDevide(VAdd(VAdd(poly.position[0], poly.position[1]), poly.position[2]), 3);
 		DrawTriangle3D(poly.position[0], poly.position[1], poly.position[2], GetColor(255, 0, 0), FALSE);
+		DrawLine3D(center_pos, VAdd(center_pos, VScale(poly.normal, 2)), GetColor(255, 255, 255));
+		VECTOR kVertical = VGet(0.f, 1.f, 0.f);
+		const float kWallRad = RadianAssistant::kOneRad * 80.f;
 
+		// ñ@ê¸Ç≈åàÇﬂÇÈ
+		float rad = VectorAssistant::GetTwoVectorRad(kVertical, poly.normal);
+
+		DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), GetColor(255, 255, 255), "%d", i);
+		Debug::GetInstance().Add();
+		Debug::GetInstance().DrawVector(center_pos);	
+		Debug::GetInstance().DrawVector(poly.normal);
+		DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), GetColor(255, 255, 255), "%.2f", rad);
+		Debug::GetInstance().Add();
 	}
 }
 
