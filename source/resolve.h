@@ -38,11 +38,11 @@ namespace Resolve
 		return offset_vel;
 	}
 
-	inline VECTOR SpherePoly(const VECTOR& pos, const float& r,const VECTOR& velocity, const VECTOR& poly1, const VECTOR& poly2, const VECTOR poly3,const VECTOR& norm)
+	inline VECTOR SpherePoly(const VECTOR& center_pos, const float& r,const VECTOR& velocity, const VECTOR& poly1, const VECTOR& poly2, const VECTOR poly3,const VECTOR& norm)
 	{
 		VECTOR offset_vel = VectorAssistant::VGetZero();
 		// セグメントの計算をした後に法線方向に半径分押し出す
-		offset_vel = SegmentPoly(pos, VAdd(pos, velocity), poly1, poly2, poly3, norm);
+		offset_vel = SegmentPoly(center_pos, VAdd(center_pos, velocity), poly1, poly2, poly3, norm);
 		offset_vel = VAdd(offset_vel, VScale(norm, r));
 		
 		return offset_vel;
@@ -55,6 +55,22 @@ namespace Resolve
 		offset_vel = SegmentPoly(start_pos, VAdd(start_pos, velocity), poly1, poly2, poly3, norm);
 		offset_vel = VAdd(offset_vel, VScale(norm, r));
 
+		return offset_vel;
+	}
+
+	inline VECTOR SegmentMesh(const VECTOR& start_pos, const VECTOR& end_pos, const int& mesh, Contact& contact)
+	{
+		VECTOR offset_vel = VSub(start_pos, end_pos);	// セグメントの長さを取る
+		VECTOR segment_end_pos = end_pos;
+
+		CheckSamePoly(contact);		//contactの中に同じポリゴンの情報があれば除外する。
+		contact = SortPoly::GetInstance().Sort(contact, start_pos);	// ソート
+
+		for (auto& poly : contact.polys)
+		{
+			offset_vel = SegmentPoly(start_pos, end_pos, poly.position[0], poly.position[1], poly.position[2], poly.normal);
+			segment_end_pos = VAdd(start_pos, offset_vel);
+		}
 		return offset_vel;
 	}
 
@@ -85,10 +101,9 @@ namespace Resolve
 				{
 					offset_vel = SpherePoly(old_center_pos, r, offset_vel, poly.position[0], poly.position[1], poly.position[2], poly.normal);
 					next_center_pos = VAdd(old_center_pos, offset_vel);
-					
 				}
-
 			}
+
 		}
 
 		return offset_vel;

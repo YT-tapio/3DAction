@@ -35,7 +35,7 @@ void Physics::Debug()
 
 		DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), GetColor(255, 255, 255), "%d", i);
 		Debug::GetInstance().Add();
-		Debug::GetInstance().DrawVector(center_pos);	
+		Debug::GetInstance().DrawVector(center_pos);
 		Debug::GetInstance().DrawVector(poly.normal);
 		DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), GetColor(255, 255, 255), "%.2f", rad);
 		Debug::GetInstance().Add();
@@ -44,16 +44,22 @@ void Physics::Debug()
 
 void Physics::Update()
 {
+	// 地上の投影
+	GroundProj();
+
 	// 摩擦の適応
 	// Resistance();
 
+
+
 	for (auto& main_body : rigid_bodies_)
 	{
+		if (!main_body->GetIsActive()) { continue; }
 		// 動いていないものは直ぐに別のものに
 		if (VSize(main_body->GetVelocity()) == 0.f) { continue; }
-
 		for (auto& target_body : rigid_bodies_)
 		{
+			if (!target_body->GetIsActive()) { return; }
 			if (main_body == target_body) { continue; }
 			contact.polys.clear();
 			// コライダーにhitの確認を行う
@@ -68,16 +74,11 @@ void Physics::Update()
 
 				// 押し戻し
 				VECTOR offset_vel = my_coll->FixPos(main_body->GetPosition(), main_body->GetVelocity(), target_body->GetVelocity(), target_coll, contact);
-
 				main_body->Update(offset_vel);
-
 			}
-
 			//MV1CollResultPolyDimTerminate(contact.hit_dim);
 		}
-
 		main_body->SetPos();
-
 	}
 
 	//着地判定
@@ -121,15 +122,68 @@ bool Physics::CheckHit(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> 
 	return FALSE;
 }
 
-bool Physics::CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidBody> other,Contact& contact)
+bool Physics::CheckHitGroundProj(std::shared_ptr<RigidBody>other, Contact& contact, const VECTOR& segment_start_pos, const float& ground_proj_length)
 {
 	bool is_hit = FALSE;
+
+	VECTOR segment_end_pos = VAdd(segment_start_pos, VGet(0.f, ground_proj_length, 0.f));
+	std::shared_ptr<ColliderBase> other_collider = other->GetCollider();
+
+	switch (other_collider->GetName())
+	{	
+	case ColliderName::kAABB:
+	{
+
+		break;
+	}
+	case ColliderName::kOBB:
+	{
+
+		break;
+	}
+	case ColliderName::kSphere:
+	{
+		// 型変換をする
+		auto sphere = dynamic_cast<Sphere*>(other_collider.get());
+		VECTOR center_pos = other->GetPosition();
+		is_hit = Collision::SegmentToSphere(segment_start_pos, segment_end_pos, center_pos, sphere->GetRadius());// その型とセグメントの当たり判定を行う
+		break;
+	}
+	case ColliderName::kCapsule:
+	{
+		// 型変換をする
+		auto capsule = dynamic_cast<Capsule*>(other_collider.get());
+		VECTOR capsule_start_pos = VAdd(other->GetPosition(), capsule->GetOffsetVel());
+		VECTOR capsule_end_pos = VAdd(capsule_start_pos, VGet(0.f, capsule->GetVertical(), 0.f));
+		is_hit = Collision::SegmentToCapsule(segment_start_pos, segment_end_pos, capsule_start_pos, capsule_end_pos, capsule->GetRadius());// その型とセグメントの当たり判定を行う
+		
+		break;
+	}
+	case ColliderName::kMesh:
+	{
+		// 型変換をする
+		auto mesh = dynamic_cast<Mesh*>(other_collider.get());
+		is_hit = Collision::SegmentToMesh(segment_start_pos, segment_end_pos, mesh->GetHandle(), contact);// その型とセグメントの当たり判定を行う
+		break;
+	}
+	default:
+		printfDx("範囲外が参照されています\n");
+		break;
+	}
+
+	return is_hit;
+}
+
+bool Physics::CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidBody> other,Contact& contact,const float& ground_proj_length)
+{
+	bool is_hit = FALSE;
+	VECTOR offset_proj = me->GetVelocity();	// 投影するもの
 	// meのposから足元にレイを飛ばして他のものと当たっているのかを検知する
 	// 線分とotherとの当たり判定を行う
 	
 	// meから真下に線分を伸ばす
-	VECTOR segment_start_pos	= me->GetPosition();
-	VECTOR segment_end_pos		= VAdd(me->GetPosition(), VGet(0.f, -0.1f, 0.f));
+	VECTOR segment_start_pos = me->GetPosition();
+	VECTOR segment_end_pos		= VAdd(segment_start_pos, VGet(0.f, -kGroundProjLength, 0.f));
 
 	// そのrigidbodyが何のコライダーを持っているかの判別をする
 
@@ -177,15 +231,57 @@ bool Physics::CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidB
 		// 型変換をする
 		auto mesh = dynamic_cast<Mesh*>(other_collider.get());
 		is_hit = Collision::SegmentToMesh(segment_start_pos, segment_end_pos, mesh->GetHandle(),contact);// その型とセグメントの当たり判定を行う
+		
+		if (is_hit)
+		{
+			offset_proj = VAdd(offset_proj,Resolve::SegmentMesh(segment_start_pos, segment_end_pos, mesh->GetHandle(), contact));
+		}
+		
 		break;
 	}
 	default:
 		printfDx("範囲外が参照されています。\n");
 		break;
-
 	}
 
+	me->Update(offset_proj);
+
 	return is_hit;
+}
+
+void Physics::GroundProj()
+{
+	// 坂の投影を行います
+	for (auto& main_body : rigid_bodies_)
+	{
+		// アクティブ状態じゃない、ボーンによる影響しか受けない場合をのぞく
+		if (!main_body->GetIsActive()) { continue; }
+		if (VSize(main_body->GetVelocity()) == 0.f) { continue; }
+		if (main_body->GetIsKinematic()) { continue; }
+
+		Contact ground_contact = {};
+
+		VECTOR offset_proj_vec = main_body->GetVelocity();
+		VECTOR body_old_pos = main_body->GetPosition();		// 移動前のpos
+		VECTOR body_future_pos = VAdd(body_old_pos, offset_proj_vec); // 移動後のpos
+		VECTOR body_old_segment_end_pos = VAdd(body_old_pos, VGet(0.f, -kGroundProjLength, 0.f));	//移動前のposから真下にセグメントを伸ばす
+		bool is_hit_old = FALSE;
+
+		for (auto& target_body : rigid_bodies_)
+		{
+			// 同じものは除外
+			if (target_body == main_body) { continue; }
+			// ここで昔のposが当たっているのかをcheckする
+			if (!CheckHitGroundProj(target_body, ground_contact, body_old_pos, -kGroundProjLength)) { continue; }
+			// 未来のやつを判断する
+			const float kOffsetProjLength = kGroundProjLength * 2.f;
+			bool is_hit_future = CheckHitFoot(main_body, target_body, ground_contact, kOffsetProjLength);
+		}
+		if (!is_hit_old) { continue; }
+	}
+
+	
+	
 }
 
 void Physics::FixPos(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> other)
@@ -359,7 +455,7 @@ void Physics::CheckGround()
 			auto body = main_body->GetIPhysicsObject().get();
 
 			// rigid_body内の足元検知用のレイと周りのオブジェクトとの当たり判定を行う
-			if (CheckHitFoot(main_body, target_body,contact))
+			if (CheckHitFoot(main_body, target_body,contact,kGroundProjLength))
 			{
 				body->OnGrounded();
 			}

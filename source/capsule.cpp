@@ -138,8 +138,6 @@ VECTOR Capsule::FixPos(const VECTOR& my_pos, const VECTOR& vel, const VECTOR& ot
 		printfDx("”ÍˆÍŠO‚ğQÆ‚µ‚Ä‚¢‚Ü‚·\n");
 		break;
 	}
-	
-	
 
 	return offset_vel;
 }

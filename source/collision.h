@@ -239,10 +239,10 @@ namespace Collision
 	}
 
 	// 移動を考慮した関数
-	inline bool IsMoveSphereToMesh(const VECTOR& pos, const VECTOR& velocity,const float& r, const int& mesh, Contact& contact)
+	inline bool IsMoveSphereToMesh(const VECTOR& center_pos, const VECTOR& velocity,const float& r, const int& mesh, Contact& contact)
 	{
 		// 球の移動はカプセルになる
-		bool is_hit = CapsuleToMesh(pos, VAdd(pos, velocity), r, mesh,contact);
+		bool is_hit = CapsuleToMesh(center_pos, VAdd(center_pos, velocity), r, mesh,contact);
 		return is_hit;
 	}
 
@@ -317,9 +317,9 @@ namespace Collision
 	inline bool HitCheckSphereTriangle(const VECTOR& old_center_pos, const float& r, const VECTOR& velocity, const VECTOR& tri_pos1, const VECTOR& tri_pos2, const VECTOR& tri_pos3)
 	{
 		VECTOR next_center_pos = VAdd(old_center_pos, velocity);
-		float check_hit_radius = r - 0.1f;
+		float check_hit_radius = r - (r * 0.1f);
 
-		if (HitCheck_Sphere_Triangle(old_center_pos, r, tri_pos1, tri_pos2, tri_pos3)) { return TRUE; }// 未来のsphereの当たり判定
+		if (HitCheck_Sphere_Triangle(next_center_pos, r, tri_pos1, tri_pos2, tri_pos3)) { return TRUE; }// 未来のsphereの当たり判定
 		if (HitCheck_Capsule_Triangle(old_center_pos, next_center_pos, check_hit_radius, tri_pos1, tri_pos2, tri_pos3)) { return TRUE; }	// 移動量の当たり判定
 		
 		return FALSE;
@@ -331,7 +331,7 @@ namespace Collision
 		VECTOR next_end_pos		= VAdd(old_end_pos, velocity);
 		VECTOR capsule_segment	= VSub(old_end_pos, old_start_pos);
 	
-		float check_hit_radius = r - 0.1f;
+		float check_hit_radius = r - (r * 0.1f);
 
 		// 未来のカプセルの当たり判定
 		if (HitCheck_Capsule_Triangle(next_start_pos, next_end_pos	, r, tri_pos1, tri_pos2, tri_pos3))		{ return TRUE; }

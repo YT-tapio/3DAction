@@ -43,7 +43,11 @@ private:
 	
 	bool CheckHit(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> other);
 
-	bool CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidBody> other, Contact& contact);
+	bool CheckHitGroundProj(std::shared_ptr<RigidBody>other,Contact& contact, const VECTOR& segment_start_pos, const float& ground_proj_length);
+
+	bool CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidBody> other, Contact& contact, const float& ground_proj_length);
+
+	void GroundProj();
 
 	void FixPos(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> other);
 
@@ -56,7 +60,8 @@ private:
 	void CheckGround();	
 
 	//0.18
-	const float kResistanceNum = 0.18f;	//’ïR‚Ì‹­‚³
+	const float kResistanceNum			= 0.18f;	// ’ïR‚Ì‹­‚³
+	const float kGroundProjLength		= 0.25;		// ’n–Ê‚ÌƒŒƒC‚Ì‹–—e”ÍˆÍ
 
 	Contact contact = {};
 

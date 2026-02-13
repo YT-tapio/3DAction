@@ -17,6 +17,16 @@ public:
 
 	void SetVelocity(const VECTOR& vel);
 
+	/// <summary>
+	/// アクティブ状態(存在している状態)
+	/// </summary>
+	void Active();
+
+	/// <summary>
+	/// 非アクティブ
+	/// </summary>
+	void NotActive();
+
 	void Update(const VECTOR& vel);
 
 	//重力処理
@@ -48,6 +58,8 @@ public:
 
 	std::shared_ptr<IPhysicsEventReceiver> GetIPhysicsObject();
 
+	const bool GetIsActive() const;
+
 private:
 
 	const float kMaxSpeed = 3.f;
@@ -65,5 +77,7 @@ private:
 
 	std::shared_ptr<ColliderBase>	coll_;				// 自分の当たり判定
 	std::weak_ptr<IPhysicsEventReceiver>				object_;	// インターフェースを継承したオブジェクト
+
+	bool is_active_;
 
 };
