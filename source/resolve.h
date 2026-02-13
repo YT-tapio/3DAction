@@ -60,7 +60,38 @@ namespace Resolve
 
 	inline VECTOR SphereMesh(const VECTOR& center_pos, const float& r, const VECTOR& velocity, const int& mesh, Contact& contact)
 	{
+		VECTOR offset_vel = velocity;
 
+		// 壁からの当たり判定にする
+		// 勝手にキャストしてくれる関数を作ります
+		VECTOR old_center_pos = center_pos;
+		VECTOR next_center_pos = VAdd(old_center_pos, velocity);
+		VECTOR original_old_pos = VAdd(old_center_pos, VGet(0.f, -r, 0.f));
+
+		for (int j = 0; j < 16; j++)
+		{
+			bool is_hit = FALSE;
+			// この中でソートした方がいいかも
+			CheckSamePoly(contact);		//contactの中に同じポリゴンの情報があれば除外する。
+			contact = SortPoly::GetInstance().Sort(contact, original_old_pos);	// ソート
+			for (auto& poly : contact.polys)
+			{
+				// 当たっているものを持ってきているからそいつとの当たり判定
+				// すでに押し戻されている可能性もあるため再度当たっているかの確認を行う
+				// segmentとの当たり判定 || 未来のcolliderの当たり判定
+				bool is_hit_triangle = Collision::HitCheckSphereTriangle(old_center_pos, r, offset_vel, poly.position[0], poly.position[1], poly.position[2]);
+
+				if (is_hit_triangle)
+				{
+					offset_vel = SpherePoly(old_center_pos, r, offset_vel, poly.position[0], poly.position[1], poly.position[2], poly.normal);
+					next_center_pos = VAdd(old_center_pos, offset_vel);
+					
+				}
+
+			}
+		}
+
+		return offset_vel;
 	}
 
 	inline VECTOR CapsuleMesh(const VECTOR& start_pos, const VECTOR& end_pos, const float& r, const VECTOR& velocity, const int& mesh,Contact& contact)
@@ -69,7 +100,7 @@ namespace Resolve
 		
 		// 壁からの当たり判定にする
 		// 勝手にキャストしてくれる関数を作ります
-		
+		VECTOR original_old_pos = VAdd(start_pos, VGet(0.f, -r, 0.f));
 		VECTOR old_start_pos	= start_pos;
 		VECTOR old_end_pos		= end_pos;
 		VECTOR next_start_pos	= VAdd(old_start_pos, offset_vel);
@@ -80,7 +111,7 @@ namespace Resolve
 			bool is_hit = FALSE;
 			// この中でソートした方がいいかも
 			CheckSamePoly(contact);		//contactの中に同じポリゴンの情報があれば除外する。
-			contact = SortPoly::GetInstance().Sort(contact,old_start_pos);	// ソート
+			contact = SortPoly::GetInstance().Sort(contact,original_old_pos);	// ソート
 			for (auto& poly : contact.polys)
 			{
 				// 当たっているものを持ってきているからそいつとの当たり判定
@@ -96,13 +127,6 @@ namespace Resolve
 				}
 
 			}
-
-			/*
-			if (!is_hit)
-			{
-				break;
-			}
-			*/
 		}
 
 		return offset_vel;

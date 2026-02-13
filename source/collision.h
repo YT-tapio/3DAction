@@ -25,7 +25,6 @@ namespace Collision
 		return TRUE;
 	}
 
-
 	/// <summary>
 	/// 
 	/// </summary>
@@ -216,7 +215,7 @@ namespace Collision
 	inline bool CapsuleToMesh(const VECTOR& start_pos, const VECTOR& end_pos,const float& r,const int& mesh,Contact& contact)
 	{
 		auto hit_dim = MV1CollCheck_Capsule(mesh, -1, start_pos, end_pos, r);
-		bool is_hit = (hit_dim.HitNum != 0);
+		bool is_hit = (hit_dim.HitNum > 0);
 		if (is_hit)
 		{
 			contact.hit_num = hit_dim.HitNum;
@@ -256,8 +255,8 @@ namespace Collision
 		bool is_hit = FALSE;
 		float offset_r = r - 0.1f;
 		// 移動前後のカプセルが当たっているかを判定
-		if (CapsuleToMesh(start_pos, end_pos, offset_r, mesh,contact))											{ is_hit = TRUE; }
-		if (CapsuleToMesh(future_start_pos, VAdd(future_start_pos, capsule_segment), r, mesh, contact)) { is_hit = TRUE; }
+		if (CapsuleToMesh(start_pos, end_pos, offset_r, mesh,contact))										{ is_hit = TRUE; }
+		if (CapsuleToMesh(future_start_pos, VAdd(future_start_pos, capsule_segment), r, mesh, contact))		{ is_hit = TRUE; }
 
 		// どちらも当たらないなら
 		const int kDefaultCapsuleNum	= 2;
@@ -315,28 +314,29 @@ namespace Collision
 		return FALSE;
 	}
 
+	inline bool HitCheckSphereTriangle(const VECTOR& old_center_pos, const float& r, const VECTOR& velocity, const VECTOR& tri_pos1, const VECTOR& tri_pos2, const VECTOR& tri_pos3)
+	{
+		VECTOR next_center_pos = VAdd(old_center_pos, velocity);
+		float check_hit_radius = r - 0.1f;
+
+		if (HitCheck_Sphere_Triangle(old_center_pos, r, tri_pos1, tri_pos2, tri_pos3)) { return TRUE; }// 未来のsphereの当たり判定
+		if (HitCheck_Capsule_Triangle(old_center_pos, next_center_pos, check_hit_radius, tri_pos1, tri_pos2, tri_pos3)) { return TRUE; }	// 移動量の当たり判定
+		
+		return FALSE;
+	}
+
 	inline bool HitCheckCapsuleTriangle(const VECTOR& old_start_pos, const VECTOR& old_end_pos, const float& r, const VECTOR& velocity, const VECTOR& tri_pos1, const VECTOR& tri_pos2, const VECTOR& tri_pos3)
 	{
-
-		
 		VECTOR next_start_pos	= VAdd(old_start_pos, velocity);
 		VECTOR next_end_pos		= VAdd(old_end_pos, velocity);
 		VECTOR capsule_segment	= VSub(old_end_pos, old_start_pos);
 	
-		float check_hit_radius = r - 0.5f;
+		float check_hit_radius = r - 0.1f;
 
 		// 未来のカプセルの当たり判定
-		if (HitCheck_Capsule_Triangle(next_start_pos, next_end_pos	, r				  , tri_pos1, tri_pos2, tri_pos3))		{ return TRUE; }
-		if (TRUE)
-		{
-			if (HitCheck_Capsule_Triangle(old_start_pos, next_start_pos, check_hit_radius, tri_pos1, tri_pos2, tri_pos3)) { return TRUE; }
-			if (HitCheck_Capsule_Triangle(old_end_pos, next_end_pos, check_hit_radius, tri_pos1, tri_pos2, tri_pos3)) { return TRUE; }
-		}
-		else
-		{
-			if (HitCheck_Line_Triangle(old_start_pos, next_start_pos,  tri_pos1, tri_pos2, tri_pos3).HitFlag) { return TRUE; }
-			if (HitCheck_Line_Triangle(old_end_pos, next_end_pos,  tri_pos1, tri_pos2, tri_pos3).HitFlag) { return TRUE; }
-		}
+		if (HitCheck_Capsule_Triangle(next_start_pos, next_end_pos	, r, tri_pos1, tri_pos2, tri_pos3))		{ return TRUE; }
+		if (HitCheck_Capsule_Triangle(old_start_pos, next_start_pos, check_hit_radius, tri_pos1, tri_pos2, tri_pos3)) { return TRUE; }
+		if (HitCheck_Capsule_Triangle(old_end_pos, next_end_pos, check_hit_radius, tri_pos1, tri_pos2, tri_pos3)) { return TRUE; }
 		
 		
 		float diameter				= (r * 2);	//直径

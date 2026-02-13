@@ -353,6 +353,7 @@ namespace VectorAssistant
 	}
 
 	 
+	// ê≥ãKâªÇµÇ»Ç≠ÇƒÇ‡Ç¢Ç¢
 	inline float GetTwoVectorRad(const VECTOR& vec1, const VECTOR& vec2)
 	{
 		VECTOR vec1_norm = VNorm(vec1);

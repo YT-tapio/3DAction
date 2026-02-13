@@ -16,7 +16,7 @@ public:
 	SortPoly(const SortPoly&) = delete;
 	SortPoly& operator = (const SortPoly&) = delete;
 
-
+	//coll_pos(capsule‚ÌˆÚ“®‘O)
 	Contact Sort(const Contact& contact, const VECTOR& pos);
 
 private:

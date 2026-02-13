@@ -10,14 +10,24 @@
 #include"radian_assistant.h"
 
 
-Contact SortPoly::Sort(const Contact& contact,const VECTOR& coll_pos)
+Contact SortPoly::Sort(const Contact& contact,const VECTOR& pos)
 {
+	const float kInSide = RadianAssistant::kOneRad * 90.f;
+
 	Contact all_con = contact;	//すべてのポリゴンを入れる
 	all_con.polys.clear();
 	std::vector<PolyContact> wall_polys;
 	std::vector<PolyContact> floor_polys;
 	for (auto& poly : contact.polys)
 	{
+		VECTOR center_pos			= VectorAssistant::VDevide(VAdd(VAdd(poly.position[0], poly.position[1]), poly.position[2]), 3);
+		VECTOR center_to_coll_dist	= VSub(pos, center_pos);		//中心点から移動前のcollの始点までのやつ
+		
+		float rad = VectorAssistant::GetTwoVectorRad(poly.normal, center_to_coll_dist);
+
+		// 90度よりも高いなら
+		if (rad > kInSide) { continue; }
+
 		//壁かの判断をする
 		if (CheckWall(poly.normal))
 		{
@@ -29,8 +39,8 @@ Contact SortPoly::Sort(const Contact& contact,const VECTOR& coll_pos)
 		}
 	}
 	
-	wall_polys		= ClosestOrder(wall_polys, coll_pos);	// 壁の中でも近いものをソートする
-	floor_polys		= ClosestOrder(floor_polys, coll_pos);	// 床の中でも近いものをソートする
+	wall_polys		= ClosestOrder(wall_polys, pos);	// 壁の中でも近いものをソートする
+	floor_polys		= ClosestOrder(floor_polys, pos);	// 床の中でも近いものをソートする
 
 	all_con.polys.insert(all_con.polys.end(), wall_polys.begin(), wall_polys.end());
 	all_con.polys.insert(all_con.polys.end(), floor_polys.begin(), floor_polys.end());
