@@ -1,17 +1,31 @@
 #pragma once
-#include"input_base.h"
+#include"input_state.h"
 
-class Pad : public InputBase
+const int kMaxButtonNum = 16;
+
+class Pad
 {
 public:
 
-	Pad();
+	
+	Pad(int pad_num);
 
-	~Pad() override;
+	~Pad();
+
+	void Init();
+
+	void Update();
 
 private:
 
+	InputState button_state_[kMaxButtonNum];
+	InputState left_stick_x_state_;
+	InputState left_stick_y_state_;
+	InputState right_stick_x_state_;
+	InputState right_stick_y_state_;
 
+	int pad_num_;
 
+	void ButtonUpdate(XINPUT_STATE pad);
 
 };

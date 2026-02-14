@@ -1,5 +1,6 @@
 #pragma once
 
+
 class InputBase
 {
 public:
@@ -8,8 +9,14 @@ public:
 
 	virtual ~InputBase();
 
+	virtual void Init();
+
+	virtual void Update();
+
+
 protected:
 
+	
 
 
 private:

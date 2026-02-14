@@ -180,7 +180,7 @@
     <ClCompile Include="source\pad.cpp">
       <Filter>ソース ファイル\input</Filter>
     </ClCompile>
-    <ClCompile Include="source\key.cpp">
+    <ClCompile Include="source\pc.cpp">
       <Filter>ソース ファイル\input</Filter>
     </ClCompile>
     <ClCompile Include="source\sort_poly.cpp">
@@ -284,7 +284,7 @@
     <ClInclude Include="source\pad.h">
       <Filter>ソース ファイル\input</Filter>
     </ClInclude>
-    <ClInclude Include="source\key.h">
+    <ClInclude Include="source\pc.h">
       <Filter>ソース ファイル\input</Filter>
     </ClInclude>
     <ClInclude Include="source\sort_poly.h">
@@ -298,6 +298,9 @@
     </ClInclude>
     <ClInclude Include="source\contact.h">
       <Filter>ソース ファイル\poly_contact_data</Filter>
+    </ClInclude>
+    <ClInclude Include="source\input_state.h">
+      <Filter>ソース ファイル\input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
