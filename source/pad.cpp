@@ -15,7 +15,7 @@ Pad::~Pad()
 
 void Pad::Init()
 {
-	for (int i = 0; i < kMaxButtonNum; i++)
+	for (int i = 0; i < kMaxMouseNum; i++)
 	{
 		button_state_[i].frame		= 0;
 		button_state_[i].time		= 0;
@@ -31,7 +31,7 @@ void Pad::Update()
 
 void Pad::ButtonUpdate(XINPUT_STATE pad)
 {
-	for (int i = 0; i < kMaxButtonNum; i++)
+	for (int i = 0; i < kMaxMouseNum; i++)
 	{
 		bool now_is_pressed = (pad.Buttons[i] == 1);
 		

@@ -1,7 +1,7 @@
 #pragma once
 #include"input_state.h"
 
-const int kMaxButtonNum = 16;
+const int kMaxMouseNum = 16;
 
 class Pad
 {
@@ -18,7 +18,7 @@ public:
 
 private:
 
-	InputState button_state_[kMaxButtonNum];
+	InputState button_state_[kMaxMouseNum];
 	InputState left_stick_x_state_;
 	InputState left_stick_y_state_;
 	InputState right_stick_x_state_;
