@@ -103,6 +103,21 @@
     <Filter Include="ソース ファイル\object_setter">
       <UniqueIdentifier>{f0fbd2fb-9140-4a45-b860-f0a3eff25530}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\input\manager">
+      <UniqueIdentifier>{f0e0a88f-2b09-4914-a9fd-b4a0310c6cf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\command">
+      <UniqueIdentifier>{ebaa41a9-200c-45c4-8115-88d54b1715a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\input\create">
+      <UniqueIdentifier>{01c991ad-9253-4426-8184-b3ca58d3bfd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\input\base">
+      <UniqueIdentifier>{23c97a68-7d13-4f98-a972-2d84560c5a75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\input\device">
+      <UniqueIdentifier>{d4251cb3-024e-4bc3-a247-8f54a97cd6f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -174,17 +189,32 @@
     <ClCompile Include="source\collider_group.cpp">
       <Filter>ソース ファイル\collider\collider_group</Filter>
     </ClCompile>
-    <ClCompile Include="source\input_base.cpp">
-      <Filter>ソース ファイル\input</Filter>
-    </ClCompile>
-    <ClCompile Include="source\pad.cpp">
-      <Filter>ソース ファイル\input</Filter>
-    </ClCompile>
-    <ClCompile Include="source\pc.cpp">
-      <Filter>ソース ファイル\input</Filter>
-    </ClCompile>
     <ClCompile Include="source\sort_poly.cpp">
       <Filter>ソース ファイル\sort_poly</Filter>
+    </ClCompile>
+    <ClCompile Include="source\input_manager.cpp">
+      <Filter>ソース ファイル\input\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\input_interface.cpp">
+      <Filter>ソース ファイル\input</Filter>
+    </ClCompile>
+    <ClCompile Include="source\command.cpp">
+      <Filter>ソース ファイル\command</Filter>
+    </ClCompile>
+    <ClCompile Include="source\input_base.cpp">
+      <Filter>ソース ファイル\input\base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\player_input.cpp">
+      <Filter>ソース ファイル\input\base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\input_creater.cpp">
+      <Filter>ソース ファイル\input\create</Filter>
+    </ClCompile>
+    <ClCompile Include="source\pad.cpp">
+      <Filter>ソース ファイル\input\device</Filter>
+    </ClCompile>
+    <ClCompile Include="source\pc.cpp">
+      <Filter>ソース ファイル\input\device</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -278,15 +308,6 @@
     <ClInclude Include="source\collider_group.h">
       <Filter>ソース ファイル\collider\collider_group</Filter>
     </ClInclude>
-    <ClInclude Include="source\input_base.h">
-      <Filter>ソース ファイル\input</Filter>
-    </ClInclude>
-    <ClInclude Include="source\pad.h">
-      <Filter>ソース ファイル\input</Filter>
-    </ClInclude>
-    <ClInclude Include="source\pc.h">
-      <Filter>ソース ファイル\input</Filter>
-    </ClInclude>
     <ClInclude Include="source\sort_poly.h">
       <Filter>ソース ファイル\sort_poly</Filter>
     </ClInclude>
@@ -301,6 +322,30 @@
     </ClInclude>
     <ClInclude Include="source\input_state.h">
       <Filter>ソース ファイル\input</Filter>
+    </ClInclude>
+    <ClInclude Include="source\input_manager.h">
+      <Filter>ソース ファイル\input\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\input_interface.h">
+      <Filter>ソース ファイル\input</Filter>
+    </ClInclude>
+    <ClInclude Include="source\command.h">
+      <Filter>ソース ファイル\command</Filter>
+    </ClInclude>
+    <ClInclude Include="source\input_base.h">
+      <Filter>ソース ファイル\input\base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\player_input.h">
+      <Filter>ソース ファイル\input\base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\input_creater.h">
+      <Filter>ソース ファイル\input\create</Filter>
+    </ClInclude>
+    <ClInclude Include="source\pad.h">
+      <Filter>ソース ファイル\input\device</Filter>
+    </ClInclude>
+    <ClInclude Include="source\pc.h">
+      <Filter>ソース ファイル\input\device</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

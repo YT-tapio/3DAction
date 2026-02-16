@@ -13,6 +13,11 @@ namespace VectorAssistant
 		return VGet(0.f, 0.f, 0.f);
 	}
 
+	inline const VECTOR VGet2D(const float& x,const float& y)
+	{
+		return VGet(x, y, 0.f);
+	}
+
 	//num•ªŠ„‚Á‚Ä‚­‚ê‚é 
 	inline VECTOR VDevide(const VECTOR& vec,const float& num)
 	{

@@ -1,24 +1,25 @@
 #pragma once
 #include"input_state.h"
+#include"input_interface.h"
 
-const int kMaxMouseNum = 16;
 
-class Pad
+class Pad : public IInput
 {
 public:
 
-	
 	Pad(int pad_num);
 
-	~Pad();
+	~Pad() override;
 
 	void Init();
 
-	void Update();
+	void Update() override;
 
 private:
 
-	InputState button_state_[kMaxMouseNum];
+	static const int kMaxPadButtonNum = 16;
+
+	InputState button_state_[kMaxPadButtonNum];
 	InputState left_stick_x_state_;
 	InputState left_stick_y_state_;
 	InputState right_stick_x_state_;

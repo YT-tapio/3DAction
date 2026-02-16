@@ -136,10 +136,14 @@
     <ClCompile Include="source\character_base.cpp" />
     <ClCompile Include="source\collider_base.cpp" />
     <ClCompile Include="source\collider_group.cpp" />
+    <ClCompile Include="source\command.cpp" />
     <ClCompile Include="source\debug.cpp" />
     <ClCompile Include="source\FPS.cpp" />
     <ClCompile Include="source\game.cpp" />
     <ClCompile Include="source\input_base.cpp" />
+    <ClCompile Include="source\input_creater.cpp" />
+    <ClCompile Include="source\input_interface.cpp" />
+    <ClCompile Include="source\input_manager.cpp" />
     <ClCompile Include="source\pc.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\mesh.cpp" />
@@ -149,6 +153,7 @@
     <ClCompile Include="source\pad.cpp" />
     <ClCompile Include="source\physics.cpp" />
     <ClCompile Include="source\physics_interface.cpp" />
+    <ClCompile Include="source\player_input.cpp" />
     <ClCompile Include="source\rigid_body.cpp" />
     <ClCompile Include="source\scene_base.cpp" />
     <ClCompile Include="source\scene_manager.cpp" />
@@ -166,12 +171,16 @@
     <ClInclude Include="source\collider_base.h" />
     <ClInclude Include="source\collider_name.h" />
     <ClInclude Include="source\collision.h" />
+    <ClInclude Include="source\command.h" />
     <ClInclude Include="source\contact.h" />
     <ClInclude Include="source\debug.h" />
     <ClInclude Include="source\FPS.h" />
     <ClInclude Include="source\game.h" />
     <ClInclude Include="source\foot_interface.h" />
     <ClInclude Include="source\input_base.h" />
+    <ClInclude Include="source\input_creater.h" />
+    <ClInclude Include="source\input_interface.h" />
+    <ClInclude Include="source\input_manager.h" />
     <ClInclude Include="source\input_state.h" />
     <ClInclude Include="source\pc.h" />
     <ClInclude Include="source\mesh.h" />
@@ -184,6 +193,7 @@
     <ClInclude Include="source\physics_interface.h" />
     <ClInclude Include="source\player.h" />
     <ClInclude Include="source\physics.h" />
+    <ClInclude Include="source\player_input.h" />
     <ClInclude Include="source\poly_contact.h" />
     <ClInclude Include="source\radian_assistant.h" />
     <ClInclude Include="source\resolve.h" />

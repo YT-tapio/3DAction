@@ -1,5 +1,6 @@
 #include"DxLib.h"
 #include"pc.h"
+#include"vector_assistant.h"
 
 PC::PC()
 {
@@ -13,18 +14,23 @@ PC::~PC()
 
 void PC::Init()
 {
+	// きーのpush状態を初期化
 	for (int i = 0; i < kMaxKeyNum; i++)
 	{
 		key_state_[i].frame = 0;
 		key_state_[i].time = 0;
 		key_state_[i].is_pressed = FALSE;
 	}
-	for (int i = 0; i < kMaxMouseNum; i++)
+	//マウスのpush状態を初期化
+	for (int i = 0; i < kMaxPadButtonNum; i++)
 	{
 		mouse_state_[i].time				= 0;
 		mouse_state_[i].frame			= 0;
 		mouse_state_[i].is_pressed	= FALSE;
 	}
+	//マウスのposを初期化
+	UpdateMousePos();
+	mouse_wheel_rot_ = 0.f;
 }
 
 void PC::Debug()
@@ -34,14 +40,15 @@ void PC::Debug()
 
 void PC::Update()
 {
-	KeyUpdate();
-	MouseUpdate();
+	UpdateKey();
+	UpdateMouseButton();
+	UpdateMousePos();
+	UpdateMouseWheel();
 }
 
 float PC::GetPushingTimeKey(int key_code)
 {
 	float num = -1.f;
-
 	if (key_state_[key_code].is_pressed) 
 	{ 
 		int now_time = GetNowCount();
@@ -91,7 +98,17 @@ float PC::GetReleaseTimeMouseButton(int mouse_code)
 	return time;
 }
 
-void PC::KeyUpdate()
+float PC::GetMouseWheelRot()
+{
+	return mouse_wheel_rot_;
+}
+
+VECTOR PC::GetMousePos()
+{
+	return mouse_pos_;
+}
+
+void PC::UpdateKey()
 {
 	char all_keys[kMaxKeyNum] = {};
 	CheckHitKeyAll(*all_keys);
@@ -108,9 +125,9 @@ void PC::KeyUpdate()
 	}
 }
 
-void PC::MouseUpdate()
+void PC::UpdateMouseButton()
 {
-	for (int i = 0; i < kMaxMouseNum; i++)
+	for (int i = 0; i < kMaxPadButtonNum; i++)
 	{
 		// 現在のどのマウスボタンかの判別
 		int mouse_button_num	= GetMouseButtonNum(i);
@@ -122,6 +139,19 @@ void PC::MouseUpdate()
 			mouse_state_[i].is_pressed = now_is_pressed;
 		}
 	}
+}
+
+void PC::UpdateMousePos()
+{
+	int mouse_x = 0;
+	int mouse_y = 0;
+	GetMousePoint(&mouse_x, &mouse_y);
+	mouse_pos_ = VectorAssistant::VGet2D(static_cast<float>(mouse_x), static_cast<float>(mouse_y));
+}
+
+void PC::UpdateMouseWheel()
+{
+	mouse_wheel_rot_ = GetMouseWheelRotVolF();
 }
 
 int PC::GetMouseButtonNum(int mouse_num)
