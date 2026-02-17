@@ -118,6 +118,9 @@
     <Filter Include="ソース ファイル\input\device">
       <UniqueIdentifier>{d4251cb3-024e-4bc3-a247-8f54a97cd6f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\config">
+      <UniqueIdentifier>{0e3adc5b-820f-4822-8321-9d179cb363b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -215,6 +218,9 @@
     </ClCompile>
     <ClCompile Include="source\pc.cpp">
       <Filter>ソース ファイル\input\device</Filter>
+    </ClCompile>
+    <ClCompile Include="source\key_config.cpp">
+      <Filter>ソース ファイル\config</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -346,6 +352,9 @@
     </ClInclude>
     <ClInclude Include="source\pc.h">
       <Filter>ソース ファイル\input\device</Filter>
+    </ClInclude>
+    <ClInclude Include="source\key_config.h">
+      <Filter>ソース ファイル\config</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

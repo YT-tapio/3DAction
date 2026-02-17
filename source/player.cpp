@@ -12,6 +12,8 @@
 #include"physics.h"
 #include"object_setter.h"
 #include"stage.h"
+#include"input_base.h"
+#include"player_input.h"
 
 Player::Player(VECTOR* camera_dir)
 	: CharacterBase("player")
@@ -33,10 +35,9 @@ Player::Player(VECTOR* camera_dir)
 	{
 		rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Sphere>(1.5f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f);
 	}
-
-	
 	fall_speed_ = 0.f;
 	is_ground_ = FALSE;
+	input_ = std::make_shared<PlayerInput>();
 }
 
 Player::~Player()
@@ -55,6 +56,7 @@ void Player::Init()
 
 void Player::Update()
 {
+	input_->Update();
 	Move();
 
 	rigid_body_->SetVelocity(vel_);
@@ -101,8 +103,9 @@ void Player::LoadFile()
 
 void Player::Move()
 {
-
+	//auto input = std::dynamic_pointer_cast<PlayerInput>(input_);
 	
+
 
 	VECTOR dir = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
@@ -114,6 +117,8 @@ void Player::Move()
 	if (CheckHitKey(KEY_INPUT_S)) { dir = VAdd(dir, VGet(0.f, 0.f, -1.f)); }
 	if (CheckHitKey(KEY_INPUT_D)) { dir = VAdd(dir, VGet(1.f, 0.f, 0.f));  }
 	if (CheckHitKey(KEY_INPUT_A)) { dir = VAdd(dir, VGet(-1.f, 0.f, 0.f)); }
+
+	dir = input_->GetMoveDir();
 
 	if (VSize(dir) > 0) 
 	{
@@ -163,11 +168,11 @@ void Player::OnGrounded()
 {
 	is_ground_ = TRUE;
 	fall_speed_ = 0.f;
-	printfDx("is_ground\n");
+	// printfDx("is_ground\n");
 }
 
 void Player::OnUnGrounded()
 {
 	is_ground_ = FALSE;
-	printfDx("1\n");
+	// printfDx("1\n");
 }

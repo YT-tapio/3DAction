@@ -3,6 +3,7 @@
 #include"physics_interface.h"
 
 class RigidBody;
+class InputBase;
 
 class Player : public CharacterBase , public IPhysicsEventReceiver
 {
@@ -31,6 +32,7 @@ private:
 	const float kSpeed = 0.3f;
 
 	std::shared_ptr<RigidBody> rigid_body_;
+	std::shared_ptr<InputBase> input_;
 
 	VECTOR dir_;
 	VECTOR vel_;

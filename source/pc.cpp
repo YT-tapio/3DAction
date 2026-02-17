@@ -4,7 +4,7 @@
 
 PC::PC()
 {
-
+	Init();
 }
 
 PC::~PC()
@@ -111,10 +111,12 @@ VECTOR PC::GetMousePos()
 void PC::UpdateKey()
 {
 	char all_keys[kMaxKeyNum] = {};
-	CheckHitKeyAll(*all_keys);
+	GetHitKeyStateAll(all_keys);
 	for (int i = 0; i < kMaxKeyNum; i++)
 	{
-		bool now_is_pressed = (all_keys[i] == 1);	// “ü—Í‚³‚ê‚Ä‚¢‚é‚©‚Ìcheck
+		bool now_is_pressed = FALSE;	// “ü—Í‚³‚ê‚Ä‚¢‚é‚©‚Ìcheck
+		auto key = all_keys[i];
+		if (key == 1) { now_is_pressed = TRUE; }
 
 		// “ü—Í‚ªˆá‚Á‚Ä‚¢‚½‚ç
 		if (key_state_[i].is_pressed != now_is_pressed)

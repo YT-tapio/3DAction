@@ -14,6 +14,7 @@ public:
 
 	virtual void Update();
 
+	virtual VECTOR GetMoveDir();
 
 protected:
 

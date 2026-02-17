@@ -1,5 +1,7 @@
 #include<vector>
 #include<memory>
+#include"DxLib.h"
+#include"vector_assistant.h"
 #include"input_base.h"
 #include"input_interface.h"
 #include"input_state.h"
@@ -27,4 +29,9 @@ void InputBase::Update()
 	{
 		input->Update();
 	}
+}
+
+VECTOR InputBase::GetMoveDir()
+{
+	return VectorAssistant::VGetZero();
 }
