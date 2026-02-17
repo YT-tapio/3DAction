@@ -279,7 +279,6 @@ void Physics::GroundProj()
 		}
 		if (!is_hit_old) { continue; }
 	}
-
 	
 	
 }

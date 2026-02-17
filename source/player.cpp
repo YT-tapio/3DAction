@@ -104,8 +104,6 @@ void Player::LoadFile()
 void Player::Move()
 {
 	//auto input = std::dynamic_pointer_cast<PlayerInput>(input_);
-	
-
 
 	VECTOR dir = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
@@ -119,13 +117,13 @@ void Player::Move()
 	if (CheckHitKey(KEY_INPUT_A)) { dir = VAdd(dir, VGet(-1.f, 0.f, 0.f)); }
 
 	dir = input_->GetMoveDir();
-
+	if (input_->IsDash()) { speed *= 2.5f; }
 	if (VSize(dir) > 0) 
 	{
 		dir_ = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(*camera_dir_), VectorAssistant::VGetTan(dir));
 		dir_ = VNorm(dir_);
 	}
-	if (CheckHitKey(KEY_INPUT_LSHIFT)) { speed *= 2.5f; }
+	
 
 	
 

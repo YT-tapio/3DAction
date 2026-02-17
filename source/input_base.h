@@ -14,12 +14,13 @@ public:
 
 	virtual void Update();
 
+	virtual bool IsDash();
+
 	virtual VECTOR GetMoveDir();
 
 protected:
 
 	std::vector<std::shared_ptr<IInput>> inputs_;
-
 
 private:
 

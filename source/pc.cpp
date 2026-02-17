@@ -48,41 +48,41 @@ void PC::Update()
 
 float PC::GetPushingTimeKey(int key_code)
 {
-	float num = -1.f;
+	float time = -1.f;
 	if (key_state_[key_code].is_pressed) 
 	{ 
 		int now_time = GetNowCount();
-		num = now_time - key_state_[key_code].time;
-		num = num / 1000.f;
+		time = now_time - key_state_[key_code].time;
+		time = time / 1000.f;
 	}
-	return num;
+	return time;
 }
 
 float PC::GetPushingTimeMouseButton(int mouse_code)
 {
-	float num = -1.f;
+	float time = -1.f;
 
 	if (mouse_state_[mouse_code].is_pressed)
 	{
 		int now_time = GetNowCount();
-		num = now_time - mouse_state_[mouse_code].time;
-		num = num / 1000.f;
+		time = now_time - mouse_state_[mouse_code].time;
+		time = time / 1000.f;
 	}
 
-	return num;
+	return time;
 }
 
 float PC::GetReleaseTimeKey(int key_code)
 {
-	float num = -1.f;
+	float time = -1.f;
 
 	if (!key_state_[key_code].is_pressed)
 	{
 		int now_time = GetNowCount();
-		num = now_time - key_state_[key_code].time;
-		num = num / 1000.f;
+		time = now_time - key_state_[key_code].time;
+		time = time / 1000.f;
 	}
-	return num;
+	return time;
 }
 
 float PC::GetReleaseTimeMouseButton(int mouse_code)

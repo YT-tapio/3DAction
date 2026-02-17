@@ -34,25 +34,50 @@ void Pad::Update()
 	right_stick_pos_	= VectorAssistant::VGet2D(pad.ThumbRX, pad.ThumbRY);
 
 	// デッドゾーンの範囲内なら強制的に0にする
-	if (left_stick_pos_.x < kDeadZone)	{ left_stick_pos_.x = 0.f; }
-	if (left_stick_pos_.y < kDeadZone)	{ left_stick_pos_.y = 0.f; }
-	if (right_stick_pos_.x < kDeadZone) { right_stick_pos_.x = 0.f; }
-	if (right_stick_pos_.y < kDeadZone) { right_stick_pos_.y = 0.f; }
+	CheckDeadZone();
+	left_stick_pos_.z = left_stick_pos_.y;
+	left_stick_pos_.y = 0.f;
+	right_stick_pos_.z = right_stick_pos_.y;
+	right_stick_pos_.y = 0.f;
+}
+
+float Pad::GetPushingTimeButton(int pad_code)
+{
+	float pushing_time = -1.f;
+
+	if (button_state_[pad_code].is_pressed)
+	{
+		int now_time = GetNowCount();
+		pushing_time = now_time - button_state_[pad_code].time;
+		pushing_time = pushing_time / 1000.f;
+	}
+	return pushing_time;
+}
+
+float Pad::GetReleaseTimeButton(int pad_code)
+{
+	float release_time = -1.f;
+
+	if (!button_state_[pad_code].is_pressed)
+	{
+		int now_time = GetNowCount();
+		release_time = now_time - button_state_[pad_code].time;
+		release_time = release_time / 1000.f;
+	}
+	return release_time;
 }
 
 VECTOR Pad::GetRightStickDir()
 {
 	VECTOR dir = VectorAssistant::VGetZero();
-	dir = VNorm(left_stick_pos_);
-	if (VSize(dir) > 0) { dir = VNorm(dir); }
+	if (VSize(right_stick_pos_) > 0) { dir = VNorm(right_stick_pos_); }
 	return dir;
 }
 
 VECTOR Pad::GetLeftStickDir()
 {
 	VECTOR dir = VectorAssistant::VGetZero();
-	if(VSize(right_stick_pos_) > 0)
-	dir = VNorm(right_stick_pos_);
+	if(VSize(left_stick_pos_) > 0){ dir = VNorm(left_stick_pos_); }
 	return dir;
 }
 
@@ -70,4 +95,13 @@ void Pad::ButtonUpdate(XINPUT_STATE pad)
 			button_state_[i].is_pressed = now_is_pressed;
 		}
 	}
+}
+
+void Pad::CheckDeadZone()
+{
+	if (left_stick_pos_.x < kDeadZone && left_stick_pos_.x > -kDeadZone) { left_stick_pos_.x = 0.f; }
+	if (left_stick_pos_.y < kDeadZone && left_stick_pos_.y > -kDeadZone) { left_stick_pos_.y = 0.f; }
+
+	if (right_stick_pos_.x < kDeadZone && right_stick_pos_.x > -kDeadZone) { right_stick_pos_.x = 0.f; }
+	if (right_stick_pos_.y < kDeadZone && right_stick_pos_.y > -kDeadZone) { right_stick_pos_.y = 0.f; }
 }

@@ -12,7 +12,7 @@
 
 Contact SortPoly::Sort(const Contact& contact,const VECTOR& pos)
 {
-	const float kInSide = RadianAssistant::kOneRad * 90.f;
+	const float kInSide = RadianAssistant::kOneRad * 91.f;
 
 	Contact all_con = contact;	//すべてのポリゴンを入れる
 	all_con.polys.clear();
@@ -23,6 +23,7 @@ Contact SortPoly::Sort(const Contact& contact,const VECTOR& pos)
 		VECTOR center_pos			= VectorAssistant::VDevide(VAdd(VAdd(poly.position[0], poly.position[1]), poly.position[2]), 3);
 		VECTOR center_to_coll_dist	= VSub(pos, center_pos);		//中心点から移動前のcollの始点までのやつ
 		
+		//裏面から来るのをやめる
 		float rad = VectorAssistant::GetTwoVectorRad(poly.normal, center_to_coll_dist);
 
 		// 90度よりも高いなら

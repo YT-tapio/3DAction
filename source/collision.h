@@ -338,7 +338,6 @@ namespace Collision
 		if (HitCheck_Capsule_Triangle(old_start_pos, next_start_pos, check_hit_radius, tri_pos1, tri_pos2, tri_pos3)) { return TRUE; }
 		if (HitCheck_Capsule_Triangle(old_end_pos, next_end_pos, check_hit_radius, tri_pos1, tri_pos2, tri_pos3)) { return TRUE; }
 		
-		
 		float diameter				= (r * 2);	//’¼Œa
 		VECTOR velocity_center_pos	= VAdd(old_start_pos, VScale(velocity, 0.5f));//‚³‚«‚Évelocity‚ÌŠÔ‚Ìpos
 

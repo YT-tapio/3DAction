@@ -18,6 +18,8 @@ public:
 
 	void Update() override;
 
+	bool IsDash() override;
+
 	VECTOR GetMoveDir() override;
 
 private:

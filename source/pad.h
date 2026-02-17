@@ -15,6 +15,10 @@ public:
 
 	void Update() override;
 
+	float GetPushingTimeButton(int pad_code);
+
+	float GetReleaseTimeButton(int pad_code);
+
 	VECTOR GetRightStickDir();
 
 	VECTOR GetLeftStickDir();
@@ -38,5 +42,7 @@ private:
 	int pad_num_;
 
 	void ButtonUpdate(XINPUT_STATE pad);
+
+	void CheckDeadZone();
 
 };

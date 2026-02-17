@@ -5,6 +5,7 @@
 #include"pc.h"
 #include"pad.h"
 #include"key_config.h"
+#include"pad_config.h"
 
 PlayerInput::PlayerInput()
 	:InputBase()
@@ -30,6 +31,29 @@ void PlayerInput::Update()
 	}
 }
 
+bool PlayerInput::IsDash()
+{
+	// ダッシュに対応されているボタンを見る
+	// padはbボタン長押しで
+	for (auto& input : inputs_)
+	{
+		auto pad = std::dynamic_pointer_cast<Pad>(input);
+		if (pad != nullptr)
+		{
+			if (pad->GetPushingTimeButton(PadConfig::jump) > 0.1f) { return TRUE; }
+		}
+		else
+		{
+			auto pc = std::dynamic_pointer_cast<PC>(input);
+			if (pc != nullptr)
+			{
+				if (pc->GetPushingTimeKey(KeyConfig::dash) > 0.1f) { return TRUE; }
+			}
+		}
+	}
+	return FALSE;
+}
+
 VECTOR PlayerInput::GetMoveDir()
 {
 	VECTOR move_dir = VectorAssistant::VGetZero();
@@ -43,20 +67,25 @@ VECTOR PlayerInput::GetMoveDir()
 		{
 			// パッドを優先的にしたいのでpadに入力がある際は優先的に
 			VECTOR pad_move_dir = MoveDirPad(pad);
-			if (VSize(pad_move_dir) > 0) { move_dir = pad_move_dir; }
+			if (VSize(pad_move_dir) > 0) 
+			{ 
+				move_dir = pad_move_dir;
+			}
 		}
 		else
 		{
 			//pcの入力
 			auto pc = std::dynamic_pointer_cast<PC>(input);
-			move_dir = MoveDirPC(pc);
+			if (pc != nullptr)
+			{
+				move_dir = MoveDirPC(pc);
+			}
 		}
 
 	}
 
 	return move_dir;
 }
-
 
 VECTOR PlayerInput::MoveDirPC(std::shared_ptr<PC> pc)
 {
@@ -75,6 +104,5 @@ VECTOR PlayerInput::MoveDirPad(std::shared_ptr<Pad> pad)
 {
 	VECTOR move_dir = VectorAssistant::VGetZero();
 	move_dir = pad->GetLeftStickDir();
-	if (VSize(move_dir) > 0) { move_dir = VNorm(move_dir); }
 	return move_dir;
 }

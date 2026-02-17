@@ -222,6 +222,9 @@
     <ClCompile Include="source\key_config.cpp">
       <Filter>ソース ファイル\config</Filter>
     </ClCompile>
+    <ClCompile Include="source\pad_config.cpp">
+      <Filter>ソース ファイル\config</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -354,6 +357,9 @@
       <Filter>ソース ファイル\input\device</Filter>
     </ClInclude>
     <ClInclude Include="source\key_config.h">
+      <Filter>ソース ファイル\config</Filter>
+    </ClInclude>
+    <ClInclude Include="source\pad_config.h">
       <Filter>ソース ファイル\config</Filter>
     </ClInclude>
   </ItemGroup>
