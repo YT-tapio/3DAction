@@ -43,6 +43,7 @@ VECTOR PlayerInput::GetMoveDir()
 		{
 			// ÉpÉbÉhÇóDêÊìIÇ…ÇµÇΩÇ¢ÇÃÇ≈padÇ…ì¸óÕÇ™Ç†ÇÈç€ÇÕóDêÊìIÇ…
 			VECTOR pad_move_dir = MoveDirPad(pad);
+			if (VSize(pad_move_dir) > 0) { move_dir = pad_move_dir; }
 		}
 		else
 		{
@@ -59,21 +60,21 @@ VECTOR PlayerInput::GetMoveDir()
 
 VECTOR PlayerInput::MoveDirPC(std::shared_ptr<PC> pc)
 {
-	VECTOR dir = VectorAssistant::VGetZero();
+	VECTOR move_dir = VectorAssistant::VGetZero();
 
-	if (pc->GetPushingTimeKey(KeyConfig::move_front)	>= 0.f) { dir.z += 1; }
-	if (pc->GetPushingTimeKey(KeyConfig::move_back)		>= 0.f) { dir.z -= 1; }
-	if (pc->GetPushingTimeKey(KeyConfig::move_left)		>= 0.f) { dir.x -= 1; }
-	if (pc->GetPushingTimeKey(KeyConfig::move_right)	>= 0.f) { dir.x += 1; }
+	if (pc->GetPushingTimeKey(KeyConfig::move_front)	>= 0.f) { move_dir.z += 1.f; }
+	if (pc->GetPushingTimeKey(KeyConfig::move_back)		>= 0.f) { move_dir.z -= 1.f; }
+	if (pc->GetPushingTimeKey(KeyConfig::move_left)		>= 0.f) { move_dir.x -= 1.f; }
+	if (pc->GetPushingTimeKey(KeyConfig::move_right)	>= 0.f) { move_dir.x += 1.f; }
+	if (VSize(move_dir) > 0){ move_dir = VNorm(move_dir); }	// ê≥ãKâª
 
-	return dir;
+	return move_dir;
 }
 
 VECTOR PlayerInput::MoveDirPad(std::shared_ptr<Pad> pad)
 {
 	VECTOR move_dir = VectorAssistant::VGetZero();
-
-	//move_dir = pad->GetLeftStickDir();
-
+	move_dir = pad->GetLeftStickDir();
+	if (VSize(move_dir) > 0) { move_dir = VNorm(move_dir); }
 	return move_dir;
 }
