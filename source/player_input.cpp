@@ -31,7 +31,7 @@ void PlayerInput::Update()
 	}
 }
 
-bool PlayerInput::IsDash()
+const bool PlayerInput::IsDash() const
 {
 	// ダッシュに対応されているボタンを見る
 	// padはbボタン長押しで
@@ -54,7 +54,7 @@ bool PlayerInput::IsDash()
 	return FALSE;
 }
 
-VECTOR PlayerInput::GetMoveDir()
+const VECTOR PlayerInput::GetMoveDir() const
 {
 	VECTOR move_dir = VectorAssistant::VGetZero();
 
@@ -87,20 +87,20 @@ VECTOR PlayerInput::GetMoveDir()
 	return move_dir;
 }
 
-VECTOR PlayerInput::MoveDirPC(std::shared_ptr<PC> pc)
+const VECTOR PlayerInput::MoveDirPC(std::shared_ptr<PC> pc) const
 {
 	VECTOR move_dir = VectorAssistant::VGetZero();
 
-	if (pc->GetPushingTimeKey(KeyConfig::move_front)	>= 0.f) { move_dir.z += 1.f; }
+	if (pc->GetPushingTimeKey(KeyConfig::move_front)		>= 0.f) { move_dir.z += 1.f; }
 	if (pc->GetPushingTimeKey(KeyConfig::move_back)		>= 0.f) { move_dir.z -= 1.f; }
 	if (pc->GetPushingTimeKey(KeyConfig::move_left)		>= 0.f) { move_dir.x -= 1.f; }
-	if (pc->GetPushingTimeKey(KeyConfig::move_right)	>= 0.f) { move_dir.x += 1.f; }
+	if (pc->GetPushingTimeKey(KeyConfig::move_right)		>= 0.f) { move_dir.x += 1.f; }
 	if (VSize(move_dir) > 0){ move_dir = VNorm(move_dir); }	// 正規化
 
 	return move_dir;
 }
 
-VECTOR PlayerInput::MoveDirPad(std::shared_ptr<Pad> pad)
+const VECTOR PlayerInput::MoveDirPad(std::shared_ptr<Pad> pad) const
 {
 	VECTOR move_dir = VectorAssistant::VGetZero();
 	move_dir = pad->GetLeftStickDir();

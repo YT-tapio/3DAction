@@ -23,12 +23,6 @@ void InputBase::Init()
 	
 }
 
-bool InputBase::IsDash()
-{
-	//base‚Ì‚Ü‚Ü‚¾‚Æfalse
-	return FALSE;
-}
-
 void InputBase::Update()
 {
 	for (auto& input : inputs_)
@@ -37,7 +31,13 @@ void InputBase::Update()
 	}
 }
 
-VECTOR InputBase::GetMoveDir()
+const bool InputBase::IsDash() const
+{
+	//base‚Ì‚Ü‚Ü‚¾‚Æfalse
+	return FALSE;
+}
+
+const VECTOR InputBase::GetMoveDir() const
 {
 	return VectorAssistant::VGetZero();
 }

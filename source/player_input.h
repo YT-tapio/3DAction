@@ -18,13 +18,13 @@ public:
 
 	void Update() override;
 
-	bool IsDash() override;
+	const bool IsDash() const override;
 
-	VECTOR GetMoveDir() override;
+	const VECTOR GetMoveDir() const override;
 
 private:
 
-	VECTOR MoveDirPC(std::shared_ptr<PC> pc);
+	const VECTOR MoveDirPC(std::shared_ptr<PC> pc) const;
 
-	VECTOR MoveDirPad(std::shared_ptr<Pad> pad);
+	const VECTOR MoveDirPad(std::shared_ptr<Pad> pad) const;
 };

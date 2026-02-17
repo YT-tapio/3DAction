@@ -14,9 +14,9 @@ public:
 
 	virtual void Update();
 
-	virtual bool IsDash();
+	virtual const bool IsDash() const;
 
-	virtual VECTOR GetMoveDir();
+	virtual const VECTOR GetMoveDir() const;
 
 protected:
 

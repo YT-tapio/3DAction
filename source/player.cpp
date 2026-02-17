@@ -103,8 +103,8 @@ void Player::LoadFile()
 
 void Player::Move()
 {
-	//auto input = std::dynamic_pointer_cast<PlayerInput>(input_);
-
+	std::shared_ptr<const InputBase> input = input_;
+	
 	VECTOR dir = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
 
@@ -116,7 +116,7 @@ void Player::Move()
 	if (CheckHitKey(KEY_INPUT_D)) { dir = VAdd(dir, VGet(1.f, 0.f, 0.f));  }
 	if (CheckHitKey(KEY_INPUT_A)) { dir = VAdd(dir, VGet(-1.f, 0.f, 0.f)); }
 
-	dir = input_->GetMoveDir();
+	dir = input->GetMoveDir();
 	if (input_->IsDash()) { speed *= 2.5f; }
 	if (VSize(dir) > 0) 
 	{
@@ -137,7 +137,7 @@ void Player::Move()
 	vel_ = VScale(vel_, (FPS::GetInstance().GetDeltaTime() * 60.f));
 	
 	if (CheckHitKey(KEY_INPUT_SPACE)) { pos_ = VGet(0.f, 0.f, 0.f); vel_ = VGet(0.f, 0.f, 0.f); is_ground_ = FALSE; fall_speed_ = 0.f;}
-	//pos_ = VAdd(pos_, vel_);
+	
 }
 
 void Player::Gravity()
