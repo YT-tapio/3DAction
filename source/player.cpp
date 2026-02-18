@@ -14,8 +14,9 @@
 #include"stage.h"
 #include"input_base.h"
 #include"player_input.h"
+#include"ai_input.h"
 
-Player::Player(VECTOR* camera_dir)
+Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	: CharacterBase("player")
 	, IPhysicsEventReceiver()
 {
@@ -37,7 +38,7 @@ Player::Player(VECTOR* camera_dir)
 	}
 	fall_speed_ = 0.f;
 	is_ground_ = FALSE;
-	input_ = std::make_shared<PlayerInput>();
+	input_ = input;
 }
 
 Player::~Player()
@@ -56,7 +57,7 @@ void Player::Init()
 
 void Player::Update()
 {
-	input_->Update();
+	// input_->Update();
 	Move();
 
 	rigid_body_->SetVelocity(vel_);
@@ -103,7 +104,7 @@ void Player::LoadFile()
 
 void Player::Move()
 {
-	std::shared_ptr<const InputBase> input = input_;
+	//std::shared_ptr<const InputBase> input = input_;
 	
 	VECTOR dir = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
@@ -116,7 +117,7 @@ void Player::Move()
 	if (CheckHitKey(KEY_INPUT_D)) { dir = VAdd(dir, VGet(1.f, 0.f, 0.f));  }
 	if (CheckHitKey(KEY_INPUT_A)) { dir = VAdd(dir, VGet(-1.f, 0.f, 0.f)); }
 
-	dir = input->GetMoveDir();
+	dir = input_->GetMoveDir();
 	if (input_->IsDash()) { speed *= 2.5f; }
 	if (VSize(dir) > 0) 
 	{

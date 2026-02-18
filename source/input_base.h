@@ -20,7 +20,6 @@ public:
 
 protected:
 
-	std::vector<std::shared_ptr<IInput>> inputs_;
 
 private:
 

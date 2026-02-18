@@ -24,6 +24,8 @@ public:
 
 private:
 
+	std::vector<std::shared_ptr<IInput>> inputs_;
+
 	const VECTOR MoveDirPC(std::shared_ptr<PC> pc) const;
 
 	const VECTOR MoveDirPad(std::shared_ptr<Pad> pad) const;

@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\ai_input.cpp" />
     <ClCompile Include="source\application.cpp" />
     <ClCompile Include="source\camera.cpp" />
     <ClCompile Include="source\capsule.cpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="source\player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\ai_input.h" />
     <ClInclude Include="source\application.h" />
     <ClInclude Include="source\camera.h" />
     <ClInclude Include="source\capsule.h" />

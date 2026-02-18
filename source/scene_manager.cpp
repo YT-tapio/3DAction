@@ -6,12 +6,13 @@
 #include"FPS.h"
 #include"color.h"
 #include"Debug.h"
+#include"input_manager.h"
 
 SceneManager::SceneManager()
 {
 	scene_ = std::make_shared<Game>();
-
 	FPS::GetInstance();
+	InputManager::GetInstance();
 }
 
 
@@ -24,6 +25,7 @@ void SceneManager::Update()
 {
 
 	FPS::GetInstance().Update();
+	InputManager::GetInstance().Update();
 	Debug::GetInstance().Reset();
 	Debug::GetInstance().Update();
 

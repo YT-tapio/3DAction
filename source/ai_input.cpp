@@ -1,0 +1,37 @@
+#include<memory>
+#include"vector_assistant.h"
+#include"ai_input.h"
+
+
+AIInput::AIInput()
+	:InputBase()
+{
+
+}
+
+AIInput::~AIInput()
+{
+
+}
+
+void AIInput::Init()
+{
+
+}
+
+void AIInput::Update()
+{
+
+}
+
+const bool AIInput::IsDash() const
+{
+
+	return FALSE;
+}
+
+const VECTOR AIInput::GetMoveDir() const
+{
+	VECTOR dir = VectorAssistant::VGetZero();
+	return dir;
+}

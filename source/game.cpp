@@ -10,6 +10,7 @@
 #include"physics.h"
 #include"object_setter.h"
 #include"collision.h"
+#include"input_manager.h"
 
 Game::Game()
 	: SceneBase()
@@ -17,7 +18,7 @@ Game::Game()
 	camera_ = std::make_shared<Camera>();
 
 	objects_.push_back(std::make_shared<Stage>());
-	objects_.push_back(std::make_shared<Player>(&camera_->dir_));
+	objects_.push_back(std::make_shared<Player>(&camera_->dir_,InputManager::GetInstance().GetPlayerInput()));
 
 	for (auto& obj : objects_)
 	{

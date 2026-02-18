@@ -225,6 +225,9 @@
     <ClCompile Include="source\pad_config.cpp">
       <Filter>ソース ファイル\config</Filter>
     </ClCompile>
+    <ClCompile Include="source\ai_input.cpp">
+      <Filter>ソース ファイル\input\base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -361,6 +364,9 @@
     </ClInclude>
     <ClInclude Include="source\pad_config.h">
       <Filter>ソース ファイル\config</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ai_input.h">
+      <Filter>ソース ファイル\input\base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

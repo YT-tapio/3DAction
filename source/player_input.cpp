@@ -6,11 +6,13 @@
 #include"pad.h"
 #include"key_config.h"
 #include"pad_config.h"
+#include"input_creater.h"
 
 PlayerInput::PlayerInput()
 	:InputBase()
 {
-	
+	// ©•ª‚ª¶¬‚³‚ê‚é‚Æ‚«‚Émangager‚©‚ç‘€ìŠ„‚è“–‚Ä‚ğ‚à‚ç‚¤
+	inputs_ = InputCreater::GetInstance().Create();	// V‚µ‚­¶¬
 }
 
 PlayerInput::~PlayerInput()

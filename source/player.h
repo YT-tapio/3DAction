@@ -9,7 +9,7 @@ class Player : public CharacterBase , public IPhysicsEventReceiver
 {
 public:
 
-	Player(VECTOR* camera_dir);
+	Player(VECTOR* camera_dir, std::shared_ptr<const InputBase> input);
 
 	~Player() override;
 
@@ -32,7 +32,7 @@ private:
 	const float kSpeed = 0.3f;
 
 	std::shared_ptr<RigidBody> rigid_body_;
-	std::shared_ptr<InputBase> input_;
+	std::shared_ptr<const InputBase> input_;
 
 	VECTOR dir_;
 	VECTOR vel_;
