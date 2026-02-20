@@ -132,6 +132,9 @@
   <ItemGroup>
     <ClCompile Include="source\ai_input.cpp" />
     <ClCompile Include="source\application.cpp" />
+    <ClCompile Include="source\tracking_camera.cpp" />
+    <ClCompile Include="source\virtual_camera_base.cpp" />
+    <ClCompile Include="source\brain.cpp" />
     <ClCompile Include="source\camera.cpp" />
     <ClCompile Include="source\capsule.cpp" />
     <ClCompile Include="source\character_base.cpp" />
@@ -169,6 +172,8 @@
   <ItemGroup>
     <ClInclude Include="source\ai_input.h" />
     <ClInclude Include="source\application.h" />
+    <ClInclude Include="source\tracking_camera.h" />
+    <ClInclude Include="source\virtual_camera_base.h" />
     <ClInclude Include="source\camera.h" />
     <ClInclude Include="source\capsule.h" />
     <ClInclude Include="source\character_base.h" />
@@ -213,6 +218,7 @@
     <ClInclude Include="source\stage.h" />
     <ClInclude Include="source\vector_assistant.h" />
     <ClInclude Include="source\collider_group.h" />
+    <ClInclude Include="source\brain.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

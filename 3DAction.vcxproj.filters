@@ -121,6 +121,12 @@
     <Filter Include="ソース ファイル\config">
       <UniqueIdentifier>{0e3adc5b-820f-4822-8321-9d179cb363b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\camera\brain">
+      <UniqueIdentifier>{ae4c8183-71b0-4f04-9bc5-dab957d8cbcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\camera\virtual_camera">
+      <UniqueIdentifier>{21fd2030-e3b1-49f1-8289-37db53bdd2f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -227,6 +233,15 @@
     </ClCompile>
     <ClCompile Include="source\ai_input.cpp">
       <Filter>ソース ファイル\input\base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\brain.cpp">
+      <Filter>ソース ファイル\camera\brain</Filter>
+    </ClCompile>
+    <ClCompile Include="source\virtual_camera_base.cpp">
+      <Filter>ソース ファイル\camera\virtual_camera</Filter>
+    </ClCompile>
+    <ClCompile Include="source\tracking_camera.cpp">
+      <Filter>ソース ファイル\camera\virtual_camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -367,6 +382,15 @@
     </ClInclude>
     <ClInclude Include="source\ai_input.h">
       <Filter>ソース ファイル\input\base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\brain.h">
+      <Filter>ソース ファイル\camera\brain</Filter>
+    </ClInclude>
+    <ClInclude Include="source\virtual_camera_base.h">
+      <Filter>ソース ファイル\camera\virtual_camera</Filter>
+    </ClInclude>
+    <ClInclude Include="source\tracking_camera.h">
+      <Filter>ソース ファイル\camera\virtual_camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
