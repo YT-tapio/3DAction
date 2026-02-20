@@ -72,7 +72,6 @@ void Player::Draw()
 
 void Player::Debug()
 {
-
 	rigid_body_->Debug();
 
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "----------player-----------", Color::kWhite);
@@ -124,9 +123,6 @@ void Player::Move()
 		dir_ = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(*camera_dir_), VectorAssistant::VGetTan(dir));
 		dir_ = VNorm(dir_);
 	}
-	
-
-	
 
 	vel_ = VScale(dir_, speed);
 	if (!is_ground_)
