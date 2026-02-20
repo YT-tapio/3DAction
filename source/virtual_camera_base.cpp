@@ -6,6 +6,8 @@ VirtualCameraBase::VirtualCameraBase()
 {
 	pos_		= VectorAssistant::VGetZero();
 	target_pos_ = VectorAssistant::VGetZero();
+	vel_		= VectorAssistant::VGetZero();
+	target_vel_ = VectorAssistant::VGetZero();
 }
 
 VirtualCameraBase::~VirtualCameraBase()
@@ -18,11 +20,17 @@ void VirtualCameraBase::Init(const VECTOR& pos,const VECTOR& target_pos)
 
 }
 
-VECTOR VirtualCameraBase::Update()
+void VirtualCameraBase::Update()
 {
-	
 
+}
 
+void VirtualCameraBase::Active()
+{
+	is_active_ = TRUE;
+}
 
-	return VectorAssistant::VGetZero();
+void VirtualCameraBase::NotActive()
+{
+	is_active_ = FALSE;
 }

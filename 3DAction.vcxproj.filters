@@ -73,12 +73,6 @@
     <Filter Include="ソース ファイル\interface">
       <UniqueIdentifier>{c192c531-cb51-418e-8a09-9f1d0dca01d0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\collision\physics">
-      <UniqueIdentifier>{c69306c1-fb7c-41b1-9c02-56cf0898eb06}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\collision\rigid_body">
-      <UniqueIdentifier>{711f2137-c906-4d21-8e81-fbbc9f940422}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\clamp">
       <UniqueIdentifier>{071fc095-b105-4e7a-85a3-887fc0698ab7}</UniqueIdentifier>
     </Filter>
@@ -126,6 +120,12 @@
     </Filter>
     <Filter Include="ソース ファイル\camera\virtual_camera">
       <UniqueIdentifier>{21fd2030-e3b1-49f1-8289-37db53bdd2f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\physics">
+      <UniqueIdentifier>{c69306c1-fb7c-41b1-9c02-56cf0898eb06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\rigid_body">
+      <UniqueIdentifier>{711f2137-c906-4d21-8e81-fbbc9f940422}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -181,10 +181,10 @@
       <Filter>ソース ファイル\Singleton</Filter>
     </ClCompile>
     <ClCompile Include="source\physics.cpp">
-      <Filter>ソース ファイル\collision\physics</Filter>
+      <Filter>ソース ファイル\physics</Filter>
     </ClCompile>
     <ClCompile Include="source\rigid_body.cpp">
-      <Filter>ソース ファイル\collision\rigid_body</Filter>
+      <Filter>ソース ファイル\rigid_body</Filter>
     </ClCompile>
     <ClCompile Include="source\physics_interface.cpp">
       <Filter>ソース ファイル\interface</Filter>
@@ -303,7 +303,7 @@
       <Filter>ソース ファイル\interface</Filter>
     </ClInclude>
     <ClInclude Include="source\physics.h">
-      <Filter>ソース ファイル\collision\physics</Filter>
+      <Filter>ソース ファイル\physics</Filter>
     </ClInclude>
     <ClInclude Include="source\foot_interface.h">
       <Filter>ソース ファイル\interface</Filter>
@@ -312,7 +312,7 @@
       <Filter>ソース ファイル\collider</Filter>
     </ClInclude>
     <ClInclude Include="source\rigid_body.h">
-      <Filter>ソース ファイル\collision\rigid_body</Filter>
+      <Filter>ソース ファイル\rigid_body</Filter>
     </ClInclude>
     <ClInclude Include="source\collision.h">
       <Filter>ソース ファイル\collision</Filter>

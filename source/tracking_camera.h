@@ -11,10 +11,10 @@ public:
 
 	void Init(const VECTOR& camera_pos, const VECTOR& target_pos) override;
 
-	VECTOR Update() override;
+	void Update() override;
 
 private:
 
-	VECTOR* player_head_pos_;
+	VECTOR* tracking_object_pos_;
 	
 };

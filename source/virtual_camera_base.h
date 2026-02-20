@@ -12,7 +12,11 @@ public:
 
 	/// @brief 独自のupdateを行い戻り値を返す
 	/// @return 移動量
-	virtual VECTOR Update();
+	virtual void Update();
+
+	void Active();
+
+	void NotActive();
 
 protected:
 
@@ -22,5 +26,6 @@ protected:
 	VECTOR target_vel_;	// ターゲットの移動量
 
 private:
-
+	bool is_active_;
+	int priority_;
 };

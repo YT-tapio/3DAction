@@ -27,29 +27,33 @@ void Camera::Update()
 {
 	VECTOR dir	= VectorAssistant::VGetZero();
 	VECTOR target_dir = VectorAssistant::VGetZero();
-	VECTOR move_dir = VectorAssistant::VGetZero();
-	VECTOR wa = VectorAssistant::VGetZero();
-	if (CheckHitKey(KEY_INPUT_UP)) { dir = VAdd(dir, VGet(0, 1, 0)); target_dir = VAdd(target_dir, VGet(0, 0, 1)); }
-	if (CheckHitKey(KEY_INPUT_DOWN))	{ dir = VAdd(dir, VGet(0, -1, 0)); target_dir = VAdd(target_dir, VGet(0, 0, -1));}
-	if (CheckHitKey(KEY_INPUT_RIGHT)) { dir = VAdd(dir, VGet(1, 0, 0)); target_dir = VAdd(target_dir, VGet(1, 0, 0));}
-	if (CheckHitKey(KEY_INPUT_LEFT)) {
-		dir = VAdd(dir, VGet(-1, 0, 0)); target_dir = VAdd(target_dir, VGet(-1, 0, 0));}
-
-	if (VSize(dir) > 0)
+	
+	if (FALSE)
 	{
-		
-	}
-	if(CheckHitKey(KEY_INPUT_LSHIFT))
-	{ 
-		target_pos_ = VAdd(target_pos_, target_dir);
-		pos_ = VAdd(pos_, target_dir);
-	}
-	else
-	{
-		pos_ = VAdd(pos_, dir);
+		if (CheckHitKey(KEY_INPUT_UP)) { dir = VAdd(dir, VGet(0, 1, 0)); target_dir = VAdd(target_dir, VGet(0, 0, 1)); }
+		if (CheckHitKey(KEY_INPUT_DOWN)) { dir = VAdd(dir, VGet(0, -1, 0)); target_dir = VAdd(target_dir, VGet(0, 0, -1)); }
+		if (CheckHitKey(KEY_INPUT_RIGHT)) { dir = VAdd(dir, VGet(1, 0, 0)); target_dir = VAdd(target_dir, VGet(1, 0, 0)); }
+		if (CheckHitKey(KEY_INPUT_LEFT)) {
+			dir = VAdd(dir, VGet(-1, 0, 0)); target_dir = VAdd(target_dir, VGet(-1, 0, 0));
+		}
+
+		if (VSize(dir) > 0)
+		{
+
+		}
+		if (CheckHitKey(KEY_INPUT_LSHIFT))
+		{
+			target_pos_ = VAdd(target_pos_, target_dir);
+			pos_ = VAdd(pos_, target_dir);
+		}
+		else
+		{
+			pos_ = VAdd(pos_, dir);
+		}
 	}
 
-	Setting();
+	// brain‚©‚ç‚ÌˆÚ“®’l‚ðŽó‚¯Žæ‚é
+
 }
 
 void Camera::Debug()
@@ -72,6 +76,9 @@ void Camera::Debug()
 
 void Camera::Setting()
 {
+	pos_ = VAdd(pos_, vel_);
+	target_pos_ = VAdd(target_pos_, target_vel_);
+
 	SetCameraNearFar(near_, far_);
 	SetupCamera_Perspective(fov_);
 	SetCameraPositionAndTarget_UpVecY(pos_, target_pos_);

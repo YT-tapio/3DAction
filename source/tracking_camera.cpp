@@ -3,7 +3,7 @@
 #include"vector_assistant.h"
 
 TrackingCamera::TrackingCamera(VECTOR* pos)
-	: player_head_pos_(pos)
+	: tracking_object_pos_(pos)
 {
 
 }
@@ -19,10 +19,12 @@ void TrackingCamera::Init(const VECTOR& camera_pos, const VECTOR& target_pos)
 	target_pos_ = target_pos;
 }
 
-VECTOR TrackingCamera::Update()
+void TrackingCamera::Update()
 {
+	// ‚Æ‚è‚ ‚¦‚¸’Ç‚¢‚©‚¯‚é‚æ‚¤‚É‚µ‚Ü‚µ‚å‚¤‚©
 	vel_ = VectorAssistant::VGetZero();
 
+	vel_ = VGet(0.f, 0.f, 1.f);
 
-	return vel_;
+	target_vel_ = vel_;
 }
