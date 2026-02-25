@@ -11,6 +11,7 @@
 #include"object_setter.h"
 #include"collision.h"
 #include"input_manager.h"
+#include"brain.h"
 
 Game::Game()
 	: SceneBase()
@@ -23,8 +24,12 @@ Game::Game()
 	for (auto& obj : objects_)
 	{
 		obj->Init();
+		if (auto player = std::dynamic_pointer_cast<Player>(obj))
+		{
+			Brain::GetInstance().CreatePlaySceneVirtualCamera(player,camera_->GetPos(), camera_->GetTargetPos());
+		}
 	}
-
+	
 }
 
 Game::~Game()
@@ -42,7 +47,7 @@ void Game::Init()
 
 void Game::Update()
 {
-	camera_->Update();
+	
 
 	
 	for (auto& obj : objects_)
@@ -53,6 +58,16 @@ void Game::Update()
 
 	Physics::GetInstance().Update();
 	ObjectSetter::GetInstance().Update();
+	
+	for (auto& obj : objects_)
+	{
+		if (!obj->GetIsActive()) { continue; }
+		obj->LateUpdate();
+	}
+
+	Brain::GetInstance().Update();
+	camera_->Update();
+
 	/*
 	VECTOR dir = VGet(0, 0, 0);
 
@@ -74,8 +89,6 @@ void Game::Update()
 	{
 		printfDx("“–‚½‚Á‚Ä‚È‚¢\n");
 	}
-	
-
 	*/
 	
 }

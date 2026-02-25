@@ -5,6 +5,7 @@
 #include"vector_assistant.h"
 #include"color.h"
 #include"debug.h"
+#include"brain.h"
 
 Camera::Camera()
 {
@@ -12,8 +13,10 @@ Camera::Camera()
 	near_					= 0.1f;
 	far_					= 1000.f;
 	fov_					= RadianAssistant::TheNumRadian(kRad);
-	pos_					= VGet(0.f, 0.f, 0.f);
-	target_pos_				= VGet(0.f, 0.f, 25.f);
+	pos_					= VectorAssistant::VGetZero();
+	vel_					= VectorAssistant::VGetZero();
+	target_vel_		= VectorAssistant::VGetZero();
+	target_pos_		= VGet(0.f, 0.f, 25.f);
 
 	Setting();
 }
@@ -53,7 +56,10 @@ void Camera::Update()
 	}
 
 	// brain‚©‚ç‚ÌˆÚ“®’l‚ðŽó‚¯Žæ‚é
-
+	vel_				= Brain::GetInstance().GetVelocity();
+	target_vel_	= Brain::GetInstance().GetTargetVelocity();
+	Setting();
+	
 }
 
 void Camera::Debug()
@@ -71,7 +77,6 @@ void Camera::Debug()
 	Debug::GetInstance().Add();
 	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "x : %.2f,y : %.2f,z : %.2f", dir_.x, dir_.y, dir_.z);
 	Debug::GetInstance().Add();
-
 }
 
 void Camera::Setting()
@@ -84,4 +89,14 @@ void Camera::Setting()
 	SetCameraPositionAndTarget_UpVecY(pos_, target_pos_);
 	Effekseer_Sync3DSetting();
 	dir_ = VectorAssistant::VGetDir(pos_, target_pos_);
+}
+
+VECTOR* Camera::GetPos()
+{
+	return &pos_;
+}
+
+VECTOR* Camera::GetTargetPos()
+{
+	return &target_pos_;
 }

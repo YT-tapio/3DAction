@@ -2,12 +2,14 @@
 #include"virtual_camera_base.h"
 #include"vector_assistant.h"
 
-VirtualCameraBase::VirtualCameraBase()
+VirtualCameraBase::VirtualCameraBase(VECTOR* pos,VECTOR* target_pos)
 {
-	pos_		= VectorAssistant::VGetZero();
-	target_pos_ = VectorAssistant::VGetZero();
+	pos_ = pos;
+	target_pos_ = target_pos;
 	vel_		= VectorAssistant::VGetZero();
 	target_vel_ = VectorAssistant::VGetZero();
+	is_active_ = FALSE;
+	priority_ = 0;
 }
 
 VirtualCameraBase::~VirtualCameraBase()
@@ -15,9 +17,9 @@ VirtualCameraBase::~VirtualCameraBase()
 
 }
 
-void VirtualCameraBase::Init(const VECTOR& pos,const VECTOR& target_pos)
+void VirtualCameraBase::Init()
 {
-
+	
 }
 
 void VirtualCameraBase::Update()
@@ -33,4 +35,14 @@ void VirtualCameraBase::Active()
 void VirtualCameraBase::NotActive()
 {
 	is_active_ = FALSE;
+}
+
+VECTOR VirtualCameraBase::GetVelocity()
+{
+	return vel_;
+}
+
+VECTOR VirtualCameraBase::GetTargetVelocity()
+{
+	return target_vel_;
 }

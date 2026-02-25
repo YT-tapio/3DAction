@@ -1,29 +1,47 @@
 #pragma once
+#include<unordered_map>
+#include<string>
+#include<memory>
 #include"virtual_camera_base.h"
 
-class VirtualCameraBase;
+class Player;
 
 class Brain
 {
 public:
 
-	Brain();
+	static Brain& GetInstance()
+	{
+		static Brain instance;
+		return instance;
+	}
 
-	~Brain();
+	Brain(const Brain&) = delete;
+	Brain& operator = (const Brain&) = default;
 
 	void Init();
 
+	void CreatePlaySceneVirtualCamera(std::shared_ptr<Player> player, VECTOR* camera_pos, VECTOR* target_pos);
+
 	void Update();
+
+	void DeleteVirtualCamera();
+
+	const VECTOR GetVelocity() const;
+
+	const VECTOR GetTargetVelocity() const;
 
 private:
 	
-	const std::string kTracking = "";
-	// const std::string k
+	Brain();
+
+	const std::string kTracking = "Tracking";
 
 	std::unordered_map<std::string, std::shared_ptr<VirtualCameraBase>> virtual_cameras_;
-	std::shared_ptr<VirtualCameraBase> active_camera_;
 
 	VECTOR vel_;
 	VECTOR target_vel_;
+
+	
 
 };

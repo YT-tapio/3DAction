@@ -25,6 +25,11 @@ void ObjectBase::Update()
 
 }
 
+void ObjectBase::LateUpdate()
+{
+
+}
+
 void ObjectBase::Draw()
 {
 

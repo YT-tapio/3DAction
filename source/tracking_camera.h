@@ -5,16 +5,16 @@ class TrackingCamera : public VirtualCameraBase
 {
 public:
 
-	TrackingCamera(VECTOR* pos);
+	TrackingCamera(VECTOR* tracking_pos, VECTOR* camera_pos, VECTOR* target_pos);
 
 	~TrackingCamera() override;
 
-	void Init(const VECTOR& camera_pos, const VECTOR& target_pos) override;
+	void Init() override;
 
 	void Update() override;
 
 private:
 
 	VECTOR* tracking_object_pos_;
-	
+	VECTOR tracking_obj_to_camera_dist_;
 };

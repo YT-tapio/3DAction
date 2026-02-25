@@ -24,6 +24,9 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	vel_		= VectorAssistant::VGetZero();
 	dir_		= VectorAssistant::VGetZero();
 	pos_		= VGet(0.f, -2.f,10.f);
+	VECTOR head_pos = VAdd(pos_, VGet(0.f, 10.f, 0.f));
+	head_pos_ = head_pos;
+	printfDx("x : %.2f,y : %.2f,z : %.2f\n", head_pos_.x, head_pos_.y, head_pos_.z);
 	scale_ = VectorAssistant::VGetSame(0.05f);
 	handle_ = MV1LoadModel("data/model/player/Lola_B_Styperek.mv1");
 	if (handle_ == -1) { printfDx("“Ç‚Ýž‚ÝƒGƒ‰[\n"); }
@@ -61,8 +64,15 @@ void Player::Update()
 	Move();
 
 	rigid_body_->SetVelocity(vel_);
+	//VECTOR a = *head_pos_;
+	//printfDx("x : %.2f,y : %.2f,z : %.2f\n", (*head_pos_).x, (*head_pos_).y, (*head_pos_).z);
 	//Gravity();
 	Setting();
+}
+
+void Player::LateUpdate()
+{
+	head_pos_ = VAdd(pos_, VGet(0.f, 10.f, 0.f));
 }
 
 void Player::Draw()
@@ -73,13 +83,14 @@ void Player::Draw()
 void Player::Debug()
 {
 	rigid_body_->Debug();
-
+	DrawSphere3D(head_pos_, 0.5f, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "----------player-----------", Color::kWhite);
 	Debug::GetInstance().Add();
 
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "pos", Color::kWhite);
 	Debug::GetInstance().Add();
 	Debug::GetInstance().DrawVector(pos_);
+	Debug::GetInstance().DrawVector(head_pos_);
 
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "dir", Color::kWhite);
 	Debug::GetInstance().Add();
@@ -170,4 +181,9 @@ void Player::OnUnGrounded()
 {
 	is_ground_ = FALSE;
 	// printfDx("1\n");
+}
+
+VECTOR* Player::GetHeadPos()
+{
+	return &head_pos_;
 }

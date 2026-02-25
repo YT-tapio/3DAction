@@ -17,6 +17,10 @@ public:
 	/// </summary>
 	void Setting();
 
+	VECTOR* GetPos();
+
+	VECTOR* GetTargetPos();
+
 	VECTOR dir_;// ƒJƒƒ‰‚Ì³–Ê
 
 private:

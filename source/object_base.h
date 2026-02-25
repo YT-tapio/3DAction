@@ -12,6 +12,8 @@ public:
 
 	virtual void Update();
 
+	virtual void LateUpdate();
+
 	virtual void Draw();
 
 	virtual void  Debug();

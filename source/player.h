@@ -17,6 +17,8 @@ public:
 
 	void Update() override;
 	
+	void LateUpdate() override;
+
 	void Draw() override;
 
 	void Debug() override;
@@ -26,6 +28,8 @@ public:
 	void OnGrounded() override;
 
 	void OnUnGrounded() override;
+
+	VECTOR* GetHeadPos();
 
 private:
 
@@ -38,7 +42,7 @@ private:
 	VECTOR vel_;
 
 	VECTOR* camera_dir_;
-
+	VECTOR head_pos_;
 
 	float fall_speed_;
 
