@@ -21,14 +21,7 @@ Game::Game()
 	objects_.push_back(std::make_shared<Stage>());
 	objects_.push_back(std::make_shared<Player>(&camera_->dir_,InputManager::GetInstance().GetPlayerInput()));
 
-	for (auto& obj : objects_)
-	{
-		obj->Init();
-		if (auto player = std::dynamic_pointer_cast<Player>(obj))
-		{
-			Brain::GetInstance().CreatePlaySceneVirtualCamera(player,camera_->GetPos(), camera_->GetTargetPos());
-		}
-	}
+	Init();
 	
 }
 
@@ -42,6 +35,10 @@ void Game::Init()
 	for (auto& obj : objects_)
 	{
 		obj->Init();
+		if (auto player = std::dynamic_pointer_cast<Player>(obj))
+		{
+			Brain::GetInstance().CreatePlaySceneVirtualCamera(player, camera_->GetPos(), camera_->GetTargetPos());
+		}
 	}
 }
 
