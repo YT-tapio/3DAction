@@ -35,3 +35,9 @@ const VECTOR AIInput::GetMoveDir() const
 	VECTOR dir = VectorAssistant::VGetZero();
 	return dir;
 }
+
+const VECTOR AIInput::GetCameraDir() const
+{
+	VECTOR dir = VectorAssistant::VGetZero();
+	return dir;
+}

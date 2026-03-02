@@ -19,6 +19,8 @@ public:
 
 	const VECTOR GetMoveDir() const override;
 
+	const VECTOR GetCameraDir() const override;
+
 private:
 
 

@@ -1,6 +1,7 @@
 #include"DxLib.h"
 #include"pc.h"
 #include"vector_assistant.h"
+#include"screen_size.h"
 
 PC::PC()
 {
@@ -103,9 +104,14 @@ float PC::GetMouseWheelRot()
 	return mouse_wheel_rot_;
 }
 
-VECTOR PC::GetMousePos()
+const VECTOR PC::GetMousePos() const
 {
 	return mouse_pos_;
+}
+
+const VECTOR PC::GetMouseDir() const
+{
+	return mouse_dir_;
 }
 
 void PC::UpdateKey()
@@ -148,7 +154,14 @@ void PC::UpdateMousePos()
 	int mouse_x = 0;
 	int mouse_y = 0;
 	GetMousePoint(&mouse_x, &mouse_y);
+	VECTOR screen_center_pos = VectorAssistant::VGet2D(float(kScreenWidth * 0.5f), float(kScreenHeight * 0.5f));
 	mouse_pos_ = VectorAssistant::VGet2D(static_cast<float>(mouse_x), static_cast<float>(mouse_y));
+	mouse_dir_ = VectorAssistant::VGetDir(screen_center_pos, mouse_pos_);
+	VECTOR mouse_diff = VectorAssistant::VGet2D(screen_center_pos.x - mouse_pos_.x, screen_center_pos.y - mouse_pos_.y);
+	if (fabs(mouse_diff.x) < 1.5f) { mouse_dir_.x = 0.f; }
+	if (fabs(mouse_diff.y) < 1.5f) { mouse_dir_.y = 0.f; }
+	mouse_dir_.z = 0.f;
+	SetMousePoint(static_cast<int>(screen_center_pos.x), static_cast<int>(screen_center_pos.y));
 }
 
 void PC::UpdateMouseWheel()

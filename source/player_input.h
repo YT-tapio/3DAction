@@ -22,6 +22,8 @@ public:
 
 	const VECTOR GetMoveDir() const override;
 
+	const VECTOR GetCameraDir() const override;
+
 private:
 
 	std::vector<std::shared_ptr<IInput>> inputs_;
@@ -29,4 +31,8 @@ private:
 	const VECTOR MoveDirPC(std::shared_ptr<PC> pc) const;
 
 	const VECTOR MoveDirPad(std::shared_ptr<Pad> pad) const;
+
+	const VECTOR CameraMoveDirPC(std::shared_ptr<PC> pc) const;
+
+	const VECTOR CameraMoveDirPad(std::shared_ptr<Pad> pad) const;
 };

@@ -36,3 +36,8 @@ const VECTOR InputBase::GetMoveDir() const
 {
 	return VectorAssistant::VGetZero();
 }
+
+const VECTOR InputBase::GetCameraDir() const
+{
+	return VectorAssistant::VGetZero();
+}

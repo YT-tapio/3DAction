@@ -132,6 +132,7 @@
   <ItemGroup>
     <ClCompile Include="source\ai_input.cpp" />
     <ClCompile Include="source\application.cpp" />
+    <ClCompile Include="source\sphere_camera.cpp" />
     <ClCompile Include="source\tracking_camera.cpp" />
     <ClCompile Include="source\virtual_camera_base.cpp" />
     <ClCompile Include="source\brain.cpp" />
@@ -172,6 +173,8 @@
   <ItemGroup>
     <ClInclude Include="source\ai_input.h" />
     <ClInclude Include="source\application.h" />
+    <ClInclude Include="source\screen_size.h" />
+    <ClInclude Include="source\sphere_camera.h" />
     <ClInclude Include="source\tracking_camera.h" />
     <ClInclude Include="source\virtual_camera_base.h" />
     <ClInclude Include="source\camera.h" />

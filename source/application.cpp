@@ -3,12 +3,11 @@
 #include"EffekseerForDXLib.h"
 #include"application.h"
 #include"scene_manager.h"
+#include"screen_size.h"
 
 Application::Application()
 {
-    const int kScreenWidth      = 1600;
-    const int kScreenHeight     = 900;
-
+    
     SetGraphMode(kScreenWidth,kScreenHeight, 32);			//ウィンドウのサイズとカラーモードを決める
     ChangeWindowMode(TRUE);				//ウィンドウモードにする
 

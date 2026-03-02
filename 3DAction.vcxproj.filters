@@ -243,6 +243,9 @@
     <ClCompile Include="source\tracking_camera.cpp">
       <Filter>ソース ファイル\camera\virtual_camera</Filter>
     </ClCompile>
+    <ClCompile Include="source\sphere_camera.cpp">
+      <Filter>ソース ファイル\camera\virtual_camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -391,6 +394,12 @@
     </ClInclude>
     <ClInclude Include="source\tracking_camera.h">
       <Filter>ソース ファイル\camera\virtual_camera</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sphere_camera.h">
+      <Filter>ソース ファイル\camera\virtual_camera</Filter>
+    </ClInclude>
+    <ClInclude Include="source\screen_size.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

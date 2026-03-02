@@ -18,6 +18,8 @@ public:
 
 	virtual const VECTOR GetMoveDir() const;
 
+	virtual const VECTOR GetCameraDir() const;
+
 protected:
 
 

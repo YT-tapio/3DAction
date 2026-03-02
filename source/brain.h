@@ -36,6 +36,9 @@ private:
 	Brain();
 
 	const std::string kTracking = "Tracking";
+	const std::string kSphere = "Sphere";
+
+	std::string now_camera_;
 
 	std::unordered_map<std::string, std::shared_ptr<VirtualCameraBase>> virtual_cameras_;
 

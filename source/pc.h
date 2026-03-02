@@ -50,7 +50,9 @@ public:
 
 	/// @brief マウスのposを返す
 	/// @return mouse_pos_
-	VECTOR GetMousePos();
+	const VECTOR GetMousePos()const;
+
+	const VECTOR GetMouseDir()const;
 
 private:
 
@@ -58,6 +60,7 @@ private:
 	InputState mouse_state_[kMaxPadButtonNum];	// マウスのpush状態
 
 	VECTOR mouse_pos_;			// マウスのpos
+	VECTOR mouse_dir_;
 	float mouse_wheel_rot_;		// ホイールの回転量
 
 	/// <summary>

@@ -33,9 +33,9 @@ void TrackingCamera::Update()
 	float rad = VectorAssistant::GetTwoVectorRad(camera_to_target_dir, camera_to_tracking_object_dir);
 
 	// ‚±‚ÌŠp“x‚ª‚Ç‚ê‚®‚ç‚¢‚©‚É‚æ‚Á‚Ä‘¬‚³‚ª•Ï‚í‚é
-	
 	VECTOR next_pos = VAdd(*tracking_object_pos_, tracking_obj_to_camera_dist_);
+	
 	vel_ = VSub(next_pos,*pos_);
 	target_vel_ = vel_;
-	printfDx("x : %.2f,y : %.2f,z : %.2f\n", tracking_obj_to_camera_dist_.x, tracking_obj_to_camera_dist_.y, tracking_obj_to_camera_dist_.z);
+	//printfDx("x : %.2f,y : %.2f,z : %.2f\n", tracking_obj_to_camera_dist_.x, tracking_obj_to_camera_dist_.y, tracking_obj_to_camera_dist_.z);
 }
