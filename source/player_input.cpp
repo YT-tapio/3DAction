@@ -120,6 +120,37 @@ const VECTOR PlayerInput::GetCameraDir() const
 	return input_move_camera_dir;
 }
 
+const VECTOR PlayerInput::GetCameraVelocity() const
+{
+	VECTOR input_move_camera_vel = VectorAssistant::VGetZero();
+
+	for (auto& input : inputs_)
+	{
+		auto pad = std::dynamic_pointer_cast<Pad>(input);
+		if (pad != nullptr)
+		{
+			// パッドを優先的にしたいのでpadに入力がある際は優先的に
+			VECTOR pad_move_dir = CameraMoveVelPad(pad);
+			if (VSize(pad_move_dir) > 0)
+			{
+				input_move_camera_vel = pad_move_dir;
+			}
+		}
+		else
+		{
+			//pcの入力
+			auto pc = std::dynamic_pointer_cast<PC>(input);
+			if (pc != nullptr)
+			{
+				input_move_camera_vel = CameraMoveVelPC(pc);
+			}
+		}
+
+	}
+
+	return input_move_camera_vel;
+}
+
 const VECTOR PlayerInput::MoveDirPC(std::shared_ptr<PC> pc) const
 {
 	VECTOR move_dir = VectorAssistant::VGetZero();
@@ -151,6 +182,23 @@ const VECTOR PlayerInput::CameraMoveDirPC(std::shared_ptr<PC> pc) const
 }
 
 const VECTOR PlayerInput::CameraMoveDirPad(std::shared_ptr<Pad> pad) const
+{
+	VECTOR camera_move_dir = VectorAssistant::VGetZero();
+
+	return camera_move_dir;
+}
+
+const VECTOR PlayerInput::CameraMoveVelPC(std::shared_ptr<PC> pc) const
+{
+	VECTOR camera_move_dir = VectorAssistant::VGetZero();
+
+	// 情報を受け取る
+	camera_move_dir = pc->GetMouseVel();
+
+	return camera_move_dir;
+}
+
+const VECTOR PlayerInput::CameraMoveVelPad(std::shared_ptr<Pad> pad) const
 {
 	VECTOR camera_move_dir = VectorAssistant::VGetZero();
 

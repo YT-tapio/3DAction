@@ -20,6 +20,8 @@ public:
 
 	virtual const VECTOR GetCameraDir() const;
 
+	virtual const VECTOR GetCameraVelocity() const;
+
 protected:
 
 

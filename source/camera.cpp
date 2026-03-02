@@ -73,6 +73,10 @@ void Camera::Debug()
 	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "x : %.2f,y : %.2f,z : %.2f", pos_.x, pos_.y, pos_.z);
 	Debug::GetInstance().Add();
 
+	DrawString(0, Debug::GetInstance().GetNowLineSize(), "-----target_pos-----", Color::kWhite);
+	Debug::GetInstance().Add();
+	Debug::GetInstance().DrawVector(target_pos_);
+
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "-----dir-----", Color::kWhite);
 	Debug::GetInstance().Add();
 	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "x : %.2f,y : %.2f,z : %.2f", dir_.x, dir_.y, dir_.z);

@@ -22,4 +22,8 @@ private:
 
 	VECTOR* center_pos_;
 	VECTOR rotation_;
+
+	float target_to_camera_dist_size_;
+	float yaw_;		// yé≤
+	float pitch_;	// xé≤
 };

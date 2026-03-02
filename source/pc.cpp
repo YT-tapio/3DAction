@@ -109,6 +109,11 @@ const VECTOR PC::GetMousePos() const
 	return mouse_pos_;
 }
 
+const VECTOR PC::GetMouseVel() const
+{
+	return mouse_vel_;
+}
+
 const VECTOR PC::GetMouseDir() const
 {
 	return mouse_dir_;
@@ -156,11 +161,12 @@ void PC::UpdateMousePos()
 	GetMousePoint(&mouse_x, &mouse_y);
 	VECTOR screen_center_pos = VectorAssistant::VGet2D(float(kScreenWidth * 0.5f), float(kScreenHeight * 0.5f));
 	mouse_pos_ = VectorAssistant::VGet2D(static_cast<float>(mouse_x), static_cast<float>(mouse_y));
-	mouse_dir_ = VectorAssistant::VGetDir(screen_center_pos, mouse_pos_);
-	VECTOR mouse_diff = VectorAssistant::VGet2D(screen_center_pos.x - mouse_pos_.x, screen_center_pos.y - mouse_pos_.y);
-	if (fabs(mouse_diff.x) < 1.5f) { mouse_dir_.x = 0.f; }
-	if (fabs(mouse_diff.y) < 1.5f) { mouse_dir_.y = 0.f; }
+	mouse_vel_ = VSub(screen_center_pos, mouse_pos_);
+	if (fabs(mouse_vel_.x) < 1.5f) { mouse_vel_.x = 0.f; }
+	if (fabs(mouse_vel_.y) < 1.5f) { mouse_vel_.y = 0.f; }
 	mouse_dir_.z = 0.f;
+	if (VSize(mouse_vel_) > 0.f){ mouse_dir_ = VNorm(mouse_vel_); }
+	VECTOR mouse_diff = VectorAssistant::VGet2D(screen_center_pos.x - mouse_pos_.x, screen_center_pos.y - mouse_pos_.y);
 	SetMousePoint(static_cast<int>(screen_center_pos.x), static_cast<int>(screen_center_pos.y));
 }
 

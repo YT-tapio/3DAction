@@ -41,3 +41,8 @@ const VECTOR InputBase::GetCameraDir() const
 {
 	return VectorAssistant::VGetZero();
 }
+
+const VECTOR InputBase::GetCameraVelocity() const
+{
+	return VectorAssistant::VGetZero();
+}
