@@ -145,7 +145,7 @@ void Player::Move()
 	vel_ = VScale(vel_, (FPS::GetInstance().GetDeltaTime() * 60.f));
 	if (VSize(vel_) > 0.f)
 	{ 
-		rot_.y = -atan2f(dir_.x, (dir_.z + RadianAssistant::kReverceRad));
+		rot_.y = atan2f(-dir_.x, (-dir_.z));
 		printfDx("%.2f\n", rot_.y);
 		if (rot_.y > RadianAssistant::kReverceRad)	{ rot_.y -= (RadianAssistant::kReverceRad * 2.f); }
 		if (rot_.y < -RadianAssistant::kReverceRad)	{ rot_.y += (RadianAssistant::kReverceRad * 2.f); }
