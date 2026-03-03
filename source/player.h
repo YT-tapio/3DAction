@@ -4,6 +4,7 @@
 
 class RigidBody;
 class InputBase;
+class AnimatorBase;
 
 class Player : public CharacterBase , public IPhysicsEventReceiver
 {
@@ -37,6 +38,7 @@ private:
 
 	std::shared_ptr<RigidBody> rigid_body_;
 	std::shared_ptr<const InputBase> input_;
+	std::shared_ptr<AnimatorBase> animator_;
 
 	VECTOR dir_;
 	VECTOR vel_;

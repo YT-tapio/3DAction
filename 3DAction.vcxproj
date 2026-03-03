@@ -131,6 +131,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\ai_input.cpp" />
+    <ClCompile Include="source\animator_base.cpp" />
+    <ClCompile Include="source\animator_player.cpp" />
     <ClCompile Include="source\application.cpp" />
     <ClCompile Include="source\sphere_camera.cpp" />
     <ClCompile Include="source\tracking_camera.cpp" />
@@ -172,7 +174,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ai_input.h" />
+    <ClInclude Include="source\animation_data.h" />
+    <ClInclude Include="source\load_animation.h" />
+    <ClInclude Include="source\animator_base.h" />
+    <ClInclude Include="source\animator_player.h" />
     <ClInclude Include="source\application.h" />
+    <ClInclude Include="source\load_animation.cpp" />
     <ClInclude Include="source\screen_size.h" />
     <ClInclude Include="source\sphere_camera.h" />
     <ClInclude Include="source\tracking_camera.h" />

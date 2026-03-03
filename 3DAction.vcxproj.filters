@@ -127,6 +127,12 @@
     <Filter Include="ソース ファイル\rigid_body">
       <UniqueIdentifier>{711f2137-c906-4d21-8e81-fbbc9f940422}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\animation">
+      <UniqueIdentifier>{fc8680bb-cd30-4e8a-9de4-9bdbeaed152e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\animation\animator">
+      <UniqueIdentifier>{195afefd-450c-45e7-afe5-f308ab229251}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -245,6 +251,12 @@
     </ClCompile>
     <ClCompile Include="source\sphere_camera.cpp">
       <Filter>ソース ファイル\camera\virtual_camera</Filter>
+    </ClCompile>
+    <ClCompile Include="source\animator_base.cpp">
+      <Filter>ソース ファイル\animation\animator</Filter>
+    </ClCompile>
+    <ClCompile Include="source\animator_player.cpp">
+      <Filter>ソース ファイル\animation\animator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -400,6 +412,21 @@
     </ClInclude>
     <ClInclude Include="source\screen_size.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\animation_data.h">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\load_animation.h">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\animator_base.h">
+      <Filter>ソース ファイル\animation\animator</Filter>
+    </ClInclude>
+    <ClInclude Include="source\animator_player.h">
+      <Filter>ソース ファイル\animation\animator</Filter>
+    </ClInclude>
+    <ClInclude Include="source\load_animation.cpp">
+      <Filter>ソース ファイル\animation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

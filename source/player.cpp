@@ -15,6 +15,8 @@
 #include"input_base.h"
 #include"player_input.h"
 #include"ai_input.h"
+#include"animator_base.h"
+#include"animator_player.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	: CharacterBase("player")
@@ -42,6 +44,8 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	fall_speed_ = 0.f;
 	is_ground_ = FALSE;
 	input_ = input;
+	animator_ = std::make_shared<AnimatorPlayer>(handle_);
+	animator_->Init();
 }
 
 Player::~Player()
@@ -67,6 +71,7 @@ void Player::Update()
 	//VECTOR a = *head_pos_;
 	//printfDx("x : %.2f,y : %.2f,z : %.2f\n", (*head_pos_).x, (*head_pos_).y, (*head_pos_).z);
 	//Gravity();
+	animator_->Update();
 	Setting();
 }
 
@@ -146,7 +151,7 @@ void Player::Move()
 	if (VSize(vel_) > 0.f)
 	{ 
 		rot_.y = atan2f(-dir_.x, (-dir_.z));
-		printfDx("%.2f\n", rot_.y);
+		//printfDx("%.2f\n", rot_.y);
 		if (rot_.y > RadianAssistant::kReverceRad)	{ rot_.y -= (RadianAssistant::kReverceRad * 2.f); }
 		if (rot_.y < -RadianAssistant::kReverceRad)	{ rot_.y += (RadianAssistant::kReverceRad * 2.f); }
 	}
