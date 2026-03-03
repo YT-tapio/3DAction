@@ -9,7 +9,6 @@ public:
 
 	~AnimatorPlayer();
 
-	void Init() override;
 
 	void Update() override;
 

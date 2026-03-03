@@ -10,7 +10,7 @@ public:
 
 	~AnimatorBase();
 
-	virtual void Init();
+	void Init();
 
 	virtual void Update();
 

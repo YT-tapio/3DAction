@@ -19,17 +19,16 @@ AnimatorPlayer::~AnimatorPlayer()
 
 }
 
-void AnimatorPlayer::Init()
-{
-	//データファイルからのよみこみをしましょう
-	LoadFile(kDataFilePath);
-}
 
 void AnimatorPlayer::Update()
 {
 	// とりあえずアタッチしましょう
 	std::string before_anim_name = now_anim_name_;
-	now_anim_name_ = "idle";
+	now_anim_name_ = "jogging";
+
+	if (CheckHitKey(KEY_INPUT_0)) { now_anim_name_ = "idle"; }
+	if (CheckHitKey(KEY_INPUT_1)) { now_anim_name_ = "run"; }
+
 	if (before_anim_name != now_anim_name_)
 	{
 		printfDx("%d\n", animation_datas_.size());

@@ -1,2 +1,4 @@
 ﻿name,file_path,anim_index,play_speed,priority
-idle,data/model/player/animation/Idle.mv1,0,2,0
+idle,data/model/player/animation/Idle.mv1,0,1,0
+run,data/model/player/animation/Standard_Run.mv1,0,0.96,0
+jogging,data/model/player/animation/Running.mv1,0,0.7,0
