@@ -27,10 +27,10 @@ void AnimatorPlayer::Update()
 	// とりあえずアタッチしましょう
 	std::string before_anim_name = now_anim_name_;
 	now_anim_name_ = "jogging";
-	VECTOR pos = player_->GetPosition();
+
 	if (CheckHitKey(KEY_INPUT_0)) { now_anim_name_ = "idle"; }
 	if (CheckHitKey(KEY_INPUT_1)) { now_anim_name_ = "run"; }
-	printfDx("x : %.2f,y : %.2f,z : %.2f\n", pos.x, pos.y, pos.z);
+	
 	if (before_anim_name != now_anim_name_)
 	{
 		printfDx("%d\n", animation_datas_.size());
