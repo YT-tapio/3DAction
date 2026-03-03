@@ -44,8 +44,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	fall_speed_ = 0.f;
 	is_ground_ = FALSE;
 	input_ = input;
-	animator_ = std::make_shared<AnimatorPlayer>(handle_);
-	animator_->Init();
+	
 }
 
 Player::~Player()
@@ -60,6 +59,9 @@ void Player::Init()
 	Physics::GetInstance().AddBody(rigid_body_);
 	// setter‚Ö‚Ì“o˜^
 	ObjectSetter::GetInstance().AddResource(handle_, &pos_,&rot_,&scale_);
+	auto mine = shared_from_this();
+	animator_ = std::make_shared<AnimatorPlayer>(handle_, std::dynamic_pointer_cast<Player>(mine));
+	animator_->Init();
 }
 
 void Player::Update()

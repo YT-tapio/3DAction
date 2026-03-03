@@ -20,6 +20,8 @@ public:
 
 	const bool GetIsActive() const;
 
+	const VECTOR GetPosition() const;
+
 protected:
 
 	VECTOR pos_;

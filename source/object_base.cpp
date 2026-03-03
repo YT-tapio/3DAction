@@ -44,3 +44,8 @@ const bool ObjectBase::GetIsActive() const
 {
 	return is_active_;
 }
+
+const VECTOR ObjectBase::GetPosition() const
+{
+	return pos_;
+}

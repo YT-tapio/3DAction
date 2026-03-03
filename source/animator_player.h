@@ -1,11 +1,12 @@
 #pragma once
 
 class AnimatorBase;
+class Player;
 class AnimatorPlayer : public AnimatorBase
 {
 public:
 
-	AnimatorPlayer(int handle);
+	AnimatorPlayer(int handle, std::shared_ptr<Player> player);
 
 	~AnimatorPlayer();
 
@@ -14,6 +15,6 @@ public:
 
 private:
 
-	
+	std::shared_ptr<const Player> player_;
 
 };
