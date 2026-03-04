@@ -70,9 +70,6 @@
     <Filter Include="ソース ファイル\collision">
       <UniqueIdentifier>{03a6bd0a-1cd5-447e-8466-fb7c76844429}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\interface">
-      <UniqueIdentifier>{c192c531-cb51-418e-8a09-9f1d0dca01d0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\clamp">
       <UniqueIdentifier>{071fc095-b105-4e7a-85a3-887fc0698ab7}</UniqueIdentifier>
     </Filter>
@@ -132,6 +129,12 @@
     </Filter>
     <Filter Include="ソース ファイル\animation\animator">
       <UniqueIdentifier>{195afefd-450c-45e7-afe5-f308ab229251}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\enemy">
+      <UniqueIdentifier>{1d6542a5-2ca7-43b2-bf9e-bbdc1e063845}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\interface">
+      <UniqueIdentifier>{c192c531-cb51-418e-8a09-9f1d0dca01d0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -257,6 +260,9 @@
     </ClCompile>
     <ClCompile Include="source\animator_player.cpp">
       <Filter>ソース ファイル\animation\animator</Filter>
+    </ClCompile>
+    <ClCompile Include="source\enemy_base.cpp">
+      <Filter>ソース ファイル\enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -427,6 +433,9 @@
     </ClInclude>
     <ClInclude Include="source\load_animation.cpp">
       <Filter>ソース ファイル\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\enemy_base.h">
+      <Filter>ソース ファイル\enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

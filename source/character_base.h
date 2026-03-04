@@ -1,6 +1,8 @@
 #pragma once
 #include"object_3D.h"
 
+class AnimatorBase;
+
 class CharacterBase : public Object3D
 {
 public:
@@ -19,7 +21,11 @@ public:
 
 protected:
 
+	VECTOR dir_;
+	VECTOR vel_;
+
 	// todo:アニメーションをつけてください
+	std::shared_ptr<AnimatorBase> animator_;
 
 private:
 

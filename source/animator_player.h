@@ -15,6 +15,10 @@ public:
 
 private:
 
-	std::shared_ptr<const Player> player_;
+	const std::string kNothing	= "nothing";
+	const std::string kIdle			= "idle";
+	const std::string kJogging	= "jogging";
+	const std::string kRun			= "run";
 
+	std::shared_ptr<const Player> player_;
 };

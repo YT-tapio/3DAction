@@ -56,7 +56,6 @@ void Physics::Update()
 	{
 		if (!main_body->GetIsActive()) { continue; }
 		// 動いていないものは直ぐに別のものに
-		if (VSize(main_body->GetVelocity()) == 0.f) { continue; }
 		for (auto& target_body : rigid_bodies_)
 		{
 			if (!target_body->GetIsActive()) { return; }
@@ -65,7 +64,7 @@ void Physics::Update()
 			// コライダーにhitの確認を行う
 			auto my_coll		= main_body->GetCollider();
 			auto target_coll	= target_body->GetCollider();
-			if (my_coll->CheckCollision(main_body->GetPosition(),main_body->GetVelocity(), target_body->GetPosition(),target_coll, contact))
+			if (my_coll->CheckCollision(main_body->GetPosition(),main_body->GetVelocity(), target_body->GetPosition(),target_body->GetVelocity(),target_coll, contact))
 			{
 				main_body->OnHit(target_body->GetIPhysicsObject());
 				target_body->OnHit(main_body->GetIPhysicsObject());
@@ -76,7 +75,7 @@ void Physics::Update()
 				VECTOR offset_vel = my_coll->FixPos(main_body->GetPosition(), main_body->GetVelocity(), target_body->GetVelocity(), target_coll, contact);
 				main_body->Update(offset_vel);
 			}
-			//MV1CollResultPolyDimTerminate(contact.hit_dim);
+			
 		}
 		main_body->SetPos();
 	}
@@ -457,6 +456,7 @@ void Physics::CheckGround()
 			if (CheckHitFoot(main_body, target_body,contact,kGroundProjLength))
 			{
 				body->OnGrounded();
+				break;
 			}
 			else
 			{

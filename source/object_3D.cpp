@@ -14,8 +14,6 @@ Object3D::Object3D(const char* id)
 
 	
 	LoadFile();
-
-
 }
 
 Object3D::~Object3D()

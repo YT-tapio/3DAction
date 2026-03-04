@@ -159,6 +159,54 @@ namespace Collision
 		return (all_size > dist_size);
 	}
 
+	inline bool IsMoveCapsuleToCapsule(const VECTOR& capsule1_start_pos, const VECTOR& capsule1_end_pos, const float& capsule1_r, const VECTOR& capsule1_velocity,
+		const VECTOR& capsule2_start_pos, const VECTOR& capsule2_end_pos, const float& capsule2_r, const VECTOR& capsule2_velocity)
+	{
+		// 移動量
+		float capsule1_vel_size = VSize(capsule1_velocity);
+		float capsule2_vel_size = VSize(capsule2_velocity);
+		// 直径
+		float capsule1_diameter = capsule1_r * 2.f;
+		float capsule2_diameter = capsule2_r * 2.f;
+		// 追加する数
+		int capsule1_add_num = 0;
+		int capsule2_add_num = 0;
+		// 移動量のサイズが直径を超えているとき新たにカプセルを追加する
+		if (capsule1_vel_size > capsule1_diameter)
+		{
+			// 最低でも一つ
+			capsule1_add_num = ((capsule1_vel_size - capsule1_diameter) / capsule1_diameter) + 1.f;
+		}
+
+		if (capsule2_vel_size > capsule2_diameter)
+		{
+			capsule2_add_num = ((capsule2_vel_size - capsule2_diameter) / capsule2_diameter) + 1.f;
+		}
+		
+		int capsule1_max = capsule1_add_num + 2;
+		int capsule2_max = capsule2_add_num + 2;
+		for (int j = 0;j < capsule1_max;j++)
+		{
+			VECTOR capsule1_offset_vel			= VectorAssistant::VGetZero();	//どのくらい離れているか
+			if (j != 0) { capsule1_offset_vel		= VScale(capsule1_velocity, j / (capsule1_max - 1)); }
+			VECTOR offset_capsule1_start_pos	= VAdd(capsule1_start_pos, capsule1_offset_vel);	// 調整した始点
+			VECTOR offset_capsule1_end_pos	= VAdd(capsule1_end_pos, capsule1_offset_vel);		// 調整した終点
+			for (int i = 0; i < capsule2_max; i++)
+			{
+				VECTOR capsule2_offset_vel = VectorAssistant::VGetZero();	// どのくらい離れているか
+				if (i != 0) { capsule2_offset_vel = VScale(capsule2_velocity, i / (capsule2_max - 1)); }
+				VECTOR offset_capsule2_start_pos = VAdd(capsule2_start_pos, capsule2_offset_vel);	// 調整した始点
+				VECTOR offset_capsule2_end_pos = VAdd(capsule2_end_pos, capsule2_offset_vel);		// 調整した終点
+				if (CapsuleToCapsule(offset_capsule1_start_pos, offset_capsule1_end_pos, capsule1_r, offset_capsule2_start_pos, offset_capsule2_end_pos, capsule2_r)) 
+				{ 
+					return TRUE;
+				}
+			}
+		}
+
+		return FALSE;
+	}
+
 	inline bool SegmentToMesh(const VECTOR& start_pos, const VECTOR& end_pos, const int& mesh,Contact& contact)
 	{
 		auto hit_dim	= MV1CollCheck_LineDim(mesh, -1, start_pos, end_pos);

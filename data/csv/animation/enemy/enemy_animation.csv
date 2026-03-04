@@ -1,0 +1,4 @@
+﻿name,file_path,anim_index,play_speed,priority
+idle,data/model/enemy/animation/.mv1,0,1,0
+jogging,data/model/enemy/animation/.mv1,0,1,0
+run,data/model/enemy/animation/.mv1,0,1,0

@@ -1,6 +1,10 @@
-#include<iostream>
+#include<fstream>
+#include<sstream>
+#include<string>
+#include<unordered_map>
 #include"DxLib.h"
 #include"character_base.h"
+#include"animator_base.h"
 #include"vector_assistant.h"
 
 

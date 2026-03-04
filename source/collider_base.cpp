@@ -4,6 +4,7 @@
 #include"collider_base.h"
 #include"contact.h"
 #include"vector_assistant.h"
+
 ColliderBase::ColliderBase(ColliderName name)
 	:name_(name)
 {
@@ -20,7 +21,7 @@ void ColliderBase::Draw(const VECTOR& pos)
 
 }
 
-bool ColliderBase::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR& other_pos, std::shared_ptr<ColliderBase> other_coll,Contact& contact)
+bool ColliderBase::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR& other_pos, const VECTOR& other_vel, std::shared_ptr<ColliderBase> other_coll,Contact& contact)
 {
 	
 

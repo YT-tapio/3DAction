@@ -26,23 +26,24 @@ void AnimatorPlayer::Update()
 {
 	// とりあえずアタッチしましょう
 	std::string before_anim_name = now_anim_name_;
-	now_anim_name_ = "jogging";
 
-	if (CheckHitKey(KEY_INPUT_0)) { now_anim_name_ = "idle"; }
-	if (CheckHitKey(KEY_INPUT_1)) { now_anim_name_ = "run"; }
+	if (player_->GetIsGround()) 
+	{ 
+		now_anim_name_ = kIdle;
+	}
+	if (player_->GetIsMove()) { now_anim_name_ = kJogging; }
+	if (player_->GetIsDash()) { now_anim_name_ = kRun; }
 	
 	if (before_anim_name != now_anim_name_)
 	{
-		printfDx("%d\n", animation_datas_.size());
-		if (before_anim_name != "nothing")
+		//printfDx("%d\n", animation_datas_.size());
+		if (before_anim_name != kNothing)
 		{
 			MV1DetachAnim(handle_, animation_datas_[before_anim_name].anim_index);
 		}
 
 		animation_datas_[now_anim_name_].attach_index = MV1AttachAnim(handle_, animation_datas_[now_anim_name_].attach_index,
 			animation_datas_[now_anim_name_].handle, FALSE);
-
-		printfDx("%d\n", animation_datas_.size());
 
 		animation_datas_[now_anim_name_].total_time = MV1GetAttachAnimTotalTime(handle_, animation_datas_[now_anim_name_].attach_index);
 
@@ -59,5 +60,4 @@ void AnimatorPlayer::Update()
 	}
 	MV1SetAttachAnimTime(handle_, animation_datas_[now_anim_name_].attach_index,
 		animation_datas_[now_anim_name_].play_time);
-	
 }

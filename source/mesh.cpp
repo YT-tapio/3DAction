@@ -17,7 +17,7 @@ Mesh::~Mesh()
 
 }
 
-bool Mesh::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR& other_pos, std::shared_ptr<ColliderBase> other_coll,Contact& contact)
+bool Mesh::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR& other_pos, const VECTOR& other_vel, std::shared_ptr<ColliderBase> other_coll,Contact& contact)
 {
 	bool is_hit = FALSE;
 

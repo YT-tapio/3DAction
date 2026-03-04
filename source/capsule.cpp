@@ -32,7 +32,7 @@ void Capsule::Draw(const VECTOR& pos)
 	DrawCapsule3D(start, end, r_, kDivNum, Color::kWhite, Color::kWhite, FALSE);
 }
 
-bool Capsule::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR& other_pos, std::shared_ptr<ColliderBase> other_coll,Contact& contact)
+bool Capsule::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR& other_pos, const VECTOR& other_vel,std::shared_ptr<ColliderBase> other_coll,Contact& contact)
 {
 
 	bool is_hit = FALSE;
@@ -67,6 +67,12 @@ bool Capsule::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTO
 	{
 		// Œ^•ÏŠ·
 		auto capsule = std::dynamic_pointer_cast<Capsule>(other_coll);
+		float other_radius = capsule->GetRadius();
+		float other_vertical = capsule->GetVertical();
+		VECTOR other_coll_start_pos = VAdd(other_pos, VGet(0.f, other_radius, 0.f));
+		VECTOR other_coll_end_pos = VAdd(other_coll_start_pos, VGet(0.f, other_vertical, 0.f));
+		is_hit = Collision::IsMoveCapsuleToCapsule(start_pos, end_pos, r_, vel,other_coll_start_pos, other_coll_end_pos, other_radius,other_vel);
+
 	}
 		break;
 	case ColliderName::kMesh:

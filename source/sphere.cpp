@@ -21,7 +21,7 @@ Sphere::~Sphere()
 
 }
 
-bool Sphere::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR& other_pos, std::shared_ptr<ColliderBase> other_coll,Contact& contact)
+bool Sphere::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR& other_pos, const VECTOR& other_vel, std::shared_ptr<ColliderBase> other_coll,Contact& contact)
 {
 	bool is_hit = FALSE;
 	VECTOR center_pos = VAdd(my_pos, VGet(0.f, r_, 0.f));

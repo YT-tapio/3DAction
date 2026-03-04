@@ -13,14 +13,14 @@ Stage::Stage()
 {
 	LoadFile();
 
-	handle_ = MV1LoadModel("data/model/stage/prac_stage6.mv1");
+	handle_ = MV1LoadModel("data/model/stage/stage_field.mv1");
 
 	if (handle_ == -1)
 	{
 		printfDx("ì«Ç›çûÇ›Ç≈Ç´Ç»Ç¢\n");
 	}
 	pos_ = VGet(0.f, -10.f, 30.f);
-	scale_ = VectorAssistant::VGetSame(0.1f);
+	scale_ = VectorAssistant::VGetSame(14.5f);
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Mesh>(handle_), &pos_, FALSE, TRUE, 20.f);
 }
 

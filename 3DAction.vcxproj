@@ -134,6 +134,7 @@
     <ClCompile Include="source\animator_base.cpp" />
     <ClCompile Include="source\animator_player.cpp" />
     <ClCompile Include="source\application.cpp" />
+    <ClCompile Include="source\enemy_base.cpp" />
     <ClCompile Include="source\sphere_camera.cpp" />
     <ClCompile Include="source\tracking_camera.cpp" />
     <ClCompile Include="source\virtual_camera_base.cpp" />
@@ -175,6 +176,7 @@
   <ItemGroup>
     <ClInclude Include="source\ai_input.h" />
     <ClInclude Include="source\animation_data.h" />
+    <ClInclude Include="source\enemy_base.h" />
     <ClInclude Include="source\load_animation.h" />
     <ClInclude Include="source\animator_base.h" />
     <ClInclude Include="source\animator_player.h" />

@@ -1,9 +1,7 @@
 #include<iostream>
 #include"DxLib.h"
 #include"player.h"
-#include"collider_base.h"
 #include"capsule.h"
-#include"sphere.h"
 #include"rigid_body.h"
 #include"FPS.h"
 #include"vector_assistant.h"
@@ -17,6 +15,7 @@
 #include"ai_input.h"
 #include"animator_base.h"
 #include"animator_player.h"
+#include"enemy_base.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	: CharacterBase("player")
@@ -28,23 +27,18 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	pos_		= VGet(0.f, -2.f,10.f);
 	VECTOR head_pos = VAdd(pos_, VGet(0.f, 10.f, 0.f));
 	head_pos_ = head_pos;
-	printfDx("x : %.2f,y : %.2f,z : %.2f\n", head_pos_.x, head_pos_.y, head_pos_.z);
+	
 	scale_ = VectorAssistant::VGetSame(0.05f);
 	handle_ = MV1LoadModel("data/model/player/Lola_B_Styperek.mv1");
+	
 	if (handle_ == -1) { printfDx("ì«Ç›çûÇ›ÉGÉâÅ[\n"); }
 	Setting();
-	if (TRUE)
-	{
-		rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f);
-	}
-	else
-	{
-		rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Sphere>(1.5f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f);
-	}
+	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f);
 	fall_speed_ = 0.f;
+	is_move_ = FALSE;
 	is_ground_ = FALSE;
+	is_dash_ = FALSE;
 	input_ = input;
-	
 }
 
 Player::~Player()
@@ -128,25 +122,36 @@ void Player::Move()
 
 	float speed = kSpeed;
 
-	//InputÇçÏÇ¡ÇΩÇÁÇ±ÇÃèàóùÇÕè¡ÇµÇƒÇ≠ÇæÇ≥Ç¢
-	if (CheckHitKey(KEY_INPUT_W)) { dir = VAdd(dir, VGet(0.f, 0.f, 1.f));  }
-	if (CheckHitKey(KEY_INPUT_S)) { dir = VAdd(dir, VGet(0.f, 0.f, -1.f)); }
-	if (CheckHitKey(KEY_INPUT_D)) { dir = VAdd(dir, VGet(1.f, 0.f, 0.f));  }
-	if (CheckHitKey(KEY_INPUT_A)) { dir = VAdd(dir, VGet(-1.f, 0.f, 0.f)); }
-
+	// InputÇçÏÇ¡ÇΩÇÁÇ±ÇÃèàóùÇÕè¡ÇµÇƒÇ≠ÇæÇ≥Ç¢
 	dir = input_->GetMoveDir();
-	if (input_->IsDash()) { speed *= 2.5f; }
+	
 	if (VSize(dir) > 0) 
 	{
 		dir_ = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(*camera_dir_), VectorAssistant::VGetTan(dir));
 		dir_ = VNorm(dir_);
+		if (input_->IsDash())
+		{
+			speed *= 2.5f;
+			is_dash_ = TRUE;
+		}
+		else
+		{
+			is_dash_ = FALSE;
+		}
+		is_move_ = TRUE;
 	}
-
+	else
+	{
+		is_move_ = FALSE;
+		is_dash_ = FALSE;
+	}
+	
 	vel_ = VScale(dir_, speed);
 	if (!is_ground_)
 	{
-		fall_speed_ += 0.05f;
+		fall_speed_ += 0.03f;
 		vel_ = VAdd(vel_, VGet(0.f, -fall_speed_, 0.f));
+		//printfDx("%.2f\n", fall_speed_);
 	}
 	
 	vel_ = VScale(vel_, (FPS::GetInstance().GetDeltaTime() * 60.f));
@@ -175,10 +180,16 @@ void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 	// ihitÇâΩé“Ç©Ç…ïœä∑
 
 	auto stage = std::dynamic_pointer_cast<Stage>(object);
-
+	auto enemy = std::dynamic_pointer_cast<EnemyBase>(object);
 	if (stage != nullptr)
 	{
 		//printfDx("stage");
+		return;
+	}
+
+	if (enemy != nullptr)
+	{
+		printfDx("enemy");
 		return;
 	}
 
@@ -200,4 +211,19 @@ void Player::OnUnGrounded()
 VECTOR* Player::GetHeadPos()
 {
 	return &head_pos_;
+}
+
+const bool Player::GetIsMove() const
+{
+	return is_move_;
+}
+
+const bool Player::GetIsGround() const
+{
+	return is_ground_;
+}
+
+const bool Player::GetIsDash() const
+{
+	return is_dash_;
 }

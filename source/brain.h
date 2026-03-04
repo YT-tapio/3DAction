@@ -45,6 +45,4 @@ private:
 	VECTOR vel_;
 	VECTOR target_vel_;
 
-	
-
 };

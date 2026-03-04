@@ -4,7 +4,6 @@
 
 class RigidBody;
 class InputBase;
-class AnimatorBase;
 
 class Player : public CharacterBase , public IPhysicsEventReceiver
 {
@@ -32,22 +31,26 @@ public:
 
 	VECTOR* GetHeadPos();
 
+	const bool GetIsMove() const;
+
+	const bool GetIsGround() const;
+
+	const bool GetIsDash() const;
+
 private:
 
 	const float kSpeed = 0.3f;
 
 	std::shared_ptr<RigidBody> rigid_body_;
 	std::shared_ptr<const InputBase> input_;
-	std::shared_ptr<AnimatorBase> animator_;
-
-	VECTOR dir_;
-	VECTOR vel_;
 
 	VECTOR* camera_dir_;
 	VECTOR head_pos_;
 
 	float fall_speed_;
 
+	bool is_move_;
+	bool is_dash_;
 	bool is_ground_;
 
 
