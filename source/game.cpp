@@ -45,8 +45,6 @@ void Game::Init()
 void Game::Update()
 {
 	
-
-	
 	for (auto& obj : objects_)
 	{
 		if (!obj->GetIsActive()) { continue; }

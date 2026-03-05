@@ -4,6 +4,7 @@
 
 class RigidBody;
 class InputBase;
+class BehaviorBase;
 
 class Player : public CharacterBase , public IPhysicsEventReceiver
 {
@@ -43,9 +44,13 @@ private:
 
 	std::shared_ptr<RigidBody> rigid_body_;
 	std::shared_ptr<const InputBase> input_;
+	std::shared_ptr<BehaviorBase> behavior_;
 
 	VECTOR* camera_dir_;
+	VECTOR hand_pos_;
 	VECTOR head_pos_;
+
+	
 
 	float fall_speed_;
 
@@ -61,5 +66,7 @@ private:
 	void Move();
 
 	void Gravity();
+
+	void UpdateBone();
 
 };

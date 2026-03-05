@@ -136,6 +136,9 @@
     <Filter Include="ソース ファイル\interface">
       <UniqueIdentifier>{c192c531-cb51-418e-8a09-9f1d0dca01d0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\behavior">
+      <UniqueIdentifier>{168e3f5b-4393-4da1-a460-2915c4034073}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -263,6 +266,15 @@
     </ClCompile>
     <ClCompile Include="source\enemy_base.cpp">
       <Filter>ソース ファイル\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="source\behavior_base.cpp">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="source\attack_base.cpp">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="source\punch.cpp">
+      <Filter>ソース ファイル\behavior</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -436,6 +448,15 @@
     </ClInclude>
     <ClInclude Include="source\enemy_base.h">
       <Filter>ソース ファイル\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\behavior_base.h">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\attack_base.h">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\punch.h">
+      <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

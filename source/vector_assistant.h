@@ -85,6 +85,15 @@ namespace VectorAssistant
 
 		return value;
 	}
+	
+	inline VECTOR VGetPositionFromMatrix(const MATRIX& mat)
+	{
+		VECTOR vec = VGetZero();
+		vec.x = mat.m[3][0];
+		vec.y = mat.m[3][1];
+		vec.z = mat.m[3][2];
+		return vec;
+	}
 
 	/// <summary>
 	/// yŽ²‰ñ“]‚µ‚½‚Æ‚«‚Ìvector

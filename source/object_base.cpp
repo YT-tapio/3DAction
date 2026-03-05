@@ -1,5 +1,4 @@
-#include<iostream>
-#include"DxLib.h"
+
 #include"object_base.h"
 #include"vector_assistant.h"
 

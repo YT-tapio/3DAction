@@ -134,7 +134,10 @@
     <ClCompile Include="source\animator_base.cpp" />
     <ClCompile Include="source\animator_player.cpp" />
     <ClCompile Include="source\application.cpp" />
+    <ClCompile Include="source\behavior_base.cpp" />
     <ClCompile Include="source\enemy_base.cpp" />
+    <ClCompile Include="source\attack_base.cpp" />
+    <ClCompile Include="source\punch.cpp" />
     <ClCompile Include="source\sphere_camera.cpp" />
     <ClCompile Include="source\tracking_camera.cpp" />
     <ClCompile Include="source\virtual_camera_base.cpp" />
@@ -182,6 +185,8 @@
     <ClInclude Include="source\animator_player.h" />
     <ClInclude Include="source\application.h" />
     <ClInclude Include="source\load_animation.cpp" />
+    <ClInclude Include="source\attack_base.h" />
+    <ClInclude Include="source\punch.h" />
     <ClInclude Include="source\screen_size.h" />
     <ClInclude Include="source\sphere_camera.h" />
     <ClInclude Include="source\tracking_camera.h" />
@@ -231,6 +236,7 @@
     <ClInclude Include="source\vector_assistant.h" />
     <ClInclude Include="source\collider_group.h" />
     <ClInclude Include="source\brain.h" />
+    <ClInclude Include="source\behavior_base.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

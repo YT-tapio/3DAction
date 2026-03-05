@@ -16,12 +16,15 @@
 #include"animator_base.h"
 #include"animator_player.h"
 #include"enemy_base.h"
+#include"behavior_base.h"
+#include"punch.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	: CharacterBase("player")
 	, IPhysicsEventReceiver()
 {
 	camera_dir_ = camera_dir;
+	hand_pos_ = VectorAssistant::VGetZero();
 	vel_		= VectorAssistant::VGetZero();
 	dir_		= VectorAssistant::VGetZero();
 	pos_		= VGet(0.f, -2.f,10.f);
@@ -33,12 +36,14 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	
 	if (handle_ == -1) { printfDx("読み込みエラー\n"); }
 	Setting();
+	UpdateBone();
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f);
 	fall_speed_ = 0.f;
 	is_move_ = FALSE;
 	is_ground_ = FALSE;
 	is_dash_ = FALSE;
 	input_ = input;
+	
 }
 
 Player::~Player()
@@ -48,6 +53,7 @@ Player::~Player()
 
 void Player::Init()
 {
+	behavior_ = std::make_shared<Punch>(weak_from_this(),&hand_pos_);
 	rigid_body_->Init(weak_from_this());
 	// physicsの登録
 	Physics::GetInstance().AddBody(rigid_body_);
@@ -69,6 +75,9 @@ void Player::Update()
 	//Gravity();
 	animator_->Update();
 	Setting();
+	// 参照の更新
+	UpdateBone();
+	
 }
 
 void Player::LateUpdate()
@@ -84,7 +93,8 @@ void Player::Draw()
 void Player::Debug()
 {
 	rigid_body_->Debug();
-	DrawSphere3D(head_pos_, 0.5f, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
+	behavior_->Debug();
+	//DrawSphere3D(head_pos_, 0.5f, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "----------player-----------", Color::kWhite);
 	Debug::GetInstance().Add();
 
@@ -158,7 +168,6 @@ void Player::Move()
 	if (VSize(vel_) > 0.f)
 	{ 
 		rot_.y = atan2f(-dir_.x, (-dir_.z));
-		//printfDx("%.2f\n", rot_.y);
 		if (rot_.y > RadianAssistant::kReverceRad)	{ rot_.y -= (RadianAssistant::kReverceRad * 2.f); }
 		if (rot_.y < -RadianAssistant::kReverceRad)	{ rot_.y += (RadianAssistant::kReverceRad * 2.f); }
 	}
@@ -171,6 +180,16 @@ void Player::Gravity()
 {
 	if (is_ground_) { return; }
 	rigid_body_->AddForce();
+}
+
+void Player::UpdateBone()
+{
+	int hand_bone_num = 0;
+	const TCHAR* hand_bone_path = "mixamorig:RightHand";
+	hand_bone_num = MV1SearchFrame(handle_, hand_bone_path);
+	MATRIX hand_mat = MV1GetFrameLocalWorldMatrix(handle_, hand_bone_num);
+	VECTOR hand_pos = VectorAssistant::VGetPositionFromMatrix(hand_mat);
+	hand_pos_ = hand_pos;
 }
 
 void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
