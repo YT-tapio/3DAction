@@ -2,5 +2,6 @@
 
 namespace PadConfig
 {
-	static int jump = XINPUT_BUTTON_A;
+	static int punch		= XINPUT_BUTTON_X;
+	static int jump		= XINPUT_BUTTON_A;
 }

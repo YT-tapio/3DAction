@@ -20,6 +20,8 @@ public:
 
 	const bool IsDash() const override;
 
+	const bool IsPunch() const override;
+
 	const VECTOR GetMoveDir() const override;
 
 	const VECTOR GetCameraDir() const override;

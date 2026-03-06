@@ -24,7 +24,7 @@ Capsule::~Capsule()
 
 void Capsule::Draw(const VECTOR& pos)
 {
-	VECTOR start = VAdd(pos, VGet(0.f, r_, 0.f));
+	VECTOR start = VAdd(VAdd(pos, offset_vel_), VGet(0.f, r_, 0.f));
 	VECTOR end = VAdd(start, VGet(0.f, vertical_, 0.f));
 
 	const int kDivNum = 20;
@@ -61,7 +61,9 @@ bool Capsule::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTO
 		// Œ^•ÏŠ·
 		auto sphere = std::dynamic_pointer_cast<Sphere>(other_coll);
 		
-	}		
+		is_hit = Collision::IsMoveSphereToCapsule(other_pos, sphere->GetRadius(), other_vel, start_pos, end_pos, r_, vel);
+
+	}
 		break;
 	case ColliderName::kCapsule:
 	{

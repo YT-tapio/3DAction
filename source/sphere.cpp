@@ -43,13 +43,20 @@ bool Sphere::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR
 	{
 		// 型変換
 		auto sphere = std::dynamic_pointer_cast<Sphere>(other_coll);
-
+		
+		is_hit = Collision::IsMoveSphereToSphere(my_pos, r_, vel, other_pos, sphere->GetRadius(), other_vel);
 	}
 	break;
 	case ColliderName::kCapsule:
 	{
 		// 型変換
 		auto capsule = std::dynamic_pointer_cast<Capsule>(other_coll);
+		float capsule_radius = capsule->GetRadius();
+		float capsule_vertical = capsule->GetVertical();
+		VECTOR capsule_start_pos = VAdd(other_pos, VGet(0.f, capsule_radius, 0.f));
+		VECTOR capsule_end_pos = VAdd(capsule_start_pos, VGet(0.f, capsule_vertical, 0.f));
+		is_hit = Collision::IsMoveSphereToCapsule(center_pos, r_, vel, capsule_start_pos, capsule_end_pos, capsule_radius, other_vel);
+		
 	}
 	break;
 	case ColliderName::kMesh:
@@ -72,9 +79,9 @@ bool Sphere::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR
 
 VECTOR Sphere::FixPos(const VECTOR& my_pos, const VECTOR& vel, const VECTOR& other_pos, std::shared_ptr<ColliderBase> other_coll, Contact& contact)
 {
-	VECTOR offset_vel = vel;
-	VECTOR old_center_pos = VAdd(my_pos, VGet(0.f, r_, 0.f));	// 移動前の中心点
-	VECTOR next_center_pos = VAdd(old_center_pos,vel);				// 移動後の中心点
+	VECTOR offset_vel				= vel;
+	VECTOR old_center_pos		= VAdd(my_pos, VGet(0.f, r_, 0.f));	// 移動前の中心点
+	VECTOR next_center_pos	= VAdd(old_center_pos,vel);				// 移動後の中心点
 
 	switch (other_coll->GetName())
 	{
@@ -125,7 +132,7 @@ void Sphere::Draw(const VECTOR& pos)
 {
 	const int kDivNum = 20;
 
-	VECTOR center_pos = VAdd(pos, VGet(0.f, r_, 0.f));
+	VECTOR center_pos = VAdd(VAdd(pos,offset_vel_), VGet(0.f, r_, 0.f));
 
 	DrawSphere3D(center_pos, r_, kDivNum, Color::kWhite, Color::kWhite, FALSE);
 }

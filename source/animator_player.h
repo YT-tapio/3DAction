@@ -19,6 +19,7 @@ private:
 	const std::string kIdle			= "idle";
 	const std::string kJogging	= "jogging";
 	const std::string kRun			= "run";
+	const std::string kPunch		= "punch";
 
 	std::shared_ptr<const Player> player_;
 };

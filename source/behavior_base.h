@@ -1,12 +1,12 @@
 #pragma once
 
-class IPhysicsEventReceiver;
+class ObjectBase;
 
 class BehaviorBase
 {
 public:
 
-	BehaviorBase(std::weak_ptr<IPhysicsEventReceiver> owner);
+	BehaviorBase(std::weak_ptr<ObjectBase> owner);
 
 	virtual ~BehaviorBase();
 
@@ -18,7 +18,7 @@ public:
 
 protected:
 
-	std::weak_ptr<IPhysicsEventReceiver> owner_;
+	std::weak_ptr<ObjectBase> owner_;
 
 private:
 

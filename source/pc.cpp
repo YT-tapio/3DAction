@@ -23,7 +23,7 @@ void PC::Init()
 		key_state_[i].is_pressed = FALSE;
 	}
 	//マウスのpush状態を初期化
-	for (int i = 0; i < kMaxPadButtonNum; i++)
+	for (int i = 0; i < kMaxMouseButtonNum; i++)
 	{
 		mouse_state_[i].time				= 0;
 		mouse_state_[i].frame			= 0;
@@ -62,7 +62,6 @@ float PC::GetPushingTimeKey(int key_code)
 float PC::GetPushingTimeMouseButton(int mouse_code)
 {
 	float time = -1.f;
-
 	if (mouse_state_[mouse_code].is_pressed)
 	{
 		int now_time = GetNowCount();
@@ -140,12 +139,12 @@ void PC::UpdateKey()
 
 void PC::UpdateMouseButton()
 {
-	for (int i = 0; i < kMaxPadButtonNum; i++)
+	for (int i = 0; i < kMaxMouseButtonNum; i++)
 	{
 		// 現在のどのマウスボタンかの判別
 		int mouse_button_num	= GetMouseButtonNum(i);
-		bool now_is_pressed		= ((GetMouseInput() & mouse_button_num) == 1);
-		if (now_is_pressed == mouse_state_[i].is_pressed)
+		bool now_is_pressed		= (GetMouseInput() & mouse_button_num);
+		if (now_is_pressed != mouse_state_[i].is_pressed)
 		{
 			mouse_state_[i].time		= GetNowCount();
 			mouse_state_[i].frame	= 0;

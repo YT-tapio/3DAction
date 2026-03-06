@@ -12,6 +12,7 @@ AnimatorBase::AnimatorBase(const char* data_file_path,int handle)
 	kDataFilePath = data_file_path;
 	now_anim_name_ = "nothing";
 	handle_ = handle;
+	is_end_ = FALSE;
 }
 
 AnimatorBase::~AnimatorBase()
@@ -31,6 +32,11 @@ void AnimatorBase::Init()
 void AnimatorBase::Update()
 {
 
+}
+
+void AnimatorBase::PlayRequest(std::string name)
+{
+	request_names_.push_back(name);
 }
 
 void AnimatorBase::LoadFile(const char* file_path)
@@ -54,6 +60,7 @@ void AnimatorBase::LoadFile(const char* file_path)
 		std::string anim_file_path;
 		int anim_index		= -1;
 		int priority		= -1;
+		int loop = -1;
 		float play_speed	= 0.f;
 		AnimationData anim_data = {};
 
@@ -77,8 +84,17 @@ void AnimatorBase::LoadFile(const char* file_path)
 		std::getline(ss, data, ',');
 		priority = std::stoi(data);
 
+		// ループするかどうか
+		std::getline(ss, data, ',');
+		loop = (std::stoi(data) == 1);
+
 		// アニメーションデータを生成
-		LoadAnimation(anim_data, anim_file_path.c_str(), anim_index, play_speed, priority);
+		LoadAnimation(anim_data, anim_file_path.c_str(), anim_index, play_speed, priority, loop);
 		animation_datas_[anim_name] = anim_data;
 	}
+}
+
+void AnimatorBase::ResetRequest()
+{
+	request_names_.clear();
 }

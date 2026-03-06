@@ -3,7 +3,7 @@
 #include"object_base.h"
 #include"physics.h"
 
-AttackBase::AttackBase(std::weak_ptr<IPhysicsEventReceiver> owner)
+AttackBase::AttackBase(std::weak_ptr<ObjectBase> owner)
 	: BehaviorBase(owner)
 {
 

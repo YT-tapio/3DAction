@@ -9,7 +9,7 @@ class AttackBase : public BehaviorBase , public IPhysicsEventReceiver
 {
 public:
 
-	AttackBase(std::weak_ptr<IPhysicsEventReceiver> owner);
+	AttackBase(std::weak_ptr<ObjectBase> owner);
 
 	~AttackBase() override;
 

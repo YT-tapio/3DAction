@@ -2,6 +2,7 @@
 #include"DxLib.h"
 #include"player.h"
 #include"capsule.h"
+#include"sphere.h"
 #include"rigid_body.h"
 #include"FPS.h"
 #include"vector_assistant.h"
@@ -53,23 +54,29 @@ Player::~Player()
 
 void Player::Init()
 {
-	behavior_ = std::make_shared<Punch>(weak_from_this(),&hand_pos_);
+	auto mine = std::dynamic_pointer_cast<Player>(shared_from_this());
+	auto a = std::dynamic_pointer_cast<ObjectBase>(mine);
+	
+	if (a == nullptr) { printfDx("¸”s"); }
+
+	behavior_ = std::make_shared<Punch>(a, &hand_pos_, std::make_shared<RigidBody>(std::make_shared<Sphere>(1.5f, VGet(0.f, -1.5f, 0.f)), &hand_pos_, FALSE, TRUE, 1.f));
 	rigid_body_->Init(weak_from_this());
 	// physics‚Ì“o˜^
 	Physics::GetInstance().AddBody(rigid_body_);
 	// setter‚Ö‚Ì“o˜^
 	ObjectSetter::GetInstance().AddResource(handle_, &pos_,&rot_,&scale_);
-	auto mine = shared_from_this();
-	animator_ = std::make_shared<AnimatorPlayer>(handle_, std::dynamic_pointer_cast<Player>(mine));
+	
+	animator_ = std::make_shared<AnimatorPlayer>(handle_, mine);
 	animator_->Init();
+	behavior_->Init();
 }
 
 void Player::Update()
 {
 	// input_->Update();
 	Move();
-
 	rigid_body_->SetVelocity(vel_);
+	behavior_->Update();
 	//VECTOR a = *head_pos_;
 	//printfDx("x : %.2f,y : %.2f,z : %.2f\n", (*head_pos_).x, (*head_pos_).y, (*head_pos_).z);
 	//Gravity();
@@ -173,7 +180,7 @@ void Player::Move()
 	}
 	
 	if (CheckHitKey(KEY_INPUT_SPACE)) { pos_ = VGet(0.f, 0.f, 0.f); vel_ = VGet(0.f, 0.f, 0.f); is_ground_ = FALSE; fall_speed_ = 0.f;}
-	
+	if (input_->IsPunch()) { animator_->PlayRequest("punch"); }
 }
 
 void Player::Gravity()
@@ -197,9 +204,9 @@ void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 	//‰½‚©‚ª“–‚½‚Á‚½‚Ìˆ—
 
 	// ihit‚ğ‰½Ò‚©‚É•ÏŠ·
-
 	auto stage = std::dynamic_pointer_cast<Stage>(object);
 	auto enemy = std::dynamic_pointer_cast<EnemyBase>(object);
+	auto attack = std::dynamic_pointer_cast<Punch>(object);
 	if (stage != nullptr)
 	{
 		//printfDx("stage");
@@ -208,8 +215,13 @@ void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 
 	if (enemy != nullptr)
 	{
-		printfDx("enemy");
+		//printfDx("enemy");
 		return;
+	}
+
+	if (attack != nullptr)
+	{
+		//printfDx("attack\n");
 	}
 
 }

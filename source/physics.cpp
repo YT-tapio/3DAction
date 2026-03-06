@@ -50,15 +50,14 @@ void Physics::Update()
 	// 摩擦の適応
 	// Resistance();
 
-
+	//printfDx("-----------------\n");
 
 	for (auto& main_body : rigid_bodies_)
 	{
 		if (!main_body->GetIsActive()) { continue; }
-		// 動いていないものは直ぐに別のものに
 		for (auto& target_body : rigid_bodies_)
 		{
-			if (!target_body->GetIsActive()) { return; }
+			if (!target_body->GetIsActive()) { continue; }
 			if (main_body == target_body) { continue; }
 			contact.polys.clear();
 			// コライダーにhitの確認を行う
@@ -66,6 +65,7 @@ void Physics::Update()
 			auto target_coll	= target_body->GetCollider();
 			if (my_coll->CheckCollision(main_body->GetPosition(),main_body->GetVelocity(), target_body->GetPosition(),target_body->GetVelocity(),target_coll, contact))
 			{
+				
 				main_body->OnHit(target_body->GetIPhysicsObject());
 				target_body->OnHit(main_body->GetIPhysicsObject());
 
@@ -75,6 +75,7 @@ void Physics::Update()
 				VECTOR offset_vel = my_coll->FixPos(main_body->GetPosition(), main_body->GetVelocity(), target_body->GetVelocity(), target_coll, contact);
 				main_body->Update(offset_vel);
 			}
+			
 			
 		}
 		main_body->SetPos();
@@ -448,6 +449,7 @@ void Physics::CheckGround()
 		for (auto& target_body : rigid_bodies_)
 		{
 			if (main_body == target_body) { continue; }
+			if (!target_body->GetIsActive()) { continue; }
 			Contact contact = {};
 			// IPhysicsの足元当たり判定を呼びたい
 			auto body = main_body->GetIPhysicsObject().get();

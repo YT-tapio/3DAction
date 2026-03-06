@@ -3,7 +3,7 @@
 #include"input_interface.h"
 
 const int kMaxKeyNum = 256;
-const int kMaxPadButtonNum = 3;
+const int kMaxMouseButtonNum = 3;
 
 struct InputState;
 
@@ -59,7 +59,7 @@ public:
 private:
 
 	InputState key_state_[kMaxKeyNum];		// キーのpush状態
-	InputState mouse_state_[kMaxPadButtonNum];	// マウスのpush状態
+	InputState mouse_state_[kMaxMouseButtonNum];	// マウスのpush状態
 
 	VECTOR mouse_pos_;			// マウスのpos
 	VECTOR mouse_vel_;

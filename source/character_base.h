@@ -19,6 +19,8 @@ public:
 
 	virtual void Debug() override;
 
+	std::shared_ptr<AnimatorBase> GetAnimator();
+
 protected:
 
 	VECTOR dir_;

@@ -38,3 +38,8 @@ void CharacterBase::Debug()
 {
 
 }
+
+std::shared_ptr<AnimatorBase> CharacterBase::GetAnimator()
+{
+	return animator_;
+}

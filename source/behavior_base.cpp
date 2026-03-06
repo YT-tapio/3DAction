@@ -2,7 +2,7 @@
 #include"behavior_base.h"
 #include"object_base.h"
 
-BehaviorBase::BehaviorBase(std::weak_ptr<IPhysicsEventReceiver> owner)
+BehaviorBase::BehaviorBase(std::weak_ptr<ObjectBase> owner)
 	:owner_(owner)
 {
 

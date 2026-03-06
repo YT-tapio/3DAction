@@ -44,7 +44,7 @@ void Game::Init()
 
 void Game::Update()
 {
-	
+	//printfDx("---‚Ü‚¢‚é[‚Õ---\n");
 	for (auto& obj : objects_)
 	{
 		if (!obj->GetIsActive()) { continue; }

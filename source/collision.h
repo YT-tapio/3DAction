@@ -159,6 +159,51 @@ namespace Collision
 		return (all_size > dist_size);
 	}
 
+	inline bool IsMoveSphereToSphere(const VECTOR& sphere1_pos, const float& sphere1_r, const VECTOR& sphere1_velocity,
+		const VECTOR& sphere2_pos, const float& sphere2_r, const VECTOR& sphere2_velocity)
+	{
+
+		VECTOR sphere1_future_pos = VAdd(sphere1_pos, sphere1_velocity);
+		VECTOR sphere2_future_pos = VAdd(sphere2_pos, sphere2_velocity);
+
+		return CapsuleToCapsule(sphere1_pos, sphere1_future_pos, sphere1_r, sphere2_pos, sphere2_future_pos, sphere2_r);
+	}
+
+	inline bool IsMoveSphereToCapsule(const VECTOR& sphere_pos, const float& sphere_r, const VECTOR& sphere_velocity,
+		const VECTOR& capsule_start_pos, const VECTOR& capsule_end_pos, const float& capsule_r, const VECTOR& capsule_velocity)
+	{
+		
+		VECTOR sphere_future_pos = VAdd(sphere_pos, sphere_velocity);
+
+		// 移動のカプセルを作る
+		float capsule_vel_size = VSize(capsule_velocity);
+		float capsule_diameter = capsule_r * 2.f;	// まずは直径を出す
+		
+		int capsule_add_num = 0;
+
+		if (capsule_vel_size > capsule_diameter)
+		{
+			capsule_add_num = ((capsule_vel_size - capsule_diameter) / capsule_diameter) + 1.f;
+		}
+
+		int capsule_max = capsule_add_num + 2;
+
+		for (int i = 0; i < capsule_max; i++)
+		{
+			VECTOR capsule_offset_vel = VectorAssistant::VGetZero();	//どのくらい離れているか
+			if (i != 0) { capsule_offset_vel = VScale(capsule_velocity, i / (capsule_max - 1)); }
+			VECTOR offset_capsule_start_pos = VAdd(capsule_start_pos, capsule_offset_vel);		// 調整した始点
+			VECTOR offset_capsule_end_pos = VAdd(capsule_end_pos, capsule_offset_vel);		// 調整した終点
+
+			if (CapsuleToCapsule(sphere_pos, sphere_future_pos, sphere_r, offset_capsule_start_pos, offset_capsule_end_pos, capsule_r))
+			{
+				return TRUE;
+			}
+		}
+
+		return FALSE;
+	}
+
 	inline bool IsMoveCapsuleToCapsule(const VECTOR& capsule1_start_pos, const VECTOR& capsule1_end_pos, const float& capsule1_r, const VECTOR& capsule1_velocity,
 		const VECTOR& capsule2_start_pos, const VECTOR& capsule2_end_pos, const float& capsule2_r, const VECTOR& capsule2_velocity)
 	{
@@ -206,6 +251,8 @@ namespace Collision
 
 		return FALSE;
 	}
+
+
 
 	inline bool SegmentToMesh(const VECTOR& start_pos, const VECTOR& end_pos, const int& mesh,Contact& contact)
 	{

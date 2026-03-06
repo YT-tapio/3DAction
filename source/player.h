@@ -57,7 +57,7 @@ private:
 	bool is_move_;
 	bool is_dash_;
 	bool is_ground_;
-
+	bool* is_punch_;
 
 	// ŠÖ”ŒQ
 

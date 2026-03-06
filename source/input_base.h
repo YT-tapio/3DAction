@@ -16,6 +16,8 @@ public:
 
 	virtual const bool IsDash() const;
 
+	virtual const bool IsPunch() const;
+
 	virtual const VECTOR GetMoveDir() const;
 
 	virtual const VECTOR GetCameraDir() const;

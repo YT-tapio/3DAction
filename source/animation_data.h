@@ -11,4 +11,6 @@ struct AnimationData
 	float play_time;	// Œ»İ‚ÌÄ¶ŠÔ
 	float total_time;	// ãŒÀŠÔ
 	float play_speed;	// Ä¶‘¬“x
+
+	bool loop;
 };
