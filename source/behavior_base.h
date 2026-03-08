@@ -16,6 +16,8 @@ public:
 
 	virtual void Debug();
 
+	std::weak_ptr<ObjectBase> GetOwner();
+
 protected:
 
 	std::weak_ptr<ObjectBase> owner_;

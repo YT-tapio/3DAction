@@ -8,7 +8,7 @@ public:
 
 	AnimatorPlayer(int handle, std::shared_ptr<Player> player);
 
-	~AnimatorPlayer();
+	~AnimatorPlayer() override;
 
 
 	void Update() override;

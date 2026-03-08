@@ -8,13 +8,22 @@ public:
 
 	AnimatorBase(const char* data_file_path,int handle);
 
-	~AnimatorBase();
+	virtual ~AnimatorBase();
 
 	void Init();
 
 	virtual void Update();
 
 	void PlayRequest(std::string name);
+
+	/// <summary>
+	/// ˆø”‚ÌÄ¶ŠÔ‚ğ“¾‚é
+	/// </summary>
+	/// <param name="name"></param>
+	/// <returns></returns>
+	const float GetPlayTime(std::string name) const;
+
+	const std::string GetNowAniName() const;
 
 protected:
 

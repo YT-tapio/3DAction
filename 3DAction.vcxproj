@@ -132,6 +132,7 @@
   <ItemGroup>
     <ClCompile Include="source\ai_input.cpp" />
     <ClCompile Include="source\animator_base.cpp" />
+    <ClCompile Include="source\animator_enemy.cpp" />
     <ClCompile Include="source\animator_player.cpp" />
     <ClCompile Include="source\application.cpp" />
     <ClCompile Include="source\behavior_base.cpp" />
@@ -179,6 +180,7 @@
   <ItemGroup>
     <ClInclude Include="source\ai_input.h" />
     <ClInclude Include="source\animation_data.h" />
+    <ClInclude Include="source\animator_enemy.h" />
     <ClInclude Include="source\enemy_base.h" />
     <ClInclude Include="source\load_animation.h" />
     <ClInclude Include="source\animator_base.h" />

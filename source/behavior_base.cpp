@@ -27,3 +27,8 @@ void BehaviorBase::Debug()
 {
 
 }
+
+std::weak_ptr<ObjectBase> BehaviorBase::GetOwner()
+{
+	return owner_;
+}

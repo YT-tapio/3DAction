@@ -59,7 +59,7 @@ void Player::Init()
 	
 	if (a == nullptr) { printfDx("Ž¸”s"); }
 
-	behavior_ = std::make_shared<Punch>(a, &hand_pos_, std::make_shared<RigidBody>(std::make_shared<Sphere>(1.5f, VGet(0.f, -1.5f, 0.f)), &hand_pos_, FALSE, TRUE, 1.f));
+	behavior_ = std::make_shared<Punch>(a, &hand_pos_, std::make_shared<RigidBody>(std::make_shared<Sphere>(1.5f, VGet(0.f, 0.f, 0.f)), &hand_pos_, FALSE, TRUE, 1.f));
 	rigid_body_->Init(weak_from_this());
 	// physics‚Ì“o˜^
 	Physics::GetInstance().AddBody(rigid_body_);

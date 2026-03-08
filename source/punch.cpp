@@ -35,9 +35,15 @@ void Punch::Update()
 	// どうしよう
 	// 正直今この中ではただ手に当たり判定を持たせているだけなんだよな
 	// ownerにpunchを発生させたいよな
-	rigid_body_->Active();
-	auto chara = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
-	//chara->GetAnimator()->PlayRequest("punch");
+	rigid_body_->NotActive();
+	auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
+	auto owner_animator = owner->GetAnimator();
+	// 当たり判定をのactiveをします
+	
+	float punch_play_time = owner_animator->GetPlayTime("punch");
+	//printfDx("%.2f\n", punch_play_time);
+	if (punch_play_time > 30.f && punch_play_time < 50.f) { rigid_body_->Active(); }
+
 }
 
 void Punch::Debug()
@@ -56,9 +62,9 @@ void Punch::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 	auto enemy_from_owner = std::dynamic_pointer_cast<EnemyBase>(owner);
 	auto player = std::dynamic_pointer_cast<Player>(object);
 	auto enemy = std::dynamic_pointer_cast<EnemyBase>(object);
-	// if (player == player_from_owner) { printfDx("同じオーナーです\n"); return; }
+	if (player == player_from_owner) { return; }
 
-	// if (enemy != nullptr) { printfDx("enemyがいるぞおい"); return; }
+	//if (enemy != nullptr) { printfDx("enemyがいるぞおい"); return; }
 	// if (player != nullptr) { printfDx("playerがいるぞ\n"); return; }
 
 }

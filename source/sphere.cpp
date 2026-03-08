@@ -56,7 +56,6 @@ bool Sphere::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR
 		VECTOR capsule_start_pos = VAdd(other_pos, VGet(0.f, capsule_radius, 0.f));
 		VECTOR capsule_end_pos = VAdd(capsule_start_pos, VGet(0.f, capsule_vertical, 0.f));
 		is_hit = Collision::IsMoveSphereToCapsule(center_pos, r_, vel, capsule_start_pos, capsule_end_pos, capsule_radius, other_vel);
-		
 	}
 	break;
 	case ColliderName::kMesh:
@@ -132,7 +131,7 @@ void Sphere::Draw(const VECTOR& pos)
 {
 	const int kDivNum = 20;
 
-	VECTOR center_pos = VAdd(VAdd(pos,offset_vel_), VGet(0.f, r_, 0.f));
+	VECTOR center_pos = VAdd(pos,offset_vel_);
 
 	DrawSphere3D(center_pos, r_, kDivNum, Color::kWhite, Color::kWhite, FALSE);
 }

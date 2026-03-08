@@ -84,6 +84,7 @@ void RigidBody::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 
 const void RigidBody::Debug() const
 {
+	if (!is_active_) { return; }
 	VECTOR segment_start_pos = VAdd(*pos_, VGet(0.f, 0.f, 0.f));
 	VECTOR segment_end_pos = VAdd(*pos_, VGet(0.f, -0.5f, 0.f));
 	DrawLine3D(segment_start_pos, segment_end_pos, GetColor(0, 255, 255));

@@ -98,3 +98,22 @@ void AnimatorBase::ResetRequest()
 {
 	request_names_.clear();
 }
+
+const float AnimatorBase::GetPlayTime(std::string name) const
+{
+	float play_time = -1.f;
+
+	for (const auto& animation : animation_datas_)
+	{
+		if (name != animation.first) { continue; }
+		play_time = animation.second.play_time;
+	}
+
+	return play_time;
+}
+
+const std::string AnimatorBase::GetNowAniName() const
+{
+	return now_anim_name_;
+}
+

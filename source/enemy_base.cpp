@@ -10,6 +10,7 @@
 #include"physics.h"
 #include"object_setter.h"
 #include"animator_base.h"
+#include"punch.h"
 
 EnemyBase::EnemyBase()
 	: CharacterBase("enemy")
@@ -77,7 +78,13 @@ void EnemyBase::Debug()
 
 void EnemyBase::OnHit(std::shared_ptr<IPhysicsEventReceiver> obj)
 {
-	
+	auto punch = std::dynamic_pointer_cast<Punch>(obj);
+
+	if (punch != nullptr)
+	{
+		printfDx("‚¢‚Ä\n");
+	}
+
 }
 
 void EnemyBase::OnGrounded()

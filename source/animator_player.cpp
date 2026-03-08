@@ -59,9 +59,9 @@ void AnimatorPlayer::Update()
 
 	if (before_anim_name != now_anim_name_)
 	{
-
 		if (before_anim_name != kNothing)
 		{
+			animation_datas_[before_anim_name].play_time = 0.f;
 			MV1DetachAnim(handle_, animation_datas_[before_anim_name].anim_index);
 		}
 

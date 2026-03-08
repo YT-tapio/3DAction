@@ -276,6 +276,9 @@
     <ClCompile Include="source\punch.cpp">
       <Filter>ソース ファイル\behavior</Filter>
     </ClCompile>
+    <ClCompile Include="source\animator_enemy.cpp">
+      <Filter>ソース ファイル\animation\animator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -457,6 +460,9 @@
     </ClInclude>
     <ClInclude Include="source\punch.h">
       <Filter>ソース ファイル\behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\animator_enemy.h">
+      <Filter>ソース ファイル\animation\animator</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
