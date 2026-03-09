@@ -6,7 +6,7 @@
 #include"animator_enemy.h"
 
 AnimatorEnemy::AnimatorEnemy(const char* data_file_path, int handle)
-	:AnimatorBase("data/csv/animation/enemy_animation.csv",handle )
+	:AnimatorBase("data/csv/animation/enemy_animation.csv",handle)
 {
 
 }

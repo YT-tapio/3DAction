@@ -13,9 +13,12 @@ public:
 
 	void Update() override;
 
+protected:
+
+	void ChangeAnimation() override;
+
 private:
 
-	const std::string kNothing	= "nothing";
 	const std::string kIdle			= "idle";
 	const std::string kJogging	= "jogging";
 	const std::string kRun			= "run";

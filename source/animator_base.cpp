@@ -6,11 +6,13 @@
 #include"animator_base.h"
 #include"animation_data.h"
 #include"load_animation.h"
+#include"FPS.h"
 
 AnimatorBase::AnimatorBase(const char* data_file_path,int handle)
 {
 	kDataFilePath = data_file_path;
 	now_anim_name_ = "nothing";
+	before_anim_name_ = "nothing";
 	handle_ = handle;
 	is_end_ = FALSE;
 }
@@ -30,6 +32,61 @@ void AnimatorBase::Init()
 }
 
 void AnimatorBase::Update()
+{
+	ChangeAnimation();
+
+	// 
+	if (!animation_datas_[before_anim_name_].loop && before_anim_name_ != kNothing)
+	{
+		// animationがすでに終わっているのかを見る
+		if (!is_end_)
+		{
+			now_anim_name_ = before_anim_name_;
+		}
+	}
+
+	if (before_anim_name_ != now_anim_name_)
+	{
+		if (before_anim_name_ != kNothing)
+		{
+			animation_datas_[before_anim_name_].play_time = 0.f;
+			MV1DetachAnim(handle_, animation_datas_[before_anim_name_].anim_index);
+		}
+
+		animation_datas_[now_anim_name_].attach_index = MV1AttachAnim(handle_, animation_datas_[now_anim_name_].attach_index,
+			animation_datas_[now_anim_name_].handle, FALSE);
+
+		animation_datas_[now_anim_name_].total_time = MV1GetAttachAnimTotalTime(handle_, animation_datas_[now_anim_name_].attach_index);
+
+		animation_datas_[now_anim_name_].play_time = 0.f;
+
+		if (animation_datas_[now_anim_name_].attach_index == -1) { printfDx("アタッチに失敗しました\n"); }
+		if (animation_datas_[now_anim_name_].total_time < 0.f) { printfDx("トータルおかしい\n"); }
+	}
+	animation_datas_[now_anim_name_].play_time += animation_datas_[now_anim_name_].play_speed * FPS::GetInstance().GetDeltaTime() * 60.f;
+	if (animation_datas_[now_anim_name_].play_time >= animation_datas_[now_anim_name_].total_time)
+	{
+		if (animation_datas_[now_anim_name_].loop)
+		{
+			animation_datas_[now_anim_name_].play_time -= animation_datas_[now_anim_name_].total_time;
+		}
+		else
+		{
+			animation_datas_[now_anim_name_].play_time = animation_datas_[now_anim_name_].total_time;
+		}
+		is_end_ = TRUE;
+	}
+	else
+	{
+		is_end_ = FALSE;
+	}
+
+	MV1SetAttachAnimTime(handle_, animation_datas_[now_anim_name_].attach_index,
+		animation_datas_[now_anim_name_].play_time);
+
+}
+
+void AnimatorBase::ChangeAnimation()
 {
 
 }
