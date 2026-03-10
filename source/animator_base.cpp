@@ -38,10 +38,13 @@ void AnimatorBase::Update()
 	// 
 	if (!animation_datas_[before_anim_name_].loop && before_anim_name_ != kNothing)
 	{
-		// animation‚ª‚·‚Å‚ÉI‚í‚Á‚Ä‚¢‚é‚Ì‚©‚ğŒ©‚é
-		if (!is_end_)
+		if(animation_datas_[before_anim_name_].priority  > animation_datas_[now_anim_name_].priority)
 		{
-			now_anim_name_ = before_anim_name_;
+			// animation‚ª‚·‚Å‚ÉI‚í‚Á‚Ä‚¢‚é‚Ì‚©‚ğŒ©‚é
+			if (!is_end_)
+			{
+				now_anim_name_ = before_anim_name_;
+			}
 		}
 	}
 
@@ -83,6 +86,8 @@ void AnimatorBase::Update()
 
 	MV1SetAttachAnimTime(handle_, animation_datas_[now_anim_name_].attach_index,
 		animation_datas_[now_anim_name_].play_time);
+
+	ResetRequest();
 
 }
 

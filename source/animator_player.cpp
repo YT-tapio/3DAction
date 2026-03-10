@@ -23,18 +23,6 @@ AnimatorPlayer::~AnimatorPlayer()
 
 }
 
-
-void AnimatorPlayer::Update()
-{
-	
-
-	
-
-
-	
-	ResetRequest();
-}
-
 void AnimatorPlayer::ChangeAnimation()
 {
 	before_anim_name_ = now_anim_name_;

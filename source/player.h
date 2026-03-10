@@ -50,8 +50,7 @@ private:
 	VECTOR hand_pos_;
 	VECTOR head_pos_;
 
-	
-
+	float target_rot_y_;
 	float fall_speed_;
 
 	bool is_move_;

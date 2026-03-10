@@ -10,9 +10,6 @@ public:
 
 	~AnimatorPlayer() override;
 
-
-	void Update() override;
-
 protected:
 
 	void ChangeAnimation() override;

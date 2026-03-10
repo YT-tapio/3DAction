@@ -14,6 +14,7 @@ RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll,VECTOR* pos,bool gravity
 	vel_		= VectorAssistant::VGetZero();
 	dir_		= VectorAssistant::VGetZero();
 	before_vel_ = VectorAssistant::VGetZero();
+	target_vel_ = VectorAssistant::VGetZero();
 	coll_ = coll;
 	use_gravity_ = gravity;
 	is_kinematic_ = kinematic;
@@ -35,6 +36,11 @@ void RigidBody::SetVelocity(const VECTOR& vel)
 {
 	vel_ = vel;
 	dir_ = VNorm(vel_);
+}
+
+void RigidBody::SetTargetVelocity(const VECTOR& vel)
+{
+	target_vel_ = vel;
 }
 
 void RigidBody::Active()
@@ -109,6 +115,11 @@ const VECTOR RigidBody::GetVelocity() const
 const VECTOR RigidBody::GetBeforeVelocity() const
 {
 	return before_vel_;
+}
+
+const VECTOR RigidBody::GetTargetVelocity() const
+{
+	return target_vel_;
 }
 
 const bool RigidBody::IsMove() const

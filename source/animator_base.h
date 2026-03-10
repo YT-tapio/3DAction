@@ -12,7 +12,7 @@ public:
 
 	void Init();
 
-	virtual void Update();
+	void Update();
 
 	void PlayRequest(std::string name);
 

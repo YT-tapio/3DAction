@@ -182,6 +182,7 @@
     <ClInclude Include="source\animation_data.h" />
     <ClInclude Include="source\animator_enemy.h" />
     <ClInclude Include="source\enemy_base.h" />
+    <ClInclude Include="source\lerp.h" />
     <ClInclude Include="source\load_animation.h" />
     <ClInclude Include="source\animator_base.h" />
     <ClInclude Include="source\animator_player.h" />

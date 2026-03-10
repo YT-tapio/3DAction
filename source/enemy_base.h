@@ -3,6 +3,8 @@
 #include"physics_interface.h"
 
 class RigidBody;
+class Punch;
+class BehaviorBase;
 
 class EnemyBase : public CharacterBase, public IPhysicsEventReceiver
 {
@@ -31,11 +33,14 @@ public:
 protected:
 
 	std::shared_ptr<RigidBody> rigid_body_;
+	std::shared_ptr<BehaviorBase> punch_;
 
+	VECTOR right_hand_pos_;
 
 	float fall_speed_;
-
 	bool is_ground_;
+
+	virtual void UpdateBone();
 
 private:
 

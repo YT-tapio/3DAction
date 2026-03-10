@@ -1,19 +1,22 @@
 #pragma once
 #include"animator_base.h"
 
+class EnemyBase;
 class AnimatorEnemy : public AnimatorBase
 {
 public:
 
-	AnimatorEnemy(const char* data_file_path, int handle);
+	AnimatorEnemy(int handle, std::shared_ptr<EnemyBase> enemy);
 
 	~AnimatorEnemy() override;
 
-	void Update()override;
+protected:
+
+	void ChangeAnimation() override;
 
 
 private:
 
-
+	std::shared_ptr<const EnemyBase> enemy_;
 
 };

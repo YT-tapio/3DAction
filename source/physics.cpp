@@ -9,6 +9,7 @@
 #include"mesh.h"
 #include"physics_interface.h"
 #include"resolve.h"
+#include"lerp.h"
 #include"debug.h"
 
 void Physics::AddBody(std::shared_ptr<RigidBody> body)
@@ -48,7 +49,7 @@ void Physics::Update()
 	GroundProj();
 
 	// –€ŽC‚Ì“K‰ž
-	// Resistance();
+	Resistance();
 
 	//printfDx("-----------------\n");
 
@@ -390,7 +391,6 @@ void Physics::CapsuleFixPos(std::shared_ptr<Capsule> me, std::shared_ptr<Collide
 		break;
 	}
 
-
 }
 
 void Physics::Resistance()
@@ -398,44 +398,15 @@ void Physics::Resistance()
 	// –€ŽC“™‚Ì’ïR‚Ì“K‰ž“K‰ž
 	for (auto& body : rigid_bodies_)
 	{
-
 		// “K‰ž‚ðŽó‚¯‚È‚¢‚à‚Ì
 		if (body->GetIsKinematic()) { continue; }
-		// “®‚¢‚Ä‚¢‚È‚¢
-		if (!body->IsMove()) { continue; }
 
-		// Å‘å’l‚Írigidbody‚É‚ ‚é
-		float max_speed = body->GetMaxSpeed();
-
-
-		VECTOR offset_vel = VectorAssistant::VGetZero();
-		// ‘S‘Ì‚ÌˆÚ“®—Ê
-		VECTOR vel = VAdd(VectorAssistant::VGetFlat(body->GetVelocity()), VectorAssistant::VGetFlat(body->GetBeforeVelocity()));
-		// vel‚Ì‹t‚ÌƒxƒNƒgƒ‹‚ð³‹K‰»‚µA’ïR‚Ì‹­‚³‚ð‚©‚¯‚é
-		VECTOR resistance_vel = VScale(VectorAssistant::VGetReverce(VNorm(vel)), kResistanceNum);
-
-		// Å‘å‚ÌˆÚ“®—Ê
-		//offset_vel = VectorAssistant::VMaxf(offset_vel, VSize(VectorAssistant::VGetFlat(body->GetVelocity())));
-		// vel‚É‘«‚·
-		offset_vel = VAdd(vel, resistance_vel);
-		// –€ŽC‚É‚æ‚Á‚Ä•ûŒü‚ª•Ï‚í‚ç‚È‚¢‚æ‚¤’²®‚·‚é
-		// Œü‚«‚ªˆê‚©‚Ç‚¤‚©
-		// Ž©•ª‚Ì“ü—Í‚ªƒ[ƒ‚ÌŽž
-		if (VectorAssistant::IsSameDir(offset_vel, resistance_vel))
-		{
-			offset_vel = VectorAssistant::VGetZero();
-		}
-
-		if (VSize(body->GetVelocity()) > 0)
-		{
-			offset_vel = VectorAssistant::VMaxf(offset_vel, max_speed);
-		}
-
-		// ‚»‚µ‚Ä‚à‚Æ‚à‚Æ‚Ìy‚ÌˆÚ“®—Ê‚É‚·‚é
-		offset_vel.y = body->GetVelocity().y;
-
-		body->SetVelocity(offset_vel);
-		
+		VECTOR now_flat_vel = VectorAssistant::VGetFlat(body->GetVelocity());
+		VECTOR target_flat_vel = VectorAssistant::VGetFlat(body->GetTargetVelocity());
+		float target_y = body->GetTargetVelocity().y;
+		VECTOR vel = Lerp::DampV(now_flat_vel, target_flat_vel, 0.1f);
+		vel = VAdd(vel, VGet(0.f, target_y, 0.f));
+		body->SetVelocity(vel);
 	}
 }
 

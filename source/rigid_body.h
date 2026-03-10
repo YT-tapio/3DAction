@@ -16,6 +16,8 @@ public:
 
 	void SetVelocity(const VECTOR& vel);
 
+	void SetTargetVelocity(const VECTOR& vel);
+
 	/// <summary>
 	/// アクティブ状態(存在している状態)
 	/// </summary>
@@ -47,6 +49,8 @@ public:
 
 	const VECTOR GetBeforeVelocity() const;
 
+	const VECTOR GetTargetVelocity() const;
+
 	const bool IsMove() const;
 
 	const bool GetUseGravity() const;
@@ -68,6 +72,8 @@ private:
 	VECTOR dir_;
 
 	VECTOR before_vel_;		// 1つ前の移動量を保存
+	VECTOR target_vel_;
+
 
 	bool use_gravity_;		// 重力
 	bool is_kinematic_;		// 摩擦や重力による変更を受けない(TRUE : 受けない,FALSE ： 受ける)

@@ -464,5 +464,8 @@
     <ClInclude Include="source\animator_enemy.h">
       <Filter>ソース ファイル\animation\animator</Filter>
     </ClInclude>
+    <ClInclude Include="source\lerp.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

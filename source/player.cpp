@@ -44,6 +44,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	is_ground_ = FALSE;
 	is_dash_ = FALSE;
 	input_ = input;
+	target_rot_y_ = 0;
 	
 }
 
@@ -75,7 +76,7 @@ void Player::Update()
 {
 	// input_->Update();
 	Move();
-	rigid_body_->SetVelocity(vel_);
+	rigid_body_->SetTargetVelocity(vel_);
 	behavior_->Update();
 	//VECTOR a = *head_pos_;
 	//printfDx("x : %.2f,y : %.2f,z : %.2f\n", (*head_pos_).x, (*head_pos_).y, (*head_pos_).z);
@@ -174,11 +175,14 @@ void Player::Move()
 	vel_ = VScale(vel_, (FPS::GetInstance().GetDeltaTime() * 60.f));
 	if (VSize(vel_) > 0.f)
 	{ 
-		rot_.y = atan2f(-dir_.x, (-dir_.z));
+		target_rot_y_ = atan2f(-dir_.x, (-dir_.z));
+		/*
 		if (rot_.y > RadianAssistant::kReverceRad)	{ rot_.y -= (RadianAssistant::kReverceRad * 2.f); }
 		if (rot_.y < -RadianAssistant::kReverceRad)	{ rot_.y += (RadianAssistant::kReverceRad * 2.f); }
+		*/
 	}
-	
+	rot_.y = RadianAssistant::Lerp(rot_.y, target_rot_y_, RadianAssistant::kOneRad * 15.f * FPS::GetInstance().GetDeltaTime() * 60.f);
+
 	if (CheckHitKey(KEY_INPUT_SPACE)) { pos_ = VGet(0.f, 0.f, 0.f); vel_ = VGet(0.f, 0.f, 0.f); is_ground_ = FALSE; fall_speed_ = 0.f;}
 	if (input_->IsPunch()) { animator_->PlayRequest("punch"); }
 }
@@ -206,7 +210,7 @@ void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 	// ihitを何者かに変換
 	auto stage = std::dynamic_pointer_cast<Stage>(object);
 	auto enemy = std::dynamic_pointer_cast<EnemyBase>(object);
-	auto attack = std::dynamic_pointer_cast<Punch>(object);
+	auto punch = std::dynamic_pointer_cast<Punch>(object);
 	if (stage != nullptr)
 	{
 		//printfDx("stage");
@@ -219,9 +223,15 @@ void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 		return;
 	}
 
-	if (attack != nullptr)
+	if (punch != nullptr)
 	{
-		//printfDx("attack\n");
+		// 自身とオーナーのパンチがplayerにcastしてnullptrなったら処理する
+		if (std::dynamic_pointer_cast<Player>(punch->GetOwner().lock()) == nullptr)
+		{
+			animator_->PlayRequest("on_damage");
+		}
+
+		return;
 	}
 
 }

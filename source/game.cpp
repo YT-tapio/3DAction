@@ -22,7 +22,6 @@ Game::Game()
 	objects_.push_back(std::make_shared<Player>(&camera_->dir_,InputManager::GetInstance().GetPlayerInput()));
 	objects_.push_back(std::make_shared<EnemyBase>());
 	Init();
-	
 }
 
 Game::~Game()
