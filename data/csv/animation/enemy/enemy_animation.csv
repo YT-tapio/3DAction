@@ -1,6 +1,6 @@
-﻿name,file_path,anim_index,play_speed,priority,loop
-idle,data/model/enemy/zako/animation/Idle.mv1,0,1,0,1
-jogging,data/model/enemy/zako/animation/Standard_Run.mv1,0,1,1,1
-run,data/model/enemy/zako/animation/Running.mv1,0,1,2,1
-on_damage,data/model/enemy/zako/animation/Stomach_Hit.mv1,0,1,4,0
-punch,data/model/enemy/zako/animation/Hook.mv1,0,1,3,0
+﻿name,file_path,anim_index,play_speed,priority,loop,cancel_time
+idle,data/model/enemy/zako/animation/Idle.mv1,0,1,0,1,0
+jogging,data/model/enemy/zako/animation/Standard_Run.mv1,0,1,1,1,0
+run,data/model/enemy/zako/animation/Running.mv1,0,1,2,1,0
+on_damage,data/model/enemy/zako/animation/Stomach_Hit.mv1,0,1,4,0,-1
+punch,data/model/enemy/zako/animation/Hook.mv1,0,1,3,0,60

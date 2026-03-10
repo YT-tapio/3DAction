@@ -43,7 +43,11 @@ void AnimatorBase::Update()
 			// animationがすでに終わっているのかを見る
 			if (!is_end_)
 			{
-				now_anim_name_ = before_anim_name_;
+				float cancel_time = animation_datas_[before_anim_name_].cancel_time;
+				if (animation_datas_[before_anim_name_].play_time < cancel_time || cancel_time == -1)
+				{
+					now_anim_name_ = before_anim_name_;
+				}
 			}
 		}
 	}
@@ -124,6 +128,7 @@ void AnimatorBase::LoadFile(const char* file_path)
 		int priority		= -1;
 		int loop = -1;
 		float play_speed	= 0.f;
+		float cancel_time = 0.f;
 		AnimationData anim_data = {};
 
 		// アニメーションの名前
@@ -141,7 +146,7 @@ void AnimatorBase::LoadFile(const char* file_path)
 		// アニメーションの再生速度
 		std::getline(ss, data, ',');
 		play_speed = std::stof(data);
-	
+
 		// アニメーションの優先度
 		std::getline(ss, data, ',');
 		priority = std::stoi(data);
@@ -149,9 +154,13 @@ void AnimatorBase::LoadFile(const char* file_path)
 		// ループするかどうか
 		std::getline(ss, data, ',');
 		loop = (std::stoi(data) == 1);
+		
+		// animationのキャンセル可能時間
+		std::getline(ss, data, ',');
+		cancel_time = std::stof(data);
 
 		// アニメーションデータを生成
-		LoadAnimation(anim_data, anim_file_path.c_str(), anim_index, play_speed, priority, loop);
+		LoadAnimation(anim_data, anim_file_path.c_str(), anim_index, play_speed, priority,cancel_time, loop);
 		animation_datas_[anim_name] = anim_data;
 	}
 }

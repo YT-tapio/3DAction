@@ -176,13 +176,8 @@ void Player::Move()
 	if (VSize(vel_) > 0.f)
 	{ 
 		target_rot_y_ = atan2f(-dir_.x, (-dir_.z));
-		/*
-		if (rot_.y > RadianAssistant::kReverceRad)	{ rot_.y -= (RadianAssistant::kReverceRad * 2.f); }
-		if (rot_.y < -RadianAssistant::kReverceRad)	{ rot_.y += (RadianAssistant::kReverceRad * 2.f); }
-		*/
 	}
 	rot_.y = RadianAssistant::Lerp(rot_.y, target_rot_y_, RadianAssistant::kOneRad * 15.f * FPS::GetInstance().GetDeltaTime() * 60.f);
-
 	if (CheckHitKey(KEY_INPUT_SPACE)) { pos_ = VGet(0.f, 0.f, 0.f); vel_ = VGet(0.f, 0.f, 0.f); is_ground_ = FALSE; fall_speed_ = 0.f;}
 	if (input_->IsPunch()) { animator_->PlayRequest("punch"); }
 }
