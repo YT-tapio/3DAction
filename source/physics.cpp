@@ -76,6 +76,11 @@ void Physics::Update()
 				VECTOR offset_vel = my_coll->FixPos(main_body->GetPosition(), main_body->GetVelocity(), target_body->GetVelocity(), target_coll, contact);
 				main_body->Update(offset_vel);
 			}
+			else
+			{
+				main_body->UnHit(target_body->GetIPhysicsObject());
+				target_body->UnHit(main_body->GetIPhysicsObject());
+			}
 			
 			
 		}
@@ -419,8 +424,9 @@ void Physics::CheckGround()
 
 		for (auto& target_body : rigid_bodies_)
 		{
-			if (main_body == target_body) { continue; }
 			if (!target_body->GetIsActive()) { continue; }
+			if (main_body == target_body) { continue; }
+
 			Contact contact = {};
 			// IPhysicsの足元当たり判定を呼びたい
 			auto body = main_body->GetIPhysicsObject().get();
@@ -428,12 +434,12 @@ void Physics::CheckGround()
 			// rigid_body内の足元検知用のレイと周りのオブジェクトとの当たり判定を行う
 			if (CheckHitFoot(main_body, target_body,contact,kGroundProjLength))
 			{
-				body->OnGrounded();
+				body->OnGrounded(target_body->GetIPhysicsObject());
 				break;
 			}
 			else
 			{
-				body->OnUnGrounded();
+				body->OnUnGrounded(target_body->GetIPhysicsObject());
 			}
 		}
 	}

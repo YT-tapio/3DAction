@@ -31,14 +31,12 @@ void Pad::Update()
 	GetJoypadXInputState(pad_num_, &pad);
 	ButtonUpdate(pad);
 	left_stick_pos_		= VectorAssistant::VGet2D(pad.ThumbLX, pad.ThumbLY);
-	right_stick_pos_	= VectorAssistant::VGet2D(pad.ThumbRX, pad.ThumbRY);
+	right_stick_pos_		= VectorAssistant::VGet2D(pad.ThumbRX, pad.ThumbRY);
 
 	// デッドゾーンの範囲内なら強制的に0にする
 	CheckDeadZone();
-	left_stick_pos_.z = left_stick_pos_.y;
-	left_stick_pos_.y = 0.f;
-	right_stick_pos_.z = right_stick_pos_.y;
-	right_stick_pos_.y = 0.f;
+	left_stick_pos_.z = 0.f;
+	right_stick_pos_.z = 0.f;
 }
 
 float Pad::GetPushingTimeButton(int pad_code)
@@ -67,6 +65,20 @@ float Pad::GetReleaseTimeButton(int pad_code)
 	return release_time;
 }
 
+float Pad::GetLeftStickRatio()
+{
+	float left_stick_ratio = 0.f;
+	left_stick_ratio = VSize(left_stick_pos_) / kMaxStickSizeMax;
+	return left_stick_ratio;
+}
+
+float Pad::GetRightStickRatio()
+{
+	float right_stick_ratio = 0.f;
+	right_stick_ratio = VSize(right_stick_pos_) / kMaxStickSizeMax;
+	return right_stick_ratio;
+}
+
 VECTOR Pad::GetRightStickDir()
 {
 	VECTOR dir = VectorAssistant::VGetZero();
@@ -79,6 +91,20 @@ VECTOR Pad::GetLeftStickDir()
 	VECTOR dir = VectorAssistant::VGetZero();
 	if(VSize(left_stick_pos_) > 0){ dir = VNorm(left_stick_pos_); }
 	return dir;
+}
+
+VECTOR Pad::GetRightStickVel()
+{
+	VECTOR right_stick_vel = VectorAssistant::VGetZero();
+
+	return right_stick_vel;
+}
+
+VECTOR Pad::GetLeftStickVel()
+{
+	VECTOR left_stick_vel = VectorAssistant::VGetZero();
+
+	return left_stick_vel;
 }
 
 void Pad::ButtonUpdate(XINPUT_STATE pad)

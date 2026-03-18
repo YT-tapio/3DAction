@@ -39,6 +39,8 @@ public:
 
 	void OnHit(std::shared_ptr<IPhysicsEventReceiver> object);
 
+	void UnHit(std::shared_ptr<IPhysicsEventReceiver> object);
+
 	const void Debug() const;
 
 	const float GetMaxSpeed() const;

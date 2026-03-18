@@ -14,7 +14,6 @@ protected:
 
 	void ChangeAnimation() override;
 
-
 private:
 
 	std::shared_ptr<const EnemyBase> enemy_;

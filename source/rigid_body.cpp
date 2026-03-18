@@ -88,6 +88,14 @@ void RigidBody::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 	}
 }
 
+void RigidBody::UnHit(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+	if (auto obj = object_.lock())
+	{
+		obj->UnHit(object);
+	}
+}
+
 const void RigidBody::Debug() const
 {
 	if (!is_active_) { return; }

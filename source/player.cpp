@@ -19,6 +19,7 @@
 #include"enemy_base.h"
 #include"behavior_base.h"
 #include"punch.h"
+#include"check_my_area.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	: CharacterBase("player")
@@ -62,6 +63,7 @@ void Player::Init()
 
 	behavior_ = std::make_shared<Punch>(a, &hand_pos_, std::make_shared<RigidBody>(std::make_shared<Sphere>(1.5f, VGet(0.f, 0.f, 0.f)), &hand_pos_, FALSE, TRUE, 1.f));
 	rigid_body_->Init(weak_from_this());
+	my_area_ = std::make_shared<CheckMyArea>(std::make_shared<Sphere>(10.f, VectorAssistant::VGetZero()), &pos_);
 	// physics‚Ì“o˜^
 	Physics::GetInstance().AddBody(rigid_body_);
 	// setter‚Ö‚Ì“o˜^
@@ -70,6 +72,7 @@ void Player::Init()
 	animator_ = std::make_shared<AnimatorPlayer>(handle_, mine);
 	animator_->Init();
 	behavior_->Init();
+	my_area_->Init();
 }
 
 void Player::Update()
@@ -102,6 +105,7 @@ void Player::Debug()
 {
 	rigid_body_->Debug();
 	behavior_->Debug();
+	my_area_->Debug();
 	//DrawSphere3D(head_pos_, 0.5f, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "----------player-----------", Color::kWhite);
 	Debug::GetInstance().Add();
@@ -122,8 +126,6 @@ void Player::Debug()
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "camera_dir", Color::kWhite);
 	Debug::GetInstance().Add();
 	Debug::GetInstance().DrawVector(*camera_dir_);
-
-
 }
 
 void Player::LoadFile()
@@ -133,20 +135,34 @@ void Player::LoadFile()
 
 void Player::Move()
 {
-	//std::shared_ptr<const InputBase> input = input_;
-	
+	int enemy_num = 0;
+	for (const auto my_area_objects : my_area_->GetMyAreaObject())
+	{
+		std::shared_ptr<EnemyBase> enemy = std::dynamic_pointer_cast<EnemyBase>(my_area_objects.lock());
+		if (enemy != nullptr)
+		{
+			enemy_num++;
+		}
+		
+	}
+	printfDx("%d\n", enemy_num);
+
 	VECTOR dir = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
 
 	float speed = kSpeed;
 
 	// Input‚ðì‚Á‚½‚ç‚±‚Ìˆ—‚ÍÁ‚µ‚Ä‚­‚¾‚³‚¢
-	dir = input_->GetMoveDir();
-	
-	if (VSize(dir) > 0) 
+	dir.x = input_->GetMoveDir().x;
+	dir.z = input_->GetMoveDir().y;
+
+	if (input_->IsPunch()) { animator_->PlayRequest("punch"); }
+
+	if (VSize(dir) > 0)
 	{
 		dir_ = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(*camera_dir_), VectorAssistant::VGetTan(dir));
 		dir_ = VNorm(dir_);
+		
 		if (input_->IsDash())
 		{
 			speed *= 2.5f;
@@ -163,13 +179,21 @@ void Player::Move()
 		is_move_ = FALSE;
 		is_dash_ = FALSE;
 	}
+
+	if (animator_->GetPlayTime("punch") == 0.f)
+	{
+		vel_ = VScale(dir_, speed);
+	}
+	else
+	{
+		vel_ = VectorAssistant::VGetZero();
+	}
+
 	
-	vel_ = VScale(dir_, speed);
 	if (!is_ground_)
 	{
 		fall_speed_ += 0.03f;
 		vel_ = VAdd(vel_, VGet(0.f, -fall_speed_, 0.f));
-		//printfDx("%.2f\n", fall_speed_);
 	}
 	
 	vel_ = VScale(vel_, (FPS::GetInstance().GetDeltaTime() * 60.f));
@@ -177,9 +201,12 @@ void Player::Move()
 	{ 
 		target_rot_y_ = atan2f(-dir_.x, (-dir_.z));
 	}
+
+	
+
 	rot_.y = RadianAssistant::Lerp(rot_.y, target_rot_y_, RadianAssistant::kOneRad * 15.f * FPS::GetInstance().GetDeltaTime() * 60.f);
 	if (CheckHitKey(KEY_INPUT_SPACE)) { pos_ = VGet(0.f, 0.f, 0.f); vel_ = VGet(0.f, 0.f, 0.f); is_ground_ = FALSE; fall_speed_ = 0.f;}
-	if (input_->IsPunch()) { animator_->PlayRequest("punch"); }
+	
 }
 
 void Player::Gravity()
@@ -225,20 +252,22 @@ void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 		{
 			animator_->PlayRequest("on_damage");
 		}
-
 		return;
 	}
 
 }
 
-void Player::OnGrounded()
+void Player::OnGrounded(std::shared_ptr<IPhysicsEventReceiver> object)
 {
+	auto check_area = std::dynamic_pointer_cast<CheckMyArea>(object);
+
+	if (check_area != nullptr) { return; }
+
 	is_ground_ = TRUE;
 	fall_speed_ = 0.f;
-	// printfDx("is_ground\n");
 }
 
-void Player::OnUnGrounded()
+void Player::OnUnGrounded(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 	is_ground_ = FALSE;
 	// printfDx("1\n");

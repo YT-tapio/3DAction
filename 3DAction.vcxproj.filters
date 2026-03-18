@@ -139,6 +139,12 @@
     <Filter Include="ソース ファイル\behavior">
       <UniqueIdentifier>{168e3f5b-4393-4da1-a460-2915c4034073}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\check_my_area">
+      <UniqueIdentifier>{ba2b1646-c7c4-44b1-a293-57c9242b5887}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\skill">
+      <UniqueIdentifier>{0e7a09a8-3e9a-4dad-a705-721cb4988aa7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -278,6 +284,9 @@
     </ClCompile>
     <ClCompile Include="source\animator_enemy.cpp">
       <Filter>ソース ファイル\animation\animator</Filter>
+    </ClCompile>
+    <ClCompile Include="source\check_my_area.cpp">
+      <Filter>ソース ファイル\check_my_area</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -466,6 +475,12 @@
     </ClInclude>
     <ClInclude Include="source\lerp.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\check_my_area.h">
+      <Filter>ソース ファイル\check_my_area</Filter>
+    </ClInclude>
+    <ClInclude Include="source\base_skill.h">
+      <Filter>ソース ファイル\skill</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

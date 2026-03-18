@@ -5,12 +5,17 @@ void IPhysicsEventReceiver::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 
 }
 
-void IPhysicsEventReceiver::OnGrounded()
+void IPhysicsEventReceiver::UnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 
 }
 
-void IPhysicsEventReceiver::OnUnGrounded()
+void IPhysicsEventReceiver::OnGrounded(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+
+}
+
+void IPhysicsEventReceiver::OnUnGrounded(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 
 }

@@ -5,6 +5,7 @@
 class RigidBody;
 class InputBase;
 class BehaviorBase;
+class CheckMyArea;
 
 class Player : public CharacterBase , public IPhysicsEventReceiver
 {
@@ -26,9 +27,9 @@ public:
 
 	void OnHit(std::shared_ptr<IPhysicsEventReceiver> obj) override;
 
-	void OnGrounded() override;
+	void OnGrounded(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
-	void OnUnGrounded() override;
+	void OnUnGrounded(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
 	VECTOR* GetHeadPos();
 
@@ -45,6 +46,7 @@ private:
 	std::shared_ptr<RigidBody> rigid_body_;
 	std::shared_ptr<const InputBase> input_;
 	std::shared_ptr<BehaviorBase> behavior_;
+	std::shared_ptr<CheckMyArea> my_area_;
 
 	VECTOR* camera_dir_;
 	VECTOR hand_pos_;

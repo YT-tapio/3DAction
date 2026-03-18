@@ -136,6 +136,7 @@
     <ClCompile Include="source\animator_player.cpp" />
     <ClCompile Include="source\application.cpp" />
     <ClCompile Include="source\behavior_base.cpp" />
+    <ClCompile Include="source\check_my_area.cpp" />
     <ClCompile Include="source\enemy_base.cpp" />
     <ClCompile Include="source\attack_base.cpp" />
     <ClCompile Include="source\punch.cpp" />
@@ -181,6 +182,8 @@
     <ClInclude Include="source\ai_input.h" />
     <ClInclude Include="source\animation_data.h" />
     <ClInclude Include="source\animator_enemy.h" />
+    <ClInclude Include="source\base_skill.h" />
+    <ClInclude Include="source\check_my_area.h" />
     <ClInclude Include="source\enemy_base.h" />
     <ClInclude Include="source\lerp.h" />
     <ClInclude Include="source\load_animation.h" />

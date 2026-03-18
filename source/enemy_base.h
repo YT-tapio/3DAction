@@ -10,7 +10,7 @@ class EnemyBase : public CharacterBase, public IPhysicsEventReceiver
 {
 public:
 
-	EnemyBase();
+	EnemyBase(const VECTOR& pos);
 
 	virtual ~EnemyBase() override;
 
@@ -26,9 +26,9 @@ public:
 
 	virtual void OnHit(std::shared_ptr<IPhysicsEventReceiver> obj) override;
 
-	virtual void OnGrounded() override;
+	virtual void OnGrounded(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
-	virtual void OnUnGrounded() override;
+	virtual void OnUnGrounded(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
 protected:
 

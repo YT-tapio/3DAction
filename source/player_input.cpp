@@ -42,7 +42,7 @@ const bool PlayerInput::IsDash() const
 		auto pad = std::dynamic_pointer_cast<Pad>(input);
 		if (pad != nullptr)
 		{
-			if (pad->GetPushingTimeButton(PadConfig::jump) > 0.1f) { return TRUE; }
+			if (pad->GetPushingTimeButton(PadConfig::dash) > 0.1f) { return TRUE; }
 		}
 		else
 		{
@@ -212,6 +212,8 @@ const VECTOR PlayerInput::CameraMoveDirPad(std::shared_ptr<Pad> pad) const
 {
 	VECTOR camera_move_dir = VectorAssistant::VGetZero();
 
+	camera_move_dir = pad->GetRightStickDir();
+		
 	return camera_move_dir;
 }
 
@@ -228,6 +230,9 @@ const VECTOR PlayerInput::CameraMoveVelPC(std::shared_ptr<PC> pc) const
 const VECTOR PlayerInput::CameraMoveVelPad(std::shared_ptr<Pad> pad) const
 {
 	VECTOR camera_move_dir = VectorAssistant::VGetZero();
+
+	camera_move_dir = VScale(pad->GetRightStickDir(), 20.f);
+	camera_move_dir.x = -camera_move_dir.x;
 
 	return camera_move_dir;
 }

@@ -13,15 +13,15 @@
 #include"animator_base.h"
 #include"animator_enemy.h"
 #include"punch.h"
+#include"check_my_area.h"
 
-
-EnemyBase::EnemyBase()
+EnemyBase::EnemyBase(const VECTOR& pos)
 	: CharacterBase("enemy")
 	, IPhysicsEventReceiver()
 {
 	vel_ = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
-	pos_ = VGet(10.f, -2.f, 10.f);
+	pos_ = pos;
 	right_hand_pos_ = VectorAssistant::VGetZero();
 	scale_ = VectorAssistant::VGetSame(0.05f);
 
@@ -101,13 +101,17 @@ void EnemyBase::OnHit(std::shared_ptr<IPhysicsEventReceiver> obj)
 
 }
 
-void EnemyBase::OnGrounded()
+void EnemyBase::OnGrounded(std::shared_ptr<IPhysicsEventReceiver> object)
 {
+	auto check_area = std::dynamic_pointer_cast<CheckMyArea>(object);
+
+	if (check_area != nullptr) { return; }
+
 	is_ground_ = TRUE;
 	fall_speed_ = 0.f;
 }
 
-void EnemyBase::OnUnGrounded()
+void EnemyBase::OnUnGrounded(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 	is_ground_ = FALSE;
 }

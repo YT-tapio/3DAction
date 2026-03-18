@@ -19,9 +19,17 @@ public:
 
 	float GetReleaseTimeButton(int pad_code);
 
+	float GetLeftStickRatio();
+
+	float GetRightStickRatio();
+
 	VECTOR GetRightStickDir();
 
 	VECTOR GetLeftStickDir();
+
+	VECTOR GetRightStickVel();
+
+	VECTOR GetLeftStickVel();
 
 private:
 

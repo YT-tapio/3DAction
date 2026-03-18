@@ -35,23 +35,21 @@ void AnimatorBase::Update()
 {
 	ChangeAnimation();
 
-	// 
+	// ƒ‹[ƒv‚È‚µ
 	if (!animation_datas_[before_anim_name_].loop && before_anim_name_ != kNothing)
 	{
+		// —Dæ‡ˆÊ‚ª‚‚¢
 		if(animation_datas_[before_anim_name_].priority  > animation_datas_[now_anim_name_].priority)
 		{
-			// animation‚ª‚·‚Å‚ÉI‚í‚Á‚Ä‚¢‚é‚Ì‚©‚ğŒ©‚é
-			if (!is_end_)
+			if(!is_end_)
 			{
-				float cancel_time = animation_datas_[before_anim_name_].cancel_time;
-				if (animation_datas_[before_anim_name_].play_time < cancel_time || cancel_time == -1)
-				{
-					now_anim_name_ = before_anim_name_;
-				}
+				now_anim_name_ = before_anim_name_;
 			}
+			
 		}
 	}
 
+	//animation‚ÌÄ¶
 	if (before_anim_name_ != now_anim_name_)
 	{
 		if (before_anim_name_ != kNothing)
@@ -183,8 +181,8 @@ const float AnimatorBase::GetPlayTime(std::string name) const
 	return play_time;
 }
 
-const std::string AnimatorBase::GetNowAniName() const
+const std::string AnimatorBase::GetNowAnimName() const
 {
 	return now_anim_name_;
-}
+}  
 

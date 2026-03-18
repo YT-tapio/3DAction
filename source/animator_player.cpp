@@ -25,15 +25,13 @@ AnimatorPlayer::~AnimatorPlayer()
 
 void AnimatorPlayer::ChangeAnimation()
 {
+
 	before_anim_name_ = now_anim_name_;
 
 	std::map<int, std::string, std::greater<int>> request_name_priority_mp;
 	if (player_->GetIsMove()) { PlayRequest(kJogging); }
 	if (player_->GetIsDash()) { PlayRequest(kRun); }
-	if (player_->GetIsGround())
-	{
-		PlayRequest(kIdle);
-	}
+	if (player_->GetIsGround()){ PlayRequest(kIdle); }
 
 	if (!request_names_.empty())
 	{
