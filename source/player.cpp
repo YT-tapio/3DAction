@@ -1,4 +1,5 @@
 #include<iostream>
+#include<map>
 #include"DxLib.h"
 #include"player.h"
 #include"capsule.h"
@@ -29,6 +30,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	hand_pos_ = VectorAssistant::VGetZero();
 	vel_		= VectorAssistant::VGetZero();
 	dir_		= VectorAssistant::VGetZero();
+	attack_target_pos_ = VectorAssistant::VGetZero();
 	pos_		= VGet(0.f, -2.f,10.f);
 	VECTOR head_pos = VAdd(pos_, VGet(0.f, 10.f, 0.f));
 	head_pos_ = head_pos;
@@ -44,6 +46,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	is_move_ = FALSE;
 	is_ground_ = FALSE;
 	is_dash_ = FALSE;
+	is_attack_target_in_range_ = FALSE;
 	input_ = input;
 	target_rot_y_ = 0;
 	
@@ -63,7 +66,7 @@ void Player::Init()
 
 	behavior_ = std::make_shared<Punch>(a, &hand_pos_, std::make_shared<RigidBody>(std::make_shared<Sphere>(1.5f, VGet(0.f, 0.f, 0.f)), &hand_pos_, FALSE, TRUE, 1.f));
 	rigid_body_->Init(weak_from_this());
-	my_area_ = std::make_shared<CheckMyArea>(std::make_shared<Sphere>(10.f, VectorAssistant::VGetZero()), &pos_);
+	my_area_ = std::make_shared<CheckMyArea>(std::make_shared<Sphere>(20.f, VectorAssistant::VGetZero()), &pos_);
 	// physics‚Ì“o˜^
 	Physics::GetInstance().AddBody(rigid_body_);
 	// setter‚Ö‚Ì“o˜^
@@ -135,17 +138,7 @@ void Player::LoadFile()
 
 void Player::Move()
 {
-	int enemy_num = 0;
-	for (const auto my_area_objects : my_area_->GetMyAreaObject())
-	{
-		std::shared_ptr<EnemyBase> enemy = std::dynamic_pointer_cast<EnemyBase>(my_area_objects.lock());
-		if (enemy != nullptr)
-		{
-			enemy_num++;
-		}
-		
-	}
-	printfDx("%d\n", enemy_num);
+	
 
 	VECTOR dir = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
@@ -156,7 +149,10 @@ void Player::Move()
 	dir.x = input_->GetMoveDir().x;
 	dir.z = input_->GetMoveDir().y;
 
-	if (input_->IsPunch()) { animator_->PlayRequest("punch"); }
+	if (input_->IsPunch()) 
+	{
+		animator_->PlayRequest("punch");
+	}
 
 	if (VSize(dir) > 0)
 	{
@@ -186,7 +182,16 @@ void Player::Move()
 	}
 	else
 	{
-		vel_ = VectorAssistant::VGetZero();
+		DecideAttackTarget();
+		if (is_attack_target_in_range_)
+		{
+			dir_ = VNorm(VSub(attack_target_pos_, pos_));
+			vel_ = dir_;
+		}
+		else
+		{
+			vel_ = VectorAssistant::VGetZero();
+		}
 	}
 
 	
@@ -201,8 +206,6 @@ void Player::Move()
 	{ 
 		target_rot_y_ = atan2f(-dir_.x, (-dir_.z));
 	}
-
-	
 
 	rot_.y = RadianAssistant::Lerp(rot_.y, target_rot_y_, RadianAssistant::kOneRad * 15.f * FPS::GetInstance().GetDeltaTime() * 60.f);
 	if (CheckHitKey(KEY_INPUT_SPACE)) { pos_ = VGet(0.f, 0.f, 0.f); vel_ = VGet(0.f, 0.f, 0.f); is_ground_ = FALSE; fall_speed_ = 0.f;}
@@ -223,6 +226,46 @@ void Player::UpdateBone()
 	MATRIX hand_mat = MV1GetFrameLocalWorldMatrix(handle_, hand_bone_num);
 	VECTOR hand_pos = VectorAssistant::VGetPositionFromMatrix(hand_mat);
 	hand_pos_ = hand_pos;
+}
+
+void Player::DecideAttackTarget()
+{
+	// UŒ‚‘ÎÛ‚ª”ÍˆÍ“à‚É‚¢‚È‚¢‚È‚ç‚â‚ß‚é
+	attack_target_pos_ = VectorAssistant::VGetZero();
+	is_attack_target_in_range_ = FALSE;
+	if (my_area_->GetMyAreaObject().size() == 0)
+	{
+		return;
+	}
+	
+	
+	// enemy‚Ì’†‚©‚ç‹ß‚¢“G‚ğUŒ‚‘ÎÛ‚É“®‚­
+	int enemy_num = 0;
+	std::map<float, VECTOR> dist_pos_mp;
+
+	for (const auto my_area_objects : my_area_->GetMyAreaObject())
+	{
+		std::shared_ptr<EnemyBase> enemy = std::dynamic_pointer_cast<EnemyBase>(my_area_objects.lock());
+		if (enemy != nullptr)
+		{
+			enemy_num++;
+			is_attack_target_in_range_ = TRUE;
+			VECTOR enemy_pos = enemy->GetPosition();
+			float dist_size = VSize(VSub(enemy_pos, pos_));
+			dist_pos_mp[dist_size] = enemy_pos;
+		}
+	}
+	printfDx("%d\n", enemy_num);	// ƒfƒoƒbƒO—p
+	if (enemy_num == 0) { return; }
+	
+	if (dist_pos_mp.size() > 0)
+	{
+		auto most_near_pos = dist_pos_mp.begin()->second;
+		attack_target_pos_ = most_near_pos;
+	}
+
+	
+
 }
 
 void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)

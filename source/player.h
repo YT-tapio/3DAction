@@ -52,6 +52,8 @@ private:
 	VECTOR hand_pos_;
 	VECTOR head_pos_;
 
+	VECTOR attack_target_pos_;
+
 	float target_rot_y_;
 	float fall_speed_;
 
@@ -59,6 +61,7 @@ private:
 	bool is_dash_;
 	bool is_ground_;
 	bool* is_punch_;
+	bool is_attack_target_in_range_;		// UŒ‚‘ÎÛ‚ª”ÍˆÍ“à‚É‚¢‚é‚Ì‚©
 
 	// ŠÖ”ŒQ
 
@@ -69,5 +72,7 @@ private:
 	void Gravity();
 
 	void UpdateBone();
+
+	void DecideAttackTarget();
 
 };

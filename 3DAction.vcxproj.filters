@@ -288,6 +288,12 @@
     <ClCompile Include="source\check_my_area.cpp">
       <Filter>ソース ファイル\check_my_area</Filter>
     </ClCompile>
+    <ClCompile Include="source\skill_base.cpp">
+      <Filter>ソース ファイル\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="source\punch_skill.cpp">
+      <Filter>ソース ファイル\skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -479,7 +485,10 @@
     <ClInclude Include="source\check_my_area.h">
       <Filter>ソース ファイル\check_my_area</Filter>
     </ClInclude>
-    <ClInclude Include="source\base_skill.h">
+    <ClInclude Include="source\skill_base.h">
+      <Filter>ソース ファイル\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="source\punch_skill.h">
       <Filter>ソース ファイル\skill</Filter>
     </ClInclude>
   </ItemGroup>

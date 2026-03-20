@@ -182,8 +182,8 @@ const VECTOR PlayerInput::MoveDirPC(std::shared_ptr<PC> pc) const
 {
 	VECTOR move_dir = VectorAssistant::VGetZero();
 
-	if (pc->GetPushingTimeKey(KeyConfig::move_front)		>= 0.f) { move_dir.z += 1.f; }
-	if (pc->GetPushingTimeKey(KeyConfig::move_back)		>= 0.f) { move_dir.z -= 1.f; }
+	if (pc->GetPushingTimeKey(KeyConfig::move_front)		>= 0.f) { move_dir.y += 1.f; }
+	if (pc->GetPushingTimeKey(KeyConfig::move_back)		>= 0.f) { move_dir.y -= 1.f; }
 	if (pc->GetPushingTimeKey(KeyConfig::move_left)		>= 0.f) { move_dir.x -= 1.f; }
 	if (pc->GetPushingTimeKey(KeyConfig::move_right)		>= 0.f) { move_dir.x += 1.f; }
 	if (VSize(move_dir) > 0){ move_dir = VNorm(move_dir); }	// ê≥ãKâª

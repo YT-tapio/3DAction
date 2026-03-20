@@ -140,6 +140,8 @@
     <ClCompile Include="source\enemy_base.cpp" />
     <ClCompile Include="source\attack_base.cpp" />
     <ClCompile Include="source\punch.cpp" />
+    <ClCompile Include="source\punch_skill.cpp" />
+    <ClCompile Include="source\skill_base.cpp" />
     <ClCompile Include="source\sphere_camera.cpp" />
     <ClCompile Include="source\tracking_camera.cpp" />
     <ClCompile Include="source\virtual_camera_base.cpp" />
@@ -182,7 +184,8 @@
     <ClInclude Include="source\ai_input.h" />
     <ClInclude Include="source\animation_data.h" />
     <ClInclude Include="source\animator_enemy.h" />
-    <ClInclude Include="source\base_skill.h" />
+    <ClInclude Include="source\punch_skill.h" />
+    <ClInclude Include="source\skill_base.h" />
     <ClInclude Include="source\check_my_area.h" />
     <ClInclude Include="source\enemy_base.h" />
     <ClInclude Include="source\lerp.h" />
