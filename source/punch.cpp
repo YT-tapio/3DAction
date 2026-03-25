@@ -37,7 +37,10 @@ void Punch::Update()
 	// owner‚Épunch‚ð”­¶‚³‚¹‚½‚¢‚æ‚È
 	rigid_body_->NotActive();
 	auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
+
+	if (owner == nullptr) { return; }
 	auto owner_animator = owner->GetAnimator();
+	if (owner_animator == nullptr) { return; }
 	// “–‚½‚è”»’è‚ð‚Ìactive‚ð‚µ‚Ü‚·
 	
 	float punch_play_time = owner_animator->GetPlayTime("punch");

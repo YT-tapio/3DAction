@@ -6,6 +6,8 @@ class RigidBody;
 class InputBase;
 class BehaviorBase;
 class CheckMyArea;
+class SkillBase;
+class ObjectBase;
 
 class Player : public CharacterBase , public IPhysicsEventReceiver
 {
@@ -21,6 +23,10 @@ public:
 	
 	void LateUpdate() override;
 
+	void SetVelocity(const VECTOR& velocity);
+
+	void SetIsStop(bool flag);
+
 	void Draw() override;
 
 	void Debug() override;
@@ -32,6 +38,10 @@ public:
 	void OnUnGrounded(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
 	VECTOR* GetHeadPos();
+
+	std::vector<std::weak_ptr<ObjectBase>> GetMyAreaObject();
+
+	const std::shared_ptr<const InputBase> GetInput() const;
 
 	const bool GetIsMove() const;
 
@@ -48,6 +58,8 @@ private:
 	std::shared_ptr<BehaviorBase> behavior_;
 	std::shared_ptr<CheckMyArea> my_area_;
 
+	std::shared_ptr<SkillBase> skill_;
+
 	VECTOR* camera_dir_;
 	VECTOR hand_pos_;
 	VECTOR head_pos_;
@@ -61,6 +73,7 @@ private:
 	bool is_dash_;
 	bool is_ground_;
 	bool* is_punch_;
+	bool is_stop_;
 	bool is_attack_target_in_range_;		// UŒ‚‘ÎÛ‚ª”ÍˆÍ“à‚É‚¢‚é‚Ì‚©
 
 	// ŠÖ”ŒQ

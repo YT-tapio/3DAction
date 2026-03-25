@@ -1,5 +1,6 @@
 #include<iostream>
 #include<memory>
+#include<vector>
 #include"DxLib.h"
 #include"player.h"
 #include"behavior_base.h"
@@ -9,7 +10,7 @@ SkillBase::SkillBase(std::weak_ptr<Player> owner, std::shared_ptr<BehaviorBase> 
 	: owner_(owner)
 	, behavior_(behavior)
 {
-
+	is_active_ = FALSE;
 }
 
 SkillBase::~SkillBase()

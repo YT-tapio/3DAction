@@ -176,6 +176,7 @@ const float AnimatorBase::GetPlayTime(std::string name) const
 	{
 		if (name != animation.first) { continue; }
 		play_time = animation.second.play_time;
+		break;
 	}
 
 	return play_time;

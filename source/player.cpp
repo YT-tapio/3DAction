@@ -1,5 +1,6 @@
 #include<iostream>
 #include<map>
+#include<vector>
 #include"DxLib.h"
 #include"player.h"
 #include"capsule.h"
@@ -21,6 +22,8 @@
 #include"behavior_base.h"
 #include"punch.h"
 #include"check_my_area.h"
+#include"skill_base.h"
+#include"punch_skill.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	: CharacterBase("player")
@@ -47,6 +50,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	is_ground_ = FALSE;
 	is_dash_ = FALSE;
 	is_attack_target_in_range_ = FALSE;
+	is_stop_ = FALSE;
 	input_ = input;
 	target_rot_y_ = 0;
 	
@@ -60,13 +64,14 @@ Player::~Player()
 void Player::Init()
 {
 	auto mine = std::dynamic_pointer_cast<Player>(shared_from_this());
-	auto a = std::dynamic_pointer_cast<ObjectBase>(mine);
+	auto mine_object = std::dynamic_pointer_cast<ObjectBase>(mine);
 	
-	if (a == nullptr) { printfDx("Ž¸”s"); }
+	if (mine_object == nullptr) { printfDx("Ž¸”s"); }
 
-	behavior_ = std::make_shared<Punch>(a, &hand_pos_, std::make_shared<RigidBody>(std::make_shared<Sphere>(1.5f, VGet(0.f, 0.f, 0.f)), &hand_pos_, FALSE, TRUE, 1.f));
+	behavior_ = std::make_shared<Punch>(mine_object, &hand_pos_, std::make_shared<RigidBody>(std::make_shared<Sphere>(1.5f, VGet(0.f, 0.f, 0.f)), &hand_pos_, FALSE, TRUE, 1.f));
 	rigid_body_->Init(weak_from_this());
 	my_area_ = std::make_shared<CheckMyArea>(std::make_shared<Sphere>(20.f, VectorAssistant::VGetZero()), &pos_);
+	skill_ = std::make_shared<PunchSkill>(mine, &hand_pos_, 1.5f);
 	// physics‚Ì“o˜^
 	Physics::GetInstance().AddBody(rigid_body_);
 	// setter‚Ö‚Ì“o˜^
@@ -76,27 +81,38 @@ void Player::Init()
 	animator_->Init();
 	behavior_->Init();
 	my_area_->Init();
+	skill_->Init();
 }
 
 void Player::Update()
 {
 	// input_->Update();
 	Move();
-	rigid_body_->SetTargetVelocity(vel_);
-	behavior_->Update();
+	//behavior_->Update();
+	
 	//VECTOR a = *head_pos_;
 	//printfDx("x : %.2f,y : %.2f,z : %.2f\n", (*head_pos_).x, (*head_pos_).y, (*head_pos_).z);
 	//Gravity();
+	rigid_body_->SetTargetVelocity(vel_);
 	animator_->Update();
 	Setting();
 	// ŽQÆ‚ÌXV
 	UpdateBone();
-	
 }
 
 void Player::LateUpdate()
 {
 	head_pos_ = VAdd(pos_, VGet(0.f, 10.f, 0.f));
+}
+
+void Player::SetVelocity(const VECTOR& velocity)
+{
+	vel_ = velocity;
+}
+
+void Player::SetIsStop(bool flag)
+{
+	is_stop_ = flag;
 }
 
 void Player::Draw()
@@ -107,12 +123,15 @@ void Player::Draw()
 void Player::Debug()
 {
 	rigid_body_->Debug();
-	behavior_->Debug();
+	// behavior_->Debug();
 	my_area_->Debug();
+	skill_->Debug();
+	
+	// DrawSphere3D(attack_target_pos_, 3.f, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
 	//DrawSphere3D(head_pos_, 0.5f, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "----------player-----------", Color::kWhite);
 	Debug::GetInstance().Add();
-
+	
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "pos", Color::kWhite);
 	Debug::GetInstance().Add();
 	Debug::GetInstance().DrawVector(pos_);
@@ -138,23 +157,19 @@ void Player::LoadFile()
 
 void Player::Move()
 {
-	
 
 	VECTOR dir = VectorAssistant::VGetZero();
-	dir_ = VectorAssistant::VGetZero();
-
+	//dir_ = VectorAssistant::VGetZero();
+	vel_ = VectorAssistant::VGetZero();
 	float speed = kSpeed;
 
-	// Input‚ðì‚Á‚½‚ç‚±‚Ìˆ—‚ÍÁ‚µ‚Ä‚­‚¾‚³‚¢
-	dir.x = input_->GetMoveDir().x;
-	dir.z = input_->GetMoveDir().y;
-
-	if (input_->IsPunch()) 
+	if (animator_->GetNowAnimName() != "punch")
 	{
-		animator_->PlayRequest("punch");
+		dir.x = input_->GetMoveDir().x;
+		dir.z = input_->GetMoveDir().y;
 	}
 
-	if (VSize(dir) > 0)
+	if (VSize(dir) > 0 && !is_stop_)
 	{
 		dir_ = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(*camera_dir_), VectorAssistant::VGetTan(dir));
 		dir_ = VNorm(dir_);
@@ -169,16 +184,24 @@ void Player::Move()
 			is_dash_ = FALSE;
 		}
 		is_move_ = TRUE;
+		vel_ = VScale(dir_, speed);
 	}
 	else
 	{
 		is_move_ = FALSE;
 		is_dash_ = FALSE;
 	}
-
-	if (animator_->GetPlayTime("punch") == 0.f)
+	/*
+	if (VSize(dir) > 0)
 	{
 		vel_ = VScale(dir_, speed);
+	}
+	*/
+
+	/*
+	if (animator_->GetPlayTime("punch") == 0.f)
+	{
+		
 	}
 	else
 	{
@@ -193,23 +216,25 @@ void Player::Move()
 			vel_ = VectorAssistant::VGetZero();
 		}
 	}
-
+	*/
+	
+	skill_->Update();
 	
 	if (!is_ground_)
 	{
 		fall_speed_ += 0.03f;
-		vel_ = VAdd(vel_, VGet(0.f, -fall_speed_, 0.f));
 	}
-	
+
+	vel_ = VAdd(vel_, VGet(0.f, -fall_speed_, 0.f));
 	vel_ = VScale(vel_, (FPS::GetInstance().GetDeltaTime() * 60.f));
 	if (VSize(vel_) > 0.f)
 	{ 
+		dir_ = VNorm(vel_);
 		target_rot_y_ = atan2f(-dir_.x, (-dir_.z));
 	}
-
+	// printfDx("x : %.2f,y : %.2f,z : %.2f\n", vel_.x, vel_.y, vel_.z);
 	rot_.y = RadianAssistant::Lerp(rot_.y, target_rot_y_, RadianAssistant::kOneRad * 15.f * FPS::GetInstance().GetDeltaTime() * 60.f);
 	if (CheckHitKey(KEY_INPUT_SPACE)) { pos_ = VGet(0.f, 0.f, 0.f); vel_ = VGet(0.f, 0.f, 0.f); is_ground_ = FALSE; fall_speed_ = 0.f;}
-	
 }
 
 void Player::Gravity()
@@ -255,17 +280,14 @@ void Player::DecideAttackTarget()
 			dist_pos_mp[dist_size] = enemy_pos;
 		}
 	}
-	printfDx("%d\n", enemy_num);	// ƒfƒoƒbƒO—p
 	if (enemy_num == 0) { return; }
 	
 	if (dist_pos_mp.size() > 0)
 	{
 		auto most_near_pos = dist_pos_mp.begin()->second;
 		attack_target_pos_ = most_near_pos;
+		
 	}
-
-	
-
 }
 
 void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
@@ -316,9 +338,19 @@ void Player::OnUnGrounded(std::shared_ptr<IPhysicsEventReceiver> object)
 	// printfDx("1\n");
 }
 
+std::vector<std::weak_ptr<ObjectBase>> Player::GetMyAreaObject()
+{
+	return my_area_->GetMyAreaObject();
+}
+
 VECTOR* Player::GetHeadPos()
 {
 	return &head_pos_;
+}
+
+const std::shared_ptr<const InputBase> Player::GetInput() const
+{
+	return input_;
 }
 
 const bool Player::GetIsMove() const

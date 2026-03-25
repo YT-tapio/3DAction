@@ -146,6 +146,4 @@ namespace Resolve
 
 		return offset_vel;
 	}
-
-
 }

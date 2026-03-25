@@ -24,6 +24,8 @@ protected:
 	std::weak_ptr<Player> owner_;
 	std::shared_ptr<BehaviorBase> behavior_;
 
+	bool is_active_;
+
 private:
 
 
