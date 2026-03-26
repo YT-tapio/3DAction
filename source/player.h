@@ -4,7 +4,6 @@
 
 class RigidBody;
 class InputBase;
-class BehaviorBase;
 class CheckMyArea;
 class SkillBase;
 class ObjectBase;
@@ -22,6 +21,8 @@ public:
 	void Update() override;
 	
 	void LateUpdate() override;
+
+	void ResetVelocity();
 
 	void SetVelocity(const VECTOR& velocity);
 
@@ -55,9 +56,7 @@ private:
 
 	std::shared_ptr<RigidBody> rigid_body_;
 	std::shared_ptr<const InputBase> input_;
-	std::shared_ptr<BehaviorBase> behavior_;
 	std::shared_ptr<CheckMyArea> my_area_;
-
 	std::shared_ptr<SkillBase> skill_;
 
 	VECTOR* camera_dir_;

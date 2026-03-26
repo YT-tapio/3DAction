@@ -7,7 +7,7 @@ class PunchSkill : public SkillBase
 {
 public:
 
-	PunchSkill(std::weak_ptr<Player>owner,VECTOR* pos,const float r);
+	PunchSkill(std::weak_ptr<Player>owner,VECTOR* pos,const float r, const float detection_radius);
 
 	~PunchSkill() override;
 
@@ -29,4 +29,7 @@ private:
 
 	VECTOR target_dir_;		// ターゲットの方向
 	VECTOR target_pos_;		// ターゲットの位置
+
+	float detection_radius_;
+
 };

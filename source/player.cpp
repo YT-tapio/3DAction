@@ -68,10 +68,12 @@ void Player::Init()
 	
 	if (mine_object == nullptr) { printfDx("Ž¸”s"); }
 
-	behavior_ = std::make_shared<Punch>(mine_object, &hand_pos_, std::make_shared<RigidBody>(std::make_shared<Sphere>(1.5f, VGet(0.f, 0.f, 0.f)), &hand_pos_, FALSE, TRUE, 1.f));
+	// ŒŸ’m—p”ÍˆÍ
+	float detection_radius = 20.f;
+
 	rigid_body_->Init(weak_from_this());
-	my_area_ = std::make_shared<CheckMyArea>(std::make_shared<Sphere>(20.f, VectorAssistant::VGetZero()), &pos_);
-	skill_ = std::make_shared<PunchSkill>(mine, &hand_pos_, 1.5f);
+	my_area_ = std::make_shared<CheckMyArea>(std::make_shared<Sphere>(detection_radius, VectorAssistant::VGetZero()), &pos_);
+	skill_ = std::make_shared<PunchSkill>(mine, &hand_pos_, 1.5f, detection_radius);
 	// physics‚Ì“o˜^
 	Physics::GetInstance().AddBody(rigid_body_);
 	// setter‚Ö‚Ì“o˜^
@@ -79,17 +81,14 @@ void Player::Init()
 	
 	animator_ = std::make_shared<AnimatorPlayer>(handle_, mine);
 	animator_->Init();
-	behavior_->Init();
 	my_area_->Init();
 	skill_->Init();
 }
 
 void Player::Update()
 {
-	// input_->Update();
 	Move();
-	//behavior_->Update();
-	
+	skill_->Update();
 	//VECTOR a = *head_pos_;
 	//printfDx("x : %.2f,y : %.2f,z : %.2f\n", (*head_pos_).x, (*head_pos_).y, (*head_pos_).z);
 	//Gravity();
@@ -103,6 +102,11 @@ void Player::Update()
 void Player::LateUpdate()
 {
 	head_pos_ = VAdd(pos_, VGet(0.f, 10.f, 0.f));
+}
+
+void Player::ResetVelocity()
+{
+	rigid_body_->ResetVelocity();
 }
 
 void Player::SetVelocity(const VECTOR& velocity)
@@ -123,7 +127,6 @@ void Player::Draw()
 void Player::Debug()
 {
 	rigid_body_->Debug();
-	// behavior_->Debug();
 	my_area_->Debug();
 	skill_->Debug();
 	
@@ -191,34 +194,9 @@ void Player::Move()
 		is_move_ = FALSE;
 		is_dash_ = FALSE;
 	}
-	/*
-	if (VSize(dir) > 0)
-	{
-		vel_ = VScale(dir_, speed);
-	}
-	*/
-
-	/*
-	if (animator_->GetPlayTime("punch") == 0.f)
-	{
-		
-	}
-	else
-	{
-		DecideAttackTarget();
-		if (is_attack_target_in_range_)
-		{
-			dir_ = VNorm(VSub(attack_target_pos_, pos_));
-			vel_ = dir_;
-		}
-		else
-		{
-			vel_ = VectorAssistant::VGetZero();
-		}
-	}
-	*/
 	
-	skill_->Update();
+	
+	
 	
 	if (!is_ground_)
 	{

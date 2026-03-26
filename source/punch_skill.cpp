@@ -17,12 +17,14 @@
 #include"animator_base.h"
 #include"enemy_base.h"
 #include"vector_assistant.h"
+#include"FPS.h"
 
-PunchSkill::PunchSkill(std::weak_ptr<Player>owner,VECTOR* pos,const float r)
+PunchSkill::PunchSkill(std::weak_ptr<Player>owner,VECTOR* pos,const float r,const float detection_radius)
 	: SkillBase(owner,std::make_shared<Punch>(owner,pos,std::make_shared<RigidBody>(std::make_shared<Sphere>(r,VGet(0,0,0)), pos, FALSE, TRUE, 1.f)))
 {
 	target_dir_ = VectorAssistant::VGetZero();
 	target_pos_ = VectorAssistant::VGetZero();
+	detection_radius_ = detection_radius;
 }
 
 PunchSkill::~PunchSkill()
@@ -54,24 +56,18 @@ void PunchSkill::Update()
 			is_active_ = TRUE;
 			// punchさせる
 			owner->GetAnimator()->PlayRequest("punch");	//パンチのanimationを再生をお願いする
-
+			owner->ResetVelocity();
 			// この瞬間にplayerをうごかす
 			auto owner_area_object = owner->GetMyAreaObject();
 			DecideTarget(owner_area_object,owner);
 		}
 		else
 		{
-			
 			return;
 		}
 	}
-	
-
 	//　behaviorのupdate
 	behavior_->Update();
-
-	
-
 }
 
 void PunchSkill::Draw()
@@ -105,12 +101,27 @@ void PunchSkill::DecideTarget(std::vector<std::weak_ptr<ObjectBase>> owner_area_
 
 	if (object_dist_dir_mp.size() == 0) { return; }
 
-	target_dir_ = object_dist_dir_mp.begin()->second;
-	target_pos_ = object_dist_pos_mp.begin()->second;
+	float speed = 8.f;
+	float speed_ratio = object_dist_dir_mp.begin()->first / detection_radius_;
+	
+	// 距離が近すぎると終わる進ませない
+	if (speed_ratio < 0.5f)
+	{
+		speed = 0.f;
+	}
+	else
+	{
+		speed = speed * speed_ratio;				// 距離によってspeedを変える
+		speed = speed * FPS::GetInstance().GetDeltaTime() * 60.f;
+	}
+	
 
-	owner->SetVelocity(VScale(target_dir_,10.f));
+	target_dir_		= object_dist_dir_mp.begin()->second;
+	target_pos_		= object_dist_pos_mp.begin()->second;
+
+	VECTOR vel = VScale(target_dir_, speed);
+	owner->SetVelocity(vel);
 	owner->SetIsStop(TRUE);
-
 }
 
 bool PunchSkill::CheckIsPunch(std::shared_ptr<Player> owner)

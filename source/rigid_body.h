@@ -14,6 +14,8 @@ public:
 
 	void Init(std::weak_ptr<IPhysicsEventReceiver> object);
 
+	void ResetVelocity();
+
 	void SetVelocity(const VECTOR& vel);
 
 	void SetTargetVelocity(const VECTOR& vel);
