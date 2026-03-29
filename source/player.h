@@ -26,6 +26,10 @@ public:
 
 	void SetVelocity(const VECTOR& velocity);
 
+	void SetRotation(const VECTOR& rotation);
+
+	void SetDirection(const VECTOR& direction);
+
 	void SetIsStop(bool flag);
 
 	void Draw() override;

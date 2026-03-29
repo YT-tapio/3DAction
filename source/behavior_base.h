@@ -14,6 +14,8 @@ public:
 
 	virtual void Update();
 
+	virtual void Draw();
+
 	virtual void Debug();
 
 	std::weak_ptr<ObjectBase> GetOwner();

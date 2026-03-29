@@ -45,9 +45,10 @@ void PunchSkill::Update()
 	if (owner->GetAnimator()->GetNowAnimName() != "punch")
 	{
 		is_active_ = FALSE;
+		owner->SetIsStop(FALSE);
 	}
 
-	owner->SetIsStop(FALSE);
+	
 
 	if(!is_active_)
 	{
@@ -56,7 +57,7 @@ void PunchSkill::Update()
 			is_active_ = TRUE;
 			// punch‚³‚¹‚é
 			owner->GetAnimator()->PlayRequest("punch");	//ƒpƒ“ƒ`‚Ìanimation‚ðÄ¶‚ð‚¨Šè‚¢‚·‚é
-			owner->ResetVelocity();
+			
 			// ‚±‚ÌuŠÔ‚Éplayer‚ð‚¤‚²‚©‚·
 			auto owner_area_object = owner->GetMyAreaObject();
 			DecideTarget(owner_area_object,owner);
@@ -94,12 +95,15 @@ void PunchSkill::DecideTarget(std::vector<std::weak_ptr<ObjectBase>> owner_area_
 		float dist = 0;
 		VECTOR obj_pos = obj->GetPosition();
 		VECTOR dist_vec = VSub(obj_pos, owner->GetPosition());
+		VECTOR obj_dir = VNorm(dist_vec);
 		dist = VSize(dist_vec);
-		object_dist_dir_mp[dist] = VNorm(dist_vec);
+		object_dist_dir_mp[dist] = obj_dir;
 		object_dist_pos_mp[dist] = obj_pos;
 	}
 
 	if (object_dist_dir_mp.size() == 0) { return; }
+
+	owner->ResetVelocity();
 
 	float speed = 8.f;
 	float speed_ratio = object_dist_dir_mp.begin()->first / detection_radius_;
@@ -114,12 +118,15 @@ void PunchSkill::DecideTarget(std::vector<std::weak_ptr<ObjectBase>> owner_area_
 		speed = speed * speed_ratio;				// ‹——£‚É‚æ‚Á‚Äspeed‚ð•Ï‚¦‚é
 		speed = speed * FPS::GetInstance().GetDeltaTime() * 60.f;
 	}
-	
 
+	//ˆê”Ô‹ß‚¢“z‚Ìî•ñ‚ðŽó‚¯Žæ‚é
 	target_dir_		= object_dist_dir_mp.begin()->second;
 	target_pos_		= object_dist_pos_mp.begin()->second;
+	
 
 	VECTOR vel = VScale(target_dir_, speed);
+	owner->SetRotation(VGet(0.f, VectorAssistant::VGetTan(VectorAssistant::VGetReverce(target_dir_)), 0.f));
+	owner->SetDirection(target_dir_);
 	owner->SetVelocity(vel);
 	owner->SetIsStop(TRUE);
 }

@@ -135,6 +135,7 @@
     <ClCompile Include="source\animator_enemy.cpp" />
     <ClCompile Include="source\animator_player.cpp" />
     <ClCompile Include="source\application.cpp" />
+    <ClCompile Include="source\avoid.cpp" />
     <ClCompile Include="source\behavior_base.cpp" />
     <ClCompile Include="source\check_my_area.cpp" />
     <ClCompile Include="source\enemy_base.cpp" />
@@ -246,6 +247,7 @@
     <ClInclude Include="source\collider_group.h" />
     <ClInclude Include="source\brain.h" />
     <ClInclude Include="source\behavior_base.h" />
+    <ClInclude Include="source\avoid.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

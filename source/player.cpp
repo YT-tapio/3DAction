@@ -88,10 +88,10 @@ void Player::Init()
 void Player::Update()
 {
 	Move();
-	skill_->Update();
 	//VECTOR a = *head_pos_;
 	//printfDx("x : %.2f,y : %.2f,z : %.2f\n", (*head_pos_).x, (*head_pos_).y, (*head_pos_).z);
 	//Gravity();
+	skill_->Update();
 	rigid_body_->SetTargetVelocity(vel_);
 	animator_->Update();
 	Setting();
@@ -112,6 +112,16 @@ void Player::ResetVelocity()
 void Player::SetVelocity(const VECTOR& velocity)
 {
 	vel_ = velocity;
+}
+
+void Player::SetRotation(const VECTOR& rotation)
+{
+	rot_ = rotation;
+}
+
+void Player::SetDirection(const VECTOR& direction)
+{
+	dir_ = direction;
 }
 
 void Player::SetIsStop(bool flag)
@@ -172,6 +182,15 @@ void Player::Move()
 		dir.z = input_->GetMoveDir().y;
 	}
 
+	/*
+	if (CheckHitKey(KEY_INPUT_5))
+	{
+		animator_->PlayRequest("avoid");
+	}
+	*/
+
+	
+
 	if (VSize(dir) > 0 && !is_stop_)
 	{
 		dir_ = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(*camera_dir_), VectorAssistant::VGetTan(dir));
@@ -202,15 +221,18 @@ void Player::Move()
 	{
 		fall_speed_ += 0.03f;
 	}
-
+	
 	vel_ = VAdd(vel_, VGet(0.f, -fall_speed_, 0.f));
 	vel_ = VScale(vel_, (FPS::GetInstance().GetDeltaTime() * 60.f));
+	
 	if (VSize(vel_) > 0.f)
 	{ 
 		dir_ = VNorm(vel_);
-		target_rot_y_ = atan2f(-dir_.x, (-dir_.z));
+		// target_rot_y_ = atan2f(-dir_.x, (-dir_.z));
+		target_rot_y_ = VectorAssistant::VGetTan(VectorAssistant::VGetReverce(dir_));
 	}
 	// printfDx("x : %.2f,y : %.2f,z : %.2f\n", vel_.x, vel_.y, vel_.z);
+	if (is_stop_) { return; }
 	rot_.y = RadianAssistant::Lerp(rot_.y, target_rot_y_, RadianAssistant::kOneRad * 15.f * FPS::GetInstance().GetDeltaTime() * 60.f);
 	if (CheckHitKey(KEY_INPUT_SPACE)) { pos_ = VGet(0.f, 0.f, 0.f); vel_ = VGet(0.f, 0.f, 0.f); is_ground_ = FALSE; fall_speed_ = 0.f;}
 }

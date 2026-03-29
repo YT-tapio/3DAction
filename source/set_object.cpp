@@ -1,6 +1,5 @@
 #include<iostream>
 #include"DxLib.h"
-
 #include"set_object.h"
 
 
@@ -22,7 +21,8 @@ void SetObject::Update()
 {
 	// matrix‚É•ÏŠ·
 	MATRIX scale_mat = MGetScale(*scale_);
-	MATRIX rot_mat = MMult(MMult(MGetRotX(rot_->x), MGetRotY(rot_->y)), MGetRotZ(rot_->z));
+	VECTOR rot = *rot_;
+	MATRIX rot_mat = MMult(MMult(MGetRotX(rot.x), MGetRotY(rot.y)), MGetRotZ(rot.z));
 	MATRIX mat = MMult(MMult(scale_mat, rot_mat), MGetTranslate(*pos_));
 
 	MV1SetupCollInfo(handle_);

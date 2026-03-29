@@ -132,14 +132,17 @@ namespace VectorAssistant
 		return VSize(VSub(vec, vec2));
 	}
 
+	/// <summary>
+	/// x‚Æz‚Ì•½t‚Ì‰ñ“]—Ê
+	/// </summary>
+	/// <param name="vec"></param>
+	/// <returns></returns>
 	inline float VGetTan(const VECTOR& vec)
 	{
 		float num = 0.f;
 
 		// y‚Í‚Ş‚µ
-
 		num = atan2f(vec.x, vec.z);
-
 		return num;
 	}
 

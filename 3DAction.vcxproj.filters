@@ -294,6 +294,9 @@
     <ClCompile Include="source\punch_skill.cpp">
       <Filter>ソース ファイル\skill</Filter>
     </ClCompile>
+    <ClCompile Include="source\avoid.cpp">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -490,6 +493,9 @@
     </ClInclude>
     <ClInclude Include="source\punch_skill.h">
       <Filter>ソース ファイル\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="source\avoid.h">
+      <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
