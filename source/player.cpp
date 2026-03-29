@@ -24,6 +24,7 @@
 #include"check_my_area.h"
 #include"skill_base.h"
 #include"punch_skill.h"
+#include"avoid.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	: CharacterBase("player")
@@ -74,6 +75,8 @@ void Player::Init()
 	rigid_body_->Init(weak_from_this());
 	my_area_ = std::make_shared<CheckMyArea>(std::make_shared<Sphere>(detection_radius, VectorAssistant::VGetZero()), &pos_);
 	skill_ = std::make_shared<PunchSkill>(mine, &hand_pos_, 1.5f, detection_radius);
+	test_behavior_ = std::make_shared<Avoid>(mine);
+	is_invincible_ = FALSE;
 	// physics‚Ì“o˜^
 	Physics::GetInstance().AddBody(rigid_body_);
 	// setter‚Ö‚Ì“o˜^
@@ -83,6 +86,7 @@ void Player::Init()
 	animator_->Init();
 	my_area_->Init();
 	skill_->Init();
+	test_behavior_->Init();
 }
 
 void Player::Update()
@@ -93,6 +97,7 @@ void Player::Update()
 	//Gravity();
 	skill_->Update();
 	rigid_body_->SetTargetVelocity(vel_);
+	test_behavior_->Update();
 	animator_->Update();
 	Setting();
 	// ŽQÆ‚ÌXV
@@ -161,6 +166,16 @@ void Player::Debug()
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "camera_dir", Color::kWhite);
 	Debug::GetInstance().Add();
 	Debug::GetInstance().DrawVector(*camera_dir_);
+
+	if (is_invincible_)
+	{
+		DrawString(0, Debug::GetInstance().GetNowLineSize(), "–³“G", Color::kWhite);
+	}
+	else
+	{
+		DrawString(0, Debug::GetInstance().GetNowLineSize(), "–³“G‚¶‚á‚È‚¢", Color::kWhite);
+	}
+	Debug::GetInstance().Add();
 }
 
 void Player::LoadFile()
@@ -182,12 +197,12 @@ void Player::Move()
 		dir.z = input_->GetMoveDir().y;
 	}
 
-	/*
+	
 	if (CheckHitKey(KEY_INPUT_5))
 	{
 		animator_->PlayRequest("avoid");
 	}
-	*/
+	
 
 	
 

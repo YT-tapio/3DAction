@@ -19,12 +19,16 @@ public:
 
 	virtual void Debug() override;
 
+	void SetInvincible(bool flag);
+
 	std::shared_ptr<AnimatorBase> GetAnimator();
 
 protected:
 
 	VECTOR dir_;
 	VECTOR vel_;
+
+	bool is_invincible_;
 
 	// todo:アニメーションをつけてください
 	std::shared_ptr<AnimatorBase> animator_;

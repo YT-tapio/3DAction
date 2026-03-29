@@ -39,25 +39,20 @@ void Avoid::Update()
 	}
 
 	//自分の行動を起こせるanimationかをチェック
-	if (chara->GetAnimator()->GetNowAnimName() != my_anim_name_) { return; }
+	if (chara->GetAnimator()->GetNowAnimName() != my_anim_name_) 
+	{ 
+		chara->SetInvincible(FALSE); 
+		return; 
+	}
 
 	float now_play_time_ = chara->GetAnimator()->GetPlayTime(my_anim_name_);
 
 	// animationの時間によって無敵にするかどうかを判断
-	/*
-	if ()
+	
+	if (now_play_time_ > 0)
 	{
 		chara->SetInvincible(TRUE);
 	}
-	else
-	{
-		chara->SetInvincible(FALSE);
-	}
-	*/
-	
-
-	
-
 }
 
 void Avoid::Debug()

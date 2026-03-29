@@ -7,6 +7,7 @@ class InputBase;
 class CheckMyArea;
 class SkillBase;
 class ObjectBase;
+class BehaviorBase;
 
 class Player : public CharacterBase , public IPhysicsEventReceiver
 {
@@ -62,6 +63,8 @@ private:
 	std::shared_ptr<const InputBase> input_;
 	std::shared_ptr<CheckMyArea> my_area_;
 	std::shared_ptr<SkillBase> skill_;
+
+	std::shared_ptr<BehaviorBase> test_behavior_;
 
 	VECTOR* camera_dir_;
 	VECTOR hand_pos_;

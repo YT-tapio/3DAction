@@ -11,7 +11,7 @@
 CharacterBase::CharacterBase(const char* id)
 	:Object3D(id)
 {
-	
+	is_invincible_ = FALSE;
 }
 
 CharacterBase::~CharacterBase()
@@ -21,7 +21,7 @@ CharacterBase::~CharacterBase()
 
 void CharacterBase::Init()
 {
-
+	is_invincible_ = FALSE;
 }
 
 void CharacterBase::Update()
@@ -37,6 +37,11 @@ void CharacterBase::Draw()
 void CharacterBase::Debug()
 {
 
+}
+
+void CharacterBase::SetInvincible(bool flag)
+{
+	is_invincible_ = flag;
 }
 
 std::shared_ptr<AnimatorBase> CharacterBase::GetAnimator()
