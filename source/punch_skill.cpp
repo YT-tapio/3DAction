@@ -41,15 +41,23 @@ void PunchSkill::Update()
 {
 	auto owner = owner_.lock();
 
-	// skillが終わる条件
-	if (owner->GetAnimator()->GetNowAnimName() != "punch")
+	if(owner == nullptr)
 	{
-		is_active_ = FALSE;
-		owner->SetIsStop(FALSE);
+		printfDx("player以外にはskillを適応できません\n");
+		return;
+	}
+
+	if (is_active_)
+	{
+		// skillが終わる条件
+		if (owner->GetAnimator()->GetNowAnimName() != "punch")
+		{
+			is_active_ = FALSE;
+			owner->SetIsStop(FALSE);
+		}
 	}
 
 	
-
 	if(!is_active_)
 	{
 		if (CheckIsPunch(owner))
@@ -61,13 +69,10 @@ void PunchSkill::Update()
 			// この瞬間にplayerをうごかす
 			auto owner_area_object = owner->GetMyAreaObject();
 			DecideTarget(owner_area_object,owner);
-		}
-		else
-		{
-			return;
+			owner->SetIsStop(TRUE);
 		}
 	}
-	//　behaviorのupdate
+	// behaviorのupdate
 	behavior_->Update();
 }
 
@@ -128,14 +133,15 @@ void PunchSkill::DecideTarget(std::vector<std::weak_ptr<ObjectBase>> owner_area_
 	owner->SetRotation(VGet(0.f, VectorAssistant::VGetTan(VectorAssistant::VGetReverce(target_dir_)), 0.f));
 	owner->SetDirection(target_dir_);
 	owner->SetVelocity(vel);
-	owner->SetIsStop(TRUE);
 }
 
 bool PunchSkill::CheckIsPunch(std::shared_ptr<Player> owner)
 {
-	if (!owner->GetIsGround())														{ return FALSE; }	// 着地していない
+	if (owner->GetIsStop())										{ return FALSE; }
+	if (!owner->GetIsGround())									{ return FALSE; }	// 着地していない
+	if (owner->GetIsInvincible())								{ return FALSE; }
 	if (owner->GetAnimator()->GetNowAnimName() == "punch")		{ return FALSE; }	// パンチじゃない
-	if (!owner->GetInput()->IsPunch())											{ return FALSE; }	// 入力されているか
+	if (!owner->GetInput()->IsPunch())							{ return FALSE; }	// 入力されているか
 
 	return TRUE;
 }

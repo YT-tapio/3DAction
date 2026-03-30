@@ -30,6 +30,18 @@ const bool AIInput::IsDash() const
 	return FALSE;
 }
 
+const bool AIInput::IsPunch() const
+{
+
+	return FALSE;
+}
+
+const bool AIInput::IsAvoid() const
+{
+
+	return FALSE;
+}
+
 const VECTOR AIInput::GetMoveDir() const
 {
 	VECTOR dir = VectorAssistant::VGetZero();

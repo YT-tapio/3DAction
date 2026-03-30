@@ -136,6 +136,7 @@
     <ClCompile Include="source\animator_player.cpp" />
     <ClCompile Include="source\application.cpp" />
     <ClCompile Include="source\avoid.cpp" />
+    <ClCompile Include="source\avoid_skill.cpp" />
     <ClCompile Include="source\behavior_base.cpp" />
     <ClCompile Include="source\check_my_area.cpp" />
     <ClCompile Include="source\enemy_base.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="source\ai_input.h" />
     <ClInclude Include="source\animation_data.h" />
     <ClInclude Include="source\animator_enemy.h" />
+    <ClInclude Include="source\avoid_skill.h" />
     <ClInclude Include="source\punch_skill.h" />
     <ClInclude Include="source\skill_base.h" />
     <ClInclude Include="source\check_my_area.h" />

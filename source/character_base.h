@@ -21,6 +21,8 @@ public:
 
 	void SetInvincible(bool flag);
 
+	const bool GetIsInvincible() const;
+
 	std::shared_ptr<AnimatorBase> GetAnimator();
 
 protected:

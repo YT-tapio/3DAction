@@ -23,6 +23,8 @@ public:
 	/// <returns></returns>
 	const float GetPlayTime(std::string name) const;
 
+	const float GetTotalTime(std::string name) const;
+
 	const std::string GetNowAnimName() const;
 
 protected:

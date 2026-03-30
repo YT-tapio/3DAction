@@ -44,6 +44,11 @@ void CharacterBase::SetInvincible(bool flag)
 	is_invincible_ = flag;
 }
 
+const bool CharacterBase::GetIsInvincible() const
+{
+	return is_invincible_;
+}
+
 std::shared_ptr<AnimatorBase> CharacterBase::GetAnimator()
 {
 	return animator_;

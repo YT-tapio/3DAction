@@ -55,6 +55,10 @@ public:
 
 	const bool GetIsDash() const;
 
+	const bool GetIsStop() const;
+
+	const VECTOR GetInputDir() const;
+
 private:
 
 	const float kSpeed = 0.3f;
@@ -63,7 +67,7 @@ private:
 	std::shared_ptr<const InputBase> input_;
 	std::shared_ptr<CheckMyArea> my_area_;
 	std::shared_ptr<SkillBase> skill_;
-
+	std::shared_ptr<SkillBase> second_skill_;
 	std::shared_ptr<BehaviorBase> test_behavior_;
 
 	VECTOR* camera_dir_;

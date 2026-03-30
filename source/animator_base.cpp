@@ -182,6 +182,20 @@ const float AnimatorBase::GetPlayTime(std::string name) const
 	return play_time;
 }
 
+const float AnimatorBase::GetTotalTime(std::string name) const
+{
+	float total_time = -1.f;
+
+	for (const auto& animation : animation_datas_)
+	{
+		if (name != animation.first) { continue; }
+		total_time = animation.second.total_time;
+		break;
+	}
+
+	return total_time;
+}
+
 const std::string AnimatorBase::GetNowAnimName() const
 {
 	return now_anim_name_;

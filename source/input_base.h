@@ -18,6 +18,8 @@ public:
 
 	virtual const bool IsPunch() const;
 
+	virtual const bool IsAvoid() const;
+
 	virtual const VECTOR GetMoveDir() const;
 
 	virtual const VECTOR GetCameraDir() const;

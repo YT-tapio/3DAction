@@ -83,6 +83,36 @@ const bool PlayerInput::IsPunch() const
 	return FALSE;
 }
 
+const bool PlayerInput::IsAvoid() const
+{
+	// 攻撃に対応されているボタンを見る
+	// padはbボタン長押しで
+	for (auto& input : inputs_)
+	{
+		auto pad = std::dynamic_pointer_cast<Pad>(input);
+		float pushing_time = 0.f;
+		if (pad != nullptr)
+		{
+			pushing_time = pad->GetPushingTimeButton(PadConfig::avoid);
+			if (pushing_time == 0.f) { return TRUE; }
+		}
+		else
+		{
+			auto pc = std::dynamic_pointer_cast<PC>(input);
+			if (pc != nullptr)
+			{
+				pushing_time = pc->GetPushingTimeMouseButton(KeyConfig::avoid);
+
+				if (pushing_time == 0.f) 
+				{ 
+					return TRUE;
+				}
+			}
+		}
+	}
+	return FALSE;
+}
+
 const VECTOR PlayerInput::GetMoveDir() const
 {
 	VECTOR move_dir = VectorAssistant::VGetZero();

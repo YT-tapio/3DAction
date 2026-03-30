@@ -24,7 +24,7 @@
 #include"check_my_area.h"
 #include"skill_base.h"
 #include"punch_skill.h"
-#include"avoid.h"
+#include"avoid_skill.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	: CharacterBase("player")
@@ -70,12 +70,15 @@ void Player::Init()
 	if (mine_object == nullptr) { printfDx("失敗"); }
 
 	// 検知用範囲
-	float detection_radius = 20.f;
+	float detection_radius = 25.f;
 
 	rigid_body_->Init(weak_from_this());
 	my_area_ = std::make_shared<CheckMyArea>(std::make_shared<Sphere>(detection_radius, VectorAssistant::VGetZero()), &pos_);
-	skill_ = std::make_shared<PunchSkill>(mine, &hand_pos_, 1.5f, detection_radius);
-	test_behavior_ = std::make_shared<Avoid>(mine);
+	//skill_ = std::make_shared<PunchSkill>(mine, &hand_pos_, 1.5f, detection_radius);
+	skill_			= std::make_shared<PunchSkill>(mine, &hand_pos_, 1.5f, detection_radius);
+	second_skill_	= std::make_shared<AvoidSkill>(mine);
+	
+	//test_behavior_ = std::make_shared<Avoid>(mine);
 	is_invincible_ = FALSE;
 	// physicsの登録
 	Physics::GetInstance().AddBody(rigid_body_);
@@ -86,7 +89,8 @@ void Player::Init()
 	animator_->Init();
 	my_area_->Init();
 	skill_->Init();
-	test_behavior_->Init();
+	second_skill_->Init();
+	//test_behavior_->Init();
 }
 
 void Player::Update()
@@ -96,8 +100,9 @@ void Player::Update()
 	//printfDx("x : %.2f,y : %.2f,z : %.2f\n", (*head_pos_).x, (*head_pos_).y, (*head_pos_).z);
 	//Gravity();
 	skill_->Update();
+	second_skill_->Update();
 	rigid_body_->SetTargetVelocity(vel_);
-	test_behavior_->Update();
+	//test_behavior_->Update();
 	animator_->Update();
 	Setting();
 	// 参照の更新
@@ -144,7 +149,7 @@ void Player::Debug()
 	rigid_body_->Debug();
 	my_area_->Debug();
 	skill_->Debug();
-	
+	second_skill_->Debug();
 	// DrawSphere3D(attack_target_pos_, 3.f, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
 	//DrawSphere3D(head_pos_, 0.5f, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "----------player-----------", Color::kWhite);
@@ -381,4 +386,28 @@ const bool Player::GetIsGround() const
 const bool Player::GetIsDash() const
 {
 	return is_dash_;
+}
+
+const bool Player::GetIsStop() const
+{
+	return is_stop_;
+}
+
+const VECTOR Player::GetInputDir() const
+{
+	VECTOR input_dir = input_->GetMoveDir();	// inputから移動方向を受け取る
+
+	// 入力がない場合はそのまま向いている方向に行く
+	if (VSize(input_dir) == 0.f) { return dir_; }
+
+	const auto ai_input = std::dynamic_pointer_cast<const AIInput>(input_);
+	if (ai_input != nullptr)
+	{
+		return input_dir;	// ai_inputにする
+	}
+	// カメラの方向に補正させる
+	input_dir = VGet(input_dir.x, 0.f, input_dir.y);
+	input_dir = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(*camera_dir_), VectorAssistant::VGetTan(input_dir));
+	input_dir = VNorm(input_dir);
+	return input_dir;
 }
