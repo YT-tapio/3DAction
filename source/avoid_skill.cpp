@@ -82,8 +82,10 @@ void AvoidSkill::DecideVelocity(std::shared_ptr<Player> owner)
 {
 	// オーナーの回避の速度をきめる
 
+	const float kSpeed = 30.f;
+
 	VECTOR input_dir = owner->GetInputDir();
-	VECTOR velocity = VScale(input_dir, 20.f * FPS::GetInstance().GetDeltaTime() * 60.f);
+	VECTOR velocity = VScale(input_dir, kSpeed * FPS::GetInstance().GetDeltaTime() * 60.f);
 	owner->ResetVelocity();
 	owner->SetVelocity(velocity);
 	owner->SetRotation(VGet(0.f, VectorAssistant::VGetTan(VectorAssistant::VGetReverce(input_dir)), 0.f));

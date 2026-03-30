@@ -110,16 +110,23 @@ void PunchSkill::DecideTarget(std::vector<std::weak_ptr<ObjectBase>> owner_area_
 
 	owner->ResetVelocity();
 
-	float speed = 8.f;
-	float speed_ratio = object_dist_dir_mp.begin()->first / detection_radius_;
+	//‚±‚ÌŠ„‡‚¾‚Æ’²®‚µ‚È‚¢
+	const float kRatioMin = 0.45f;
+
+	float speed = 20.f;
+	float most_near_dist = object_dist_dir_mp.begin()->first;		// ˆê”Ô‹ß‚¢“G‚Æ‚Ì‹——£
+	float speed_ratio = most_near_dist / detection_radius_;
 	
 	// ‹——£‚ª‹ß‚·‚¬‚é‚ÆI‚í‚éi‚Ü‚¹‚È‚¢
-	if (speed_ratio < 0.5f)
+	if (speed_ratio < kRatioMin)
 	{
 		speed = 0.f;
 	}
 	else
 	{
+		float offset_detection_radius	= detection_radius_ - (detection_radius_ * kRatioMin);
+		float offset_most_near_dist		= most_near_dist - (detection_radius_ * kRatioMin);
+		speed_ratio = offset_most_near_dist / offset_detection_radius;
 		speed = speed * speed_ratio;				// ‹——£‚É‚æ‚Á‚Äspeed‚ğ•Ï‚¦‚é
 		speed = speed * FPS::GetInstance().GetDeltaTime() * 60.f;
 	}
@@ -132,6 +139,7 @@ void PunchSkill::DecideTarget(std::vector<std::weak_ptr<ObjectBase>> owner_area_
 	VECTOR vel = VScale(target_dir_, speed);
 	owner->SetRotation(VGet(0.f, VectorAssistant::VGetTan(VectorAssistant::VGetReverce(target_dir_)), 0.f));
 	owner->SetDirection(target_dir_);
+	//owner->ResetVelocity();
 	owner->SetVelocity(vel);
 }
 
