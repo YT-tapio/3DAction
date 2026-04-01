@@ -145,6 +145,12 @@
     <Filter Include="ソース ファイル\skill">
       <UniqueIdentifier>{0e7a09a8-3e9a-4dad-a705-721cb4988aa7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\interface\damage">
+      <UniqueIdentifier>{3ece247b-e993-4c57-b437-58272b37fb81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\interface\heal">
+      <UniqueIdentifier>{eb0e7703-b86f-4ca3-8c4e-83f5dbb27419}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -299,6 +305,21 @@
     </ClCompile>
     <ClCompile Include="source\avoid_skill.cpp">
       <Filter>ソース ファイル\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="source\takable_damage_enemy_interface.cpp">
+      <Filter>ソース ファイル\interface\damage</Filter>
+    </ClCompile>
+    <ClCompile Include="source\takable_damage_player_interface.cpp">
+      <Filter>ソース ファイル\interface\damage</Filter>
+    </ClCompile>
+    <ClCompile Include="source\takable_heal_player_interface.cpp">
+      <Filter>ソース ファイル\interface\heal</Filter>
+    </ClCompile>
+    <ClCompile Include="source\takable_heal_enemy_interface.cpp">
+      <Filter>ソース ファイル\interface\heal</Filter>
+    </ClCompile>
+    <ClCompile Include="source\area_action_base.cpp">
+      <Filter>ソース ファイル\behavior</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -502,6 +523,21 @@
     </ClInclude>
     <ClInclude Include="source\avoid_skill.h">
       <Filter>ソース ファイル\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="source\takable_damage_enemy_interface.h">
+      <Filter>ソース ファイル\interface\damage</Filter>
+    </ClInclude>
+    <ClInclude Include="source\takable_damage_player_interface.h">
+      <Filter>ソース ファイル\interface\damage</Filter>
+    </ClInclude>
+    <ClInclude Include="source\takable_heal_player_interface.h">
+      <Filter>ソース ファイル\interface\heal</Filter>
+    </ClInclude>
+    <ClInclude Include="source\takable_heal_enemy_interface.h">
+      <Filter>ソース ファイル\interface\heal</Filter>
+    </ClInclude>
+    <ClInclude Include="source\area_action_base.h">
+      <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

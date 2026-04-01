@@ -28,6 +28,8 @@ public:
 
 	std::vector<std::weak_ptr<ObjectBase>> GetMyAreaObject();
 
+	const VECTOR GetPos() const;
+
 protected:
 
 	std::shared_ptr<RigidBody> rigid_body_;

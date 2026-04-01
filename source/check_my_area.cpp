@@ -97,3 +97,8 @@ std::vector<std::weak_ptr<ObjectBase>> CheckMyArea::GetMyAreaObject()
 {
 	return my_area_objects_;
 }
+
+const VECTOR CheckMyArea::GetPos() const
+{
+	return rigid_body_->GetPosition();
+}
