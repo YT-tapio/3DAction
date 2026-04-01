@@ -151,6 +151,12 @@
     <Filter Include="ソース ファイル\interface\heal">
       <UniqueIdentifier>{eb0e7703-b86f-4ca3-8c4e-83f5dbb27419}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\behavior\heal">
+      <UniqueIdentifier>{3c67baa0-85a5-42fa-b282-974f8786b177}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\json">
+      <UniqueIdentifier>{da6e9177-f8e7-449e-92d2-812f4978e85d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -320,6 +326,12 @@
     </ClCompile>
     <ClCompile Include="source\area_action_base.cpp">
       <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="source\area_heal.cpp">
+      <Filter>ソース ファイル\behavior\heal</Filter>
+    </ClCompile>
+    <ClCompile Include="source\area_heal_give_player.cpp">
+      <Filter>ソース ファイル\behavior\heal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -539,5 +551,16 @@
     <ClInclude Include="source\area_action_base.h">
       <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
+    <ClInclude Include="source\area_heal.h">
+      <Filter>ソース ファイル\behavior\heal</Filter>
+    </ClInclude>
+    <ClInclude Include="source\area_heal_give_player.h">
+      <Filter>ソース ファイル\behavior\heal</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\json\animation.json">
+      <Filter>ソース ファイル\json</Filter>
+    </None>
   </ItemGroup>
 </Project>

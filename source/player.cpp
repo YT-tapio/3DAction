@@ -25,6 +25,7 @@
 #include"skill_base.h"
 #include"punch_skill.h"
 #include"avoid_skill.h"
+#include"area_heal_give_player.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	: CharacterBase("player")
@@ -39,9 +40,19 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	VECTOR head_pos = VAdd(pos_, VGet(0.f, 10.f, 0.f));
 	head_pos_ = head_pos;
 	
+	static int num = 0;
+
 	scale_ = VectorAssistant::VGetSame(0.05f);
-	handle_ = MV1LoadModel("data/model/player/Lola_B_Styperek.mv1");
-	
+
+	if (num == 0)
+	{
+		handle_ = MV1LoadModel("data/model/player/Peasant_Girl.mv1");
+	}
+	else
+	{
+		handle_ = MV1LoadModel("data/model/player/Lola_B_Styperek.mv1");
+	}
+	num++;
 	if (handle_ == -1) { printfDx("読み込みエラー\n"); }
 	Setting();
 	UpdateBone();
@@ -54,7 +65,6 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	is_stop_ = FALSE;
 	input_ = input;
 	target_rot_y_ = 0;
-	
 }
 
 Player::~Player()
@@ -78,7 +88,8 @@ void Player::Init()
 	skill_			= std::make_shared<PunchSkill>(mine, &hand_pos_, 1.5f, detection_radius);
 	second_skill_	= std::make_shared<AvoidSkill>(mine);
 	
-	//test_behavior_ = std::make_shared<Avoid>(mine);
+	test_behavior_ = 
+		std::make_shared<AreaHealGivePlayer>(mine,std::make_shared<CheckMyArea>(std::make_shared<Sphere>(20.f,VectorAssistant::VGetZero()), &pos_), &pos_);
 	is_invincible_ = FALSE;
 	// physicsの登録
 	Physics::GetInstance().AddBody(rigid_body_);
@@ -90,7 +101,7 @@ void Player::Init()
 	my_area_->Init();
 	skill_->Init();
 	second_skill_->Init();
-	//test_behavior_->Init();
+	test_behavior_->Init();
 }
 
 void Player::Update()
@@ -102,7 +113,7 @@ void Player::Update()
 	skill_->Update();
 	second_skill_->Update();
 	rigid_body_->SetTargetVelocity(vel_);
-	//test_behavior_->Update();
+	test_behavior_->Update();
 	animator_->Update();
 	Setting();
 	// 参照の更新
@@ -148,9 +159,10 @@ void Player::Draw()
 void Player::Debug()
 {
 	rigid_body_->Debug();
-	my_area_->Debug();
-	skill_->Debug();
+	//my_area_->Debug();
+	//skill_->Debug();
 	second_skill_->Debug();
+	//test_behavior_->Debug();
 	// DrawSphere3D(attack_target_pos_, 3.f, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
 	//DrawSphere3D(head_pos_, 0.5f, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "----------player-----------", Color::kWhite);
@@ -357,6 +369,16 @@ void Player::OnUnGrounded(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 	is_ground_ = FALSE;
 	// printfDx("1\n");
+}
+
+void Player::OnHealFromPlayer(float heal)
+{
+	// printfDx("ヒール\n");
+}
+
+void Player::OnDamageFromEnemy(float damage)
+{
+	printfDx("ダメージを受けちゃってます\n");
 }
 
 std::vector<std::weak_ptr<ObjectBase>> Player::GetMyAreaObject()

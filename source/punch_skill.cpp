@@ -113,7 +113,7 @@ void PunchSkill::DecideTarget(std::vector<std::weak_ptr<ObjectBase>> owner_area_
 	//‚±‚ÌŠ„‡‚¾‚Æ’²®‚µ‚È‚¢
 	const float kRatioMin = 0.45f;
 
-	float speed = 20.f;
+	float speed = 19.5f;
 	float most_near_dist = object_dist_dir_mp.begin()->first;		// ˆê”Ô‹ß‚¢“G‚Æ‚Ì‹——£
 	float speed_ratio = most_near_dist / detection_radius_;
 	
@@ -128,7 +128,7 @@ void PunchSkill::DecideTarget(std::vector<std::weak_ptr<ObjectBase>> owner_area_
 		float offset_most_near_dist		= most_near_dist - (detection_radius_ * kRatioMin);
 		speed_ratio = offset_most_near_dist / offset_detection_radius;
 		speed = speed * speed_ratio;				// ‹——£‚É‚æ‚Á‚Äspeed‚ğ•Ï‚¦‚é
-		speed = speed * FPS::GetInstance().GetDeltaTime() * 60.f;
+		speed = speed;
 	}
 
 	//ˆê”Ô‹ß‚¢“z‚Ìî•ñ‚ğó‚¯æ‚é

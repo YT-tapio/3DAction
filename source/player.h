@@ -1,6 +1,8 @@
 #pragma once
 #include"character_base.h"
 #include"physics_interface.h"
+#include"takable_heal_player_interface.h"
+#include"takable_damage_enemy_interface.h"
 
 class RigidBody;
 class InputBase;
@@ -10,6 +12,7 @@ class ObjectBase;
 class BehaviorBase;
 
 class Player : public CharacterBase , public IPhysicsEventReceiver
+	,public ITakableHealPlayer,public ITakableDamageEnemy
 {
 public:
 
@@ -42,6 +45,10 @@ public:
 	void OnGrounded(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
 	void OnUnGrounded(std::shared_ptr<IPhysicsEventReceiver> object) override;
+
+	void OnHealFromPlayer(float heal) override;
+
+	void OnDamageFromEnemy(float damage) override;
 
 	VECTOR* GetHeadPos();
 
