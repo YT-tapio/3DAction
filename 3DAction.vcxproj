@@ -266,7 +266,7 @@
     <ClInclude Include="source\avoid.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\json\animation.json" />
+    <None Include="data\json\player_data.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

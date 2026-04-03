@@ -559,7 +559,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\json\animation.json">
+    <None Include="data\json\player_data.json">
       <Filter>ソース ファイル\json</Filter>
     </None>
   </ItemGroup>

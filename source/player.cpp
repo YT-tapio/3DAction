@@ -46,11 +46,11 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 
 	if (num == 0)
 	{
-		handle_ = MV1LoadModel("data/model/player/Peasant_Girl.mv1");
+		handle_ = MV1LoadModel("data/model/player/healer/Peasant_Girl.mv1");
 	}
 	else
 	{
-		handle_ = MV1LoadModel("data/model/player/Lola_B_Styperek.mv1");
+		handle_ = MV1LoadModel("data/model/player/attacker/Lola_B_Styperek.mv1");
 	}
 	num++;
 	if (handle_ == -1) { printfDx("“Ç‚İ‚İƒGƒ‰[\n"); }
