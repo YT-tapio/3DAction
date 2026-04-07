@@ -7,7 +7,7 @@ class PunchSkill : public SkillBase
 {
 public:
 
-	PunchSkill(std::weak_ptr<Player>owner,VECTOR* pos,const float r, const float detection_radius);
+	PunchSkill(std::weak_ptr<Player> owner,VECTOR* pos,const float r, const float detection_radius);
 
 	~PunchSkill() override;
 

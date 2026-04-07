@@ -119,7 +119,7 @@ void AnimatorBase::LoadFile(const char* file_path)
 	while (std::getline(file, line))
 	{
 		std::stringstream ss(line);
-		std::string data;	// csv‚©‚ç‚Ì•¶Žš—ñ‚ð‚à‚ç‚¤
+		std::string data;			// csv‚©‚ç‚Ì•¶Žš—ñ‚ð‚à‚ç‚¤
 		std::string anim_name;
 		std::string anim_file_path;
 		int anim_index		= -1;

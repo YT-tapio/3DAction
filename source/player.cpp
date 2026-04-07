@@ -1,6 +1,8 @@
 #include<iostream>
 #include<map>
 #include<vector>
+#include<fstream>
+#include<sstream>
 #include"DxLib.h"
 #include"player.h"
 #include"capsule.h"
@@ -26,10 +28,13 @@
 #include"punch_skill.h"
 #include"avoid_skill.h"
 #include"area_heal_give_player.h"
+#include"skill_name.h"
+#include"skill_loader.h"
 
-Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
+Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name)
 	: CharacterBase("player")
 	, IPhysicsEventReceiver()
+	, name_(name)
 {
 	camera_dir_ = camera_dir;
 	hand_pos_ = VectorAssistant::VGetZero();
@@ -39,21 +44,12 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input)
 	pos_		= VGet(0.f, -2.f,10.f);
 	VECTOR head_pos = VAdd(pos_, VGet(0.f, 10.f, 0.f));
 	head_pos_ = head_pos;
-	
-	static int num = 0;
+
+	skill1_name_ = SkillName::kNothing;
+	skill2_name_ = SkillName::kNothing;
 
 	scale_ = VectorAssistant::VGetSame(0.05f);
-
-	if (num == 0)
-	{
-		handle_ = MV1LoadModel("data/model/player/healer/Peasant_Girl.mv1");
-	}
-	else
-	{
-		handle_ = MV1LoadModel("data/model/player/attacker/Lola_B_Styperek.mv1");
-	}
-	num++;
-	if (handle_ == -1) { printfDx("読み込みエラー\n"); }
+	handle_ = -1;
 	Setting();
 	UpdateBone();
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f);
@@ -82,6 +78,8 @@ void Player::Init()
 	// 検知用範囲
 	float detection_radius = 25.f;
 
+	LoadFile("",name_);
+	MakeSkill();
 	rigid_body_->Init(weak_from_this());
 	my_area_ = std::make_shared<CheckMyArea>(std::make_shared<Sphere>(detection_radius, VectorAssistant::VGetZero()), &pos_);
 	//skill_ = std::make_shared<PunchSkill>(mine, &hand_pos_, 1.5f, detection_radius);
@@ -196,16 +194,75 @@ void Player::Debug()
 	Debug::GetInstance().Add();
 }
 
-void Player::LoadFile()
+void Player::LoadFile(const char* file_path,const std::string my_name)
 {
+	std::ifstream file("data/csv/players/players_data.csv");
+	std::string line;
+
+	std::string job = "";
+	if (!file)
+	{
+		printfDx("csvファイル読み込み失敗\n");
+		return;
+	}
+
+	// 最初の2行を飛ばす
+	std::getline(file, line);
+	std::getline(file, line);
+
+	while (std::getline(file, line))
+	{
+		std::stringstream ss(line);
+		std::string data;			// csvからの文字列をもらう
+
+		std::getline(ss, data, ',');
+		if (data != my_name) { continue; }
+
+		// アニメーションの名前
+		std::getline(ss, data, ',');
+		handle_ = MV1LoadModel(data.c_str());
+		if(handle_ == -1){ printfDx("player : モデル読み込みエラー\n"); }
+		VECTOR init_pos = VectorAssistant::VGetZero();
+		
+		// 初期pos
+		std::getline(ss, data, ',');
+		init_pos.x = std::stof(data);
+		std::getline(ss, data, ',');
+		init_pos.y = std::stof(data);
+		std::getline(ss, data, ',');
+		init_pos.z = std::stof(data);
+		pos_ = init_pos;
+
+		// skill
+		std::getline(ss, data, ',');
+		skill1_name_ = stoi(data);
+		std::getline(ss, data, ',');
+		skill2_name_ = stoi(data);
+		
+		std::getline(ss, data, ',');
+		job = data;
+
+		break;
+	}
+	file.close();
+	/*スキルを作っていくよ*/
 	
+}
+
+void Player::MakeSkill()
+{
+	auto aa = SkillLoader::GetInstance().SkillLoad(skill1_name_, "attacker");
+	auto bb = SkillLoader::GetInstance().SkillLoad(skill2_name_, "attacker");
+	if (aa == nullptr) 
+	{ 
+		printfDx("正解\n");
+	}
 }
 
 void Player::Move()
 {
-
 	VECTOR dir = VectorAssistant::VGetZero();
-	//dir_ = VectorAssistant::VGetZero();
+	// dir_ = VectorAssistant::VGetZero();
 	vel_ = VectorAssistant::VGetZero();
 	float speed = kSpeed;
 

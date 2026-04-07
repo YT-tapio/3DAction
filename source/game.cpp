@@ -20,8 +20,9 @@ Game::Game()
 	camera_ = std::make_shared<Camera>();
 
 	objects_.push_back(std::make_shared<Stage>());
-	objects_.push_back(std::make_shared<Player>(&camera_->dir_, InputManager::GetInstance().GetAIInput()));
-	objects_.push_back(std::make_shared<Player>(&camera_->dir_, InputManager::GetInstance().GetPlayerInput()));
+	objects_.push_back(std::make_shared<Player>(&camera_->dir_, InputManager::GetInstance().GetAIInput(),"attacker"));
+	objects_.push_back(std::make_shared<Player>(&camera_->dir_, InputManager::GetInstance().GetAIInput(),"healer"));
+	objects_.push_back(std::make_shared<Player>(&camera_->dir_, InputManager::GetInstance().GetPlayerInput(), "defender"));
 	objects_.push_back(std::make_shared<EnemyBase>(VGet(10,0,2)));
 	objects_.push_back(std::make_shared<EnemyBase>(VGet(10, 0, 10)));
 	objects_.push_back(std::make_shared<EnemyBase>(VGet(-10, 0, 10)));

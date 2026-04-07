@@ -16,7 +16,7 @@ class Player : public CharacterBase , public IPhysicsEventReceiver
 {
 public:
 
-	Player(VECTOR* camera_dir, std::shared_ptr<const InputBase> input);
+	Player(VECTOR* camera_dir, std::shared_ptr<const InputBase> input,const std::string name);
 
 	~Player() override;
 
@@ -83,6 +83,10 @@ private:
 
 	VECTOR attack_target_pos_;
 
+	std::string name_;
+	int skill1_name_;
+	int skill2_name_;
+
 	float target_rot_y_;
 	float fall_speed_;
 
@@ -95,7 +99,9 @@ private:
 
 	// ä÷êîåQ
 
-	void LoadFile();
+	void LoadFile(const char* file_path, const std::string my_name);
+
+	void MakeSkill();
 
 	void Move();
 

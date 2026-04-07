@@ -19,12 +19,16 @@ public:
 
 	virtual void Debug();
 
+	void SetOwner(std::weak_ptr<Player>owner);
+
 protected:
 
 	std::weak_ptr<Player> owner_;
 	std::shared_ptr<BehaviorBase> behavior_;
 
 	bool is_active_;
+
+	const bool CheckMyOwner() const;
 
 private:
 

@@ -106,6 +106,10 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>DxLib_h;EffekseerForDxLib;nlohmann</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalBMIDirectories>
+      </AdditionalBMIDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -142,11 +146,13 @@
     <ClCompile Include="source\avoid_skill.cpp" />
     <ClCompile Include="source\behavior_base.cpp" />
     <ClCompile Include="source\check_my_area.cpp" />
+    <ClCompile Include="source\csv_loader.cpp" />
     <ClCompile Include="source\enemy_base.cpp" />
     <ClCompile Include="source\attack_base.cpp" />
     <ClCompile Include="source\punch.cpp" />
     <ClCompile Include="source\punch_skill.cpp" />
     <ClCompile Include="source\skill_base.cpp" />
+    <ClCompile Include="source\skill_loader.cpp" />
     <ClCompile Include="source\sphere_camera.cpp" />
     <ClCompile Include="source\takable_damage_enemy_interface.cpp" />
     <ClCompile Include="source\takable_damage_player_interface.cpp" />
@@ -197,6 +203,7 @@
     <ClInclude Include="source\area_heal.h" />
     <ClInclude Include="source\area_heal_give_player.h" />
     <ClInclude Include="source\avoid_skill.h" />
+    <ClInclude Include="source\csv_loader.h" />
     <ClInclude Include="source\punch_skill.h" />
     <ClInclude Include="source\skill_base.h" />
     <ClInclude Include="source\check_my_area.h" />
@@ -210,6 +217,7 @@
     <ClInclude Include="source\attack_base.h" />
     <ClInclude Include="source\punch.h" />
     <ClInclude Include="source\screen_size.h" />
+    <ClInclude Include="source\skill_loader.h" />
     <ClInclude Include="source\sphere_camera.h" />
     <ClInclude Include="source\takable_damage_enemy_interface.h" />
     <ClInclude Include="source\takable_damage_player_interface.h" />
@@ -264,6 +272,7 @@
     <ClInclude Include="source\brain.h" />
     <ClInclude Include="source\behavior_base.h" />
     <ClInclude Include="source\avoid.h" />
+    <ClInclude Include="source\skill_name.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\json\player_data.json" />

@@ -6,7 +6,7 @@
 #include"behavior_base.h"
 #include"skill_base.h"
 
-SkillBase::SkillBase(std::weak_ptr<Player> owner, std::shared_ptr<BehaviorBase> behavior)
+SkillBase::SkillBase(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior)
 	: owner_(owner)
 	, behavior_(behavior)
 {
@@ -36,4 +36,14 @@ void SkillBase::Draw()
 void SkillBase::Debug()
 {
 
+}
+
+void SkillBase::SetOwner(std::weak_ptr<Player>owner)
+{
+	owner_ = owner;
+}
+
+const bool SkillBase::CheckMyOwner() const
+{
+	return owner_.lock() != nullptr;
 }

@@ -157,6 +157,9 @@
     <Filter Include="ソース ファイル\json">
       <UniqueIdentifier>{da6e9177-f8e7-449e-92d2-812f4978e85d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\csv">
+      <UniqueIdentifier>{2b2a0549-e618-450e-bf50-6fb360394a80}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -332,6 +335,12 @@
     </ClCompile>
     <ClCompile Include="source\area_heal_give_player.cpp">
       <Filter>ソース ファイル\behavior\heal</Filter>
+    </ClCompile>
+    <ClCompile Include="source\skill_loader.cpp">
+      <Filter>ソース ファイル\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="source\csv_loader.cpp">
+      <Filter>ソース ファイル\csv</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -556,6 +565,15 @@
     </ClInclude>
     <ClInclude Include="source\area_heal_give_player.h">
       <Filter>ソース ファイル\behavior\heal</Filter>
+    </ClInclude>
+    <ClInclude Include="source\skill_name.h">
+      <Filter>ソース ファイル\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="source\skill_loader.h">
+      <Filter>ソース ファイル\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="source\csv_loader.h">
+      <Filter>ソース ファイル\csv</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
