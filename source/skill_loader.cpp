@@ -1,18 +1,25 @@
-#include"DxLib.h"
-#include<memory>
+#include<iostream>
+#include<map>
+#include<vector>
 #include<fstream>
 #include<sstream>
+#include"DxLib.h"
 #include"skill_loader.h"
 #include"skill_base.h"
+#include"punch_skill.h"
 #include"avoid_skill.h"
+#include"area_heal_skill.h"
 #include"skill_name.h"
+#include"player.h"
+#include"sphere.h"
+#include"vector_assistant.h"
 
 SkillLoader::SkillLoader()
 {
 
 }
 
-std::shared_ptr<SkillBase> SkillLoader::SkillLoad(const int skill_name, const std::string name)
+std::shared_ptr<SkillBase> SkillLoader::SkillLoad(const int skill_name, const std::string name, std::weak_ptr<Player> owner)
 {
 	std::string file_path = "data/csv/skill/";
 	std::shared_ptr<SkillBase> skill = nullptr;
@@ -34,7 +41,7 @@ std::shared_ptr<SkillBase> SkillLoader::SkillLoad(const int skill_name, const st
 		std::getline(file, line);
 	}
 
-	skill = MakeSkill(skill_name, file, line, name);
+	skill = MakeSkill(skill_name, file, line, name,owner);
 
 	return skill;
 }
@@ -49,27 +56,27 @@ void SkillLoader::DecideFile(const int skill_name,std::string& file_path, int& s
 
 	case SkillName::kPunch:
 		// ƒpƒ“ƒ`‚Ìfile
-		file_path = file_path + "punch_data";
+		file_path = file_path + "punch";
 		skip_line_num = 1;
 		break;
 
 	case SkillName::kAvoid:
 		// ‰ñ”ð‚Ìfile
-		file_path = file_path + "avoid_data";
+		file_path = file_path + "avoid";
 		skip_line_num = 1;
 		break;
 
 	case SkillName::kAreaHeal:
 		// ”ÍˆÍ‰ñ•œ
-		file_path = file_path + "area_heal_data";
+		file_path = file_path + "area_heal";
 		skip_line_num = 1;
 		break;
 	}
-	file_path = file_path + ".csv";
+	file_path = file_path + "_data.csv";
 
 }
 
-std::shared_ptr<SkillBase> SkillLoader::MakeSkill(const int skill_name, std::ifstream& file, std::string& line, const std::string name)
+std::shared_ptr<SkillBase> SkillLoader::MakeSkill(const int skill_name, std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner)
 {
 	std::shared_ptr<SkillBase> skill = nullptr;
 	switch (skill_name)
@@ -80,19 +87,19 @@ std::shared_ptr<SkillBase> SkillLoader::MakeSkill(const int skill_name, std::ifs
 
 	case SkillName::kPunch:
 
-		skill = MakePunchSkill(file, line, name);
+		skill = MakePunchSkill(file, line, name,owner);
 
 		break;
 
 	case SkillName::kAvoid:
 
-		skill = MakeAvoidSkill(file, line, name);
+		skill = MakeAvoidSkill(file, line, name,owner);
 
 		break;
 
 	case SkillName::kAreaHeal:
 
-		skill = MakeAreaHealSkill(file, line, name);
+		skill = MakeAreaHealSkill(file, line, name,owner);
 
 		break;
 	}
@@ -102,9 +109,10 @@ std::shared_ptr<SkillBase> SkillLoader::MakeSkill(const int skill_name, std::ifs
 
 }
 
-std::shared_ptr<SkillBase> SkillLoader::MakePunchSkill(std::ifstream& file, std::string& line,const std::string name)
+std::shared_ptr<SkillBase> SkillLoader::MakePunchSkill(std::ifstream& file, std::string& line,const std::string name, std::weak_ptr<Player> owner)
 {
 	std::shared_ptr<SkillBase> skill = nullptr;
+
 	while (std::getline(file, line))
 	{
 		std::stringstream ss(line);
@@ -113,14 +121,19 @@ std::shared_ptr<SkillBase> SkillLoader::MakePunchSkill(std::ifstream& file, std:
 		std::getline(ss, data, ',');
 		if (data != name) { continue; }
 
-		// ‚¿‚á‚ñ‚Æ‚±‚±‚Ü‚Å‚Æ‚¨‚Á‚Ä‚«‚Ä‚¢‚ÄŠ´“®
+		float radius = 0.f;
+
+		std::getline(ss, data, ',');
+		radius = stof(data);
+		auto owner_ptr = owner.lock();
+		skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetHandPos(), radius, owner_ptr->GetDetectionRadius());
 
 		break;
 	}
 	return skill;
 }
 
-std::shared_ptr<SkillBase> SkillLoader::MakeAvoidSkill(std::ifstream& file, std::string& line, const std::string name)
+std::shared_ptr<SkillBase> SkillLoader::MakeAvoidSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner)
 {
 	std::shared_ptr<SkillBase> skill = nullptr;
 	while (std::getline(file, line))
@@ -131,24 +144,31 @@ std::shared_ptr<SkillBase> SkillLoader::MakeAvoidSkill(std::ifstream& file, std:
 		std::getline(ss, data, ',');
 		if (data != name) { continue; }
 
+		skill = std::make_shared<AvoidSkill>(owner);
+
+		break;
+	}
+	return skill;
+}
+
+std::shared_ptr<SkillBase>SkillLoader::MakeAreaHealSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner)
+{
+	std::shared_ptr<SkillBase> skill = nullptr;
+	while (std::getline(file, line))
+	{
+		std::stringstream ss(line);
+		std::string data;			// csv‚©‚ç‚Ì•¶Žš—ñ‚ð‚à‚ç‚¤
+
+		std::getline(ss, data, ',');
+		if (data != name) { continue; }
+		float radius = 0.f;
+		std::getline(ss, data, ',');
+		radius = stof(data);
 		
-
-		break;
-	}
-	return skill;
-}
-
-std::shared_ptr<SkillBase>SkillLoader::MakeAreaHealSkill(std::ifstream& file, std::string& line, const std::string name)
-{
-	std::shared_ptr<SkillBase> skill = nullptr;
-	while (std::getline(file, line))
-	{
-		std::stringstream ss(line);
-		std::string data;			// csv‚©‚ç‚Ì•¶Žš—ñ‚ð‚à‚ç‚¤
-
-		std::getline(ss, data, ',');
-		if (data != name) { continue; }
-
+		auto owner_ptr = owner.lock();
+		
+		skill = std::make_shared<AreaHealSkill>(owner, owner_ptr->GetPosPtr(), radius);
+		
 		break;
 	}
 

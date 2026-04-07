@@ -160,6 +160,9 @@
     <Filter Include="ソース ファイル\csv">
       <UniqueIdentifier>{2b2a0549-e618-450e-bf50-6fb360394a80}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\effect">
+      <UniqueIdentifier>{fd21f6ea-b101-4382-8b97-b13b3452772b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -341,6 +344,12 @@
     </ClCompile>
     <ClCompile Include="source\csv_loader.cpp">
       <Filter>ソース ファイル\csv</Filter>
+    </ClCompile>
+    <ClCompile Include="source\area_heal_skill.cpp">
+      <Filter>ソース ファイル\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="source\effect_data.cpp">
+      <Filter>ソース ファイル\effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -574,6 +583,12 @@
     </ClInclude>
     <ClInclude Include="source\csv_loader.h">
       <Filter>ソース ファイル\csv</Filter>
+    </ClInclude>
+    <ClInclude Include="source\area_heal_skill.h">
+      <Filter>ソース ファイル\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="source\effect_data.h">
+      <Filter>ソース ファイル\effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

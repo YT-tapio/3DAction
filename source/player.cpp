@@ -27,6 +27,7 @@
 #include"skill_base.h"
 #include"punch_skill.h"
 #include"avoid_skill.h"
+#include"area_heal_skill.h"
 #include"area_heal_give_player.h"
 #include"skill_name.h"
 #include"skill_loader.h"
@@ -61,6 +62,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	is_stop_ = FALSE;
 	input_ = input;
 	target_rot_y_ = 0;
+	detection_radius_ = 25.f;
 }
 
 Player::~Player()
@@ -76,18 +78,20 @@ void Player::Init()
 	if (mine_object == nullptr) { printfDx("é∏îs"); }
 
 	// åüímópîÕàÕ
-	float detection_radius = 25.f;
+	detection_radius_ = 25.f;
 
 	LoadFile("",name_);
-	MakeSkill();
+	MakeSkill(mine);
 	rigid_body_->Init(weak_from_this());
-	my_area_ = std::make_shared<CheckMyArea>(std::make_shared<Sphere>(detection_radius, VectorAssistant::VGetZero()), &pos_);
+	my_area_ = std::make_shared<CheckMyArea>(std::make_shared<Sphere>(detection_radius_, VectorAssistant::VGetZero()), &pos_);
 	//skill_ = std::make_shared<PunchSkill>(mine, &hand_pos_, 1.5f, detection_radius);
-	skill_			= std::make_shared<PunchSkill>(mine, &hand_pos_, 1.5f, detection_radius);
-	second_skill_	= std::make_shared<AvoidSkill>(mine);
+	//skill_			= std::make_shared<PunchSkill>(mine, &hand_pos_, 1.5f, detection_radius_);
+	//second_skill_	= std::make_shared<AreaHealSkill>(mine,&pos_,5.f);
 	
 	test_behavior_ = 
-		std::make_shared<AreaHealGivePlayer>(mine,std::make_shared<CheckMyArea>(std::make_shared<Sphere>(20.f,VectorAssistant::VGetZero()), &pos_), &pos_);
+		std::make_shared<AreaHealGivePlayer>(mine,
+			std::make_shared<CheckMyArea>(std::make_shared<Sphere>(20.f,
+				VectorAssistant::VGetZero()), &pos_), &pos_);
 	is_invincible_ = FALSE;
 	// physicsÇÃìoò^
 	Physics::GetInstance().AddBody(rigid_body_);
@@ -97,8 +101,15 @@ void Player::Init()
 	animator_ = std::make_shared<AnimatorPlayer>(handle_, mine);
 	animator_->Init();
 	my_area_->Init();
-	skill_->Init();
-	second_skill_->Init();
+
+	if (skill_ != nullptr)
+	{
+		skill_->Init();
+	}
+	if (second_skill_ != nullptr)
+	{
+		second_skill_->Init();
+	}
 	test_behavior_->Init();
 }
 
@@ -108,8 +119,16 @@ void Player::Update()
 	//VECTOR a = *head_pos_;
 	//printfDx("x : %.2f,y : %.2f,z : %.2f\n", (*head_pos_).x, (*head_pos_).y, (*head_pos_).z);
 	//Gravity();
-	skill_->Update();
-	second_skill_->Update();
+	if (skill_ != nullptr)
+	{
+		skill_->Update();
+	}
+
+	if (second_skill_ != nullptr)
+	{
+		second_skill_->Update();
+	}
+	
 	rigid_body_->SetTargetVelocity(vel_);
 	test_behavior_->Update();
 	animator_->Update();
@@ -158,8 +177,9 @@ void Player::Debug()
 {
 	rigid_body_->Debug();
 	//my_area_->Debug();
+	if (skill_ != nullptr) { skill_->Debug(); }
+	if (second_skill_ != nullptr) { second_skill_->Debug(); }
 	//skill_->Debug();
-	second_skill_->Debug();
 	//test_behavior_->Debug();
 	// DrawSphere3D(attack_target_pos_, 3.f, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
 	//DrawSphere3D(head_pos_, 0.5f, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
@@ -249,14 +269,23 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 	
 }
 
-void Player::MakeSkill()
+void Player::MakeSkill(std::weak_ptr<Player> owner)
 {
-	auto aa = SkillLoader::GetInstance().SkillLoad(skill1_name_, "attacker");
-	auto bb = SkillLoader::GetInstance().SkillLoad(skill2_name_, "attacker");
-	if (aa == nullptr) 
-	{ 
-		printfDx("ê≥â\n");
+
+	auto aa = SkillLoader::GetInstance().SkillLoad(skill1_name_, name_, owner);
+	auto bb = SkillLoader::GetInstance().SkillLoad(skill2_name_, name_, owner);
+	skill_ = aa;
+	second_skill_ = bb;
+	if (skill_ == nullptr)
+	{
+		printfDx("é∏îs\n");
 	}
+
+	if (second_skill_ == nullptr)
+	{
+		printfDx("é∏îs\n");
+	}
+
 }
 
 void Player::Move()
@@ -448,9 +477,24 @@ VECTOR* Player::GetHeadPos()
 	return &head_pos_;
 }
 
+VECTOR* Player::GetHandPos()
+{
+	return &hand_pos_;
+}
+
+VECTOR* Player::GetPosPtr()
+{
+	return &pos_;
+}
+
 const std::shared_ptr<const InputBase> Player::GetInput() const
 {
 	return input_;
+}
+
+const float Player::GetDetectionRadius() const
+{
+	return detection_radius_;
 }
 
 const bool Player::GetIsMove() const

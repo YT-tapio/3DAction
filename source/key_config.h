@@ -12,4 +12,7 @@ namespace KeyConfig
 	static int punch		= 0;
 	static int jump			= KEY_INPUT_SPACE;		// ƒWƒƒƒ“ƒv
 	static int avoid		= 1;
+
+	static int normal_skill = 0;
+	static int strong_skill = 1;
 }

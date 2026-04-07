@@ -23,6 +23,10 @@ public:
 	const bool IsPunch() const override;
 
 	const bool IsAvoid()const override;
+	
+	const bool IsNormalSkill() const override;
+
+	const bool IsStrongSkill() const override;
 
 	const VECTOR GetMoveDir() const override;
 

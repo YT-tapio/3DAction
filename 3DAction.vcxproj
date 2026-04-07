@@ -142,11 +142,13 @@
     <ClCompile Include="source\area_action_base.cpp" />
     <ClCompile Include="source\area_heal.cpp" />
     <ClCompile Include="source\area_heal_give_player.cpp" />
+    <ClCompile Include="source\area_heal_skill.cpp" />
     <ClCompile Include="source\avoid.cpp" />
     <ClCompile Include="source\avoid_skill.cpp" />
     <ClCompile Include="source\behavior_base.cpp" />
     <ClCompile Include="source\check_my_area.cpp" />
     <ClCompile Include="source\csv_loader.cpp" />
+    <ClCompile Include="source\effect_data.cpp" />
     <ClCompile Include="source\enemy_base.cpp" />
     <ClCompile Include="source\attack_base.cpp" />
     <ClCompile Include="source\punch.cpp" />
@@ -202,8 +204,10 @@
     <ClInclude Include="source\area_action_base.h" />
     <ClInclude Include="source\area_heal.h" />
     <ClInclude Include="source\area_heal_give_player.h" />
+    <ClInclude Include="source\area_heal_skill.h" />
     <ClInclude Include="source\avoid_skill.h" />
     <ClInclude Include="source\csv_loader.h" />
+    <ClInclude Include="source\effect_data.h" />
     <ClInclude Include="source\punch_skill.h" />
     <ClInclude Include="source\skill_base.h" />
     <ClInclude Include="source\check_my_area.h" />

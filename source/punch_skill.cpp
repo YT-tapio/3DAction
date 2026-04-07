@@ -149,7 +149,7 @@ bool PunchSkill::CheckIsPunch(std::shared_ptr<Player> owner)
 	if (!owner->GetIsGround())									{ return FALSE; }	// ’…’n‚µ‚Ä‚¢‚È‚¢
 	if (owner->GetIsInvincible())								{ return FALSE; }
 	if (owner->GetAnimator()->GetNowAnimName() == "punch")		{ return FALSE; }	// ƒpƒ“ƒ`‚¶‚á‚È‚¢
-	if (!owner->GetInput()->IsPunch())							{ return FALSE; }	// “ü—Í‚³‚ê‚Ä‚¢‚é‚©
+	if (!owner->GetInput()->IsNormalSkill())							{ return FALSE; }	// “ü—Í‚³‚ê‚Ä‚¢‚é‚©
 
 	return TRUE;
 }

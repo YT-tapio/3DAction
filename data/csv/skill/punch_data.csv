@@ -1,2 +1,4 @@
-﻿name,sphere
-attacker,0
+﻿name,collider_radius,detection_radius
+attacker,1.5,
+healer,1.5,
+defender,1.5,

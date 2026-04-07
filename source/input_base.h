@@ -20,6 +20,10 @@ public:
 
 	virtual const bool IsAvoid() const;
 
+	virtual const bool IsNormalSkill() const;
+
+	virtual const bool IsStrongSkill() const;
+
 	virtual const VECTOR GetMoveDir() const;
 
 	virtual const VECTOR GetCameraDir() const;

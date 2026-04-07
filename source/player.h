@@ -52,9 +52,15 @@ public:
 
 	VECTOR* GetHeadPos();
 
+	VECTOR* GetHandPos();
+
+	VECTOR* GetPosPtr();
+
 	std::vector<std::weak_ptr<ObjectBase>> GetMyAreaObject();
 
 	const std::shared_ptr<const InputBase> GetInput() const;
+
+	const float GetDetectionRadius() const;
 
 	const bool GetIsMove() const;
 
@@ -65,6 +71,8 @@ public:
 	const bool GetIsStop() const;
 
 	const VECTOR GetInputDir() const;
+
+
 
 private:
 
@@ -90,6 +98,8 @@ private:
 	float target_rot_y_;
 	float fall_speed_;
 
+	float detection_radius_;
+
 	bool is_move_;
 	bool is_dash_;
 	bool is_ground_;
@@ -101,7 +111,7 @@ private:
 
 	void LoadFile(const char* file_path, const std::string my_name);
 
-	void MakeSkill();
+	void MakeSkill(std::weak_ptr<Player> owner);
 
 	void Move();
 

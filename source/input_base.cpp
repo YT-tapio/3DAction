@@ -42,6 +42,16 @@ const bool InputBase::IsAvoid() const
 	return FALSE;
 }
 
+const bool InputBase::IsNormalSkill() const
+{
+	return FALSE;
+}
+
+const bool InputBase::IsStrongSkill() const
+{
+	return FALSE;
+}
+
 const VECTOR InputBase::GetMoveDir() const
 {
 	return VectorAssistant::VGetZero();
