@@ -31,6 +31,7 @@
 #include"area_heal_give_player.h"
 #include"skill_name.h"
 #include"skill_loader.h"
+#include"csv_file_assistant.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name)
 	: CharacterBase("player")
@@ -238,29 +239,20 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 		std::getline(ss, data, ',');
 		if (data != my_name) { continue; }
 
-		// アニメーションの名前
-		std::getline(ss, data, ',');
-		handle_ = MV1LoadModel(data.c_str());
+		// モデルのパス
+		std::string path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
+		handle_ = MV1LoadModel(path.c_str());
 		if(handle_ == -1){ printfDx("player : モデル読み込みエラー\n"); }
 		VECTOR init_pos = VectorAssistant::VGetZero();
 		
 		// 初期pos
-		std::getline(ss, data, ',');
-		init_pos.x = std::stof(data);
-		std::getline(ss, data, ',');
-		init_pos.y = std::stof(data);
-		std::getline(ss, data, ',');
-		init_pos.z = std::stof(data);
-		pos_ = init_pos;
+		pos_ = CSVFileAssistant::GetVectorOfCSVFile(ss, data);
 
 		// skill
-		std::getline(ss, data, ',');
-		skill1_name_ = stoi(data);
-		std::getline(ss, data, ',');
-		skill2_name_ = stoi(data);
+		skill1_name_ = CSVFileAssistant::GetIntOfCSVFile(ss, data);
+		skill2_name_ = CSVFileAssistant::GetIntOfCSVFile(ss, data);
 		
-		std::getline(ss, data, ',');
-		job = data;
+		job = CSVFileAssistant::GetStringOfCSVFile(ss, data);
 
 		break;
 	}

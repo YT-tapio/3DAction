@@ -351,6 +351,12 @@
     <ClCompile Include="source\effect_data.cpp">
       <Filter>ソース ファイル\effect</Filter>
     </ClCompile>
+    <ClCompile Include="source\effect_base.cpp">
+      <Filter>ソース ファイル\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\csv_file_assistant.cpp">
+      <Filter>ソース ファイル\csv</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -589,6 +595,12 @@
     </ClInclude>
     <ClInclude Include="source\effect_data.h">
       <Filter>ソース ファイル\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\effect_base.h">
+      <Filter>ソース ファイル\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\csv_file_assistant.h">
+      <Filter>ソース ファイル\csv</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

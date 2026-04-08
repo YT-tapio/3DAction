@@ -13,6 +13,7 @@
 #include"input_manager.h"
 #include"brain.h"
 #include"enemy_base.h"
+#include"effect_base.h"
 
 Game::Game()
 	: SceneBase()
@@ -27,6 +28,7 @@ Game::Game()
 	objects_.push_back(std::make_shared<EnemyBase>(VGet(10, 0, 10)));
 	objects_.push_back(std::make_shared<EnemyBase>(VGet(-10, 0, 10)));
 	objects_.push_back(std::make_shared<EnemyBase>(VGet(-10, 0, -10)));
+	effect_ = std::make_shared<EffectBase>("data/csv/effect/effect_No1.csv");
 	Init();
 }
 
@@ -45,6 +47,7 @@ void Game::Init()
 			Brain::GetInstance().CreatePlaySceneVirtualCamera(player, camera_->GetPos(), camera_->GetTargetPos());
 		}
 	}
+	effect_->Init();
 }
 
 void Game::Update()
@@ -90,7 +93,21 @@ void Game::Update()
 		printfDx("“–‚½‚Á‚Ä‚È‚¢\n");
 	}
 	*/
-	
+
+	/*
+	if(CheckHitKey(KEY_INPUT_0)){ effect_->Play(); }
+
+	if (CheckHitKey(KEY_INPUT_1))
+	{
+		effect_->Stop();
+	}
+	else
+	{
+		effect_->RePlay();
+	}
+	*/
+
+	effect_->Update();
 }
 
 void Game::Draw()
@@ -115,6 +132,6 @@ void Game::Draw()
 
 		camera_->Debug();
 	}
-	
+	effect_->Draw();
 	
 }
