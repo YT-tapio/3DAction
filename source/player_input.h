@@ -36,6 +36,7 @@ public:
 
 private:
 
+	const float kDashTiming = 0.13f;
 	std::vector<std::shared_ptr<IInput>> inputs_;
 
 	const VECTOR MoveDirPC(std::shared_ptr<PC> pc) const;

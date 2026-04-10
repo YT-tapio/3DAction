@@ -14,6 +14,9 @@
 #include"brain.h"
 #include"enemy_base.h"
 #include"effect_base.h"
+#include"effect_manager.h"
+#include"effect_id.h"
+#include"effect_end_state.h"
 
 Game::Game()
 	: SceneBase()
@@ -21,14 +24,14 @@ Game::Game()
 	camera_ = std::make_shared<Camera>();
 
 	objects_.push_back(std::make_shared<Stage>());
-	objects_.push_back(std::make_shared<Player>(&camera_->dir_, InputManager::GetInstance().GetAIInput(),"attacker"));
+	objects_.push_back(std::make_shared<Player>(&camera_->dir_, InputManager::GetInstance().GetPlayerInput(),"attacker"));
 	objects_.push_back(std::make_shared<Player>(&camera_->dir_, InputManager::GetInstance().GetAIInput(),"healer"));
-	objects_.push_back(std::make_shared<Player>(&camera_->dir_, InputManager::GetInstance().GetPlayerInput(), "defender"));
+	objects_.push_back(std::make_shared<Player>(&camera_->dir_, InputManager::GetInstance().GetAIInput(), "defender"));
 	objects_.push_back(std::make_shared<EnemyBase>(VGet(10,0,2)));
 	objects_.push_back(std::make_shared<EnemyBase>(VGet(10, 0, 10)));
 	objects_.push_back(std::make_shared<EnemyBase>(VGet(-10, 0, 10)));
 	objects_.push_back(std::make_shared<EnemyBase>(VGet(-10, 0, -10)));
-	effect_ = std::make_shared<EffectBase>("data/csv/effect/effect_No1.csv");
+	EffectManager::GetInstance().Awake();
 	Init();
 }
 
@@ -47,7 +50,7 @@ void Game::Init()
 			Brain::GetInstance().CreatePlaySceneVirtualCamera(player, camera_->GetPos(), camera_->GetTargetPos());
 		}
 	}
-	effect_->Init();
+	EffectManager::GetInstance().Init();
 }
 
 void Game::Update()
@@ -107,7 +110,37 @@ void Game::Update()
 	}
 	*/
 
-	effect_->Update();
+	if (CheckHitKey(KEY_INPUT_0)) 
+	{ 
+		EffectManager::GetInstance().Play(EffectID::test);
+	}
+
+	if (CheckHitKey(KEY_INPUT_1))
+	{
+		EffectManager::GetInstance().Play(EffectID::test2);
+	}
+
+	if (CheckHitKey(KEY_INPUT_2))
+	{
+		EffectManager::GetInstance().Stop(EffectID::test);
+	}
+	
+	if (CheckHitKey(KEY_INPUT_3))
+	{
+		EffectManager::GetInstance().RePlay(EffectID::test);
+	}
+
+	if (CheckHitKey(KEY_INPUT_4))
+	{
+		EffectManager::GetInstance().End(EffectID::test,EffectEndState::kMoment);
+	}
+
+	if (CheckHitKey(KEY_INPUT_5))
+	{
+		EffectManager::GetInstance().End(EffectID::test, EffectEndState::kTotal);
+	}
+
+	EffectManager::GetInstance().Update();
 }
 
 void Game::Draw()
@@ -132,6 +165,5 @@ void Game::Draw()
 
 		camera_->Debug();
 	}
-	effect_->Draw();
-	
+	EffectManager::GetInstance().Draw();
 }

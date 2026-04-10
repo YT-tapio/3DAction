@@ -42,14 +42,14 @@ const bool PlayerInput::IsDash() const
 		auto pad = std::dynamic_pointer_cast<Pad>(input);
 		if (pad != nullptr)
 		{
-			if (pad->GetPushingTimeButton(PadConfig::dash) > 0.1f) { return TRUE; }
+			if (pad->GetPushingTimeButton(PadConfig::dash) > kDashTiming) { return TRUE; }
 		}
 		else
 		{
 			auto pc = std::dynamic_pointer_cast<PC>(input);
 			if (pc != nullptr)
 			{
-				if (pc->GetPushingTimeKey(KeyConfig::dash) > 0.1f) { return TRUE; }
+				if (pc->GetPushingTimeKey(KeyConfig::dash) > kDashTiming) { return TRUE; }
 			}
 		}
 	}
@@ -93,20 +93,28 @@ const bool PlayerInput::IsAvoid() const
 		float pushing_time = 0.f;
 		if (pad != nullptr)
 		{
-			pushing_time = pad->GetPushingTimeButton(PadConfig::avoid);
-			if (pushing_time == 0.f) { return TRUE; }
+			if (pad->GetReleaseTimeButton(PadConfig::avoid) == 0.f)
+			{
+				pushing_time = pad->GetBeforePushingTimeButton(PadConfig::avoid);
+				if (pushing_time <= kDashTiming) { return TRUE; }
+			}
 		}
 		else
 		{
 			auto pc = std::dynamic_pointer_cast<PC>(input);
 			if (pc != nullptr)
 			{
-				pushing_time = pc->GetPushingTimeMouseButton(KeyConfig::avoid);
 
-				if (pushing_time == 0.f) 
-				{ 
-					return TRUE;
+				if (pc->GetReleaseTimeKey(KeyConfig::avoid) == 0.f)
+				{
+					pushing_time = pc->GetBeforePushingTimeKey(KeyConfig::avoid);
+
+					if (pushing_time <= kDashTiming)
+					{
+						return TRUE;
+					}
 				}
+
 			}
 		}
 	}

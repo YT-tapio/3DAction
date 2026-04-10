@@ -357,6 +357,9 @@
     <ClCompile Include="source\csv_file_assistant.cpp">
       <Filter>ソース ファイル\csv</Filter>
     </ClCompile>
+    <ClCompile Include="source\effect_manager.cpp">
+      <Filter>ソース ファイル\effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -601,6 +604,15 @@
     </ClInclude>
     <ClInclude Include="source\csv_file_assistant.h">
       <Filter>ソース ファイル\csv</Filter>
+    </ClInclude>
+    <ClInclude Include="source\effect_manager.h">
+      <Filter>ソース ファイル\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\effect_id.h">
+      <Filter>ソース ファイル\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\effect_end_state.h">
+      <Filter>ソース ファイル\effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -44,9 +44,17 @@ public:
 	/// @return ŠÔ(•b)
 	float GetReleaseTimeMouseButton(int mouse_code);
 
+	const float GetBeforePushingTimeKey(int key_code) const;
+
+	const float GetBeforeReleasingTimeKey(int key_code) const;
+
+	const float GetBeforePushingTimeMouseButton(int mouse_code) const;
+
+	const float GetBeforeReleasingTimeMouseButton(int mouse_code) const;
+
 	/// @brief Œ»İ“ü—Í‚³‚ê‚Ä‚¢‚é‰ñ“]—Ê‚ğ•Ô‚·
 	/// @return mouse_wheel_rot_
-	float GetMouseWheelRot();
+	const float GetMouseWheelRot() const;
 
 	/// @brief ƒ}ƒEƒX‚Ìpos‚ğ•Ô‚·
 	/// @return mouse_pos_

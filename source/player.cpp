@@ -88,7 +88,7 @@ void Player::Init()
 	//skill_ = std::make_shared<PunchSkill>(mine, &hand_pos_, 1.5f, detection_radius);
 	//skill_			= std::make_shared<PunchSkill>(mine, &hand_pos_, 1.5f, detection_radius_);
 	//second_skill_	= std::make_shared<AreaHealSkill>(mine,&pos_,5.f);
-	
+	avoid_ = std::make_shared<AvoidSkill>(mine);
 	test_behavior_ = 
 		std::make_shared<AreaHealGivePlayer>(mine,
 			std::make_shared<CheckMyArea>(std::make_shared<Sphere>(20.f,
@@ -111,6 +111,7 @@ void Player::Init()
 	{
 		second_skill_->Init();
 	}
+	avoid_->Init();
 	test_behavior_->Init();
 }
 
@@ -129,9 +130,10 @@ void Player::Update()
 	{
 		second_skill_->Update();
 	}
-	
+	avoid_->Update();
 	rigid_body_->SetTargetVelocity(vel_);
 	test_behavior_->Update();
+	
 	animator_->Update();
 	Setting();
 	// ŽQÆ‚ÌXV
@@ -292,14 +294,6 @@ void Player::Move()
 		dir.x = input_->GetMoveDir().x;
 		dir.z = input_->GetMoveDir().y;
 	}
-
-	
-	if (CheckHitKey(KEY_INPUT_5))
-	{
-		animator_->PlayRequest("avoid");
-	}
-	
-
 	
 
 	if (VSize(dir) > 0 && !is_stop_)
@@ -324,9 +318,6 @@ void Player::Move()
 		is_move_ = FALSE;
 		is_dash_ = FALSE;
 	}
-	
-	
-	
 	
 	if (!is_ground_)
 	{

@@ -4,16 +4,18 @@
 #include"DxLib.h"
 #include"EffekseerForDxLib.h"
 #include"effect_base.h"
+#include"effect_end_state.h"
 #include"vector_assistant.h"
 #include"csv_file_assistant.h"
 #include"FPS.h"
 
-EffectBase::EffectBase(std::string data_file_path)
-	: data_file_path_(data_file_path)
+EffectBase::EffectBase(EffectData data)
+	: data_(data)
 	, is_play_(FALSE)
 	, is_stop_(FALSE)
+	, end_id_(EffectEndState::kNothing)
 {
-	//LoadFile();
+	
 }
 
 EffectBase::~EffectBase()
@@ -25,7 +27,7 @@ EffectBase::~EffectBase()
 
 void EffectBase::Init()
 {
-	LoadFile();
+	
 	is_play_ = FALSE;
 	is_stop_ = FALSE;
 }
@@ -36,9 +38,40 @@ void EffectBase::Update()
 	// いったん再生できるようにしよう
 	float speed = data_.speed * (FPS::GetInstance().GetDeltaTime() * 60.f);
 	if (is_stop_) { speed = 0.f; }
+
+	if (end_id_ == EffectEndState::kMoment)
+	{
+		data_.playing_handle = StopEffekseer3DEffect(data_.playing_handle);
+		data_.play_time = 0.f;
+		is_play_ = FALSE;
+		return;
+	}
+
+	data_.play_time += speed;
 	SetSpeedPlayingEffekseer3DEffect(data_.playing_handle,speed);
-	SetPosPlayingEffekseer3DEffect(data_.playing_handle, data_.pos.x, data_.pos.y, data_.pos.z);
-	UpdateEffekseer3D();
+	SetTransform();
+
+	if (data_.play_time > data_.total_time)
+	{
+		data_.playing_handle = StopEffekseer3DEffect(data_.playing_handle);
+		if (data_.loop)
+		{
+			if (end_id_ == EffectEndState::kTotal)
+			{
+				data_.playing_handle = StopEffekseer3DEffect(data_.playing_handle);
+				data_.play_time = 0.f;
+				is_play_ = FALSE;
+				return;
+			}
+			data_.playing_handle = PlayEffekseer3DEffect(data_.handle);
+			data_.play_time = data_.play_time - data_.total_time;
+			SetSpeedPlayingEffekseer3DEffect(data_.playing_handle, data_.play_time);
+		}
+		else
+		{
+			is_play_ = FALSE;
+		}
+	}
 }
 
 void EffectBase::Play()
@@ -46,11 +79,20 @@ void EffectBase::Play()
 	if (is_play_) { return; }
 	data_.playing_handle = PlayEffekseer3DEffect(data_.handle);
 	is_play_ = TRUE;
+	data_.play_time = 0.f;
+	end_id_ = EffectEndState::kNothing;
 }
 
 void EffectBase::Stop()
 {
+	if (!is_play_) { return; }
 	is_stop_ = TRUE;
+}
+
+void EffectBase::End(const int& end_id)
+{
+	if (!is_play_) { return; }
+	end_id_ = end_id;
 }
 
 void EffectBase::RePlay()
@@ -58,12 +100,20 @@ void EffectBase::RePlay()
 	is_stop_ = FALSE;
 }
 
+void EffectBase::SetPos(const VECTOR& pos)
+{
+	data_.pos = pos;
+}
+
+void EffectBase::SetRot(const VECTOR& rot)
+{
+	data_.rot = rot;
+}
+
 void EffectBase::Draw()
 {
 	if (!is_play_) { return; }
-	DrawEffekseer3D_Begin();
 	DrawEffekseer3D_Draw(data_.playing_handle);
-	DrawEffekseer3D_End();
 }
 
 void EffectBase::Debug()
@@ -71,43 +121,14 @@ void EffectBase::Debug()
 
 }
 
-void EffectBase::LoadFile()
+const bool EffectBase::GetIsPlay() const
 {
-	std::ifstream file(data_file_path_);
-	std::string line;
+	return is_play_;
+}
 
-	if (!file)
-	{
-		printfDx("csvfile読み込みエラー\n");
-		return;
-	}
-
-	// 2行飛ばします
-	std::getline(file, line);
-	std::getline(file, line);
-
-	while (std::getline(file, line))
-	{
-		std::stringstream ss(line);
-		std::string data;			// csvからの文字列をもらう
-		EffectData effect_data;
-		
-		// pathを受け取る
-		std::getline(ss, data, ',');
-		effect_data.path = data;
-		effect_data.handle = LoadEffekseerEffect(effect_data.path.c_str(), 1.f);
-		if (effect_data.handle == -1) { printfDx("effect読み込み失敗\n"); }
-		effect_data.pos		= CSVFileAssistant::GetVectorOfCSVFile(ss, data);	// 位置
-		effect_data.rot		= CSVFileAssistant::GetVectorOfCSVFile(ss, data);	// 回転
-		effect_data.scale	= CSVFileAssistant::GetVectorOfCSVFile(ss, data);	// 大きさ
-
-		// spedを受け取る
-		effect_data.speed = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
-		effect_data.play_time = 0.f;				// 再生時間を初期化
-
-		effect_data.loop = CSVFileAssistant::GetBoolOfCSVFile(ss, data);	// 
-		data_ = effect_data;
-	}
-
-
+void EffectBase::SetTransform()
+{
+	SetScalePlayingEffekseer3DEffect(data_.playing_handle, data_.scale.x, data_.scale.y, data_.scale.z);
+	SetRotationPlayingEffekseer3DEffect(data_.playing_handle, data_.rot.x, data_.rot.y, data_.rot.z);
+	SetPosPlayingEffekseer3DEffect(data_.playing_handle, data_.pos.x, data_.pos.y, data_.pos.z);
 }

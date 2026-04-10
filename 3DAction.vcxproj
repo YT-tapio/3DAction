@@ -151,6 +151,7 @@
     <ClCompile Include="source\csv_loader.cpp" />
     <ClCompile Include="source\effect_base.cpp" />
     <ClCompile Include="source\effect_data.cpp" />
+    <ClCompile Include="source\effect_manager.cpp" />
     <ClCompile Include="source\enemy_base.cpp" />
     <ClCompile Include="source\attack_base.cpp" />
     <ClCompile Include="source\punch.cpp" />
@@ -212,6 +213,9 @@
     <ClInclude Include="source\csv_loader.h" />
     <ClInclude Include="source\effect_base.h" />
     <ClInclude Include="source\effect_data.h" />
+    <ClInclude Include="source\effect_end_state.h" />
+    <ClInclude Include="source\effect_id.h" />
+    <ClInclude Include="source\effect_manager.h" />
     <ClInclude Include="source\punch_skill.h" />
     <ClInclude Include="source\skill_base.h" />
     <ClInclude Include="source\check_my_area.h" />

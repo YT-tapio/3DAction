@@ -31,6 +31,10 @@ public:
 
 	VECTOR GetLeftStickVel();
 
+	const float GetBeforePushingTimeButton(int pad_code) const;
+
+	const float GetBeforeReleasingTimeButton(int pad_code) const;
+
 private:
 
 	static const int kMaxPadButtonNum	= 16;

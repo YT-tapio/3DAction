@@ -18,7 +18,9 @@ void Pad::Init()
 	for (int i = 0; i < kMaxPadButtonNum; i++)
 	{
 		button_state_[i].frame		= 0;
-		button_state_[i].time		= 0;
+		button_state_[i].time			= 0;
+		button_state_[i].pushing_time		= 0.f;
+		button_state_[i].releasing_time = 0.f;
 		button_state_[i].is_pressed = FALSE;
 	}
 	left_stick_pos_		= VectorAssistant::VGetZero();
@@ -48,6 +50,7 @@ float Pad::GetPushingTimeButton(int pad_code)
 		int now_time = GetNowCount();
 		pushing_time = now_time - button_state_[pad_code].time;
 		pushing_time = pushing_time / 1000.f;
+		button_state_[pad_code].pushing_time = pushing_time;
 	}
 	return pushing_time;
 }
@@ -61,6 +64,7 @@ float Pad::GetReleaseTimeButton(int pad_code)
 		int now_time = GetNowCount();
 		release_time = now_time - button_state_[pad_code].time;
 		release_time = release_time / 1000.f;
+		button_state_[pad_code].releasing_time = release_time;
 	}
 	return release_time;
 }
@@ -105,6 +109,16 @@ VECTOR Pad::GetLeftStickVel()
 	VECTOR left_stick_vel = VectorAssistant::VGetZero();
 
 	return left_stick_vel;
+}
+
+const float Pad::GetBeforePushingTimeButton(int pad_code) const
+{
+	return button_state_[pad_code].pushing_time;
+}
+
+const float Pad::GetBeforeReleasingTimeButton(int pad_code) const
+{
+	return button_state_[pad_code].releasing_time;
 }
 
 void Pad::ButtonUpdate(XINPUT_STATE pad)

@@ -5,7 +5,7 @@ class EffectBase
 {
 public:
 
-	EffectBase(std::string data_file_path);
+	EffectBase(EffectData data);
 
 	~EffectBase();
 
@@ -17,24 +17,33 @@ public:
 
 	void Stop();
 
+	void End(const int& end_id);
+
 	void RePlay();
+
+	void SetPos(const VECTOR& pos);
+
+	void SetRot(const VECTOR& rot);
 
 	void Draw();
 
 	void Debug();
 
-	
+	const bool GetIsPlay() const;
+
 protected:
+
+	
+
+private:
+
+	void SetTransform();
 
 	EffectData data_;
 
 	bool is_play_;
 	bool is_stop_;
 
-private:
-
-	void LoadFile();
-
-	std::string data_file_path_;
+	int end_id_;
 
 };

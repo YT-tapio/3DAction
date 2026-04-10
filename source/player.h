@@ -84,6 +84,7 @@ private:
 	std::shared_ptr<SkillBase> skill_;
 	std::shared_ptr<SkillBase> second_skill_;
 	std::shared_ptr<BehaviorBase> test_behavior_;
+	std::shared_ptr<SkillBase> avoid_;
 
 	VECTOR* camera_dir_;
 	VECTOR hand_pos_;

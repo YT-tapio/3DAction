@@ -1,3 +1,4 @@
-﻿path,pos,,,rot,,,scale,,,speed,totla_time,loop
-,x,y,z,x,y,z,x,y,z,,,
-data/effect/3D/Effekseer01/Laser03.efkefc,0,0,0,0,0,0,1,1,1,1,100,1
+﻿id,path,pos,,,rot,,,scale,,,speed,totla_time,loop
+,,x,y,z,x,y,z,x,y,z,,,
+0,data/effect/3D/Effekseer01/Laser03.efkefc,0,0,0,0,90,0,1,1,1,1,100,1
+1,data/effect/3D/Effekseer01/Laser03.efkefc,0,10,0,0,0,0,1,1,1,1,100,1

@@ -20,6 +20,8 @@ void PC::Init()
 	{
 		key_state_[i].frame = 0;
 		key_state_[i].time = 0;
+		key_state_[i].pushing_time = 0.f;
+		key_state_[i].releasing_time = 0.f;
 		key_state_[i].is_pressed = FALSE;
 	}
 	//マウスのpush状態を初期化
@@ -27,6 +29,8 @@ void PC::Init()
 	{
 		mouse_state_[i].time				= 0;
 		mouse_state_[i].frame			= 0;
+		mouse_state_[i].pushing_time = 0.f;
+		mouse_state_[i].releasing_time = 0.f;
 		mouse_state_[i].is_pressed	= FALSE;
 	}
 	//マウスのposを初期化
@@ -55,6 +59,7 @@ float PC::GetPushingTimeKey(int key_code)
 		int now_time = GetNowCount();
 		time = now_time - key_state_[key_code].time;
 		time = time / 1000.f;
+		key_state_[key_code].pushing_time = time;
 	}
 	return time;
 }
@@ -67,6 +72,7 @@ float PC::GetPushingTimeMouseButton(int mouse_code)
 		int now_time = GetNowCount();
 		time = now_time - mouse_state_[mouse_code].time;
 		time = time / 1000.f;
+		mouse_state_[mouse_code].pushing_time = time;
 	}
 
 	return time;
@@ -75,12 +81,12 @@ float PC::GetPushingTimeMouseButton(int mouse_code)
 float PC::GetReleaseTimeKey(int key_code)
 {
 	float time = -1.f;
-
 	if (!key_state_[key_code].is_pressed)
 	{
 		int now_time = GetNowCount();
 		time = now_time - key_state_[key_code].time;
 		time = time / 1000.f;
+		key_state_[key_code].releasing_time = time;
 	}
 	return time;
 }
@@ -93,12 +99,32 @@ float PC::GetReleaseTimeMouseButton(int mouse_code)
 		int now_time = GetNowCount();
 		time = now_time - mouse_state_[mouse_code].time;
 		time = time / 1000;
+		mouse_state_[mouse_code].releasing_time = time;
 	}
 
 	return time;
 }
 
-float PC::GetMouseWheelRot()
+const float PC::GetBeforePushingTimeKey(int key_code) const
+{
+	return key_state_[key_code].pushing_time;
+}
+
+const float PC::GetBeforeReleasingTimeKey(int key_code) const
+{
+	return key_state_[key_code].releasing_time;
+}
+
+const float PC::GetBeforePushingTimeMouseButton(int mouse_code) const
+{
+	return mouse_state_[mouse_code].pushing_time;
+}
+
+const float PC::GetBeforeReleasingTimeMouseButton(int mouse_code) const
+{
+	return mouse_state_[mouse_code].releasing_time;
+}
+const float PC::GetMouseWheelRot() const
 {
 	return mouse_wheel_rot_;
 }
