@@ -5,16 +5,17 @@
 #include"tracking_camera.h"
 #include"player.h"
 #include"sphere_camera.h"
+#include"player_group.h"
 
 void Brain::Init()
 {
 	now_camera_ = "nothing";
 }
 
-void Brain::CreatePlaySceneVirtualCamera(std::shared_ptr<Player> player,VECTOR* camera_pos, VECTOR* target_pos)
+void Brain::CreatePlaySceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos)
 {
-	virtual_cameras_[kTracking] = std::make_shared<TrackingCamera>(player->GetHeadPos(), camera_pos, target_pos);
-	virtual_cameras_[kSphere] = std::make_shared<SphereCamera>(player->GetHeadPos(), camera_pos, target_pos);
+	virtual_cameras_[kTracking] = std::make_shared<TrackingCamera>(PlayerGroup::GetInstance().GetCurrentPlayerHeadPos(), camera_pos, target_pos);
+	virtual_cameras_[kSphere] = std::make_shared<SphereCamera>(PlayerGroup::GetInstance().GetCurrentPlayerHeadPos(), camera_pos, target_pos);
 	virtual_cameras_[kTracking]->Init();
 	virtual_cameras_[kSphere]->Init();
 

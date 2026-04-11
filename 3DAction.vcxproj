@@ -154,6 +154,8 @@
     <ClCompile Include="source\effect_manager.cpp" />
     <ClCompile Include="source\enemy_base.cpp" />
     <ClCompile Include="source\attack_base.cpp" />
+    <ClCompile Include="source\input_change_interface.cpp" />
+    <ClCompile Include="source\player_group.cpp" />
     <ClCompile Include="source\punch.cpp" />
     <ClCompile Include="source\punch_skill.cpp" />
     <ClCompile Include="source\skill_base.cpp" />
@@ -216,6 +218,8 @@
     <ClInclude Include="source\effect_end_state.h" />
     <ClInclude Include="source\effect_id.h" />
     <ClInclude Include="source\effect_manager.h" />
+    <ClInclude Include="source\input_change_interface.h" />
+    <ClInclude Include="source\player_group.h" />
     <ClInclude Include="source\punch_skill.h" />
     <ClInclude Include="source\skill_base.h" />
     <ClInclude Include="source\check_my_area.h" />

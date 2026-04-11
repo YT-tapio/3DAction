@@ -21,7 +21,7 @@ public:
 
 	void Init();
 
-	void CreatePlaySceneVirtualCamera(std::shared_ptr<Player> player, VECTOR* camera_pos, VECTOR* target_pos);
+	void CreatePlaySceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos);
 
 	void Update();
 

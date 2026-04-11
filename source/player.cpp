@@ -3,6 +3,7 @@
 #include<vector>
 #include<fstream>
 #include<sstream>
+#include<unordered_map>
 #include"DxLib.h"
 #include"player.h"
 #include"capsule.h"
@@ -32,6 +33,7 @@
 #include"skill_name.h"
 #include"skill_loader.h"
 #include"csv_file_assistant.h"
+#include"input_manager.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name)
 	: CharacterBase("player")
@@ -61,7 +63,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	is_dash_ = FALSE;
 	is_attack_target_in_range_ = FALSE;
 	is_stop_ = FALSE;
-	input_ = input;
+	 input_ = input;
 	target_rot_y_ = 0;
 	detection_radius_ = 25.f;
 }
@@ -75,9 +77,9 @@ void Player::Init()
 {
 	auto mine = std::dynamic_pointer_cast<Player>(shared_from_this());
 	auto mine_object = std::dynamic_pointer_cast<ObjectBase>(mine);
-	
+	auto input_change = std::dynamic_pointer_cast<IInputChange>(mine);
 	if (mine_object == nullptr) { printfDx("¸”s"); }
-
+	if (input_change == nullptr) { printfDx("¸”s‚Å‚·"); }
 	// ŒŸ’m—p”ÍˆÍ
 	detection_radius_ = 25.f;
 
@@ -94,6 +96,8 @@ void Player::Init()
 			std::make_shared<CheckMyArea>(std::make_shared<Sphere>(20.f,
 				VectorAssistant::VGetZero()), &pos_), &pos_);
 	is_invincible_ = FALSE;
+	
+	InputManager::GetInstance().AddInput(input_change);
 	// physics‚Ì“o˜^
 	Physics::GetInstance().AddBody(rigid_body_);
 	// setter‚Ö‚Ì“o˜^
@@ -148,6 +152,11 @@ void Player::LateUpdate()
 void Player::ResetVelocity()
 {
 	rigid_body_->ResetVelocity();
+}
+
+void Player::SetTragetVelocity(const VECTOR& velocity)
+{
+	vel_ = velocity;
 }
 
 void Player::SetVelocity(const VECTOR& velocity)
@@ -289,13 +298,14 @@ void Player::Move()
 	vel_ = VectorAssistant::VGetZero();
 	float speed = kSpeed;
 
+	//auto input = input_.get();
+
 	if (animator_->GetNowAnimName() != "punch")
 	{
 		dir.x = input_->GetMoveDir().x;
 		dir.z = input_->GetMoveDir().y;
 	}
 	
-
 	if (VSize(dir) > 0 && !is_stop_)
 	{
 		dir_ = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(*camera_dir_), VectorAssistant::VGetTan(dir));
@@ -448,6 +458,11 @@ void Player::OnHealFromPlayer(float heal)
 void Player::OnDamageFromEnemy(float damage)
 {
 	printfDx("ƒ_ƒ[ƒW‚ğó‚¯‚¿‚á‚Á‚Ä‚Ü‚·\n");
+}
+
+void Player::InputChange(std::shared_ptr<InputBase> input)
+{
+	input_ = input;
 }
 
 std::vector<std::weak_ptr<ObjectBase>> Player::GetMyAreaObject()

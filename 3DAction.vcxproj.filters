@@ -163,6 +163,9 @@
     <Filter Include="ソース ファイル\effect">
       <UniqueIdentifier>{fd21f6ea-b101-4382-8b97-b13b3452772b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\player_group">
+      <UniqueIdentifier>{c93c75c2-24fd-42cc-b23f-82e80d7489c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -359,6 +362,12 @@
     </ClCompile>
     <ClCompile Include="source\effect_manager.cpp">
       <Filter>ソース ファイル\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\input_change_interface.cpp">
+      <Filter>ソース ファイル\input</Filter>
+    </ClCompile>
+    <ClCompile Include="source\player_group.cpp">
+      <Filter>ソース ファイル\player_group</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -613,6 +622,12 @@
     </ClInclude>
     <ClInclude Include="source\effect_end_state.h">
       <Filter>ソース ファイル\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\input_change_interface.h">
+      <Filter>ソース ファイル\input</Filter>
+    </ClInclude>
+    <ClInclude Include="source\player_group.h">
+      <Filter>ソース ファイル\player_group</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

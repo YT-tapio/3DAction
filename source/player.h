@@ -3,6 +3,7 @@
 #include"physics_interface.h"
 #include"takable_heal_player_interface.h"
 #include"takable_damage_enemy_interface.h"
+#include"input_change_interface.h"
 
 class RigidBody;
 class InputBase;
@@ -12,7 +13,7 @@ class ObjectBase;
 class BehaviorBase;
 
 class Player : public CharacterBase , public IPhysicsEventReceiver
-	,public ITakableHealPlayer,public ITakableDamageEnemy
+	,public ITakableHealPlayer,public ITakableDamageEnemy,public IInputChange
 {
 public:
 
@@ -27,6 +28,8 @@ public:
 	void LateUpdate() override;
 
 	void ResetVelocity();
+
+	void SetTragetVelocity(const VECTOR& velocity);
 
 	void SetVelocity(const VECTOR& velocity);
 
@@ -49,6 +52,8 @@ public:
 	void OnHealFromPlayer(float heal) override;
 
 	void OnDamageFromEnemy(float damage) override;
+
+	void InputChange(std::shared_ptr<InputBase> input) override;
 
 	VECTOR* GetHeadPos();
 

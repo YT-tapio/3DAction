@@ -11,6 +11,7 @@
 #include"resolve.h"
 #include"lerp.h"
 #include"debug.h"
+#include"check_my_area.h"
 
 void Physics::AddBody(std::shared_ptr<RigidBody> body)
 {
@@ -421,11 +422,19 @@ void Physics::CheckGround()
 	for (auto& main_body : rigid_bodies_)
 	{
 		if (!main_body->GetUseGravity()) { continue; }
-
+		
+		auto area = std::dynamic_pointer_cast<CheckMyArea>(main_body->GetIPhysicsObject());
+		if (area != nullptr) { continue; }
 		for (auto& target_body : rigid_bodies_)
 		{
 			if (!target_body->GetIsActive()) { continue; }
 			if (main_body == target_body) { continue; }
+
+			auto target_area = std::dynamic_pointer_cast<CheckMyArea>(target_body->GetIPhysicsObject());
+			if (target_area != nullptr) 
+			{ 
+				continue;
+			}
 
 			Contact contact = {};
 			// IPhysics‚Ì‘«Œ³“–‚½‚è”»’è‚ðŒÄ‚Ñ‚½‚¢

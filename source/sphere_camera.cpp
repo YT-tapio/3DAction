@@ -1,4 +1,5 @@
 #include<memory>
+#include<unordered_map>
 #include"DxLib.h"
 #include"sphere_camera.h"
 #include"input_base.h"

@@ -109,7 +109,7 @@ void Camera::Setting()
 
 void Camera::OnHit(std::shared_ptr<IPhysicsEventReceiver> obj)
 {
-	printfDx("aa\n");
+	//printfDx("aa\n");
 }
 
 VECTOR* Camera::GetPos()

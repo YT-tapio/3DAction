@@ -1,5 +1,5 @@
 #include<memory>
-#include<vector>
+#include<unordered_map>
 #include"DxLib.h"
 #include"pc.h"
 #include"pad.h"
@@ -8,8 +8,13 @@
 #include"input_base.h"
 #include"player_input.h"
 #include"ai_input.h"
+#include"input_change_interface.h"
 
-
+void InputManager::AddInput(std::weak_ptr<IInputChange> input)
+{
+	input_changers_[changers_num_] = input;
+	changers_num_++;
+}
 
 void InputManager::Init()
 {
@@ -25,6 +30,9 @@ void InputManager::Update()
 		if (input == nullptr) { return; }
 		ai_input_ = player_input_;
 		player_input_ = std::make_shared<AIInput>();
+		
+		(input_changers_[0].lock())->InputChange(ai_input_);
+		(input_changers_[1].lock())->InputChange(player_input_);
 	}
 
 	if (CheckHitKey(KEY_INPUT_0))
@@ -33,6 +41,8 @@ void InputManager::Update()
 		if (input == nullptr) { return; }
 		player_input_ = ai_input_;
 		ai_input_ = std::make_shared<AIInput>();
+		(input_changers_[0].lock())->InputChange(ai_input_);
+		(input_changers_[1].lock())->InputChange(player_input_);
 	}
 
 	player_input_->Update();
@@ -76,4 +86,5 @@ void InputManager::Awake()
 	ai_input_ = std::make_shared<AIInput>();
 	ai_input_2 = std::make_shared<AIInput>();
 	ai_input_3 = std::make_shared<AIInput>();
+	changers_num_ = 0;
 }
