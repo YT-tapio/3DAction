@@ -24,9 +24,9 @@ Game::Game()
 	camera_ = std::make_shared<Camera>();
 
 	objects_.push_back(std::make_shared<Stage>());
-	objects_.push_back(std::make_shared<Player>(&camera_->dir_, InputManager::GetInstance().GetPlayerInput(),"attacker"));
-	objects_.push_back(std::make_shared<Player>(&camera_->dir_, InputManager::GetInstance().GetAIInput(),"healer"));
-	objects_.push_back(std::make_shared<Player>(&camera_->dir_, InputManager::GetInstance().GetAIInput(), "defender"));
+	objects_.push_back(std::make_shared<Player>(&camera_->dir_, InputManager::GetInstance().GetAIInput(),"attacker"));
+	objects_.push_back(std::make_shared<Player>(&camera_->dir_, InputManager::GetInstance().GetAIInput2(),"healer"));
+	objects_.push_back(std::make_shared<Player>(&camera_->dir_, InputManager::GetInstance().GetPlayerInput(), "defender"));
 	objects_.push_back(std::make_shared<EnemyBase>(VGet(10,0,2)));
 	objects_.push_back(std::make_shared<EnemyBase>(VGet(10, 0, 10)));
 	objects_.push_back(std::make_shared<EnemyBase>(VGet(-10, 0, 10)));
@@ -51,10 +51,12 @@ void Game::Init()
 		}
 	}
 	EffectManager::GetInstance().Init();
+	camera_->Init();
 }
 
 void Game::Update()
 {
+
 	//printfDx("---‚Ü‚¢‚é[‚Õ---\n");
 	for (auto& obj : objects_)
 	{
@@ -62,54 +64,19 @@ void Game::Update()
 		obj->Update();
 	}
 
+	Brain::GetInstance().Update();
+	camera_->Update();
+
 	Physics::GetInstance().Update();
 	ObjectSetter::GetInstance().Update();
-	
+
 	for (auto& obj : objects_)
 	{
 		if (!obj->GetIsActive()) { continue; }
 		obj->LateUpdate();
 	}
-
-	Brain::GetInstance().Update();
-	camera_->Update();
-
-	/*
-	VECTOR dir = VGet(0, 0, 0);
-
-	if (CheckHitKey(KEY_INPUT_W)) { dir = VAdd(dir, VGet(0, 1, 0)); }
-	if (CheckHitKey(KEY_INPUT_S)) { dir = VAdd(dir, VGet(0, -1, 0)); }
-	if (CheckHitKey(KEY_INPUT_A)) { dir = VAdd(dir, VGet(-1, 0, 0)); }
-	if (CheckHitKey(KEY_INPUT_D)) { dir = VAdd(dir, VGet(1, 0, 0)); }
-
-	capsule_pos = VAdd(capsule_pos, dir);
-
-	VECTOR capsule_end_pos = VAdd(capsule_pos, VGet(0, vertical, 0));
-	VECTOR capsule2_end_pos = VAdd(capsule2_pos, VGet(capsule2_vertical, 0, 0));
-
-	if (Collision::CapsuleToCapsule(capsule_pos,capsule_end_pos,capsule_r,capsule2_pos, capsule2_end_pos,capsule2_r))
-	{
-		printfDx("“–‚½‚Á‚Ä‚é\n");
-	}
-	else
-	{
-		printfDx("“–‚½‚Á‚Ä‚È‚¢\n");
-	}
-	*/
-
-	/*
-	if(CheckHitKey(KEY_INPUT_0)){ effect_->Play(); }
-
-	if (CheckHitKey(KEY_INPUT_1))
-	{
-		effect_->Stop();
-	}
-	else
-	{
-		effect_->RePlay();
-	}
-	*/
-
+	
+	
 	if (CheckHitKey(KEY_INPUT_0)) 
 	{ 
 		EffectManager::GetInstance().Play(EffectID::test);

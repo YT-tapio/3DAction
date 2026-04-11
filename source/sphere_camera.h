@@ -15,8 +15,9 @@ public:
 
 	void Update() override;
 
-
 private:
+
+	void MakeYawPitch();
 
 	std::shared_ptr<const InputBase> input_;
 

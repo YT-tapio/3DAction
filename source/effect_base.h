@@ -25,6 +25,8 @@ public:
 
 	void SetRot(const VECTOR& rot);
 
+	void SetScale(const VECTOR& scale);
+
 	void Draw();
 
 	void Debug();

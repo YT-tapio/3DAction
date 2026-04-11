@@ -27,7 +27,7 @@ EnemyBase::EnemyBase(const VECTOR& pos)
 
 	handle_ = MV1LoadModel("data/model/enemy/zako/Demon_T_Wiezzorek.mv1");
 	if (handle_ == -1) { printfDx("ì«Ç›çûÇ›ÉGÉâÅ[\n"); }
-	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f);
+	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f,0.1f);
 	fall_speed_ = 0.f;
 	is_ground_ = FALSE;
 	
@@ -49,7 +49,7 @@ void EnemyBase::Init()
 
 	UpdateBone();
 	punch_ = std::make_shared<Punch>(std::dynamic_pointer_cast<ObjectBase>(mine), &right_hand_pos_, 
-		std::make_shared<RigidBody>(std::make_shared<Sphere>(1.5f, VGet(0.f, 0.f, 0.f)), &right_hand_pos_, FALSE, TRUE, 1.f));
+		std::make_shared<RigidBody>(std::make_shared<Sphere>(1.5f, VGet(0.f, 0.f, 0.f)), &right_hand_pos_, FALSE, TRUE, 1.f,1.f));
 	animator_ = std::make_shared<AnimatorEnemy>(handle_, std::dynamic_pointer_cast<EnemyBase>(mine));
 	animator_->Init();
 	punch_->Init();

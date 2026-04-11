@@ -8,7 +8,7 @@
 #include"physics_interface.h"
 #include"FPS.h"
 
-RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll,VECTOR* pos,bool gravity, bool kinematic,float mass)
+RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll,VECTOR* pos,bool gravity, bool kinematic,float mass,float friction)
 {
 	pos_		= pos;
 	vel_		= VectorAssistant::VGetZero();
@@ -19,6 +19,7 @@ RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll,VECTOR* pos,bool gravity
 	use_gravity_ = gravity;
 	is_kinematic_ = kinematic;
 	mass_ = mass;
+	friction_ = friction;
 	is_active_ = TRUE;
 }
 
@@ -114,6 +115,11 @@ const void RigidBody::Debug() const
 const float RigidBody::GetMaxSpeed() const
 {
 	return kMaxSpeed * VSize(vel_);
+}
+
+const float RigidBody::GetFriction() const
+{
+	return friction_;
 }
 
 const VECTOR RigidBody::GetPosition() const

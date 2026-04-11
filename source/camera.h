@@ -1,12 +1,17 @@
 #pragma once
+#include"physics_interface.h"
 
-class Camera
+class RigidBody;
+
+class Camera : public IPhysicsEventReceiver
 {
 public:
 
 	Camera();
 
-	~Camera();
+	~Camera() override;
+
+	void Init();
 
 	void Update();
 
@@ -17,6 +22,8 @@ public:
 	/// </summary>
 	void Setting();
 
+	void OnHit(std::shared_ptr<IPhysicsEventReceiver> obj) override;
+
 	VECTOR* GetPos();
 
 	VECTOR* GetTargetPos();
@@ -25,7 +32,8 @@ public:
 
 private:
 
-	VECTOR* camera_pos_;		// 
+	std::shared_ptr<RigidBody> rigid_body_;
+
 	VECTOR pos_;				// 自身の座標
 	VECTOR target_pos_;			// 注視点の座標
 

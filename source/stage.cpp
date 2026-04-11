@@ -21,7 +21,7 @@ Stage::Stage()
 	}
 	pos_ = VGet(0.f, -10.f, 30.f);
 	scale_ = VectorAssistant::VGetSame(14.5f);
-	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Mesh>(handle_), &pos_, FALSE, TRUE, 20.f);
+	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Mesh>(handle_), &pos_, FALSE, TRUE, 20.f,1.f);
 }
 
 Stage::~Stage()

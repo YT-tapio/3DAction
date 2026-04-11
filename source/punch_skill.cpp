@@ -20,7 +20,7 @@
 #include"FPS.h"
 
 PunchSkill::PunchSkill(std::weak_ptr<Player> owner,VECTOR* pos,const float r,const float detection_radius)
-	: SkillBase(owner,std::make_shared<Punch>(owner,pos,std::make_shared<RigidBody>(std::make_shared<Sphere>(r,VGet(0,0,0)), pos, FALSE, TRUE, 1.f)))
+	: SkillBase(owner,std::make_shared<Punch>(owner,pos,std::make_shared<RigidBody>(std::make_shared<Sphere>(r,VGet(0,0,0)), pos, FALSE, TRUE, 1.f,1.f)))
 {
 	target_dir_ = VectorAssistant::VGetZero();
 	target_pos_ = VectorAssistant::VGetZero();

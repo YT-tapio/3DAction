@@ -6,6 +6,9 @@
 #include"color.h"
 #include"debug.h"
 #include"brain.h"
+#include"rigid_body.h"
+#include"sphere.h"
+#include"physics.h"
 
 Camera::Camera()
 {
@@ -18,12 +21,20 @@ Camera::Camera()
 	target_vel_		= VectorAssistant::VGetZero();
 	target_pos_		= VGet(0.f, 0.f, 25.f);
 
+	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Sphere>(1.f, VectorAssistant::VGetZero()), &pos_, FALSE, FALSE, 0.1f,1.f);
 	Setting();
 }
 
 Camera::~Camera()
 {
 
+}
+
+void Camera::Init()
+{
+	// pysics‚Ö‚Ì“o˜^
+	rigid_body_->Init(weak_from_this());
+	Physics::GetInstance().AddBody(rigid_body_);
 }
 
 void Camera::Update()
@@ -58,6 +69,8 @@ void Camera::Update()
 	// brain‚©‚ç‚ÌˆÚ“®’l‚ðŽó‚¯Žæ‚é
 	vel_				= Brain::GetInstance().GetVelocity();
 	target_vel_	= Brain::GetInstance().GetTargetVelocity();
+
+	rigid_body_->SetTargetVelocity(vel_);
 	Setting();
 	
 }
@@ -85,7 +98,6 @@ void Camera::Debug()
 
 void Camera::Setting()
 {
-	pos_ = VAdd(pos_, vel_);
 	target_pos_ = VAdd(target_pos_, target_vel_);
 
 	SetCameraNearFar(near_, far_);
@@ -93,6 +105,11 @@ void Camera::Setting()
 	SetCameraPositionAndTarget_UpVecY(pos_, target_pos_);
 	Effekseer_Sync3DSetting();
 	dir_ = VectorAssistant::VGetDir(pos_, target_pos_);
+}
+
+void Camera::OnHit(std::shared_ptr<IPhysicsEventReceiver> obj)
+{
+	printfDx("aa\n");
 }
 
 VECTOR* Camera::GetPos()

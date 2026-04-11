@@ -9,7 +9,7 @@
 
 CheckMyArea::CheckMyArea(std::shared_ptr<ColliderBase> coll,VECTOR* pos)
 {
-	rigid_body_ = std::make_shared<RigidBody>(coll, pos, FALSE, TRUE, 0);
+	rigid_body_ = std::make_shared<RigidBody>(coll, pos, FALSE, TRUE, 0, 1.f);
 }
 
 CheckMyArea::~CheckMyArea()

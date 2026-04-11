@@ -33,6 +33,14 @@ public:
 
 	void RePlay(const int& id);
 
+	void SetPos(const int& id, const VECTOR& pos);
+
+	void SetRot(const int& id, const VECTOR& rot);
+
+	void SetScale(const int& id, const VECTOR& scale);
+
+	void SetTransform(const int& id, const VECTOR& pos, const VECTOR& rot, const VECTOR& scale);
+
 	const bool CheckIsPlay(const int& id) const;
 
 private:

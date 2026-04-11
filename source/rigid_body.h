@@ -8,7 +8,7 @@ class RigidBody
 {
 public:
 
-	RigidBody(std::shared_ptr<ColliderBase> coll, VECTOR* pos, bool gravity, bool kinematic, float mass);
+	RigidBody(std::shared_ptr<ColliderBase> coll, VECTOR* pos, bool gravity, bool kinematic, float mass, float friction);
 
 	~RigidBody();
 
@@ -47,6 +47,8 @@ public:
 
 	const float GetMaxSpeed() const;
 
+	const float GetFriction() const;
+
 	const VECTOR GetPosition()const;
 
 	const VECTOR GetVelocity()const;
@@ -78,11 +80,11 @@ private:
 	VECTOR before_vel_;		// 1つ前の移動量を保存
 	VECTOR target_vel_;
 
-
 	bool use_gravity_;		// 重力
 	bool is_kinematic_;		// 摩擦や重力による変更を受けない(TRUE : 受けない,FALSE ： 受ける)
 	bool on_grounded_;		// 着地判定
 	float mass_;			// 重さ
+	float friction_;		// 摩擦(0～1の間)0に近づくほど摩擦が強くなる
 
 	std::shared_ptr<ColliderBase>	coll_;				// 自分の当たり判定
 	std::weak_ptr<IPhysicsEventReceiver>				object_;	// インターフェースを継承したオブジェクト

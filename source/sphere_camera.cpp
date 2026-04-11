@@ -23,14 +23,13 @@ SphereCamera::~SphereCamera()
 
 void SphereCamera::Init()
 {
-	
 	VECTOR target_to_camera_dist		= VSub(*pos_, *target_pos_);
 	VECTOR target_pos_to_camera_dir		= VNorm(target_to_camera_dist);
 	// 真上
-	VECTOR a = VGet(0.f, 1.f, 0.f);
+	VECTOR above = VGet(0.f, 1.f, 0.f);
 
 	// 角度を出す
-	yaw_ = VectorAssistant::GetTwoVectorRad(a, target_pos_to_camera_dir);
+	yaw_ = VectorAssistant::GetTwoVectorRad(above, target_pos_to_camera_dir);
 	pitch_ = atan2f(target_pos_to_camera_dir.z, target_pos_to_camera_dir.x);
 	target_to_camera_dist_size_ = VSize(target_to_camera_dist);
 
@@ -41,6 +40,7 @@ void SphereCamera::Update()
 {
 	vel_ = VectorAssistant::VGetZero();
 	target_vel_ = VectorAssistant::VGetZero();
+	//MakeYawPitch();
 	// target_posを中心とし回転をさせる
 	VECTOR input_value = VectorAssistant::VGetZero();
 	VECTOR target_to_camera_dist = VectorAssistant::VGetZero();
@@ -77,5 +77,16 @@ void SphereCamera::Update()
 		target_vel_ = VectorAssistant::VGetZero();
 	}
 	
+}
+
+void SphereCamera::MakeYawPitch()
+{
+	// 真上
+	VECTOR target_to_camera_dist = VSub(*pos_, *target_pos_);
+	VECTOR target_pos_to_camera_dir = VNorm(target_to_camera_dist);
+	VECTOR above = VGet(0.f, 1.f, 0.f);
+	// 角度を出す
+	yaw_ = VectorAssistant::GetTwoVectorRad(above, target_pos_to_camera_dir);
+	pitch_ = atan2f(target_pos_to_camera_dir.z, target_pos_to_camera_dir.x);
 }
 

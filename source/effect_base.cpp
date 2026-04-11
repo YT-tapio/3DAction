@@ -110,6 +110,11 @@ void EffectBase::SetRot(const VECTOR& rot)
 	data_.rot = rot;
 }
 
+void EffectBase::SetScale(const VECTOR& scale)
+{
+	data_.scale = scale;
+}
+
 void EffectBase::Draw()
 {
 	if (!is_play_) { return; }

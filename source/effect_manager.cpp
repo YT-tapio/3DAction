@@ -98,6 +98,44 @@ void EffectManager::RePlay(const int& id)
 	}
 }
 
+void EffectManager::SetPos(const int& id, const VECTOR& pos)
+{
+	auto effect = effects_.find(id);
+	if (effect != effects_.end())
+	{
+		effect->second->SetPos(pos);
+	}
+}
+
+void EffectManager::SetRot(const int& id, const VECTOR& rot)
+{
+	auto effect = effects_.find(id);
+	if (effect != effects_.end())
+	{
+		effect->second->SetRot(rot);
+	}
+}
+
+void EffectManager::SetScale(const int& id, const VECTOR& scale)
+{
+	auto effect = effects_.find(id);
+	if (effect != effects_.end())
+	{
+		effect->second->SetScale(scale);
+	}
+}
+
+void EffectManager::SetTransform(const int& id, const VECTOR& pos, const VECTOR& rot, const VECTOR& scale)
+{
+	auto effect = effects_.find(id);
+	if (effect != effects_.end())
+	{
+		effect->second->SetPos(pos);
+		effect->second->SetPos(rot);
+		effect->second->SetPos(scale);
+	}
+}
+
 const bool EffectManager::CheckIsPlay(const int& id) const
 {
 	auto effect = effects_.find(id);

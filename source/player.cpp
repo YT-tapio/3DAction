@@ -54,7 +54,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	handle_ = -1;
 	Setting();
 	UpdateBone();
-	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f);
+	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f, 0.1f);
 	fall_speed_ = 0.f;
 	is_move_ = FALSE;
 	is_ground_ = FALSE;
