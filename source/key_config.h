@@ -13,6 +13,11 @@ namespace KeyConfig
 	static int jump			= KEY_INPUT_SPACE;		// ƒWƒƒƒ“ƒv
 	static int avoid			= KEY_INPUT_LSHIFT;		// ‰ñ”ð
 
+	static int change_player1 = KEY_INPUT_1;
+	static int change_player2 = KEY_INPUT_2;
+	static int change_player3 = KEY_INPUT_3;
+	static int change_player4 = KEY_INPUT_4;
+
 	static int normal_skill		= 0;
 	static int strong_skill		= 1;
 }

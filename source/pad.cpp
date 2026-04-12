@@ -19,7 +19,7 @@ void Pad::Init()
 	{
 		button_state_[i].frame		= 0;
 		button_state_[i].time			= 0;
-		button_state_[i].pushing_time		= 0.f;
+		button_state_[i].pushing_time	= 0.f;
 		button_state_[i].releasing_time = 0.f;
 		button_state_[i].is_pressed = FALSE;
 	}
@@ -47,10 +47,7 @@ float Pad::GetPushingTimeButton(int pad_code)
 
 	if (button_state_[pad_code].is_pressed)
 	{
-		int now_time = GetNowCount();
-		pushing_time = now_time - button_state_[pad_code].time;
-		pushing_time = pushing_time / 1000.f;
-		button_state_[pad_code].pushing_time = pushing_time;
+		pushing_time = button_state_[pad_code].pushing_time;
 	}
 	return pushing_time;
 }
@@ -61,10 +58,7 @@ float Pad::GetReleaseTimeButton(int pad_code)
 
 	if (!button_state_[pad_code].is_pressed)
 	{
-		int now_time = GetNowCount();
-		release_time = now_time - button_state_[pad_code].time;
-		release_time = release_time / 1000.f;
-		button_state_[pad_code].releasing_time = release_time;
+		release_time = button_state_[pad_code].releasing_time;
 	}
 	return release_time;
 }
@@ -126,13 +120,24 @@ void Pad::ButtonUpdate(XINPUT_STATE pad)
 	for (int i = 0; i < kMaxPadButtonNum; i++)
 	{
 		bool now_is_pressed = (pad.Buttons[i] == 1);
-		
 		// “ü—Í‚ªXV‚³‚ê‚Ä‚¢‚½‚ç
 		if (now_is_pressed != button_state_[i].is_pressed)
 		{
 			button_state_[i].frame		= 0;
 			button_state_[i].time		= GetNowCount();
 			button_state_[i].is_pressed = now_is_pressed;
+		}
+
+		// Œo‰ßŽžŠÔ
+		float elapsed_time = (GetNowCount() - button_state_[i].time) / 1000.f;
+
+		if (button_state_[i].is_pressed)
+		{
+			button_state_[i].pushing_time = elapsed_time;
+		}
+		else
+		{
+			button_state_[i].releasing_time = elapsed_time;
 		}
 	}
 }

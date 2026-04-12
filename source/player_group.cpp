@@ -22,9 +22,10 @@ void PlayerGroup::Awake(VECTOR* camera_dir)
 {
 	current_player_head_pos_ = VectorAssistant::VGetZero();
 	camera_dir_ = camera_dir;
-	players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetAIInput(), "attacker"));
-	//players_.push_back(std::make_shared<Player>(&camera_->dir_, InputManager::GetInstance().GetAIInput2(),"healer"));
-	players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayerInput(), "defender"));
+	players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer1Input(), "attacker"));
+	players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer2Input(),"healer"));
+	players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer3Input(), "defender"));
+	players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer3Input(), "attacker2"));
 	//Init();
 }
 

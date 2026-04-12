@@ -33,6 +33,31 @@ void PlayerInput::Update()
 	}
 }
 
+const int PlayerInput::GetPlayerChangeNum(const int& current_player_id) const
+{
+	for (auto& input : inputs_)
+	{
+		auto pad = std::dynamic_pointer_cast<Pad>(input);
+		if (pad != nullptr)
+		{
+			if (pad->GetPushingTimeButton(PadConfig::change_player_up) == 0.f) { return -1; }
+			if (pad->GetPushingTimeButton(PadConfig::change_player_donw) == 0.f) { return 1; }
+		}
+		else
+		{
+			auto pc = std::dynamic_pointer_cast<PC>(input);
+			if (pc != nullptr)
+			{
+				if (pc->GetPushingTimeKey(KeyConfig::change_player1) == 0.f) { return 1 - current_player_id; }
+				if (pc->GetPushingTimeKey(KeyConfig::change_player2) == 0.f) { return 2 - current_player_id; }
+				if (pc->GetPushingTimeKey(KeyConfig::change_player3) == 0.f) { return 3 - current_player_id; }
+				if (pc->GetPushingTimeKey(KeyConfig::change_player4) == 0.f) { return 4 - current_player_id; }
+			}
+		}
+	}
+	return 0;
+}
+
 const bool PlayerInput::IsDash() const
 {
 	// ダッシュに対応されているボタンを見る
@@ -104,15 +129,11 @@ const bool PlayerInput::IsAvoid() const
 			auto pc = std::dynamic_pointer_cast<PC>(input);
 			if (pc != nullptr)
 			{
-
 				if (pc->GetReleaseTimeKey(KeyConfig::avoid) == 0.f)
 				{
 					pushing_time = pc->GetBeforePushingTimeKey(KeyConfig::avoid);
 
-					if (pushing_time <= kDashTiming)
-					{
-						return TRUE;
-					}
+					if (pushing_time <= kDashTiming){ return TRUE; }
 				}
 
 			}

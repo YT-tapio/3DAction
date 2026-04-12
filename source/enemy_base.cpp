@@ -96,7 +96,7 @@ void EnemyBase::OnHit(std::shared_ptr<IPhysicsEventReceiver> obj)
 	if (punch != nullptr)
 	{
 		animator_->PlayRequest("on_damage");
-		printfDx("‚¢‚Ä\n");
+		//printfDx("‚¢‚Ä\n");
 	}
 
 }

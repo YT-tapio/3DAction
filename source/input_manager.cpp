@@ -18,60 +18,45 @@ void InputManager::AddInput(std::weak_ptr<IInputChange> input)
 
 void InputManager::Init()
 {
-
+	for (auto& input_id : input_id_mp_)
+	{
+		input_id.second->Update();
+	}
 }
 
 void InputManager::Update()
 {
 
-	if (CheckHitKey(KEY_INPUT_6))
+	ChangeInput();
+
+	for (auto& input_id : input_id_mp_)
 	{
-		auto input = std::dynamic_pointer_cast<PlayerInput>(player_input_);
-		if (input == nullptr) { return; }
-		ai_input_ = player_input_;
-		player_input_ = std::make_shared<AIInput>();
-		
-		(input_changers_[0].lock())->InputChange(ai_input_);
-		(input_changers_[1].lock())->InputChange(player_input_);
+		input_id.second->Update();
 	}
-
-	if (CheckHitKey(KEY_INPUT_0))
-	{
-		auto input = std::dynamic_pointer_cast<PlayerInput>(ai_input_);
-		if (input == nullptr) { return; }
-		player_input_ = ai_input_;
-		ai_input_ = std::make_shared<AIInput>();
-		(input_changers_[0].lock())->InputChange(ai_input_);
-		(input_changers_[1].lock())->InputChange(player_input_);
-	}
-
-	player_input_->Update();
-	ai_input_->Update();
-	ai_input_2->Update();
-	ai_input_3->Update();
+	
 }
 
-const std::shared_ptr<const InputBase> InputManager::GetPlayerInput() const
+const std::shared_ptr<const InputBase> InputManager::GetPlayer1Input() const
 {
-	std::shared_ptr<const InputBase> input = player_input_;
+	std::shared_ptr<const InputBase> input = input_id_mp_.find(kPlayer1Id)->second;
 	return input;
 }
 
-const std::shared_ptr<const InputBase> InputManager::GetAIInput() const
+const std::shared_ptr<const InputBase> InputManager::GetPlayer2Input() const
 {
-	std::shared_ptr<const InputBase> input = ai_input_;
+	std::shared_ptr<const InputBase> input = input_id_mp_.find(kPlayer2Id)->second;
 	return input;
 }
 
-const std::shared_ptr<const InputBase> InputManager::GetAIInput2() const
+const std::shared_ptr<const InputBase> InputManager::GetPlayer3Input() const
 {
-	std::shared_ptr<const InputBase> input = ai_input_2;
+	std::shared_ptr<const InputBase> input = input_id_mp_.find(kPlayer3Id)->second;
 	return input;
 }
 
-const std::shared_ptr<const InputBase> InputManager::GetAIInput3() const
+const std::shared_ptr<const InputBase> InputManager::GetPlayer4Input() const
 {
-	std::shared_ptr<const InputBase> input = ai_input_3;
+	std::shared_ptr<const InputBase> input = input_id_mp_.find(kPlayer4Id)->second;
 	return input;
 }
 
@@ -82,9 +67,52 @@ InputManager::InputManager()
 
 void InputManager::Awake()
 {
+
+	input_id_mp_[kPlayer1Id] = std::make_shared<PlayerInput>();
+	input_id_mp_[kPlayer2Id] = std::make_shared<AIInput>();
+	input_id_mp_[kPlayer3Id] = std::make_shared<AIInput>();
+	input_id_mp_[kPlayer4Id] = std::make_shared<AIInput>();
+	/*
 	player_input_ = std::make_shared<PlayerInput>();
-	ai_input_ = std::make_shared<AIInput>();
+	player2_input_ = std::make_shared<AIInput>();
 	ai_input_2 = std::make_shared<AIInput>();
 	ai_input_3 = std::make_shared<AIInput>();
-	changers_num_ = 0;
+
+	*/
+	changers_num_ = 1;
+}
+
+void InputManager::ChangeInput()
+{
+
+	for (auto& input_id : input_id_mp_)
+	{
+		auto player_input = std::dynamic_pointer_cast<PlayerInput>(input_id.second);
+		if (player_input == nullptr) { continue; }
+		// •Ï‰»—Ê
+		int num = input_id.first;
+		int change_num = player_input->GetPlayerChangeNum(num);
+		if (change_num == 0) { return; }	// •Ï‰»‚È‚µ‚È‚çI—¹
+		int change_player_id = num + change_num;
+
+		// ¡‚Í—v‘f‚Ê‚¯‚·‚é‰Â”\«‚ª‚ ‚é‚Ì‚Å‚»‚ê‚Ì‰ü‘P‚ğ‚µ‚Ü‚µ‚å‚¤
+
+		if (change_player_id < kPlayer1Id)
+		{
+			change_player_id = changers_num_ - 1;
+		}
+
+		if (change_player_id > changers_num_ - 1)
+		{
+			change_player_id = kPlayer1Id;
+		}
+
+		auto changer_input = input_id_mp_.find(change_player_id)->second;			//æ‚Éplayer2‚Ìî•ñ‚ğ•Û‘¶
+		input_id_mp_.find(change_player_id)->second = input_id_mp_.find(num)->second;// player1‚Ìî•ñ‚ğplayer2‚É‘ã“ü
+		input_id_mp_.find(num)->second = changer_input;		// •Û‘¶‚µ‚Ä‚¢‚½‚à‚Ì‚ğ“ü‚ê‚é
+
+		(input_changers_[num].lock())->InputChange(input_id_mp_.find(num)->second);
+		(input_changers_[change_player_id].lock())->InputChange(input_id_mp_.find(change_player_id)->second);
+		return;
+	}
 }

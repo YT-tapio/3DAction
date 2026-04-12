@@ -11,6 +11,7 @@
 #include"rigid_body.h"
 #include"FPS.h"
 #include"vector_assistant.h"
+#include"radian_assistant.h"
 #include"Debug.h"
 #include"color.h"
 #include"physics.h"
@@ -45,12 +46,13 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	vel_		= VectorAssistant::VGetZero();
 	dir_		= VectorAssistant::VGetZero();
 	attack_target_pos_ = VectorAssistant::VGetZero();
-	pos_		= VGet(0.f, -2.f,10.f);
+	pos_		= VectorAssistant::VGetZero();
+	rot_ = VectorAssistant::VGetZero();
 	VECTOR head_pos = VAdd(pos_, VGet(0.f, 10.f, 0.f));
 	head_pos_ = head_pos;
 
-	skill1_name_ = SkillName::kNothing;
-	skill2_name_ = SkillName::kNothing;
+	skill1_id_ = SkillName::kNothing;
+	skill2_id_ = SkillName::kNothing;
 
 	scale_ = VectorAssistant::VGetSame(0.05f);
 	handle_ = -1;
@@ -103,6 +105,8 @@ void Player::Init()
 	// setterÇ÷ÇÃìoò^
 	ObjectSetter::GetInstance().AddResource(handle_, &pos_,&rot_,&scale_);
 	
+	target_rot_y_ = rot_.y;
+
 	animator_ = std::make_shared<AnimatorPlayer>(handle_, mine);
 	animator_->Init();
 	my_area_->Init();
@@ -207,6 +211,10 @@ void Player::Debug()
 	Debug::GetInstance().Add();
 	Debug::GetInstance().DrawVector(dir_);
 
+	DrawString(0, Debug::GetInstance().GetNowLineSize(), "rot", Color::kWhite);
+	Debug::GetInstance().Add();
+	Debug::GetInstance().DrawVector(rot_);
+
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "vel", Color::kWhite);
 	Debug::GetInstance().Add();
 	Debug::GetInstance().DrawVector(vel_);
@@ -214,7 +222,16 @@ void Player::Debug()
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "camera_dir", Color::kWhite);
 	Debug::GetInstance().Add();
 	Debug::GetInstance().DrawVector(*camera_dir_);
-
+	
+	if (is_ground_)
+	{
+		DrawString(0, Debug::GetInstance().GetNowLineSize(), "íÖín", Color::kWhite);
+	}
+	else
+	{
+		DrawString(0, Debug::GetInstance().GetNowLineSize(), "íÖínÇ∂Ç·Ç»Ç¢", Color::kWhite);
+	}
+	Debug::GetInstance().Add();
 	if (is_invincible_)
 	{
 		DrawString(0, Debug::GetInstance().GetNowLineSize(), "ñ≥ìG", Color::kWhite);
@@ -258,10 +275,18 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 		
 		// èâä˙pos
 		pos_ = CSVFileAssistant::GetVectorOfCSVFile(ss, data);
-
+		VECTOR rot = CSVFileAssistant::GetVectorOfCSVFile(ss, data);
+		
+		if (TRUE)
+		{
+			rot_.x = RadianAssistant::kOneRad * rot.x;
+			rot_.y = RadianAssistant::kOneRad * rot.y;
+			rot_.z = RadianAssistant::kOneRad * rot.z;
+		}
+		
 		// skill
-		skill1_name_ = CSVFileAssistant::GetIntOfCSVFile(ss, data);
-		skill2_name_ = CSVFileAssistant::GetIntOfCSVFile(ss, data);
+		skill1_id_ = CSVFileAssistant::GetIntOfCSVFile(ss, data);
+		skill2_id_ = CSVFileAssistant::GetIntOfCSVFile(ss, data);
 		
 		job = CSVFileAssistant::GetStringOfCSVFile(ss, data);
 
@@ -275,8 +300,8 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 void Player::MakeSkill(std::weak_ptr<Player> owner)
 {
 
-	auto aa = SkillLoader::GetInstance().SkillLoad(skill1_name_, name_, owner);
-	auto bb = SkillLoader::GetInstance().SkillLoad(skill2_name_, name_, owner);
+	auto aa = SkillLoader::GetInstance().SkillLoad(skill1_id_, name_, owner);
+	auto bb = SkillLoader::GetInstance().SkillLoad(skill2_id_, name_, owner);
 	skill_ = aa;
 	second_skill_ = bb;
 	if (skill_ == nullptr)
@@ -337,10 +362,9 @@ void Player::Move()
 	vel_ = VAdd(vel_, VGet(0.f, -fall_speed_, 0.f));
 	vel_ = VScale(vel_, (FPS::GetInstance().GetDeltaTime() * 60.f));
 	
-	if (VSize(vel_) > 0.f)
+	if (VSize(dir) > 0.f)
 	{ 
 		dir_ = VNorm(vel_);
-		// target_rot_y_ = atan2f(-dir_.x, (-dir_.z));
 		target_rot_y_ = VectorAssistant::VGetTan(VectorAssistant::VGetReverce(dir_));
 	}
 	// printfDx("x : %.2f,y : %.2f,z : %.2f\n", vel_.x, vel_.y, vel_.z);

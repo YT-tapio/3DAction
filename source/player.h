@@ -98,8 +98,8 @@ private:
 	VECTOR attack_target_pos_;
 
 	std::string name_;
-	int skill1_name_;
-	int skill2_name_;
+	int skill1_id_;
+	int skill2_id_;
 
 	float target_rot_y_;
 	float fall_speed_;

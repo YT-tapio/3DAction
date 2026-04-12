@@ -18,6 +18,13 @@ public:
 
 	void Update() override;
 
+	/// <summary>
+	/// •Ï‰»—Ê‚ğ•Ô‚·
+	/// </summary>
+	/// <param name="current_player_id">¡‚»‚¤‚³‚µ‚Ä‚¢‚éplayer‚Ìid</param>
+	/// <returns></returns>
+	const int GetPlayerChangeNum(const int& current_player_id) const;
+
 	const bool IsDash() const override;
 
 	const bool IsPunch() const override;

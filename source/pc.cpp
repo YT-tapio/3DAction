@@ -56,10 +56,7 @@ float PC::GetPushingTimeKey(int key_code)
 	float time = -1.f;
 	if (key_state_[key_code].is_pressed) 
 	{ 
-		int now_time = GetNowCount();
-		time = now_time - key_state_[key_code].time;
-		time = time / 1000.f;
-		key_state_[key_code].pushing_time = time;
+		time = key_state_[key_code].pushing_time;
 	}
 	return time;
 }
@@ -69,10 +66,7 @@ float PC::GetPushingTimeMouseButton(int mouse_code)
 	float time = -1.f;
 	if (mouse_state_[mouse_code].is_pressed)
 	{
-		int now_time = GetNowCount();
-		time = now_time - mouse_state_[mouse_code].time;
-		time = time / 1000.f;
-		mouse_state_[mouse_code].pushing_time = time;
+		time = key_state_[mouse_code].pushing_time;
 	}
 
 	return time;
@@ -83,10 +77,7 @@ float PC::GetReleaseTimeKey(int key_code)
 	float time = -1.f;
 	if (!key_state_[key_code].is_pressed)
 	{
-		int now_time = GetNowCount();
-		time = now_time - key_state_[key_code].time;
-		time = time / 1000.f;
-		key_state_[key_code].releasing_time = time;
+		time = key_state_[key_code].releasing_time;
 	}
 	return time;
 }
@@ -96,10 +87,7 @@ float PC::GetReleaseTimeMouseButton(int mouse_code)
 	float time = -1.f;
 	if (!mouse_state_[mouse_code].is_pressed)
 	{
-		int now_time = GetNowCount();
-		time = now_time - mouse_state_[mouse_code].time;
-		time = time / 1000;
-		mouse_state_[mouse_code].releasing_time = time;
+		time = mouse_state_[mouse_code].releasing_time;
 	}
 
 	return time;
@@ -160,6 +148,16 @@ void PC::UpdateKey()
 			key_state_[i].is_pressed = now_is_pressed;
 			key_state_[i].time = GetNowCount();//タイマーやフレームの更新
 		}
+
+		float elapsed_time = (GetNowCount() - key_state_[i].time) / 1000.f;
+		if (key_state_[i].is_pressed)
+		{
+			key_state_[i].pushing_time = elapsed_time;
+		}
+		else
+		{
+			key_state_[i].releasing_time = elapsed_time;
+		}
 	}
 }
 
@@ -175,6 +173,16 @@ void PC::UpdateMouseButton()
 			mouse_state_[i].time		= GetNowCount();
 			mouse_state_[i].frame	= 0;
 			mouse_state_[i].is_pressed = now_is_pressed;
+		}
+
+		float elapsed_time = (GetNowCount() - mouse_state_[i].time) / 1000.f;
+		if (mouse_state_[i].is_pressed)
+		{
+			mouse_state_[i].pushing_time = elapsed_time;
+		}
+		else
+		{
+			mouse_state_[i].releasing_time = elapsed_time;
 		}
 	}
 }

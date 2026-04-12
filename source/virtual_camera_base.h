@@ -24,7 +24,7 @@ public:
 
 protected:
 
-	VECTOR* pos_;						// 自分の位置
+	VECTOR* pos_;							// 自分の位置
 	VECTOR* target_pos_;				// 見る位置
 	VECTOR vel_;						// 自分の移動量
 	VECTOR target_vel_;	// ターゲットの移動量

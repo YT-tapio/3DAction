@@ -103,7 +103,7 @@ std::shared_ptr<SkillBase> SkillLoader::MakeSkill(const int skill_name, std::ifs
 
 		break;
 	}
-	printfDx("‚Æ‚Á‚Ä‚¢‚é\n");
+	//printfDx("‚Æ‚Á‚Ä‚¢‚é\n");
 
 	return skill;
 

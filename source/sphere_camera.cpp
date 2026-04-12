@@ -7,13 +7,15 @@
 #include"radian_assistant.h"
 #include"vector_assistant.h"
 #include"FPS.h"
+#include"lerp.h"
 
 SphereCamera::SphereCamera(VECTOR* center_pos,VECTOR* pos, VECTOR* target_pos)
 	:VirtualCameraBase(pos,target_pos)
 {
-	center_pos_ = center_pos;
-	rotation_ = VectorAssistant::VGetZero();
-	input_ = InputManager::GetInstance().GetPlayerInput();
+	center_pos_	= center_pos;
+	future_pos_	= VectorAssistant::VGetZero();
+	rotation_		= VectorAssistant::VGetZero();
+	input_ = InputManager::GetInstance().GetPlayer1Input();
 	target_to_camera_dist_size_ = 0.f;
 }
 
@@ -41,7 +43,7 @@ void SphereCamera::Update()
 {
 	vel_ = VectorAssistant::VGetZero();
 	target_vel_ = VectorAssistant::VGetZero();
-	//MakeYawPitch();
+	
 	// target_pos‚ğ’†S‚Æ‚µ‰ñ“]‚ğ‚³‚¹‚é
 	VECTOR input_value = VectorAssistant::VGetZero();
 	VECTOR target_to_camera_dist = VectorAssistant::VGetZero();
@@ -55,7 +57,7 @@ void SphereCamera::Update()
 
 	pitch_	+= (pitch_value * FPS::GetInstance().GetDeltaTime());
 	yaw_	+= (yaw_value * FPS::GetInstance().GetDeltaTime());
-	
+
 	//yaw‚Ì§ŒÀ‚ğ‚·‚é
 	// yaw‚Æpitch‚ÌˆÊ’u‚ğo‚µ‚Ä‚İ‚é
 	float pitch_size = 0.f;
@@ -66,7 +68,9 @@ void SphereCamera::Update()
 	target_to_camera_dist.x = (cosf(pitch_) * pitch_size);
 	target_to_camera_dist.z = (sinf(pitch_) * pitch_size);
 
-	next_pos = VAdd(*target_pos_, target_to_camera_dist);
+	future_pos_ = VAdd(*target_pos_, target_to_camera_dist);
+
+	next_pos = Lerp::DampV(*pos_, future_pos_, 0.2);
 
 	vel_ = VAdd(vel_, VSub(next_pos, *pos_));
 	if (!VectorAssistant::IsSamePos(*center_pos_, *target_pos_))

@@ -77,32 +77,32 @@ void Game::Update()
 
 
 	
-	if (CheckHitKey(KEY_INPUT_0)) 
+	if (CheckHitKey(KEY_INPUT_5)) 
 	{ 
 		EffectManager::GetInstance().Play(EffectID::test);
 	}
 
-	if (CheckHitKey(KEY_INPUT_1))
+	if (CheckHitKey(KEY_INPUT_6))
 	{
 		EffectManager::GetInstance().Play(EffectID::test2);
 	}
 
-	if (CheckHitKey(KEY_INPUT_2))
+	if (CheckHitKey(KEY_INPUT_7))
 	{
 		EffectManager::GetInstance().Stop(EffectID::test);
 	}
 	
-	if (CheckHitKey(KEY_INPUT_3))
+	if (CheckHitKey(KEY_INPUT_8))
 	{
 		EffectManager::GetInstance().RePlay(EffectID::test);
 	}
 
-	if (CheckHitKey(KEY_INPUT_4))
+	if (CheckHitKey(KEY_INPUT_9))
 	{
 		EffectManager::GetInstance().End(EffectID::test,EffectEndState::kMoment);
 	}
 
-	if (CheckHitKey(KEY_INPUT_5))
+	if (CheckHitKey(KEY_INPUT_0))
 	{
 		EffectManager::GetInstance().End(EffectID::test, EffectEndState::kTotal);
 	}
