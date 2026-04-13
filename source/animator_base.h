@@ -6,7 +6,7 @@ class AnimatorBase
 {
 public:
 
-	AnimatorBase(const char* data_file_path,int handle);
+	AnimatorBase(const std::string data_file_path,int handle);
 
 	virtual ~AnimatorBase();
 
@@ -25,17 +25,19 @@ public:
 
 	const float GetTotalTime(std::string name) const;
 
+	const float GetRatio(std::string name) const;
+
 	const std::string GetNowAnimName() const;
 
 protected:
 
 	virtual void ChangeAnimation();
 
-	void LoadFile(const char* file_path);
+	void LoadFile(const std::string file_path);
 
 	void ResetRequest();
 
-	const char* kDataFilePath = "";
+	std::string kDataFilePath;
 
 	const std::string kNothing = "nothing";
 

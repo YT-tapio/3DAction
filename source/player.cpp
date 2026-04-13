@@ -107,7 +107,7 @@ void Player::Init()
 	
 	target_rot_y_ = rot_.y;
 
-	animator_ = std::make_shared<AnimatorPlayer>(handle_, mine);
+	animator_ = std::make_shared<AnimatorPlayer>(handle_, mine, name_);
 	animator_->Init();
 	my_area_->Init();
 

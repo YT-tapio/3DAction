@@ -50,7 +50,7 @@ void EnemyBase::Init()
 	UpdateBone();
 	punch_ = std::make_shared<Punch>(std::dynamic_pointer_cast<ObjectBase>(mine), &right_hand_pos_, 
 		std::make_shared<RigidBody>(std::make_shared<Sphere>(1.5f, VGet(0.f, 0.f, 0.f)), &right_hand_pos_, FALSE, TRUE, 1.f,1.f));
-	animator_ = std::make_shared<AnimatorEnemy>(handle_, std::dynamic_pointer_cast<EnemyBase>(mine));
+	animator_ = std::make_shared<AnimatorEnemy>(handle_, std::dynamic_pointer_cast<EnemyBase>(mine),"enemy");
 	animator_->Init();
 	punch_->Init();
 }

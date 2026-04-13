@@ -8,11 +8,11 @@
 #include"load_animation.h"
 #include"FPS.h"
 
-AnimatorBase::AnimatorBase(const char* data_file_path,int handle)
+AnimatorBase::AnimatorBase(const std::string data_file_path, int handle)
 {
-	kDataFilePath = data_file_path;
-	now_anim_name_ = "nothing";
-	before_anim_name_ = "nothing";
+	kDataFilePath		= "data/csv/animation/" + data_file_path +"_animation.csv";
+	now_anim_name_		= "nothing";
+	before_anim_name_	= "nothing";
 	handle_ = handle;
 	is_end_ = FALSE;
 }
@@ -103,7 +103,7 @@ void AnimatorBase::PlayRequest(std::string name)
 	request_names_.push_back(name);
 }
 
-void AnimatorBase::LoadFile(const char* file_path)
+void AnimatorBase::LoadFile(const std::string file_path)
 {
 	std::ifstream file(file_path);
 	std::string line;
@@ -194,6 +194,17 @@ const float AnimatorBase::GetTotalTime(std::string name) const
 	}
 
 	return total_time;
+}
+
+const float AnimatorBase::GetRatio(std::string name) const
+{
+	float ratio = -1.f;
+	auto data = animation_datas_.find(name);
+
+	if (data == animation_datas_.end()) { return ratio; }
+
+	ratio = data->second.play_time / data->second.total_time;
+	return ratio;
 }
 
 const std::string AnimatorBase::GetNowAnimName() const

@@ -8,8 +8,8 @@
 #include"animator_enemy.h"
 #include"enemy_base.h"
 
-AnimatorEnemy::AnimatorEnemy(int handle,  std::shared_ptr<EnemyBase> enemy)
-	:AnimatorBase("data/csv/animation/enemy/enemy_animation.csv",handle)
+AnimatorEnemy::AnimatorEnemy(int handle,  std::shared_ptr<EnemyBase> enemy,std::string data_name)
+	:AnimatorBase("enemy/" + data_name,handle)
 {
 	enemy_ = enemy;
 }

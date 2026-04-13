@@ -10,11 +10,11 @@
 #include"load_animation.h"
 #include"fps.h"
 
-AnimatorPlayer::AnimatorPlayer(int handle, std::shared_ptr<Player> player)
-	: AnimatorBase("data/csv/animation/player/player_animation.csv",handle)
+AnimatorPlayer::AnimatorPlayer(int handle, std::shared_ptr<Player> player, std::string name)
+	: AnimatorBase("player/" + name, handle)
 	, player_(player)
 {
-
+	
 }
 
 AnimatorPlayer::~AnimatorPlayer()

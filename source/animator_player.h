@@ -6,7 +6,7 @@ class AnimatorPlayer : public AnimatorBase
 {
 public:
 
-	AnimatorPlayer(int handle, std::shared_ptr<Player> player);
+	AnimatorPlayer(int handle, std::shared_ptr<Player> player,std::string name);
 
 	~AnimatorPlayer() override;
 
@@ -17,7 +17,7 @@ protected:
 private:
 
 	const std::string kIdle			= "idle";
-	const std::string kJogging	= "jogging";
+	const std::string kJogging		= "jogging";
 	const std::string kRun			= "run";
 	const std::string kPunch		= "punch";
 
