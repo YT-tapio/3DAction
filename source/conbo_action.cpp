@@ -12,6 +12,8 @@ ConboAction::ConboAction(std::weak_ptr<ObjectBase>owner, std::unordered_map<int,
 	: BehaviorBase(owner)
 	, conbos_(conbos)
 	, current_conbo_(0)
+	, go_next_(FALSE)
+	, is_active_(FALSE)
 {
 
 }
@@ -24,11 +26,12 @@ ConboAction::~ConboAction()
 void ConboAction::Init()
 {
 	current_conbo_ = 0;
+	go_next_ = FALSE;
 }
 
 void ConboAction::Update()
 {
-
+	conbos_[current_conbo_]->Update();
 }
 
 void ConboAction::Draw()
@@ -39,4 +42,16 @@ void ConboAction::Draw()
 void ConboAction::Debug()
 {
 
+}
+
+void ConboAction::GoNext()
+{
+	go_next_ = TRUE;
+}
+
+const bool ConboAction::CheckNextConboReady() const
+{
+	auto current_conbo = conbos_.find(current_conbo_);
+	if (current_conbo == conbos_.end()) { return FALSE; }
+	return current_conbo->second->CheckNextReady();
 }

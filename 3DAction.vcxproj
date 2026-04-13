@@ -149,6 +149,7 @@
     <ClCompile Include="source\check_my_area.cpp" />
     <ClCompile Include="source\conbo.cpp" />
     <ClCompile Include="source\conbo_action.cpp" />
+    <ClCompile Include="source\conbo_skill.cpp" />
     <ClCompile Include="source\csv_file_assistant.cpp" />
     <ClCompile Include="source\csv_loader.cpp" />
     <ClCompile Include="source\effect_base.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="source\avoid_skill.h" />
     <ClInclude Include="source\conbo.h" />
     <ClInclude Include="source\conbo_action.h" />
+    <ClInclude Include="source\conbo_skill.h" />
     <ClInclude Include="source\csv_file_assistant.h" />
     <ClInclude Include="source\csv_loader.h" />
     <ClInclude Include="source\effect_base.h" />

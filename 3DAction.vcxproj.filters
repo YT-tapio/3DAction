@@ -375,6 +375,9 @@
     <ClCompile Include="source\conbo_action.cpp">
       <Filter>ソース ファイル\behavior</Filter>
     </ClCompile>
+    <ClCompile Include="source\conbo_skill.cpp">
+      <Filter>ソース ファイル\skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -640,6 +643,9 @@
     </ClInclude>
     <ClInclude Include="source\conbo_action.h">
       <Filter>ソース ファイル\behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\conbo_skill.h">
+      <Filter>ソース ファイル\skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
