@@ -19,8 +19,9 @@
 #include"vector_assistant.h"
 #include"FPS.h"
 
-PunchSkill::PunchSkill(std::weak_ptr<Player> owner,VECTOR* pos,const float r,const float detection_radius)
-	: SkillBase(owner,std::make_shared<Punch>(owner,pos,std::make_shared<RigidBody>(std::make_shared<Sphere>(r,VGet(0,0,0)), pos, FALSE, TRUE, 1.f,1.f)))
+PunchSkill::PunchSkill(std::weak_ptr<Player> owner,VECTOR* pos,std::string my_anim_name,const float r, float min_coll_ratio, float max_coll_ratio,const float detection_radius)
+	: SkillBase(owner,std::make_shared<Punch>(owner,pos,my_anim_name,min_coll_ratio,max_coll_ratio, std::make_shared<RigidBody>(std::make_shared<Sphere>(r, VGet(0, 0, 0)), pos, FALSE, TRUE, 1.f, 1.f)))
+	, my_anim_name_(my_anim_name)
 {
 	target_dir_ = VectorAssistant::VGetZero();
 	target_pos_ = VectorAssistant::VGetZero();
@@ -50,7 +51,7 @@ void PunchSkill::Update()
 	if (is_active_)
 	{
 		// skillが終わる条件
-		if (owner->GetAnimator()->GetNowAnimName() != "punch")
+		if (owner->GetAnimator()->GetNowAnimName() != my_anim_name_)
 		{
 			is_active_ = FALSE;
 			owner->SetIsStop(FALSE);
@@ -64,7 +65,7 @@ void PunchSkill::Update()
 		{
 			is_active_ = TRUE;
 			// punchさせる
-			owner->GetAnimator()->PlayRequest("punch");	//パンチのanimationを再生をお願いする
+			owner->GetAnimator()->PlayRequest(my_anim_name_);	//パンチのanimationを再生をお願いする
 			
 			// この瞬間にplayerをうごかす
 			auto owner_area_object = owner->GetMyAreaObject();
@@ -148,7 +149,7 @@ bool PunchSkill::CheckIsPunch(std::shared_ptr<Player> owner)
 	if (owner->GetIsStop())										{ return FALSE; }
 	if (!owner->GetIsGround())									{ return FALSE; }	// 着地していない
 	if (owner->GetIsInvincible())								{ return FALSE; }
-	if (owner->GetAnimator()->GetNowAnimName() == "punch")		{ return FALSE; }	// パンチじゃない
+	if (owner->GetAnimator()->GetNowAnimName() == my_anim_name_)		{ return FALSE; }	// パンチじゃない
 	if (!owner->GetInput()->IsNormalSkill())							{ return FALSE; }	// 入力されているか
 
 	return TRUE;

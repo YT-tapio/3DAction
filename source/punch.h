@@ -8,13 +8,16 @@ class Punch : public AttackBase
 {
 public:
 
-	Punch(std::weak_ptr<ObjectBase> owner,VECTOR* pos,std::shared_ptr<RigidBody> body);
+	Punch(std::weak_ptr<ObjectBase> owner,VECTOR* pos, std::string my_anim_name,
+		float min_coll_ratio, float max_coll_ratio,std::shared_ptr<RigidBody> body);
 
 	~Punch()override;
 
 	void Init() override;
 
 	void Update() override;
+	
+	void Exit() override;
 
 	void Debug() override;
 
@@ -24,4 +27,9 @@ private:
 
 	VECTOR* pos_;
 
+	std::string my_anim_name_;
+
+	// 当たり判定のタイミング
+	float min_coll_ratio_;
+	float max_coll_ratio_;
 };

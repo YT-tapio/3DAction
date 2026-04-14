@@ -172,12 +172,10 @@ const float AnimatorBase::GetPlayTime(std::string name) const
 {
 	float play_time = -1.f;
 
-	for (const auto& animation : animation_datas_)
-	{
-		if (name != animation.first) { continue; }
-		play_time = animation.second.play_time;
-		break;
-	}
+	auto data = animation_datas_.find(name);
+	if (data == animation_datas_.end()) { return play_time; }
+
+	play_time = data->second.play_time;
 
 	return play_time;
 }
@@ -186,13 +184,10 @@ const float AnimatorBase::GetTotalTime(std::string name) const
 {
 	float total_time = -1.f;
 
-	for (const auto& animation : animation_datas_)
-	{
-		if (name != animation.first) { continue; }
-		total_time = animation.second.total_time;
-		break;
-	}
+	auto data = animation_datas_.find(name);
+	if (data == animation_datas_.end()) { return total_time; }
 
+	total_time = data->second.total_time;
 	return total_time;
 }
 
@@ -202,7 +197,7 @@ const float AnimatorBase::GetRatio(std::string name) const
 	auto data = animation_datas_.find(name);
 
 	if (data == animation_datas_.end()) { return ratio; }
-
+	if (data->second.total_time == 0.f) { return ratio; }
 	ratio = data->second.play_time / data->second.total_time;
 	return ratio;
 }

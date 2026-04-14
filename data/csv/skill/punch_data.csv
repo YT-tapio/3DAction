@@ -1,5 +1,5 @@
-﻿name,collider_radius,detection_radius
-attacker,1.5,
-healer,1.5,
-defender,1.5,
-attacker2,1.5,
+﻿name,right,animation_name,min_coll_ratio,max_coll_ratio,collider_radius
+attacker,1,punch,0.3,0.7,1.5
+healer,1,punch,0.3,0.7,1.5
+defender,1,punch,0.3,0.7,1.5
+attacker2,1,punch,0.3,0.7,1.5

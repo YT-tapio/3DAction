@@ -11,8 +11,13 @@
 #include"player.h"
 #include"object_base.h"
 #include"animator_base.h"
-Punch::Punch(std::weak_ptr<ObjectBase> owner, VECTOR* pos,std::shared_ptr<RigidBody> body)
+
+Punch::Punch(std::weak_ptr<ObjectBase> owner, VECTOR* pos, 
+	std::string my_anim_name, float min_coll_ratio, float max_coll_ratio, std::shared_ptr<RigidBody> body)
 	: AttackBase(owner)
+	, my_anim_name_(my_anim_name)
+	, min_coll_ratio_(min_coll_ratio)
+	, max_coll_ratio_(max_coll_ratio)
 {
 	pos_ = pos;
 	rigid_body_ = body;
@@ -43,10 +48,15 @@ void Punch::Update()
 	if (owner_animator == nullptr) { return; }
 	// “–‚½‚è”»’è‚ð‚Ìactive‚ð‚µ‚Ü‚·
 	
-	float punch_play_time = owner_animator->GetPlayTime("punch");
+	float punch_play_time = owner_animator->GetRatio(my_anim_name_);
 	//printfDx("%.2f\n", punch_play_time);
-	if (punch_play_time > 30.f && punch_play_time < 50.f) { rigid_body_->Active(); }
+	if (punch_play_time > min_coll_ratio_ && punch_play_time < max_coll_ratio_) { rigid_body_->Active(); }
 
+}
+
+void Punch::Exit()
+{
+	rigid_body_->NotActive();
 }
 
 void Punch::Debug()

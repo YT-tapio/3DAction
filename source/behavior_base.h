@@ -14,6 +14,8 @@ public:
 
 	virtual void Update();
 
+	virtual void Exit();
+
 	virtual void Draw();
 
 	virtual void Debug();

@@ -42,7 +42,8 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	, name_(name)
 {
 	camera_dir_ = camera_dir;
-	hand_pos_ = VectorAssistant::VGetZero();
+	right_hand_pos_ = VectorAssistant::VGetZero();
+	left_hand_pos_ = VectorAssistant::VGetZero();
 	vel_		= VectorAssistant::VGetZero();
 	dir_		= VectorAssistant::VGetZero();
 	attack_target_pos_ = VectorAssistant::VGetZero();
@@ -381,12 +382,21 @@ void Player::Gravity()
 
 void Player::UpdateBone()
 {
-	int hand_bone_num = 0;
-	const TCHAR* hand_bone_path = "mixamorig:RightHand";
-	hand_bone_num = MV1SearchFrame(handle_, hand_bone_path);
-	MATRIX hand_mat = MV1GetFrameLocalWorldMatrix(handle_, hand_bone_num);
-	VECTOR hand_pos = VectorAssistant::VGetPositionFromMatrix(hand_mat);
-	hand_pos_ = hand_pos;
+	int right_hand_bone_num = 0;
+	int left_hand_bone_num = 0;
+	const TCHAR* right_hand_bone_path	= "mixamorig:RightHand";
+	const TCHAR* left_hand_bone_path		= "mixamorig:LeftHand";
+	//bone‚Ìid‚ðŽæ“¾
+	right_hand_bone_num	= MV1SearchFrame(handle_, right_hand_bone_path);
+	left_hand_bone_num		= MV1SearchFrame(handle_, left_hand_bone_path);
+	//matrix‚ðŽæ“¾
+	MATRIX right_hand_mat = MV1GetFrameLocalWorldMatrix(handle_, right_hand_bone_num);
+	MATRIX left_hand_mat = MV1GetFrameLocalWorldMatrix(handle_, left_hand_bone_num);
+	//pos‚ðŽæ“¾
+	VECTOR right_hand_pos = VectorAssistant::VGetPositionFromMatrix(right_hand_mat);
+	VECTOR left_hand_pos = VectorAssistant::VGetPositionFromMatrix(left_hand_mat);
+	right_hand_pos_ = right_hand_pos;
+	left_hand_pos_ = left_hand_pos;
 }
 
 void Player::DecideAttackTarget()
@@ -499,9 +509,15 @@ VECTOR* Player::GetHeadPos()
 	return &head_pos_;
 }
 
-VECTOR* Player::GetHandPos()
+VECTOR* Player::GetRightHandPos()
 {
-	return &hand_pos_;
+	return &right_hand_pos_;
+}
+
+
+VECTOR* Player::GetLeftHandPos()
+{
+	return &left_hand_pos_;
 }
 
 VECTOR* Player::GetPosPtr()

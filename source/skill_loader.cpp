@@ -3,16 +3,24 @@
 #include<vector>
 #include<fstream>
 #include<sstream>
+#include<unordered_map>
 #include"DxLib.h"
 #include"skill_loader.h"
 #include"skill_base.h"
 #include"punch_skill.h"
+#include"punch.h"
 #include"avoid_skill.h"
 #include"area_heal_skill.h"
 #include"skill_name.h"
 #include"player.h"
 #include"sphere.h"
 #include"vector_assistant.h"
+#include"csv_file_assistant.h"
+#include"conbo_action.h"
+#include"conbo.h"
+#include"conbo_skill.h"
+#include"rigid_body.h"
+#include"sphere.h"
 
 SkillLoader::SkillLoader()
 {
@@ -71,6 +79,13 @@ void SkillLoader::DecideFile(const int skill_name,std::string& file_path, int& s
 		file_path = file_path + "area_heal";
 		skip_line_num = 1;
 		break;
+
+	case SkillName::kConboAttack:
+		// îÕàÕâÒïú
+		file_path = file_path + "conbo_attack";
+		skip_line_num = 1;
+		break;
+
 	}
 	file_path = file_path + "_data.csv";
 
@@ -102,6 +117,12 @@ std::shared_ptr<SkillBase> SkillLoader::MakeSkill(const int skill_name, std::ifs
 		skill = MakeAreaHealSkill(file, line, name,owner);
 
 		break;
+
+	case SkillName::kConboAttack:
+
+		skill = MakeConboAttackSkill(file, line, name, owner);
+
+		break;
 	}
 	//printfDx("Ç∆Ç¡ÇƒÇ¢ÇÈ\n");
 
@@ -120,13 +141,23 @@ std::shared_ptr<SkillBase> SkillLoader::MakePunchSkill(std::ifstream& file, std:
 
 		std::getline(ss, data, ',');
 		if (data != name) { continue; }
-
+		bool is_right = CSVFileAssistant::GetBoolOfCSVFile(ss, data);
+		std::string anim_name = CSVFileAssistant::GetStringOfCSVFile(ss, data);
+		float min_coll_ratio = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+		float max_coll_ratio = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		float radius = 0.f;
-
-		std::getline(ss, data, ',');
-		radius = stof(data);
+		radius = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		auto owner_ptr = owner.lock();
-		skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetHandPos(), radius, owner_ptr->GetDetectionRadius());
+
+		// right
+		if (is_right)
+		{
+			skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetRightHandPos(), anim_name, radius, min_coll_ratio, max_coll_ratio, owner_ptr->GetDetectionRadius());
+		}
+		else
+		{
+			skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetLeftHandPos(), anim_name, radius, min_coll_ratio, max_coll_ratio, owner_ptr->GetDetectionRadius());
+		}
 
 		break;
 	}
@@ -170,6 +201,82 @@ std::shared_ptr<SkillBase>SkillLoader::MakeAreaHealSkill(std::ifstream& file, st
 		skill = std::make_shared<AreaHealSkill>(owner, owner_ptr->GetPosPtr(), radius);
 		
 		break;
+	}
+
+	return skill;
+}
+
+std::shared_ptr<SkillBase>SkillLoader::MakeConboAttackSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner)
+{
+	const std::string kSame = "same";
+	std::shared_ptr<SkillBase> skill = nullptr;
+	// targetÇ™Ç†ÇÈÇ©Ç«Ç§Ç©
+	bool is_target = FALSE;
+	int conbo_num = 0;	// ÉRÉìÉ{êî
+	std::unordered_map<int, std::shared_ptr<Conbo>> conbos;
+
+	
+
+	while (std::getline(file, line))
+	{
+		std::stringstream ss(line);
+		std::string data;			// csvÇ©ÇÁÇÃï∂éöóÒÇÇ‡ÇÁÇ§
+		std::string name_data = CSVFileAssistant::GetStringOfCSVFile(ss, data);
+		if(is_target)
+		{
+			if (name_data != kSame) { break; }
+		}
+		else
+		{
+			if (name_data != name) { continue; }
+			is_target = TRUE;
+		}
+		
+		int skill_id = CSVFileAssistant::GetIntOfCSVFile(ss, data);
+		std::shared_ptr<Conbo> conbo = nullptr;
+		switch (skill_id)
+		{
+		case SkillName::kPunch:
+
+			bool is_right						= CSVFileAssistant::GetIntOfCSVFile(ss,data);
+			std::string anim_name		= CSVFileAssistant::GetStringOfCSVFile(ss, data);
+			float min_ratio_next_conbo = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+			float max_ratio_next_conbo = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+			float min_coll_ratio				= CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+			float max_coll_ratio			= CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+			float go_next_timing			= CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+			float radius						= CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+			float mass							= CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+			float friction						= CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+			auto owner_ptr = owner.lock();
+
+			if (is_right)
+			{
+				conbo = std::make_shared<Conbo>(owner, min_coll_ratio, max_coll_ratio, go_next_timing,anim_name,
+					std::make_shared<Punch>(owner, owner_ptr->GetRightHandPos(), anim_name, min_coll_ratio, max_coll_ratio,
+						std::make_shared<RigidBody>(std::make_shared<Sphere>(radius, VectorAssistant::VGetZero()),
+							owner_ptr->GetRightHandPos(), FALSE, TRUE, mass, friction)));
+			}
+			else
+			{
+				conbo = std::make_shared<Conbo>(owner, min_coll_ratio, max_coll_ratio, go_next_timing, anim_name,
+					std::make_shared<Punch>(owner, owner_ptr->GetLeftHandPos(), anim_name, min_coll_ratio, max_coll_ratio,
+						std::make_shared<RigidBody>(std::make_shared<Sphere>(radius, VectorAssistant::VGetZero()),
+							owner_ptr->GetLeftHandPos(), FALSE, TRUE, mass, friction)));
+			}
+
+			
+			break;
+		}
+
+		conbos[conbo_num] = conbo;
+		conbo_num++;
+	}
+
+	if (is_target)
+	{
+		skill = std::make_shared<ConboSkill>(owner,
+			std::make_shared<ConboAction>(owner,conbos));
 	}
 
 	return skill;

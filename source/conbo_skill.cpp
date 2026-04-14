@@ -10,7 +10,7 @@
 #include"conbo_action.h"
 #include"player.h"
 #include"behavior_base.h"
-//#include"animator_base.h"
+#include"animator_base.h"
 #include"input_base.h"
 
 ConboSkill::ConboSkill(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior)
@@ -37,8 +37,27 @@ void ConboSkill::Update()
 	
 	if (IsStartConboAction(conbo_action))
 	{
-		auto owner = owner_.lock();
-		owner->GetAnimator();
+		is_active_ = TRUE;
+		owner_.lock()->GetAnimator()->PlayRequest(conbo_action->GetFirstConboAnimation());
+	}
+
+	if (is_active_)
+	{
+
+		// コンボが終了したかの判断
+		if (conbo_action->CheckIsEnd())
+		{
+			is_active_ = FALSE;
+			conbo_action->Exit();
+			return;
+		}
+
+		if (CheckGoNextConbo(conbo_action))
+		{
+			conbo_action->GoNext();
+		}
+
+		behavior_->Update();	
 	}
 
 }
@@ -50,7 +69,7 @@ void ConboSkill::Draw()
 
 void ConboSkill::Debug()
 {
-
+	behavior_->Debug();
 }
 
 bool ConboSkill::IsStartConboAction(std::shared_ptr<ConboAction> conbo_action)
@@ -60,9 +79,20 @@ bool ConboSkill::IsStartConboAction(std::shared_ptr<ConboAction> conbo_action)
 	if (is_active_)													{ return FALSE; }
 	if (!owner->GetIsGround())								{ return FALSE; }
 	if (owner->GetIsStop())									{ return FALSE; }
-	if (!conbo_action->CheckNextConboReady())	{ return FALSE; }
 	//inputの確認
+	if (!owner->GetInput()->IsStrongSkill()) { return FALSE; }
 
+	return TRUE;
+}
+
+bool ConboSkill::CheckGoNextConbo(std::shared_ptr<ConboAction> conbo_action)
+{
+	auto owner = owner_.lock();
+	if (!owner->GetIsGround()) { return FALSE; }
+	if (owner->GetIsStop()) { return FALSE; }
+	if (!conbo_action->CheckNextConboReady()) { return FALSE; }
+	//inputの確認
+	if (!owner->GetInput()->IsStrongSkill()) { return FALSE; }
 
 	return TRUE;
 }

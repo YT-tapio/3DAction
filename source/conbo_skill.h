@@ -26,4 +26,6 @@ private:
 
 	bool IsStartConboAction(std::shared_ptr<ConboAction> conbo_action);
 
+	bool CheckGoNextConbo(std::shared_ptr<ConboAction> conbo_action);
+
 };

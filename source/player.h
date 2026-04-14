@@ -57,7 +57,9 @@ public:
 
 	VECTOR* GetHeadPos();
 
-	VECTOR* GetHandPos();
+	VECTOR* GetRightHandPos();
+
+	VECTOR* GetLeftHandPos();
 
 	VECTOR* GetPosPtr();
 
@@ -92,7 +94,8 @@ private:
 	std::shared_ptr<SkillBase> avoid_;
 
 	VECTOR* camera_dir_;
-	VECTOR hand_pos_;
+	VECTOR right_hand_pos_;
+	VECTOR left_hand_pos_;
 	VECTOR head_pos_;
 
 	VECTOR attack_target_pos_;

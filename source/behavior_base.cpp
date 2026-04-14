@@ -23,6 +23,11 @@ void BehaviorBase::Update()
 
 }
 
+void BehaviorBase::Exit()
+{
+
+}
+
 void BehaviorBase::Draw()
 {
 
