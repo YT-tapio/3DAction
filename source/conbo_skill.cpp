@@ -39,11 +39,11 @@ void ConboSkill::Update()
 	{
 		is_active_ = TRUE;
 		owner_.lock()->GetAnimator()->PlayRequest(conbo_action->GetFirstConboAnimation());
+		Correction();
 	}
 
 	if (is_active_)
 	{
-
 		// ƒRƒ“ƒ{‚ªI—¹‚µ‚½‚©‚Ì”»’f
 		if (conbo_action->CheckIsEnd())
 		{
