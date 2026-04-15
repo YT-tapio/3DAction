@@ -378,6 +378,12 @@
     <ClCompile Include="source\conbo_skill.cpp">
       <Filter>ソース ファイル\skill</Filter>
     </ClCompile>
+    <ClCompile Include="source\correction_skill.cpp">
+      <Filter>ソース ファイル\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="source\close_correction_skill.cpp">
+      <Filter>ソース ファイル\skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -645,6 +651,12 @@
       <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
     <ClInclude Include="source\conbo_skill.h">
+      <Filter>ソース ファイル\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="source\correction_skill.h">
+      <Filter>ソース ファイル\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="source\close_correction_skill.h">
       <Filter>ソース ファイル\skill</Filter>
     </ClInclude>
   </ItemGroup>

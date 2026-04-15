@@ -1,9 +1,9 @@
 #pragma once
-#include"skill_base.h"
+#include"close_correction_skill.h"
 
 class ObjectBase;
 
-class PunchSkill : public SkillBase
+class PunchSkill : public CloseCorrectionSkill
 {
 public:
 

@@ -33,6 +33,8 @@ public:
 
 	const bool CheckIsEnd() const;
 
+	
+
 	const std::string GetMyAnimName() const;
 
 private:

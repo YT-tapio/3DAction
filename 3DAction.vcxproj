@@ -143,10 +143,12 @@
     <ClCompile Include="source\area_heal.cpp" />
     <ClCompile Include="source\area_heal_give_player.cpp" />
     <ClCompile Include="source\area_heal_skill.cpp" />
+    <ClCompile Include="source\correction_skill.cpp" />
     <ClCompile Include="source\avoid.cpp" />
     <ClCompile Include="source\avoid_skill.cpp" />
     <ClCompile Include="source\behavior_base.cpp" />
     <ClCompile Include="source\check_my_area.cpp" />
+    <ClCompile Include="source\close_correction_skill.cpp" />
     <ClCompile Include="source\conbo.cpp" />
     <ClCompile Include="source\conbo_action.cpp" />
     <ClCompile Include="source\conbo_skill.cpp" />
@@ -214,6 +216,7 @@
     <ClInclude Include="source\area_heal_give_player.h" />
     <ClInclude Include="source\area_heal_skill.h" />
     <ClInclude Include="source\avoid_skill.h" />
+    <ClInclude Include="source\close_correction_skill.h" />
     <ClInclude Include="source\conbo.h" />
     <ClInclude Include="source\conbo_action.h" />
     <ClInclude Include="source\conbo_skill.h" />
@@ -295,6 +298,7 @@
     <ClInclude Include="source\behavior_base.h" />
     <ClInclude Include="source\avoid.h" />
     <ClInclude Include="source\skill_name.h" />
+    <ClInclude Include="source\correction_skill.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\json\player_data.json" />
