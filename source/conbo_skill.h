@@ -1,12 +1,12 @@
 #pragma once
-#include"skill_base.h"
+#include"close_correction_skill.h"
 
 class BehaviorBase;
 class ObjectBase;
 class Player;
 class ConboAction;
 
-class ConboSkill : public SkillBase
+class ConboSkill : public CloseCorrectionSkill
 {
 public:
 

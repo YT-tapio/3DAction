@@ -5,7 +5,7 @@ class CloseCorrectionSkill : public CorrectionSkill
 {
 public:
 
-	CloseCorrectionSkill(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behaivor,const float detection_radius);
+	CloseCorrectionSkill(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behaivor);
 
 	virtual ~CloseCorrectionSkill() override;
 
@@ -21,9 +21,6 @@ protected:
 
 	//補正をかける
 	void Correction() override;
-
-	//検出範囲
-	float detection_radius_;
 
 private:
 

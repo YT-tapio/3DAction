@@ -14,7 +14,7 @@
 #include"input_base.h"
 
 ConboSkill::ConboSkill(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior)
-	: SkillBase(owner,behavior)
+	: CloseCorrectionSkill(owner,behavior)
 {
 
 }

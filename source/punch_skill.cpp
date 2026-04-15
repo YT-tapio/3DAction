@@ -21,7 +21,7 @@
 
 PunchSkill::PunchSkill(std::weak_ptr<Player> owner,VECTOR* pos,std::string my_anim_name,const float r, float min_coll_ratio, float max_coll_ratio,const float detection_radius)
 	: CloseCorrectionSkill(owner,std::make_shared<Punch>(owner,pos,my_anim_name,min_coll_ratio,max_coll_ratio, 
-		std::make_shared<RigidBody>(std::make_shared<Sphere>(r, VGet(0, 0, 0)), pos, FALSE, TRUE, 1.f, 1.f)),detection_radius)
+		std::make_shared<RigidBody>(std::make_shared<Sphere>(r, VGet(0, 0, 0)), pos, FALSE, TRUE, 1.f, 1.f)))
 	, my_anim_name_(my_anim_name)
 {
 	target_dir_ = VectorAssistant::VGetZero();

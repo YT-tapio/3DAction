@@ -9,9 +9,8 @@
 #include"enemy_base.h"
 #include"vector_assistant.h"
 
-CloseCorrectionSkill::CloseCorrectionSkill(std::weak_ptr<Player> owner, std::shared_ptr<BehaviorBase> behaivor, const float detection_radius)
+CloseCorrectionSkill::CloseCorrectionSkill(std::weak_ptr<Player> owner, std::shared_ptr<BehaviorBase> behaivor)
 	: CorrectionSkill(owner, behaivor)
-	, detection_radius_(detection_radius)
 {
 
 }
@@ -69,8 +68,8 @@ void CloseCorrectionSkill::Correction()
 	owner->ResetVelocity();
 
 	//この割合だと調整しない
-	const float kRatioMin = 0.45f;
-
+	const float kRatioMin	= 0.45f;
+	float detection_radius_ = owner->GetDetectionRadius(); //検出範囲
 	float speed = 19.5f;
 	float most_near_dist = object_dist_dir_mp.begin()->first;		// 一番近い敵との距離
 	float speed_ratio = most_near_dist / detection_radius_;
