@@ -20,11 +20,15 @@ public:
 
 	virtual void Debug();
 
+	void Active();
+
 	std::weak_ptr<ObjectBase> GetOwner();
 
 protected:
 
 	std::weak_ptr<ObjectBase> owner_;
+
+	bool is_active_;
 
 private:
 

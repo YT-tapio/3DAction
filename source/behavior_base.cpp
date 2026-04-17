@@ -4,6 +4,7 @@
 
 BehaviorBase::BehaviorBase(std::weak_ptr<ObjectBase> owner)
 	:owner_(owner)
+	,is_active_(FALSE)
 {
 
 }
@@ -36,6 +37,11 @@ void BehaviorBase::Draw()
 void BehaviorBase::Debug()
 {
 
+}
+
+void BehaviorBase::Active()
+{
+	is_active_ = TRUE;
 }
 
 std::weak_ptr<ObjectBase> BehaviorBase::GetOwner()

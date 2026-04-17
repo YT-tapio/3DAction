@@ -34,21 +34,26 @@ void ConboSkill::Update()
 	// behaviorをconboに変換する必要がある
 	auto conbo_action = std::dynamic_pointer_cast<ConboAction>(behavior_);
 	if (conbo_action == nullptr) { return; }
-	
+	bool is_attack = FALSE;
+
+
 	if (IsStartConboAction(conbo_action))
 	{
 		is_active_ = TRUE;
 		owner_.lock()->GetAnimator()->PlayRequest(conbo_action->GetFirstConboAnimation());
+		owner_.lock()->SetIsStop(TRUE);
+		is_attack = TRUE;
 	}
 
 	if (is_active_)
 	{
-
 		// コンボが終了したかの判断
 		if (conbo_action->CheckIsEnd())
 		{
+			if (is_attack) { return; }
 			is_active_ = FALSE;
 			conbo_action->Exit();
+			owner_.lock()->SetIsStop(FALSE);
 			return;
 		}
 
@@ -56,10 +61,9 @@ void ConboSkill::Update()
 		{
 			conbo_action->GoNext();
 		}
-
-		behavior_->Update();	
 	}
 
+	behavior_->Update();
 }
 
 void ConboSkill::Draw()
@@ -89,7 +93,6 @@ bool ConboSkill::CheckGoNextConbo(std::shared_ptr<ConboAction> conbo_action)
 {
 	auto owner = owner_.lock();
 	if (!owner->GetIsGround()) { return FALSE; }
-	if (owner->GetIsStop()) { return FALSE; }
 	if (!conbo_action->CheckNextConboReady()) { return FALSE; }
 	//inputの確認
 	if (!owner->GetInput()->IsStrongSkill()) { return FALSE; }

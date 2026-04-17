@@ -166,6 +166,9 @@
     <Filter Include="ソース ファイル\player_group">
       <UniqueIdentifier>{c93c75c2-24fd-42cc-b23f-82e80d7489c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\attack_correction">
+      <UniqueIdentifier>{1c7d9171-14b8-4f8a-a8ec-068e81b550fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -377,6 +380,9 @@
     </ClCompile>
     <ClCompile Include="source\conbo_skill.cpp">
       <Filter>ソース ファイル\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="source\attack_correction.cpp">
+      <Filter>ソース ファイル\attack_correction</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -646,6 +652,9 @@
     </ClInclude>
     <ClInclude Include="source\conbo_skill.h">
       <Filter>ソース ファイル\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="source\attack_correction.h">
+      <Filter>ソース ファイル\attack_correction</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

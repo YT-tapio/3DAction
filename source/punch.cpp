@@ -12,7 +12,7 @@
 #include"object_base.h"
 #include"animator_base.h"
 
-Punch::Punch(std::weak_ptr<ObjectBase> owner, VECTOR* pos, 
+Punch::Punch(std::weak_ptr<ObjectBase> owner, VECTOR* pos,
 	std::string my_anim_name, float min_coll_ratio, float max_coll_ratio, std::shared_ptr<RigidBody> body)
 	: AttackBase(owner)
 	, my_anim_name_(my_anim_name)
@@ -42,14 +42,14 @@ void Punch::Update()
 	// owner‚Épunch‚ð”­¶‚³‚¹‚½‚¢‚æ‚È
 	rigid_body_->NotActive();
 	auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
-
+	
 	if (owner == nullptr) { return; }
 	auto owner_animator = owner->GetAnimator();
 	if (owner_animator == nullptr) { return; }
 	// “–‚½‚è”»’è‚ð‚Ìactive‚ð‚µ‚Ü‚·
 	
 	float punch_play_time = owner_animator->GetRatio(my_anim_name_);
-	//printfDx("%.2f\n", punch_play_time);
+	
 	if (punch_play_time > min_coll_ratio_ && punch_play_time < max_coll_ratio_) { rigid_body_->Active(); }
 
 }
