@@ -86,8 +86,8 @@ namespace Lerp
 		float offset_speed = speed;
 		VECTOR value = VectorAssistant::VGetZero();
 		VECTOR diff = VSub(target, now);
-		//if (speed > 1.f) { offset_speed = 1.f; }
-		value = VAdd(now, VScale(diff, speed));
+		if (speed > 1.f) { offset_speed = 1.f; }
+		value = VAdd(now, VScale(diff, offset_speed));
 		return value;
 	}
 }

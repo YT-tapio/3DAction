@@ -1,6 +1,6 @@
 ﻿name,model_path,init_pos,,,rot,,,skill,,speed,avoid_speed,job
 ,,x,y,z,x,y,z,1,2,,,
-attacker,data/model/player/attacker/Lola_B_Styperek.mv1,8,-8.5,42,0,0,0,0,3,0.3,30,attacker
-healer,data/model/player/healer/Peasant_Girl.mv1,18,-8.5,44.5,0,0,0,0,2,0.3,30,healer
-defender,data/model/player/defender/castle_guard_01.mv1,2.45,-8.5,52.3,0,0,0,0,2,0.3,30,defender
-attacker2,data/model/player/attacker2/Kachujin_G_Rosales.mv1,13.6,-8.5,55.4,0,0,0,0,2,0.3,30,attacker
+attacker,data/model/player/attacker/Lola_B_Styperek.mv1,8,-8.5,42,0,0,0,0,3,0.3,20,attacker
+healer,data/model/player/healer/Peasant_Girl.mv1,18,-8.5,44.5,0,0,0,0,2,0.3,20,healer
+defender,data/model/player/defender/castle_guard_01.mv1,2.45,-8.5,52.3,0,0,0,0,2,0.3,20,defender
+attacker2,data/model/player/attacker2/Kachujin_G_Rosales.mv1,13.6,-8.5,55.4,0,0,0,0,2,0.3,20,attacker

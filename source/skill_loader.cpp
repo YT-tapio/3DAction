@@ -220,7 +220,7 @@ std::shared_ptr<SkillBase>SkillLoader::MakeConboAttackSkill(std::ifstream& file,
 	std::unordered_map<int, std::shared_ptr<Conbo>> conbos;
 	float approach_speed = 0.45f;
 	float approach_ratio = 0.3f;
-	std::unordered_map<int, std::unordered_map<float, float>> id_approach_speed_ratio_mp;
+	std::unordered_map<int, std::pair<float, float>> id_approach_speed_ratio_mp;
 
 	while (std::getline(file, line))
 	{
@@ -243,7 +243,7 @@ std::shared_ptr<SkillBase>SkillLoader::MakeConboAttackSkill(std::ifstream& file,
 		{
 		case SkillName::kPunch:
 
-			std::unordered_map<float, float> approach_speed_ratio_mp;
+			std::pair<float, float> approach_speed_ratio;
 			bool is_right						= CSVFileAssistant::GetIntOfCSVFile(ss,data);
 			std::string anim_name		= CSVFileAssistant::GetStringOfCSVFile(ss, data);
 			float min_ratio_next_conbo = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
@@ -257,7 +257,7 @@ std::shared_ptr<SkillBase>SkillLoader::MakeConboAttackSkill(std::ifstream& file,
 			float approach_speed = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 			float approach_ratio = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 			auto owner_ptr = owner.lock();
-			approach_speed_ratio_mp[approach_speed] = approach_ratio;
+			approach_speed_ratio = { approach_speed,approach_ratio };
 			if (is_right)
 			{
 				conbo = std::make_shared<Conbo>(owner, min_coll_ratio, max_coll_ratio, go_next_timing,anim_name,
@@ -272,7 +272,7 @@ std::shared_ptr<SkillBase>SkillLoader::MakeConboAttackSkill(std::ifstream& file,
 						std::make_shared<RigidBody>(std::make_shared<Sphere>(radius, VectorAssistant::VGetZero()),
 							owner_ptr->GetLeftHandPos(), FALSE, TRUE, mass, friction)));
 			}
-			id_approach_speed_ratio_mp[conbo_num] = approach_speed_ratio_mp;
+			id_approach_speed_ratio_mp[conbo_num] = approach_speed_ratio;
 			
 			break;
 		}

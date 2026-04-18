@@ -317,10 +317,10 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 void Player::MakeSkill(std::weak_ptr<Player> owner)
 {
 
-	auto aa = SkillLoader::GetInstance().SkillLoad(skill1_id_, name_, owner);
-	auto bb = SkillLoader::GetInstance().SkillLoad(skill2_id_, name_, owner);
-	skill_ = aa;
-	second_skill_ = bb;
+	auto skill = SkillLoader::GetInstance().SkillLoad(skill1_id_, name_, owner);
+	auto second_skill = SkillLoader::GetInstance().SkillLoad(skill2_id_, name_, owner);
+	skill_ = skill;
+	second_skill_ = second_skill;
 	if (skill_ == nullptr)
 	{
 		printfDx("Ž¸”s\n");
@@ -336,11 +336,8 @@ void Player::MakeSkill(std::weak_ptr<Player> owner)
 void Player::Move()
 {
 	VECTOR dir = VectorAssistant::VGetZero();
-	// dir_ = VectorAssistant::VGetZero();
 	vel_ = VectorAssistant::VGetZero();
 	float speed = speed_;
-
-	//auto input = input_.get();
 
 	if (animator_->GetNowAnimName() != "punch")
 	{
@@ -373,12 +370,11 @@ void Player::Move()
 	
 	if (!is_ground_)
 	{
-		fall_speed_ += 0.03f;
+		fall_speed_ += 0.03f * FPS::GetInstance().GetDeltaTime() * 60.f;
 	}
-	
-	vel_ = VAdd(vel_, VGet(0.f, -fall_speed_, 0.f));
-	float delta_time = FPS::GetInstance().GetDeltaTime() * 60.f;
 	vel_ = VScale(vel_, FPS::GetInstance().GetDeltaTime() * 60.f);
+	vel_ = VAdd(vel_, VGet(0.f, -fall_speed_, 0.f));
+	
 	if (VSize(dir) > 0.f)
 	{ 
 		dir_ = VNorm(vel_);

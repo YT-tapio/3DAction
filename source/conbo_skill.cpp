@@ -14,9 +14,9 @@
 #include"input_base.h"
 #include"attack_correction.h"
 #include"vector_assistant.h"
+#include"FPS.h"
 
-
-ConboSkill::ConboSkill(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior, std::unordered_map<int, std::unordered_map<float, float>> approach_speed_ratio_mp)
+ConboSkill::ConboSkill(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior, std::unordered_map<int, std::pair<float,float>> approach_speed_ratio_mp)
 	: SkillBase(owner,behavior)
 	, id_approach_speed_ratio_mp_(approach_speed_ratio_mp)
 {
@@ -98,9 +98,9 @@ void ConboSkill::Correction(std::shared_ptr<ConboAction> conbo_action)
 	auto approach_speed_ratio_mp = id_approach_speed_ratio_mp_.find(conbo_action->GetCurrentConbo());	// 現在のコンボの補正値を受け取る
 	if (approach_speed_ratio_mp == id_approach_speed_ratio_mp_.end()) { printfDx("おかしい\n"); return; }
 	auto approach_speed_ratio = approach_speed_ratio_mp->second;	// speedとratioのでーた
-	float approach_speed = approach_speed_ratio.begin()->first;		// speed
-	float approach_ratio = approach_speed_ratio.begin()->second;	// ratio
-	AttackCorrection::GetInstance().ApproachTheNearestEnemy(owner_.lock(), vel, approach_speed, approach_ratio);
+	float approach_speed = approach_speed_ratio.first;		// speed
+	float approach_ratio = approach_speed_ratio.second;	// ratio
+	AttackCorrection::GetInstance().ApproachTheNearestEnemy(owner_.lock(), vel, approach_speed * FPS::GetInstance().GetDeltaTime() * 60.f, approach_ratio);
 }
 
 bool ConboSkill::IsStartConboAction(std::shared_ptr<ConboAction> conbo_action)
