@@ -14,8 +14,9 @@
 #include"FPS.h"
 #include"vector_assistant.h"
 
-AvoidSkill::AvoidSkill(std::weak_ptr<Player> owner)
+AvoidSkill::AvoidSkill(std::weak_ptr<Player> owner,float speed)
 	: SkillBase(owner,std::make_shared<Avoid>(owner))
+	, speed_(30.f)
 {
 
 }
@@ -83,10 +84,8 @@ void AvoidSkill::DecideVelocity(std::shared_ptr<Player> owner)
 {
 	// オーナーの回避の速度をきめる
 
-	const float kSpeed = 30.f;
-
 	VECTOR input_dir = owner->GetInputDir();
-	VECTOR velocity = VScale(input_dir, kSpeed);
+	VECTOR velocity = VScale(input_dir, speed_);
 	owner->ResetVelocity();
 	owner->SetVelocity(velocity);
 	owner->SetRotation(VGet(0.f, VectorAssistant::VGetTan(VectorAssistant::VGetReverce(input_dir)), 0.f));

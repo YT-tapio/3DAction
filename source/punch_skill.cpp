@@ -18,14 +18,17 @@
 #include"enemy_base.h"
 #include"vector_assistant.h"
 #include"FPS.h"
+#include"attack_correction.h"
 
-PunchSkill::PunchSkill(std::weak_ptr<Player> owner,VECTOR* pos,std::string my_anim_name,const float r, float min_coll_ratio, float max_coll_ratio,const float detection_radius)
+PunchSkill::PunchSkill(std::weak_ptr<Player> owner,VECTOR* pos,std::string my_anim_name,const float r, float min_coll_ratio, float max_coll_ratio,const float detection_radius, float approach_speed, float approach_ratio)
 	: SkillBase(owner,std::make_shared<Punch>(owner,pos,my_anim_name,min_coll_ratio,max_coll_ratio, std::make_shared<RigidBody>(std::make_shared<Sphere>(r, VGet(0, 0, 0)), pos, FALSE, TRUE, 1.f, 1.f)))
 	, my_anim_name_(my_anim_name)
+	, approach_speed_(approach_speed)
+	, approach_ratio_(approach_ratio)
+	, detection_radius_(detection_radius)
 {
 	target_dir_ = VectorAssistant::VGetZero();
 	target_pos_ = VectorAssistant::VGetZero();
-	detection_radius_ = detection_radius;
 }
 
 PunchSkill::~PunchSkill()
@@ -55,6 +58,8 @@ void PunchSkill::Update()
 		{
 			is_active_ = FALSE;
 			owner->SetIsStop(FALSE);
+			// cool_timeの開始
+
 		}
 	}
 
@@ -66,10 +71,9 @@ void PunchSkill::Update()
 			is_active_ = TRUE;
 			// punchさせる
 			owner->GetAnimator()->PlayRequest(my_anim_name_);	//パンチのanimationを再生をお願いする
-			
-			// この瞬間にplayerをうごかす
-			auto owner_area_object = owner->GetMyAreaObject();
-			DecideTarget(owner_area_object,owner);
+			VECTOR vel = VectorAssistant::VGetZero();
+			//DecideTarget(owner_area_object,owner);
+			bool is_in_site = AttackCorrection::GetInstance().ApproachTheNearestEnemy(owner, vel, 18.5f, 0.45f);
 			owner->SetIsStop(TRUE);
 		}
 	}

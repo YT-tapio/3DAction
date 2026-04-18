@@ -12,9 +12,14 @@
 #include"behavior_base.h"
 #include"animator_base.h"
 #include"input_base.h"
+#include"attack_correction.h"
+#include"vector_assistant.h"
 
-ConboSkill::ConboSkill(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior)
+
+ConboSkill::ConboSkill(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior,float approach_speed, float approach_ratio)
 	: SkillBase(owner,behavior)
+	, approach_speed_(approach_speed)
+	, approach_ratio_(approach_ratio)
 {
 
 }
@@ -36,13 +41,14 @@ void ConboSkill::Update()
 	if (conbo_action == nullptr) { return; }
 	bool is_attack = FALSE;
 
-
 	if (IsStartConboAction(conbo_action))
 	{
 		is_active_ = TRUE;
 		owner_.lock()->GetAnimator()->PlayRequest(conbo_action->GetFirstConboAnimation());
 		owner_.lock()->SetIsStop(TRUE);
 		is_attack = TRUE;
+		VECTOR vel = VectorAssistant::VGetZero();
+		AttackCorrection::GetInstance().ApproachTheNearestEnemy(owner_.lock(), vel, 18.5f, 0.3f);
 	}
 
 	if (is_active_)
@@ -54,6 +60,8 @@ void ConboSkill::Update()
 			is_active_ = FALSE;
 			conbo_action->Exit();
 			owner_.lock()->SetIsStop(FALSE);
+			// ‚±‚±‚Åcool_time‚ðŠJŽn
+
 			return;
 		}
 
@@ -61,6 +69,15 @@ void ConboSkill::Update()
 		{
 			conbo_action->GoNext();
 		}
+
+		if (conbo_action->CheckChangeConbo())
+		{
+			// ‚±‚±‚Å•â³‚ª”­¶‚·‚é
+			printfDx("change\n");
+			VECTOR vel = VectorAssistant::VGetZero();
+			AttackCorrection::GetInstance().ApproachTheNearestEnemy(owner_.lock(), vel, 18.5f, 0.3f);
+		}
+
 	}
 
 	behavior_->Update();

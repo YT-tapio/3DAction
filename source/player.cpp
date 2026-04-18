@@ -68,7 +68,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	is_stop_ = FALSE;
 	 input_ = input;
 	target_rot_y_ = 0;
-	detection_radius_ = 25.f;
+	speed_ = 0.f;
 }
 
 Player::~Player()
@@ -93,7 +93,8 @@ void Player::Init()
 	//skill_ = std::make_shared<PunchSkill>(mine, &hand_pos_, 1.5f, detection_radius);
 	//skill_			= std::make_shared<PunchSkill>(mine, &hand_pos_, 1.5f, detection_radius_);
 	//second_skill_	= std::make_shared<AreaHealSkill>(mine,&pos_,5.f);
-	avoid_ = std::make_shared<AvoidSkill>(mine);
+	
+	//avoid_ = std::make_shared<AvoidSkill>(mine);
 	test_behavior_ = 
 		std::make_shared<AreaHealGivePlayer>(mine,
 			std::make_shared<CheckMyArea>(std::make_shared<Sphere>(20.f,
@@ -127,9 +128,6 @@ void Player::Init()
 void Player::Update()
 {
 	Move();
-	//VECTOR a = *head_pos_;
-	//printfDx("x : %.2f,y : %.2f,z : %.2f\n", (*head_pos_).x, (*head_pos_).y, (*head_pos_).z);
-	//Gravity();
 	if (skill_ != nullptr)
 	{
 		skill_->Update();
@@ -193,7 +191,7 @@ void Player::Draw()
 void Player::Debug()
 {
 	rigid_body_->Debug();
-	//my_area_->Debug();
+	my_area_->Debug();
 	if (skill_ != nullptr) { skill_->Debug(); }
 	if (second_skill_ != nullptr) { second_skill_->Debug(); }
 	//skill_->Debug();
@@ -248,7 +246,7 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 {
 	std::ifstream file("data/csv/players/players_data.csv");
 	std::string line;
-
+	float avoid_speed = 0.f;
 	std::string job = "";
 	if (!file)
 	{
@@ -289,13 +287,18 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 		skill1_id_ = CSVFileAssistant::GetIntOfCSVFile(ss, data);
 		skill2_id_ = CSVFileAssistant::GetIntOfCSVFile(ss, data);
 		
+		speed_		= CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+		avoid_speed = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		job = CSVFileAssistant::GetStringOfCSVFile(ss, data);
 
 		break;
 	}
 	file.close();
 	/*ƒXƒLƒ‹‚ğì‚Á‚Ä‚¢‚­‚æ*/
-	
+	//avoidskill
+
+	avoid_ = std::make_shared<AvoidSkill>(std::dynamic_pointer_cast<Player>(shared_from_this()),avoid_speed);
+
 }
 
 void Player::MakeSkill(std::weak_ptr<Player> owner)
@@ -322,7 +325,7 @@ void Player::Move()
 	VECTOR dir = VectorAssistant::VGetZero();
 	// dir_ = VectorAssistant::VGetZero();
 	vel_ = VectorAssistant::VGetZero();
-	float speed = kSpeed;
+	float speed = speed_;
 
 	//auto input = input_.get();
 
@@ -357,11 +360,10 @@ void Player::Move()
 	
 	if (!is_ground_)
 	{
-		fall_speed_ += 0.03f;
+		fall_speed_ += 0.03f * FPS::GetInstance().GetDeltaTime() * 60.f;
 	}
 	
 	vel_ = VAdd(vel_, VGet(0.f, -fall_speed_, 0.f));
-	vel_ = VScale(vel_, (FPS::GetInstance().GetDeltaTime() * 60.f));
 	
 	if (VSize(dir) > 0.f)
 	{ 
@@ -409,7 +411,6 @@ void Player::DecideAttackTarget()
 		return;
 	}
 	
-	
 	// enemy‚Ì’†‚©‚ç‹ß‚¢“G‚ğUŒ‚‘ÎÛ‚É“®‚­
 	int enemy_num = 0;
 	std::map<float, VECTOR> dist_pos_mp;
@@ -432,7 +433,6 @@ void Player::DecideAttackTarget()
 	{
 		auto most_near_pos = dist_pos_mp.begin()->second;
 		attack_target_pos_ = most_near_pos;
-		
 	}
 }
 
@@ -514,7 +514,6 @@ VECTOR* Player::GetRightHandPos()
 	return &right_hand_pos_;
 }
 
-
 VECTOR* Player::GetLeftHandPos()
 {
 	return &left_hand_pos_;
@@ -553,6 +552,11 @@ const bool Player::GetIsDash() const
 const bool Player::GetIsStop() const
 {
 	return is_stop_;
+}
+
+const VECTOR Player::GetDirection() const
+{
+	return dir_;
 }
 
 const VECTOR Player::GetInputDir() const

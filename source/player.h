@@ -77,13 +77,15 @@ public:
 
 	const bool GetIsStop() const;
 
+	const VECTOR GetDirection()const;
+
 	const VECTOR GetInputDir() const;
 
 
 
 private:
 
-	const float kSpeed = 0.3f;
+	
 
 	std::shared_ptr<RigidBody> rigid_body_;
 	std::shared_ptr<const InputBase> input_;
@@ -104,6 +106,7 @@ private:
 	int skill1_id_;
 	int skill2_id_;
 
+	float speed_;
 	float target_rot_y_;
 	float fall_speed_;
 

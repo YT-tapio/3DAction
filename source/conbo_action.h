@@ -33,6 +33,8 @@ public:
 
 	const bool CheckIsEnd() const;
 
+	const bool CheckChangeConbo() const;
+
 	const std::string GetFirstConboAnimation() const;
 
 private:
@@ -47,5 +49,6 @@ private:
 
 	int current_conbo_;
 	bool go_next_;
+	bool is_change_;
 
 };

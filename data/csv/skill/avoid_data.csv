@@ -1,5 +1,5 @@
-﻿name
-attacker
-healer
-defender
-attacker2
+﻿name,speed
+attacker,30.f
+healer,30.f
+defender,30.f
+attacker2,30.f

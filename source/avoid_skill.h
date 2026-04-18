@@ -6,7 +6,7 @@ class AvoidSkill : public SkillBase
 {
 public:
 
-	AvoidSkill(std::weak_ptr<Player> owner);
+	AvoidSkill(std::weak_ptr<Player> owner, float speed);
 
 	~AvoidSkill() override;
 
@@ -22,5 +22,6 @@ private:
 
 	void DecideVelocity(std::shared_ptr<Player> owner);
 
+	float speed_;
 
 };

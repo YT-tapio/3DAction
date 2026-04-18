@@ -145,18 +145,21 @@ std::shared_ptr<SkillBase> SkillLoader::MakePunchSkill(std::ifstream& file, std:
 		std::string anim_name = CSVFileAssistant::GetStringOfCSVFile(ss, data);
 		float min_coll_ratio = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		float max_coll_ratio = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
-		float radius = 0.f;
-		radius = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+		float radius = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+		float approach_speed = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+		float approach_ratio = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+
+
 		auto owner_ptr = owner.lock();
 
 		// right
 		if (is_right)
 		{
-			skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetRightHandPos(), anim_name, radius, min_coll_ratio, max_coll_ratio, owner_ptr->GetDetectionRadius());
+			skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetRightHandPos(), anim_name, radius, min_coll_ratio, max_coll_ratio, owner_ptr->GetDetectionRadius(),approach_speed,approach_ratio);
 		}
 		else
 		{
-			skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetLeftHandPos(), anim_name, radius, min_coll_ratio, max_coll_ratio, owner_ptr->GetDetectionRadius());
+			skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetLeftHandPos(), anim_name, radius, min_coll_ratio, max_coll_ratio, owner_ptr->GetDetectionRadius(), approach_speed, approach_ratio);
 		}
 
 		break;
@@ -175,7 +178,9 @@ std::shared_ptr<SkillBase> SkillLoader::MakeAvoidSkill(std::ifstream& file, std:
 		std::getline(ss, data, ',');
 		if (data != name) { continue; }
 
-		skill = std::make_shared<AvoidSkill>(owner);
+		float speed = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+
+		skill = std::make_shared<AvoidSkill>(owner,speed);
 
 		break;
 	}
@@ -214,7 +219,8 @@ std::shared_ptr<SkillBase>SkillLoader::MakeConboAttackSkill(std::ifstream& file,
 	bool is_target = FALSE;
 	int conbo_num = 0;	// ÉRÉìÉ{êî
 	std::unordered_map<int, std::shared_ptr<Conbo>> conbos;
-
+	float approach_speed = 0.45f;
+	float approach_ratio = 0.3f;
 	
 
 	while (std::getline(file, line))
@@ -276,7 +282,7 @@ std::shared_ptr<SkillBase>SkillLoader::MakeConboAttackSkill(std::ifstream& file,
 	if (is_target)
 	{
 		skill = std::make_shared<ConboSkill>(owner,
-			std::make_shared<ConboAction>(owner,conbos));
+			std::make_shared<ConboAction>(owner,conbos), approach_speed, approach_ratio);
 	}
 
 	return skill;

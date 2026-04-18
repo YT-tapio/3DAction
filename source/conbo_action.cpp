@@ -15,6 +15,7 @@ ConboAction::ConboAction(std::weak_ptr<ObjectBase>owner, std::unordered_map<int,
 	, conbos_(conbos)
 	, current_conbo_(0)
 	, go_next_(FALSE)
+	, is_change_(FALSE)
 {
 
 }
@@ -40,7 +41,7 @@ void ConboAction::Update()
 
 	//キャラクターなのが前提ではある
 	auto character = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
-	
+	is_change_ = FALSE;
 	if (character == nullptr) { return; }
 	if(CheckNextConbo(character))
 	{
@@ -49,6 +50,7 @@ void ConboAction::Update()
 		// キャラにanimationを再生させる
 		character->GetAnimator()->PlayRequest(conbos_[current_conbo_]->GetMyAnimName());
 		go_next_ = FALSE;
+		is_change_ = TRUE;
 	}
 
 	conbos_[current_conbo_]->Update();
@@ -75,7 +77,6 @@ void ConboAction::GoNext()
 	go_next_ = TRUE;
 }
 
-
 const bool ConboAction::CheckNextConboReady() const
 {
 	auto current_conbo = conbos_.find(current_conbo_);
@@ -89,6 +90,11 @@ const bool ConboAction::CheckIsEnd() const
 	if (conbo == conbos_.end()) { return FALSE; }
 	if (!conbo->second->CheckIsEnd()) { return FALSE; }
 	return TRUE;
+}
+
+const bool ConboAction::CheckChangeConbo() const
+{
+	return is_change_;
 }
 
 const std::string ConboAction::GetFirstConboAnimation() const
