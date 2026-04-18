@@ -66,7 +66,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	is_dash_ = FALSE;
 	is_attack_target_in_range_ = FALSE;
 	is_stop_ = FALSE;
-	 input_ = input;
+	input_ = input;
 	target_rot_y_ = 0;
 	speed_ = 0.f;
 }
@@ -190,10 +190,13 @@ void Player::Draw()
 
 void Player::Debug()
 {
-	rigid_body_->Debug();
-	my_area_->Debug();
 	if (skill_ != nullptr) { skill_->Debug(); }
 	if (second_skill_ != nullptr) { second_skill_->Debug(); }
+	my_area_->Debug();
+	return;
+	rigid_body_->Debug();
+	
+	
 	//skill_->Debug();
 	//test_behavior_->Debug();
 	// DrawSphere3D(attack_target_pos_, 3.f, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
@@ -239,6 +242,16 @@ void Player::Debug()
 	{
 		DrawString(0, Debug::GetInstance().GetNowLineSize(), "–³“G‚¶‚á‚È‚¢", Color::kWhite);
 	}
+
+	if (is_stop_)
+	{
+		DrawString(0, Debug::GetInstance().GetNowLineSize(), "stop", Color::kWhite);
+	}
+	else
+	{
+		DrawString(0, Debug::GetInstance().GetNowLineSize(), "not_stop", Color::kWhite);
+	}
+
 	Debug::GetInstance().Add();
 }
 
@@ -360,17 +373,17 @@ void Player::Move()
 	
 	if (!is_ground_)
 	{
-		fall_speed_ += 0.03f * FPS::GetInstance().GetDeltaTime() * 60.f;
+		fall_speed_ += 0.03f;
 	}
 	
 	vel_ = VAdd(vel_, VGet(0.f, -fall_speed_, 0.f));
-	
+	float delta_time = FPS::GetInstance().GetDeltaTime() * 60.f;
+	vel_ = VScale(vel_, FPS::GetInstance().GetDeltaTime() * 60.f);
 	if (VSize(dir) > 0.f)
 	{ 
 		dir_ = VNorm(vel_);
 		target_rot_y_ = VectorAssistant::VGetTan(VectorAssistant::VGetReverce(dir_));
 	}
-	// printfDx("x : %.2f,y : %.2f,z : %.2f\n", vel_.x, vel_.y, vel_.z);
 	if (is_stop_) { return; }
 	rot_.y = RadianAssistant::Lerp(rot_.y, target_rot_y_, RadianAssistant::kOneRad * 15.f * FPS::GetInstance().GetDeltaTime() * 60.f);
 	if (CheckHitKey(KEY_INPUT_SPACE)) { pos_ = VGet(0.f, 0.f, 0.f); vel_ = VGet(0.f, 0.f, 0.f); is_ground_ = FALSE; fall_speed_ = 0.f;}

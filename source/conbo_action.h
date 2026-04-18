@@ -26,6 +26,12 @@ public:
 	void GoNext();
 
 	/// <summary>
+	/// 現在のコンボ
+	/// </summary>
+	/// <returns></returns>
+	const int GetCurrentConbo() const;
+
+	/// <summary>
 	/// 次のコンボへの入力を受け付けていいかのチェック
 	/// </summary>
 	/// <returns></returns>

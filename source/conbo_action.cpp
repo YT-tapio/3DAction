@@ -77,6 +77,11 @@ void ConboAction::GoNext()
 	go_next_ = TRUE;
 }
 
+const int ConboAction::GetCurrentConbo() const
+{
+	return current_conbo_;
+}
+
 const bool ConboAction::CheckNextConboReady() const
 {
 	auto current_conbo = conbos_.find(current_conbo_);

@@ -411,7 +411,7 @@ void Physics::Resistance()
 		VECTOR now_flat_vel		= VectorAssistant::VGetFlat(body->GetVelocity());
 		VECTOR target_flat_vel	= VectorAssistant::VGetFlat(body->GetTargetVelocity());
 		float target_y = body->GetTargetVelocity().y;
-		float friction = body->GetFriction() * FPS::GetInstance().GetDeltaTime() * 60.f;
+		float friction = body->GetFriction();
 		VECTOR vel = Lerp::DampV(now_flat_vel, target_flat_vel,friction);
 		vel = VAdd(vel, VGet(0.f, target_y, 0.f));
 		body->SetVelocity(vel);

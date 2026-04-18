@@ -28,7 +28,7 @@ bool AttackCorrection::ApproachTheNearestEnemy(std::shared_ptr<Player> player, V
 	// “G‚ª‚¢‚È‚¢‚È‚çplayer‚ÌŒü‚«‚É“®‚©‚·
 	if (dist_pos_mp.empty()) 
 	{ 
-		VECTOR player_dir = player->GetDirection();
+		VECTOR player_dir = player->GetInputDir();
 		velocity = VScale(player_dir, speed);
 		player->ResetVelocity();
 		player->SetRotation(VGet(0.f, VectorAssistant::VGetTan(VectorAssistant::VGetReverce(player_dir)), 0.f));

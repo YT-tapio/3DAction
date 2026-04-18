@@ -70,7 +70,8 @@ void SphereCamera::Update()
 
 	future_pos_ = VAdd(*target_pos_, target_to_camera_dist);
 
-	next_pos = Lerp::DampV(*pos_, future_pos_, 0.2);
+
+	next_pos = Lerp::DampV(*pos_, future_pos_, 0.2f * FPS::GetInstance().GetDeltaTime() * 60.f);
 
 	vel_ = VAdd(vel_, VSub(next_pos, *pos_));
 	if (!VectorAssistant::IsSamePos(*center_pos_, *target_pos_))

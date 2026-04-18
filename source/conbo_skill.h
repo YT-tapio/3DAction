@@ -10,7 +10,7 @@ class ConboSkill : public SkillBase
 {
 public:
 
-	ConboSkill(std::weak_ptr<Player> owner, std::shared_ptr<BehaviorBase> behavior,float approach_speed, float approach_ratio);
+	ConboSkill(std::weak_ptr<Player> owner, std::shared_ptr<BehaviorBase> behavior, std::unordered_map<int, std::unordered_map<float, float>> approach_speed_ratio_mp);
 
 	~ConboSkill() override;
 
@@ -24,13 +24,19 @@ public:
 
 private:
 
+	/// <summary>
+	/// 補正
+	/// </summary>
+	void Correction(std::shared_ptr<ConboAction> conbo_action);
+
 	bool IsStartConboAction(std::shared_ptr<ConboAction> conbo_action);
 
 	bool CheckGoNextConbo(std::shared_ptr<ConboAction> conbo_action);
 
 	// コンボの攻撃の補正を格納している
-	std::unordered_map<int, std::unordered_map<float, float>> approach_speed_ratio_mp_;
+	// 敵に近づく際のスピード
+	// どれくらいの距離で補正をするかの割合
+	std::unordered_map<int, std::unordered_map<float, float>> id_approach_speed_ratio_mp_;
 
-	float approach_speed_;			// 敵に近づく際のスピード
-	float approach_ratio_;			// どれくらいの距離で補正をするかの割合
+				
 };

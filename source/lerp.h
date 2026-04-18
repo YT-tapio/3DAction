@@ -40,10 +40,10 @@ namespace Lerp
 	inline float Dampf(const float& now, const float& target, const float& speed)
 	{
 		float value = 0.f;
-
+		float offset_speed = speed;
 		float diff = target - now;
-
-		value = (diff * speed) + now;
+		if (offset_speed > 1.f) { offset_speed = 1.f; }
+		value = (diff * offset_speed) + now;
 		
 		return value;
 	}
@@ -82,9 +82,12 @@ namespace Lerp
 	/// <returns>Å‰‚ªÅ‚‘¬“x‚ÌˆÚ“®’l</returns>
 	inline VECTOR DampV(const VECTOR& now, const VECTOR& target, const float& speed)
 	{
+		//speed‚ª1‚É‚È‚ç‚È‚¢‚æ‚¤1‚É‘I‘ğ‚È‚ç’²®‚·‚é
+		float offset_speed = speed;
 		VECTOR value = VectorAssistant::VGetZero();
 		VECTOR diff = VSub(target, now);
-		value = VAdd(now,VScale(diff, speed));
+		//if (speed > 1.f) { offset_speed = 1.f; }
+		value = VAdd(now, VScale(diff, speed));
 		return value;
 	}
 }

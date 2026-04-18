@@ -16,10 +16,9 @@
 #include"vector_assistant.h"
 
 
-ConboSkill::ConboSkill(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior,float approach_speed, float approach_ratio)
+ConboSkill::ConboSkill(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior, std::unordered_map<int, std::unordered_map<float, float>> approach_speed_ratio_mp)
 	: SkillBase(owner,behavior)
-	, approach_speed_(approach_speed)
-	, approach_ratio_(approach_ratio)
+	, id_approach_speed_ratio_mp_(approach_speed_ratio_mp)
 {
 
 }
@@ -47,8 +46,7 @@ void ConboSkill::Update()
 		owner_.lock()->GetAnimator()->PlayRequest(conbo_action->GetFirstConboAnimation());
 		owner_.lock()->SetIsStop(TRUE);
 		is_attack = TRUE;
-		VECTOR vel = VectorAssistant::VGetZero();
-		AttackCorrection::GetInstance().ApproachTheNearestEnemy(owner_.lock(), vel, 18.5f, 0.3f);
+		Correction(conbo_action);
 	}
 
 	if (is_active_)
@@ -61,7 +59,7 @@ void ConboSkill::Update()
 			conbo_action->Exit();
 			owner_.lock()->SetIsStop(FALSE);
 			// ここでcool_timeを開始
-
+			
 			return;
 		}
 
@@ -69,13 +67,14 @@ void ConboSkill::Update()
 		{
 			conbo_action->GoNext();
 		}
-
+		
 		if (conbo_action->CheckChangeConbo())
 		{
 			// ここで補正が発生する
 			printfDx("change\n");
 			VECTOR vel = VectorAssistant::VGetZero();
-			AttackCorrection::GetInstance().ApproachTheNearestEnemy(owner_.lock(), vel, 18.5f, 0.3f);
+			Correction(conbo_action);
+			//owner_.lock()->SetIsStop(TRUE);
 		}
 
 	}
@@ -91,6 +90,17 @@ void ConboSkill::Draw()
 void ConboSkill::Debug()
 {
 	behavior_->Debug();
+}
+
+void ConboSkill::Correction(std::shared_ptr<ConboAction> conbo_action)
+{
+	VECTOR vel = VectorAssistant::VGetZero();
+	auto approach_speed_ratio_mp = id_approach_speed_ratio_mp_.find(conbo_action->GetCurrentConbo());	// 現在のコンボの補正値を受け取る
+	if (approach_speed_ratio_mp == id_approach_speed_ratio_mp_.end()) { printfDx("おかしい\n"); return; }
+	auto approach_speed_ratio = approach_speed_ratio_mp->second;	// speedとratioのでーた
+	float approach_speed = approach_speed_ratio.begin()->first;		// speed
+	float approach_ratio = approach_speed_ratio.begin()->second;	// ratio
+	AttackCorrection::GetInstance().ApproachTheNearestEnemy(owner_.lock(), vel, approach_speed, approach_ratio);
 }
 
 bool ConboSkill::IsStartConboAction(std::shared_ptr<ConboAction> conbo_action)
