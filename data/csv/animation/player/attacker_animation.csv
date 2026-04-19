@@ -4,7 +4,7 @@ run,data/model/player/animation/Standard_Run.mv1,0,0.96,2,1,0
 jogging,data/model/player/animation/Running.mv1,0,0.7,1,1,0
 on_damage,data/model/player/animation/Stomach_Hit.mv1,0,1,4,0,-1
 punch,data/model/player/animation/Hook.mv1,0,1,3,0,60
-punch_conbo1,data/model/player/animation/punch_conbo_attacker/punch_conbo1.mv1,0,0.5,5,0,60
+punch_conbo1,data/model/player/animation/punch_conbo_attacker/punch_conbo1.mv1,0,0.8,5,0,60
 punch_conbo2,data/model/player/animation/punch_conbo_attacker/punch_conbo2.mv1,0,0.8,6,0,60
 punch_conbo3,data/model/player/animation/punch_conbo_attacker/punch_conbo3.mv1,0,0.8,7,0,60
 punch_conbo4,data/model/player/animation/punch_conbo_attacker/punch_conbo4.mv1,0,0.95,8,0,60
