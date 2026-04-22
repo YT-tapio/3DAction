@@ -27,7 +27,7 @@ void AIInput::Update()
 const bool AIInput::IsDash() const
 {
 
-	return FALSE;
+	return TRUE;
 }
 
 const bool AIInput::IsPunch() const
@@ -38,14 +38,14 @@ const bool AIInput::IsPunch() const
 
 const bool AIInput::IsAvoid() const
 {
-
 	return FALSE;
 }
 
 const VECTOR AIInput::GetMoveDir() const
 {
 	VECTOR dir = VectorAssistant::VGetZero();
-	//dir.x = 1.f;
+	dir.x = 1.f;
+	dir = VNorm(dir);
 	return dir;
 }
 

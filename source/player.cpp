@@ -40,6 +40,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	: CharacterBase("player")
 	, IPhysicsEventReceiver()
 	, name_(name)
+	, input_(input)
 {
 	camera_dir_ = camera_dir;
 	right_hand_pos_ = VectorAssistant::VGetZero();
@@ -66,7 +67,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	is_dash_ = FALSE;
 	is_attack_target_in_range_ = FALSE;
 	is_stop_ = FALSE;
-	input_ = input;
+	//input_ = input;
 	target_rot_y_ = 0;
 	speed_ = 0.f;
 }
@@ -347,7 +348,11 @@ void Player::Move()
 	
 	if (VSize(dir) > 0 && !is_stop_)
 	{
-		dir_ = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(*camera_dir_), VectorAssistant::VGetTan(dir));
+		auto input = std::dynamic_pointer_cast<const PlayerInput>(input_);
+		if (input != nullptr) 
+		{
+			dir_ = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(*camera_dir_), VectorAssistant::VGetTan(dir));
+		}
 		dir_ = VNorm(dir_);
 		
 		if (input_->IsDash())

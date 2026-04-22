@@ -35,6 +35,8 @@ protected:
 	std::shared_ptr<RigidBody> rigid_body_;
 	std::shared_ptr<BehaviorBase> punch_;
 
+	std::string my_name_;
+
 	VECTOR right_hand_pos_;
 
 	float fall_speed_;

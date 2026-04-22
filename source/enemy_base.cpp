@@ -1,5 +1,6 @@
 
 #include<iostream>
+#include<string>
 #include"DxLib.h"
 #include"enemy_base.h"
 #include"sphere.h"
@@ -24,7 +25,7 @@ EnemyBase::EnemyBase(const VECTOR& pos)
 	pos_ = pos;
 	right_hand_pos_ = VectorAssistant::VGetZero();
 	scale_ = VectorAssistant::VGetSame(0.05f);
-
+	my_name_ = "";
 	handle_ = MV1LoadModel("data/model/enemy/zako/Demon_T_Wiezzorek.mv1");
 	if (handle_ == -1) { printfDx("ì«Ç›çûÇ›ÉGÉâÅ[\n"); }
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f,0.1f);

@@ -384,6 +384,9 @@
     <ClCompile Include="source\attack_correction.cpp">
       <Filter>ソース ファイル\attack_correction</Filter>
     </ClCompile>
+    <ClCompile Include="source\enemy_group.cpp">
+      <Filter>ソース ファイル\enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -655,6 +658,9 @@
     </ClInclude>
     <ClInclude Include="source\attack_correction.h">
       <Filter>ソース ファイル\attack_correction</Filter>
+    </ClInclude>
+    <ClInclude Include="source\enemy_group.h">
+      <Filter>ソース ファイル\enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
