@@ -169,6 +169,12 @@
     <Filter Include="ソース ファイル\attack_correction">
       <UniqueIdentifier>{1c7d9171-14b8-4f8a-a8ec-068e81b550fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ai">
+      <UniqueIdentifier>{90bdf8a2-f958-4282-a18a-995f628e77ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\behavior_tree">
+      <UniqueIdentifier>{85fe82ad-e9ba-443d-9007-7be026c6f025}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -386,6 +392,15 @@
     </ClCompile>
     <ClCompile Include="source\enemy_group.cpp">
       <Filter>ソース ファイル\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="source\behavior_tree.cpp">
+      <Filter>ソース ファイル\behavior_tree</Filter>
+    </ClCompile>
+    <ClCompile Include="source\node_base.cpp">
+      <Filter>ソース ファイル\behavior_tree</Filter>
+    </ClCompile>
+    <ClCompile Include="source\entry_node.cpp">
+      <Filter>ソース ファイル\behavior_tree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -661,6 +676,15 @@
     </ClInclude>
     <ClInclude Include="source\enemy_group.h">
       <Filter>ソース ファイル\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\behavior_tree.h">
+      <Filter>ソース ファイル\behavior_tree</Filter>
+    </ClInclude>
+    <ClInclude Include="source\node_base.h">
+      <Filter>ソース ファイル\behavior_tree</Filter>
+    </ClInclude>
+    <ClInclude Include="source\entry_node.h">
+      <Filter>ソース ファイル\behavior_tree</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

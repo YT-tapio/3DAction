@@ -25,6 +25,8 @@ void Pad::Init()
 	}
 	left_stick_pos_		= VectorAssistant::VGetZero();
 	right_stick_pos_	= VectorAssistant::VGetZero();
+	left_trigger_ = 0;
+	right_trigger_ = 0;
 }
 
 void Pad::Update()
@@ -34,6 +36,9 @@ void Pad::Update()
 	ButtonUpdate(pad);
 	left_stick_pos_		= VectorAssistant::VGet2D(pad.ThumbLX, pad.ThumbLY);
 	right_stick_pos_		= VectorAssistant::VGet2D(pad.ThumbRX, pad.ThumbRY);
+
+	right_trigger_		= pad.RightTrigger;	// RT
+	left_trigger_		= pad.LeftTrigger;		// LT
 
 	// デッドゾーンの範囲内なら強制的に0にする
 	CheckDeadZone();
@@ -66,14 +71,14 @@ float Pad::GetReleaseTimeButton(int pad_code)
 float Pad::GetLeftStickRatio()
 {
 	float left_stick_ratio = 0.f;
-	left_stick_ratio = VSize(left_stick_pos_) / kMaxStickSizeMax;
+	left_stick_ratio = VSize(left_stick_pos_) / kMaxStickSize;
 	return left_stick_ratio;
 }
 
 float Pad::GetRightStickRatio()
 {
 	float right_stick_ratio = 0.f;
-	right_stick_ratio = VSize(right_stick_pos_) / kMaxStickSizeMax;
+	right_stick_ratio = VSize(right_stick_pos_) / kMaxStickSize;
 	return right_stick_ratio;
 }
 

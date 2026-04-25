@@ -147,6 +147,7 @@
     <ClCompile Include="source\avoid.cpp" />
     <ClCompile Include="source\avoid_skill.cpp" />
     <ClCompile Include="source\behavior_base.cpp" />
+    <ClCompile Include="source\behavior_tree.cpp" />
     <ClCompile Include="source\check_my_area.cpp" />
     <ClCompile Include="source\conbo.cpp" />
     <ClCompile Include="source\conbo_action.cpp" />
@@ -159,7 +160,9 @@
     <ClCompile Include="source\enemy_base.cpp" />
     <ClCompile Include="source\attack_base.cpp" />
     <ClCompile Include="source\enemy_group.cpp" />
+    <ClCompile Include="source\entry_node.cpp" />
     <ClCompile Include="source\input_change_interface.cpp" />
+    <ClCompile Include="source\node_base.cpp" />
     <ClCompile Include="source\player_group.cpp" />
     <ClCompile Include="source\punch.cpp" />
     <ClCompile Include="source\punch_skill.cpp" />
@@ -217,6 +220,7 @@
     <ClInclude Include="source\area_heal_skill.h" />
     <ClInclude Include="source\attack_correction.h" />
     <ClInclude Include="source\avoid_skill.h" />
+    <ClInclude Include="source\behavior_tree.h" />
     <ClInclude Include="source\conbo.h" />
     <ClInclude Include="source\conbo_action.h" />
     <ClInclude Include="source\conbo_skill.h" />
@@ -228,7 +232,9 @@
     <ClInclude Include="source\effect_id.h" />
     <ClInclude Include="source\effect_manager.h" />
     <ClInclude Include="source\enemy_group.h" />
+    <ClInclude Include="source\entry_node.h" />
     <ClInclude Include="source\input_change_interface.h" />
+    <ClInclude Include="source\node_base.h" />
     <ClInclude Include="source\player_group.h" />
     <ClInclude Include="source\punch_skill.h" />
     <ClInclude Include="source\skill_base.h" />

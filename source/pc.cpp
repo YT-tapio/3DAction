@@ -66,9 +66,8 @@ float PC::GetPushingTimeMouseButton(int mouse_code)
 	float time = -1.f;
 	if (mouse_state_[mouse_code].is_pressed)
 	{
-		time = key_state_[mouse_code].pushing_time;
+		time = mouse_state_[mouse_code].pushing_time;
 	}
-
 	return time;
 }
 
@@ -89,7 +88,6 @@ float PC::GetReleaseTimeMouseButton(int mouse_code)
 	{
 		time = mouse_state_[mouse_code].releasing_time;
 	}
-
 	return time;
 }
 
@@ -149,6 +147,7 @@ void PC::UpdateKey()
 			key_state_[i].time = GetNowCount();//タイマーやフレームの更新
 		}
 
+		// 経過時間
 		float elapsed_time = (GetNowCount() - key_state_[i].time) / 1000.f;
 		if (key_state_[i].is_pressed)
 		{
