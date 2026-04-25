@@ -44,8 +44,8 @@ const bool AIInput::IsAvoid() const
 const VECTOR AIInput::GetMoveDir() const
 {
 	VECTOR dir = VectorAssistant::VGetZero();
-	dir.x = 1.f;
-	dir = VNorm(dir);
+	//dir.x = 1.f;
+	//dir = VNorm(dir);
 	return dir;
 }
 

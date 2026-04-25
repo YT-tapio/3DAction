@@ -150,6 +150,7 @@
     <ClCompile Include="source\avoid_skill.cpp" />
     <ClCompile Include="source\behavior_base.cpp" />
     <ClCompile Include="source\behavior_tree.cpp" />
+    <ClCompile Include="source\branch_node.cpp" />
     <ClCompile Include="source\check_my_area.cpp" />
     <ClCompile Include="source\composite_node.cpp" />
     <ClCompile Include="source\conbo.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="source\attack_node.h" />
     <ClInclude Include="source\avoid_skill.h" />
     <ClInclude Include="source\behavior_tree.h" />
+    <ClInclude Include="source\branch_node.h" />
     <ClInclude Include="source\composite_node.h" />
     <ClInclude Include="source\conbo.h" />
     <ClInclude Include="source\conbo_action.h" />

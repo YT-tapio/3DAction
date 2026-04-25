@@ -5,6 +5,7 @@
 class RigidBody;
 class Punch;
 class BehaviorBase;
+class BehaviorTree;
 
 class EnemyBase : public CharacterBase, public IPhysicsEventReceiver
 {
@@ -34,6 +35,7 @@ protected:
 
 	std::shared_ptr<RigidBody> rigid_body_;
 	std::shared_ptr<BehaviorBase> punch_;
+	std::shared_ptr<BehaviorTree> behavior_tree_;
 
 	std::string my_name_;
 

@@ -1,4 +1,3 @@
-
 #include<iostream>
 #include<string>
 #include"DxLib.h"
@@ -15,6 +14,7 @@
 #include"animator_enemy.h"
 #include"punch.h"
 #include"check_my_area.h"
+#include"behavior_tree.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos)
 	: CharacterBase("enemy")
@@ -31,7 +31,7 @@ EnemyBase::EnemyBase(const VECTOR& pos)
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f,0.1f);
 	fall_speed_ = 0.f;
 	is_ground_ = FALSE;
-	
+	behavior_tree_ = std::make_shared<BehaviorTree>();
 }
 
 EnemyBase::~EnemyBase()
@@ -72,6 +72,7 @@ void EnemyBase::Update()
 	animator_->Update();
 	UpdateBone();
 	punch_->Update();
+	behavior_tree_->Update();
 }
 
 void EnemyBase::LateUpdate()
