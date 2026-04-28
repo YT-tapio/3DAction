@@ -158,6 +158,7 @@
     <ClCompile Include="source\conbo_skill.cpp" />
     <ClCompile Include="source\csv_file_assistant.cpp" />
     <ClCompile Include="source\csv_loader.cpp" />
+    <ClCompile Include="source\decorator_node.cpp" />
     <ClCompile Include="source\effect_base.cpp" />
     <ClCompile Include="source\effect_data.cpp" />
     <ClCompile Include="source\effect_manager.cpp" />
@@ -235,6 +236,7 @@
     <ClInclude Include="source\conbo_skill.h" />
     <ClInclude Include="source\csv_file_assistant.h" />
     <ClInclude Include="source\csv_loader.h" />
+    <ClInclude Include="source\decorator_node.h" />
     <ClInclude Include="source\effect_base.h" />
     <ClInclude Include="source\effect_data.h" />
     <ClInclude Include="source\effect_end_state.h" />

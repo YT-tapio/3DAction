@@ -5,15 +5,22 @@ class CompositeNode :public NodeBase
 {
 public:
 
-	CompositeNode(std::map<int, std::shared_ptr<NodeBase>, std::greater<int>> nodes);
+	CompositeNode(std::vector<std::shared_ptr<NodeBase>> nodes);
 
 	virtual ~CompositeNode() override;
 
 	NodeStatus Update() override;
 
+protected:
+
+	// •¡”‚Ìnode‚ğ‚Â
+	std::vector<std::shared_ptr<NodeBase>> nodes_;
+
+	// Œ»İ‚Ìƒm[ƒh
+	int current_node_;
+
 private:
 
-	// •¡”‚Ì—Dæ‡ˆÊ‚Ì‚ ‚énode‚ğ‚Â
-	std::map<int, std::shared_ptr<NodeBase>,std::greater<int>> nodes_;
+	
 
 };

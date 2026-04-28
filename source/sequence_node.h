@@ -6,7 +6,7 @@ class SequenceNode : public CompositeNode
 {
 public:
 
-	SequenceNode(std::map<int, std::shared_ptr<NodeBase>, std::greater<int>> nodes);
+	SequenceNode(std::vector<std::shared_ptr<NodeBase>> nodes);
 
 	~SequenceNode() override;
 

@@ -1,9 +1,11 @@
-#include<map>
+#include<vector>
 #include<memory>
 #include"composite_node.h"
 #include"node_status.h"
-CompositeNode::CompositeNode(std::map<int, std::shared_ptr<NodeBase>,std::greater<int>> nodes)
+
+CompositeNode::CompositeNode(std::vector<std::shared_ptr<NodeBase>> nodes)
 	:nodes_(nodes)
+	, current_node_(0)
 {
 
 }

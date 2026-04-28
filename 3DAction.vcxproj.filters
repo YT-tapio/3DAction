@@ -187,6 +187,9 @@
     <Filter Include="ソース ファイル\behavior_tree\node\branch">
       <UniqueIdentifier>{88da2ccf-bc7a-424d-8044-7aa7df6d53a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\behavior_tree\decorator">
+      <UniqueIdentifier>{afc52f43-bbb2-4128-8cea-7ac695d09f56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -428,6 +431,9 @@
     </ClCompile>
     <ClCompile Include="source\branch_node.cpp">
       <Filter>ソース ファイル\behavior_tree\node\branch</Filter>
+    </ClCompile>
+    <ClCompile Include="source\decorator_node.cpp">
+      <Filter>ソース ファイル\behavior_tree\decorator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -730,6 +736,9 @@
     </ClInclude>
     <ClInclude Include="source\node_status.h">
       <Filter>ソース ファイル\behavior_tree\node</Filter>
+    </ClInclude>
+    <ClInclude Include="source\decorator_node.h">
+      <Filter>ソース ファイル\behavior_tree\decorator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
