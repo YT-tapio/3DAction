@@ -10,7 +10,7 @@ public:
 
 	~SelectorNode();
 
-	NodeStatus Update();
+	BehaviorStatus Update();
 
 private:
 

@@ -3,7 +3,7 @@
 #include<utility>
 #include"node_base.h"
 #include"branch_node.h"
-#include"node_status.h"
+#include"behavior_status.h"
 
 BranchNode::BranchNode(std::pair<std::shared_ptr<NodeBase>,std::shared_ptr<NodeBase>> nodes,std::function<bool()> condition)
 	: NodeBase()
@@ -18,7 +18,7 @@ BranchNode::~BranchNode()
 
 }
 
-NodeStatus BranchNode::Update()
+BehaviorStatus BranchNode::Update()
 {
 	if (condition_)
 	{
@@ -29,5 +29,5 @@ NodeStatus BranchNode::Update()
 		nodes_.second->Update();
 	}
 
-	return NodeStatus::kSuccess;
+	return BehaviorStatus::kSuccess;
 }

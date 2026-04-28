@@ -9,7 +9,7 @@ public:
 
 	virtual ~CompositeNode() override;
 
-	NodeStatus Update() override;
+	BehaviorStatus Update() override;
 
 protected:
 

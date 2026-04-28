@@ -1,7 +1,7 @@
 #include<vector>
 #include<memory>
 #include"composite_node.h"
-#include"node_status.h"
+#include"behavior_status.h"
 
 CompositeNode::CompositeNode(std::vector<std::shared_ptr<NodeBase>> nodes)
 	:nodes_(nodes)
@@ -15,7 +15,7 @@ CompositeNode::~CompositeNode()
 
 }
 
-NodeStatus CompositeNode::Update()
+BehaviorStatus CompositeNode::Update()
 {
-	return NodeStatus::kSuccess;
+	return BehaviorStatus::kSuccess;
 }

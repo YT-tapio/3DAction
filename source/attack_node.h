@@ -9,7 +9,7 @@ public:
 
 	~AttackNode() override;
 
-	NodeStatus Update() override;
+	BehaviorStatus Update() override;
 
 private:
 

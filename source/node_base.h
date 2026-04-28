@@ -1,6 +1,6 @@
 #pragma once
 
-enum class NodeStatus;
+enum class BehaviorStatus;
 
 class NodeBase
 {
@@ -10,7 +10,7 @@ public:
 
 	virtual ~NodeBase();
 
-	virtual NodeStatus Update();
+	virtual BehaviorStatus Update();
 
 protected:
 

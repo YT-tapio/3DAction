@@ -6,14 +6,18 @@ class DecoratorNode : public NodeBase
 {
 public:
 
-	DecoratorNode();
+	DecoratorNode(std::unique_ptr<NodeBase> node_);
 
 	~DecoratorNode() override;
 
-	NodeStatus Update() override;
+	BehaviorStatus Update() override;
+
+protected:
+
+	std::unique_ptr<NodeBase> node_;
 
 private:
 
-
+	
 
 };

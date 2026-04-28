@@ -1,10 +1,12 @@
 #include<vector>
+#include<memory>
 #include"node_base.h"
 #include"decorator_node.h"
-#include"node_status.h"
+#include"behavior_status.h"
 
-DecoratorNode::DecoratorNode()
+DecoratorNode::DecoratorNode(std::unique_ptr<NodeBase> node)
 	:NodeBase()
+	,node_(std::move(node))
 {
 
 }
@@ -14,10 +16,10 @@ DecoratorNode::~DecoratorNode()
 
 }
 
-NodeStatus DecoratorNode::Update()
+BehaviorStatus DecoratorNode::Update()
 {
 	// èåèÇÇ©Ç≠
+	
 
-
-	return NodeStatus::kFailure;
+	return BehaviorStatus::kFailure;
 }

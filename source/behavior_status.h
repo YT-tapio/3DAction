@@ -1,6 +1,6 @@
 #pragma once
 
-enum class NodeStatus
+enum class BehaviorStatus
 {
 	kSuccess,
 	kFailure,

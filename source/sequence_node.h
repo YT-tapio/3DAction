@@ -10,7 +10,7 @@ public:
 
 	~SequenceNode() override;
 
-	NodeStatus Update() override;
+	BehaviorStatus Update() override;
 
 private:
 

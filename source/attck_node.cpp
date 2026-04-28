@@ -2,7 +2,7 @@
 #include"DxLib.h"
 #include"action_node.h"
 #include"attack_node.h"
-#include"node_status.h"
+#include"behavior_status.h"
 
 AttackNode::AttackNode()
 	:ActionNode()
@@ -15,12 +15,12 @@ AttackNode::~AttackNode()
 
 }
 
-NodeStatus AttackNode::Update()
+BehaviorStatus AttackNode::Update()
 {
 	static bool test = FALSE;
-	if (test) { return NodeStatus::kSuccess; }
+	if (test) { return BehaviorStatus::kSuccess; }
 	printfDx("wow");
 	test = TRUE;
 
-	return NodeStatus::kSuccess;
+	return BehaviorStatus::kSuccess;
 }

@@ -2,7 +2,7 @@
 #include<memory>
 #include"composite_node.h"
 #include"sequence_node.h"
-#include"node_status.h"
+#include"behavior_status.h"
 
 SequenceNode::SequenceNode(std::vector<std::shared_ptr<NodeBase>> nodes)
 	: CompositeNode(nodes)
@@ -15,7 +15,7 @@ SequenceNode::~SequenceNode()
 
 }
 
-NodeStatus SequenceNode::Update()
+BehaviorStatus SequenceNode::Update()
 {
 	// 優先度の高いnodeから実行していく
 	// sucsessの場合はループする
@@ -27,23 +27,23 @@ NodeStatus SequenceNode::Update()
 		switch (status)
 		{
 			//実行成功(終了)
-		case NodeStatus::kSuccess:
+		case BehaviorStatus::kSuccess:
 			// 成功したら次のノードへ
 			current_node_++;
 			break;
 
 			// 実行中
-		case NodeStatus::kRunning:
-			return NodeStatus::kRunning;
+		case BehaviorStatus::kRunning:
+			return BehaviorStatus::kRunning;
 			break;
 
 			// 実行失敗
-		case NodeStatus::kFailure:
+		case BehaviorStatus::kFailure:
 			current_node_ = 0;
-			return NodeStatus::kFailure;
+			return BehaviorStatus::kFailure;
 			break;
 		}
 	}
 	// 全て成功なら成功を返す
-	return NodeStatus::kSuccess;
+	return BehaviorStatus::kSuccess;
 }

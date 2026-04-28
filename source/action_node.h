@@ -11,7 +11,7 @@ public:
 
 	virtual ~ActionNode() override;
 	
-	virtual NodeStatus Update() override;
+	virtual BehaviorStatus Update() override;
 
 private:
 
