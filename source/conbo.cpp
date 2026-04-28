@@ -8,6 +8,7 @@
 #include"object_base.h"
 #include"character_base.h"
 #include"animator_base.h"
+#include"behavior_status.h"
 
 Conbo::Conbo(std::weak_ptr<ObjectBase> owner,float min_ratio, float max_ratio, float go_next_timing, std::string my_anim_name, std::shared_ptr<BehaviorBase> behavior)
 	: BehaviorBase(owner)
@@ -30,9 +31,9 @@ void Conbo::Init()
 	behavior_->Init();
 }
 
-void Conbo::Update()
+BehaviorStatus Conbo::Update()
 {
-	behavior_->Update();
+	return behavior_->Update();
 }
 
 void Conbo::Exit()

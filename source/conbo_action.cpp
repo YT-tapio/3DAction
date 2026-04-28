@@ -9,6 +9,7 @@
 #include"conbo.h"
 #include"character_base.h"
 #include"animator_base.h"
+#include"behavior_status.h"
 
 ConboAction::ConboAction(std::weak_ptr<ObjectBase>owner, std::unordered_map<int, std::shared_ptr<Conbo>> conbos)
 	: BehaviorBase(owner)
@@ -35,14 +36,14 @@ void ConboAction::Init()
 	go_next_ = FALSE;
 }
 
-void ConboAction::Update()
+BehaviorStatus ConboAction::Update()
 {
 	//go_nextされているときにanimationが
 
 	//キャラクターなのが前提ではある
 	auto character = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
 	is_change_ = FALSE;
-	if (character == nullptr) { return; }
+	if (character == nullptr) { return BehaviorStatus::kFailure; }
 	if(CheckNextConbo(character))
 	{
 		conbos_[current_conbo_]->Exit();
@@ -53,7 +54,7 @@ void ConboAction::Update()
 		is_change_ = TRUE;
 	}
 
-	conbos_[current_conbo_]->Update();
+	return conbos_[current_conbo_]->Update();
 }
 
 void ConboAction::Exit()

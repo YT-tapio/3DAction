@@ -1,6 +1,7 @@
 #pragma once
 #include"behavior_base.h"
 
+enum class BehaviorStatus;
 class ObjectBase;
 class CheckMyArea;
 
@@ -15,7 +16,7 @@ public:
 
 	virtual void Init() override;
 
-	virtual void Update() override;
+	virtual BehaviorStatus Update() override;
 
 	virtual void Draw() override;
 
@@ -23,7 +24,7 @@ public:
 
 protected:
 
-	virtual void Action(std::shared_ptr<ObjectBase> object);
+	virtual BehaviorStatus Action(std::shared_ptr<ObjectBase> object);
 
 	std::shared_ptr<CheckMyArea> my_area_;
 

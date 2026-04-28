@@ -1,6 +1,7 @@
 #pragma once
 #include"area_heal.h"
 
+enum class BehaviorStatus;
 //player‚©‚çheal‚ðŽó‚¯‚é‚à‚Ì‚ðheal‚·‚é
 class AreaHealGivePlayer : public AreaHeal
 {
@@ -16,7 +17,7 @@ public:
 
 protected:
 
-	virtual void Action(std::shared_ptr<ObjectBase> object)override;
+	virtual BehaviorStatus Action(std::shared_ptr<ObjectBase> object)override;
 
 private:
 

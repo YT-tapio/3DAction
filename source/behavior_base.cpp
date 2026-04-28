@@ -1,6 +1,7 @@
 #include<memory>
 #include"behavior_base.h"
 #include"object_base.h"
+#include"behavior_status.h"
 
 BehaviorBase::BehaviorBase(std::weak_ptr<ObjectBase> owner)
 	:owner_(owner)
@@ -19,9 +20,10 @@ void BehaviorBase::Init()
 
 }
 
-void BehaviorBase::Update()
+BehaviorStatus BehaviorBase::Update()
 {
 
+	return BehaviorStatus::kFailure;
 }
 
 void BehaviorBase::Exit()

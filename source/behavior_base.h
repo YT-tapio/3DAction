@@ -1,5 +1,6 @@
 #pragma once
 
+enum class BehaviorStatus;
 class ObjectBase;
 
 class BehaviorBase
@@ -12,7 +13,7 @@ public:
 
 	virtual void Init();
 
-	virtual void Update();
+	virtual BehaviorStatus Update();
 
 	virtual void Exit();
 

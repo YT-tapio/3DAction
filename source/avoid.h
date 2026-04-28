@@ -11,7 +11,7 @@ public:
 
 	void Init() override;
 
-	void Update() override;
+	BehaviorStatus Update() override;
 
 	void Debug() override;
 

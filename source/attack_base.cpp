@@ -2,6 +2,7 @@
 #include"attack_base.h"
 #include"object_base.h"
 #include"physics.h"
+#include"behavior_status.h"
 
 AttackBase::AttackBase(std::weak_ptr<ObjectBase> owner)
 	: BehaviorBase(owner)
@@ -19,9 +20,9 @@ void AttackBase::Init()
 
 }
 
-void AttackBase::Update()
+BehaviorStatus AttackBase::Update()
 {
-
+	return BehaviorStatus::kFailure;
 }
 
 void AttackBase::Debug()

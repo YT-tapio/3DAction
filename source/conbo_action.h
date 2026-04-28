@@ -1,6 +1,7 @@
 #pragma once
 #include"behavior_base.h"
 
+enum class BehaviorStatus;
 class ObjectBase;
 class Conbo;
 class CharacterBase;
@@ -15,7 +16,7 @@ public:
 
 	void Init() override;
 
-	void Update() override;
+	BehaviorStatus Update() override;
 	
 	void Exit() override;
 

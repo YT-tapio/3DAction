@@ -2,6 +2,7 @@
 #include"behavior_base.h"
 #include"physics_interface.h"
 
+enum class BehaviorStatus;
 class ObjectBase;
 class RigidBody;
 
@@ -15,7 +16,7 @@ public:
 
 	void Init() override;
 
-	void Update() override;
+	BehaviorStatus Update() override;
 
 	void Debug() override;
 

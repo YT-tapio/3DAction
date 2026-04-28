@@ -11,6 +11,7 @@
 #include"player.h"
 #include"object_base.h"
 #include"animator_base.h"
+#include"behavior_status.h"
 
 Punch::Punch(std::weak_ptr<ObjectBase> owner, VECTOR* pos,
 	std::string my_anim_name, float min_coll_ratio, float max_coll_ratio, std::shared_ptr<RigidBody> body)
@@ -35,7 +36,7 @@ void Punch::Init()
 	rigid_body_->NotActive();
 }
 
-void Punch::Update()
+BehaviorStatus Punch::Update()
 {
 	// どうしよう
 	// 正直今この中ではただ手に当たり判定を持たせているだけなんだよな
@@ -43,15 +44,17 @@ void Punch::Update()
 	rigid_body_->NotActive();
 	auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
 	
-	if (owner == nullptr) { return; }
+	if (owner == nullptr) { return BehaviorStatus::kFailure; }
 	auto owner_animator = owner->GetAnimator();
-	if (owner_animator == nullptr) { return; }
-	// 当たり判定をのactiveをします
-	
+	if (owner_animator == nullptr) { return BehaviorStatus::kFailure; }
+
+	//TODO：おわりのタイミングになったらsuccessするように
+
 	float punch_play_time = owner_animator->GetRatio(my_anim_name_);
-	
+	// 当たり判定をのactiveをします
 	if (punch_play_time > min_coll_ratio_ && punch_play_time < max_coll_ratio_) { rigid_body_->Active(); }
 
+	return BehaviorStatus::kRunning;
 }
 
 void Punch::Exit()

@@ -8,7 +8,7 @@
 #include"object_base.h"
 #include"character_base.h"
 #include"animator_base.h"
-
+#include"behavior_status.h"
 Avoid::Avoid(std::weak_ptr<ObjectBase> owner)
 	: BehaviorBase(owner)
 {
@@ -25,7 +25,7 @@ void Avoid::Init()
 
 }
 
-void Avoid::Update()
+BehaviorStatus Avoid::Update()
 {
 	// animationの時間によってcharacterを無敵にする
 
@@ -35,14 +35,14 @@ void Avoid::Update()
 	if (chara == nullptr)
 	{
 		printfDx("こいつには行動を付与できません");
-		return;
+		return BehaviorStatus::kFailure;
 	}
 
 	//自分の行動を起こせるanimationかをチェック
 	if (chara->GetAnimator()->GetNowAnimName() != my_anim_name_) 
 	{
 		chara->SetInvincible(FALSE);
-		return;
+		return BehaviorStatus::kFailure;
 	}
 
 	float now_play_time_ = chara->GetAnimator()->GetPlayTime(my_anim_name_);
@@ -52,11 +52,14 @@ void Avoid::Update()
 	if (now_play_time_ > 0 && now_play_time_ < chara->GetAnimator()->GetTotalTime("avoid"))
 	{ 
 		chara->SetInvincible(TRUE);
+		return BehaviorStatus::kRunning;
 	}
 	else
 	{
 		chara->SetInvincible(FALSE);
+		return BehaviorStatus::kSuccess;
 	}
+	return BehaviorStatus::kSuccess;
 }
 
 void Avoid::Debug()
