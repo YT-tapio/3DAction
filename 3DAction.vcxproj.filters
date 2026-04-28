@@ -728,6 +728,9 @@
     <ClInclude Include="source\branch_node.h">
       <Filter>ソース ファイル\behavior_tree\node\branch</Filter>
     </ClInclude>
+    <ClInclude Include="source\node_status.h">
+      <Filter>ソース ファイル\behavior_tree\node</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\json\player_data.json">

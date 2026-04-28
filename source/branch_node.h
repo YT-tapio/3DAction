@@ -11,7 +11,7 @@ public:
 
 	~BranchNode() override;
 
-	void Update() override;
+	NodeStatus Update() override;
 
 private:
 

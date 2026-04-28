@@ -6,11 +6,11 @@ class SelectorNode : public CompositeNode
 {
 public:
 
-	SelectorNode();
+	SelectorNode(std::map<int, std::shared_ptr<NodeBase>, std::greater<int>> nodes);
 
 	~SelectorNode();
 
-	void Update();
+	NodeStatus Update();
 
 private:
 

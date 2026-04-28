@@ -1,5 +1,5 @@
 #include"node_base.h"
-
+#include"node_status.h"
 
 NodeBase::NodeBase()
 {
@@ -11,7 +11,7 @@ NodeBase::~NodeBase()
 
 }
 
-void NodeBase::Update()
+NodeStatus NodeBase::Update()
 {
-
+	return NodeStatus::kSuccess;
 }

@@ -16,5 +16,5 @@ BehaviorTree::~BehaviorTree()
 
 void BehaviorTree::Update()
 {
-	
+	node_->Update();
 }

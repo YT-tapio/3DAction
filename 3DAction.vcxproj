@@ -243,6 +243,7 @@
     <ClInclude Include="source\enemy_group.h" />
     <ClInclude Include="source\input_change_interface.h" />
     <ClInclude Include="source\node_base.h" />
+    <ClInclude Include="source\node_status.h" />
     <ClInclude Include="source\player_group.h" />
     <ClInclude Include="source\punch_skill.h" />
     <ClInclude Include="source\selector_node.h" />

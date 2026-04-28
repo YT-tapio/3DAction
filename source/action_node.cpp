@@ -1,5 +1,6 @@
 #include<memory>
 #include"action_node.h"
+#include"node_status.h"
 
 ActionNode::ActionNode()
 	:NodeBase()
@@ -12,8 +13,9 @@ ActionNode::~ActionNode()
 
 }
 
-void ActionNode::Update()
+NodeStatus ActionNode::Update()
 {
 	// アクションの実行
 	action_->Update();
+	return NodeStatus::kSuccess;
 }
