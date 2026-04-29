@@ -4,13 +4,25 @@
 #include"contact.h"
 #include"sort_poly.h"
 
+
 /// 押し戻しを行う(velocityを返す)
 namespace Resolve
 {
 
-	inline VECTOR CapsuleCapsule()
+	inline VECTOR CapsuleCapsule(const VECTOR& capsule1_start_pos, const VECTOR& capsule1_end_pos, const float& capsule1_r, const VECTOR& capsule1_velocity,
+		const VECTOR& capsule2_start_pos, const VECTOR& capsule2_end_pos, const float& capsule2_r)
 	{
+		VECTOR offset_vel = capsule1_velocity;
 
+		// セグメントの距離
+		VECTOR segment_dist = VectorAssistant::VGetSegmentDist(capsule1_start_pos, capsule1_end_pos, capsule2_start_pos, capsule2_end_pos);
+		VECTOR norm_segment_dist = VNorm(segment_dist);
+		// 外積(1.f～-1.f)
+		float velocity_to_segment_dist_dot = VDot(capsule1_velocity,norm_segment_dist);
+		VECTOR pushback_vel = VScale(norm_segment_dist, velocity_to_segment_dist_dot);
+		if (velocity_to_segment_dist_dot > 0.f) { offset_vel = VSub(offset_vel, pushback_vel); }
+
+		return offset_vel;
 	}
 
 	//セグメントとポリゴンの押し戻し(壁ずり)
@@ -73,7 +85,7 @@ namespace Resolve
 		}
 		return offset_vel;
 	}
-
+	
 	inline VECTOR SphereMesh(const VECTOR& center_pos, const float& r, const VECTOR& velocity, const int& mesh, Contact& contact)
 	{
 		VECTOR offset_vel = velocity;

@@ -75,7 +75,7 @@ void Physics::Update()
 				if (main_body->GetIsKinematic()) { continue; }
 
 				// ‰Ÿ‚µ–ß‚µ
-				VECTOR offset_vel = my_coll->FixPos(main_body->GetPosition(), main_body->GetVelocity(), target_body->GetVelocity(), target_coll, contact);
+				VECTOR offset_vel = my_coll->FixPos(main_body->GetPosition(), main_body->GetVelocity(), target_body->GetPosition(), target_coll, contact);
 				main_body->Update(offset_vel);
 			}
 			else

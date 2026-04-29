@@ -17,7 +17,6 @@ public:
 
 	void Debug() override;
 
-
 protected:
 
 

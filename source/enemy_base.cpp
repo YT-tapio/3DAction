@@ -94,11 +94,13 @@ void EnemyBase::Debug()
 void EnemyBase::OnHit(std::shared_ptr<IPhysicsEventReceiver> obj)
 {
 	auto punch = std::dynamic_pointer_cast<Punch>(obj);
-
 	if (punch != nullptr)
 	{
-		animator_->PlayRequest("on_damage");
-		//printfDx("‚¢‚Ä\n");
+		if (std::dynamic_pointer_cast<EnemyBase>(punch->GetOwner().lock()) == nullptr)
+		{
+			animator_->PlayRequest("on_damage");
+			//printfDx("‚¢‚Ä\n");
+		}
 	}
 
 }

@@ -234,13 +234,13 @@ namespace VectorAssistant
 	{
 		VECTOR proj = VGet(0.f, 0.f, 0.f);
 
-		//分母
+		// 分母
 		float denominator = 0.f;
-		//vectorのサイズを受け取る
+		// vectorのサイズを受け取る
 		float vec_size = VSize(me);
 		denominator = vec_size * vec_size;
 
-		//分子
+		// 分子
 		float molecule = 0.f;
 		molecule = VDot(me, other);
 		float num = (molecule / denominator);
@@ -267,36 +267,44 @@ namespace VectorAssistant
 	}
 
 	
-	inline float VGetSegmentDist(const VECTOR& vec1_start_pos, const VECTOR& vec1_end_pos,const VECTOR& vec2_start_pos,const VECTOR& vec2_end_pos)
+	/// <summary>
+	/// セグメント同士のの距離をvectorで返す
+	/// </summary>
+	/// <param name="vec1_start_pos"></param>
+	/// <param name="vec1_end_pos"></param>
+	/// <param name="vec2_start_pos"></param>
+	/// <param name="vec2_end_pos"></param>
+	/// <returns></returns>
+	inline VECTOR VGetSegmentDist(const VECTOR& vec1_start_pos, const VECTOR& vec1_end_pos, const VECTOR& vec2_start_pos, const VECTOR& vec2_end_pos)
 	{
+		VECTOR dist = VectorAssistant::VGetZero();
+
 		const float kScaleMax = 1.f;
 		const float kScaleMin = 0.f;
 
 		// この浮動小数点以下は0とみなす
 		const float kZeroPoint = 0.00001f;
 
-		float near_dist_size = 0.f;
-
-		VECTOR vec1_segment				= VSub(vec1_end_pos, vec1_start_pos);	// 
-		VECTOR vec2_segment				= VSub(vec2_end_pos, vec2_start_pos);	// 
-		VECTOR vec1_to_vec2_start_pos	= VSub(vec1_start_pos, vec2_start_pos);	// 始点から始点までの距離
+		VECTOR vec1_segment = VSub(vec1_end_pos, vec1_start_pos);	// 
+		VECTOR vec2_segment = VSub(vec2_end_pos, vec2_start_pos);	// 
+		VECTOR vec1_to_vec2_start_pos = VSub(vec1_start_pos, vec2_start_pos);	// 始点から始点までの距離
 
 		float a = VDot(vec1_segment, vec1_segment);					// セグメントの2乗のサイズ
 		float b = VDot(vec1_segment, vec2_segment);					// 
-		float c = VDot(vec2_segment, vec2_segment);					// 
+		float c = VDot(vec2_segment, vec2_segment);						// 
 		float d = VDot(vec1_segment, vec1_to_vec2_start_pos);		// 
 		float e = VDot(vec2_segment, vec1_to_vec2_start_pos);		// 
 
 		float parallel_num = a * c - b * b;	// 平行かどうかを求めます
 		float vec1_scale;					// vec1のセグメントの最短距離のposのscale値
 		float vec2_scale;					// vec2のセグメントの最短距離のposのscale値
-		if (parallel_num < kZeroPoint) 
-		{ 
-			vec1_scale = 0.0f; 
-			vec2_scale = (b > c ? d / b : e / c); 
-		} 
-		else 
-		{ 
+		if (parallel_num < kZeroPoint)
+		{
+			vec1_scale = 0.0f;
+			vec2_scale = (b > c ? d / b : e / c);
+		}
+		else
+		{
 			vec1_scale = (b * e - c * d) / parallel_num;
 			vec2_scale = (a * e - b * d) / parallel_num;
 		}
@@ -307,8 +315,24 @@ namespace VectorAssistant
 		VECTOR vec1_near_pos = VAdd(vec1_start_pos, VScale(vec1_segment, vec1_scale));
 		VECTOR vec2_near_pos = VAdd(vec2_start_pos, VScale(vec2_segment, vec2_scale));
 
-		near_dist_size = VSize(VSub(vec2_near_pos, vec1_near_pos));
+		dist = VSub(vec2_near_pos, vec1_near_pos);
 
+		return dist;
+	}
+	
+	/// <summary>
+	/// セグメント同士の距離を返す
+	/// </summary>
+	/// <param name="vec1_start_pos"></param>
+	/// <param name="vec1_end_pos"></param>
+	/// <param name="vec2_start_pos"></param>
+	/// <param name="vec2_end_pos"></param>
+	/// <returns></returns>
+	inline float VGetSegmentDistSize(const VECTOR& vec1_start_pos, const VECTOR& vec1_end_pos,const VECTOR& vec2_start_pos,const VECTOR& vec2_end_pos)
+	{
+		float near_dist_size = 0.f;
+
+		near_dist_size = VSize(VGetSegmentDist(vec1_start_pos, vec1_end_pos, vec2_start_pos, vec2_end_pos));
 		return near_dist_size;
 	}
 

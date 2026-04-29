@@ -154,7 +154,7 @@ namespace Collision
 			return (dist < all_size);
 		}
 
-		dist_size = VectorAssistant::VGetSegmentDist(capsule1_start_pos, capsule1_end_pos, capsule2_start_pos, capsule2_end_pos);
+		dist_size = VectorAssistant::VGetSegmentDistSize(capsule1_start_pos, capsule1_end_pos, capsule2_start_pos, capsule2_end_pos);
 
 		return (all_size > dist_size);
 	}

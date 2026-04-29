@@ -41,7 +41,6 @@ bool Capsule::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTO
 	VECTOR end_pos		= VAdd(start_pos, VGet(0.f, vertical_, 0.f));
 
 	// colliderのキャッシュを行う
-
 	switch (other_coll->GetName())
 	{
 	case ColliderName::kAABB:
@@ -97,7 +96,7 @@ bool Capsule::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTO
 
 VECTOR Capsule::FixPos(const VECTOR& my_pos, const VECTOR& vel, const VECTOR& other_pos, std::shared_ptr<ColliderBase> other_coll, Contact& contact)
 {
-	
+	if (VSize(vel) == 0.f) { return vel; }
 	VECTOR start_pos = VAdd(my_pos, VGet(0.f, r_, 0.f));
 	VECTOR end_pos = VAdd(start_pos, VGet(0.f, vertical_, 0.f));
 
@@ -130,6 +129,10 @@ VECTOR Capsule::FixPos(const VECTOR& my_pos, const VECTOR& vel, const VECTOR& ot
 	{
 		// 型変換
 		auto capsule = std::dynamic_pointer_cast<Capsule>(other_coll);
+		VECTOR other_start_pos = VAdd(other_pos, VGet(0.f, capsule->GetRadius(), 0.f));
+		VECTOR other_end_pos = VAdd(other_start_pos, VGet(0.f, capsule->GetVertical(), 0.f));
+		offset_vel = Resolve::CapsuleCapsule(start_pos, end_pos, r_, vel, other_start_pos, other_end_pos, capsule->GetRadius());
+		//offset_vel = VectorAssistant::VGetZero();
 	}
 	break;
 	case ColliderName::kMesh:
