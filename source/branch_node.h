@@ -23,3 +23,12 @@ private:
 	std::function<bool()> condition_;
 
 };
+
+/*
+int index = 0;
+	condition_ = [&index]()
+		{
+
+			return index;
+		};
+*/

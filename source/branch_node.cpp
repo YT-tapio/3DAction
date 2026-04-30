@@ -10,7 +10,7 @@ BranchNode::BranchNode(std::pair<std::shared_ptr<NodeBase>,std::shared_ptr<NodeB
 	,nodes_(nodes)
 	,condition_(condition)
 {
-
+	
 }
 
 BranchNode::~BranchNode()
@@ -28,6 +28,6 @@ BehaviorStatus BranchNode::Update()
 	{
 		nodes_.second->Update();
 	}
-
+	
 	return BehaviorStatus::kSuccess;
 }

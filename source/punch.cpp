@@ -15,10 +15,8 @@
 
 Punch::Punch(std::weak_ptr<ObjectBase> owner, VECTOR* pos,
 	std::string my_anim_name, float min_coll_ratio, float max_coll_ratio, std::shared_ptr<RigidBody> body)
-	: AttackBase(owner)
+	: AttackBase(owner, min_coll_ratio, max_coll_ratio)
 	, my_anim_name_(my_anim_name)
-	, min_coll_ratio_(min_coll_ratio)
-	, max_coll_ratio_(max_coll_ratio)
 {
 	pos_ = pos;
 	rigid_body_ = body;

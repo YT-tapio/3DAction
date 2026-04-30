@@ -4,8 +4,10 @@
 #include"physics.h"
 #include"behavior_status.h"
 
-AttackBase::AttackBase(std::weak_ptr<ObjectBase> owner)
+AttackBase::AttackBase(std::weak_ptr<ObjectBase> owner, float min_coll_ratio, float max_coll_ratio)
 	: BehaviorBase(owner)
+	, min_coll_ratio_(min_coll_ratio)
+	, max_coll_ratio_(max_coll_ratio)
 {
 
 }

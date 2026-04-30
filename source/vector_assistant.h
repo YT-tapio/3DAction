@@ -86,6 +86,25 @@ namespace VectorAssistant
 		return value;
 	}
 	
+	/// <summary>
+	/// rotation‚©‚çdir‚ðŽó‚¯Žæ‚é
+	/// </summary>
+	/// <param name="rot"></param>
+	/// <returns></returns>
+	inline VECTOR VGetDirFromRotY(const VECTOR& rot)
+	{
+		VECTOR vel = VGetZero();
+		vel.x = sinf(rot.y);
+		vel.z = cosf(rot.y);
+
+		return VGetReverce(vel);
+	}
+
+	/// <summary>
+	/// matrix‚©‚çposition‚ð‚Æ‚é
+	/// </summary>
+	/// <param name="mat"></param>
+	/// <returns></returns>
 	inline VECTOR VGetPositionFromMatrix(const MATRIX& mat)
 	{
 		VECTOR vec = VGetZero();

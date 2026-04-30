@@ -15,6 +15,7 @@
 #include"punch.h"
 #include"check_my_area.h"
 #include"behavior_tree.h"
+#include"double_punch.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos)
 	: CharacterBase("enemy")
@@ -23,6 +24,7 @@ EnemyBase::EnemyBase(const VECTOR& pos)
 	vel_ = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
 	pos_ = pos;
+	double_punch_coll_pos_ = VectorAssistant::VGetZero();
 	right_hand_pos_ = VectorAssistant::VGetZero();
 	scale_ = VectorAssistant::VGetSame(0.05f);
 	my_name_ = "";
@@ -49,23 +51,25 @@ void EnemyBase::Init()
 	auto mine = shared_from_this();
 
 	UpdateBone();
-	punch_ = std::make_shared<Punch>(std::dynamic_pointer_cast<ObjectBase>(mine), &right_hand_pos_, "punch",0.3f,0.7f,
-		std::make_shared<RigidBody>(std::make_shared<Sphere>(1.5f, VGet(0.f, 0.f, 0.f)), &right_hand_pos_, FALSE, TRUE, 1.f,1.f));
+	punch_ = std::make_shared<DoublePunch>(std::dynamic_pointer_cast<ObjectBase>(mine),
+		"punch", 0.2f, 0.7f, &double_punch_coll_pos_, 3.0f, 2.f);
 	animator_ = std::make_shared<AnimatorEnemy>(handle_, std::dynamic_pointer_cast<EnemyBase>(mine),"enemy");
 	animator_->Init();
 	punch_->Init();
+	dir_ = VectorAssistant::VGetDirFromRotY(rot_);
 }
 
 void EnemyBase::Update()
 {
 	VECTOR dir = VectorAssistant::VGetZero();
-	dir_ = VectorAssistant::VGetZero();
+	//dir_ = VectorAssistant::VGetZero();
 	vel_ = dir;
 	if (!is_ground_)
 	{
 		fall_speed_ += 0.03f;
 		vel_ = VAdd(vel_, VGet(0.f, -fall_speed_, 0.f));
 	}
+	double_punch_coll_pos_ = VAdd(pos_, VScale(dir_, 5.f));
 
 	vel_ = VScale(vel_, (FPS::GetInstance().GetDeltaTime() * 60.f));
 	rigid_body_->SetTargetVelocity(vel_);

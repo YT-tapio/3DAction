@@ -178,9 +178,6 @@
     <Filter Include="ソース ファイル\behavior_tree\node">
       <UniqueIdentifier>{de9817d6-e7b0-470d-b186-d83c8d3fa72a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\behavior_tree\node\compsite">
-      <UniqueIdentifier>{351cf119-6141-4eba-9f59-4914bdee4a37}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\behavior_tree\node\action">
       <UniqueIdentifier>{46f6b62f-1f5c-4310-a7e5-a0a525459d1e}</UniqueIdentifier>
     </Filter>
@@ -189,6 +186,12 @@
     </Filter>
     <Filter Include="ソース ファイル\behavior_tree\node\decorator">
       <UniqueIdentifier>{afc52f43-bbb2-4128-8cea-7ac695d09f56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\behavior_tree\node\composite">
+      <UniqueIdentifier>{351cf119-6141-4eba-9f59-4914bdee4a37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\timer">
+      <UniqueIdentifier>{7eeec33d-0f52-40b1-9997-71643e559c90}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -415,16 +418,16 @@
       <Filter>ソース ファイル\behavior_tree\node</Filter>
     </ClCompile>
     <ClCompile Include="source\composite_node.cpp">
-      <Filter>ソース ファイル\behavior_tree\node\compsite</Filter>
+      <Filter>ソース ファイル\behavior_tree\node\composite</Filter>
     </ClCompile>
     <ClCompile Include="source\action_node.cpp">
       <Filter>ソース ファイル\behavior_tree\node\action</Filter>
     </ClCompile>
     <ClCompile Include="source\sequence_node.cpp">
-      <Filter>ソース ファイル\behavior_tree\node\compsite</Filter>
+      <Filter>ソース ファイル\behavior_tree\node\composite</Filter>
     </ClCompile>
     <ClCompile Include="source\selector_node.cpp">
-      <Filter>ソース ファイル\behavior_tree\node\compsite</Filter>
+      <Filter>ソース ファイル\behavior_tree\node\composite</Filter>
     </ClCompile>
     <ClCompile Include="source\attck_node.cpp">
       <Filter>ソース ファイル\behavior_tree\node\action</Filter>
@@ -434,6 +437,15 @@
     </ClCompile>
     <ClCompile Include="source\decorator_node.cpp">
       <Filter>ソース ファイル\behavior_tree\node\decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="source\double_punch.cpp">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="source\jumping_attack.cpp">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="source\condition_timer.cpp">
+      <Filter>ソース ファイル\timer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -717,16 +729,16 @@
       <Filter>ソース ファイル\behavior_tree\node</Filter>
     </ClInclude>
     <ClInclude Include="source\composite_node.h">
-      <Filter>ソース ファイル\behavior_tree\node\compsite</Filter>
+      <Filter>ソース ファイル\behavior_tree\node\composite</Filter>
     </ClInclude>
     <ClInclude Include="source\action_node.h">
       <Filter>ソース ファイル\behavior_tree\node\action</Filter>
     </ClInclude>
     <ClInclude Include="source\sequence_node.h">
-      <Filter>ソース ファイル\behavior_tree\node\compsite</Filter>
+      <Filter>ソース ファイル\behavior_tree\node\composite</Filter>
     </ClInclude>
     <ClInclude Include="source\selector_node.h">
-      <Filter>ソース ファイル\behavior_tree\node\compsite</Filter>
+      <Filter>ソース ファイル\behavior_tree\node\composite</Filter>
     </ClInclude>
     <ClInclude Include="source\attack_node.h">
       <Filter>ソース ファイル\behavior_tree\node\action</Filter>
@@ -739,6 +751,18 @@
     </ClInclude>
     <ClInclude Include="source\decorator_node.h">
       <Filter>ソース ファイル\behavior_tree\node\decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="source\double_punch.h">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\jumping_attack.h">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\condition_timer.h">
+      <Filter>ソース ファイル\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\jumping_attack_state.h">
+      <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

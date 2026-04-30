@@ -22,8 +22,16 @@ AnimatorEnemy::~AnimatorEnemy()
 void AnimatorEnemy::ChangeAnimation()
 {
 	const std::string kOnDamage = "on_damage";
+	const std::string kPunch = "punch";
 	before_anim_name_ = now_anim_name_;
-	PlayRequest("punch");
+	auto punch_anim_data = animation_datas_.find(kPunch);
+	if (punch_anim_data != animation_datas_.end())
+	{
+		if (punch_anim_data->second.play_time== 0.f)
+		{
+			PlayRequest(kPunch);
+		}
+	}
 	PlayRequest("idle");
 	std::map<int, std::string, std::greater<int>> request_name_priority_mp;
 	if (!request_names_.empty())

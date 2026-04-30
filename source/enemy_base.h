@@ -41,6 +41,8 @@ protected:
 
 	VECTOR right_hand_pos_;
 
+	VECTOR double_punch_coll_pos_;
+
 	float fall_speed_;
 	bool is_ground_;
 

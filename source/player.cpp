@@ -42,6 +42,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	, name_(name)
 	, input_(input)
 {
+	
 	camera_dir_ = camera_dir;
 	right_hand_pos_ = VectorAssistant::VGetZero();
 	left_hand_pos_ = VectorAssistant::VGetZero();

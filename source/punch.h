@@ -30,7 +30,4 @@ private:
 
 	std::string my_anim_name_;
 
-	// 当たり判定のタイミング
-	float min_coll_ratio_;
-	float max_coll_ratio_;
 };

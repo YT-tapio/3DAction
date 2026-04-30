@@ -156,9 +156,11 @@
     <ClCompile Include="source\conbo.cpp" />
     <ClCompile Include="source\conbo_action.cpp" />
     <ClCompile Include="source\conbo_skill.cpp" />
+    <ClCompile Include="source\condition_timer.cpp" />
     <ClCompile Include="source\csv_file_assistant.cpp" />
     <ClCompile Include="source\csv_loader.cpp" />
     <ClCompile Include="source\decorator_node.cpp" />
+    <ClCompile Include="source\double_punch.cpp" />
     <ClCompile Include="source\effect_base.cpp" />
     <ClCompile Include="source\effect_data.cpp" />
     <ClCompile Include="source\effect_manager.cpp" />
@@ -166,6 +168,7 @@
     <ClCompile Include="source\attack_base.cpp" />
     <ClCompile Include="source\enemy_group.cpp" />
     <ClCompile Include="source\input_change_interface.cpp" />
+    <ClCompile Include="source\jumping_attack.cpp" />
     <ClCompile Include="source\node_base.cpp" />
     <ClCompile Include="source\player_group.cpp" />
     <ClCompile Include="source\punch.cpp" />
@@ -234,9 +237,11 @@
     <ClInclude Include="source\conbo.h" />
     <ClInclude Include="source\conbo_action.h" />
     <ClInclude Include="source\conbo_skill.h" />
+    <ClInclude Include="source\condition_timer.h" />
     <ClInclude Include="source\csv_file_assistant.h" />
     <ClInclude Include="source\csv_loader.h" />
     <ClInclude Include="source\decorator_node.h" />
+    <ClInclude Include="source\double_punch.h" />
     <ClInclude Include="source\effect_base.h" />
     <ClInclude Include="source\effect_data.h" />
     <ClInclude Include="source\effect_end_state.h" />
@@ -244,6 +249,8 @@
     <ClInclude Include="source\effect_manager.h" />
     <ClInclude Include="source\enemy_group.h" />
     <ClInclude Include="source\input_change_interface.h" />
+    <ClInclude Include="source\jumping_attack.h" />
+    <ClInclude Include="source\jumping_attack_state.h" />
     <ClInclude Include="source\node_base.h" />
     <ClInclude Include="source\behavior_status.h" />
     <ClInclude Include="source\player_group.h" />
