@@ -15,6 +15,7 @@ AnimatorBase::AnimatorBase(const std::string data_file_path, int handle)
 	before_anim_name_	= "nothing";
 	handle_ = handle;
 	is_end_ = FALSE;
+	is_stop_ = FALSE;
 }
 
 AnimatorBase::~AnimatorBase()
@@ -86,8 +87,16 @@ void AnimatorBase::Update()
 		is_end_ = FALSE;
 	}
 
-	MV1SetAttachAnimTime(handle_, animation_datas_[now_anim_name_].attach_index,
-		animation_datas_[now_anim_name_].play_time);
+	if (is_stop_)
+	{
+		MV1SetAttachAnimTime(handle_, animation_datas_[now_anim_name_].attach_index, 0.f);
+	}
+	else
+	{
+		MV1SetAttachAnimTime(handle_, animation_datas_[now_anim_name_].attach_index,
+			animation_datas_[now_anim_name_].play_time);
+	}
+	
 
 	ResetRequest();
 
@@ -166,6 +175,16 @@ void AnimatorBase::LoadFile(const std::string file_path)
 void AnimatorBase::ResetRequest()
 {
 	request_names_.clear();
+}
+
+void AnimatorBase::Start()
+{
+	is_stop_ = FALSE;
+}
+
+void AnimatorBase::Stop()
+{
+	is_stop_ = TRUE;
 }
 
 const float AnimatorBase::GetPlayTime(std::string name) const

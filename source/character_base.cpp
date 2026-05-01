@@ -43,6 +43,19 @@ void CharacterBase::SetInvincible(bool flag)
 	is_invincible_ = flag;
 }
 
+void CharacterBase::Teleport(const VECTOR& pos)
+{
+	pos_ = pos;
+}
+
+const VECTOR CharacterBase::GetAtackTargetPos() const
+{
+	// ‘ÎÛ‚ğæ“¾
+
+
+	return VGet(0, 0, 0);
+}
+
 const bool CharacterBase::GetIsInvincible() const
 {
 	return is_invincible_;

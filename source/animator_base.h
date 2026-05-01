@@ -17,6 +17,16 @@ public:
 	void PlayRequest(std::string name);
 
 	/// <summary>
+	/// アニメーションを再生
+	/// </summary>
+	void Start();
+
+	/// <summary>
+	/// アニメーションをストップ
+	/// </summary>
+	void Stop();
+
+	/// <summary>
 	/// 引数の再生時間を得る
 	/// </summary>
 	/// <param name="name"></param>
@@ -49,6 +59,8 @@ protected:
 
 	int handle_;
 	bool is_end_;
+
+	bool is_stop_;
 
 private:
 

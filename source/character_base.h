@@ -21,6 +21,10 @@ public:
 
 	void SetInvincible(bool flag);
 
+	void Teleport(const VECTOR& pos);
+
+	const VECTOR GetAtackTargetPos() const;
+
 	const bool GetIsInvincible() const;
 
 	std::shared_ptr<AnimatorBase> GetAnimator();
