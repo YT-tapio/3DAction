@@ -33,25 +33,25 @@ private:
 	/// ジャンプする前
 	/// </summary>
 	/// <returns></returns>
-	BehaviorStatus StandbyUpdate(std::shared_ptr<CharacterBase> owner);
+	BehaviorStatus UpdateStandby(std::shared_ptr<CharacterBase> owner);
 
 	/// <summary>
 	/// ジャンプ中
 	/// </summary>
 	/// <returns></returns>
-	BehaviorStatus JumpingUpdate(std::shared_ptr<CharacterBase> owner);
+	BehaviorStatus UpdateJumping(std::shared_ptr<CharacterBase> owner);
 
 	/// <summary>
 	/// 空中で
 	/// </summary>
 	/// <returns></returns>
-	BehaviorStatus AirStandbyUpdate(std::shared_ptr<CharacterBase> owner);
+	BehaviorStatus UpdateAirStandby(std::shared_ptr<CharacterBase> owner);
 
 	/// <summary>
 	/// 落ちる
 	/// </summary>
 	/// <returns></returns>
-	BehaviorStatus FallingUpdate(std::shared_ptr<CharacterBase> owner);
+	BehaviorStatus UpdateFalling(std::shared_ptr<CharacterBase> owner);
 
 	/// <summary>
 	/// 当たり判定をオンするかどうか

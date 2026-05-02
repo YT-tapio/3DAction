@@ -48,19 +48,19 @@ BehaviorStatus JumpingAttack::Update()
 	{
 		// ジャンプの予備動作
 		case JumpingAttackState::kStandby:
-			return StandbyUpdate(owner);
+			return UpdateStandby(owner);
 			break;
 		// 上昇中
 		case JumpingAttackState::kJumping:
-			return JumpingUpdate(owner);
+			return UpdateJumping(owner);
 			break;
 		// 空中での待機
 		case JumpingAttackState::kAirStandby:
-			return AirStandbyUpdate(owner);
+			return UpdateAirStandby(owner);
 			break;
 		// 落下中
 		case JumpingAttackState::kFalling:
-			return FallingUpdate(owner);
+			return UpdateFalling(owner);
 			break;
 	}
 
@@ -88,21 +88,26 @@ void JumpingAttack::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 }
 
 
-BehaviorStatus JumpingAttack::StandbyUpdate(std::shared_ptr<CharacterBase> owner)
+BehaviorStatus JumpingAttack::UpdateStandby(std::shared_ptr<CharacterBase> owner)
 {
 	// ジャンプのタイミング：アニメーション基準
 	if (owner->GetAnimator()->GetRatio(my_anim_name_) > jumping_timing_)
 	{
 		// オーナーをジャンプさせる
 		// 初速を与えてステートを切り替え
-		// owner->Jumping(5.f);
+		// オーナーを変換する
+		auto obj = std::dynamic_pointer_cast<IPhysicsEventReceiver>(owner);
+		if (obj == nullptr) { return BehaviorStatus::kFailure; }
+		auto owner_rigid_body = obj->GetRigidBody();
+		if (owner_rigid_body == nullptr) { return BehaviorStatus::kFailure; }
+
+		owner_rigid_body->SetTargetVelocity(VGet(0.f, 5.f, 0.f));
 		jumping_state_ = JumpingAttackState::kJumping;
 	}
-
 	return BehaviorStatus::kRunning;
 }
 
-BehaviorStatus JumpingAttack::JumpingUpdate(std::shared_ptr<CharacterBase> owner)
+BehaviorStatus JumpingAttack::UpdateJumping(std::shared_ptr<CharacterBase> owner)
 {
 	auto animator = owner->GetAnimator();
 	// タイミングでanimationをstopさせる
@@ -128,7 +133,7 @@ BehaviorStatus JumpingAttack::JumpingUpdate(std::shared_ptr<CharacterBase> owner
 	return BehaviorStatus::kRunning;
 }
 
-BehaviorStatus JumpingAttack::AirStandbyUpdate(std::shared_ptr<CharacterBase> owner)
+BehaviorStatus JumpingAttack::UpdateAirStandby(std::shared_ptr<CharacterBase> owner)
 {
 	// タイマー更新
 	condition_timer_->Update();
@@ -151,7 +156,7 @@ BehaviorStatus JumpingAttack::AirStandbyUpdate(std::shared_ptr<CharacterBase> ow
 	return BehaviorStatus::kRunning;
 }
 
-BehaviorStatus JumpingAttack::FallingUpdate(std::shared_ptr<CharacterBase> owner)
+BehaviorStatus JumpingAttack::UpdateFalling(std::shared_ptr<CharacterBase> owner)
 {
 	// 当たり判定のオン,オフをする 
 	if (CheckActiveColl(owner))

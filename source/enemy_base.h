@@ -31,6 +31,8 @@ public:
 
 	virtual void OnUnGrounded(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
+	std::shared_ptr<RigidBody> GetRigidBody() override;
+
 protected:
 
 	std::shared_ptr<RigidBody> rigid_body_;

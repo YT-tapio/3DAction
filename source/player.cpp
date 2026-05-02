@@ -518,6 +518,11 @@ std::vector<std::weak_ptr<ObjectBase>> Player::GetMyAreaObject()
 	return my_area_->GetMyAreaObject();
 }
 
+std::shared_ptr<RigidBody> Player::GetRigidBody()
+{
+	return rigid_body_;
+}
+
 VECTOR* Player::GetHeadPos()
 {
 	return &head_pos_;

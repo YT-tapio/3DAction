@@ -1,6 +1,8 @@
 #pragma once
 #include<iostream>
 
+class RigidBody;
+
 class IPhysicsEventReceiver : public std::enable_shared_from_this<IPhysicsEventReceiver>
 {
 public:
@@ -28,5 +30,5 @@ public:
 	/// </summary>
 	virtual void OnUnGrounded(std::shared_ptr<IPhysicsEventReceiver> object);
 
-
+	virtual std::shared_ptr<RigidBody> GetRigidBody();
 };

@@ -131,6 +131,11 @@ void EnemyBase::OnUnGrounded(std::shared_ptr<IPhysicsEventReceiver> object)
 	is_ground_ = FALSE;
 }
 
+std::shared_ptr<RigidBody> EnemyBase::GetRigidBody()
+{
+	return rigid_body_;
+}
+
 void EnemyBase::UpdateBone()
 {
 	int hand_bone_num = 0;

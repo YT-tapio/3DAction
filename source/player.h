@@ -65,6 +65,8 @@ public:
 
 	std::vector<std::weak_ptr<ObjectBase>> GetMyAreaObject();
 
+	std::shared_ptr<RigidBody> GetRigidBody() override;
+
 	const std::shared_ptr<const InputBase> GetInput() const;
 
 	const float GetDetectionRadius() const;
