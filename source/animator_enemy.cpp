@@ -22,14 +22,15 @@ AnimatorEnemy::~AnimatorEnemy()
 void AnimatorEnemy::ChangeAnimation()
 {
 	const std::string kOnDamage = "on_damage";
-	const std::string kPunch = "punch";
+	const std::string kDoublePunch = "double_punch";
+	const std::string kJumpingAttack = "jumping_attack";
 	before_anim_name_ = now_anim_name_;
-	auto punch_anim_data = animation_datas_.find(kPunch);
+	auto punch_anim_data = animation_datas_.find(kJumpingAttack);
 	if (punch_anim_data != animation_datas_.end())
 	{
 		if (punch_anim_data->second.play_time== 0.f)
 		{
-			PlayRequest(kPunch);
+			PlayRequest(kJumpingAttack);
 		}
 	}
 	PlayRequest("idle");

@@ -13,11 +13,15 @@
 #include"character_base.h"
 #include"animator_base.h"
 #include"rigid_body.h"
+#include"capsule.h"
+#include"vector_assistant.h"
 
-JumpingAttack::JumpingAttack(std::weak_ptr<ObjectBase> owner, float min_coll_ratio, float max_coll_ratio,
+JumpingAttack::JumpingAttack(std::weak_ptr<ObjectBase> owner, VECTOR* pos ,float min_coll_ratio, float max_coll_ratio,
 	std::string my_anim_name)
 	: AttackBase(owner,min_coll_ratio,max_coll_ratio)
-	, jumping_timing_(0.f)
+	, coll_pos_(pos)
+	, jumping_timing_(0.35f)
+	, jumping_anim_stop_timing_(0.5f)
 	, my_anim_name_(my_anim_name)
 {
 	condition_timer_ = std::make_shared<ConditionTimer>(0.5f);
@@ -31,14 +35,15 @@ JumpingAttack::~JumpingAttack()
 
 void JumpingAttack::Init()
 {
-	
+	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(2.f,
+		3.f,VectorAssistant::VGetZero()), coll_pos_, FALSE, TRUE, 1.f, 1.f);
 }
 
 BehaviorStatus JumpingAttack::Update()
 {
-
 	auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
 	if (owner == nullptr) { return BehaviorStatus::kFailure; }
+	if (owner->GetAnimator()->GetRatio(my_anim_name_) <= 0.08f) { jumping_state_ = JumpingAttackState::kStandby; }
 	switch (jumping_state_)
 	{
 		// ジャンプの予備動作
@@ -74,7 +79,7 @@ void JumpingAttack::Draw()
 
 void JumpingAttack::Debug()
 {
-
+	rigid_body_->Debug();
 }
 
 void JumpingAttack::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
@@ -101,9 +106,21 @@ BehaviorStatus JumpingAttack::JumpingUpdate(std::shared_ptr<CharacterBase> owner
 {
 	auto animator = owner->GetAnimator();
 	// タイミングでanimationをstopさせる
-	if (animator->GetRatio(my_anim_name_) > jumping_anim_stop_timing_) { animator->Stop(); }
-
-	jumping_state_ = JumpingAttackState::kAirStandby;
+	if (animator->GetRatio(my_anim_name_) > jumping_anim_stop_timing_) 
+	{ 
+		animator->Stop();
+	}
+	else
+	{
+		return BehaviorStatus::kRunning;
+	}
+	// 上昇値がなくなったら
+	if (owner->GetVelocity().y <= 0.f)
+	{
+		condition_timer_->Start();	// タイマーをスタート
+		jumping_state_ = JumpingAttackState::kAirStandby;
+	}
+	
 
 	// このスタンバイ時にあいての上に、いとかなくちゃいけないのか
 	// 攻撃対象の上にいるようにしておきますか
@@ -119,14 +136,14 @@ BehaviorStatus JumpingAttack::AirStandbyUpdate(std::shared_ptr<CharacterBase> ow
 	// 空中滞在時間を満たしたら
 	if(condition_timer_->GetIsEnd())
 	{
-		// アニメーションの再生
-		// 自分の位置をターゲットした的の位置の真上に設定
+		// 降りる瞬間にアニメーションをスタート
 		owner->GetAnimator()->Start();
+		// 自分の位置をターゲットした的の位置の真上に設定
 		
 		// ターゲットの真上
-		VECTOR attack_target_pos = VGet(0, 0, 0);// owner->GetAttackTargetPos();
+		VECTOR attack_target_pos = owner->GetAttackTargetPos();
 		// ターゲットの上空のpos
-		VECTOR attack_target_above_pos = VAdd(attack_target_pos, VGet(0.f, 5.f, 0.f));	// 単純な高さでいいな	
+		VECTOR attack_target_above_pos = VAdd(attack_target_pos, VGet(0.f, 5.f, 0.f));	// 単純な高さでいいな
 		owner->Teleport(attack_target_above_pos);	// 上空の位置へテレポート
 		jumping_state_ = JumpingAttackState::kFalling;
 	}
@@ -149,7 +166,11 @@ BehaviorStatus JumpingAttack::FallingUpdate(std::shared_ptr<CharacterBase> owner
 	}
 
 	// オーナーが着地をしたらサクセスを返すように：owner->GetIsGround();
-	if (FALSE) { return BehaviorStatus::kSuccess; }
+	if (owner->GetIsGround()) 
+	{ 
+		// jumping_state_ = JumpingAttackState::kStandby;
+		return BehaviorStatus::kSuccess;
+	}
 
 	return BehaviorStatus::kRunning;
 }

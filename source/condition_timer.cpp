@@ -29,7 +29,7 @@ void ConditionTimer::Init()
 void ConditionTimer::Update()
 {
 	if (is_stop_)	{ return; }
-	if(is_end_)		{ return; }
+	if (is_end_)	{ return; }
 	time_ += FPS::GetInstance().GetDeltaTime();
 	if (time_ > max_time_) { time_ = max_time_; is_end_ = TRUE; }
 }

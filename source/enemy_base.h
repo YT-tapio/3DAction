@@ -34,7 +34,7 @@ public:
 protected:
 
 	std::shared_ptr<RigidBody> rigid_body_;
-	std::shared_ptr<BehaviorBase> punch_;
+	std::shared_ptr<BehaviorBase> test_behavior_;
 	std::shared_ptr<BehaviorTree> behavior_tree_;
 
 	std::string my_name_;
@@ -44,7 +44,6 @@ protected:
 	VECTOR double_punch_coll_pos_;
 
 	float fall_speed_;
-	bool is_ground_;
 
 	virtual void UpdateBone();
 

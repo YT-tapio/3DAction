@@ -64,7 +64,6 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f, 0.1f);
 	fall_speed_ = 0.f;
 	is_move_ = FALSE;
-	is_ground_ = FALSE;
 	is_dash_ = FALSE;
 	is_attack_target_in_range_ = FALSE;
 	is_stop_ = FALSE;
@@ -192,6 +191,7 @@ void Player::Draw()
 
 void Player::Debug()
 {
+	return;
 	//if (skill_ != nullptr) { skill_->Debug(); }
 	//if (second_skill_ != nullptr) { second_skill_->Debug(); }
 	//my_area_->Debug();
@@ -454,7 +454,7 @@ void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 	//‰½‚©‚ª“–‚½‚Á‚½‚Ìˆ—
 
-	// ihit‚ğ‰½Ò‚©‚É•ÏŠ·
+	// object‚ğ‰½Ò‚©‚É•ÏŠ·
 	auto stage = std::dynamic_pointer_cast<Stage>(object);
 	auto enemy = std::dynamic_pointer_cast<EnemyBase>(object);
 	auto punch = std::dynamic_pointer_cast<Punch>(object);

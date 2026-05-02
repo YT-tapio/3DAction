@@ -23,9 +23,15 @@ public:
 
 	void Teleport(const VECTOR& pos);
 
-	const VECTOR GetAtackTargetPos() const;
+	const VECTOR GetAttackTargetPos() const;
 
 	const bool GetIsInvincible() const;
+	
+	const bool GetIsGround() const;
+
+	const VECTOR GetVelocity() const;
+
+
 
 	std::shared_ptr<AnimatorBase> GetAnimator();
 
@@ -35,6 +41,8 @@ protected:
 	VECTOR vel_;
 
 	bool is_invincible_;
+
+	bool is_ground_;
 
 	// todo:アニメーションをつけてください
 	std::shared_ptr<AnimatorBase> animator_;

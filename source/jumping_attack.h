@@ -11,7 +11,7 @@ class JumpingAttack : public AttackBase
 {
 public:
 
-	JumpingAttack(std::weak_ptr<ObjectBase> owner,float min_coll_ratio, float max_coll_ratio,std::string my_anim_name);
+	JumpingAttack(std::weak_ptr<ObjectBase> owner, VECTOR* pos, float min_coll_ratio, float max_coll_ratio,std::string my_anim_name);
 
 	~JumpingAttack() override;
 
@@ -62,6 +62,8 @@ private:
 	std::shared_ptr<ConditionTimer> condition_timer_;
 
 	JumpingAttackState jumping_state_;
+
+	VECTOR* coll_pos_;
 
 	float jumping_timing_;	// ジャンプのタイミング：アニメーション基準
 	float jumping_anim_stop_timing_;	// ジャンプ中のアニメーションをstopするタイミング

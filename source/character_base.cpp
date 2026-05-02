@@ -9,6 +9,7 @@
 
 CharacterBase::CharacterBase(const char* id)
 	:Object3D(id)
+	, is_ground_(FALSE)
 {
 	is_invincible_ = FALSE;
 }
@@ -48,17 +49,24 @@ void CharacterBase::Teleport(const VECTOR& pos)
 	pos_ = pos;
 }
 
-const VECTOR CharacterBase::GetAtackTargetPos() const
+const VECTOR CharacterBase::GetAttackTargetPos() const
 {
-	// ‘ÎÛ‚ğæ“¾
-
-
-	return VGet(0, 0, 0);
+	return VectorAssistant::VGetZero();
 }
 
 const bool CharacterBase::GetIsInvincible() const
 {
 	return is_invincible_;
+}
+
+const bool CharacterBase::GetIsGround() const
+{
+	return is_ground_;
+}
+
+const VECTOR CharacterBase::GetVelocity() const
+{
+	return vel_;
 }
 
 std::shared_ptr<AnimatorBase> CharacterBase::GetAnimator()

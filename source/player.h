@@ -114,7 +114,6 @@ private:
 
 	bool is_move_;
 	bool is_dash_;
-	bool is_ground_;
 	bool* is_punch_;
 	bool is_stop_;
 	bool is_attack_target_in_range_;		// UŒ‚‘ÎÛ‚ª”ÍˆÍ“à‚É‚¢‚é‚Ì‚©

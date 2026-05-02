@@ -69,7 +69,8 @@ void AnimatorBase::Update()
 		if (animation_datas_[now_anim_name_].attach_index == -1) { printfDx("アタッチに失敗しました\n"); }
 		if (animation_datas_[now_anim_name_].total_time < 0.f) { printfDx("トータルおかしい\n"); }
 	}
-	animation_datas_[now_anim_name_].play_time += animation_datas_[now_anim_name_].play_speed * FPS::GetInstance().GetDeltaTime() * 60.f;
+	if(!is_stop_){ animation_datas_[now_anim_name_].play_time += animation_datas_[now_anim_name_].play_speed * FPS::GetInstance().GetDeltaTime() * 60.f; }
+	
 	if (animation_datas_[now_anim_name_].play_time >= animation_datas_[now_anim_name_].total_time)
 	{
 		if (animation_datas_[now_anim_name_].loop)
@@ -87,16 +88,8 @@ void AnimatorBase::Update()
 		is_end_ = FALSE;
 	}
 
-	if (is_stop_)
-	{
-		MV1SetAttachAnimTime(handle_, animation_datas_[now_anim_name_].attach_index, 0.f);
-	}
-	else
-	{
-		MV1SetAttachAnimTime(handle_, animation_datas_[now_anim_name_].attach_index,
-			animation_datas_[now_anim_name_].play_time);
-	}
-	
+	MV1SetAttachAnimTime(handle_, animation_datas_[now_anim_name_].attach_index,
+		animation_datas_[now_anim_name_].play_time);
 
 	ResetRequest();
 

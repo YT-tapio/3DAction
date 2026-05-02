@@ -73,7 +73,7 @@ void Physics::Update()
 				target_body->OnHit(main_body->GetIPhysicsObject());
 
 				if (main_body->GetIsKinematic()) { continue; }
-
+				if (!target_body->IsObject()) { continue;}
 				// ‰Ÿ‚µ–ß‚µ
 				VECTOR offset_vel = my_coll->FixPos(main_body->GetPosition(), main_body->GetVelocity(), target_body->GetPosition(), target_coll, contact);
 				main_body->Update(offset_vel);
@@ -431,13 +431,9 @@ void Physics::CheckGround()
 		{
 			if (!target_body->GetIsActive()) { continue; }
 			if (main_body == target_body) { continue; }
-
+			if (!target_body->IsObject()) { continue; }
 			auto target_area = std::dynamic_pointer_cast<CheckMyArea>(target_body->GetIPhysicsObject());
-			if (target_area != nullptr) 
-			{ 
-				continue;
-			}
-
+			if (target_area != nullptr) { continue;}
 			Contact contact = {};
 			// IPhysics‚Ì‘«Œ³“–‚½‚è”»’è‚ðŒÄ‚Ñ‚½‚¢
 			auto body = main_body->GetIPhysicsObject().get();

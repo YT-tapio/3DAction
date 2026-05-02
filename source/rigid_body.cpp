@@ -21,6 +21,7 @@ RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll,VECTOR* pos,bool gravity
 	mass_ = mass;
 	friction_ = friction;
 	is_active_ = TRUE;
+	is_object_ = FALSE;
 }
 
 RigidBody::~RigidBody()
@@ -31,6 +32,9 @@ RigidBody::~RigidBody()
 void RigidBody::Init(std::weak_ptr<IPhysicsEventReceiver> object)
 {
 	object_ = object;
+	// object‚ð•ÏŠ·‚·‚é
+	auto obj = std::dynamic_pointer_cast<ObjectBase>(object_.lock());
+	is_object_ = obj != nullptr;
 }
 
 void RigidBody::ResetVelocity()
@@ -158,6 +162,11 @@ const bool RigidBody::GetUseGravity() const
 const bool RigidBody::GetIsKinematic() const
 {
 	return is_kinematic_;
+}
+
+const bool RigidBody::IsObject() const
+{
+	return is_object_;
 }
 
 std::shared_ptr<ColliderBase> RigidBody::GetCollider()

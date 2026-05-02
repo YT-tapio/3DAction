@@ -16,6 +16,7 @@
 #include"check_my_area.h"
 #include"behavior_tree.h"
 #include"double_punch.h"
+#include"jumping_attack.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos)
 	: CharacterBase("enemy")
@@ -32,7 +33,6 @@ EnemyBase::EnemyBase(const VECTOR& pos)
 	if (handle_ == -1) { printfDx("ì«Ç›çûÇ›ÉGÉâÅ[\n"); }
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f,0.1f);
 	fall_speed_ = 0.f;
-	is_ground_ = FALSE;
 	behavior_tree_ = std::make_shared<BehaviorTree>();
 }
 
@@ -48,14 +48,21 @@ void EnemyBase::Init()
 	Physics::GetInstance().AddBody(rigid_body_);
 	// setterÇ÷ÇÃìoò^
 	ObjectSetter::GetInstance().AddResource(handle_, &pos_, &rot_, &scale_);
-	auto mine = shared_from_this();
+	auto physics_mine = shared_from_this();
+	auto mine = std::dynamic_pointer_cast<EnemyBase>(physics_mine);
+	std::shared_ptr<ObjectBase> obj_mine = mine;
 
 	UpdateBone();
-	punch_ = std::make_shared<DoublePunch>(std::dynamic_pointer_cast<ObjectBase>(mine),
-		"punch", 0.2f, 0.7f, &double_punch_coll_pos_, 3.0f, 2.f);
+	/*
+	test_behavior_ = std::make_shared<DoublePunch>(std::dynamic_pointer_cast<ObjectBase>(mine),
+		"double_punch", 0.2f, 0.7f, &double_punch_coll_pos_, 3.0f, 2.f);
+	*/
+	
+	test_behavior_ = std::make_shared<JumpingAttack>(obj_mine, &pos_,0.5f, 0.75f, "jumping_attack");
+
 	animator_ = std::make_shared<AnimatorEnemy>(handle_, std::dynamic_pointer_cast<EnemyBase>(mine),"enemy");
 	animator_->Init();
-	punch_->Init();
+	test_behavior_->Init();
 	dir_ = VectorAssistant::VGetDirFromRotY(rot_);
 }
 
@@ -75,7 +82,7 @@ void EnemyBase::Update()
 	rigid_body_->SetTargetVelocity(vel_);
 	animator_->Update();
 	UpdateBone();
-	punch_->Update();
+	test_behavior_->Update();
 	behavior_tree_->Update();
 }
 
@@ -92,7 +99,7 @@ void EnemyBase::Draw()
 void EnemyBase::Debug()
 {
 	rigid_body_->Debug();
-	punch_->Debug();
+	test_behavior_->Debug();
 }
 
 void EnemyBase::OnHit(std::shared_ptr<IPhysicsEventReceiver> obj)
