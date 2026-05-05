@@ -12,6 +12,7 @@
 #include"vector_assistant.h"
 #include"character_base.h"
 #include"animator_base.h"
+#include"physics.h"
 #include"physics_interface.h"
 
 DoublePunch::DoublePunch(std::weak_ptr<ObjectBase> owner, std::string my_anim_name,
@@ -33,6 +34,9 @@ void DoublePunch::Init()
 {
 	rigid_body_->Init(weak_from_this());
 	rigid_body_->NotActive();
+
+	Physics::GetInstance().AddBody(rigid_body_);
+
 }
 
 BehaviorStatus DoublePunch::Update()
@@ -45,7 +49,6 @@ BehaviorStatus DoublePunch::Update()
 	{
 		rigid_body_->NotActive();
 	}
-	//printfDx("‚æ");
 	return BehaviorStatus::kFailure;
 }
 
@@ -66,7 +69,7 @@ void DoublePunch::Debug()
 
 void DoublePunch::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 {
-
+	
 }
 
 const bool DoublePunch::CheckCollActive() const

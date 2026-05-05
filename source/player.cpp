@@ -35,6 +35,8 @@
 #include"skill_loader.h"
 #include"csv_file_assistant.h"
 #include"input_manager.h"
+#include"attack_base.h"
+#include"double_punch.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name)
 	: CharacterBase("player")
@@ -191,9 +193,8 @@ void Player::Draw()
 
 void Player::Debug()
 {
-	return;
-	//if (skill_ != nullptr) { skill_->Debug(); }
-	//if (second_skill_ != nullptr) { second_skill_->Debug(); }
+	if (skill_ != nullptr) { skill_->Debug(); }
+	if (second_skill_ != nullptr) { second_skill_->Debug(); }
 	//my_area_->Debug();
 	rigid_body_->Debug();
 	
@@ -458,15 +459,16 @@ void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 	auto stage = std::dynamic_pointer_cast<Stage>(object);
 	auto enemy = std::dynamic_pointer_cast<EnemyBase>(object);
 	auto punch = std::dynamic_pointer_cast<Punch>(object);
+	auto double_punch = std::dynamic_pointer_cast<DoublePunch>(object);
 	if (stage != nullptr)
 	{
-		//printfDx("stage");
+		// printfDx("stage");
 		return;
 	}
 
 	if (enemy != nullptr)
 	{
-		//printfDx("enemy");
+		// printfDx("enemy");
 		return;
 	}
 
@@ -480,6 +482,15 @@ void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 		return;
 	}
 
+	if (double_punch != nullptr)
+	{
+		// 自身とオーナーのパンチがplayerにcastしてnullptrなったら処理する
+		if (std::dynamic_pointer_cast<Player>(double_punch->GetOwner().lock()) == nullptr)
+		{
+			animator_->PlayRequest("on_damage");
+		}
+		return;
+	}
 }
 
 void Player::OnGrounded(std::shared_ptr<IPhysicsEventReceiver> object)

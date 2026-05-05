@@ -27,11 +27,11 @@ EnemyBase::EnemyBase(const VECTOR& pos)
 	pos_ = pos;
 	double_punch_coll_pos_ = VectorAssistant::VGetZero();
 	right_hand_pos_ = VectorAssistant::VGetZero();
-	scale_ = VectorAssistant::VGetSame(0.05f);
+	scale_ = VectorAssistant::VGetSame(0.15f);
 	my_name_ = "";
 	handle_ = MV1LoadModel("data/model/enemy/zako/Demon_T_Wiezzorek.mv1");
 	if (handle_ == -1) { printfDx("ì«Ç›çûÇ›ÉGÉâÅ[\n"); }
-	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f,0.1f);
+	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(5.5f, 18.f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f,0.1f);
 	fall_speed_ = 0.f;
 	behavior_tree_ = std::make_shared<BehaviorTree>();
 }
@@ -53,12 +53,13 @@ void EnemyBase::Init()
 	std::shared_ptr<ObjectBase> obj_mine = mine;
 
 	UpdateBone();
-	/*
-	test_behavior_ = std::make_shared<DoublePunch>(std::dynamic_pointer_cast<ObjectBase>(mine),
-		"double_punch", 0.2f, 0.7f, &double_punch_coll_pos_, 3.0f, 2.f);
-	*/
 	
-	test_behavior_ = std::make_shared<JumpingAttack>(obj_mine, &pos_,0.5f, 0.75f, "jumping_attack");
+	test_behavior_ = std::make_shared<DoublePunch>(std::dynamic_pointer_cast<ObjectBase>(mine),
+		"double_punch", 0.35f, 0.5f, &double_punch_coll_pos_, 3.0f, 6.f);
+	
+	/*
+	test_behavior_ = std::make_shared<JumpingAttack>(obj_mine, &pos_, 0.5f, 0.75f, "jumping_attack");
+	*/
 
 	animator_ = std::make_shared<AnimatorEnemy>(handle_, std::dynamic_pointer_cast<EnemyBase>(mine),"enemy");
 	animator_->Init();

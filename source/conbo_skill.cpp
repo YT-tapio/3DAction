@@ -71,7 +71,7 @@ void ConboSkill::Update()
 		if (conbo_action->CheckChangeConbo())
 		{
 			// ‚±‚±‚Å•â³‚ª”­¶‚·‚é
-			printfDx("change\n");
+			//printfDx("change\n");
 			VECTOR vel = VectorAssistant::VGetZero();
 			Correction(conbo_action);
 			//owner_.lock()->SetIsStop(TRUE);

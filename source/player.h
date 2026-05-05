@@ -86,7 +86,6 @@ public:
 
 
 private:
-
 	
 
 	std::shared_ptr<RigidBody> rigid_body_;

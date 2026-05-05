@@ -48,7 +48,7 @@ void AreaHealSkill::Update()
 	//
 	if (CheckIsAreaHeal(owner))
 	{
-		printfDx("”­“®\n");
+		//printfDx("”­“®\n");
 	}
 
 

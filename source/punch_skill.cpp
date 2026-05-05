@@ -133,7 +133,6 @@ void PunchSkill::DecideTarget(std::vector<std::weak_ptr<ObjectBase>> owner_area_
 		float offset_most_near_dist		= most_near_dist - (detection_radius_ * kRatioMin);
 		speed_ratio = offset_most_near_dist / offset_detection_radius;
 		speed = speed * speed_ratio;				// ‹——£‚É‚æ‚Á‚Äspeed‚ğ•Ï‚¦‚é
-		speed = speed;
 	}
 
 	//ˆê”Ô‹ß‚¢“z‚Ìî•ñ‚ğó‚¯æ‚é
