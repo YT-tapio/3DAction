@@ -27,9 +27,11 @@ public:
 
 	virtual void OnHit(std::shared_ptr<IPhysicsEventReceiver> obj) override;
 
-	virtual void OnGrounded(std::shared_ptr<IPhysicsEventReceiver> object) override;
+	virtual void OnGround(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
-	virtual void OnUnGrounded(std::shared_ptr<IPhysicsEventReceiver> object) override;
+	virtual void UnGround(std::shared_ptr<IPhysicsEventReceiver> object) override;
+
+	virtual const bool GetOnGround() const;
 
 	std::shared_ptr<RigidBody> GetRigidBody() override;
 

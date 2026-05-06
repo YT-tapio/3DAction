@@ -27,11 +27,9 @@ public:
 
 	const bool GetIsInvincible() const;
 	
-	const bool GetIsGround() const;
+	virtual const bool GetOnGround() const;
 
 	const VECTOR GetVelocity() const;
-
-
 
 	std::shared_ptr<AnimatorBase> GetAnimator();
 

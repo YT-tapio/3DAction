@@ -59,7 +59,7 @@ const bool CharacterBase::GetIsInvincible() const
 	return is_invincible_;
 }
 
-const bool CharacterBase::GetIsGround() const
+const bool CharacterBase::GetOnGround() const
 {
 	return is_ground_;
 }

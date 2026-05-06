@@ -32,22 +32,34 @@ public:
 
 	void Update(const VECTOR& vel);
 
-	//重力処理
+	// 重力処理
 	void AddForce();
 
 	void ResetGravity();
 
 	void SetPos();
 
+	/// <summary>
+	/// 上昇値の設定(fall_speedをプラスにする)
+	/// </summary>
+	/// <param name="speed"></param>
+	void SetUpSpeed(float speed);
+
 	void OnHit(std::shared_ptr<IPhysicsEventReceiver> object);
 
 	void UnHit(std::shared_ptr<IPhysicsEventReceiver> object);
+
+	void OnGround(std::shared_ptr<IPhysicsEventReceiver> object);
+
+	void UnGround(std::shared_ptr<IPhysicsEventReceiver> object);
 
 	const void Debug() const;
 
 	const float GetMaxSpeed() const;
 
 	const float GetFriction() const;
+
+	const float GetFallSpeed() const;
 
 	const VECTOR GetPosition()const;
 
@@ -62,6 +74,8 @@ public:
 	const bool GetUseGravity() const;
 
 	const bool GetIsKinematic() const;
+
+	const bool GetOnGround() const;
 
 	/// <summary>
 	/// 自分がobjectなのか
@@ -88,11 +102,13 @@ private:
 
 	bool use_gravity_;		// 重力
 	bool is_kinematic_;		// 摩擦や重力による変更を受けない(TRUE : 受けない,FALSE ： 受ける)
-	bool on_grounded_;		// 着地判定
+	bool on_ground_;		// 着地判定
 	bool is_object_;		// 自分はobjectなのか
 	bool is_active_;
 	float mass_;			// 重さ
 	float friction_;		// 摩擦(0～1の間)0に近づくほど摩擦が強くなる
+
+	float fall_speed_;
 
 	std::shared_ptr<ColliderBase>	coll_;				// 自分の当たり判定
 	std::weak_ptr<IPhysicsEventReceiver>				object_;	// インターフェースを継承したオブジェクト

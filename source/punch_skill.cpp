@@ -150,7 +150,7 @@ void PunchSkill::DecideTarget(std::vector<std::weak_ptr<ObjectBase>> owner_area_
 bool PunchSkill::CheckIsPunch(std::shared_ptr<Player> owner)
 {
 	if (owner->GetIsStop())										{ return FALSE; }
-	if (!owner->GetIsGround())									{ return FALSE; }	// 着地していない
+	if (!owner->GetOnGround())									{ return FALSE; }	// 着地していない
 	if (owner->GetIsInvincible())								{ return FALSE; }
 	if (owner->GetAnimator()->GetNowAnimName() == my_anim_name_)		{ return FALSE; }	// パンチじゃない
 	if (!owner->GetInput()->IsNormalSkill())							{ return FALSE; }	// 入力されているか

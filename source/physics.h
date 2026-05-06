@@ -35,7 +35,6 @@ public:
 	/// </summary>
 	void Update();
 
-	
 
 private:
 
@@ -57,12 +56,14 @@ private:
 
 	void Resistance();
 
+	void Gravity();
+
 	void CheckGround();	
 
 	//0.18
 	const float kResistanceNum			= 0.18f;	// 抵抗の強さ
 	const float kGroundProjLength		= 0.25;		// 地面のレイの許容範囲
-
+	const float kOffsetCheckGround	= 0.015f;	//もともとのポジションから調整した値
 	Contact contact = {};
 
 	std::list<std::shared_ptr<RigidBody>> rigid_bodies_;		//各オブジェクトに付随している当たり判定たち

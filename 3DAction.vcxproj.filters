@@ -447,6 +447,9 @@
     <ClCompile Include="source\condition_timer.cpp">
       <Filter>ソース ファイル\timer</Filter>
     </ClCompile>
+    <ClCompile Include="source\jump.cpp">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -762,6 +765,9 @@
       <Filter>ソース ファイル\timer</Filter>
     </ClInclude>
     <ClInclude Include="source\jumping_attack_state.h">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\jump.h">
       <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
   </ItemGroup>

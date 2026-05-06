@@ -17,6 +17,8 @@
 #include"behavior_tree.h"
 #include"double_punch.h"
 #include"jumping_attack.h"
+#include"jump.h"
+#include"color.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos)
 	: CharacterBase("enemy")
@@ -31,7 +33,8 @@ EnemyBase::EnemyBase(const VECTOR& pos)
 	my_name_ = "";
 	handle_ = MV1LoadModel("data/model/enemy/zako/Demon_T_Wiezzorek.mv1");
 	if (handle_ == -1) { printfDx("ì«Ç›çûÇ›ÉGÉâÅ[\n"); }
-	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(5.5f, 18.f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f,0.1f);
+	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(5.5f, 18.f, VectorAssistant::VGetZero()), 
+		&pos_, TRUE, FALSE, 0.03f,0.1f);
 	fall_speed_ = 0.f;
 	behavior_tree_ = std::make_shared<BehaviorTree>();
 }
@@ -53,13 +56,17 @@ void EnemyBase::Init()
 	std::shared_ptr<ObjectBase> obj_mine = mine;
 
 	UpdateBone();
-	
+	/*
 	test_behavior_ = std::make_shared<DoublePunch>(std::dynamic_pointer_cast<ObjectBase>(mine),
 		"double_punch", 0.35f, 0.5f, &double_punch_coll_pos_, 3.0f, 6.f);
-	
-	/*
-	test_behavior_ = std::make_shared<JumpingAttack>(obj_mine, &pos_, 0.5f, 0.75f, "jumping_attack");
 	*/
+	/*
+	test_behavior_ = std::make_shared<JumpingAttack>
+		(obj_mine, &pos_, 0.5f, 0.75f, "jumping_attack");
+	*/
+	test_behavior_ = std::make_shared<Jump>
+		(obj_mine, "jumping_attack" , 0.38f, 1.f);
+	
 
 	animator_ = std::make_shared<AnimatorEnemy>(handle_, std::dynamic_pointer_cast<EnemyBase>(mine),"enemy");
 	animator_->Init();
@@ -71,15 +78,10 @@ void EnemyBase::Update()
 {
 	VECTOR dir = VectorAssistant::VGetZero();
 	//dir_ = VectorAssistant::VGetZero();
-	vel_ = dir;
-	if (!is_ground_)
-	{
-		fall_speed_ += 0.03f;
-		vel_ = VAdd(vel_, VGet(0.f, -fall_speed_, 0.f));
-	}
+	// vel_ = dir;
+
 	double_punch_coll_pos_ = VAdd(pos_, VScale(dir_, 5.f));
 
-	vel_ = VScale(vel_, (FPS::GetInstance().GetDeltaTime() * 60.f));
 	rigid_body_->SetTargetVelocity(vel_);
 	animator_->Update();
 	UpdateBone();
@@ -117,19 +119,21 @@ void EnemyBase::OnHit(std::shared_ptr<IPhysicsEventReceiver> obj)
 
 }
 
-void EnemyBase::OnGrounded(std::shared_ptr<IPhysicsEventReceiver> object)
+void EnemyBase::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 {
-	auto check_area = std::dynamic_pointer_cast<CheckMyArea>(object);
-
-	if (check_area != nullptr) { return; }
-
 	is_ground_ = TRUE;
 	fall_speed_ = 0.f;
+	vel_.y = 0.f;
 }
 
-void EnemyBase::OnUnGrounded(std::shared_ptr<IPhysicsEventReceiver> object)
+void EnemyBase::UnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 	is_ground_ = FALSE;
+}
+
+const bool EnemyBase::GetOnGround() const
+{
+	return rigid_body_->GetOnGround();
 }
 
 std::shared_ptr<RigidBody> EnemyBase::GetRigidBody()

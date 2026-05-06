@@ -45,9 +45,9 @@ public:
 
 	void OnHit(std::shared_ptr<IPhysicsEventReceiver> obj) override;
 
-	void OnGrounded(std::shared_ptr<IPhysicsEventReceiver> object) override;
+	void OnGround(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
-	void OnUnGrounded(std::shared_ptr<IPhysicsEventReceiver> object) override;
+	void UnGround(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
 	void OnHealFromPlayer(float heal) override;
 
@@ -73,7 +73,7 @@ public:
 
 	const bool GetIsMove() const;
 
-	const bool GetIsGround() const;
+	const bool GetOnGround() const override;
 
 	const bool GetIsDash() const;
 
@@ -82,8 +82,6 @@ public:
 	const VECTOR GetDirection()const;
 
 	const VECTOR GetInputDir() const;
-
-
 
 private:
 	

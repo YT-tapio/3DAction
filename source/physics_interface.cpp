@@ -14,12 +14,12 @@ void IPhysicsEventReceiver::UnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 
 }
 
-void IPhysicsEventReceiver::OnGrounded(std::shared_ptr<IPhysicsEventReceiver> object)
+void IPhysicsEventReceiver::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 
 }
 
-void IPhysicsEventReceiver::OnUnGrounded(std::shared_ptr<IPhysicsEventReceiver> object)
+void IPhysicsEventReceiver::UnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 
 }

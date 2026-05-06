@@ -101,7 +101,7 @@ BehaviorStatus JumpingAttack::UpdateStandby(std::shared_ptr<CharacterBase> owner
 		auto owner_rigid_body = obj->GetRigidBody();
 		if (owner_rigid_body == nullptr) { return BehaviorStatus::kFailure; }
 
-		owner_rigid_body->SetTargetVelocity(VGet(0.f, 5.f, 0.f));
+		owner_rigid_body->SetUpSpeed(5.f);
 		jumping_state_ = JumpingAttackState::kJumping;
 	}
 	return BehaviorStatus::kRunning;
@@ -170,8 +170,12 @@ BehaviorStatus JumpingAttack::UpdateFalling(std::shared_ptr<CharacterBase> owner
 		rigid_body_->NotActive();
 	}
 
+	// physicsのやつに変換
+	auto physics_obj = std::dynamic_pointer_cast<IPhysicsEventReceiver>(owner);
+	if (physics_obj == nullptr) { return BehaviorStatus::kFailure; }
+	auto owner_rigid_body = physics_obj->GetRigidBody();
 	// オーナーが着地をしたらサクセスを返すように：owner->GetIsGround();
-	if (owner->GetIsGround()) 
+	if (owner->GetOnGround())
 	{ 
 		// jumping_state_ = JumpingAttackState::kStandby;
 		return BehaviorStatus::kSuccess;

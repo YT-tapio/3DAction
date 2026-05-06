@@ -9,6 +9,8 @@
 #include"animator_player.h"
 #include"load_animation.h"
 #include"fps.h"
+#include"rigid_body.h"
+#include"physics_interface.h"
 
 AnimatorPlayer::AnimatorPlayer(int handle, std::shared_ptr<Player> player, std::string name)
 	: AnimatorBase("player/" + name, handle)
@@ -25,13 +27,12 @@ AnimatorPlayer::~AnimatorPlayer()
 
 void AnimatorPlayer::ChangeAnimation()
 {
-
 	before_anim_name_ = now_anim_name_;
 
 	std::map<int, std::string, std::greater<int>> request_name_priority_mp;
 	if (player_->GetIsMove()) { PlayRequest(kJogging); }
 	if (player_->GetIsDash()) { PlayRequest(kRun); }
-	if (player_->GetIsGround()){ PlayRequest(kIdle); }
+	if (player_->GetOnGround()){ PlayRequest(kIdle); }
 
 	if (!request_names_.empty())
 	{

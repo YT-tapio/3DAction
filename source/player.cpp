@@ -63,7 +63,8 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	handle_ = -1;
 	Setting();
 	UpdateBone();
-	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), &pos_, TRUE, FALSE, 1.f, 0.1f);
+	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), 
+		&pos_, TRUE, FALSE, 0.03f, 0.1f);
 	fall_speed_ = 0.f;
 	is_move_ = FALSE;
 	is_dash_ = FALSE;
@@ -193,6 +194,7 @@ void Player::Draw()
 
 void Player::Debug()
 {
+	if (TRUE) { return; }
 	if (skill_ != nullptr) { skill_->Debug(); }
 	if (second_skill_ != nullptr) { second_skill_->Debug(); }
 	//my_area_->Debug();
@@ -244,7 +246,7 @@ void Player::Debug()
 	{
 		DrawString(0, Debug::GetInstance().GetNowLineSize(), "–³“G‚¶‚á‚È‚¢", Color::kWhite);
 	}
-
+	Debug::GetInstance().Add();
 	if (is_stop_)
 	{
 		DrawString(0, Debug::GetInstance().GetNowLineSize(), "stop", Color::kWhite);
@@ -373,11 +375,13 @@ void Player::Move()
 		is_move_ = FALSE;
 		is_dash_ = FALSE;
 	}
-	
+	/*
 	if (!is_ground_)
 	{
 		fall_speed_ += 0.03f * FPS::GetInstance().GetDeltaTime() * 60.f;
 	}
+	*/
+	
 	vel_ = VScale(vel_, FPS::GetInstance().GetDeltaTime() * 60.f);
 	vel_ = VAdd(vel_, VGet(0.f, -fall_speed_, 0.f));
 	
@@ -493,17 +497,14 @@ void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 	}
 }
 
-void Player::OnGrounded(std::shared_ptr<IPhysicsEventReceiver> object)
+void Player::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 	auto check_area = std::dynamic_pointer_cast<CheckMyArea>(object);
 
 	if (check_area != nullptr) { return; }
-
-	is_ground_ = TRUE;
-	fall_speed_ = 0.f;
 }
 
-void Player::OnUnGrounded(std::shared_ptr<IPhysicsEventReceiver> object)
+void Player::UnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 	is_ground_ = FALSE;
 	// printfDx("1\n");
@@ -569,9 +570,9 @@ const bool Player::GetIsMove() const
 	return is_move_;
 }
 
-const bool Player::GetIsGround() const
+const bool Player::GetOnGround() const
 {
-	return is_ground_;
+	return rigid_body_->GetOnGround();
 }
 
 const bool Player::GetIsDash() const

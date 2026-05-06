@@ -47,11 +47,14 @@ void Physics::Debug()
 
 void Physics::Update()
 {
+	// 重力
+	Gravity();
 	// 地上の投影
 	GroundProj();
-
 	// 摩擦の適応
 	Resistance();
+
+	
 
 	//printfDx("-----------------\n");
 
@@ -83,8 +86,6 @@ void Physics::Update()
 				main_body->UnHit(target_body->GetIPhysicsObject());
 				target_body->UnHit(main_body->GetIPhysicsObject());
 			}
-			
-			
 		}
 		main_body->SetPos();
 	}
@@ -154,7 +155,7 @@ bool Physics::CheckHitGroundProj(std::shared_ptr<RigidBody>other, Contact& conta
 		// 型変換をする
 		auto sphere = dynamic_cast<Sphere*>(other_collider.get());
 		VECTOR center_pos = other->GetPosition();
-		is_hit = Collision::SegmentToSphere(segment_start_pos, segment_end_pos, center_pos, sphere->GetRadius());// その型とセグメントの当たり判定を行う
+		//is_hit = Collision::SegmentToSphere(segment_start_pos, segment_end_pos, center_pos, sphere->GetRadius());// その型とセグメントの当たり判定を行う
 		break;
 	}
 	case ColliderName::kCapsule:
@@ -163,7 +164,7 @@ bool Physics::CheckHitGroundProj(std::shared_ptr<RigidBody>other, Contact& conta
 		auto capsule = dynamic_cast<Capsule*>(other_collider.get());
 		VECTOR capsule_start_pos = VAdd(other->GetPosition(), capsule->GetOffsetVel());
 		VECTOR capsule_end_pos = VAdd(capsule_start_pos, VGet(0.f, capsule->GetVertical(), 0.f));
-		is_hit = Collision::SegmentToCapsule(segment_start_pos, segment_end_pos, capsule_start_pos, capsule_end_pos, capsule->GetRadius());// その型とセグメントの当たり判定を行う
+		//is_hit = Collision::SegmentToCapsule(segment_start_pos, segment_end_pos, capsule_start_pos, capsule_end_pos, capsule->GetRadius());// その型とセグメントの当たり判定を行う
 		
 		break;
 	}
@@ -189,8 +190,8 @@ bool Physics::CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidB
 	// meのposから足元にレイを飛ばして他のものと当たっているのかを検知する
 	// 線分とotherとの当たり判定を行う
 	
-	// meから真下に線分を伸ばす
-	VECTOR segment_start_pos = me->GetPosition();
+	// meを少しだけ上にし真下に線分を伸ばす
+	VECTOR segment_start_pos = VAdd(me->GetPosition(),VGet(0.f,kOffsetCheckGround,0.f));
 	VECTOR segment_end_pos		= VAdd(segment_start_pos, VGet(0.f, -kGroundProjLength, 0.f));
 
 	// そのrigidbodyが何のコライダーを持っているかの判別をする
@@ -262,11 +263,14 @@ void Physics::GroundProj()
 	// 坂の投影を行います
 	for (auto& main_body : rigid_bodies_)
 	{
+		
 		// アクティブ状態じゃない、ボーンによる影響しか受けない場合をのぞく
 		if (!main_body->GetIsActive()) { continue; }
 		if (VSize(main_body->GetVelocity()) == 0.f) { continue; }
 		if (main_body->GetIsKinematic()) { continue; }
-
+		// if (main_body->GetFallSpeed() != 0.f) { continue; }
+		// if (main_body->GetFallSpeed() != 0.f) { printfDx("a"); }
+		
 		Contact ground_contact = {};
 
 		VECTOR offset_proj_vec = main_body->GetVelocity();
@@ -418,6 +422,14 @@ void Physics::Resistance()
 	}
 }
 
+void Physics::Gravity()
+{
+	for (auto& main_body : rigid_bodies_)
+	{
+		main_body->AddForce();
+	}
+}
+
 void Physics::CheckGround()
 {
 	// 着地の判定
@@ -441,12 +453,12 @@ void Physics::CheckGround()
 			// rigid_body内の足元検知用のレイと周りのオブジェクトとの当たり判定を行う
 			if (CheckHitFoot(main_body, target_body,contact,kGroundProjLength))
 			{
-				body->OnGrounded(target_body->GetIPhysicsObject());
+				main_body->OnGround(target_body->GetIPhysicsObject());
 				break;
 			}
 			else
 			{
-				body->OnUnGrounded(target_body->GetIPhysicsObject());
+				main_body->UnGround(target_body->GetIPhysicsObject());
 			}
 		}
 	}

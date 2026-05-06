@@ -23,12 +23,12 @@ public:
 	/// <summary>
 	/// “–‚½‚Á‚Ä‚¢‚é
 	/// </summary>
-	virtual void OnGrounded(std::shared_ptr<IPhysicsEventReceiver> object);
+	virtual void OnGround(std::shared_ptr<IPhysicsEventReceiver> object);
 
 	/// <summary>
 	/// “–‚½‚Á‚Ä‚¢‚È‚¢
 	/// </summary>
-	virtual void OnUnGrounded(std::shared_ptr<IPhysicsEventReceiver> object);
+	virtual void UnGround(std::shared_ptr<IPhysicsEventReceiver> object);
 
 	virtual std::shared_ptr<RigidBody> GetRigidBody();
 };

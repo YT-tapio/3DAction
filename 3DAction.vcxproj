@@ -178,6 +178,7 @@
     <ClCompile Include="source\attack_base.cpp" />
     <ClCompile Include="source\enemy_group.cpp" />
     <ClCompile Include="source\input_change_interface.cpp" />
+    <ClCompile Include="source\jump.cpp" />
     <ClCompile Include="source\jumping_attack.cpp" />
     <ClCompile Include="source\node_base.cpp" />
     <ClCompile Include="source\player_group.cpp" />
@@ -259,6 +260,7 @@
     <ClInclude Include="source\effect_manager.h" />
     <ClInclude Include="source\enemy_group.h" />
     <ClInclude Include="source\input_change_interface.h" />
+    <ClInclude Include="source\jump.h" />
     <ClInclude Include="source\jumping_attack.h" />
     <ClInclude Include="source\jumping_attack_state.h" />
     <ClInclude Include="source\node_base.h" />

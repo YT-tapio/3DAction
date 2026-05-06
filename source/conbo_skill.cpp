@@ -108,7 +108,7 @@ bool ConboSkill::IsStartConboAction(std::shared_ptr<ConboAction> conbo_action)
 	auto owner = owner_.lock();
 	
 	if (is_active_)													{ return FALSE; }
-	if (!owner->GetIsGround())								{ return FALSE; }
+	if (!owner->GetOnGround())								{ return FALSE; }
 	if (owner->GetIsStop())									{ return FALSE; }
 	//inputの確認
 	if (!owner->GetInput()->IsStrongSkill()) { return FALSE; }
@@ -119,7 +119,7 @@ bool ConboSkill::IsStartConboAction(std::shared_ptr<ConboAction> conbo_action)
 bool ConboSkill::CheckGoNextConbo(std::shared_ptr<ConboAction> conbo_action)
 {
 	auto owner = owner_.lock();
-	if (!owner->GetIsGround()) { return FALSE; }
+	if (!owner->GetOnGround()) { return FALSE; }
 	if (!conbo_action->CheckNextConboReady()) { return FALSE; }
 	//inputの確認
 	if (!owner->GetInput()->IsStrongSkill()) { return FALSE; }

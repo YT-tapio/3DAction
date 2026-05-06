@@ -22,7 +22,6 @@ void BehaviorBase::Init()
 
 BehaviorStatus BehaviorBase::Update()
 {
-
 	return BehaviorStatus::kFailure;
 }
 
