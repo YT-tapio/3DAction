@@ -435,6 +435,7 @@ void Physics::CheckGround()
 	// ’…’n‚Ì”»’è
 	for (auto& main_body : rigid_bodies_)
 	{
+		bool on_ground = FALSE;
 		if (!main_body->GetUseGravity()) { continue; }
 		
 		auto area = std::dynamic_pointer_cast<CheckMyArea>(main_body->GetIPhysicsObject());
@@ -454,12 +455,14 @@ void Physics::CheckGround()
 			if (CheckHitFoot(main_body, target_body,contact,kGroundProjLength))
 			{
 				main_body->OnGround(target_body->GetIPhysicsObject());
+				on_ground = TRUE;
 				break;
 			}
-			else
-			{
-				main_body->UnGround(target_body->GetIPhysicsObject());
-			}
+		}
+
+		if (!on_ground)
+		{
+			// main_body->UnGround();
 		}
 	}
 

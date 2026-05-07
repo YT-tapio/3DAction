@@ -1,5 +1,6 @@
 #include<vector>
 #include<memory>
+#include"DxLib.h"
 #include"composite_node.h"
 #include"sequence_node.h"
 #include"behavior_status.h"
@@ -30,6 +31,10 @@ BehaviorStatus SequenceNode::Update()
 		case BehaviorStatus::kSuccess:
 			// 成功したら次のノードへ
 			current_node_++;
+			if (current_node_ == nodes_.size())
+			{
+				current_node_ = 0;
+			}
 			break;
 
 			// 実行中
@@ -44,6 +49,7 @@ BehaviorStatus SequenceNode::Update()
 			break;
 		}
 	}
+
 	// 全て成功なら成功を返す
 	return BehaviorStatus::kSuccess;
 }

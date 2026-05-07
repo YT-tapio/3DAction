@@ -127,7 +127,7 @@ void RigidBody::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 		object_.lock()->OnGround(object);
 	}
 
-	// 着地の瞬間化を記憶
+	// 着地の瞬間を記憶
 	if (!on_ground_)
 	{
 		is_landing_ = TRUE;
@@ -135,6 +135,7 @@ void RigidBody::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 	else
 	{
 		is_landing_ = FALSE;
+		printfDx("FALSE\n");
 	}
 
 	on_ground_ = TRUE;
@@ -149,11 +150,16 @@ void RigidBody::UnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 	{
 		object_.lock()->UnGround(object);
 	}
+
 	on_ground_ = FALSE;
+	is_landing_ = FALSE;
 }
 
 const void RigidBody::Debug() const
 {
+	DrawString(0, Debug::GetInstance().GetNowLineSize(), "--RigidBody--", Color::kWhite);
+	Debug::GetInstance().Add();
+
 	if (!is_active_) { return; }
 	VECTOR segment_start_pos = VAdd(*pos_, VGet(0.f, 0.f, 0.f));
 	VECTOR segment_end_pos = VAdd(*pos_, VGet(0.f, -0.5f, 0.f));

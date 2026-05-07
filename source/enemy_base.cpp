@@ -65,7 +65,7 @@ void EnemyBase::Init()
 
 	std::vector<std::shared_ptr<NodeBase>> nodes;
 	nodes.push_back(std::make_shared<ActionNode>(std::make_shared<Jump>(obj_mine,
-		"jump_attack", 0.38f, 1.f)));
+		"jumping_attack", 0.38f, 1.f)));
 
 	nodes.push_back(std::make_shared<ActionNode>
 		(std::make_shared<Stamp>(obj_mine, &pos_, 5.f)));

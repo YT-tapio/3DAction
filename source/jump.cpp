@@ -38,7 +38,7 @@ BehaviorStatus Jump::Update()
 	if(character ==nullptr){ return BehaviorStatus::kFailure; }
 	auto animator = character->GetAnimator();			// アニメーターを取得
 	
-	if (animator->GetRatio(my_anim_name_) < 0.1f) { played_ = FALSE; }
+	if (animator->GetRatio(my_anim_name_) < timing_) { played_ = FALSE; }
 	// physics用に変換する
 	auto physics_owner = std::dynamic_pointer_cast<IPhysicsEventReceiver>(character);
 	auto owner_rigid_body = physics_owner->GetRigidBody();
