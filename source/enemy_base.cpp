@@ -15,10 +15,16 @@
 #include"punch.h"
 #include"check_my_area.h"
 #include"behavior_tree.h"
+#include"behavior_base.h"
 #include"double_punch.h"
 #include"jumping_attack.h"
 #include"jump.h"
+#include"stamp.h"
 #include"color.h"
+#include"node_base.h"
+#include"composite_node.h"
+#include"sequence_node.h"
+#include"action_node.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos)
 	: CharacterBase("enemy")
@@ -36,7 +42,7 @@ EnemyBase::EnemyBase(const VECTOR& pos)
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(5.5f, 18.f, VectorAssistant::VGetZero()), 
 		&pos_, TRUE, FALSE, 0.03f,0.1f);
 	fall_speed_ = 0.f;
-	behavior_tree_ = std::make_shared<BehaviorTree>();
+
 }
 
 EnemyBase::~EnemyBase()
@@ -46,6 +52,8 @@ EnemyBase::~EnemyBase()
 
 void EnemyBase::Init()
 {
+	
+
 	rigid_body_->Init(weak_from_this());
 	// physics‚Ì“o˜^
 	Physics::GetInstance().AddBody(rigid_body_);
@@ -54,6 +62,16 @@ void EnemyBase::Init()
 	auto physics_mine = shared_from_this();
 	auto mine = std::dynamic_pointer_cast<EnemyBase>(physics_mine);
 	std::shared_ptr<ObjectBase> obj_mine = mine;
+
+	std::vector<std::shared_ptr<NodeBase>> nodes;
+	nodes.push_back(std::make_shared<ActionNode>(std::make_shared<Jump>(obj_mine,
+		"jump_attack", 0.38f, 1.f)));
+
+	nodes.push_back(std::make_shared<ActionNode>
+		(std::make_shared<Stamp>(obj_mine, &pos_, 5.f)));
+
+	std::shared_ptr<NodeBase> first_node = std::make_shared<SequenceNode>(nodes);
+	behavior_tree_ = std::make_shared<BehaviorTree>(first_node);
 
 	UpdateBone();
 	/*
@@ -85,7 +103,7 @@ void EnemyBase::Update()
 	rigid_body_->SetTargetVelocity(vel_);
 	animator_->Update();
 	UpdateBone();
-	test_behavior_->Update();
+	// test_behavior_->Update();
 	behavior_tree_->Update();
 }
 
@@ -102,7 +120,7 @@ void EnemyBase::Draw()
 void EnemyBase::Debug()
 {
 	rigid_body_->Debug();
-	test_behavior_->Debug();
+	// test_behavior_->Debug();
 }
 
 void EnemyBase::OnHit(std::shared_ptr<IPhysicsEventReceiver> obj)

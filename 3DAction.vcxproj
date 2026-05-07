@@ -189,6 +189,7 @@
     <ClCompile Include="source\skill_base.cpp" />
     <ClCompile Include="source\skill_loader.cpp" />
     <ClCompile Include="source\sphere_camera.cpp" />
+    <ClCompile Include="source\stamp.cpp" />
     <ClCompile Include="source\takable_damage_enemy_interface.cpp" />
     <ClCompile Include="source\takable_damage_player_interface.cpp" />
     <ClCompile Include="source\takable_heal_enemy_interface.cpp" />
@@ -283,6 +284,7 @@
     <ClInclude Include="source\screen_size.h" />
     <ClInclude Include="source\skill_loader.h" />
     <ClInclude Include="source\sphere_camera.h" />
+    <ClInclude Include="source\stamp.h" />
     <ClInclude Include="source\takable_damage_enemy_interface.h" />
     <ClInclude Include="source\takable_damage_player_interface.h" />
     <ClInclude Include="source\takable_heal_enemy_interface.h" />

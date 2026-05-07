@@ -12,15 +12,15 @@ public:
 
 	AttackBase(std::weak_ptr<ObjectBase> owner,float min_coll_ratio, float max_coll_ratio);
 
-	~AttackBase() override;
+	virtual ~AttackBase() override;
 
-	void Init() override;
+	virtual void Init() override;
 
-	BehaviorStatus Update() override;
+	virtual BehaviorStatus Update() override;
 
-	void Debug() override;
+	virtual void Debug() override;
 
-	void OnHit(std::shared_ptr<IPhysicsEventReceiver> object) override;
+	virtual void OnHit(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
 protected:
 

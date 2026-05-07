@@ -450,6 +450,9 @@
     <ClCompile Include="source\jump.cpp">
       <Filter>ソース ファイル\behavior</Filter>
     </ClCompile>
+    <ClCompile Include="source\stamp.cpp">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -768,6 +771,9 @@
       <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
     <ClInclude Include="source\jump.h">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\stamp.h">
       <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
   </ItemGroup>

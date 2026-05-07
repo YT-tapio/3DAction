@@ -26,6 +26,7 @@ RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll,VECTOR* pos,bool gravity
 	is_active_ = TRUE;
 	is_object_ = FALSE;
 	on_ground_ = FALSE;
+	is_landing_ = FALSE;
 }
 
 RigidBody::~RigidBody()
@@ -84,8 +85,6 @@ void RigidBody::AddForce()
 		if (fall_speed_ == 5.f) { printfDx("aa"); }
 		fall_speed_ -= mass_ * FPS::GetInstance().GetDeltaTime() * 60.f;
 		target_vel_ = VAdd(target_vel_, VGet(0.f, fall_speed_, 0.f));
-		
-		//vel_ = target_vel_;
 	}
 }
 
@@ -127,6 +126,17 @@ void RigidBody::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 	{
 		object_.lock()->OnGround(object);
 	}
+
+	// íÖínÇÃèuä‘âªÇãLâØ
+	if (!on_ground_)
+	{
+		is_landing_ = TRUE;
+	}
+	else
+	{
+		is_landing_ = FALSE;
+	}
+
 	on_ground_ = TRUE;
 	fall_speed_ = 0.f;
 	target_vel_.y = 0.f;
@@ -225,6 +235,11 @@ const bool RigidBody::GetIsKinematic() const
 const bool RigidBody::GetOnGround() const
 {
 	return on_ground_;
+}
+
+const bool RigidBody::GetIsLanding() const
+{
+	return is_landing_;
 }
 
 const bool RigidBody::IsObject() const

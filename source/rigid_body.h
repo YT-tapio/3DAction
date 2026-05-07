@@ -77,6 +77,8 @@ public:
 
 	const bool GetOnGround() const;
 
+	const bool GetIsLanding() const;
+
 	/// <summary>
 	/// 自分がobjectなのか
 	/// </summary>
@@ -103,6 +105,7 @@ private:
 	bool use_gravity_;		// 重力
 	bool is_kinematic_;		// 摩擦や重力による変更を受けない(TRUE : 受けない,FALSE ： 受ける)
 	bool on_ground_;		// 着地判定
+	bool is_landing_;		// 着地した瞬間
 	bool is_object_;		// 自分はobjectなのか
 	bool is_active_;
 	float mass_;			// 重さ

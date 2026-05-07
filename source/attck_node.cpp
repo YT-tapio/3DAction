@@ -5,7 +5,7 @@
 #include"behavior_status.h"
 
 AttackNode::AttackNode()
-	:ActionNode()
+	:ActionNode(nullptr)
 {
 
 }

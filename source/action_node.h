@@ -7,7 +7,7 @@ class ActionNode : public NodeBase
 {
 public:
 
-	ActionNode();
+	ActionNode(std::shared_ptr<BehaviorBase> action);
 
 	virtual ~ActionNode() override;
 	

@@ -5,9 +5,11 @@ class BehaviorTree
 {
 public:
 
-	BehaviorTree();
+	BehaviorTree(std::shared_ptr<NodeBase> node);
 
 	~BehaviorTree();
+
+	void Init();
 
 	void Update();
 
