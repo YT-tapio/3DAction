@@ -17,10 +17,15 @@ BehaviorTree::~BehaviorTree()
 
 void BehaviorTree::Init()
 {
-	//node_->Init();
+	node_->Init();
 }
 
 void BehaviorTree::Update()
 {
 	node_->Update();
+}
+
+void BehaviorTree::Debug()
+{
+	node_->Debug();
 }

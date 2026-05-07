@@ -504,7 +504,7 @@ void Player::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 	if (check_area != nullptr) { return; }
 }
 
-void Player::UnGround(std::shared_ptr<IPhysicsEventReceiver> object)
+void Player::UnGround()
 {
 	is_ground_ = FALSE;
 	// printfDx("1\n");

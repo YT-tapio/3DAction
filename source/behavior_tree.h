@@ -13,6 +13,8 @@ public:
 
 	void Update();
 
+	void Debug();
+
 private:
 
 	// start‚Ìnode‚ğ‚Â

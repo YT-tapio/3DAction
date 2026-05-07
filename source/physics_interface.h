@@ -28,7 +28,7 @@ public:
 	/// <summary>
 	/// “–‚½‚Á‚Ä‚¢‚È‚¢
 	/// </summary>
-	virtual void UnGround(std::shared_ptr<IPhysicsEventReceiver> object);
+	virtual void UnGround();
 
 	virtual std::shared_ptr<RigidBody> GetRigidBody();
 };

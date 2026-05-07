@@ -131,11 +131,11 @@ void RigidBody::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 	if (!on_ground_)
 	{
 		is_landing_ = TRUE;
+		printfDx("aa\n");
 	}
 	else
 	{
 		is_landing_ = FALSE;
-		printfDx("FALSE\n");
 	}
 
 	on_ground_ = TRUE;
@@ -144,11 +144,11 @@ void RigidBody::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 	vel_.y = 0.f;
 }
 
-void RigidBody::UnGround(std::shared_ptr<IPhysicsEventReceiver> object)
+void RigidBody::UnGround()
 {
 	if (auto obj = object_.lock())
 	{
-		object_.lock()->UnGround(object);
+		object_.lock()->UnGround();
 	}
 
 	on_ground_ = FALSE;

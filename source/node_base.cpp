@@ -11,7 +11,17 @@ NodeBase::~NodeBase()
 
 }
 
+void NodeBase::Init()
+{
+
+}
+
 BehaviorStatus NodeBase::Update()
 {
 	return BehaviorStatus::kSuccess;
+}
+
+void NodeBase::Debug()
+{
+
 }

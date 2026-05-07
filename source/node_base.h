@@ -10,7 +10,11 @@ public:
 
 	virtual ~NodeBase();
 
+	virtual void Init();
+
 	virtual BehaviorStatus Update();
+
+	virtual void Debug();
 
 protected:
 

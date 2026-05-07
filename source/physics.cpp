@@ -462,7 +462,7 @@ void Physics::CheckGround()
 
 		if (!on_ground)
 		{
-			// main_body->UnGround();
+			main_body->UnGround();
 		}
 	}
 

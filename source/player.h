@@ -47,7 +47,7 @@ public:
 
 	void OnGround(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
-	void UnGround(std::shared_ptr<IPhysicsEventReceiver> object) override;
+	void UnGround() override;
 
 	void OnHealFromPlayer(float heal) override;
 

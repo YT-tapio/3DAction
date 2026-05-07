@@ -9,7 +9,11 @@ public:
 
 	virtual ~CompositeNode() override;
 
+	virtual void Init() override;
+
 	BehaviorStatus Update() override;
+
+	void Debug() override;
 
 protected:
 

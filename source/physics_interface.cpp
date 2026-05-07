@@ -19,7 +19,7 @@ void IPhysicsEventReceiver::OnGround(std::shared_ptr<IPhysicsEventReceiver> obje
 
 }
 
-void IPhysicsEventReceiver::UnGround(std::shared_ptr<IPhysicsEventReceiver> object)
+void IPhysicsEventReceiver::UnGround()
 {
 
 }

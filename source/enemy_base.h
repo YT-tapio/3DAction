@@ -29,7 +29,7 @@ public:
 
 	virtual void OnGround(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
-	virtual void UnGround(std::shared_ptr<IPhysicsEventReceiver> object) override;
+	virtual void UnGround() override;
 
 	virtual const bool GetOnGround() const;
 

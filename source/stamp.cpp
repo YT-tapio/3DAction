@@ -53,5 +53,5 @@ void Stamp::Debug()
 
 void Stamp::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 {
-
+	//printfDx("‚ ‚½‚Á‚Ä‚¢‚é\n");
 }

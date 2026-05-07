@@ -68,7 +68,7 @@ void EnemyBase::Init()
 		"jumping_attack", 0.38f, 1.f)));
 
 	nodes.push_back(std::make_shared<ActionNode>
-		(std::make_shared<Stamp>(obj_mine, &pos_, 5.f)));
+		(std::make_shared<Stamp>(obj_mine, &pos_, 10.f)));
 
 	std::shared_ptr<NodeBase> first_node = std::make_shared<SequenceNode>(nodes);
 	behavior_tree_ = std::make_shared<BehaviorTree>(first_node);
@@ -85,10 +85,10 @@ void EnemyBase::Init()
 	test_behavior_ = std::make_shared<Jump>
 		(obj_mine, "jumping_attack" , 0.38f, 1.f);
 	
-
 	animator_ = std::make_shared<AnimatorEnemy>(handle_, std::dynamic_pointer_cast<EnemyBase>(mine),"enemy");
 	animator_->Init();
 	test_behavior_->Init();
+	behavior_tree_->Init();
 	dir_ = VectorAssistant::VGetDirFromRotY(rot_);
 }
 
@@ -120,6 +120,7 @@ void EnemyBase::Draw()
 void EnemyBase::Debug()
 {
 	rigid_body_->Debug();
+	behavior_tree_->Debug();
 	// test_behavior_->Debug();
 }
 
@@ -144,7 +145,7 @@ void EnemyBase::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 	vel_.y = 0.f;
 }
 
-void EnemyBase::UnGround(std::shared_ptr<IPhysicsEventReceiver> object)
+void EnemyBase::UnGround()
 {
 	is_ground_ = FALSE;
 }

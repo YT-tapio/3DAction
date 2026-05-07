@@ -11,7 +11,11 @@ public:
 
 	virtual ~ActionNode() override;
 	
+	virtual void Init() override;
+
 	virtual BehaviorStatus Update() override;
+
+	virtual void Debug() override;
 
 private:
 

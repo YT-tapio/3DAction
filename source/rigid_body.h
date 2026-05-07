@@ -51,7 +51,7 @@ public:
 
 	void OnGround(std::shared_ptr<IPhysicsEventReceiver> object);
 
-	void UnGround(std::shared_ptr<IPhysicsEventReceiver> object);
+	void UnGround();
 
 	const void Debug() const;
 

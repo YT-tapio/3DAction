@@ -15,7 +15,23 @@ CompositeNode::~CompositeNode()
 
 }
 
+void CompositeNode::Init()
+{
+	for (auto& node : nodes_)
+	{
+		node->Init();
+	}
+}
+
 BehaviorStatus CompositeNode::Update()
 {
 	return BehaviorStatus::kSuccess;
+}
+
+void CompositeNode::Debug()
+{
+	for (auto& node : nodes_)
+	{
+		node->Debug();
+	}
 }

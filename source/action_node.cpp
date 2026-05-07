@@ -14,8 +14,19 @@ ActionNode::~ActionNode()
 
 }
 
+void ActionNode::Init()
+{
+	action_->Init();
+}
+
 BehaviorStatus ActionNode::Update()
 {
 	// アクションの実行
 	return action_->Update();
+}
+
+
+void ActionNode::Debug()
+{
+	action_->Debug();
 }
