@@ -9,8 +9,7 @@ class Jump : public BehaviorBase
 {
 public:
 
-	Jump(std::weak_ptr<ObjectBase> owner,
-		std::string my_anim_name,float timing,float speed);
+	Jump(std::weak_ptr<ObjectBase> owner,std::string my_anim_name,std::pair<float,float>timing,float speed);
 
 	~Jump() override;
 
@@ -32,7 +31,8 @@ private:
 
 	std::string my_anim_name_;	// 自分のアニメーションの名前
 	
-	bool played_;	// ジャンプしたか
+	std::pair<float, float> timing_; // この間はジャンプするタイミング
+
+	bool played_;							// ジャンプしたか
 	float speed_;							//上昇値
-	float timing_;							// ジャンプするタイミング(あにめーしょんの)
 };

@@ -1,4 +1,7 @@
+#include<string>
+#include<unordered_map>
 #include<memory>
+#include<utility>
 #include"DxLib.h"
 #include"attack_base.h"
 #include"stamp.h"
@@ -8,6 +11,8 @@
 #include"sphere.h"
 #include"physics.h"
 #include"rigid_body.h"
+#include"character_base.h"
+#include"animator_base.h"
 
 Stamp::Stamp(std::weak_ptr<ObjectBase> owner, VECTOR* pos, float radius)
 	: AttackBase(owner,0,0)

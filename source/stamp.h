@@ -25,6 +25,8 @@ public:
 
 private:
 
+	bool SuccessCondition();
+
 	bool is_stamp_;
 
 };

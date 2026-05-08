@@ -1,5 +1,7 @@
 #include<iostream>
+#include<memory>
 #include<string>
+#include<utility>
 #include"DxLib.h"
 #include"enemy_base.h"
 #include"sphere.h"
@@ -63,9 +65,13 @@ void EnemyBase::Init()
 	auto mine = std::dynamic_pointer_cast<EnemyBase>(physics_mine);
 	std::shared_ptr<ObjectBase> obj_mine = mine;
 
+	std::pair<float, float> a;
+	a.first = 0.38f;
+	a.second = 0.45f;
 	std::vector<std::shared_ptr<NodeBase>> nodes;
+	
 	nodes.push_back(std::make_shared<ActionNode>(std::make_shared<Jump>(obj_mine,
-		"jumping_attack", 0.38f, 1.f)));
+		"jumping_attack", a, 1.f)));
 
 	nodes.push_back(std::make_shared<ActionNode>
 		(std::make_shared<Stamp>(obj_mine, &pos_, 10.f)));
@@ -82,12 +88,15 @@ void EnemyBase::Init()
 	test_behavior_ = std::make_shared<JumpingAttack>
 		(obj_mine, &pos_, 0.5f, 0.75f, "jumping_attack");
 	*/
+	/*
 	test_behavior_ = std::make_shared<Jump>
 		(obj_mine, "jumping_attack" , 0.38f, 1.f);
+	*/
+	
 	
 	animator_ = std::make_shared<AnimatorEnemy>(handle_, std::dynamic_pointer_cast<EnemyBase>(mine),"enemy");
 	animator_->Init();
-	test_behavior_->Init();
+	// test_behavior_->Init();
 	behavior_tree_->Init();
 	dir_ = VectorAssistant::VGetDirFromRotY(rot_);
 }
