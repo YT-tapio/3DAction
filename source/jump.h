@@ -16,6 +16,8 @@ public:
 
 	void Init() override;
 
+	void Entry() override;
+
 	BehaviorStatus Update() override;
 
 	void Exit() override;

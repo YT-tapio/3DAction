@@ -29,9 +29,14 @@ BehaviorStatus SequenceNode::Update()
 		{
 			//実行成功(終了)
 		case BehaviorStatus::kSuccess:
+			nodes_[current_node_]->Exit();	//
 			// 成功したら次のノードへ
 			current_node_++;
-			if (current_node_ == nodes_.size())
+			if (current_node_ != nodes_.size())
+			{
+				nodes_[current_node_]->Entry();
+			}
+			else
 			{
 				current_node_ = 0;
 			}
@@ -44,7 +49,9 @@ BehaviorStatus SequenceNode::Update()
 
 			// 実行失敗
 		case BehaviorStatus::kFailure:
+			nodes_[current_node_]->Exit();
 			current_node_ = 0;
+			nodes_[current_node_]->Entry();
 			return BehaviorStatus::kFailure;
 			break;
 		}

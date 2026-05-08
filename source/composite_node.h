@@ -11,7 +11,11 @@ public:
 
 	virtual void Init() override;
 
+	virtual void Entry() override;
+
 	BehaviorStatus Update() override;
+
+	virtual void Exit() override;
 
 	void Debug() override;
 

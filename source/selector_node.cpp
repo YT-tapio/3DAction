@@ -28,6 +28,7 @@ BehaviorStatus SelectorNode::Update()
 			// ÀsŠ®—¹
 		case BehaviorStatus::kSuccess:
 			// ƒm[ƒh‚ğ‰Šú‰»‚·‚é
+			nodes_[current_node_]->Exit();
 			current_node_ = 0;
 			return BehaviorStatus::kSuccess;
 			break;
@@ -41,7 +42,9 @@ BehaviorStatus SelectorNode::Update()
 			// Às¸”s
 		case BehaviorStatus::kFailure:
 			// ¸”s‚È‚çŸ‚Ìƒm[ƒh‚Ö
+			nodes_[current_node_]->Exit();
 			current_node_++;
+			nodes_[current_node_]->Entry();
 			break;
 		}
 	}

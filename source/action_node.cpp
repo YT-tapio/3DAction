@@ -19,12 +19,21 @@ void ActionNode::Init()
 	action_->Init();
 }
 
+void ActionNode::Entry()
+{
+	action_->Entry();
+}
+
 BehaviorStatus ActionNode::Update()
 {
 	// アクションの実行
 	return action_->Update();
 }
 
+void ActionNode::Exit()
+{
+	action_->Exit();
+}
 
 void ActionNode::Debug()
 {

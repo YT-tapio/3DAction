@@ -28,7 +28,17 @@ Jump::~Jump()
 
 void Jump::Init()
 {
+	played_ = FALSE;
+}
 
+void Jump::Entry()
+{
+	played_ = FALSE;
+	// アニメーションの再生
+	if (auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock()))
+	{
+		owner->GetAnimator()->PlayRequest(my_anim_name_);
+	}
 }
 
 BehaviorStatus Jump::Update()

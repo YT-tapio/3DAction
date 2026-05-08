@@ -16,9 +16,19 @@ void NodeBase::Init()
 
 }
 
+void NodeBase::Entry()
+{
+
+}
+
 BehaviorStatus NodeBase::Update()
 {
 	return BehaviorStatus::kSuccess;
+}
+
+void NodeBase::Exit()
+{
+
 }
 
 void NodeBase::Debug()

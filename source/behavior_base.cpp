@@ -20,6 +20,11 @@ void BehaviorBase::Init()
 
 }
 
+void BehaviorBase::Entry()
+{
+
+}
+
 BehaviorStatus BehaviorBase::Update()
 {
 	return BehaviorStatus::kFailure;

@@ -13,6 +13,8 @@ public:
 
 	virtual void Init();
 
+	virtual void Entry();
+
 	virtual BehaviorStatus Update();
 
 	virtual void Exit();

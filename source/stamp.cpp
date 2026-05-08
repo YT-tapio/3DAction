@@ -11,6 +11,7 @@
 
 Stamp::Stamp(std::weak_ptr<ObjectBase> owner, VECTOR* pos, float radius)
 	: AttackBase(owner,0,0)
+	, is_stamp_(FALSE)
 {
 	//rigid_bodyを生成
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Sphere>(radius, VGet(0, 0, 0)), pos, FALSE, TRUE, 1.f, 1.f);
@@ -25,11 +26,18 @@ void Stamp::Init()
 {
 	rigid_body_->Init(weak_from_this());
 	Physics::GetInstance().AddBody(rigid_body_);
+	rigid_body_->NotActive();
+}
+
+void Stamp::Entry()
+{
+	rigid_body_->NotActive();
+	is_stamp_ = FALSE;
 }
 
 BehaviorStatus Stamp::Update()
 {
-	rigid_body_->NotActive();
+	if (is_stamp_) { return BehaviorStatus::kSuccess; }
 	// オーナーが着地したら成功を返します。
 	if (auto owner_physics = std::dynamic_pointer_cast<IPhysicsEventReceiver>(owner_.lock()))
 	{
@@ -39,11 +47,17 @@ BehaviorStatus Stamp::Update()
 		{
 			// この瞬間に当たり判定を発生する
 			rigid_body_->Active();
-			return BehaviorStatus::kSuccess;
+			is_stamp_ = TRUE;
 		}
 	}
-
 	return BehaviorStatus::kRunning;
+}
+
+void Stamp::Exit()
+{
+	// 当たり判定を消す
+	rigid_body_->NotActive();
+	is_stamp_ = FALSE;
 }
 
 void Stamp::Debug()

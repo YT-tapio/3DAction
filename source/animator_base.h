@@ -51,7 +51,7 @@ protected:
 
 	const std::string kNothing = "nothing";
 
-	std::vector<std::string> request_names_;
+	std::list<std::string> request_names_;
 
 	std::unordered_map<std::string, AnimationData> animation_datas_;
 	std::string now_anim_name_;

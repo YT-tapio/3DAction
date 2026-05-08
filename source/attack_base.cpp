@@ -17,6 +17,11 @@ AttackBase::~AttackBase()
 
 }
 
+void AttackBase::Entry()
+{
+
+}
+
 void AttackBase::Init()
 {
 
@@ -25,6 +30,11 @@ void AttackBase::Init()
 BehaviorStatus AttackBase::Update()
 {
 	return BehaviorStatus::kFailure;
+}
+
+void AttackBase::Exit()
+{
+
 }
 
 void AttackBase::Debug()
