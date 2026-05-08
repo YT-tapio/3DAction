@@ -1,0 +1,74 @@
+#include<memory>
+#include<string>
+#include<unordered_map>
+#include"DxLib.h"
+#include"behavior_base.h"
+#include"chase_player.h"
+#include"object_base.h"
+#include"behavior_status.h"
+#include"physics_interface.h"
+#include"rigid_body.h"
+#include"character_base.h"
+#include"animator_base.h"
+
+ChasePlayer::ChasePlayer(std::weak_ptr<ObjectBase> owner,
+	std::string my_anim_name, VECTOR* target_player_pos, float chase_speed)
+	: BehaviorBase(owner)
+	, my_anim_name_(my_anim_name)
+	, target_player_pos_(target_player_pos)
+	, chase_speed_(chase_speed)
+{
+
+}
+
+ChasePlayer::~ChasePlayer()
+{
+
+}
+
+void ChasePlayer::Init()
+{
+
+}
+
+void ChasePlayer::Entry()
+{
+
+}
+
+BehaviorStatus ChasePlayer::Update()
+{
+	auto owner = owner_.lock();
+	auto owner_physics = std::dynamic_pointer_cast<IPhysicsEventReceiver>(owner);
+	// 変換できないものは失敗
+	if (owner_physics == nullptr) { return BehaviorStatus::kFailure; }
+	
+	if (auto character = std::dynamic_pointer_cast<CharacterBase>(owner))
+	{
+		//アニメーションの再生
+		character->GetAnimator()->PlayRequest(my_anim_name_);
+	}
+
+	// プレイヤーとオーナーの距離を計算
+	VECTOR dist = VSub(owner->GetPosition(), *target_player_pos_);
+	VECTOR velocity = dist;
+	if (VSize(velocity) > chase_speed_)
+	{
+		// スピードの調整
+		velocity = VScale(VNorm(velocity), chase_speed_);
+	}
+	auto owner_rigid_body = owner_physics->GetRigidBody();
+	owner_rigid_body->SetTargetVelocity(velocity);
+	// 必ず成功を返す
+	return BehaviorStatus::kSuccess;
+}
+
+void ChasePlayer::Exit()
+{
+
+}
+
+void ChasePlayer::Debug()
+{
+
+}

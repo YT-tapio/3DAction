@@ -103,13 +103,8 @@ void AnimatorBase::ChangeAnimation()
 void AnimatorBase::PlayRequest(std::string name)
 {
 	// 今流しているアニメーション(ループなし)と同じなら除去
-	
-	
-	
-
 	if (now_anim_name_ == name) 
 	{
-		
 		if (const auto request_data = animation_datas_.find(name);request_data != animation_datas_.end())
 		{
 			if (!request_data->second.loop) { return; }
@@ -123,7 +118,7 @@ void AnimatorBase::PlayRequest(std::string name)
 			return;
 		}
 	}
-	request_names_.push_back(name);	// 
+	request_names_.push_back(name);
 }
 
 void AnimatorBase::LoadFile(const std::string file_path)

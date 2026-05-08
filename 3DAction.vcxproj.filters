@@ -130,9 +130,6 @@
     <Filter Include="ソース ファイル\animation\animator">
       <UniqueIdentifier>{195afefd-450c-45e7-afe5-f308ab229251}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\enemy">
-      <UniqueIdentifier>{1d6542a5-2ca7-43b2-bf9e-bbdc1e063845}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\interface">
       <UniqueIdentifier>{c192c531-cb51-418e-8a09-9f1d0dca01d0}</UniqueIdentifier>
     </Filter>
@@ -192,6 +189,9 @@
     </Filter>
     <Filter Include="ソース ファイル\timer">
       <UniqueIdentifier>{7eeec33d-0f52-40b1-9997-71643e559c90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\enemy">
+      <UniqueIdentifier>{1d6542a5-2ca7-43b2-bf9e-bbdc1e063845}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -319,7 +319,7 @@
       <Filter>ソース ファイル\animation\animator</Filter>
     </ClCompile>
     <ClCompile Include="source\enemy_base.cpp">
-      <Filter>ソース ファイル\enemy</Filter>
+      <Filter>ソース ファイル\object\enemy</Filter>
     </ClCompile>
     <ClCompile Include="source\behavior_base.cpp">
       <Filter>ソース ファイル\behavior</Filter>
@@ -409,7 +409,7 @@
       <Filter>ソース ファイル\attack_correction</Filter>
     </ClCompile>
     <ClCompile Include="source\enemy_group.cpp">
-      <Filter>ソース ファイル\enemy</Filter>
+      <Filter>ソース ファイル\object\enemy</Filter>
     </ClCompile>
     <ClCompile Include="source\behavior_tree.cpp">
       <Filter>ソース ファイル\behavior_tree</Filter>
@@ -451,6 +451,9 @@
       <Filter>ソース ファイル\behavior</Filter>
     </ClCompile>
     <ClCompile Include="source\stamp.cpp">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="source\chase_player.cpp">
       <Filter>ソース ファイル\behavior</Filter>
     </ClCompile>
   </ItemGroup>
@@ -624,7 +627,7 @@
       <Filter>ソース ファイル\animation</Filter>
     </ClInclude>
     <ClInclude Include="source\enemy_base.h">
-      <Filter>ソース ファイル\enemy</Filter>
+      <Filter>ソース ファイル\object\enemy</Filter>
     </ClInclude>
     <ClInclude Include="source\behavior_base.h">
       <Filter>ソース ファイル\behavior</Filter>
@@ -726,7 +729,7 @@
       <Filter>ソース ファイル\attack_correction</Filter>
     </ClInclude>
     <ClInclude Include="source\enemy_group.h">
-      <Filter>ソース ファイル\enemy</Filter>
+      <Filter>ソース ファイル\object\enemy</Filter>
     </ClInclude>
     <ClInclude Include="source\behavior_tree.h">
       <Filter>ソース ファイル\behavior_tree</Filter>
@@ -774,6 +777,9 @@
       <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
     <ClInclude Include="source\stamp.h">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\chase_player.h">
       <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
   </ItemGroup>
