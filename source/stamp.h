@@ -7,7 +7,7 @@ class Stamp :public AttackBase
 {
 public:
 
-	Stamp(std::weak_ptr<ObjectBase> owner, VECTOR* pos,float radius);
+	Stamp(std::weak_ptr<ObjectBase> owner, VECTOR* pos,float radius,std::string my_anim_name);
 
 	~Stamp() override;
 
@@ -25,7 +25,7 @@ public:
 
 private:
 
-	bool SuccessCondition();
+	std::string my_anim_name_;
 
 	bool is_stamp_;
 

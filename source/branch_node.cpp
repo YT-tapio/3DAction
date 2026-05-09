@@ -26,45 +26,29 @@ void BranchNode::Init()
 	nodes_.second->Init();
 }
 
+void BranchNode::Entry()
+{
+	is_first_update_ = condition_();
+	is_first_update_ ? nodes_.first->Entry() : nodes_.second->Entry();
+}
+
 BehaviorStatus BranchNode::Update()
 {
-	if (status_ != BehaviorStatus::kRunning)
-	{
-		is_first_update_ = condition_();
-	}
-	
-	if(is_first_update_)
-	{
-		status_ = nodes_.first->Update();
-	}
-	else
-	{
-		status_ = nodes_.second->Update();
-	}
-
-	/*
-	status_ = is_first_update_ ? nodes_.first->Update() : nodes_.second->Update();
-	*/
-	
-
 	if (status_ == BehaviorStatus::kSuccess)
 	{
-		if (is_first_update_)
-		{
-			nodes_.first->Exit();
-		}
-		else
-		{
-			nodes_.second->Exit();
-		}
-
-		/*
 		is_first_update_ ? nodes_.first->Exit() : nodes_.second->Exit();
-		*/
-		
+		is_first_update_ = condition_();
+		is_first_update_ ? nodes_.first->Entry() : nodes_.second->Entry();
 	}
+	
+	status_ = is_first_update_ ? nodes_.first->Update() : nodes_.second->Update();
 
 	return status_;
+}
+
+void BranchNode::Exit()
+{
+	
 }
 
 void BranchNode::Debug()

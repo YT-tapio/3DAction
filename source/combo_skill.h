@@ -4,15 +4,15 @@
 class BehaviorBase;
 class ObjectBase;
 class Player;
-class ConboAction;
+class ComboAction;
 
-class ConboSkill : public SkillBase
+class ComboSkill : public SkillBase
 {
 public:
 
-	ConboSkill(std::weak_ptr<Player> owner, std::shared_ptr<BehaviorBase> behavior, std::unordered_map<int, std::pair<float, float>> approach_speed_ratio_mp);
+	ComboSkill(std::weak_ptr<Player> owner, std::shared_ptr<BehaviorBase> behavior, std::unordered_map<int, std::pair<float, float>> approach_speed_ratio_mp);
 
-	~ConboSkill() override;
+	~ComboSkill() override;
 
 	void Init() override;
 
@@ -27,11 +27,11 @@ private:
 	/// <summary>
 	/// ï‚ê≥
 	/// </summary>
-	void Correction(std::shared_ptr<ConboAction> conbo_action);
+	void Correction(std::shared_ptr<ComboAction> combo_action);
 
-	bool IsStartConboAction(std::shared_ptr<ConboAction> conbo_action);
+	bool IsStartcomboAction(std::shared_ptr<ComboAction> combo_action);
 
-	bool CheckGoNextConbo(std::shared_ptr<ConboAction> conbo_action);
+	bool CheckGoNextcombo(std::shared_ptr<ComboAction> combo_action);
 
 	// ÉRÉìÉ{ÇÃçUåÇÇÃï‚ê≥Çäiî[ÇµÇƒÇ¢ÇÈ
 	// ìGÇ…ãﬂÇ√Ç≠ç€ÇÃÉXÉsÅ[Éh

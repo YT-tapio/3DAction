@@ -3,16 +3,16 @@
 
 enum class BehaviorStatus;
 class ObjectBase;
-class Conbo;
+class Combo;
 class CharacterBase;
 
-class ConboAction : public BehaviorBase
+class ComboAction : public BehaviorBase
 {
 public:
 
-	ConboAction(std::weak_ptr<ObjectBase>owner,std::unordered_map<int,std::shared_ptr<Conbo>> conbos);
+	ComboAction(std::weak_ptr<ObjectBase>owner,std::unordered_map<int,std::shared_ptr<Combo>> combos);
 
-	~ConboAction() override;
+	~ComboAction() override;
 
 	void Init() override;
 
@@ -30,19 +30,19 @@ public:
 	/// 現在のコンボ
 	/// </summary>
 	/// <returns></returns>
-	const int GetCurrentConbo() const;
+	const int GetCurrentcombo() const;
 
 	/// <summary>
 	/// 次のコンボへの入力を受け付けていいかのチェック
 	/// </summary>
 	/// <returns></returns>
-	const bool CheckNextConboReady() const;
+	const bool CheckNextcomboReady() const;
 
 	const bool CheckIsEnd() const;
 
-	const bool CheckChangeConbo() const;
+	const bool CheckChangecombo() const;
 
-	const std::string GetFirstConboAnimation() const;
+	const std::string GetFirstcomboAnimation() const;
 
 private:
 
@@ -50,11 +50,11 @@ private:
 	/// 次のコンボに移っていいか
 	/// </summary>
 	/// <returns></returns>
-	const bool CheckNextConbo(std::shared_ptr<CharacterBase> character) const;
+	const bool CheckNextcombo(std::shared_ptr<CharacterBase> character) const;
 
-	std::unordered_map<int, std::shared_ptr<Conbo>> conbos_;
+	std::unordered_map<int, std::shared_ptr<Combo>> combos_;
 
-	int current_conbo_;
+	int current_combo_;
 	bool go_next_;
 	bool is_change_;
 

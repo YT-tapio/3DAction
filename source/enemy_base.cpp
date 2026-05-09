@@ -80,7 +80,7 @@ void EnemyBase::Init()
 		"jumping_attack", timing, 1.f)));
 
 	stump_nodes.push_back(std::make_shared<ActionNode>
-		(std::make_shared<Stamp>(obj_mine, &pos_, 10.f)));
+		(std::make_shared<Stamp>(obj_mine, &pos_, 10.f,"jumping_attack")));
 
 	std::shared_ptr<NodeBase> stump_node = std::make_shared<SequenceNode>(stump_nodes);
 	

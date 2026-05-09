@@ -2,13 +2,13 @@
 #include"behavior_base.h"
 enum class BehaviorStatus;
 
-class Conbo : public BehaviorBase
+class Combo : public BehaviorBase
 {
 public:
 
-	Conbo(std::weak_ptr<ObjectBase> owner,float min_ratio,float max_ratio,float go_next_timing,std::string my_anim_name,std::shared_ptr<BehaviorBase> behavior);
+	Combo(std::weak_ptr<ObjectBase> owner,float min_ratio,float max_ratio,float go_next_timing,std::string my_anim_name,std::shared_ptr<BehaviorBase> behavior);
 
-	~Conbo() override;
+	~Combo() override;
 
 	void Init() override;
 

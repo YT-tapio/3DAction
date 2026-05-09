@@ -14,9 +14,10 @@
 #include"character_base.h"
 #include"animator_base.h"
 
-Stamp::Stamp(std::weak_ptr<ObjectBase> owner, VECTOR* pos, float radius)
+Stamp::Stamp(std::weak_ptr<ObjectBase> owner, VECTOR* pos, float radius,std::string my_anim_name)
 	: AttackBase(owner,0,0)
 	, is_stamp_(FALSE)
+	, my_anim_name_(my_anim_name)
 {
 	//rigid_bodyを生成
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Sphere>(radius, VGet(0, 0, 0)), pos, FALSE, TRUE, 1.f, 1.f);
@@ -44,7 +45,11 @@ BehaviorStatus Stamp::Update()
 {
 	if (is_stamp_) 
 	{ 
-		return BehaviorStatus::kSuccess;
+		//違うアニメーションになればサクセスを返す
+		if (auto character = std::dynamic_pointer_cast<CharacterBase>(owner_.lock()))
+		{
+			if(character->GetAnimator()->GetNowAnimName() != my_anim_name_){ return BehaviorStatus::kSuccess; }
+		}
 	}
 	// オーナーが着地したら成功を返します。
 	if (auto owner_physics = std::dynamic_pointer_cast<IPhysicsEventReceiver>(owner_.lock()))

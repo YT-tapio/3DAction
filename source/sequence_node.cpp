@@ -21,7 +21,7 @@ BehaviorStatus SequenceNode::Update()
 	// 優先度の高いnodeから実行していく
 	// sucsessの場合はループする
 
-	while (current_node_ != nodes_.size() -1)
+	while (current_node_ < nodes_.size())
 	{
 		auto status = nodes_[current_node_]->Update();
 
@@ -31,10 +31,15 @@ BehaviorStatus SequenceNode::Update()
 		case BehaviorStatus::kSuccess:
 			nodes_[current_node_]->Exit();	//
 			// 成功したら次のノードへ
-			if (current_node_ != nodes_.size() - 1)
+			current_node_++;
+			if (current_node_ < nodes_.size())
 			{
-				current_node_++;
 				nodes_[current_node_]->Entry();
+			}
+			else
+			{
+				current_node_ = nodes_.size() - 1;	// 最後のnodeに
+				return BehaviorStatus::kSuccess;
 			}
 			break;
 

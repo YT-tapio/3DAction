@@ -32,6 +32,6 @@ private:
 
 	std::shared_ptr<SkillBase> MakeAreaHealSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner);
 
-	std::shared_ptr<SkillBase> MakeConboAttackSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner);
+	std::shared_ptr<SkillBase> MakecomboAttackSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner);
 
 };

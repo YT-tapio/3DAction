@@ -4,13 +4,13 @@
 #include<unordered_map>
 #include<vector>
 #include"DxLib.h"
-#include"conbo.h"
+#include"combo.h"
 #include"object_base.h"
 #include"character_base.h"
 #include"animator_base.h"
 #include"behavior_status.h"
 
-Conbo::Conbo(std::weak_ptr<ObjectBase> owner,float min_ratio, float max_ratio, float go_next_timing, std::string my_anim_name, std::shared_ptr<BehaviorBase> behavior)
+Combo::Combo(std::weak_ptr<ObjectBase> owner,float min_ratio, float max_ratio, float go_next_timing, std::string my_anim_name, std::shared_ptr<BehaviorBase> behavior)
 	: BehaviorBase(owner)
 	, behavior_(behavior)
 	, min_ratio_(min_ratio)
@@ -21,37 +21,37 @@ Conbo::Conbo(std::weak_ptr<ObjectBase> owner,float min_ratio, float max_ratio, f
 	
 }
 
-Conbo::~Conbo()
+Combo::~Combo()
 {
 
 }
 
-void Conbo::Init()
+void Combo::Init()
 {
 	behavior_->Init();
 }
 
-BehaviorStatus Conbo::Update()
+BehaviorStatus Combo::Update()
 {
 	return behavior_->Update();
 }
 
-void Conbo::Exit()
+void Combo::Exit()
 {
 	behavior_->Exit();
 }
 
-void Conbo::Draw()
+void Combo::Draw()
 {
 	behavior_->Draw();
 }
 
-void Conbo::Debug()
+void Combo::Debug()
 {
 	behavior_->Debug();
 }
 
-const bool Conbo::CheckNextReady() const
+const bool Combo::CheckNextReady() const
 {
 	auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
 	
@@ -64,20 +64,20 @@ const bool Conbo::CheckNextReady() const
 	return TRUE;
 }
 
-const bool Conbo::CheckAnimation() const
+const bool Combo::CheckAnimation() const
 {
-	const float kLastConboTiming = 1.f;
+	const float kLastcomboTiming = 1.f;
 	auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
 	if (owner == nullptr) { return FALSE; }	//•ÏŠ·
 	auto animator = owner->GetAnimator();
 	float ratio = animator->GetRatio(my_anim_name_);
-	if (go_next_timing_ == kLastConboTiming) { return FALSE; }
+	if (go_next_timing_ == kLastcomboTiming) { return FALSE; }
 	if (0 > ratio)						{ return FALSE; }
 	if (ratio < go_next_timing_) { return FALSE; }
 	return TRUE;
 }
 
-const bool Conbo::CheckIsEnd() const
+const bool Combo::CheckIsEnd() const
 {
 	auto character = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
 	if (character == nullptr) { return FALSE; }
@@ -85,7 +85,7 @@ const bool Conbo::CheckIsEnd() const
 	return TRUE;
 }
 
-const std::string Conbo::GetMyAnimName() const
+const std::string Combo::GetMyAnimName() const
 {
 	return my_anim_name_;
 }

@@ -396,13 +396,13 @@
     <ClCompile Include="source\player_group.cpp">
       <Filter>ソース ファイル\player_group</Filter>
     </ClCompile>
-    <ClCompile Include="source\conbo.cpp">
+    <ClCompile Include="source\combo.cpp">
       <Filter>ソース ファイル\behavior</Filter>
     </ClCompile>
-    <ClCompile Include="source\conbo_action.cpp">
+    <ClCompile Include="source\combo_action.cpp">
       <Filter>ソース ファイル\behavior</Filter>
     </ClCompile>
-    <ClCompile Include="source\conbo_skill.cpp">
+    <ClCompile Include="source\combo_skill.cpp">
       <Filter>ソース ファイル\skill</Filter>
     </ClCompile>
     <ClCompile Include="source\attack_correction.cpp">
@@ -716,13 +716,13 @@
     <ClInclude Include="source\player_group.h">
       <Filter>ソース ファイル\player_group</Filter>
     </ClInclude>
-    <ClInclude Include="source\conbo.h">
+    <ClInclude Include="source\combo.h">
       <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
-    <ClInclude Include="source\conbo_action.h">
+    <ClInclude Include="source\combo_action.h">
       <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
-    <ClInclude Include="source\conbo_skill.h">
+    <ClInclude Include="source\combo_skill.h">
       <Filter>ソース ファイル\skill</Filter>
     </ClInclude>
     <ClInclude Include="source\attack_correction.h">

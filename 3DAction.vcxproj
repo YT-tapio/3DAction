@@ -164,9 +164,9 @@
     <ClCompile Include="source\chase_player.cpp" />
     <ClCompile Include="source\check_my_area.cpp" />
     <ClCompile Include="source\composite_node.cpp" />
-    <ClCompile Include="source\conbo.cpp" />
-    <ClCompile Include="source\conbo_action.cpp" />
-    <ClCompile Include="source\conbo_skill.cpp" />
+    <ClCompile Include="source\combo.cpp" />
+    <ClCompile Include="source\combo_action.cpp" />
+    <ClCompile Include="source\combo_skill.cpp" />
     <ClCompile Include="source\condition_timer.cpp" />
     <ClCompile Include="source\csv_file_assistant.cpp" />
     <ClCompile Include="source\csv_loader.cpp" />
@@ -248,9 +248,9 @@
     <ClInclude Include="source\branch_node.h" />
     <ClInclude Include="source\chase_player.h" />
     <ClInclude Include="source\composite_node.h" />
-    <ClInclude Include="source\conbo.h" />
-    <ClInclude Include="source\conbo_action.h" />
-    <ClInclude Include="source\conbo_skill.h" />
+    <ClInclude Include="source\combo.h" />
+    <ClInclude Include="source\combo_action.h" />
+    <ClInclude Include="source\combo_skill.h" />
     <ClInclude Include="source\condition_timer.h" />
     <ClInclude Include="source\csv_file_assistant.h" />
     <ClInclude Include="source\csv_loader.h" />

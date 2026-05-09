@@ -16,9 +16,9 @@
 #include"sphere.h"
 #include"vector_assistant.h"
 #include"csv_file_assistant.h"
-#include"conbo_action.h"
-#include"conbo.h"
-#include"conbo_skill.h"
+#include"combo_action.h"
+#include"combo.h"
+#include"combo_skill.h"
 #include"rigid_body.h"
 #include"sphere.h"
 
@@ -80,9 +80,9 @@ void SkillLoader::DecideFile(const int skill_name,std::string& file_path, int& s
 		skip_line_num = 1;
 		break;
 
-	case SkillName::kConboAttack:
+	case SkillName::kcomboAttack:
 		// 範囲回復
-		file_path = file_path + "conbo_attack";
+		file_path = file_path + "combo_attack";
 		skip_line_num = 1;
 		break;
 
@@ -118,9 +118,9 @@ std::shared_ptr<SkillBase> SkillLoader::MakeSkill(const int skill_name, std::ifs
 
 		break;
 
-	case SkillName::kConboAttack:
+	case SkillName::kcomboAttack:
 
-		skill = MakeConboAttackSkill(file, line, name, owner);
+		skill = MakecomboAttackSkill(file, line, name, owner);
 
 		break;
 	}
@@ -210,14 +210,14 @@ std::shared_ptr<SkillBase>SkillLoader::MakeAreaHealSkill(std::ifstream& file, st
 	return skill;
 }
 
-std::shared_ptr<SkillBase>SkillLoader::MakeConboAttackSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner)
+std::shared_ptr<SkillBase>SkillLoader::MakecomboAttackSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner)
 {
 	const std::string kSame = "same";
 	std::shared_ptr<SkillBase> skill = nullptr;
 	// targetがあるかどうか
 	bool is_target = FALSE;
-	int conbo_num = 0;	// コンボ数
-	std::unordered_map<int, std::shared_ptr<Conbo>> conbos;
+	int combo_num = 0;	// コンボ数
+	std::unordered_map<int, std::shared_ptr<Combo>> combos;
 	float approach_speed = 0.45f;
 	float approach_ratio = 0.3f;
 	std::unordered_map<int, std::pair<float, float>> id_approach_speed_ratio_mp;
@@ -238,7 +238,7 @@ std::shared_ptr<SkillBase>SkillLoader::MakeConboAttackSkill(std::ifstream& file,
 		}
 		
 		int skill_id = CSVFileAssistant::GetIntOfCSVFile(ss, data);
-		std::shared_ptr<Conbo> conbo = nullptr;
+		std::shared_ptr<Combo> combo = nullptr;
 		switch (skill_id)
 		{
 		case SkillName::kPunch:
@@ -246,8 +246,8 @@ std::shared_ptr<SkillBase>SkillLoader::MakeConboAttackSkill(std::ifstream& file,
 			std::pair<float, float> approach_speed_ratio;
 			bool is_right						= CSVFileAssistant::GetIntOfCSVFile(ss,data);
 			std::string anim_name		= CSVFileAssistant::GetStringOfCSVFile(ss, data);
-			float min_ratio_next_conbo = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
-			float max_ratio_next_conbo = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+			float min_ratio_next_combo = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+			float max_ratio_next_combo = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 			float min_coll_ratio				= CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 			float max_coll_ratio			= CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 			float go_next_timing			= CSVFileAssistant::GetFloatOfCSVFile(ss, data);
@@ -260,31 +260,31 @@ std::shared_ptr<SkillBase>SkillLoader::MakeConboAttackSkill(std::ifstream& file,
 			approach_speed_ratio = { approach_speed,approach_ratio };
 			if (is_right)
 			{
-				conbo = std::make_shared<Conbo>(owner, min_coll_ratio, max_coll_ratio, go_next_timing,anim_name,
+				combo = std::make_shared<Combo>(owner, min_coll_ratio, max_coll_ratio, go_next_timing,anim_name,
 					std::make_shared<Punch>(owner, owner_ptr->GetRightHandPos(), anim_name, min_coll_ratio, max_coll_ratio,
 						std::make_shared<RigidBody>(std::make_shared<Sphere>(radius, VectorAssistant::VGetZero()),
 							owner_ptr->GetRightHandPos(), FALSE, TRUE, mass, friction)));
 			}
 			else
 			{
-				conbo = std::make_shared<Conbo>(owner, min_coll_ratio, max_coll_ratio, go_next_timing, anim_name,
+				combo = std::make_shared<Combo>(owner, min_coll_ratio, max_coll_ratio, go_next_timing, anim_name,
 					std::make_shared<Punch>(owner, owner_ptr->GetLeftHandPos(), anim_name, min_coll_ratio, max_coll_ratio,
 						std::make_shared<RigidBody>(std::make_shared<Sphere>(radius, VectorAssistant::VGetZero()),
 							owner_ptr->GetLeftHandPos(), FALSE, TRUE, mass, friction)));
 			}
-			id_approach_speed_ratio_mp[conbo_num] = approach_speed_ratio;
+			id_approach_speed_ratio_mp[combo_num] = approach_speed_ratio;
 			
 			break;
 		}
 
-		conbos[conbo_num] = conbo;
-		conbo_num++;
+		combos[combo_num] = combo;
+		combo_num++;
 	}
 
 	if (is_target)
 	{
-		skill = std::make_shared<ConboSkill>(owner,
-			std::make_shared<ConboAction>(owner,conbos), id_approach_speed_ratio_mp);
+		skill = std::make_shared<ComboSkill>(owner,
+			std::make_shared<ComboAction>(owner,combos), id_approach_speed_ratio_mp);
 	}
 
 	return skill;
