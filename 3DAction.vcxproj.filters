@@ -193,6 +193,9 @@
     <Filter Include="ソース ファイル\object\enemy">
       <UniqueIdentifier>{1d6542a5-2ca7-43b2-bf9e-bbdc1e063845}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\behavior_tree\node\radom_node">
+      <UniqueIdentifier>{ebc9ebca-d469-492f-b0b6-15c98273eae5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -455,6 +458,9 @@
     </ClCompile>
     <ClCompile Include="source\chase_player.cpp">
       <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="source\random_node.cpp">
+      <Filter>ソース ファイル\behavior_tree\node\radom_node</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -781,6 +787,12 @@
     </ClInclude>
     <ClInclude Include="source\chase_player.h">
       <Filter>ソース ファイル\behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\random.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\random_node.h">
+      <Filter>ソース ファイル\behavior_tree\node\radom_node</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

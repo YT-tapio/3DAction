@@ -28,6 +28,7 @@
 #include"node_base.h"
 #include"composite_node.h"
 #include"sequence_node.h"
+#include"random_node.h"
 #include"branch_node.h"
 #include"action_node.h"
 #include"player_group.h"
@@ -73,7 +74,12 @@ void EnemyBase::Init()
 	std::pair<float, float> timing;
 	timing.first = 0.38f;
 	timing.second = 0.45f;
+	// 両手パンチのノードを生成
+	std::shared_ptr<BehaviorBase> double_punch = std::make_shared<DoublePunch>(std::dynamic_pointer_cast<ObjectBase>(mine),
+		"double_punch", 0.35f, 0.5f, &double_punch_coll_pos_, 3.0f, 6.f);
+	std::shared_ptr<NodeBase> double_punch_node = std::make_shared<ActionNode>(double_punch);
 
+	// 上から降ってくるノードを生成
 	std::vector<std::shared_ptr<NodeBase>> stump_nodes;
 
 	stump_nodes.push_back(std::make_shared<ActionNode>(std::make_shared<Jump>(obj_mine,
@@ -84,13 +90,19 @@ void EnemyBase::Init()
 
 	std::shared_ptr<NodeBase> stump_node = std::make_shared<SequenceNode>(stump_nodes);
 	
+	// ランダムのnodeに代入
+	std::vector<std::shared_ptr<NodeBase>>random_nodes;
+	random_nodes.emplace_back(stump_node);
+	random_nodes.emplace_back(double_punch_node);
+	std::shared_ptr<NodeBase> radom_attack_node = std::make_shared<RandomNode>(random_nodes);
+
 	target_player_pos_ = PlayerGroup::GetInstance().MostNearPlayerPos(pos_);
 	std::shared_ptr<NodeBase> chase_node = std::make_shared<ActionNode>(std::make_shared<ChasePlayer>(obj_mine,
 		"run", &target_player_pos_, 0.1f));
 
 	std::pair<std::shared_ptr<NodeBase>, std::shared_ptr<NodeBase>> nodes_;
 	nodes_.first = chase_node;
-	nodes_.second = stump_node;
+	nodes_.second = radom_attack_node;
 	
 	std::function<bool()> condition = [this]()-> bool
 	{

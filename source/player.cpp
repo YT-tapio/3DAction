@@ -194,7 +194,7 @@ void Player::Draw()
 
 void Player::Debug()
 {
-	if (TRUE) { return; }
+	if (FALSE) { return; }
 	if (skill_ != nullptr) { skill_->Debug(); }
 	if (second_skill_ != nullptr) { second_skill_->Debug(); }
 	//my_area_->Debug();

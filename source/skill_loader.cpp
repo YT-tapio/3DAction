@@ -258,20 +258,12 @@ std::shared_ptr<SkillBase>SkillLoader::MakecomboAttackSkill(std::ifstream& file,
 			float approach_ratio = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 			auto owner_ptr = owner.lock();
 			approach_speed_ratio = { approach_speed,approach_ratio };
-			if (is_right)
-			{
-				combo = std::make_shared<Combo>(owner, min_coll_ratio, max_coll_ratio, go_next_timing,anim_name,
-					std::make_shared<Punch>(owner, owner_ptr->GetRightHandPos(), anim_name, min_coll_ratio, max_coll_ratio,
-						std::make_shared<RigidBody>(std::make_shared<Sphere>(radius, VectorAssistant::VGetZero()),
-							owner_ptr->GetRightHandPos(), FALSE, TRUE, mass, friction)));
-			}
-			else
-			{
-				combo = std::make_shared<Combo>(owner, min_coll_ratio, max_coll_ratio, go_next_timing, anim_name,
-					std::make_shared<Punch>(owner, owner_ptr->GetLeftHandPos(), anim_name, min_coll_ratio, max_coll_ratio,
-						std::make_shared<RigidBody>(std::make_shared<Sphere>(radius, VectorAssistant::VGetZero()),
-							owner_ptr->GetLeftHandPos(), FALSE, TRUE, mass, friction)));
-			}
+			
+			hand_pos_ = is_right ? owner_ptr->GetRightHandPos() : owner_ptr->GetLeftHandPos();
+			const auto rigid_body = std::make_shared<RigidBody>(std::make_shared<Sphere>(radius, VectorAssistant::VGetZero()),hand_pos_, FALSE, TRUE, mass, friction);
+			const auto punch = std::make_shared<Punch>(owner, hand_pos_, anim_name, min_coll_ratio, max_coll_ratio,rigid_body);
+			combo = std::make_shared<Combo>(owner, min_coll_ratio, max_coll_ratio, go_next_timing, anim_name,punch);
+
 			id_approach_speed_ratio_mp[combo_num] = approach_speed_ratio;
 			
 			break;

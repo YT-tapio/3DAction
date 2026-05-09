@@ -45,6 +45,7 @@ BehaviorStatus Stamp::Update()
 {
 	if (is_stamp_) 
 	{ 
+		rigid_body_->NotActive();
 		//違うアニメーションになればサクセスを返す
 		if (auto character = std::dynamic_pointer_cast<CharacterBase>(owner_.lock()))
 		{
