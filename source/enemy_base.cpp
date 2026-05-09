@@ -1,6 +1,7 @@
 #include<iostream>
 #include<memory>
 #include<string>
+#include<functional>
 #include<utility>
 #include"DxLib.h"
 #include"enemy_base.h"
@@ -22,11 +23,14 @@
 #include"jumping_attack.h"
 #include"jump.h"
 #include"stamp.h"
+#include"chase_player.h"
 #include"color.h"
 #include"node_base.h"
 #include"composite_node.h"
 #include"sequence_node.h"
+#include"branch_node.h"
 #include"action_node.h"
+#include"player_group.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos)
 	: CharacterBase("enemy")
@@ -34,6 +38,7 @@ EnemyBase::EnemyBase(const VECTOR& pos)
 {
 	vel_ = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
+	target_player_pos_ = VectorAssistant::VGetZero();
 	pos_ = pos;
 	double_punch_coll_pos_ = VectorAssistant::VGetZero();
 	right_hand_pos_ = VectorAssistant::VGetZero();
@@ -65,18 +70,38 @@ void EnemyBase::Init()
 	auto mine = std::dynamic_pointer_cast<EnemyBase>(physics_mine);
 	std::shared_ptr<ObjectBase> obj_mine = mine;
 
-	std::pair<float, float> a;
-	a.first = 0.38f;
-	a.second = 0.45f;
-	std::vector<std::shared_ptr<NodeBase>> nodes;
-	
-	nodes.push_back(std::make_shared<ActionNode>(std::make_shared<Jump>(obj_mine,
-		"jumping_attack", a, 1.f)));
+	std::pair<float, float> timing;
+	timing.first = 0.38f;
+	timing.second = 0.45f;
 
-	nodes.push_back(std::make_shared<ActionNode>
+	std::vector<std::shared_ptr<NodeBase>> stump_nodes;
+
+	stump_nodes.push_back(std::make_shared<ActionNode>(std::make_shared<Jump>(obj_mine,
+		"jumping_attack", timing, 1.f)));
+
+	stump_nodes.push_back(std::make_shared<ActionNode>
 		(std::make_shared<Stamp>(obj_mine, &pos_, 10.f)));
 
-	std::shared_ptr<NodeBase> first_node = std::make_shared<SequenceNode>(nodes);
+	std::shared_ptr<NodeBase> stump_node = std::make_shared<SequenceNode>(stump_nodes);
+	
+	target_player_pos_ = PlayerGroup::GetInstance().MostNearPlayerPos(pos_);
+	std::shared_ptr<NodeBase> chase_node = std::make_shared<ActionNode>(std::make_shared<ChasePlayer>(obj_mine,
+		"run", &target_player_pos_, 0.1f));
+
+	std::pair<std::shared_ptr<NodeBase>, std::shared_ptr<NodeBase>> nodes_;
+	nodes_.first = chase_node;
+	nodes_.second = stump_node;
+	
+	std::function<bool()> condition = [this]()-> bool
+	{
+		float dist_to_player = VSize(VSub(target_player_pos_, pos_));
+		return dist_to_player > 10.f;
+	};
+	std::shared_ptr<NodeBase> first_node = std::make_shared<BranchNode>(nodes_,
+		condition);
+	
+	
+	//std::shared_ptr<NodeBase> first_node = chase_node;
 	behavior_tree_ = std::make_shared<BehaviorTree>(first_node);
 
 	UpdateBone();
@@ -103,6 +128,8 @@ void EnemyBase::Init()
 
 void EnemyBase::Update()
 {
+	// 一番近いプレイヤーの位置を取得
+	target_player_pos_ = PlayerGroup::GetInstance().MostNearPlayerPos(pos_);
 	VECTOR dir = VectorAssistant::VGetZero();
 	//dir_ = VectorAssistant::VGetZero();
 	// vel_ = dir;
@@ -110,10 +137,11 @@ void EnemyBase::Update()
 	double_punch_coll_pos_ = VAdd(pos_, VScale(dir_, 5.f));
 
 	rigid_body_->SetTargetVelocity(vel_);
+	behavior_tree_->Update();
 	animator_->Update();
 	UpdateBone();
 	// test_behavior_->Update();
-	behavior_tree_->Update();
+	
 }
 
 void EnemyBase::LateUpdate()
@@ -128,6 +156,15 @@ void EnemyBase::Draw()
 
 void EnemyBase::Debug()
 {
+	DrawString(0, Debug::GetInstance().GetNowLineSize(), "----------enemy-----------", Color::kWhite);
+	Debug::GetInstance().Add();
+	DrawString(0, Debug::GetInstance().GetNowLineSize(), "pos", Color::kWhite);
+	Debug::GetInstance().Add();
+	Debug::GetInstance().DrawVector(pos_);
+	DrawString(0, Debug::GetInstance().GetNowLineSize(), "target_player_pos", Color::kWhite);
+	
+	Debug::GetInstance().DrawVector(target_player_pos_);
+
 	rigid_body_->Debug();
 	behavior_tree_->Debug();
 	// test_behavior_->Debug();

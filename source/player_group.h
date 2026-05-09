@@ -29,6 +29,13 @@ public:
 
 	VECTOR* GetCurrentPlayerHeadPos();
 
+	/// <summary>
+	/// ˆø”‚Éˆê”Ô‹ß‚¢player‚ÌˆÊ’u‚ğ•Ô‚·
+	/// </summary>
+	/// <param name="pos">object‚Ìpos</param>
+	/// <returns></returns>
+	VECTOR MostNearPlayerPos(const VECTOR& pos);
+
 private:
 
 	PlayerGroup();

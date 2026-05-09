@@ -42,7 +42,10 @@ void Stamp::Entry()
 
 BehaviorStatus Stamp::Update()
 {
-	if (is_stamp_) { return BehaviorStatus::kSuccess; }
+	if (is_stamp_) 
+	{ 
+		return BehaviorStatus::kSuccess;
+	}
 	// オーナーが着地したら成功を返します。
 	if (auto owner_physics = std::dynamic_pointer_cast<IPhysicsEventReceiver>(owner_.lock()))
 	{

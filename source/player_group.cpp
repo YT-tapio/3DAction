@@ -23,9 +23,12 @@ void PlayerGroup::Awake(VECTOR* camera_dir)
 	current_player_head_pos_ = VectorAssistant::VGetZero();
 	camera_dir_ = camera_dir;
 	players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer1Input(), "attacker"));
+	/*
 	players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer2Input(),"healer"));
 	players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer3Input(), "defender"));
 	players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer3Input(), "attacker2"));
+	*/
+	
 	//Init();
 }
 
@@ -77,6 +80,28 @@ void PlayerGroup::Debug()
 VECTOR* PlayerGroup::GetCurrentPlayerHeadPos()
 {
 	return &current_player_head_pos_;
+}
+
+VECTOR PlayerGroup::MostNearPlayerPos(const VECTOR& pos)
+{
+	VECTOR most_near_player_pos = VectorAssistant::VGetZero();
+	float most_near_player_dist = -1;	// -1‚ÌŽž‚ÍÅ‰‚ÌƒvƒŒƒCƒ„[‚Ì‹——£‚ð‘ã“ü‚·‚é
+	for (auto& player : players_)
+	{
+		float dist = VSize(VSub(player->GetPosition(), pos));
+		if (most_near_player_dist == -1)
+		{
+			most_near_player_dist = dist;
+			most_near_player_pos = player->GetPosition();
+			continue;
+		}
+		if (dist < most_near_player_dist)
+		{
+			most_near_player_dist = dist;
+			most_near_player_pos = player->GetPosition();
+		}
+	}
+	return most_near_player_pos;
 }
 
 

@@ -10,6 +10,7 @@
 #include"rigid_body.h"
 #include"character_base.h"
 #include"animator_base.h"
+#include"vector_assistant.h"
 
 ChasePlayer::ChasePlayer(std::weak_ptr<ObjectBase> owner,
 	std::string my_anim_name, VECTOR* target_player_pos, float chase_speed)
@@ -50,7 +51,8 @@ BehaviorStatus ChasePlayer::Update()
 	}
 
 	// プレイヤーとオーナーの距離を計算
-	VECTOR dist = VSub(owner->GetPosition(), *target_player_pos_);
+	VECTOR dist = VSub(*target_player_pos_, owner->GetPosition());
+	dist = VectorAssistant::VGetFlat(dist);
 	VECTOR velocity = dist;
 	if (VSize(velocity) > chase_speed_)
 	{

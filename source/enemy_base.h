@@ -44,8 +44,8 @@ protected:
 	std::string my_name_;
 
 	VECTOR right_hand_pos_;
-
 	VECTOR double_punch_coll_pos_;
+	VECTOR target_player_pos_;
 
 	float fall_speed_;
 
