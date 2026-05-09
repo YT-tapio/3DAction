@@ -19,6 +19,7 @@
 #include"effect_id.h"
 #include"effect_end_state.h"
 #include"player_group.h"
+#include"random.h"
 
 Game::Game()
 	: SceneBase()
@@ -53,6 +54,7 @@ void Game::Init()
 
 void Game::Update()
 {
+	printfDx("%d\n", GetRandom(0, 3));
 	PlayerGroup::GetInstance().Update();
 	//printfDx("---Ç‹Ç¢ÇÈÅ[Ç’---\n");
 	for (auto& obj : objects_)

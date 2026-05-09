@@ -18,6 +18,7 @@ BehaviorTree::~BehaviorTree()
 void BehaviorTree::Init()
 {
 	node_->Init();
+	node_->Entry();
 }
 
 void BehaviorTree::Update()

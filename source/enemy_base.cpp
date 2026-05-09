@@ -174,11 +174,16 @@ void EnemyBase::Debug()
 	Debug::GetInstance().Add();
 	Debug::GetInstance().DrawVector(pos_);
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "target_player_pos", Color::kWhite);
-	
+	Debug::GetInstance().Add();
 	Debug::GetInstance().DrawVector(target_player_pos_);
+	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "%s", animator_->GetNowAnimName().c_str());
+	Debug::GetInstance().Add();
 
 	rigid_body_->Debug();
 	behavior_tree_->Debug();
+
+	
+
 	// test_behavior_->Debug();
 }
 

@@ -13,6 +13,6 @@ inline T GetRandom(const T& min,const T& max)
 {
 	static std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_real_distribution<> dis(min, max - 1);
+	std::uniform_real_distribution<> dis(min, max);
 	return dis(gen);
 }

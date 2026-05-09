@@ -20,6 +20,7 @@ DoublePunch::DoublePunch(std::weak_ptr<ObjectBase> owner, std::string my_anim_na
 	: AttackBase(owner,min_coll_ratio,max_coll_ratio)
 	, my_anim_name_(my_anim_name)
 	, pos_(pos)
+	,played_(FALSE)
 {
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(radius,vertical,VectorAssistant::VGetZero()),
 		pos_, FALSE, TRUE, 1.f, 0.2f);
@@ -39,22 +40,39 @@ void DoublePunch::Init()
 
 }
 
+void DoublePunch::Entry()
+{
+	// アニメーションの再生
+	if (auto character = std::dynamic_pointer_cast<CharacterBase>(owner_.lock()))
+	{
+		character->GetAnimator()->PlayRequest(my_anim_name_);
+	}
+	rigid_body_->NotActive();
+	played_ = FALSE;
+	printfDx("double_punch_entry\n");
+}
+
 BehaviorStatus DoublePunch::Update()
 {
 	if (CheckCollActive())
 	{
 		rigid_body_->Active();
+		played_ = TRUE;
 	}
 	else
 	{
 		rigid_body_->NotActive();
 	}
-	return BehaviorStatus::kFailure;
+	//printfDx("double_punch\n");
+	if (SuccessCondition()) { return BehaviorStatus::kSuccess; }
+
+	return BehaviorStatus::kRunning;
 }
 
 void DoublePunch::Exit()
 {
-
+	rigid_body_->NotActive();
+	played_ = FALSE;
 }
 
 void DoublePunch::Draw()
@@ -78,5 +96,13 @@ const bool DoublePunch::CheckCollActive() const
 	auto anim_play_ratio = owner->GetAnimator()->GetRatio(my_anim_name_);
 	if (min_coll_ratio_ > anim_play_ratio) { return FALSE; }
 	if (max_coll_ratio_ < anim_play_ratio) { return FALSE; }
+	return TRUE;
+}
+
+const bool DoublePunch::SuccessCondition() const
+{
+	if (!played_) { return FALSE; }
+	auto character = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
+	if (character->GetAnimator()->GetNowAnimName() == my_anim_name_) { return FALSE; }
 	return TRUE;
 }

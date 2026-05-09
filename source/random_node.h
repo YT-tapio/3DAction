@@ -12,8 +12,6 @@ public:
 
 	~RandomNode() override;
 
-	void Init() override;
-
 	void Entry() override;
 
 	BehaviorStatus Update() override;

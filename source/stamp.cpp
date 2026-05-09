@@ -39,6 +39,7 @@ void Stamp::Entry()
 {
 	rigid_body_->NotActive();
 	is_stamp_ = FALSE;
+	printfDx("stamp_entry\n");
 }
 
 BehaviorStatus Stamp::Update()
@@ -49,7 +50,10 @@ BehaviorStatus Stamp::Update()
 		//違うアニメーションになればサクセスを返す
 		if (auto character = std::dynamic_pointer_cast<CharacterBase>(owner_.lock()))
 		{
-			if(character->GetAnimator()->GetNowAnimName() != my_anim_name_){ return BehaviorStatus::kSuccess; }
+			if(character->GetAnimator()->GetNowAnimName() != my_anim_name_)
+			{ 
+				return BehaviorStatus::kSuccess;
+			}
 		}
 	}
 	// オーナーが着地したら成功を返します。
@@ -64,6 +68,8 @@ BehaviorStatus Stamp::Update()
 			is_stamp_ = TRUE;
 		}
 	}
+	// printfDx("stamp\n");
+
 	return BehaviorStatus::kRunning;
 }
 

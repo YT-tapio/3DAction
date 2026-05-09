@@ -41,10 +41,12 @@ void Jump::Entry()
 	{
 		owner->GetAnimator()->PlayRequest(my_anim_name_);
 	}
+	printfDx("jump_entry\n");
 }
 
 BehaviorStatus Jump::Update()
 {
+	//printfDx("jump\n");
 	// オーナーのアニメーターをもらう
 	auto character = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
 	if(character ==nullptr){ return BehaviorStatus::kFailure; }
@@ -58,7 +60,7 @@ BehaviorStatus Jump::Update()
 		owner_rigid_body->SetUpSpeed(speed_);
 		return BehaviorStatus::kSuccess;
 	}
-	return BehaviorStatus::kFailure;
+	return BehaviorStatus::kRunning;
 }
 
 void Jump::Exit()

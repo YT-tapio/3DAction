@@ -225,6 +225,7 @@ const float AnimatorBase::GetRatio(std::string name) const
 	auto data = animation_datas_.find(name);
 
 	if (data == animation_datas_.end()) { return ratio; }
+	//if (name == data->first) { return ratio; }
 	if (data->second.total_time == 0.f) { return ratio; }
 	ratio = data->second.play_time / data->second.total_time;
 	return ratio;

@@ -41,10 +41,12 @@ void AnimatorEnemy::ChangeAnimation()
 	std::map<int, std::string, std::greater<int>> request_name_priority_mp;
 	if (!request_names_.empty())
 	{
+		//printfDx("--------------\n");
 		for (auto& request_name : request_names_)
 		{
 			int priority = animation_datas_[request_name].priority;
 			request_name_priority_mp[priority] = request_name;
+			//printfDx("%s\n", request_name.c_str());
 		}
 	}
 

@@ -18,28 +18,27 @@ RandomNode::~RandomNode()
 
 }
 
-void RandomNode::Init()
-{
-
-}
-
 void RandomNode::Entry()
 {
-
+	constexpr int kMin = 0;
+	int max = nodes_.size();
+	current_node_ = GetRandom(kMin, max);
+	current_node_ = 1;
+	nodes_[current_node_]->Entry();
 }
 
 BehaviorStatus RandomNode::Update()
 {
 	if (status_ == BehaviorStatus::kSuccess)
 	{
-		nodes_[current_node_]->Entry();
+		nodes_[current_node_]->Exit();
 		constexpr int kMin = 0;
 		int max = nodes_.size();
 		current_node_ = GetRandom(kMin, max);
-		nodes_[current_node_]->Exit();
+		nodes_[current_node_]->Entry();
 	}
-
-	return nodes_[current_node_]->Update();
+	status_ = nodes_[current_node_]->Update();
+	return status_;
 }
 
 void RandomNode::Exit()
@@ -49,6 +48,9 @@ void RandomNode::Exit()
 
 void RandomNode::Debug()
 {
-
+	for (auto& node : nodes_)
+	{
+		node->Debug();
+	}
 }
 

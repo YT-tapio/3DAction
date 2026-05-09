@@ -17,6 +17,8 @@ public:
 
 	void Init() override;
 
+	void Entry() override;
+
 	BehaviorStatus Update() override;
 
 	void Exit() override;
@@ -35,8 +37,11 @@ private:
 	/// <returns></returns>
 	const bool CheckCollActive() const;
 
+	const bool SuccessCondition() const;
+
 	// パンチ
 	std::string my_anim_name_;	// アニメーションの名前
 
 	VECTOR* pos_;
+	bool played_;
 };
