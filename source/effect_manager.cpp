@@ -136,12 +136,32 @@ void EffectManager::SetTransform(const int& id, const VECTOR& pos, const VECTOR&
 	}
 }
 
+const float EffectManager::GetRatio(const int& id) const
+{
+	auto effect = effects_.find(id);
+	if (effect != effects_.end())
+	{
+		return effect->second->GetRatio();
+	}
+	return -1.f;
+}
+
 const bool EffectManager::CheckIsPlay(const int& id) const
 {
 	auto effect = effects_.find(id);
 	if (effect != effects_.end())
 	{
 		return effect->second->GetIsPlay();
+	}
+	return FALSE;
+}
+
+const bool EffectManager::GetIsEnd(const int& id)const
+{
+	auto effect = effects_.find(id);
+	if (effect != effects_.end())
+	{
+		return effect->second->GetIsEnd();
 	}
 	return FALSE;
 }

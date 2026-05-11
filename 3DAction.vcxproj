@@ -156,6 +156,7 @@
     <ClCompile Include="source\area_heal.cpp" />
     <ClCompile Include="source\area_heal_give_player.cpp" />
     <ClCompile Include="source\area_heal_skill.cpp" />
+    <ClCompile Include="source\area_of_effect._attack.cpp" />
     <ClCompile Include="source\attack_correction.cpp" />
     <ClCompile Include="source\attck_node.cpp" />
     <ClCompile Include="source\avoid.cpp" />
@@ -244,6 +245,8 @@
     <ClInclude Include="source\area_heal.h" />
     <ClInclude Include="source\area_heal_give_player.h" />
     <ClInclude Include="source\area_heal_skill.h" />
+    <ClInclude Include="source\area_of_effect_attack.h" />
+    <ClInclude Include="source\area_of_effect_attack_state.h" />
     <ClInclude Include="source\attack_correction.h" />
     <ClInclude Include="source\attack_node.h" />
     <ClInclude Include="source\avoid_skill.h" />

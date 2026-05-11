@@ -21,6 +21,7 @@
 #include"behavior_base.h"
 #include"double_punch.h"
 #include"jumping_attack.h"
+#include"area_of_effect_attack.h"
 #include"jump.h"
 #include"stamp.h"
 #include"chase_player.h"
@@ -32,6 +33,7 @@
 #include"branch_node.h"
 #include"action_node.h"
 #include"player_group.h"
+#include"effect_id.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos)
 	: CharacterBase("enemy")
@@ -90,18 +92,31 @@ void EnemyBase::Init()
 
 	std::shared_ptr<NodeBase> stump_node = std::make_shared<SequenceNode>(stump_nodes);
 	
+	std::shared_ptr<NodeBase> area_of_effect_node = std::make_shared<ActionNode>(std::make_shared<AreaOfEffectAttack>(
+		obj_mine, 0.f, 0.9f, VectorAssistant::VGetSame(2.f), 10.f, EffectID::kAreaOfEffect, 2.f));
+
 	// ƒ‰ƒ“ƒ_ƒ€‚Ìnode‚É‘ã“ü
 	std::vector<std::shared_ptr<NodeBase>>random_nodes;
 	random_nodes.emplace_back(stump_node);
 	random_nodes.emplace_back(double_punch_node);
+	random_nodes.emplace_back(area_of_effect_node);
+
+	std::vector<std::shared_ptr<NodeBase>> random_nodes2;
+
+	random_nodes2.emplace_back(area_of_effect_node);
+
 	std::shared_ptr<NodeBase> radom_attack_node = std::make_shared<RandomNode>(random_nodes);
 
 	target_player_pos_ = PlayerGroup::GetInstance().MostNearPlayerPos(pos_);
 	std::shared_ptr<NodeBase> chase_node = std::make_shared<ActionNode>(std::make_shared<ChasePlayer>(obj_mine,
 		"run", &target_player_pos_, 0.1f));
 
+	random_nodes2.emplace_back(chase_node);
+
+	std::shared_ptr<NodeBase> random_far_nodes2 = std::make_shared<RandomNode>(random_nodes2);
+
 	std::pair<std::shared_ptr<NodeBase>, std::shared_ptr<NodeBase>> nodes_;
-	nodes_.first = chase_node;
+	nodes_.first = random_far_nodes2;
 	nodes_.second = radom_attack_node;
 	
 	std::function<bool()> condition = [this]()-> bool
@@ -109,9 +124,12 @@ void EnemyBase::Init()
 		float dist_to_player = VSize(VSub(target_player_pos_, pos_));
 		return dist_to_player > 10.f;
 	};
+	
+	
+
 	std::shared_ptr<NodeBase> first_node = std::make_shared<BranchNode>(nodes_,
 		condition);
-	
+
 	
 	//std::shared_ptr<NodeBase> first_node = chase_node;
 	behavior_tree_ = std::make_shared<BehaviorTree>(first_node);
@@ -221,6 +239,11 @@ const bool EnemyBase::GetOnGround() const
 std::shared_ptr<RigidBody> EnemyBase::GetRigidBody()
 {
 	return rigid_body_;
+}
+
+const VECTOR EnemyBase::GetAttackTargetPos() const
+{
+	return target_player_pos_;
 }
 
 void EnemyBase::UpdateBone()

@@ -23,8 +23,8 @@ void RandomNode::Entry()
 	constexpr int kMin = 0;
 	int max = nodes_.size();
 	current_node_ = GetRandom(kMin, max);
-	current_node_ = 1;
 	nodes_[current_node_]->Entry();
+	status_ = BehaviorStatus::kRunning;
 }
 
 BehaviorStatus RandomNode::Update()

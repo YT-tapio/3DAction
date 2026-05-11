@@ -13,6 +13,7 @@ EffectBase::EffectBase(EffectData data)
 	: data_(data)
 	, is_play_(FALSE)
 	, is_stop_(FALSE)
+	, is_end_(FALSE)
 	, end_id_(EffectEndState::kNothing)
 {
 	
@@ -27,15 +28,15 @@ EffectBase::~EffectBase()
 
 void EffectBase::Init()
 {
-	
 	is_play_ = FALSE;
 	is_stop_ = FALSE;
+	is_end_ = FALSE;
 }
 
 void EffectBase::Update()
 {
 	if (!is_play_) { return; }
-	// Ç¢Ç¡ÇΩÇÒçƒê∂Ç≈Ç´ÇÈÇÊÇ§Ç…ÇµÇÊÇ§
+	// çƒê∂éûä‘
 	float speed = data_.speed * (FPS::GetInstance().GetDeltaTime() * 60.f);
 	if (is_stop_) { speed = 0.f; }
 
@@ -44,6 +45,7 @@ void EffectBase::Update()
 		data_.playing_handle = StopEffekseer3DEffect(data_.playing_handle);
 		data_.play_time = 0.f;
 		is_play_ = FALSE;
+		is_end_ = TRUE;
 		return;
 	}
 
@@ -61,6 +63,7 @@ void EffectBase::Update()
 				data_.playing_handle = StopEffekseer3DEffect(data_.playing_handle);
 				data_.play_time = 0.f;
 				is_play_ = FALSE;
+				is_end_ = TRUE;
 				return;
 			}
 			data_.playing_handle = PlayEffekseer3DEffect(data_.handle);
@@ -81,6 +84,7 @@ void EffectBase::Play()
 	is_play_ = TRUE;
 	data_.play_time = 0.f;
 	end_id_ = EffectEndState::kNothing;
+	is_end_ = TRUE;
 }
 
 void EffectBase::Stop()
@@ -126,10 +130,28 @@ void EffectBase::Debug()
 
 }
 
+const float EffectBase::GetRatio() const
+{
+	float ratio = -1.f;
+
+	if (data_.total_time != 0)
+	{
+		ratio = data_.play_time / data_.total_time;
+	}
+
+	return ratio;
+}
+
 const bool EffectBase::GetIsPlay() const
 {
 	return is_play_;
 }
+
+const bool EffectBase::GetIsEnd() const
+{
+	return is_end_;
+}
+
 
 void EffectBase::SetTransform()
 {

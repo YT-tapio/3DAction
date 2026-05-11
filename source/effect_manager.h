@@ -41,7 +41,11 @@ public:
 
 	void SetTransform(const int& id, const VECTOR& pos, const VECTOR& rot, const VECTOR& scale);
 
+	const float GetRatio(const int &id) const;
+
 	const bool CheckIsPlay(const int& id) const;
+
+	const bool GetIsEnd(const int& id) const;
 
 private:
 
@@ -50,6 +54,5 @@ private:
 	void LoadFile();
 
 	std::unordered_map<int, std::shared_ptr<EffectBase>> effects_;
-
 
 };

@@ -35,6 +35,8 @@ public:
 
 	std::shared_ptr<RigidBody> GetRigidBody() override;
 
+	const VECTOR GetAttackTargetPos() const override;
+
 protected:
 
 	std::shared_ptr<RigidBody> rigid_body_;

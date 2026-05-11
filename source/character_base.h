@@ -23,7 +23,7 @@ public:
 
 	void Teleport(const VECTOR& pos);
 
-	const VECTOR GetAttackTargetPos() const;
+	virtual const VECTOR GetAttackTargetPos() const;
 
 	const bool GetIsInvincible() const;
 	

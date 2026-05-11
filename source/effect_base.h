@@ -31,7 +31,11 @@ public:
 
 	void Debug();
 
+	const float GetRatio() const;
+
 	const bool GetIsPlay() const;
+
+	const bool GetIsEnd() const;
 
 protected:
 
@@ -45,6 +49,7 @@ private:
 
 	bool is_play_;
 	bool is_stop_;
+	bool is_end_;
 
 	int end_id_;
 

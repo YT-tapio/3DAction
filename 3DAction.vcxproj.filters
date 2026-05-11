@@ -193,7 +193,7 @@
     <Filter Include="ソース ファイル\object\enemy">
       <UniqueIdentifier>{1d6542a5-2ca7-43b2-bf9e-bbdc1e063845}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\behavior_tree\node\radom_node">
+    <Filter Include="ソース ファイル\behavior_tree\node\random_node">
       <UniqueIdentifier>{ebc9ebca-d469-492f-b0b6-15c98273eae5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -460,7 +460,10 @@
       <Filter>ソース ファイル\behavior</Filter>
     </ClCompile>
     <ClCompile Include="source\random_node.cpp">
-      <Filter>ソース ファイル\behavior_tree\node\radom_node</Filter>
+      <Filter>ソース ファイル\behavior_tree\node\random_node</Filter>
+    </ClCompile>
+    <ClCompile Include="source\area_of_effect._attack.cpp">
+      <Filter>ソース ファイル\behavior</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -792,7 +795,13 @@
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="source\random_node.h">
-      <Filter>ソース ファイル\behavior_tree\node\radom_node</Filter>
+      <Filter>ソース ファイル\behavior_tree\node\random_node</Filter>
+    </ClInclude>
+    <ClInclude Include="source\area_of_effect_attack.h">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\area_of_effect_attack_state.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
