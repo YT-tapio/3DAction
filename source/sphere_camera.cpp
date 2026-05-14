@@ -58,7 +58,10 @@ void SphereCamera::Update()
 	pitch_	+= (pitch_value * FPS::GetInstance().GetDeltaTime());
 	yaw_	+= (yaw_value * FPS::GetInstance().GetDeltaTime());
 
-	//yaw‚Ì§ŒÀ‚ğ‚·‚é
+	// yaw‚Ì§ŒÀ‚ğ‚·‚é
+	yaw_ = MyMath::Clampf(yaw_, RadianAssistant::kOneRad * kYawRadMin, RadianAssistant::kOneRad * kYawRadMax);
+
+
 	// yaw‚Æpitch‚ÌˆÊ’u‚ğo‚µ‚Ä‚İ‚é
 	float pitch_size = 0.f;
 	

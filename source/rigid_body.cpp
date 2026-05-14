@@ -82,7 +82,7 @@ void RigidBody::AddForce()
 	// èdóÕèàóù
 	if (!on_ground_)
 	{
-		if (fall_speed_ == 5.f) { printfDx("aa"); }
+		//if (fall_speed_ == 5.f) { printfDx("aa"); }
 		fall_speed_ -= mass_ * FPS::GetInstance().GetDeltaTime() * 60.f;
 		target_vel_ = VAdd(target_vel_, VGet(0.f, fall_speed_, 0.f));
 	}
@@ -131,7 +131,7 @@ void RigidBody::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 	if (!on_ground_)
 	{
 		is_landing_ = TRUE;
-		printfDx("aa\n");
+		//printfDx("aa\n");
 	}
 	else
 	{

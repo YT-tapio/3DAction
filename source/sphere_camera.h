@@ -19,6 +19,9 @@ private:
 
 	void MakeYawPitch();
 
+	static constexpr float kYawRadMax = 85.f;
+	static constexpr float kYawRadMin = 50.f;
+
 	std::shared_ptr<const InputBase> input_;
 
 	VECTOR* center_pos_;

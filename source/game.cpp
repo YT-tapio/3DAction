@@ -54,7 +54,7 @@ void Game::Init()
 
 void Game::Update()
 {
-	printfDx("%d\n", GetRandom(0, 3));
+	//printfDx("%d\n", GetRandom(0, 3));
 	PlayerGroup::GetInstance().Update();
 	//printfDx("---Ç‹Ç¢ÇÈÅ[Ç’---\n");
 	for (auto& obj : objects_)

@@ -128,11 +128,8 @@ void EnemyBase::Init()
 		return dist_to_player > 10.f;
 	};
 	
-	
 	std::shared_ptr<NodeBase> first_node = std::make_shared<BranchNode>(nodes_,
 		condition);
-	
-
 	
 	/*
 	* std::shared_ptr<NodeBase> first_node = chase_node;
