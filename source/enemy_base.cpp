@@ -104,7 +104,9 @@ void EnemyBase::Init()
 	std::vector<std::shared_ptr<NodeBase>> random_nodes2;
 
 	random_nodes2.emplace_back(area_of_effect_node);
-
+	/*
+	
+	*/
 	std::shared_ptr<NodeBase> radom_attack_node = std::make_shared<RandomNode>(random_nodes);
 
 	target_player_pos_ = PlayerGroup::GetInstance().MostNearPlayerPos(pos_);
@@ -116,7 +118,8 @@ void EnemyBase::Init()
 	std::shared_ptr<NodeBase> random_far_nodes2 = std::make_shared<RandomNode>(random_nodes2);
 
 	std::pair<std::shared_ptr<NodeBase>, std::shared_ptr<NodeBase>> nodes_;
-	nodes_.first = random_far_nodes2;
+	//nodes_.first = random_far_nodes2;
+	nodes_.first = chase_node;
 	nodes_.second = radom_attack_node;
 	
 	std::function<bool()> condition = [this]()-> bool
@@ -126,12 +129,15 @@ void EnemyBase::Init()
 	};
 	
 	
-
 	std::shared_ptr<NodeBase> first_node = std::make_shared<BranchNode>(nodes_,
 		condition);
+	
 
 	
-	//std::shared_ptr<NodeBase> first_node = chase_node;
+	/*
+	* std::shared_ptr<NodeBase> first_node = chase_node;
+	*/
+	
 	behavior_tree_ = std::make_shared<BehaviorTree>(first_node);
 
 	UpdateBone();
