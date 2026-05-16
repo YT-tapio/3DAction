@@ -10,7 +10,8 @@ class AreaOfEffectAttack : public AttackBase
 {
 public:
 	AreaOfEffectAttack(std::weak_ptr<ObjectBase> owner,
-		float min_coll_ratio,float max_coll_ratio,VECTOR effect_scale,
+		std::string stand_by_anim,float min_coll_ratio,
+		float max_coll_ratio,VECTOR effect_scale,
 		float hit_radius, int effect_id,float activate_time);
 
 	~AreaOfEffectAttack() override;
@@ -44,6 +45,8 @@ private:
 
 	std::shared_ptr<ConditionTimer> activate_timer_;
 	
+	std::string charge_anim_;
+
 	AreaOfEffectAttackState state_;
 
 	VECTOR effect_pos_;

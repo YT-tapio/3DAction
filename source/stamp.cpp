@@ -52,7 +52,7 @@ BehaviorStatus Stamp::Update()
 		{
 			if(character->GetAnimator()->GetNowAnimName() != my_anim_name_)
 			{ 
-				return BehaviorStatus::kSuccess;
+				return BehaviorStatus::kComplete;
 			}
 		}
 	}

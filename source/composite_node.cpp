@@ -32,7 +32,7 @@ void CompositeNode::Entry()
 
 BehaviorStatus CompositeNode::Update()
 {
-	return BehaviorStatus::kSuccess;
+	return BehaviorStatus::kComplete;
 }
 
 void CompositeNode::Exit()

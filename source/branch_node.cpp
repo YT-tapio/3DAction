@@ -34,7 +34,7 @@ void BranchNode::Entry()
 
 BehaviorStatus BranchNode::Update()
 {
-	if (status_ == BehaviorStatus::kSuccess)
+	if (status_ == BehaviorStatus::kComplete)
 	{
 		is_first_update_ ? nodes_.first->Exit() : nodes_.second->Exit();
 		is_first_update_ = condition_();

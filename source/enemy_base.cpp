@@ -93,7 +93,7 @@ void EnemyBase::Init()
 	std::shared_ptr<NodeBase> stump_node = std::make_shared<SequenceNode>(stump_nodes);
 	
 	std::shared_ptr<NodeBase> area_of_effect_node = std::make_shared<ActionNode>(std::make_shared<AreaOfEffectAttack>(
-		obj_mine, 0.f, 0.9f, VectorAssistant::VGetSame(2.f), 10.f, EffectID::kAreaOfEffect, 2.f));
+		obj_mine, "charge", 0.f, 0.9f, VectorAssistant::VGetSame(2.f), 10.f, EffectID::kAreaOfEffect, 2.f));
 
 	// ƒ‰ƒ“ƒ_ƒ€‚Ìnode‚É‘ã“ü
 	std::vector<std::shared_ptr<NodeBase>>random_nodes;

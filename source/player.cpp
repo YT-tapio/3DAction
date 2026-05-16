@@ -362,10 +362,12 @@ void Player::Move()
 		{
 			speed *= 2.5f;
 			is_dash_ = TRUE;
+			animator_->PlayRequest("run");
 		}
 		else
 		{
 			is_dash_ = FALSE;
+			animator_->PlayRequest("jogging");
 		}
 		is_move_ = TRUE;
 		vel_ = VScale(dir_, speed);
@@ -374,13 +376,11 @@ void Player::Move()
 	{
 		is_move_ = FALSE;
 		is_dash_ = FALSE;
+
+		animator_->PlayRequest("idle");
+
 	}
-	/*
-	if (!is_ground_)
-	{
-		fall_speed_ += 0.03f * FPS::GetInstance().GetDeltaTime() * 60.f;
-	}
-	*/
+	
 	
 	vel_ = VScale(vel_, FPS::GetInstance().GetDeltaTime() * 60.f);
 	vel_ = VAdd(vel_, VGet(0.f, -fall_speed_, 0.f));

@@ -178,7 +178,7 @@ BehaviorStatus JumpingAttack::UpdateFalling(std::shared_ptr<CharacterBase> owner
 	if (owner->GetOnGround())
 	{ 
 		// jumping_state_ = JumpingAttackState::kStandby;
-		return BehaviorStatus::kSuccess;
+		return BehaviorStatus::kComplete;
 	}
 
 	return BehaviorStatus::kRunning;

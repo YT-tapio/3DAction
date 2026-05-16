@@ -35,19 +35,10 @@ void AnimatorBase::Init()
 void AnimatorBase::Update()
 {
 	ChangeAnimation();
-
-	// ループなし
-	if (!animation_datas_[before_anim_name_].loop && before_anim_name_ != kNothing)
+	
+	if (ChangeCondition())
 	{
-		// 優先順位が高い
-		if(animation_datas_[before_anim_name_].priority  > animation_datas_[now_anim_name_].priority)
-		{
-			if(!is_end_)
-			{
-				now_anim_name_ = before_anim_name_;
-			}
-			
-		}
+		now_anim_name_ = before_anim_name_;
 	}
 
 	//animationの再生
@@ -69,6 +60,7 @@ void AnimatorBase::Update()
 		if (animation_datas_[now_anim_name_].attach_index == -1) { printfDx("アタッチに失敗しました\n"); }
 		if (animation_datas_[now_anim_name_].total_time < 0.f) { printfDx("トータルおかしい\n"); }
 	}
+
 	if(!is_stop_){ animation_datas_[now_anim_name_].play_time += animation_datas_[now_anim_name_].play_speed * FPS::GetInstance().GetDeltaTime() * 60.f; }
 	
 	if (animation_datas_[now_anim_name_].play_time >= animation_datas_[now_anim_name_].total_time)
@@ -236,3 +228,18 @@ const std::string AnimatorBase::GetNowAnimName() const
 	return now_anim_name_;
 }  
 
+const bool AnimatorBase::ChangeCondition() const
+{
+	// !animation_datas_[before_anim_name_].loop && before_anim_name_ != kNothing
+	// animation_datas_[before_anim_name_].priority  > animation_datas_[now_anim_name_].priority
+	// チェンジできるか
+	auto before_data = animation_datas_.find(before_anim_name_);
+	auto now_data = animation_datas_.find(now_anim_name_);
+	if (before_data == animation_datas_.end())	{ return FALSE; }
+	if (now_data == animation_datas_.end())		{ return FALSE; }
+	if (before_data->second.loop){ return FALSE; }
+	if (before_anim_name_ == kNothing) { return FALSE; }
+	if (before_data->second.priority <= now_data->second.priority) { return FALSE; }
+	if (is_end_) { return FALSE; }
+	return TRUE;
+}

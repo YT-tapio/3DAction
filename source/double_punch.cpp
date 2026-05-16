@@ -64,7 +64,7 @@ BehaviorStatus DoublePunch::Update()
 		rigid_body_->NotActive();
 	}
 	//printfDx("double_punch\n");
-	if (SuccessCondition()) { return BehaviorStatus::kSuccess; }
+	if (SuccessCondition()) { return BehaviorStatus::kComplete; }
 
 	return BehaviorStatus::kRunning;
 }

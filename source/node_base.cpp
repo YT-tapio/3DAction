@@ -23,7 +23,7 @@ void NodeBase::Entry()
 
 BehaviorStatus NodeBase::Update()
 {
-	return BehaviorStatus::kSuccess;
+	return BehaviorStatus::kComplete;
 }
 
 void NodeBase::Exit()

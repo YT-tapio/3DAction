@@ -58,7 +58,7 @@ BehaviorStatus Jump::Update()
 	{
 		played_ = TRUE;
 		owner_rigid_body->SetUpSpeed(speed_);
-		return BehaviorStatus::kSuccess;
+		return BehaviorStatus::kComplete;
 	}
 	return BehaviorStatus::kRunning;
 }

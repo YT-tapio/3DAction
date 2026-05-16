@@ -1,5 +1,6 @@
 #include<memory>
 #include<string>
+#include<unordered_map>
 #include"DxLib.h"
 #include"attack_base.h"
 #include"area_of_effect_attack.h"
@@ -15,12 +16,16 @@
 #include"character_base.h"
 #include"effect_manager.h"
 #include"effect_end_state.h"
+#include"animator_base.h"
+
 
 AreaOfEffectAttack::AreaOfEffectAttack(std::weak_ptr<ObjectBase> owner, 
-	float min_coll_ratio, float max_coll_ratio,VECTOR effect_scale, 
+	std::string charge_anim,float min_coll_ratio, 
+	float max_coll_ratio,VECTOR effect_scale, 
 	float hit_radius, int effect_id,float activate_time)
 	: AttackBase(owner,min_coll_ratio,max_coll_ratio)
 	, activate_timer_(std::make_shared<ConditionTimer>(activate_time))
+	, charge_anim_(charge_anim)
 	, state_(AreaOfEffectAttackState::kCharge)
 	, effect_pos_(VectorAssistant::VGetZero())
 	, effect_rot_(VectorAssistant::VGetZero())
@@ -52,6 +57,9 @@ void AreaOfEffectAttack::Entry()
 	auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
 	effect_pos_ = owner->GetAttackTargetPos();
 	
+	// アニメーションの再生
+	owner->GetAnimator()->PlayRequest(charge_anim_);
+
 	EffectManager::GetInstance().SetPos(effect_id_, effect_pos_);
 	EffectManager::GetInstance().SetScale(effect_id_, effect_scale_);
 	// タイマーの起動
@@ -112,13 +120,14 @@ BehaviorStatus AreaOfEffectAttack::UpdateCharge()
 
 BehaviorStatus AreaOfEffectAttack::UpdatePlay()
 {
-	// エフェクトの割合がこえたら当たり判定をなくしsuccessを返し、effectを終了させる
+	// エフェクトの割合がこえたら当たり判定をなくし、effectを終了させる
 	if (EffectManager::GetInstance().GetRatio(effect_id_) > max_coll_ratio_)
 	{
 		rigid_body_->NotActive();
 		EffectManager::GetInstance().End(effect_id_, EffectEndState::kTotal);
-		return BehaviorStatus::kSuccess;
 	}
-
+	auto chara = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
+	//アニメーション終了時,completeを返す
+	if(chara->GetAnimator()->GetNowAnimName() != charge_anim_){ return BehaviorStatus::kComplete; }
 	return BehaviorStatus::kRunning;
 }

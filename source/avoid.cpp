@@ -57,9 +57,9 @@ BehaviorStatus Avoid::Update()
 	else
 	{
 		chara->SetInvincible(FALSE);
-		return BehaviorStatus::kSuccess;
+		return BehaviorStatus::kComplete;
 	}
-	return BehaviorStatus::kSuccess;
+	return BehaviorStatus::kComplete;
 }
 
 void Avoid::Debug()

@@ -2,7 +2,7 @@
 
 enum class BehaviorStatus
 {
-	kSuccess,
+	kComplete,
 	kFailure,
 	kRunning
 };

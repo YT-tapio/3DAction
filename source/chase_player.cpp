@@ -62,7 +62,7 @@ BehaviorStatus ChasePlayer::Update()
 	auto owner_rigid_body = owner_physics->GetRigidBody();
 	owner_rigid_body->SetTargetVelocity(velocity);
 	// •K‚¸¬Œ÷‚ğ•Ô‚·
-	return BehaviorStatus::kSuccess;
+	return BehaviorStatus::kComplete;
 }
 
 void ChasePlayer::Exit()

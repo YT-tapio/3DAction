@@ -28,7 +28,7 @@ BehaviorStatus SequenceNode::Update()
 		switch (status)
 		{
 			//実行成功(終了)
-		case BehaviorStatus::kSuccess:
+		case BehaviorStatus::kComplete:
 			nodes_[current_node_]->Exit();	//
 			// 成功したら次のノードへ
 			current_node_++;
@@ -39,7 +39,7 @@ BehaviorStatus SequenceNode::Update()
 			else
 			{
 				current_node_ = nodes_.size() - 1;	// 最後のnodeに
-				return BehaviorStatus::kSuccess;
+				return BehaviorStatus::kComplete;
 			}
 			break;
 
@@ -59,5 +59,5 @@ BehaviorStatus SequenceNode::Update()
 	}
 
 	// 全て成功なら成功を返す
-	return BehaviorStatus::kSuccess;
+	return BehaviorStatus::kComplete;
 }

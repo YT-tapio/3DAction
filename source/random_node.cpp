@@ -29,7 +29,7 @@ void RandomNode::Entry()
 
 BehaviorStatus RandomNode::Update()
 {
-	if (status_ == BehaviorStatus::kSuccess)
+	if (status_ == BehaviorStatus::kComplete)
 	{
 		nodes_[current_node_]->Exit();
 		constexpr int kMin = 0;

@@ -29,19 +29,20 @@ void AnimatorPlayer::ChangeAnimation()
 {
 	before_anim_name_ = now_anim_name_;
 
-	std::map<int, std::string, std::greater<int>> request_name_priority_mp;
-	if (player_->GetIsMove()) { PlayRequest(kJogging); }
-	if (player_->GetIsDash()) { PlayRequest(kRun); }
-	if (player_->GetOnGround()){ PlayRequest(kIdle); }
+	std::map<int, std::string, std::greater<int>> priority_request_name_mp;
+
+
+	// キャンセルタイミング時にpriorityの低いものだった場合はかえてもok
+
 
 	if (!request_names_.empty())
 	{
 		for (auto& request_name : request_names_)
 		{
 			int priority = animation_datas_[request_name].priority;
-			request_name_priority_mp[priority] = request_name;
+			priority_request_name_mp[priority] = request_name;
 		}
 	}
 	// requestの中でもpriorityのたかいものを取る。
-	if (!request_name_priority_mp.empty()) { now_anim_name_ = request_name_priority_mp.begin()->second; }
+	if (!priority_request_name_mp.empty()) { now_anim_name_ = priority_request_name_mp.begin()->second; }
 }

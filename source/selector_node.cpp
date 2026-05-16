@@ -26,11 +26,11 @@ BehaviorStatus SelectorNode::Update()
 		switch (status)
 		{
 			// 実行完了
-		case BehaviorStatus::kSuccess:
+		case BehaviorStatus::kComplete:
 			// ノードを初期化する
 			nodes_[current_node_]->Exit();
 			current_node_ = 0;
-			return BehaviorStatus::kSuccess;
+			return BehaviorStatus::kComplete;
 			break;
 
 			// 実行中

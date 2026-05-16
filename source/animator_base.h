@@ -47,6 +47,8 @@ protected:
 
 	void ResetRequest();
 
+	const bool ChangeCondition() const;
+
 	std::string kDataFilePath;
 
 	const std::string kNothing = "nothing";
