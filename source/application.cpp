@@ -10,7 +10,7 @@ Application::Application()
     
     SetGraphMode(kScreenWidth,kScreenHeight, 32);			//ウィンドウのサイズとカラーモードを決める
     ChangeWindowMode(TRUE);				//ウィンドウモードにする
-
+    SetFullSceneAntiAliasingMode(400, 0);
     if (DxLib_Init() == -1)    // ＤＸライブラリ初期化処理
     {
         return;    // エラーが起きたら直ちに終了
@@ -46,7 +46,7 @@ Application::Application()
     SetDrawScreen(DX_SCREEN_BACK);
 
     SetUseZBufferFlag(TRUE);		// Ｚバッファを使用する
-    SetUseBackCulling(TRUE);		// バックカリングを行う
+    SetUseBackCulling(FALSE);		// バックカリングを行う
 
     SetUseSetDrawScreenSettingReset(FALSE);
 

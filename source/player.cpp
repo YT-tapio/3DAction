@@ -171,9 +171,9 @@ void Player::SetVelocity(const VECTOR& velocity)
 	vel_ = velocity;
 }
 
-void Player::SetRotation(const VECTOR& rotation)
+void Player::SetRotation(const VECTOR& rot)
 {
-	rot_ = rotation;
+	rot_ = rot;
 	target_rot_y_ = rot_.y;
 }
 

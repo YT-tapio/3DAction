@@ -21,6 +21,8 @@ public:
 
 	void SetInvincible(bool flag);
 
+	virtual void SetRotation(const VECTOR& rot);
+
 	void Teleport(const VECTOR& pos);
 
 	virtual const VECTOR GetAttackTargetPos() const;

@@ -39,6 +39,11 @@ void CharacterBase::Debug()
 
 }
 
+void CharacterBase::SetRotation(const VECTOR& rot)
+{
+	rot_ = rot;
+}
+
 void CharacterBase::SetInvincible(bool flag)
 {
 	is_invincible_ = flag;

@@ -33,7 +33,7 @@ public:
 
 	void SetVelocity(const VECTOR& velocity);
 
-	void SetRotation(const VECTOR& rotation);
+	void SetRotation(const VECTOR& rot) override;
 
 	void SetDirection(const VECTOR& direction);
 

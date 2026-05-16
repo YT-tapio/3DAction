@@ -72,7 +72,6 @@ void PunchSkill::Update()
 			// punch‚³‚¹‚é
 			owner->GetAnimator()->PlayRequest(my_anim_name_);	//ƒpƒ“ƒ`‚Ìanimation‚ðÄ¶‚ð‚¨Šè‚¢‚·‚é
 			VECTOR vel = VectorAssistant::VGetZero();
-			//DecideTarget(owner_area_object,owner);
 			bool is_in_site = AttackCorrection::GetInstance().ApproachTheNearestEnemy(owner, vel, 18.5f, 0.45f);
 			owner->SetIsStop(TRUE);
 		}

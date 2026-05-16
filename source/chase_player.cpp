@@ -44,12 +44,6 @@ BehaviorStatus ChasePlayer::Update()
 	// 変換できないものは失敗
 	if (owner_physics == nullptr) { return BehaviorStatus::kFailure; }
 	
-	if (auto character = std::dynamic_pointer_cast<CharacterBase>(owner))
-	{
-		//アニメーションの再生
-		character->GetAnimator()->PlayRequest(my_anim_name_);
-	}
-
 	// プレイヤーとオーナーの距離を計算
 	VECTOR dist = VSub(*target_player_pos_, owner->GetPosition());
 	dist = VectorAssistant::VGetFlat(dist);
@@ -61,6 +55,16 @@ BehaviorStatus ChasePlayer::Update()
 	}
 	auto owner_rigid_body = owner_physics->GetRigidBody();
 	owner_rigid_body->SetTargetVelocity(velocity);
+
+
+	if (auto character = std::dynamic_pointer_cast<CharacterBase>(owner))
+	{
+		// アニメーションの再生をリクエスト
+		character->GetAnimator()->PlayRequest(my_anim_name_);
+		character->SetRotation(VGet(0.f,VectorAssistant::VGetTan(VectorAssistant::VGetReverce(VNorm(dist))), 0.f));	// ターゲットに向けたい
+	}
+
+	
 	// 必ず成功を返す
 	return BehaviorStatus::kComplete;
 }

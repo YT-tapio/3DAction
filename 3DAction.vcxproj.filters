@@ -196,6 +196,9 @@
     <Filter Include="ソース ファイル\behavior_tree\node\random_node">
       <UniqueIdentifier>{ebc9ebca-d469-492f-b0b6-15c98273eae5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\transform">
+      <UniqueIdentifier>{c3bc0536-ac55-4353-927d-a0cb47a49feb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -464,6 +467,9 @@
     </ClCompile>
     <ClCompile Include="source\area_of_effect._attack.cpp">
       <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="source\transform.cpp">
+      <Filter>ソース ファイル\transform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -802,6 +808,9 @@
     </ClInclude>
     <ClInclude Include="source\area_of_effect_attack_state.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\transform.h">
+      <Filter>ソース ファイル\transform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

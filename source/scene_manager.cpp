@@ -26,20 +26,17 @@ SceneManager::~SceneManager()
 
 void SceneManager::Update()
 {
+	ClearDrawScreen();
 	FPS::GetInstance().Update();
 	InputManager::GetInstance().Update();
 	Debug::GetInstance().Reset();
 	Debug::GetInstance().Update();
 
 	scene_->Update();
-	
-	ClearDrawScreen();
 
 	scene_->Draw();
 
-	ScreenFlip();
-
 	FPS::GetInstance().Wait();
 	FPS::GetInstance().SetPrevTime();
-
+	ScreenFlip();
 }

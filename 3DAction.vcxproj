@@ -200,6 +200,7 @@
     <ClCompile Include="source\takable_heal_enemy_interface.cpp" />
     <ClCompile Include="source\takable_heal_player_interface.cpp" />
     <ClCompile Include="source\tracking_camera.cpp" />
+    <ClCompile Include="source\transform.cpp" />
     <ClCompile Include="source\virtual_camera_base.cpp" />
     <ClCompile Include="source\brain.cpp" />
     <ClCompile Include="source\camera.cpp" />
@@ -300,6 +301,7 @@
     <ClInclude Include="source\takable_heal_enemy_interface.h" />
     <ClInclude Include="source\takable_heal_player_interface.h" />
     <ClInclude Include="source\tracking_camera.h" />
+    <ClInclude Include="source\transform.h" />
     <ClInclude Include="source\virtual_camera_base.h" />
     <ClInclude Include="source\camera.h" />
     <ClInclude Include="source\capsule.h" />
