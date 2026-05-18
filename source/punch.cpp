@@ -9,7 +9,6 @@
 #include"debug.h"
 #include"enemy_base.h"
 #include"player.h"
-#include"object_base.h"
 #include"animator_base.h"
 #include"behavior_status.h"
 
@@ -50,7 +49,7 @@ BehaviorStatus Punch::Update()
 
 	float punch_play_time = owner_animator->GetRatio(my_anim_name_);
 	// “–‚½‚è”»’è‚ð‚Ìactive‚ð‚µ‚Ü‚·
-	if (punch_play_time > min_coll_ratio_ && punch_play_time < max_coll_ratio_) { rigid_body_->Active(); }
+	if (punch_play_time > coll_timing_min_ && punch_play_time < coll_timing_max_) { rigid_body_->Active(); }
 
 	return BehaviorStatus::kRunning;
 }

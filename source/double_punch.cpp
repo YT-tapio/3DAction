@@ -19,11 +19,11 @@ DoublePunch::DoublePunch(std::weak_ptr<ObjectBase> owner, std::string my_anim_na
 	float min_coll_ratio, float max_coll_ratio,VECTOR* pos,float vertical,float radius)
 	: AttackBase(owner,min_coll_ratio,max_coll_ratio)
 	, my_anim_name_(my_anim_name)
-	, pos_(pos)
-	,played_(FALSE)
+	,pos_(VectorAssistant::VGetZero())
+	, played_(FALSE)
 {
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(radius,vertical,VectorAssistant::VGetZero()),
-		pos_, FALSE, TRUE, 1.f, 0.2f);
+		&pos_, FALSE, TRUE, 1.f, 0.2f);
 }
 
 DoublePunch::~DoublePunch()
@@ -42,13 +42,25 @@ void DoublePunch::Init()
 
 void DoublePunch::Entry()
 {
+	VECTOR owner_pos = VectorAssistant::VGetZero();
+	VECTOR front_dir = VectorAssistant::VGetZero();
 	// アニメーションの再生
 	if (auto character = std::dynamic_pointer_cast<CharacterBase>(owner_.lock()))
 	{
 		character->GetAnimator()->PlayRequest(my_anim_name_);
+
+		// オーナーの位置を取得
+		owner_pos = character->GetPosition();
+		// 正面方向を取得
+		front_dir = character->GetFrontDir();
+	
 	}
 	rigid_body_->NotActive();
 	played_ = FALSE;
+
+	// オーナーの正面方向に当たり判定を生成
+	pos_ = VAdd(owner_pos, VScale(front_dir, 5.f));
+
 	printfDx("double_punch_entry\n");
 }
 
@@ -94,8 +106,8 @@ const bool DoublePunch::CheckCollActive() const
 {
 	auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
 	auto anim_play_ratio = owner->GetAnimator()->GetRatio(my_anim_name_);
-	if (min_coll_ratio_ > anim_play_ratio) { return FALSE; }
-	if (max_coll_ratio_ < anim_play_ratio) { return FALSE; }
+	if (coll_timing_min_ > anim_play_ratio) { return FALSE; }
+	if (coll_timing_max_ < anim_play_ratio) { return FALSE; }
 	return TRUE;
 }
 

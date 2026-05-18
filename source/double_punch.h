@@ -42,6 +42,6 @@ private:
 	// パンチ
 	std::string my_anim_name_;	// アニメーションの名前
 
-	VECTOR* pos_;
+	VECTOR pos_;
 	bool played_;
 };

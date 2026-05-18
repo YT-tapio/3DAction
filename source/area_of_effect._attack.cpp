@@ -121,7 +121,7 @@ BehaviorStatus AreaOfEffectAttack::UpdateCharge()
 BehaviorStatus AreaOfEffectAttack::UpdatePlay()
 {
 	// エフェクトの割合がこえたら当たり判定をなくし、effectを終了させる
-	if (EffectManager::GetInstance().GetRatio(effect_id_) > max_coll_ratio_)
+	if (EffectManager::GetInstance().GetRatio(effect_id_) > coll_timing_max_)
 	{
 		rigid_body_->NotActive();
 		EffectManager::GetInstance().End(effect_id_, EffectEndState::kTotal);

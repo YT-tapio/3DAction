@@ -164,6 +164,7 @@
     <ClCompile Include="source\behavior_base.cpp" />
     <ClCompile Include="source\behavior_tree.cpp" />
     <ClCompile Include="source\branch_node.cpp" />
+    <ClCompile Include="source\animation_charge.cpp" />
     <ClCompile Include="source\chase_player.cpp" />
     <ClCompile Include="source\check_my_area.cpp" />
     <ClCompile Include="source\composite_node.cpp" />
@@ -195,6 +196,7 @@
     <ClCompile Include="source\skill_loader.cpp" />
     <ClCompile Include="source\sphere_camera.cpp" />
     <ClCompile Include="source\stamp.cpp" />
+    <ClCompile Include="source\tackle.cpp" />
     <ClCompile Include="source\takable_damage_enemy_interface.cpp" />
     <ClCompile Include="source\takable_damage_player_interface.cpp" />
     <ClCompile Include="source\takable_heal_enemy_interface.cpp" />
@@ -296,6 +298,7 @@
     <ClInclude Include="source\skill_loader.h" />
     <ClInclude Include="source\sphere_camera.h" />
     <ClInclude Include="source\stamp.h" />
+    <ClInclude Include="source\tackle.h" />
     <ClInclude Include="source\takable_damage_enemy_interface.h" />
     <ClInclude Include="source\takable_damage_player_interface.h" />
     <ClInclude Include="source\takable_heal_enemy_interface.h" />
@@ -351,6 +354,7 @@
     <ClInclude Include="source\behavior_base.h" />
     <ClInclude Include="source\avoid.h" />
     <ClInclude Include="source\skill_name.h" />
+    <ClInclude Include="source\animation_charge.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\json\player_data.json" />

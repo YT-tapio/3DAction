@@ -188,8 +188,8 @@ const bool JumpingAttack::CheckActiveColl(std::shared_ptr<CharacterBase> owner) 
 {
 	float anim_ratio = owner->GetAnimator()->GetRatio(my_anim_name_);
 
-	if (anim_ratio < min_coll_ratio_) { return FALSE; }
-	if (anim_ratio > max_coll_ratio_) { return FALSE; }
+	if (anim_ratio < coll_timing_min_) { return FALSE; }
+	if (anim_ratio > coll_timing_max_) { return FALSE; }
 
 	return TRUE;
 }

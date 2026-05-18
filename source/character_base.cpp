@@ -69,6 +69,14 @@ const bool CharacterBase::GetOnGround() const
 	return is_ground_;
 }
 
+const VECTOR CharacterBase::GetFrontDir() const
+{
+	// ³–Ê‚ğó‚¯æ‚é
+	VECTOR front_dir = VectorAssistant::VGetZero();
+	front_dir = VectorAssistant::VGetDirFromRotY(rot_);
+	return front_dir;
+}
+
 const VECTOR CharacterBase::GetVelocity() const
 {
 	return vel_;
