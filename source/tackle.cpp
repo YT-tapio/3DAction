@@ -1,6 +1,7 @@
 #include<memory>
 #include<string>
 #include<unordered_map>
+#include"DxLib.h"
 #include"attack_base.h"
 #include"tackle.h"
 #include"behavior_status.h"
@@ -31,11 +32,12 @@ void Tackle::Init()
 void Tackle::Entry()
 {
 	
-
 }
 
 BehaviorStatus Tackle::Update()
 {
+	
+
 
 	return BehaviorStatus::kRunning;
 }
