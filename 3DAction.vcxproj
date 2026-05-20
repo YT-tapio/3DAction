@@ -165,6 +165,7 @@
     <ClCompile Include="source\behavior_tree.cpp" />
     <ClCompile Include="source\branch_node.cpp" />
     <ClCompile Include="source\animation_charge.cpp" />
+    <ClCompile Include="source\character_behavior.cpp" />
     <ClCompile Include="source\chase_player.cpp" />
     <ClCompile Include="source\check_my_area.cpp" />
     <ClCompile Include="source\composite_node.cpp" />
@@ -186,6 +187,8 @@
     <ClCompile Include="source\jump.cpp" />
     <ClCompile Include="source\jumping_attack.cpp" />
     <ClCompile Include="source\node_base.cpp" />
+    <ClCompile Include="source\object_behavior.cpp" />
+    <ClCompile Include="source\physics_behavior.cpp" />
     <ClCompile Include="source\player_group.cpp" />
     <ClCompile Include="source\punch.cpp" />
     <ClCompile Include="source\punch_skill.cpp" />
@@ -255,6 +258,7 @@
     <ClInclude Include="source\avoid_skill.h" />
     <ClInclude Include="source\behavior_tree.h" />
     <ClInclude Include="source\branch_node.h" />
+    <ClInclude Include="source\character_behavior.h" />
     <ClInclude Include="source\chase_player.h" />
     <ClInclude Include="source\composite_node.h" />
     <ClInclude Include="source\combo.h" />
@@ -277,6 +281,8 @@
     <ClInclude Include="source\jumping_attack_state.h" />
     <ClInclude Include="source\node_base.h" />
     <ClInclude Include="source\behavior_status.h" />
+    <ClInclude Include="source\object_behavior.h" />
+    <ClInclude Include="source\physics_behavior.h" />
     <ClInclude Include="source\player_group.h" />
     <ClInclude Include="source\punch_skill.h" />
     <ClInclude Include="source\random.h" />

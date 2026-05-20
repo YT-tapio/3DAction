@@ -31,12 +31,14 @@ void Tackle::Init()
 
 void Tackle::Entry()
 {
-	
+	// おーなーのアニメーションを流す
+	auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
 }
 
 BehaviorStatus Tackle::Update()
 {
-	
+	// タックルのアニメーションをずっと流しておきたい
+
 
 
 	return BehaviorStatus::kRunning;

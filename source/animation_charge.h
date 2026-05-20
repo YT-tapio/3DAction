@@ -15,7 +15,6 @@ public:
 
 	~AnimationCharge() override;
 
-
 	void Init() override;
 
 	void Entry() override;

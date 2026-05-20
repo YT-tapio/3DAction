@@ -19,6 +19,7 @@
 #include"check_my_area.h"
 #include"behavior_tree.h"
 #include"behavior_base.h"
+#include"character_behavior.h"
 #include"double_punch.h"
 #include"jumping_attack.h"
 #include"area_of_effect_attack.h"
@@ -84,7 +85,7 @@ void EnemyBase::Init()
 	// ã‚©‚ç~‚Á‚Ä‚­‚éƒm[ƒh‚ğ¶¬
 	std::vector<std::shared_ptr<NodeBase>> stump_nodes;
 
-	stump_nodes.push_back(std::make_shared<ActionNode>(std::make_shared<Jump>(obj_mine,
+	stump_nodes.push_back(std::make_shared<ActionNode>(std::make_shared<Jump>(mine,
 		"jumping_attack", timing, 1.f)));
 
 	stump_nodes.push_back(std::make_shared<ActionNode>

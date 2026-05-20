@@ -199,6 +199,18 @@
     <Filter Include="ソース ファイル\transform">
       <UniqueIdentifier>{c3bc0536-ac55-4353-927d-a0cb47a49feb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\behavior\character_behavior">
+      <UniqueIdentifier>{3512859e-0b79-4b48-b960-f14d55e88bf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\behavior\physics_behavior">
+      <UniqueIdentifier>{bd04a9d9-7e15-4c3b-b6d2-fb88f8170cb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\behavior\base">
+      <UniqueIdentifier>{9b46343a-bf66-4607-b278-aa9e30dfb5f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\behavior\object">
+      <UniqueIdentifier>{9e96f28d-2839-4d19-a54c-40c26c716fc8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -326,9 +338,6 @@
     </ClCompile>
     <ClCompile Include="source\enemy_base.cpp">
       <Filter>ソース ファイル\object\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="source\behavior_base.cpp">
-      <Filter>ソース ファイル\behavior</Filter>
     </ClCompile>
     <ClCompile Include="source\attack_base.cpp">
       <Filter>ソース ファイル\behavior</Filter>
@@ -476,6 +485,18 @@
     </ClCompile>
     <ClCompile Include="source\animation_charge.cpp">
       <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="source\character_behavior.cpp">
+      <Filter>ソース ファイル\behavior\character_behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="source\physics_behavior.cpp">
+      <Filter>ソース ファイル\behavior\physics_behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="source\behavior_base.cpp">
+      <Filter>ソース ファイル\behavior\base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\object_behavior.cpp">
+      <Filter>ソース ファイル\behavior\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -650,9 +671,6 @@
     <ClInclude Include="source\enemy_base.h">
       <Filter>ソース ファイル\object\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="source\behavior_base.h">
-      <Filter>ソース ファイル\behavior</Filter>
-    </ClInclude>
     <ClInclude Include="source\attack_base.h">
       <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
@@ -823,6 +841,18 @@
     </ClInclude>
     <ClInclude Include="source\animation_charge.h">
       <Filter>ソース ファイル\behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\character_behavior.h">
+      <Filter>ソース ファイル\behavior\character_behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\physics_behavior.h">
+      <Filter>ソース ファイル\behavior\physics_behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\behavior_base.h">
+      <Filter>ソース ファイル\behavior\base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\object_behavior.h">
+      <Filter>ソース ファイル\behavior\object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

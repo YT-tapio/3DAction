@@ -1,15 +1,17 @@
 #pragma once
 
 class BehaviorBase;
+class CharacterBase;
+class CharacterBehavior;
 class AnimatorBase;
 class RigidBody;
 enum class BehaviorStatus;
 
-class Jump : public BehaviorBase
+class Jump : public CharacterBehavior
 {
 public:
 
-	Jump(std::weak_ptr<ObjectBase> owner,std::string my_anim_name,std::pair<float,float>timing,float speed);
+	Jump(std::weak_ptr<CharacterBase> owner,std::string my_anim_name,std::pair<float,float>timing,float speed);
 
 	~Jump() override;
 
@@ -27,7 +29,7 @@ public:
 
 private:
 
-	bool JumpCondition(std::shared_ptr<AnimatorBase> animator,std::shared_ptr<RigidBody> owner_rigid_body);	// 飛べる条件
+	bool JumpCondition(std::shared_ptr<CharacterBase> owner);	// 飛べる条件
 
 	std::string my_anim_name_;	// 自分のアニメーションの名前
 	

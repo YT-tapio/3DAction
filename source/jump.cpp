@@ -5,6 +5,7 @@
 #include<unordered_map>
 #include<utility>
 #include"behavior_base.h"
+#include"character_behavior.h"
 #include"jump.h"
 #include"behavior_status.h"
 #include"character_base.h"
@@ -12,9 +13,9 @@
 #include"physics_interface.h"
 #include"rigid_body.h"
 
-Jump::Jump(std::weak_ptr<ObjectBase> owner, std::string my_anim_name, 
+Jump::Jump(std::weak_ptr<CharacterBase> owner, std::string my_anim_name, 
 	std::pair<float,float> timing, float speed)
-	: BehaviorBase(owner)
+	: CharacterBehavior(owner)
 	, my_anim_name_(my_anim_name)
 	, timing_(timing)
 	, speed_(speed)
@@ -37,7 +38,7 @@ void Jump::Entry()
 {
 	played_ = FALSE;
 	// アニメーションの再生
-	if (auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock()))
+	if (auto owner = my_owner_.lock())
 	{
 		owner->GetAnimator()->PlayRequest(my_anim_name_);
 	}
@@ -48,17 +49,21 @@ BehaviorStatus Jump::Update()
 {
 	//printfDx("jump\n");
 	// オーナーのアニメーターをもらう
-	auto character = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
-	if(character ==nullptr){ return BehaviorStatus::kFailure; }
-	auto animator = character->GetAnimator();			// アニメーターを取得
-	// physics用に変換する
-	auto physics_owner = std::dynamic_pointer_cast<IPhysicsEventReceiver>(character);
-	auto owner_rigid_body = physics_owner->GetRigidBody();
-	if (JumpCondition(animator,owner_rigid_body))
+	auto owner = my_owner_.lock();
+	if(owner ==nullptr){ return BehaviorStatus::kFailure; }
+	
+	if (JumpCondition(owner))
 	{
-		played_ = TRUE;
-		owner_rigid_body->SetUpSpeed(speed_);
-		return BehaviorStatus::kComplete;
+		
+		if (auto owner_rigid_body = std::dynamic_pointer_cast<IPhysicsEventReceiver>(owner))
+		{
+			if (owner_rigid_body->GetRigidBody()->GetOnGround()) 
+			{
+				played_ = TRUE;
+				owner_rigid_body->GetRigidBody()->SetUpSpeed(speed_);
+				return BehaviorStatus::kComplete;
+			}
+		}
 	}
 	return BehaviorStatus::kRunning;
 }
@@ -79,11 +84,10 @@ void Jump::Debug()
 }
 
 
-bool Jump::JumpCondition(std::shared_ptr<AnimatorBase> animator, std::shared_ptr<RigidBody> owner_rigid_body)
+bool Jump::JumpCondition(std::shared_ptr<CharacterBase> owner)
 {
 	if (played_) { return FALSE; }
-	if (!owner_rigid_body->GetOnGround()) { return FALSE; }
-	auto anim_ratio = animator->GetRatio(my_anim_name_);
+	auto anim_ratio = owner->GetAnimator()->GetRatio(my_anim_name_);
 	if (anim_ratio < timing_.first) { return FALSE; }
 	if (anim_ratio > timing_.second) { return FALSE; }
 	return TRUE;
