@@ -46,7 +46,10 @@ BehaviorStatus AnimationCharge::Update()
 
 	if (auto character = std::dynamic_pointer_cast<CharacterBase>(owner_.lock()))
 	{
-		if (character->GetAnimator()->GetRatio(my_anim_name_)) { return BehaviorStatus::kComplete; };
+		if (character->GetAnimator()->GetRatio(my_anim_name_) > timing_ratio_) 
+		{ 
+			return BehaviorStatus::kComplete;
+		}
 	}
 	else
 	{

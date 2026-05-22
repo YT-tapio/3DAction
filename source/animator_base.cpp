@@ -16,6 +16,7 @@ AnimatorBase::AnimatorBase(const std::string data_file_path, int handle)
 	handle_ = handle;
 	is_end_ = FALSE;
 	is_stop_ = FALSE;
+	can_cancel_ = FALSE;
 }
 
 AnimatorBase::~AnimatorBase()
@@ -36,23 +37,32 @@ void AnimatorBase::Update()
 {
 	ChangeAnimation();
 	
+	// チェンジできるか
 	if (ChangeCondition())
 	{
 		now_anim_name_ = before_anim_name_;
 	}
 
-	//animationの再生
+	if (now_anim_name_ == "tackle") {
+		printfDx("タックルしている\n"); }
+	// animationのアタッチ
 	if (before_anim_name_ != now_anim_name_)
 	{
+		// キャンセルを無効にする
+		can_cancel_ = FALSE;
+
+		// デタッチ
 		if (before_anim_name_ != kNothing)
 		{
 			animation_datas_[before_anim_name_].play_time = 0.f;
 			MV1DetachAnim(handle_, animation_datas_[before_anim_name_].anim_index);
 		}
 
+		// アタッチ
 		animation_datas_[now_anim_name_].attach_index = MV1AttachAnim(handle_, animation_datas_[now_anim_name_].attach_index,
 			animation_datas_[now_anim_name_].handle, FALSE);
 
+		// トータルタイムを取得
 		animation_datas_[now_anim_name_].total_time = MV1GetAttachAnimTotalTime(handle_, animation_datas_[now_anim_name_].attach_index);
 
 		animation_datas_[now_anim_name_].play_time = 0.f;
@@ -61,8 +71,10 @@ void AnimatorBase::Update()
 		if (animation_datas_[now_anim_name_].total_time < 0.f) { printfDx("トータルおかしい\n"); }
 	}
 
+	//stopじゃないときはアニメーションの再生を行う
 	if(!is_stop_){ animation_datas_[now_anim_name_].play_time += animation_datas_[now_anim_name_].play_speed * FPS::GetInstance().GetDeltaTime() * 60.f; }
 	
+	// トータルタイムを超えた時
 	if (animation_datas_[now_anim_name_].play_time >= animation_datas_[now_anim_name_].total_time)
 	{
 		if (animation_datas_[now_anim_name_].loop)
@@ -188,6 +200,11 @@ void AnimatorBase::Stop()
 	is_stop_ = TRUE;
 }
 
+void AnimatorBase::Cancel()
+{
+	can_cancel_ = TRUE;
+}
+
 const float AnimatorBase::GetPlayTime(std::string name) const
 {
 	float play_time = -1.f;
@@ -226,10 +243,11 @@ const float AnimatorBase::GetRatio(std::string name) const
 const std::string AnimatorBase::GetNowAnimName() const
 {
 	return now_anim_name_;
-}  
+} 
 
 const bool AnimatorBase::ChangeCondition() const
 {
+	if (before_anim_name_ == kNothing) { return FALSE; }
 	// !animation_datas_[before_anim_name_].loop && before_anim_name_ != kNothing
 	// animation_datas_[before_anim_name_].priority  > animation_datas_[now_anim_name_].priority
 	// チェンジできるか
@@ -238,8 +256,11 @@ const bool AnimatorBase::ChangeCondition() const
 	if (before_data == animation_datas_.end())	{ return FALSE; }
 	if (now_data == animation_datas_.end())		{ return FALSE; }
 	if (before_data->second.loop){ return FALSE; }
-	if (before_anim_name_ == kNothing) { return FALSE; }
-	if (before_data->second.priority <= now_data->second.priority) { return FALSE; }
+	// priorityが低くてもキャンセルが許されているときなら変更する
+	if (before_data->second.priority <= now_data->second.priority) 
+	{ 
+		if (!can_cancel_) { return FALSE; }
+	}
 	if (is_end_) { return FALSE; }
 	return TRUE;
 }

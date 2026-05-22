@@ -25,6 +25,8 @@
 #include"area_of_effect_attack.h"
 #include"jump.h"
 #include"stamp.h"
+#include"tackle.h"
+#include"animation_charge.h"
 #include"chase_player.h"
 #include"color.h"
 #include"node_base.h"
@@ -53,7 +55,6 @@ EnemyBase::EnemyBase(const VECTOR& pos)
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(5.5f, 18.f, VectorAssistant::VGetZero()), 
 		&pos_, TRUE, FALSE, 0.03f,0.1f);
 	fall_speed_ = 0.f;
-
 }
 
 EnemyBase::~EnemyBase()
@@ -93,14 +94,30 @@ void EnemyBase::Init()
 
 	std::shared_ptr<NodeBase> stump_node = std::make_shared<SequenceNode>(stump_nodes);
 	
+	// エフェクトによる攻撃
 	std::shared_ptr<NodeBase> area_of_effect_node = std::make_shared<ActionNode>(std::make_shared<AreaOfEffectAttack>(
 		obj_mine, "charge", 0.f, 0.9f, VectorAssistant::VGetSame(2.f), 10.f, EffectID::kAreaOfEffect, 2.f));
 
+	// タックルの前の予備動作
+	std::shared_ptr<NodeBase> charge_tackle_node = 
+		std::make_shared<ActionNode>(std::make_shared<AnimationCharge>(mine, "charge_tackle", 0.9f));
+
+	// タックル
+	std::shared_ptr<NodeBase> tackle_node = std::make_shared<ActionNode>(
+		std::make_shared<Tackle>(mine,
+			std::make_shared<RigidBody>(rigid_body_->GetCollider(), &pos_, FALSE, TRUE, 0.1f, 1.f), "tackle", 1.f, 2.f));
+	
+	std::vector<std::shared_ptr<NodeBase>> tackle_nodes;
+	
+	tackle_nodes.emplace_back(charge_tackle_node);
+	tackle_nodes.emplace_back(tackle_node);
+
 	// ランダムのnodeに代入
 	std::vector<std::shared_ptr<NodeBase>>random_nodes;
-	random_nodes.emplace_back(stump_node);
+	//random_nodes.emplace_back(stump_node);
 	random_nodes.emplace_back(double_punch_node);
-	random_nodes.emplace_back(area_of_effect_node);
+	//random_nodes.emplace_back(area_of_effect_node);
+	random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
 
 	std::vector<std::shared_ptr<NodeBase>> random_nodes2;
 

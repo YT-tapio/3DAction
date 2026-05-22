@@ -27,6 +27,11 @@ public:
 	void Stop();
 
 	/// <summary>
+	/// アニメーションのキャンセルを有効に
+	/// </summary>
+	void Cancel();
+
+	/// <summary>
 	/// 引数の再生時間を得る
 	/// </summary>
 	/// <param name="name"></param>
@@ -63,6 +68,8 @@ protected:
 	bool is_end_;
 
 	bool is_stop_;
+
+	bool can_cancel_;
 
 private:
 

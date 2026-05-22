@@ -9,10 +9,15 @@
 #include"condition_timer.h"
 #include"character_base.h"
 #include"animator_base.h"
+#include"vector_assistant.h"
 
-Tackle::Tackle(std::weak_ptr<ObjectBase> owner, std::shared_ptr<RigidBody> rigid_body, const float time)
+Tackle::Tackle(std::weak_ptr<ObjectBase> owner, std::shared_ptr<RigidBody> rigid_body,
+	std::string anim_name,const float time, const float speed)
 	: AttackBase(owner,0.f,0.f)
 	, activate_timer_(std::make_shared<ConditionTimer>(time))
+	, anim_name_(anim_name)
+	, vel_(VectorAssistant::VGetZero())
+	, speed_(speed)
 {
 	rigid_body_ = rigid_body;
 }
@@ -24,6 +29,7 @@ Tackle::~Tackle()
 
 void Tackle::Init()
 {
+	vel_ = VectorAssistant::VGetZero();
 	// rigid_bodyの登録
 	rigid_body_->Init(weak_from_this());
 	activate_timer_->Init();
@@ -31,15 +37,53 @@ void Tackle::Init()
 
 void Tackle::Entry()
 {
+	VECTOR dir = VectorAssistant::VGetZero();
 	// おーなーのアニメーションを流す
-	auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
+	if (auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock()))
+	{
+		owner->GetAnimator()->PlayRequest(anim_name_);
+		dir = VectorAssistant::VGetDir(owner->GetPosition(), owner->GetAttackTargetPos());
+		owner->SetRotation(VGet(0.f, VectorAssistant::VGetTan(VectorAssistant::VGetReverce(dir)), 0.f));
+		vel_ = VScale(dir, speed_);
+	}
+	
+	// 当たり判定発生と発生時間のタイマーを開始
+	rigid_body_->Active();
+	activate_timer_->Init();
+	activate_timer_->Start();
+
+	// velocityの設定をする
+	
 }
 
 BehaviorStatus Tackle::Update()
 {
-	// タックルのアニメーションをずっと流しておきたい
-
-
+	// タイマーの更新
+	activate_timer_->Update();
+	// 移動量を設定
+	if (activate_timer_->GetIsEnd())
+	{
+		// アニメーションのキャンセルを有効に
+		if(auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock()))
+		{
+			owner->GetAnimator()->Cancel();
+		}
+		// 当たり判定をなくす
+		rigid_body_->NotActive();
+		return BehaviorStatus::kComplete;	// 終了を返す
+	}
+	else
+	{
+		if (auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock()))
+		{
+			owner->GetAnimator()->PlayRequest(anim_name_);
+		}
+		if (auto owner = std::dynamic_pointer_cast<IPhysicsEventReceiver>(owner_.lock()))
+		{
+			owner->GetRigidBody()->SetTargetVelocity(vel_);
+		}
+	}
+	
 
 	return BehaviorStatus::kRunning;
 }

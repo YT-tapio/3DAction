@@ -9,7 +9,8 @@ class Tackle :public AttackBase
 {
 public:
 
-	Tackle(std::weak_ptr<ObjectBase> owner,std::shared_ptr<RigidBody> rigid_body,const float time);
+	Tackle(std::weak_ptr<ObjectBase> owner,std::shared_ptr<RigidBody> rigid_body,
+		std::string anim_name,const float time, const float speed);
 
 	~Tackle() override;
 
@@ -30,7 +31,10 @@ private:
 	// “–‚½‚è”»’è‚Ì”­¶ŠÔ
 	std::shared_ptr<ConditionTimer> activate_timer_;
 
-	std::string anim_;
-	std::string tackle_anim_;
+	VECTOR vel_;
+	
+	std::string anim_name_;
+
+	float speed_;
 
 };
