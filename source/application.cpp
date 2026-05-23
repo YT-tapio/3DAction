@@ -65,11 +65,9 @@ Application::~Application()
 
 void Application::Update()
 {
-
     while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && !CheckHitKey(KEY_INPUT_ESCAPE))
     {
         SetLightAmbColor(GetColorF(1.f, 1.f, 1.f, 1.0f));
         scene_manager_->Update();
     }
-    
 }

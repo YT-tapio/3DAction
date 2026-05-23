@@ -23,6 +23,8 @@ public:
 
 	void OnHit(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
+	std::shared_ptr<RigidBody> GetRigidBody() override;
+
 protected:
 
 private:

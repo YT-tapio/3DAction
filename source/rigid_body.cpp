@@ -1,4 +1,4 @@
-#include<iostream>
+#include<string>
 #include<memory>
 #include"DxLib.h"
 #include"rigid_body.h"
@@ -27,6 +27,8 @@ RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll,VECTOR* pos,bool gravity
 	is_object_ = FALSE;
 	on_ground_ = FALSE;
 	is_landing_ = FALSE;
+	tag_ = "Nothing";
+	tag_first_change_ = FALSE;
 }
 
 RigidBody::~RigidBody()
@@ -40,6 +42,7 @@ void RigidBody::Init(std::weak_ptr<IPhysicsEventReceiver> object)
 	// object‚ð•ÏŠ·‚·‚é
 	auto obj = std::dynamic_pointer_cast<ObjectBase>(object_.lock());
 	is_object_ = obj != nullptr;
+	tag_ = "Nothing";
 }
 
 void RigidBody::ResetVelocity()
@@ -57,6 +60,16 @@ void RigidBody::SetVelocity(const VECTOR& vel)
 void RigidBody::SetTargetVelocity(const VECTOR& vel)
 {
 	target_vel_ = vel;
+}
+
+void RigidBody::SetTag(std::string tag)
+{
+	if (!tag_first_change_)
+	{
+		tag_ = tag;
+		tag_first_change_ = TRUE;
+	}
+
 }
 
 void RigidBody::Active()
@@ -251,6 +264,16 @@ const bool RigidBody::GetIsLanding() const
 const bool RigidBody::IsObject() const
 {
 	return is_object_;
+}
+
+const bool RigidBody::CheckSameOwner(std::shared_ptr<IPhysicsEventReceiver> other_object) const
+{
+	return object_.lock() == other_object;
+}
+
+const std::string RigidBody::GetTag() const
+{
+	return tag_;
 }
 
 std::shared_ptr<ColliderBase> RigidBody::GetCollider()

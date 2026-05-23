@@ -3,6 +3,7 @@
 #include<vector>
 #include<fstream>
 #include<sstream>
+#include<string>
 #include<unordered_map>
 #include"DxLib.h"
 #include"player.h"
@@ -93,6 +94,7 @@ void Player::Init()
 	LoadFile("",name_);
 	MakeSkill(mine);
 	rigid_body_->Init(weak_from_this());
+	rigid_body_->SetTag("player");
 	my_area_ = std::make_shared<CheckMyArea>(std::make_shared<Sphere>(detection_radius_, VectorAssistant::VGetZero()), &pos_);
 	//skill_ = std::make_shared<PunchSkill>(mine, &hand_pos_, 1.5f, detection_radius);
 	//skill_			= std::make_shared<PunchSkill>(mine, &hand_pos_, 1.5f, detection_radius_);
@@ -458,43 +460,40 @@ void Player::DecideAttackTarget()
 void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 	//何かが当たった時の処理
+	std::string target_tag = object->GetRigidBody()->GetTag();
 
-	// objectを何者かに変換
-	auto stage = std::dynamic_pointer_cast<Stage>(object);
-	auto enemy = std::dynamic_pointer_cast<EnemyBase>(object);
-	auto punch = std::dynamic_pointer_cast<Punch>(object);
-	auto double_punch = std::dynamic_pointer_cast<DoublePunch>(object);
-	if (stage != nullptr)
+	if (target_tag == "stage")
 	{
-		// printfDx("stage");
-		return;
+
 	}
 
-	if (enemy != nullptr)
+	if (target_tag == "enemy")
 	{
 		// printfDx("enemy");
 		return;
 	}
 
-	if (punch != nullptr)
+	if (target_tag == "punch")
 	{
-		// 自身とオーナーのパンチがplayerにcastしてnullptrなったら処理する
-		if (std::dynamic_pointer_cast<Player>(punch->GetOwner().lock()) == nullptr)
+		// 自身とオーナーが一緒かを確認
+		if (!object->GetRigidBody()->CheckSameOwner(shared_from_this()))
 		{
 			animator_->PlayRequest("on_damage");
 		}
 		return;
 	}
 
-	if (double_punch != nullptr)
+	if (target_tag == "double_punch")
 	{
 		// 自身とオーナーのパンチがplayerにcastしてnullptrなったら処理する
-		if (std::dynamic_pointer_cast<Player>(double_punch->GetOwner().lock()) == nullptr)
+		if (!object->GetRigidBody()->CheckSameOwner(shared_from_this()))
 		{
 			animator_->PlayRequest("on_damage");
 		}
 		return;
 	}
+	
+
 }
 
 void Player::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)

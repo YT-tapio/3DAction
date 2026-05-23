@@ -30,5 +30,9 @@ public:
 	/// </summary>
 	virtual void UnGround();
 
+	/// <summary>
+	/// rigid_body‚ðŽó‚¯Žæ‚é
+	/// </summary>
+	/// <returns></returns>
 	virtual std::shared_ptr<RigidBody> GetRigidBody();
 };

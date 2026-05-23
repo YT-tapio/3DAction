@@ -30,6 +30,8 @@ public:
 
 	VECTOR dir_;// ƒJƒƒ‰‚Ì³–Ê
 
+	std::shared_ptr<RigidBody> GetRigidBody() override;
+
 private:
 
 	std::shared_ptr<RigidBody> rigid_body_;

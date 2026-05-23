@@ -1,5 +1,6 @@
 #include<vector>
 #include<memory>
+#include<string>
 #include"check_my_area.h"
 #include"object_base.h"
 #include"rigid_body.h"
@@ -96,6 +97,11 @@ void CheckMyArea::UnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 std::vector<std::weak_ptr<ObjectBase>> CheckMyArea::GetMyAreaObject()
 {
 	return my_area_objects_;
+}
+
+std::shared_ptr<RigidBody> CheckMyArea::GetRigidBody()
+{
+	return rigid_body_;
 }
 
 const VECTOR CheckMyArea::GetPos() const

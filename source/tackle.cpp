@@ -32,6 +32,7 @@ void Tackle::Init()
 	vel_ = VectorAssistant::VGetZero();
 	// rigid_body‚Ì“o˜^
 	rigid_body_->Init(weak_from_this());
+	rigid_body_->SetTag("tackle");
 	activate_timer_->Init();
 }
 

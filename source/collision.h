@@ -1,5 +1,7 @@
 #pragma once
 #include<map>
+#include<memory>
+#include<string>
 #include"DxLib.h"
 #include"rigid_body.h"
 #include"collider_base.h"

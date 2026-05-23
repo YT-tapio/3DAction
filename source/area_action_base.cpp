@@ -1,5 +1,6 @@
 #include<vector>
 #include<memory>
+#include<string>
 #include"DxLib.h"
 #include"area_action_base.h"
 #include"check_my_area.h"

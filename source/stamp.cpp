@@ -31,6 +31,7 @@ Stamp::~Stamp()
 void Stamp::Init()
 {
 	rigid_body_->Init(weak_from_this());
+	rigid_body_->SetTag("stamp");
 	Physics::GetInstance().AddBody(rigid_body_);
 	rigid_body_->NotActive();
 }

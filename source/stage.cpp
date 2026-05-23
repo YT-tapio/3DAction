@@ -1,4 +1,6 @@
 #include<iostream>
+#include<memory>
+#include<string>
 #include"DxLib.h"
 #include"stage.h"
 #include"rigid_body.h"
@@ -32,6 +34,7 @@ Stage::~Stage()
 void Stage::Init()
 {
 	rigid_body_->Init(weak_from_this());
+	rigid_body_->SetTag("stage");
 	// RigidBodyの登録
 	Physics::GetInstance().AddBody(rigid_body_);
 	ObjectSetter::GetInstance().AddResource(handle_, &pos_, &rot_, &scale_);
@@ -72,6 +75,9 @@ void Stage::LoadFile()
 	// データの読み込みの開始
 
 
+}
 
-
+std::shared_ptr<RigidBody> Stage::GetRigidBody()
+{
+	return rigid_body_;
 }

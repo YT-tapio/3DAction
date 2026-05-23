@@ -1,5 +1,6 @@
 #include<iostream>
 #include<memory>
+#include<string>
 #include"DxLib.h"
 #include"physics_interface.h"
 #include"rigid_body.h"

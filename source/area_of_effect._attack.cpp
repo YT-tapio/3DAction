@@ -45,6 +45,7 @@ void AreaOfEffectAttack::Init()
 {
 	// rigid_body‚Ì“o˜^
 	rigid_body_->Init(weak_from_this());
+	//rigid_body_->SetTag()
 	Physics::GetInstance().AddBody(rigid_body_);
 	rigid_body_->NotActive();
 	state_ = AreaOfEffectAttackState::kCharge();

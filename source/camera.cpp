@@ -1,3 +1,5 @@
+#include<memory>
+#include<string>
 #include"DxLib.h"
 #include"EffekseerForDXLib.h"
 #include"camera.h"
@@ -120,4 +122,9 @@ VECTOR* Camera::GetPos()
 VECTOR* Camera::GetTargetPos()
 {
 	return &target_pos_;
+}
+
+std::shared_ptr<RigidBody> Camera::GetRigidBody()
+{
+	return rigid_body_;
 }

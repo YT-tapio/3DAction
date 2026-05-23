@@ -34,6 +34,7 @@ DoublePunch::~DoublePunch()
 void DoublePunch::Init()
 {
 	rigid_body_->Init(weak_from_this());
+	rigid_body_->SetTag("double_punch");
 	rigid_body_->NotActive();
 
 	Physics::GetInstance().AddBody(rigid_body_);

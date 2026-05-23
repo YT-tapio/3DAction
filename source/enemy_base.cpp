@@ -67,6 +67,7 @@ void EnemyBase::Init()
 	
 
 	rigid_body_->Init(weak_from_this());
+	rigid_body_->SetTag("enemy");
 	// physics‚Ì“o˜^
 	Physics::GetInstance().AddBody(rigid_body_);
 	// setter‚Ö‚Ì“o˜^
@@ -228,13 +229,12 @@ void EnemyBase::Debug()
 
 void EnemyBase::OnHit(std::shared_ptr<IPhysicsEventReceiver> obj)
 {
-	auto punch = std::dynamic_pointer_cast<Punch>(obj);
-	if (punch != nullptr)
+	auto target_tag = obj->GetRigidBody()->GetTag();
+	if (target_tag == "punch")
 	{
-		if (std::dynamic_pointer_cast<EnemyBase>(punch->GetOwner().lock()) == nullptr)
+		if (!obj->GetRigidBody()->CheckSameOwner(shared_from_this()))
 		{
 			animator_->PlayRequest("on_damage");
-			//printfDx("‚¢‚Ä\n");
 		}
 	}
 

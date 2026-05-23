@@ -1,4 +1,5 @@
 #include<iostream>
+#include<memory>
 #include<map>
 #include<vector>
 #include<fstream>
@@ -20,7 +21,6 @@
 #include"combo.h"
 #include"combo_skill.h"
 #include"rigid_body.h"
-#include"sphere.h"
 
 SkillLoader::SkillLoader()
 {

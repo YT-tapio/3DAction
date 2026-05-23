@@ -1,3 +1,4 @@
+#include<string>
 #include<memory>
 #include"DxLib.h"
 #include"punch.h"
@@ -29,6 +30,7 @@ Punch::~Punch()
 void Punch::Init()
 {
 	rigid_body_->Init(weak_from_this());
+	rigid_body_->SetTag("punch");
 	Physics::GetInstance().AddBody(rigid_body_);
 	rigid_body_->NotActive();
 }

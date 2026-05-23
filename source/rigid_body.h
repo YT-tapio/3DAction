@@ -20,6 +20,8 @@ public:
 
 	void SetTargetVelocity(const VECTOR& vel);
 
+	void SetTag(std::string tag);
+
 	/// <summary>
 	/// アクティブ状態(存在している状態)
 	/// </summary>
@@ -85,6 +87,14 @@ public:
 	/// <returns></returns>
 	const bool IsObject() const;
 
+	const bool CheckSameOwner(std::shared_ptr<IPhysicsEventReceiver> other_object) const;
+
+	/// <summary>
+	/// タグを返す
+	/// </summary>
+	/// <returns></returns>
+	const std::string GetTag() const;
+
 	std::shared_ptr<ColliderBase> GetCollider();
 
 	std::shared_ptr<IPhysicsEventReceiver> GetIPhysicsObject();
@@ -113,6 +123,8 @@ private:
 
 	float fall_speed_;
 
+	std::string tag_;		// タグ
+	bool tag_first_change_;	// タグの最初のチェンジ
 	std::shared_ptr<ColliderBase>	coll_;				// 自分の当たり判定
 	std::weak_ptr<IPhysicsEventReceiver>				object_;	// インターフェースを継承したオブジェクト
 

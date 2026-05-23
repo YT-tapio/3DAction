@@ -1,4 +1,5 @@
 #include<memory>
+#include<string>
 #include"attack_base.h"
 #include"object_base.h"
 #include"physics.h"
@@ -45,4 +46,9 @@ void AttackBase::Debug()
 void AttackBase::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 
+}
+
+std::shared_ptr<RigidBody> AttackBase::GetRigidBody()
+{
+	return rigid_body_;
 }
