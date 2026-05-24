@@ -854,6 +854,9 @@
     <ClInclude Include="source\object_behavior.h">
       <Filter>ソース ファイル\behavior\object</Filter>
     </ClInclude>
+    <ClInclude Include="source\status.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\json\player_data.json">

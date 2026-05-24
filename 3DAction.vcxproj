@@ -361,6 +361,7 @@
     <ClInclude Include="source\avoid.h" />
     <ClInclude Include="source\skill_name.h" />
     <ClInclude Include="source\animation_charge.h" />
+    <ClInclude Include="source\status.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\json\player_data.json" />
