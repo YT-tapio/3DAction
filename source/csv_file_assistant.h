@@ -1,7 +1,6 @@
 #pragma once
 #include"vector_assistant.h"
 
-
 namespace CSVFileAssistant
 {
 

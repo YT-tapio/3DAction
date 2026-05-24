@@ -211,6 +211,9 @@
     <Filter Include="ソース ファイル\behavior\object">
       <UniqueIdentifier>{9e96f28d-2839-4d19-a54c-40c26c716fc8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\status">
+      <UniqueIdentifier>{9a4c7b2b-8bae-4073-bdb1-ec8aa127a486}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -497,6 +500,9 @@
     </ClCompile>
     <ClCompile Include="source\object_behavior.cpp">
       <Filter>ソース ファイル\behavior\object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\status_container.cpp">
+      <Filter>ソース ファイル\status</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -855,7 +861,10 @@
       <Filter>ソース ファイル\behavior\object</Filter>
     </ClInclude>
     <ClInclude Include="source\status.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\status</Filter>
+    </ClInclude>
+    <ClInclude Include="source\status_container.h">
+      <Filter>ソース ファイル\status</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
