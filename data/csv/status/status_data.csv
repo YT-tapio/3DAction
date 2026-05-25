@@ -1,0 +1,6 @@
+﻿name,hp,physical_atk,physical_def,magic_atk,magic_def,stamina
+attacker,10,2,0,0,0,0
+healer,5,0,0,0,0,0
+defender,15,0,0,0,0,0
+attacker2,8,0,0,0,0,0
+zako,10,0,0,0,0,0
