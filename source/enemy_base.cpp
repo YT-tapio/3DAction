@@ -213,6 +213,11 @@ void EnemyBase::Draw()
 
 void EnemyBase::Debug()
 {
+	if (FALSE) { return; }
+
+	status_container_->Debug();
+
+	if (TRUE) { return; }
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "----------enemy-----------", Color::kWhite);
 	Debug::GetInstance().Add();
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "pos", Color::kWhite);

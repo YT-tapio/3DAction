@@ -204,6 +204,9 @@ void Player::Debug()
 	if (FALSE) { return; }
 	if (skill_ != nullptr) { skill_->Debug(); }
 	if (second_skill_ != nullptr) { second_skill_->Debug(); }
+	
+	status_container_->Debug();
+	if (TRUE) { return; }
 	//my_area_->Debug();
 	rigid_body_->Debug();
 	

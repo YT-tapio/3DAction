@@ -8,8 +8,11 @@
 #include"variable_timer.h"
 #include"buff_type.h"
 #include"attack_type.h"
-
+#include"debug.h"
+#include"color.h"
 StatusContainer::StatusContainer(const std::string owner_name)
+	: base_status_{}
+	, current_status_{}
 {
 	LoadFile(owner_name);
 	Init();
@@ -33,6 +36,51 @@ void StatusContainer::Update()
 
 void StatusContainer::Debug()
 {
+	// 
+	DrawString(0, Debug::GetInstance().GetNowLineSize(), "-----current_status-----", Color::kWhite);
+	Debug::GetInstance().Add();
+	
+	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "HP：%.2f",current_status_.hp);
+	Debug::GetInstance().Add();
+
+	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "PhysicalATK：%.2f",current_status_.physical_atk);
+	Debug::GetInstance().Add();
+
+	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "PhysicalDEF：%.2f", current_status_.physical_def);
+	Debug::GetInstance().Add();
+
+	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "MagicATK：%.2f", current_status_.magic_atk);
+	Debug::GetInstance().Add();
+
+	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "MagicDEF：%.2f", current_status_.magic_def);
+	Debug::GetInstance().Add();
+
+	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "Stamina：%.2f", current_status_.stamina);
+	Debug::GetInstance().Add();
+	
+	/*
+	DrawString(0, Debug::GetInstance().GetNowLineSize(), "-----base_status-----", Color::kWhite);
+	Debug::GetInstance().Add();
+	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "HP：%.2f", base_status_.hp);
+	Debug::GetInstance().Add();
+
+	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "PhysicalATK：%.2f", base_status_.physical_atk);
+	Debug::GetInstance().Add();
+
+	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "PhysicalDEF：%.2f", base_status_.physical_def);
+	Debug::GetInstance().Add();
+
+	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "MagicATK：%.2f", base_status_.magic_atk);
+	Debug::GetInstance().Add();
+
+	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "MagicDEF：%.2f", base_status_.magic_def);
+	Debug::GetInstance().Add();
+
+	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "Stamina：%.2f", base_status_.stamina);
+	Debug::GetInstance().Add();
+	*/
+	
+
 
 }
 
@@ -44,11 +92,11 @@ void StatusContainer::TakeDamage(float atk,AttackType type)
 	switch (type)
 	{
 	case AttackType::kPhysical:
-		damage = current_status_.physical_def - atk;
+		damage = atk - current_status_.physical_def;
 		break;
 
 	case AttackType::kMagic:
-		damage = current_status_.magic_def - atk;
+		damage = atk - current_status_.magic_def;
 		break;
 	}
 
@@ -91,7 +139,7 @@ void StatusContainer::LoadFile(const std::string owner_name)
 		std::stringstream ss(line);
 		std::string data;			// csvからの文字列をもらう
 
-		if (owner_name == CSVFileAssistant::GetStringOfCSVFile(ss, data)) { continue; }
+		if (owner_name != CSVFileAssistant::GetStringOfCSVFile(ss, data)) { continue; }
 
 		// データを用意
 		Status base_data = {};
@@ -113,5 +161,8 @@ void StatusContainer::LoadFile(const std::string owner_name)
 	{
 		printfDx("そのようなゲーム内キャラクターはいません\n");
 	}
+
+	// ファイルを閉じる
+
 }
 
