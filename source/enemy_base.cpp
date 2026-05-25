@@ -37,6 +37,9 @@
 #include"action_node.h"
 #include"player_group.h"
 #include"effect_id.h"
+#include"attack_type.h"
+#include"status.h"
+#include"status_container.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos)
 	: CharacterBase("enemy")
@@ -55,6 +58,7 @@ EnemyBase::EnemyBase(const VECTOR& pos)
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(5.5f, 18.f, VectorAssistant::VGetZero()), 
 		&pos_, TRUE, FALSE, 0.03f,0.1f);
 	fall_speed_ = 0.f;
+	status_container_ = std::make_shared<StatusContainer>("zako");
 }
 
 EnemyBase::~EnemyBase()
@@ -173,6 +177,7 @@ void EnemyBase::Init()
 	
 	animator_ = std::make_shared<AnimatorEnemy>(handle_, std::dynamic_pointer_cast<EnemyBase>(mine),"enemy");
 	animator_->Init();
+	status_container_->Init();
 	// test_behavior_->Init();
 	behavior_tree_->Init();
 	dir_ = VectorAssistant::VGetDirFromRotY(rot_);
@@ -250,9 +255,19 @@ void EnemyBase::UnGround()
 	is_ground_ = FALSE;
 }
 
+void EnemyBase::OnDamageFromPlayer(float damage,AttackType type)
+{
+	status_container_->TakeDamage(damage,type);
+}
+
 const bool EnemyBase::GetOnGround() const
 {
 	return rigid_body_->GetOnGround();
+}
+
+std::shared_ptr<StatusContainer> EnemyBase::GetStatusContainer()
+{
+	return status_container_;
 }
 
 std::shared_ptr<RigidBody> EnemyBase::GetRigidBody()

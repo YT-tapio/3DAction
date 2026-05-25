@@ -16,7 +16,7 @@
 #include"status.h"
 #include"status_container.h"
 #include"status_holder_interface.h"
-
+#include"attack_type.h"
 
 Punch::Punch(std::weak_ptr<ObjectBase> owner, VECTOR* pos,
 	std::string my_anim_name, float min_coll_ratio, float max_coll_ratio, std::shared_ptr<RigidBody> body)
@@ -90,7 +90,7 @@ void Punch::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 		// objectがプレイヤーからダメージを受けるインターフェースを継承しているかをチェック
 		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
 		{
-			takable_player->OnDamageFromPlayer(1);
+			takable_player->OnDamageFromPlayer(1,AttackType::kPhysical);
 		}
 		return;
 	}
@@ -101,7 +101,7 @@ void Punch::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 		// objectがプレイヤーからダメージを受けるインターフェースを継承しているかをチェック
 		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
 		{
-			takable_enemy->OnDamageFromEnemy(1);
+			takable_enemy->OnDamageFromEnemy(1,AttackType::kPhysical);
 		}
 		return;
 	}

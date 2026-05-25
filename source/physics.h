@@ -58,7 +58,11 @@ private:
 
 	void Gravity();
 
+	void Collision();
+
 	void CheckGround();	
+
+private:
 
 	//0.18
 	const float kResistanceNum			= 0.18f;	// ’ïR‚Ì‹­‚³

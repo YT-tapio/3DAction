@@ -56,41 +56,7 @@ void Physics::Update()
 	// 摩擦の適応
 	Resistance();
 
-	
-
-	//printfDx("-----------------\n");
-
-	for (auto& main_body : rigid_bodies_)
-	{
-		if (!main_body->GetIsActive()) { continue; }
-		for (auto& target_body : rigid_bodies_)
-		{
-			if (!target_body->GetIsActive()) { continue; }
-			if (main_body == target_body) { continue; }
-			contact.polys.clear();
-			// コライダーにhitの確認を行う
-			auto my_coll		= main_body->GetCollider();
-			auto target_coll	= target_body->GetCollider();
-			if (my_coll->CheckCollision(main_body->GetPosition(),main_body->GetVelocity(), target_body->GetPosition(),target_body->GetVelocity(),target_coll, contact))
-			{
-				
-				main_body->OnHit(target_body->GetIPhysicsObject());
-				target_body->OnHit(main_body->GetIPhysicsObject());
-
-				if (main_body->GetIsKinematic()) { continue; }
-				if (!target_body->IsObject()) { continue;}
-				// 押し戻し
-				VECTOR offset_vel = my_coll->FixPos(main_body->GetPosition(), main_body->GetVelocity(), target_body->GetPosition(), target_coll, contact);
-				main_body->Update(offset_vel);
-			}
-			else
-			{
-				main_body->UnHit(target_body->GetIPhysicsObject());
-				target_body->UnHit(main_body->GetIPhysicsObject());
-			}
-		}
-		main_body->SetPos();
-	}
+	Collision();
 
 	//着地判定
 	CheckGround();
@@ -430,6 +396,47 @@ void Physics::Gravity()
 	{
 		main_body->AddForce();
 	}
+}
+
+void Physics::Collision()
+{
+	for (auto& main_body : rigid_bodies_)
+	{
+		if (!main_body->GetIsActive()) { continue; }
+		for (auto& target_body : rigid_bodies_)
+		{
+			if (!target_body->GetIsActive()) { continue; }
+			if (main_body == target_body) { continue; }
+			contact.polys.clear();
+			// コライダーにhitの確認を行う
+			auto my_coll = main_body->GetCollider();
+			auto target_coll = target_body->GetCollider();
+			if (my_coll->CheckCollision(main_body->GetPosition(), main_body->GetVelocity(), target_body->GetPosition(), target_body->GetVelocity(), target_coll, contact))
+			{
+				// ここで1フレーム前衝突しているかの確認をします
+				// それによってenterもしくはstayを呼ぶ
+
+
+				main_body->OnHit(target_body->GetIPhysicsObject());
+				target_body->OnHit(main_body->GetIPhysicsObject());
+
+				if (main_body->GetIsKinematic()) { continue; }
+				if (!target_body->IsObject()) { continue; }
+				// 押し戻し
+				VECTOR offset_vel = my_coll->FixPos(main_body->GetPosition(), main_body->GetVelocity(), target_body->GetPosition(), target_coll, contact);
+				main_body->Update(offset_vel);
+			}
+			else
+			{
+				// ここで1フレーム前当たっているかを調べる
+
+				main_body->UnHit(target_body->GetIPhysicsObject());
+				target_body->UnHit(main_body->GetIPhysicsObject());
+			}
+		}
+		main_body->SetPos();
+	}
+
 }
 
 void Physics::CheckGround()

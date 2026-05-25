@@ -70,6 +70,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	UpdateBone();
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), 
 		&pos_, TRUE, FALSE, 0.03f, 0.1f);
+	status_container_ = std::make_shared<StatusContainer>(name_);
 	fall_speed_ = 0.f;
 	is_move_ = FALSE;
 	is_dash_ = FALSE;
@@ -409,21 +410,21 @@ void Player::Gravity()
 
 void Player::UpdateBone()
 {
-	int right_hand_bone_num = 0;
-	int left_hand_bone_num = 0;
+	int right_hand_bone_num				= 0;
+	int left_hand_bone_num				= 0;
 	const TCHAR* right_hand_bone_path	= "mixamorig:RightHand";
-	const TCHAR* left_hand_bone_path		= "mixamorig:LeftHand";
+	const TCHAR* left_hand_bone_path	= "mixamorig:LeftHand";
 	//bone‚Ìid‚ğæ“¾
-	right_hand_bone_num	= MV1SearchFrame(handle_, right_hand_bone_path);
+	right_hand_bone_num		= MV1SearchFrame(handle_, right_hand_bone_path);
 	left_hand_bone_num		= MV1SearchFrame(handle_, left_hand_bone_path);
 	//matrix‚ğæ“¾
-	MATRIX right_hand_mat = MV1GetFrameLocalWorldMatrix(handle_, right_hand_bone_num);
-	MATRIX left_hand_mat = MV1GetFrameLocalWorldMatrix(handle_, left_hand_bone_num);
+	const MATRIX right_hand_mat	= MV1GetFrameLocalWorldMatrix(handle_, right_hand_bone_num);
+	const MATRIX left_hand_mat	= MV1GetFrameLocalWorldMatrix(handle_, left_hand_bone_num);
 	//pos‚ğæ“¾
-	VECTOR right_hand_pos = VectorAssistant::VGetPositionFromMatrix(right_hand_mat);
-	VECTOR left_hand_pos = VectorAssistant::VGetPositionFromMatrix(left_hand_mat);
-	right_hand_pos_ = right_hand_pos;
-	left_hand_pos_ = left_hand_pos;
+	const VECTOR right_hand_pos	= VectorAssistant::VGetPositionFromMatrix(right_hand_mat);
+	const VECTOR left_hand_pos	= VectorAssistant::VGetPositionFromMatrix(left_hand_mat);
+	right_hand_pos_				= right_hand_pos;
+	left_hand_pos_				= left_hand_pos;
 }
 
 void Player::DecideAttackTarget()
@@ -431,10 +432,7 @@ void Player::DecideAttackTarget()
 	// UŒ‚‘ÎÛ‚ª”ÍˆÍ“à‚É‚¢‚È‚¢‚È‚ç‚â‚ß‚é
 	attack_target_pos_ = VectorAssistant::VGetZero();
 	is_attack_target_in_range_ = FALSE;
-	if (my_area_->GetMyAreaObject().size() == 0)
-	{
-		return;
-	}
+	if (my_area_->GetMyAreaObject().size() == 0) { return; }
 	
 	// enemy‚Ì’†‚©‚ç‹ß‚¢“G‚ğUŒ‚‘ÎÛ‚É“®‚­
 	int enemy_num = 0;
@@ -442,14 +440,14 @@ void Player::DecideAttackTarget()
 
 	for (const auto my_area_objects : my_area_->GetMyAreaObject())
 	{
-		std::shared_ptr<EnemyBase> enemy = std::dynamic_pointer_cast<EnemyBase>(my_area_objects.lock());
+		const auto enemy = std::dynamic_pointer_cast<EnemyBase>(my_area_objects.lock());
 		if (enemy != nullptr)
 		{
 			enemy_num++;
-			is_attack_target_in_range_ = TRUE;
-			VECTOR enemy_pos = enemy->GetPosition();
-			float dist_size = VSize(VSub(enemy_pos, pos_));
-			dist_pos_mp[dist_size] = enemy_pos;
+			is_attack_target_in_range_	= TRUE;
+			const VECTOR	enemy_pos	= enemy->GetPosition();
+			const float		dist_size	= VSize(VSub(enemy_pos, pos_));
+			dist_pos_mp[dist_size]		= enemy_pos;
 		}
 	}
 	if (enemy_num == 0) { return; }
@@ -518,9 +516,9 @@ void Player::OnHealFromPlayer(float heal)
 	// printfDx("ƒq[ƒ‹\n");
 }
 
-void Player::OnDamageFromEnemy(float damage)
+void Player::OnDamageFromEnemy(float damage,AttackType type)
 {
-	status_container_->TakeDamage(damage,AttackType::kPhysical);
+	status_container_->TakeDamage(damage,type);
 	printfDx("ƒ_ƒ[ƒW‚ğó‚¯‚¿‚á‚Á‚Ä‚Ü‚·\n");
 }
 

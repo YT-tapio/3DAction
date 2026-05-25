@@ -6,6 +6,7 @@
 #include"input_change_interface.h"
 #include"status_holder_interface.h"
 
+enum class AttackType;
 class RigidBody;
 class InputBase;
 class CheckMyArea;
@@ -53,7 +54,7 @@ public:
 
 	void OnHealFromPlayer(float heal) override;
 
-	void OnDamageFromEnemy(float damage) override;
+	void OnDamageFromEnemy(float damage,AttackType type) override;
 
 	void InputChange(std::shared_ptr<InputBase> input) override;
 
