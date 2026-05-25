@@ -504,6 +504,9 @@
     <ClCompile Include="source\status_container.cpp">
       <Filter>ソース ファイル\status</Filter>
     </ClCompile>
+    <ClCompile Include="source\variable_timer.cpp">
+      <Filter>ソース ファイル\timer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -865,6 +868,9 @@
     </ClInclude>
     <ClInclude Include="source\status_container.h">
       <Filter>ソース ファイル\status</Filter>
+    </ClInclude>
+    <ClInclude Include="source\variavle_timer.h">
+      <Filter>ソース ファイル\timer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

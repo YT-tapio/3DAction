@@ -23,7 +23,10 @@ private:
 	void LoadFile(const std::string owner_name);
 
 	Status base_status_;		// ‰Šúó‘Ô
-	Status current_status_;	// Œ»İ‚Ìó‘Ô
+	Status current_status_;		// Œ»İ‚Ìó‘Ô
+
+	// ƒoƒtŠÖ˜A
+
 
 
 };
