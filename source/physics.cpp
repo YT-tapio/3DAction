@@ -429,6 +429,8 @@ void Physics::Collision()
 			else
 			{
 				// ここで1フレーム前当たっているかを調べる
+				// もし当たっていたならexitの処理を呼び出す
+				// 要素の削除も行う
 
 				main_body->UnHit(target_body->GetIPhysicsObject());
 				target_body->UnHit(main_body->GetIPhysicsObject());

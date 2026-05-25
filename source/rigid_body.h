@@ -112,6 +112,7 @@ private:
 	VECTOR before_vel_;		// 1つ前の移動量を保存
 	VECTOR target_vel_;
 
+
 	bool use_gravity_;		// 重力
 	bool is_kinematic_;		// 摩擦や重力による変更を受けない(TRUE : 受けない,FALSE ： 受ける)
 	bool on_ground_;		// 着地判定
