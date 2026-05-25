@@ -12,6 +12,11 @@
 #include"player.h"
 #include"animator_base.h"
 #include"behavior_status.h"
+#include"takable_damage_player_interface.h"
+#include"status.h"
+#include"status_container.h"
+#include"status_holder_interface.h"
+
 
 Punch::Punch(std::weak_ptr<ObjectBase> owner, VECTOR* pos,
 	std::string my_anim_name, float min_coll_ratio, float max_coll_ratio, std::shared_ptr<RigidBody> body)
@@ -71,15 +76,33 @@ void Punch::Debug()
 
 void Punch::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 {
-	auto owner = owner_.lock();
+	auto owner = std::dynamic_pointer_cast<IPhysicsEventReceiver>(owner_.lock());
+	if (owner == nullptr) { return; }
+	auto owner_tag = owner->GetRigidBody()->GetTag();
+	auto object_tag = object->GetRigidBody()->GetTag();
+	// タグが同じだと早期リターン
+	if (owner_tag == object_tag) { return; }
 
-	auto player_from_owner = std::dynamic_pointer_cast<Player>(owner);
-	auto enemy_from_owner = std::dynamic_pointer_cast<EnemyBase>(owner);
-	auto player = std::dynamic_pointer_cast<Player>(object);
-	auto enemy = std::dynamic_pointer_cast<EnemyBase>(object);
-	if (player == player_from_owner) { return; }
+	// タグが違う場合は相手にダメージを加える
+	// ownerがpalyerだったら
+	if (owner_tag == "player")
+	{
+		// objectがプレイヤーからダメージを受けるインターフェースを継承しているかをチェック
+		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
+		{
+			takable_player->OnDamageFromPlayer(1);
+		}
+		return;
+	}
 
-	//if (enemy != nullptr) { printfDx("enemyがいるぞおい"); return; }
-	// if (player != nullptr) { printfDx("playerがいるぞ\n"); return; }
-
+	// ownerがenemyだったら
+	if (owner_tag == "enemy")
+	{
+		// objectがプレイヤーからダメージを受けるインターフェースを継承しているかをチェック
+		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
+		{
+			takable_enemy->OnDamageFromEnemy(1);
+		}
+		return;
+	}
 }

@@ -165,6 +165,7 @@
     <ClCompile Include="source\behavior_tree.cpp" />
     <ClCompile Include="source\branch_node.cpp" />
     <ClCompile Include="source\animation_charge.cpp" />
+    <ClCompile Include="source\buff_data.cpp" />
     <ClCompile Include="source\character_behavior.cpp" />
     <ClCompile Include="source\chase_player.cpp" />
     <ClCompile Include="source\check_my_area.cpp" />
@@ -199,7 +200,9 @@
     <ClCompile Include="source\skill_loader.cpp" />
     <ClCompile Include="source\sphere_camera.cpp" />
     <ClCompile Include="source\stamp.cpp" />
+    <ClCompile Include="source\status_buff_container.cpp" />
     <ClCompile Include="source\status_container.cpp" />
+    <ClCompile Include="source\status_holder_interface.cpp" />
     <ClCompile Include="source\tackle.cpp" />
     <ClCompile Include="source\takable_damage_enemy_interface.cpp" />
     <ClCompile Include="source\takable_damage_player_interface.cpp" />
@@ -257,9 +260,12 @@
     <ClInclude Include="source\area_of_effect_attack_state.h" />
     <ClInclude Include="source\attack_correction.h" />
     <ClInclude Include="source\attack_node.h" />
+    <ClInclude Include="source\attack_type.h" />
     <ClInclude Include="source\avoid_skill.h" />
     <ClInclude Include="source\behavior_tree.h" />
     <ClInclude Include="source\branch_node.h" />
+    <ClInclude Include="source\buff_data.h" />
+    <ClInclude Include="source\buff_type.h" />
     <ClInclude Include="source\character_behavior.h" />
     <ClInclude Include="source\chase_player.h" />
     <ClInclude Include="source\composite_node.h" />
@@ -306,7 +312,9 @@
     <ClInclude Include="source\skill_loader.h" />
     <ClInclude Include="source\sphere_camera.h" />
     <ClInclude Include="source\stamp.h" />
+    <ClInclude Include="source\status_buff_container.h" />
     <ClInclude Include="source\status_container.h" />
+    <ClInclude Include="source\status_holder_interface.h" />
     <ClInclude Include="source\tackle.h" />
     <ClInclude Include="source\takable_damage_enemy_interface.h" />
     <ClInclude Include="source\takable_damage_player_interface.h" />
@@ -314,7 +322,7 @@
     <ClInclude Include="source\takable_heal_player_interface.h" />
     <ClInclude Include="source\tracking_camera.h" />
     <ClInclude Include="source\transform.h" />
-    <ClInclude Include="source\variavle_timer.h" />
+    <ClInclude Include="source\variable_timer.h" />
     <ClInclude Include="source\virtual_camera_base.h" />
     <ClInclude Include="source\camera.h" />
     <ClInclude Include="source\capsule.h" />

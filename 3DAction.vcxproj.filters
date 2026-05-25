@@ -214,6 +214,9 @@
     <Filter Include="ソース ファイル\status">
       <UniqueIdentifier>{9a4c7b2b-8bae-4073-bdb1-ec8aa127a486}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\interface\status_holder">
+      <UniqueIdentifier>{fe9b4269-fe35-476a-bce8-7c8742a85717}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -506,6 +509,15 @@
     </ClCompile>
     <ClCompile Include="source\variable_timer.cpp">
       <Filter>ソース ファイル\timer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\status_buff_container.cpp">
+      <Filter>ソース ファイル\status</Filter>
+    </ClCompile>
+    <ClCompile Include="source\buff_data.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="source\status_holder_interface.cpp">
+      <Filter>ソース ファイル\interface\status_holder</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -869,8 +881,23 @@
     <ClInclude Include="source\status_container.h">
       <Filter>ソース ファイル\status</Filter>
     </ClInclude>
-    <ClInclude Include="source\variavle_timer.h">
+    <ClInclude Include="source\variable_timer.h">
       <Filter>ソース ファイル\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\status_buff_container.h">
+      <Filter>ソース ファイル\status</Filter>
+    </ClInclude>
+    <ClInclude Include="source\buff_data.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\buff_type.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\attack_type.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\status_holder_interface.h">
+      <Filter>ソース ファイル\interface\status_holder</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,7 @@
 #include"takable_heal_player_interface.h"
 #include"takable_damage_enemy_interface.h"
 #include"input_change_interface.h"
+#include"status_holder_interface.h"
 
 class RigidBody;
 class InputBase;
@@ -11,9 +12,10 @@ class CheckMyArea;
 class SkillBase;
 class ObjectBase;
 class BehaviorBase;
+class StatusContainer;
 
 class Player : public CharacterBase , public IPhysicsEventReceiver
-	,public ITakableHealPlayer,public ITakableDamageEnemy,public IInputChange
+	,public ITakableHealPlayer,public ITakableDamageEnemy,public IInputChange,public IStatusHolder
 {
 public:
 
@@ -67,6 +69,8 @@ public:
 
 	std::shared_ptr<RigidBody> GetRigidBody() override;
 
+	std::shared_ptr<StatusContainer> GetStatusContainer() override;
+
 	const std::shared_ptr<const InputBase> GetInput() const;
 
 	const float GetDetectionRadius() const;
@@ -85,7 +89,6 @@ public:
 
 private:
 	
-
 	std::shared_ptr<RigidBody> rigid_body_;
 	std::shared_ptr<const InputBase> input_;
 	std::shared_ptr<CheckMyArea> my_area_;
@@ -93,6 +96,8 @@ private:
 	std::shared_ptr<SkillBase> second_skill_;
 	std::shared_ptr<BehaviorBase> test_behavior_;
 	std::shared_ptr<SkillBase> avoid_;
+	std::shared_ptr<StatusContainer> status_container_;
+
 
 	VECTOR* camera_dir_;
 	VECTOR right_hand_pos_;

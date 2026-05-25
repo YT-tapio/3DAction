@@ -38,6 +38,10 @@
 #include"input_manager.h"
 #include"attack_base.h"
 #include"double_punch.h"
+#include"status.h"
+#include"status_container.h"
+#include"buff_type.h"
+#include"attack_type.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name)
 	: CharacterBase("player")
@@ -516,6 +520,7 @@ void Player::OnHealFromPlayer(float heal)
 
 void Player::OnDamageFromEnemy(float damage)
 {
+	status_container_->TakeDamage(damage,AttackType::kPhysical);
 	printfDx("ƒ_ƒ[ƒW‚ğó‚¯‚¿‚á‚Á‚Ä‚Ü‚·\n");
 }
 
@@ -552,6 +557,11 @@ VECTOR* Player::GetLeftHandPos()
 VECTOR* Player::GetPosPtr()
 {
 	return &pos_;
+}
+
+std::shared_ptr<StatusContainer> Player::GetStatusContainer()
+{
+	return status_container_;
 }
 
 const std::shared_ptr<const InputBase> Player::GetInput() const

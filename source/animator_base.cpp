@@ -43,8 +43,6 @@ void AnimatorBase::Update()
 		now_anim_name_ = before_anim_name_;
 	}
 
-	if (now_anim_name_ == "tackle") {
-		printfDx("タックルしている\n"); }
 	// animationのアタッチ
 	if (before_anim_name_ != now_anim_name_)
 	{

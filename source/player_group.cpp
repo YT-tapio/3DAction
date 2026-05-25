@@ -72,8 +72,6 @@ void PlayerGroup::Debug()
 	{
 		player->Debug();
 	}
-
-
 }
 
 VECTOR* PlayerGroup::GetCurrentPlayerHeadPos()

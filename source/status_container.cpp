@@ -4,6 +4,10 @@
 #include"status.h"
 #include"status_container.h"
 #include"csv_file_assistant.h"
+#include"condition_timer.h"
+#include"variable_timer.h"
+#include"buff_type.h"
+#include"attack_type.h"
 
 StatusContainer::StatusContainer(const std::string owner_name)
 {
@@ -23,12 +27,38 @@ void StatusContainer::Init()
 
 void StatusContainer::Update()
 {
-	//バフされる量をあらかじめ決めておく
+	// バフされる量をあらかじめ決めておく
+
 }
 
 void StatusContainer::Debug()
 {
-	
+
+}
+
+void StatusContainer::TakeDamage(float atk,AttackType type)
+{
+	// 攻撃力と防御力の計算を行う
+	float damage = 0.f;
+
+	switch (type)
+	{
+	case AttackType::kPhysical:
+		damage = current_status_.physical_def - atk;
+		break;
+
+	case AttackType::kMagic:
+		damage = current_status_.magic_def - atk;
+		break;
+	}
+
+	// 最低でも1ダメージは食らう
+	if (damage <= 0.f) { damage = 1.f; }
+
+	// TODO：受けたダメージの表示する
+
+	current_status_.hp -= damage;
+	if (current_status_.hp < 0.f) { current_status_.hp = 0.f; }
 }
 
 const Status StatusContainer::GetCurrentStatus() const

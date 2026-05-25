@@ -1,5 +1,8 @@
 #pragma once
 
+/// <summary>
+/// enemy‚©‚çƒ_ƒ[ƒW‚ğó‚¯‚é
+/// </summary>
 class ITakableDamageEnemy
 {
 public:

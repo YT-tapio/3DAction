@@ -222,8 +222,6 @@ void EnemyBase::Debug()
 	rigid_body_->Debug();
 	behavior_tree_->Debug();
 
-	
-
 	// test_behavior_->Debug();
 }
 
@@ -234,7 +232,7 @@ void EnemyBase::OnHit(std::shared_ptr<IPhysicsEventReceiver> obj)
 	{
 		if (!obj->GetRigidBody()->CheckSameOwner(shared_from_this()))
 		{
-			animator_->PlayRequest("on_damage");
+			// animator_->PlayRequest("on_damage");
 		}
 	}
 

@@ -45,11 +45,13 @@ public:
 	/// <returns>タイマーがマックスまで達しているか</returns>
 	const bool GetIsEnd() const;
 
-private:
+protected:
 
 	bool is_stop_;
 	bool is_end_;
 	float max_time_;
 	float time_;
+
+private:
 
 };

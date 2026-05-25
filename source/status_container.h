@@ -1,6 +1,8 @@
 #pragma once
 
-struct Status;
+enum class AttackType;
+class VariableTimer;
+class Status;
 
 class StatusContainer
 {
@@ -16,17 +18,19 @@ public:
 
 	void Debug();
 
+	void TakeDamage(float atk,AttackType type);
+
 	const Status GetCurrentStatus() const;
 
 private:
 
 	void LoadFile(const std::string owner_name);
 
+private:
+
 	Status base_status_;		// 初期状態
 	Status current_status_;		// 現在の状態
 
-	// バフ関連
-
-
+	// TODO：バフ系は後から
 
 };

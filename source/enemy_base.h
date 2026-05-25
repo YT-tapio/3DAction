@@ -1,13 +1,15 @@
 #pragma once
 #include"character_base.h"
 #include"physics_interface.h"
+#include"takable_damage_player_interface.h"
+#include"status_holder_interface.h"
 
 class RigidBody;
 class Punch;
 class BehaviorBase;
 class BehaviorTree;
 
-class EnemyBase : public CharacterBase, public IPhysicsEventReceiver
+class EnemyBase : public CharacterBase, public IPhysicsEventReceiver,public ITakableDamagePlayer,public IStatusHolder
 {
 public:
 
@@ -30,6 +32,8 @@ public:
 	virtual void OnGround(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
 	virtual void UnGround() override;
+
+	virtual void OnDamageFromPlayer(float damage) override;
 
 	virtual const bool GetOnGround() const;
 

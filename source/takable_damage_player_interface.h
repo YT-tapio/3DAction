@@ -1,10 +1,13 @@
 #pragma once
 
-class ITakableDamageEnemy
+/// <summary>
+/// player‚©‚çUŒ‚‚ğó‚¯‚é
+/// </summary>
+class ITakableDamagePlayer
 {
 public:
 
-	virtual ~ITakableDamageEnemy() = default;
+	virtual ~ITakableDamagePlayer() = default;
 	virtual void OnDamageFromPlayer(float damage);
 
 };

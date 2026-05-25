@@ -100,7 +100,11 @@ void DoublePunch::Debug()
 
 void DoublePunch::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 {
-	
+	auto owner = std::dynamic_pointer_cast<IPhysicsEventReceiver>(owner_.lock());
+	if (owner == nullptr) { return; }
+	auto owner_tag = owner->GetRigidBody()->GetTag();
+	auto object_tag = object->GetRigidBody()->GetTag();
+
 }
 
 const bool DoublePunch::CheckCollActive() const
