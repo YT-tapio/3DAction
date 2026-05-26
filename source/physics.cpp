@@ -1,6 +1,7 @@
 #include<iostream>
 #include<memory>
 #include<string>
+#include<unordered_map>
 #include"DxLib.h"
 #include"physics.h"
 #include"rigid_body.h"
@@ -18,7 +19,11 @@
 
 void Physics::AddBody(std::shared_ptr<RigidBody> body)
 {
-	rigid_bodies_.push_back(body);
+	// idのカウント
+	rigid_body_id_++;
+
+	// IDも一緒に振り分ける
+	id_rigid_bodies_mp_[rigid_body_id_] = body;
 }
 
 void Physics::Debug()
@@ -55,48 +60,10 @@ void Physics::Update()
 	GroundProj();
 	// 摩擦の適応
 	Resistance();
-
+	// 当たり判定と押し戻し
 	Collision();
-
 	//着地判定
 	CheckGround();
-}
-
-bool Physics::CheckHit(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> other)
-{
-	//当たっているかの判別を行います
-
-	// colliderの取得
-	auto me_coll			= me->GetCollider();
-	auto other_coll		= other->GetCollider();
-
-	auto me_name			= me_coll->GetName();
-
-	switch (me_name)
-	{
-	case ColliderName::kSphere:
-		return FALSE;
-		break;
-
-	case ColliderName::kCapsule:
-		return FALSE;
-		break;
-
-	case ColliderName::kAABB:
-		return FALSE;
-		break;
-
-	case ColliderName::kOBB:
-		return FALSE;
-		break;
-
-	case ColliderName::kMesh:
-		return FALSE;
-		break;
-	}
-
-
-	return FALSE;
 }
 
 bool Physics::CheckHitGroundProj(std::shared_ptr<RigidBody>other, Contact& contact, const VECTOR& segment_start_pos, const float& ground_proj_length)
@@ -229,9 +196,9 @@ bool Physics::CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidB
 void Physics::GroundProj()
 {
 	// 坂の投影を行います
-	for (auto& main_body : rigid_bodies_)
+	for (auto& id_main_body : id_rigid_bodies_mp_)
 	{
-		
+		auto main_body = id_main_body.second;
 		// アクティブ状態じゃない、ボーンによる影響しか受けない場合をのぞく
 		if (!main_body->GetIsActive()) { continue; }
 		if (VSize(main_body->GetVelocity()) == 0.f) { continue; }
@@ -247,8 +214,9 @@ void Physics::GroundProj()
 		VECTOR body_old_segment_end_pos = VAdd(body_old_pos, VGet(0.f, -kGroundProjLength, 0.f));	//移動前のposから真下にセグメントを伸ばす
 		bool is_hit_old = FALSE;
 
-		for (auto& target_body : rigid_bodies_)
+		for (auto& target_id_body : id_rigid_bodies_mp_)
 		{
+			auto target_body = target_id_body.second;
 			// 同じものは除外
 			if (target_body == main_body) { continue; }
 			// ここで昔のposが当たっているのかをcheckする
@@ -263,120 +231,13 @@ void Physics::GroundProj()
 	
 }
 
-void Physics::FixPos(std::shared_ptr<RigidBody>me, std::shared_ptr<RigidBody> other)
-{
-	// 自分のcolliderが何かを取得
-
-	auto my_collider		= me->GetCollider();
-	auto other_collider		= other->GetCollider();
-
-	switch (my_collider->GetName())
-	{
-	case ColliderName::kAABB:
-
-		#pragma region 自分がAABBの当たり判定
-
-		#pragma endregion
-		break;
-
-	case ColliderName::kOBB:
-
-		#pragma region 自分がOBBの当たり判定
-
-		#pragma endregion
-
-		break;
-
-	case ColliderName::kSphere:
-
-#pragma region 自分がSphereの当たり判定
-	{
-		auto sphere = std::dynamic_pointer_cast<Sphere>(my_collider);	// sphereに変換
-		SphereFixPos(sphere, other_collider);
-	}
-#pragma endregion
-		break;
-
-	case ColliderName::kCapsule:
-
-#pragma region 自分がCapsuleの当たり判定
-	{
-		auto capsule = std::dynamic_pointer_cast<Capsule>(my_collider);
-		CapsuleFixPos(capsule, other_collider);
-	}
-		#pragma endregion
-
-		break;
-
-	case ColliderName::kMesh:
-
-		#pragma region 自分がmeshの当たり判定
-
-		#pragma endregion
-
-		break;
-
-	default:
-		printfDx("範囲外が参照されています\n");
-		break;
-	}
-
-
-}
-
-void Physics::SphereFixPos(std::shared_ptr<Sphere> me, std::shared_ptr<ColliderBase> other)
-{
-
-}
-
-void Physics::CapsuleFixPos(std::shared_ptr<Capsule> me, std::shared_ptr<ColliderBase> other)
-{
-	// otherのキャストを行う
-
-	switch (other->GetName())
-	{
-	case ColliderName::kAABB:
-	{
-		auto other_coll = std::dynamic_pointer_cast<Mesh>(other);
-	}
-		break;
-
-	case ColliderName::kOBB:
-	{
-		auto other_coll = std::dynamic_pointer_cast<Mesh>(other);
-	}
-		break;
-
-	case ColliderName::kSphere:
-	{
-		auto other_coll = std::dynamic_pointer_cast<Mesh>(other);
-	}
-		break;
-
-	case ColliderName::kCapsule:
-	{
-		auto other_coll = std::dynamic_pointer_cast<Mesh>(other);
-	}
-		break;
-
-	case ColliderName::kMesh:
-	{
-		auto other_coll = std::dynamic_pointer_cast<Mesh>(other);
-	}
-		break;
-
-	default:
-		printfDx("範囲外が参照されています\n");
-		break;
-	}
-
-}
-
 void Physics::Resistance()
 {
 	// 摩擦等の抵抗の適応適応
-	for (auto& body : rigid_bodies_)
+	for (auto& id_rigid_body : id_rigid_bodies_mp_)
 	{
+		auto body = id_rigid_body.second;
+
 		// 適応を受けないもの
 		if (body->GetIsKinematic()) { continue; }
 
@@ -392,19 +253,22 @@ void Physics::Resistance()
 
 void Physics::Gravity()
 {
-	for (auto& main_body : rigid_bodies_)
+	for (auto& main_body : id_rigid_bodies_mp_)
 	{
-		main_body->AddForce();
+		main_body.second->AddForce();
 	}
 }
 
 void Physics::Collision()
 {
-	for (auto& main_body : rigid_bodies_)
+	for (auto& main_id_body : id_rigid_bodies_mp_)
 	{
+		auto main_body = main_id_body.second;
+
 		if (!main_body->GetIsActive()) { continue; }
-		for (auto& target_body : rigid_bodies_)
+		for (auto& target_id_body : id_rigid_bodies_mp_)
 		{
+			auto target_body = target_id_body.second;
 			if (!target_body->GetIsActive()) { continue; }
 			if (main_body == target_body) { continue; }
 			contact.polys.clear();
@@ -444,15 +308,17 @@ void Physics::Collision()
 void Physics::CheckGround()
 {
 	// 着地の判定
-	for (auto& main_body : rigid_bodies_)
+	for (auto& main_id_body : id_rigid_bodies_mp_)
 	{
+		auto main_body = main_id_body.second;
 		bool on_ground = FALSE;
 		if (!main_body->GetUseGravity()) { continue; }
 		
 		auto area = std::dynamic_pointer_cast<CheckMyArea>(main_body->GetIPhysicsObject());
 		if (area != nullptr) { continue; }
-		for (auto& target_body : rigid_bodies_)
+		for (auto& target_id_body : id_rigid_bodies_mp_)
 		{
+			auto target_body = target_id_body.second;
 			if (!target_body->GetIsActive()) { continue; }
 			if (main_body == target_body) { continue; }
 			if (!target_body->IsObject()) { continue; }
