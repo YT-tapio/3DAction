@@ -44,15 +44,44 @@ private:
 
 	bool CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidBody> other, Contact& contact, const float& ground_proj_length);
 
+	/// <summary>
+	/// 投影
+	/// </summary>
 	void GroundProj();
 
+	/// <summary>
+	/// 抵抗
+	/// </summary>
 	void Resistance();
 
+	/// <summary>
+	/// 重力
+	/// </summary>
 	void Gravity();
 
+	/// <summary>
+	/// 当たり判定
+	/// </summary>
 	void Collision();
 
+	/// <summary>
+	/// 地上なのか確認
+	/// </summary>
 	void CheckGround();	
+
+	/// <summary>
+	/// 自分がpairの中にいるかを確認
+	/// </summary>
+	/// <returns>中に自分がいるならTRUEを返す</returns>
+	bool CheckCollisionedIDPair(std::pair<int,int> id_pair);
+
+	/// <summary>
+	/// 二つのペアの要素が同じかを判断する
+	/// </summary>
+	/// <param name="my_pair"></param>
+	/// <param name="target_pair"></param>
+	/// <returns></returns>
+	bool IsSamePair(std::pair<int, int> my_pair, std::pair<int, int> target_pair);
 
 private:
 
@@ -63,6 +92,7 @@ private:
 	int rigid_body_id_ = 0;
 	Contact contact = {};
 
+	std::list<std::pair<int, int>> cllisioned_pairs_;
 
 	std::unordered_map<int,std::shared_ptr<RigidBody>> id_rigid_bodies_mp_;		//各オブジェクトに付随している当たり判定とid
 };

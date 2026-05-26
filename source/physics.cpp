@@ -279,6 +279,22 @@ void Physics::Collision()
 			{
 				// ここで1フレーム前衝突しているかの確認をします
 				// それによってenterもしくはstayを呼ぶ
+				/*
+				if (CheckCollisionedIDPair())
+				{
+					// stay
+					
+
+				}
+				else
+				{
+					// enter
+					// 要素の追加
+
+				}
+				*/
+				
+
 
 
 				main_body->OnHit(target_body->GetIPhysicsObject());
@@ -293,8 +309,16 @@ void Physics::Collision()
 			else
 			{
 				// ここで1フレーム前当たっているかを調べる
-				// もし当たっていたならexitの処理を呼び出す
-				// 要素の削除も行う
+				/*
+				if (CheckCollisionedIDPair())
+				{
+					// exitを呼び出す
+
+
+					// 要素の削除も行う
+
+				}
+				*/
 
 				main_body->UnHit(target_body->GetIPhysicsObject());
 				target_body->UnHit(main_body->GetIPhysicsObject());
@@ -343,4 +367,29 @@ void Physics::CheckGround()
 		}
 	}
 
+}
+
+//あればTRUEを返す
+bool Physics::CheckCollisionedIDPair(std::pair<int, int> id_pair)
+{
+	// collisioned_pairsの中に自分のpairがあるかを判断する
+	
+	if (cllisioned_pairs_.size() != 0) { return FALSE; }
+
+	// すでに衝突していれる
+	for (auto& pair : cllisioned_pairs_)
+	{
+		if (IsSamePair(pair, id_pair))
+		{
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+
+bool Physics::IsSamePair(std::pair<int,int>my_pair,std::pair<int,int> target_pair)
+{
+	if (my_pair.first == target_pair.first && my_pair.second == target_pair.second) { return TRUE; }	// 一緒かどうか
+	return FALSE;
 }
