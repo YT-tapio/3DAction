@@ -29,10 +29,20 @@ void Physics::AddBody(std::shared_ptr<RigidBody> body)
 void Physics::Debug()
 {
 	int i = 0;
+	/*
+	printfDx("%d\n", collisioned_pairs_id_.size());
+	*/
+	
+	for (const auto& pair : collisioned_pairs_id_)
+	{
+		DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), GetColor(255, 255, 255), "first - %d：second - %d", pair.first, pair.second);
+		Debug::GetInstance().Add();
+	}
+
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "---normal---", GetColor(255, 255, 255));
 	Debug::GetInstance().Add();
 	for (const auto& poly : contact.polys)
-	{ 
+	{
 		i++;
 		VECTOR center_pos = VectorAssistant::VDevide(VAdd(VAdd(poly.position[0], poly.position[1]), poly.position[2]), 3);
 		DrawTriangle3D(poly.position[0], poly.position[1], poly.position[2], GetColor(255, 0, 0), FALSE);
@@ -263,9 +273,26 @@ void Physics::Collision()
 {
 	for (auto& main_id_body : id_rigid_bodies_mp_)
 	{
+		auto main_id = main_id_body.first;
 		auto main_body = main_id_body.second;
-
-		if (!main_body->GetIsActive()) { continue; }
+		if (!main_body->GetIsActive()) 
+		{
+			// 自分がactiveではないときはpairからなくす
+			// 消去
+			for (auto it = collisioned_pairs_id_.begin(); it != collisioned_pairs_id_.end();)
+			{
+				// first,secondどちらかに要素があるなら消去
+				if(it->first == main_id || it->second == main_id)
+				{
+					it = collisioned_pairs_id_.erase(it);
+				}
+				else
+				{
+					++it;
+				}
+			}
+			continue;
+		}
 		for (auto& target_id_body : id_rigid_bodies_mp_)
 		{
 			auto target_body = target_id_body.second;
@@ -275,30 +302,41 @@ void Physics::Collision()
 			// コライダーにhitの確認を行う
 			auto my_coll = main_body->GetCollider();
 			auto target_coll = target_body->GetCollider();
+
+			// idが低い方を先にする
+			
+			auto target_id = target_id_body.first;
+			std::pair<int, int> pair;
+
+			if (main_id < target_id)
+			{
+				pair = { main_id, target_id };
+			}
+			else
+			{
+				pair = { target_id,main_id };
+			}
+
 			if (my_coll->CheckCollision(main_body->GetPosition(), main_body->GetVelocity(), target_body->GetPosition(), target_body->GetVelocity(), target_coll, contact))
 			{
 				// ここで1フレーム前衝突しているかの確認をします
 				// それによってenterもしくはstayを呼ぶ
-				/*
-				if (CheckCollisionedIDPair())
+
+				if (CheckCollisionedIDPair(pair))
 				{
 					// stay
-					
-
+					main_body->OnCollisionStay(target_body->GetIPhysicsObject());
+					target_body->OnCollisionStay(main_body->GetIPhysicsObject());
 				}
 				else
 				{
 					// enter
 					// 要素の追加
-
+					collisioned_pairs_id_.emplace_back(pair);
+					// stay
+					main_body->OnCollisionEnter(target_body->GetIPhysicsObject());
+					target_body->OnCollisionEnter(main_body->GetIPhysicsObject());
 				}
-				*/
-				
-
-
-
-				main_body->OnHit(target_body->GetIPhysicsObject());
-				target_body->OnHit(main_body->GetIPhysicsObject());
 
 				if (main_body->GetIsKinematic()) { continue; }
 				if (!target_body->IsObject()) { continue; }
@@ -309,19 +347,16 @@ void Physics::Collision()
 			else
 			{
 				// ここで1フレーム前当たっているかを調べる
-				/*
-				if (CheckCollisionedIDPair())
+				
+				if (CheckCollisionedIDPair(pair))
 				{
 					// exitを呼び出す
-
+					main_body->OnCollisionExit(target_body->GetIPhysicsObject());
+					target_body->OnCollisionExit(main_body->GetIPhysicsObject());
 
 					// 要素の削除も行う
-
+					collisioned_pairs_id_.remove(pair);
 				}
-				*/
-
-				main_body->UnHit(target_body->GetIPhysicsObject());
-				target_body->UnHit(main_body->GetIPhysicsObject());
 			}
 		}
 		main_body->SetPos();
@@ -374,13 +409,13 @@ bool Physics::CheckCollisionedIDPair(std::pair<int, int> id_pair)
 {
 	// collisioned_pairsの中に自分のpairがあるかを判断する
 	
-	if (cllisioned_pairs_.size() != 0) { return FALSE; }
+	if (collisioned_pairs_id_.size() == 0) { return FALSE; }
 
-	// すでに衝突していれる
-	for (auto& pair : cllisioned_pairs_)
+	// すでに衝突しているかを調べる
+	for (auto& pair : collisioned_pairs_id_)
 	{
 		if (IsSamePair(pair, id_pair))
-		{
+		{ 
 			return TRUE;
 		}
 	}

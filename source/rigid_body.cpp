@@ -117,6 +117,30 @@ void RigidBody::SetUpSpeed(float speed)
 	target_vel_.y = fall_speed_;
 }
 
+void RigidBody::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+	if (auto obj = object_.lock())
+	{
+		obj->OnCollisionEnter(object);
+	}
+}
+
+void RigidBody::OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+	if (auto obj = object_.lock())
+	{
+		obj->OnCollisionStay(object);
+	}
+}
+
+void RigidBody::OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+	if (auto obj = object_.lock())
+	{
+		obj->OnCollisionExit(object);
+	}
+}
+
 void RigidBody::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 	if (auto obj = object_.lock()) 

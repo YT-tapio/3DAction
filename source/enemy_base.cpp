@@ -235,17 +235,38 @@ void EnemyBase::Debug()
 	// test_behavior_->Debug();
 }
 
-void EnemyBase::OnHit(std::shared_ptr<IPhysicsEventReceiver> obj)
+void EnemyBase::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 {
-	auto target_tag = obj->GetRigidBody()->GetTag();
+	auto target_tag = object->GetRigidBody()->GetTag();
 	if (target_tag == "punch")
 	{
-		if (!obj->GetRigidBody()->CheckSameOwner(shared_from_this()))
+		if (!object->GetRigidBody()->CheckSameOwner(shared_from_this()))
 		{
 			// animator_->PlayRequest("on_damage");
 		}
 	}
+}
 
+void EnemyBase::OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+
+}
+
+void EnemyBase::OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+
+}
+
+void EnemyBase::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+	auto target_tag = object->GetRigidBody()->GetTag();
+	if (target_tag == "punch")
+	{
+		if (!object->GetRigidBody()->CheckSameOwner(shared_from_this()))
+		{
+			// animator_->PlayRequest("on_damage");
+		}
+	}
 }
 
 void EnemyBase::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)

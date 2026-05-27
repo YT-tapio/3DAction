@@ -47,6 +47,12 @@ public:
 	/// <param name="speed"></param>
 	void SetUpSpeed(float speed);
 
+	void OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object);
+
+	void OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object);
+
+	void OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object);
+
 	void OnHit(std::shared_ptr<IPhysicsEventReceiver> object);
 
 	void UnHit(std::shared_ptr<IPhysicsEventReceiver> object);

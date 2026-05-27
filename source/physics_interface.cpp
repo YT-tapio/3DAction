@@ -5,6 +5,21 @@
 #include"physics_interface.h"
 #include"rigid_body.h"
 
+void IPhysicsEventReceiver::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+
+}
+
+void IPhysicsEventReceiver::OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+
+}
+
+void IPhysicsEventReceiver::OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+
+}
+
 void IPhysicsEventReceiver::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 

@@ -29,7 +29,13 @@ public:
 
 	virtual void Debug() override;
 
-	virtual void OnHit(std::shared_ptr<IPhysicsEventReceiver> obj) override;
+	virtual void OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object) override;
+
+	virtual void OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object) override;
+
+	virtual void OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object) override;
+
+	virtual void OnHit(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
 	virtual void OnGround(std::shared_ptr<IPhysicsEventReceiver> object) override;
 

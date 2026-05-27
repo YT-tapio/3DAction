@@ -462,7 +462,7 @@ void Player::DecideAttackTarget()
 	}
 }
 
-void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
+void Player::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 	//‰½‚©‚ª“–‚½‚Á‚½Žž‚Ìˆ—
 	std::string target_tag = object->GetRigidBody()->GetTag();
@@ -497,6 +497,20 @@ void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 		}
 		return;
 	}
+}
+
+void Player::OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+
+}
+
+void Player::OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+
+}
+
+void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
+{
 	
 
 }

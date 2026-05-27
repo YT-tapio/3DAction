@@ -74,7 +74,7 @@ void Punch::Debug()
 	Debug::GetInstance().DrawVector(*pos_);
 }
 
-void Punch::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
+void Punch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 	auto owner = std::dynamic_pointer_cast<IPhysicsEventReceiver>(owner_.lock());
 	if (owner == nullptr) { return; }
@@ -90,7 +90,7 @@ void Punch::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 		// objectがプレイヤーからダメージを受けるインターフェースを継承しているかをチェック
 		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
 		{
-			takable_player->OnDamageFromPlayer(1,AttackType::kPhysical);
+			takable_player->OnDamageFromPlayer(1, AttackType::kPhysical);
 		}
 		return;
 	}
@@ -101,8 +101,18 @@ void Punch::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 		// objectがプレイヤーからダメージを受けるインターフェースを継承しているかをチェック
 		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
 		{
-			takable_enemy->OnDamageFromEnemy(1,AttackType::kPhysical);
+			takable_enemy->OnDamageFromEnemy(1, AttackType::kPhysical);
 		}
 		return;
 	}
+}
+
+void Punch::OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+
+}
+
+void Punch::OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+
 }

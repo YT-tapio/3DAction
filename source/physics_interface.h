@@ -8,6 +8,12 @@ class IPhysicsEventReceiver : public std::enable_shared_from_this<IPhysicsEventR
 public:
 	virtual ~IPhysicsEventReceiver() = default;
 	
+	virtual void OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object);
+
+	virtual void OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object);
+
+	virtual void OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object);
+
 	/// <summary>
 	/// ‰½‚©‚ÉÚG‚µ‚½‚Ìˆ—
 	/// </summary>

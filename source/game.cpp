@@ -122,6 +122,7 @@ void Game::Draw()
 	{
 		obj->Draw();
 	}
+	Physics::GetInstance().Debug();
 
 	
 	if (Debug::GetInstance().GetIsDisp())
@@ -135,5 +136,7 @@ void Game::Draw()
 
 		camera_->Debug();
 	}
+	
+	
 	EffectManager::GetInstance().Draw();
 }

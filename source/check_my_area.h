@@ -22,9 +22,20 @@ public:
 	/// ‰½‚©‚ÉÚG‚µ‚½‚Ìˆ—
 	/// </summary>
 	/// <param name="object"></param>
-	virtual void OnHit(std::shared_ptr<IPhysicsEventReceiver> object) override;
+	virtual void OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
-	virtual void UnHit(std::shared_ptr<IPhysicsEventReceiver> object) override;
+	/// <summary>
+	/// ‹‘±‚¯‚é
+	/// </summary>
+	/// <param name="object"></param>
+	virtual void OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object) override;
+
+	/// <summary>
+	/// —£‚µ‚½uŠÔ
+	/// </summary>
+	/// <param name="object"></param>
+	virtual void OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object) override;
+
 
 	std::vector<std::weak_ptr<ObjectBase>> GetMyAreaObject();
 

@@ -10,6 +10,7 @@
 #include"attack_type.h"
 #include"debug.h"
 #include"color.h"
+
 StatusContainer::StatusContainer(const std::string owner_name)
 	: base_status_{}
 	, current_status_{}
@@ -20,7 +21,7 @@ StatusContainer::StatusContainer(const std::string owner_name)
 
 StatusContainer::~StatusContainer()
 {
-
+	
 }
 
 void StatusContainer::Init()

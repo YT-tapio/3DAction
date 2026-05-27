@@ -92,7 +92,7 @@ private:
 	int rigid_body_id_ = 0;
 	Contact contact = {};
 
-	std::list<std::pair<int, int>> cllisioned_pairs_;
+	std::list<std::pair<int, int>> collisioned_pairs_id_;
 
 	std::unordered_map<int,std::shared_ptr<RigidBody>> id_rigid_bodies_mp_;		//各オブジェクトに付随している当たり判定とid
 };

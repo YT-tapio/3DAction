@@ -22,7 +22,11 @@ public:
 
 	void Debug() override;
 
-	void OnHit(std::shared_ptr<IPhysicsEventReceiver> object) override;
+	void OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object) override;
+
+	void OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object) override;
+
+	void OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
 private:
 

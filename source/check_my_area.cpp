@@ -30,7 +30,7 @@ void CheckMyArea::Debug()
 	rigid_body_->Debug();
 }
 
-void CheckMyArea::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
+void CheckMyArea::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 	
 	// object‚É•ÏŠ·
@@ -65,13 +65,17 @@ void CheckMyArea::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 	//printfDx("%d",my_area_objects_.size());
 }
 
-void CheckMyArea::UnHit(std::shared_ptr<IPhysicsEventReceiver> object)
+void CheckMyArea::OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+
+}
+
+void CheckMyArea::OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 	 
 	// object‚ª‰½ŒÂ–Ú‚É•Û‘¶‚³‚ê‚Ä‚Ì‚©
 	int num = 0;
 	bool is_erase = FALSE;	// Á‹‚·‚é‚©‚Ç‚¤‚©
-
 
 	auto obj = std::dynamic_pointer_cast<ObjectBase>(object);
 

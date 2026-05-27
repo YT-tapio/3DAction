@@ -43,6 +43,21 @@ void AttackBase::Debug()
 
 }
 
+void AttackBase::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+
+}
+
+void AttackBase::OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+
+}
+
+void AttackBase::OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+
+}
+
 void AttackBase::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 

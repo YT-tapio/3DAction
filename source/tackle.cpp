@@ -99,8 +99,17 @@ void Tackle::Debug()
 
 }
 
-void Tackle::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
+void Tackle::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 
 }
 
+void Tackle::OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+
+}
+
+void Tackle::OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+
+}
