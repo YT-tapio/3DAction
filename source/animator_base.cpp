@@ -105,12 +105,15 @@ void AnimatorBase::ChangeAnimation()
 void AnimatorBase::PlayRequest(std::string name)
 {
 	// 今流しているアニメーション(ループなし)と同じなら除去
-	if (now_anim_name_ == name) 
+	if (now_anim_name_ == name)
 	{
+		/*
 		if (const auto request_data = animation_datas_.find(name);request_data != animation_datas_.end())
 		{
 			if (!request_data->second.loop) { return; }
 		}
+		*/
+		
 	}
 	// 同じリクエストはいれない
 	for (auto& request_name : request_names_)
@@ -246,8 +249,7 @@ const std::string AnimatorBase::GetNowAnimName() const
 const bool AnimatorBase::ChangeCondition() const
 {
 	if (before_anim_name_ == kNothing) { return FALSE; }
-	// !animation_datas_[before_anim_name_].loop && before_anim_name_ != kNothing
-	// animation_datas_[before_anim_name_].priority  > animation_datas_[now_anim_name_].priority
+	if (now_anim_name_ == before_anim_name_) { return FALSE; }
 	// チェンジできるか
 	auto before_data = animation_datas_.find(before_anim_name_);
 	auto now_data = animation_datas_.find(now_anim_name_);

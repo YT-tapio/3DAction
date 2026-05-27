@@ -26,17 +26,6 @@ void AnimatorEnemy::ChangeAnimation()
 	const std::string kJumpingAttack = "jumping_attack";
 	before_anim_name_ = now_anim_name_;
 	
-	/*
-	auto punch_anim_data = animation_datas_.find(kJumpingAttack);
-	if (punch_anim_data != animation_datas_.end())
-	{
-		if (punch_anim_data->second.play_time== 0.f)
-		{
-			PlayRequest(kJumpingAttack);
-		}
-	}
-	*/
-	
 	PlayRequest("idle");
 	std::map<int, std::string, std::greater<int>> request_name_priority_mp;
 	if (!request_names_.empty())

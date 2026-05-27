@@ -29,6 +29,7 @@ void Physics::AddBody(std::shared_ptr<RigidBody> body)
 void Physics::Debug()
 {
 	int i = 0;
+	if (TRUE) { return; }
 	/*
 	printfDx("%d\n", collisioned_pairs_id_.size());
 	*/

@@ -122,7 +122,7 @@ void Game::Draw()
 	{
 		obj->Draw();
 	}
-	Physics::GetInstance().Debug();
+	//Physics::GetInstance().Debug();
 
 	
 	if (Debug::GetInstance().GetIsDisp())
