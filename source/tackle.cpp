@@ -5,11 +5,15 @@
 #include"attack_base.h"
 #include"tackle.h"
 #include"behavior_status.h"
+#include"physics.h"
 #include"rigid_body.h"
 #include"condition_timer.h"
 #include"character_base.h"
 #include"animator_base.h"
 #include"vector_assistant.h"
+#include"takable_damage_player_interface.h"
+#include"takable_damage_enemy_interface.h"
+#include"attack_type.h"
 
 Tackle::Tackle(std::weak_ptr<ObjectBase> owner, std::shared_ptr<RigidBody> rigid_body,
 	std::string anim_name,const float time, const float speed)
@@ -31,7 +35,9 @@ void Tackle::Init()
 {
 	vel_ = VectorAssistant::VGetZero();
 	// rigid_bodyの登録
+	rigid_body_->NotActive();
 	rigid_body_->Init(weak_from_this());
+	Physics::GetInstance().AddBody(rigid_body_);
 	rigid_body_->SetTag("tackle");
 	activate_timer_->Init();
 }
@@ -83,6 +89,9 @@ BehaviorStatus Tackle::Update()
 		{
 			owner->GetRigidBody()->SetTargetVelocity(vel_);
 		}
+
+		rigid_body_->Active();
+
 	}
 	
 
@@ -91,16 +100,45 @@ BehaviorStatus Tackle::Update()
 
 void Tackle::Exit()
 {
-
+	rigid_body_->NotActive();
 }
 
 void Tackle::Debug()
 {
-
+	rigid_body_->Debug();
 }
 
 void Tackle::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 {
+	auto owner = std::dynamic_pointer_cast<IPhysicsEventReceiver>(owner_.lock());
+	if (owner == nullptr) { return; }
+	auto owner_tag = owner->GetRigidBody()->GetTag();
+	auto object_tag = object->GetRigidBody()->GetTag();
+
+	if (owner_tag == object_tag) { return; }
+
+	// タグが違う場合は相手にダメージを加える
+	// ownerがpalyerだったら
+	if (owner_tag == "player")
+	{
+		// objectがプレイヤーからダメージを受けるインターフェースを継承しているかをチェック
+		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
+		{
+			takable_player->OnDamageFromPlayer(1, AttackType::kPhysical);
+		}
+		return;
+	}
+
+	// ownerがenemyだったら
+	if (owner_tag == "enemy")
+	{
+		// objectがプレイヤーからダメージを受けるインターフェースを継承しているかをチェック
+		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
+		{
+			takable_enemy->OnDamageFromEnemy(1, AttackType::kPhysical);
+		}
+		return;
+	}
 
 }
 

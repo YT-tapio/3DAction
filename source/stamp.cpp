@@ -13,6 +13,9 @@
 #include"rigid_body.h"
 #include"character_base.h"
 #include"animator_base.h"
+#include"takable_damage_player_interface.h"
+#include"takable_damage_enemy_interface.h"
+#include"attack_type.h"
 
 Stamp::Stamp(std::weak_ptr<ObjectBase> owner, VECTOR* pos, float radius,std::string my_anim_name)
 	: AttackBase(owner,0,0)
@@ -85,6 +88,51 @@ void Stamp::Debug()
 {
 	rigid_body_->Debug();
 }
+
+void Stamp::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+	// タグをとる
+	auto owner = std::dynamic_pointer_cast<IPhysicsEventReceiver>(owner_.lock());
+	if (owner == nullptr) { return; }
+	auto owner_tag = owner->GetRigidBody()->GetTag();
+	auto object_tag = owner->GetRigidBody()->GetTag();
+
+	if (owner_tag == object_tag) { return; }
+
+	// オーナーが何者かを判別
+	if (owner_tag == "player")
+	{
+		//playerからダメージを受ける対象に変換
+		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
+		{
+			takable_player->OnDamageFromPlayer(1,AttackType::kPhysical);
+		}
+		return;
+	}
+
+	// オーナーが何者かを判別
+	if (owner_tag == "enemy")
+	{
+		//playerからダメージを受ける対象に変換
+		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
+		{
+			takable_enemy->OnDamageFromEnemy(1, AttackType::kPhysical);
+		}
+		return;
+	}
+
+}
+
+void Stamp::OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+	//printfDx("あたっている\n");
+}
+
+void Stamp::OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+	//printfDx("あたっている\n");
+}
+
 
 void Stamp::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 {

@@ -138,19 +138,27 @@ void Player::Init()
 
 void Player::Update()
 {
-	Move();
-	if (skill_ != nullptr)
+	if (status_container_->GetCurrentStatus().hp <= 0)
 	{
-		skill_->Update();
+		animator_->PlayRequest("death");
 	}
+	else
+	{
+		Move();
+		if (skill_ != nullptr)
+		{
+			skill_->Update();
+		}
 
-	if (second_skill_ != nullptr)
-	{
-		second_skill_->Update();
+		if (second_skill_ != nullptr)
+		{
+			second_skill_->Update();
+		}
+		avoid_->Update();
+		rigid_body_->SetTargetVelocity(vel_);
+		test_behavior_->Update();
+
 	}
-	avoid_->Update();
-	rigid_body_->SetTargetVelocity(vel_);
-	test_behavior_->Update();
 	
 	animator_->Update();
 	Setting();
@@ -494,6 +502,16 @@ void Player::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		if (!object->GetRigidBody()->CheckSameOwner(shared_from_this()))
 		{
 			animator_->PlayRequest("on_damage");
+		}
+		return;
+	}
+
+	if (target_tag == "tackle")
+	{
+		// 自身とオーナーのパンチがplayerにcastしてnullptrなったら処理する
+		if (!object->GetRigidBody()->CheckSameOwner(shared_from_this()))
+		{
+			animator_->PlayRequest("knock_back");
 		}
 		return;
 	}

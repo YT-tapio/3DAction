@@ -110,7 +110,7 @@ void EnemyBase::Init()
 	// タックル
 	std::shared_ptr<NodeBase> tackle_node = std::make_shared<ActionNode>(
 		std::make_shared<Tackle>(mine,
-			std::make_shared<RigidBody>(rigid_body_->GetCollider(), &pos_, FALSE, TRUE, 0.1f, 1.f), "tackle", 1.f, 2.f));
+			std::make_shared<RigidBody>(std::make_shared<Capsule>(6.f, 18.f, VectorAssistant::VGetZero()), &pos_, FALSE, TRUE, 0.1f, 1.f), "tackle", 1.f, 2.f));
 	
 	std::vector<std::shared_ptr<NodeBase>> tackle_nodes;
 	
@@ -120,7 +120,7 @@ void EnemyBase::Init()
 	// ランダムのnodeに代入
 	std::vector<std::shared_ptr<NodeBase>>random_nodes;
 	//random_nodes.emplace_back(stump_node);
-	random_nodes.emplace_back(double_punch_node);
+	//random_nodes.emplace_back(double_punch_node);
 	//random_nodes.emplace_back(area_of_effect_node);
 	random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
 
@@ -202,12 +202,12 @@ void EnemyBase::Update()
 
 		rigid_body_->SetTargetVelocity(vel_);
 		behavior_tree_->Update();
-
+		//test_behavior_->Update();
 	}
 
 	animator_->Update();
 	UpdateBone();
-	// test_behavior_->Update();
+	
 	
 }
 
@@ -227,6 +227,8 @@ void EnemyBase::Debug()
 
 	status_container_->Debug();
 
+	behavior_tree_->Debug();
+	rigid_body_->Debug();
 	if (TRUE) { return; }
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "----------enemy-----------", Color::kWhite);
 	Debug::GetInstance().Add();
@@ -239,8 +241,7 @@ void EnemyBase::Debug()
 	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "%s", animator_->GetNowAnimName().c_str());
 	Debug::GetInstance().Add();
 
-	rigid_body_->Debug();
-	behavior_tree_->Debug();
+	
 
 	// test_behavior_->Debug();
 }

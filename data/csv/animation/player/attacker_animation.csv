@@ -9,3 +9,6 @@ punch_conbo2,data/model/player/animation/punch_conbo_attacker/punch_conbo2.mv1,0
 punch_conbo3,data/model/player/animation/punch_conbo_attacker/punch_conbo3.mv1,0,0.8,7,0,60
 punch_conbo4,data/model/player/animation/punch_conbo_attacker/punch_conbo4.mv1,0,0.95,8,0,60
 avoid,data/model/player/animation/Sprinting_Forward_Roll.mv1,0,1,100,0,100
+knock_back,data/model/player/animation/Stunned.mv1,0,1,50,0,100
+stand_up,data/model/player/animation/Getting_Up.mv1,0,1,51,0,100
+death,data/model/player/animation/player_death.mv1,0,0.7,1000,0,-1
