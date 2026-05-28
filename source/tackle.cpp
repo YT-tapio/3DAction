@@ -89,9 +89,6 @@ BehaviorStatus Tackle::Update()
 		{
 			owner->GetRigidBody()->SetTargetVelocity(vel_);
 		}
-
-		rigid_body_->Active();
-
 	}
 	
 

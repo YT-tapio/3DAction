@@ -110,7 +110,7 @@ void EnemyBase::Init()
 	// ƒ^ƒbƒNƒ‹
 	std::shared_ptr<NodeBase> tackle_node = std::make_shared<ActionNode>(
 		std::make_shared<Tackle>(mine,
-			std::make_shared<RigidBody>(std::make_shared<Capsule>(6.f, 18.f, VectorAssistant::VGetZero()), &pos_, FALSE, TRUE, 0.1f, 1.f), "tackle", 1.f, 2.f));
+			std::make_shared<RigidBody>(std::make_shared<Capsule>(10.5f, 18.f, VectorAssistant::VGetZero()), &pos_, FALSE, TRUE, 0.1f, 1.f), "tackle", 1.f, 2.f));
 	
 	std::vector<std::shared_ptr<NodeBase>> tackle_nodes;
 	
