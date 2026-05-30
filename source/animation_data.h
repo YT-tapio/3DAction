@@ -14,4 +14,5 @@ struct AnimationData
 	float cancel_time;
 
 	bool loop;
+	std::string next_anim_name;	// 次のアニメーションの名前
 };

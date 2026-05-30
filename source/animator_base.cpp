@@ -6,6 +6,7 @@
 #include"animator_base.h"
 #include"animation_data.h"
 #include"load_animation.h"
+#include"csv_file_assistant.h"
 #include"FPS.h"
 
 AnimatorBase::AnimatorBase(const std::string data_file_path, int handle)
@@ -36,7 +37,7 @@ void AnimatorBase::Init()
 void AnimatorBase::Update()
 {
 	ChangeAnimation();
-	
+
 	// チェンジできるか
 	if (ChangeCondition())
 	{
@@ -145,43 +146,27 @@ void AnimatorBase::LoadFile(const std::string file_path)
 		std::string data;			// csvからの文字列をもらう
 		std::string anim_name;
 		std::string anim_file_path;
+		std::string next_anim_name;
 		int anim_index		= -1;
 		int priority		= -1;
 		int loop = -1;
 		float play_speed	= 0.f;
-		float cancel_time = 0.f;
+		float cancel_time	= 0.f;
 		AnimationData anim_data = {};
 
+
 		// アニメーションの名前
-		std::getline(ss, data, ',');
-		anim_name = data;
-
-		// アニメーションファイルの名前
-		std::getline(ss, data, ',');
-		anim_file_path = data;
-
-		// アニメーションの識別番号
-		std::getline(ss, data, ',');
-		anim_index = std::stoi(data);
-
-		// アニメーションの再生速度
-		std::getline(ss, data, ',');
-		play_speed = std::stof(data);
-
-		// アニメーションの優先度
-		std::getline(ss, data, ',');
-		priority = std::stoi(data);
-
-		// ループするかどうか
-		std::getline(ss, data, ',');
-		loop = (std::stoi(data) == 1);
-		
-		// animationのキャンセル可能時間
-		std::getline(ss, data, ',');
-		cancel_time = std::stof(data);
+		anim_name		= CSVFileAssistant::GetStringOfCSVFile(ss,data);  // アニメーションの名前 
+		anim_file_path	= CSVFileAssistant::GetStringOfCSVFile(ss,data);  // アニメーションファイルの名前
+		anim_index		= CSVFileAssistant::GetIntOfCSVFile(ss,data);	  // アニメーションの識別番号
+		play_speed		= CSVFileAssistant::GetFloatOfCSVFile(ss,data);	  // アニメーションの再生速度
+		priority		= CSVFileAssistant::GetIntOfCSVFile(ss,data);	  // アニメーションの優先度
+		loop			= CSVFileAssistant::GetBoolOfCSVFile(ss,data);	  // ループするかどうか
+		cancel_time		= CSVFileAssistant::GetFloatOfCSVFile(ss, data);  // animationのキャンセル可能時間
+		next_anim_name	= CSVFileAssistant::GetStringOfCSVFile(ss, data); // 次のanimationのなまえ
 
 		// アニメーションデータを生成
-		LoadAnimation(anim_data, anim_file_path.c_str(), anim_index, play_speed, priority,cancel_time, loop);
+		LoadAnimation(anim_data, anim_file_path.c_str(), anim_index, play_speed, priority, cancel_time, loop, next_anim_name);
 		animation_datas_[anim_name] = anim_data;
 	}
 }

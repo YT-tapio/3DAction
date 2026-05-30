@@ -42,6 +42,9 @@
 #include"status_container.h"
 #include"buff_type.h"
 #include"attack_type.h"
+#include"effect_manager.h"
+#include"effect_id.h"
+#include"effect_end_state.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name)
 	: CharacterBase("player")
@@ -553,6 +556,16 @@ void Player::OnHealFromPlayer(float heal)
 
 void Player::OnDamageFromEnemy(float damage,AttackType type)
 {
+	// 無敵時はダメージを受けない
+	if (is_invincible_) 
+	{
+		// この瞬間にエフェクトを描画
+		printfDx("無敵\n");
+		EffectManager::GetInstance().Play(EffectID::kAvoidCollect);
+		EffectManager::GetInstance().End(EffectID::kAvoidCollect, EffectEndState::kTotal);
+
+		return;
+	}
 	status_container_->TakeDamage(damage,type);
 	printfDx("ダメージを受けちゃってます\n");
 }
