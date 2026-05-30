@@ -52,7 +52,9 @@ protected:
 
 	void ResetRequest();
 
-	const bool ChangeCondition() const;
+	const bool CheckNextAnimation() const;
+
+	const bool ContinueCondition() const;
 
 	std::string kDataFilePath;
 
@@ -65,6 +67,7 @@ protected:
 	std::string before_anim_name_;
 
 	int handle_;
+
 	bool is_end_;
 
 	bool is_stop_;
@@ -73,6 +76,11 @@ protected:
 
 private:
 
-	
+	void BlendUpdate();
+
+private:
+
+	bool is_blending_;
+	float blend_rate_;
 
 };

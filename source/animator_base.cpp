@@ -16,6 +16,7 @@ AnimatorBase::AnimatorBase(const std::string data_file_path, int handle)
 	before_anim_name_	= "nothing";
 	handle_ = handle;
 	is_end_ = FALSE;
+	is_blending_ = FALSE;
 	is_stop_ = FALSE;
 	can_cancel_ = FALSE;
 }
@@ -36,29 +37,46 @@ void AnimatorBase::Init()
 
 void AnimatorBase::Update()
 {
+	before_anim_name_ = now_anim_name_;
+	// もし次に続くアニメーションがあるなら
+	if (CheckNextAnimation())
+	{
+		PlayRequest(animation_datas_[now_anim_name_].next_anim_name);
+	}
+
+	// リクエストが来る
 	ChangeAnimation();
 
-	// チェンジできるか
-	if (ChangeCondition())
+	
+	// アニメーションを続ける
+	if (ContinueCondition())
 	{
 		now_anim_name_ = before_anim_name_;
 	}
+	
 
 	// animationのアタッチ
 	if (before_anim_name_ != now_anim_name_)
 	{
 		// キャンセルを無効にする
 		can_cancel_ = FALSE;
-
-		// デタッチ
+		is_end_		= FALSE;
+		is_blending_ = before_anim_name_ != kNothing;	// 何もないとブレンドしない
+		blend_rate_ = 0.f;
+		
+		/*
 		if (before_anim_name_ != kNothing)
 		{
+			// デタッチ
+			MV1DetachAnim(handle_, animation_datas_[before_anim_name_].attach_index);
+			animation_datas_[before_anim_name_].attach_index = -1;
 			animation_datas_[before_anim_name_].play_time = 0.f;
-			MV1DetachAnim(handle_, animation_datas_[before_anim_name_].anim_index);
 		}
+		*/
+		
 
 		// アタッチ
-		animation_datas_[now_anim_name_].attach_index = MV1AttachAnim(handle_, animation_datas_[now_anim_name_].attach_index,
+		animation_datas_[now_anim_name_].attach_index = MV1AttachAnim(handle_, animation_datas_[now_anim_name_].anim_index,
 			animation_datas_[now_anim_name_].handle, FALSE);
 
 		// トータルタイムを取得
@@ -72,7 +90,7 @@ void AnimatorBase::Update()
 
 	//stopじゃないときはアニメーションの再生を行う
 	if(!is_stop_){ animation_datas_[now_anim_name_].play_time += animation_datas_[now_anim_name_].play_speed * FPS::GetInstance().GetDeltaTime() * 60.f; }
-	
+
 	// トータルタイムを超えた時
 	if (animation_datas_[now_anim_name_].play_time >= animation_datas_[now_anim_name_].total_time)
 	{
@@ -83,8 +101,8 @@ void AnimatorBase::Update()
 		else
 		{
 			animation_datas_[now_anim_name_].play_time = animation_datas_[now_anim_name_].total_time;
+			is_end_ = TRUE;
 		}
-		is_end_ = TRUE;
 	}
 	else
 	{
@@ -93,6 +111,7 @@ void AnimatorBase::Update()
 
 	MV1SetAttachAnimTime(handle_, animation_datas_[now_anim_name_].attach_index,
 		animation_datas_[now_anim_name_].play_time);
+	BlendUpdate();
 
 	ResetRequest();
 
@@ -231,7 +250,7 @@ const std::string AnimatorBase::GetNowAnimName() const
 	return now_anim_name_;
 } 
 
-const bool AnimatorBase::ChangeCondition() const
+const bool AnimatorBase::ContinueCondition() const
 {
 	if (before_anim_name_ == kNothing) { return FALSE; }
 	if (now_anim_name_ == before_anim_name_) { return FALSE; }
@@ -248,4 +267,52 @@ const bool AnimatorBase::ChangeCondition() const
 	}
 	if (is_end_) { return FALSE; }
 	return TRUE;
+}
+
+const bool AnimatorBase::CheckNextAnimation() const
+{
+	auto now_data = animation_datas_.find(now_anim_name_);
+	if (now_data == animation_datas_.end()) { return FALSE; }
+	if (now_data->second.next_anim_name == "nothing") { return FALSE; }
+	if (!is_end_) { return FALSE; }
+	return TRUE;
+}
+
+void AnimatorBase::BlendUpdate()
+{
+	if (!is_blending_) { return; }
+	
+	// ブレンドします
+	//stopじゃないときはアニメーションの再生を行う
+	if (!is_stop_) { animation_datas_[before_anim_name_].play_time += animation_datas_[before_anim_name_].play_speed * FPS::GetInstance().GetDeltaTime() * 60.f; }
+
+	// トータルタイムを超えた時
+	if (animation_datas_[before_anim_name_].play_time >= animation_datas_[before_anim_name_].total_time)
+	{
+		if (animation_datas_[before_anim_name_].loop)
+		{
+			animation_datas_[before_anim_name_].play_time -= animation_datas_[before_anim_name_].total_time;
+		}
+		else
+		{
+			animation_datas_[before_anim_name_].play_time = animation_datas_[before_anim_name_].total_time;
+		}
+	}
+
+	MV1SetAttachAnimTime(handle_, animation_datas_[before_anim_name_].attach_index,
+		animation_datas_[before_anim_name_].play_time);
+	
+	if (blend_rate_ >= 1.f) 
+	{ 
+		is_blending_ = FALSE;
+		blend_rate_ = 1.f;
+		MV1DetachAnim(handle_, animation_datas_[before_anim_name_].attach_index);
+		animation_datas_[before_anim_name_].attach_index = -1;
+		animation_datas_[before_anim_name_].play_time	= 0.f;
+		return;
+	}
+	
+	MV1SetAttachAnimBlendRate(handle_, animation_datas_[before_anim_name_].attach_index, 1.f - blend_rate_);
+	MV1SetAttachAnimBlendRate(handle_, animation_datas_[now_anim_name_].attach_index, blend_rate_);
+	blend_rate_ += FPS::GetInstance().GetDeltaTime() * 3.f;
 }

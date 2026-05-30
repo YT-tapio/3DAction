@@ -567,7 +567,7 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 		return;
 	}
 	status_container_->TakeDamage(damage,type);
-	printfDx("ダメージを受けちゃってます\n");
+	//printfDx("ダメージを受けちゃってます\n");
 }
 
 void Player::InputChange(std::shared_ptr<InputBase> input)
