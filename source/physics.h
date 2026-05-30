@@ -22,6 +22,11 @@ public:
 	Physics& operator = (const Physics&) = delete;
 
 	/// <summary>
+	/// 初期化
+	/// </summary>
+	void Init();
+
+	/// <summary>
 	/// rigid_bodyの登録
 	/// </summary>
 	/// <param name="body"></param>
@@ -34,6 +39,11 @@ public:
 	/// アップデート
 	/// </summary>
 	void Update();
+
+	/// <summary>
+	/// 後処理
+	/// </summary>
+	void End();
 
 
 private:

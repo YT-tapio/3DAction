@@ -35,7 +35,6 @@ void EffectManager::Init()
 
 void EffectManager::Update()
 {
-
 	auto aa = GetEffekseer3DManager();
 
 	if (effects_.empty()) { return; }
@@ -44,6 +43,11 @@ void EffectManager::Update()
 		effect.second->Update();
 	}
 	UpdateEffekseer3D();
+}
+
+void EffectManager::End()
+{
+	effects_.clear();
 }
 
 void EffectManager::Draw()

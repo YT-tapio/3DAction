@@ -49,6 +49,11 @@ void PlayerGroup::Update()
 	}
 }
 
+void PlayerGroup::End()
+{
+	players_.clear();
+}
+
 void PlayerGroup::LateUpdate()
 {
 	for (auto& player : players_)

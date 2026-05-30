@@ -21,6 +21,8 @@ public:
 
 	void Update();
 
+	void End();
+
 	void LateUpdate();
 
 	void Draw();

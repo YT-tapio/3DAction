@@ -8,10 +8,10 @@
 #include"animator_enemy.h"
 #include"enemy_base.h"
 
-AnimatorEnemy::AnimatorEnemy(int handle,  std::shared_ptr<EnemyBase> enemy,std::string data_name)
+AnimatorEnemy::AnimatorEnemy(int handle,  std::string data_name)
 	:AnimatorBase("enemy/" + data_name,handle)
 {
-	enemy_ = enemy;
+	
 }
 
 AnimatorEnemy::~AnimatorEnemy()

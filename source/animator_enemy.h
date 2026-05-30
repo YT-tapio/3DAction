@@ -6,7 +6,7 @@ class AnimatorEnemy : public AnimatorBase
 {
 public:
 
-	AnimatorEnemy(int handle, std::shared_ptr<EnemyBase> enemy,std::string data_name);
+	AnimatorEnemy(int handle, std::string data_name);
 
 	~AnimatorEnemy() override;
 
@@ -16,6 +16,6 @@ protected:
 
 private:
 
-	std::shared_ptr<const EnemyBase> enemy_;
+	std::weak_ptr<const EnemyBase> enemy_;
 
 };

@@ -86,7 +86,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 
 Player::~Player()
 {
-
+	
 }
 
 void Player::Init()
@@ -123,7 +123,7 @@ void Player::Init()
 	
 	target_rot_y_ = rot_.y;
 
-	animator_ = std::make_shared<AnimatorPlayer>(handle_, mine, name_);
+	animator_ = std::make_shared<AnimatorPlayer>(handle_, name_);
 	animator_->Init();
 	my_area_->Init();
 

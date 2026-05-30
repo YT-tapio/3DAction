@@ -19,6 +19,7 @@ AnimatorBase::AnimatorBase(const std::string data_file_path, int handle)
 	is_blending_		= FALSE;
 	is_stop_			= FALSE;
 	can_cancel_		= FALSE;
+	blend_rate_ = 0.f;
 }
 
 AnimatorBase::~AnimatorBase()
@@ -28,22 +29,22 @@ AnimatorBase::~AnimatorBase()
 	{
 		MV1DeleteModel(animation.second.handle);
 	}
+	animation_datas_.clear();
 }
 
 void AnimatorBase::Init()
 {
 	LoadFile(kDataFilePath);
+	blend_rate_ = 0.f;
 }
 
 void AnimatorBase::Update()
 {
-	auto now_anim_data = animation_datas_[now_anim_name_];
-
 	before_anim_name_ = now_anim_name_;
 	// もし次に続くアニメーションがあるなら
 	if (CheckNextAnimation())
 	{
-		PlayRequest(now_anim_data.next_anim_name);
+		PlayRequest(animation_datas_[now_anim_name_].next_anim_name);
 	}
 
 	// リクエストの整理をする
@@ -54,6 +55,7 @@ void AnimatorBase::Update()
 	{
 		now_anim_name_ = before_anim_name_;
 	}
+	auto now_anim_data = animation_datas_[now_anim_name_];
 
 	// animationのアタッチ
 	if (before_anim_name_ != now_anim_name_)

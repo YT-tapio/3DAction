@@ -37,11 +37,15 @@ Game::Game()
 
 Game::~Game()
 {
-
+	objects_.clear();
+	Physics::GetInstance().End();
+	PlayerGroup::GetInstance().End();
+	EffectManager::GetInstance().End();
 }
 
 void Game::Init()
 {
+	Physics::GetInstance().Init();
 	PlayerGroup::GetInstance().Init();
 	for (auto& obj : objects_)
 	{

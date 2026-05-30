@@ -12,9 +12,8 @@
 #include"rigid_body.h"
 #include"physics_interface.h"
 
-AnimatorPlayer::AnimatorPlayer(int handle, std::shared_ptr<Player> player, std::string name)
+AnimatorPlayer::AnimatorPlayer(int handle, std::string name)
 	: AnimatorBase("player/" + name, handle)
-	, player_(player)
 {
 	
 }

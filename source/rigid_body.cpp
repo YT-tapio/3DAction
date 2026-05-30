@@ -33,7 +33,7 @@ RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll,VECTOR* pos,bool gravity
 
 RigidBody::~RigidBody()
 {
-
+	
 }
 
 void RigidBody::Init(std::weak_ptr<IPhysicsEventReceiver> object)

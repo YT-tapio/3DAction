@@ -217,6 +217,9 @@
     <Filter Include="ソース ファイル\interface\status_holder">
       <UniqueIdentifier>{fe9b4269-fe35-476a-bce8-7c8742a85717}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\scene\test">
+      <UniqueIdentifier>{a7c6f714-8664-43d1-b241-b57d2de124d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -518,6 +521,9 @@
     </ClCompile>
     <ClCompile Include="source\status_holder_interface.cpp">
       <Filter>ソース ファイル\interface\status_holder</Filter>
+    </ClCompile>
+    <ClCompile Include="source\test_scene.cpp">
+      <Filter>ソース ファイル\scene\test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -898,6 +904,9 @@
     </ClInclude>
     <ClInclude Include="source\status_holder_interface.h">
       <Filter>ソース ファイル\interface\status_holder</Filter>
+    </ClInclude>
+    <ClInclude Include="source\test_scene.h">
+      <Filter>ソース ファイル\scene\test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

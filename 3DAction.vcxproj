@@ -208,6 +208,7 @@
     <ClCompile Include="source\takable_damage_player_interface.cpp" />
     <ClCompile Include="source\takable_heal_enemy_interface.cpp" />
     <ClCompile Include="source\takable_heal_player_interface.cpp" />
+    <ClCompile Include="source\test_scene.cpp" />
     <ClCompile Include="source\tracking_camera.cpp" />
     <ClCompile Include="source\transform.cpp" />
     <ClCompile Include="source\variable_timer.cpp" />
@@ -320,6 +321,7 @@
     <ClInclude Include="source\takable_damage_player_interface.h" />
     <ClInclude Include="source\takable_heal_enemy_interface.h" />
     <ClInclude Include="source\takable_heal_player_interface.h" />
+    <ClInclude Include="source\test_scene.h" />
     <ClInclude Include="source\tracking_camera.h" />
     <ClInclude Include="source\transform.h" />
     <ClInclude Include="source\variable_timer.h" />

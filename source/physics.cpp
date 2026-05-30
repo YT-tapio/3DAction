@@ -17,6 +17,11 @@
 #include"check_my_area.h"
 #include"FPS.h"
 
+void Physics::Init()
+{
+	rigid_body_id_ = 0;
+}
+
 void Physics::AddBody(std::shared_ptr<RigidBody> body)
 {
 	// idのカウント
@@ -75,6 +80,14 @@ void Physics::Update()
 	Collision();
 	//着地判定
 	CheckGround();
+}
+
+void Physics::End()
+{
+	// 後始末
+	rigid_body_id_ = 0;
+	collisioned_pairs_id_.clear();
+	id_rigid_bodies_mp_.clear();
 }
 
 bool Physics::CheckHitGroundProj(std::shared_ptr<RigidBody>other, Contact& contact, const VECTOR& segment_start_pos, const float& ground_proj_length)
