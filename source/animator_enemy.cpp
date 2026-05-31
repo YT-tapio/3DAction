@@ -24,7 +24,6 @@ void AnimatorEnemy::ChangeAnimation()
 	const std::string kOnDamage = "on_damage";
 	const std::string kDoublePunch = "double_punch";
 	const std::string kJumpingAttack = "jumping_attack";
-	before_anim_name_ = now_anim_name_;
 	
 	PlayRequest("idle");
 	std::map<int, std::string, std::greater<int>> request_name_priority_mp;
@@ -40,5 +39,5 @@ void AnimatorEnemy::ChangeAnimation()
 	}
 
 	// request‚Ì’†‚Å‚àpriority‚Ì‚½‚©‚¢‚à‚Ì‚ðŽæ‚éB
-	if (!request_name_priority_mp.empty()) { now_anim_name_ = request_name_priority_mp.begin()->second; }
+	if (!request_name_priority_mp.empty()) { next_anim_name_ = request_name_priority_mp.begin()->second; }
 }

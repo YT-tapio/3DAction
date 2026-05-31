@@ -42,6 +42,8 @@ public:
 
 	const float GetRatio(std::string name) const;
 
+	const bool GetIsBlending() const;
+
 	const std::string GetNowAnimName() const;
 
 protected:
@@ -54,7 +56,7 @@ protected:
 
 	const bool CheckNextAnimation() const;
 
-	const bool ContinueCondition() const;
+	const bool ChangeCondition() const;
 
 	std::string kDataFilePath;
 
@@ -63,6 +65,7 @@ protected:
 	std::list<std::string> request_names_;
 
 	std::unordered_map<std::string, AnimationData> animation_datas_;
+	std::string next_anim_name_;
 	std::string now_anim_name_;
 	std::string before_anim_name_;
 
@@ -75,6 +78,8 @@ protected:
 	bool can_cancel_;
 
 private:
+
+	void PlayTimeUpdate(AnimationData& data);
 
 	void BlendUpdate();
 

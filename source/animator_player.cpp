@@ -26,13 +26,8 @@ AnimatorPlayer::~AnimatorPlayer()
 
 void AnimatorPlayer::ChangeAnimation()
 {
-	before_anim_name_ = now_anim_name_;
-
 	std::map<int, std::string, std::greater<int>> priority_request_name_mp;
-
-
 	// キャンセルタイミング時にpriorityの低いものだった場合はかえてもok
-
 
 	if (!request_names_.empty())
 	{
@@ -43,5 +38,5 @@ void AnimatorPlayer::ChangeAnimation()
 		}
 	}
 	// requestの中でもpriorityのたかいものを取る。
-	if (!priority_request_name_mp.empty()) { now_anim_name_ = priority_request_name_mp.begin()->second; }
+	if (!priority_request_name_mp.empty()) { next_anim_name_ = priority_request_name_mp.begin()->second; }
 }

@@ -27,8 +27,6 @@ void PlayerGroup::Awake(VECTOR* camera_dir)
 	// players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer3Input(), "defender"));
 	// players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer3Input(), "attacker2"));
 	
-	
-	// Init();
 }
 
 void PlayerGroup::Init()
