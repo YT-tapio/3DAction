@@ -34,7 +34,6 @@ void AnimatorEnemy::ChangeAnimation()
 		{
 			int priority = animation_datas_[request_name].priority;
 			request_name_priority_mp[priority] = request_name;
-			//printfDx("%s\n", request_name.c_str());
 		}
 	}
 

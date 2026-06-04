@@ -20,6 +20,7 @@
 #include"effect_end_state.h"
 #include"player_group.h"
 #include"random.h"
+#include"skydome.h"
 
 Game::Game()
 	: SceneBase()
@@ -28,7 +29,7 @@ Game::Game()
 
 	objects_.push_back(std::make_shared<EnemyBase>(VGet(10, 0, 10)));
 	objects_.push_back(std::make_shared<Stage>());
-	
+	objects_.push_back(std::make_shared<SkyDome>());
 	
 	EffectManager::GetInstance().Awake();
 	PlayerGroup::GetInstance().Awake(&camera_->dir_);
@@ -140,7 +141,6 @@ void Game::Draw()
 
 		camera_->Debug();
 	}
-	
 	
 	EffectManager::GetInstance().Draw();
 }

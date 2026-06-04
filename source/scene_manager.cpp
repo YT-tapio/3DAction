@@ -27,41 +27,15 @@ SceneManager::~SceneManager()
 
 void SceneManager::Update()
 {
-	/*
-	static int a = 1;
-	if (CheckHitKey(KEY_INPUT_0))
-	{
-		if (a == 0)
-		{
-			scene_ = std::make_shared<Test>();
-			scene_->Init();
-		}
-		a = 1;
-	}
-
-	if (CheckHitKey(KEY_INPUT_1))
-	{
-		if (a == 1)
-		{
-			scene_ = std::make_shared<Game>();
-			scene_->Init();
-		}
-		a = 0;
-	}
-
-	*/
-	
 	ClearDrawScreen();
+	SetLightAmbColor(GetColorF(1.f, 1.f, 1.f, 1.0f));
 	FPS::GetInstance().Update();
 	InputManager::GetInstance().Update();
 	Debug::GetInstance().Reset();
 	Debug::GetInstance().Update();
-
 	scene_->Update();
-
 	scene_->Draw();
-
-	FPS::GetInstance().Wait();
-	FPS::GetInstance().SetPrevTime();
+	FPS::GetInstance().Debug();
 	ScreenFlip();
+	FPS::GetInstance().Wait();
 }

@@ -29,23 +29,24 @@ public:
 	}
 
 
-	void SetPrevTime()
-	{
-		prev_time_ = now_time_;
-	}
-
-
 	const float GetDeltaTime() const { return delta_time_; }
 
 	void Debug();
 	
 private:
 
-	const float  kTargetFps = 60.0f;
+	// É}ÉCÉNÉçïbêî
+	static constexpr float kUS = 0.000001f;
+
+	static constexpr float  kTargetFps = 60.0f;
+	static constexpr float kTargetFrameTime = 1.f / kTargetFps;
 
 	LONGLONG prev_time_;
 	LONGLONG now_time_;
-
+	LONGLONG first_time_;
+	float took_time_ = 0.f;
+	float sleep_time_ = 0.f;
+	float wait_time_ = 0.f;
 	float delta_time_;
 	float now_fps_;
 	float time_scale_;
