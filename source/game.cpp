@@ -21,7 +21,7 @@
 #include"player_group.h"
 #include"random.h"
 #include"skydome.h"
-
+#include"collision_mesh_obj.h"
 Game::Game()
 	: SceneBase()
 {
@@ -29,8 +29,8 @@ Game::Game()
 
 	objects_.push_back(std::make_shared<EnemyBase>(VGet(10, 0, 10)));
 	objects_.push_back(std::make_shared<Stage>());
-	objects_.push_back(std::make_shared<SkyDome>());
-	
+	//objects_.push_back(std::make_shared<SkyDome>());
+	objects_.push_back(std::make_shared<CollisionMeshObject>());
 	EffectManager::GetInstance().Awake();
 	PlayerGroup::GetInstance().Awake(&camera_->dir_);
 	Init();

@@ -169,6 +169,7 @@
     <ClCompile Include="source\character_behavior.cpp" />
     <ClCompile Include="source\chase_player.cpp" />
     <ClCompile Include="source\check_my_area.cpp" />
+    <ClCompile Include="source\collision_mesh_obj.cpp" />
     <ClCompile Include="source\composite_node.cpp" />
     <ClCompile Include="source\combo.cpp" />
     <ClCompile Include="source\combo_action.cpp" />
@@ -271,6 +272,7 @@
     <ClInclude Include="source\buff_type.h" />
     <ClInclude Include="source\character_behavior.h" />
     <ClInclude Include="source\chase_player.h" />
+    <ClInclude Include="source\collision_mesh_obj.h" />
     <ClInclude Include="source\composite_node.h" />
     <ClInclude Include="source\combo.h" />
     <ClInclude Include="source\combo_action.h" />
