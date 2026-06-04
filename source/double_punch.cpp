@@ -130,7 +130,7 @@ void DoublePunch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object
 		//object‚ªenemy‚©‚çƒ_ƒ[ƒW‚ğó‚¯‚é‘ÎÛ‚È‚Ì‚©•ÏŠ·‚·‚é
 		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
 		{
-			takable_enemy->OnDamageFromEnemy(20, AttackType::kPhysical);
+			takable_enemy->OnDamageFromEnemy(1, AttackType::kPhysical);
 		}
 		return;
 	}

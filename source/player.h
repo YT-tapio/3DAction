@@ -143,4 +143,6 @@ private:
 
 	void DecideAttackTarget();
 
+	void EffectUpdate();
+
 };

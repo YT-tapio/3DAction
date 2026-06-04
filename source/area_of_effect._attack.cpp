@@ -17,7 +17,9 @@
 #include"effect_manager.h"
 #include"effect_end_state.h"
 #include"animator_base.h"
-
+#include"takable_damage_player_interface.h"
+#include"takable_damage_enemy_interface.h"
+#include"attack_type.h"
 
 AreaOfEffectAttack::AreaOfEffectAttack(std::weak_ptr<ObjectBase> owner, 
 	std::string charge_anim,float min_coll_ratio, 
@@ -45,7 +47,7 @@ void AreaOfEffectAttack::Init()
 {
 	// rigid_bodyの登録
 	rigid_body_->Init(weak_from_this());
-	//rigid_body_->SetTag()
+	rigid_body_->SetTag("effect_attack");
 	Physics::GetInstance().AddBody(rigid_body_);
 	rigid_body_->NotActive();
 	state_ = AreaOfEffectAttackState::kCharge();
@@ -97,7 +99,42 @@ void AreaOfEffectAttack::Debug()
 
 }
 
-void AreaOfEffectAttack::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
+void AreaOfEffectAttack::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
+{	
+	auto owner = std::dynamic_pointer_cast<IPhysicsEventReceiver>(owner_.lock());
+	if (owner == nullptr) { return; }
+	auto owner_tag = owner->GetRigidBody()->GetTag();
+	auto object_tag = object->GetRigidBody()->GetTag();
+
+	// オーナーが何者かを判別
+	if (owner_tag == "player")
+	{
+		// playerからダメージを受ける対象に変換
+		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
+		{
+			takable_player->OnDamageFromPlayer(1, AttackType::kMagic);
+		}
+		return;
+	}
+
+	// オーナーが何者かを判別
+	if (owner_tag == "enemy")
+	{
+		//playerからダメージを受ける対象に変換
+		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
+		{
+			takable_enemy->OnDamageFromEnemy(1, AttackType::kMagic);
+		}
+		return;
+	}
+}
+
+void AreaOfEffectAttack::OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+
+}
+
+void AreaOfEffectAttack::OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 
 }

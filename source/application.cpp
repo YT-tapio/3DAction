@@ -10,18 +10,21 @@ Application::Application()
     
     SetGraphMode(kScreenWidth,kScreenHeight, 32);			//ウィンドウのサイズとカラーモードを決める
     ChangeWindowMode(TRUE);				//ウィンドウモードにする
-    SetFullSceneAntiAliasingMode(400, 0);
+    SetFullSceneAntiAliasingMode(4, 0);
+    
+    // DirectX11を使用するようにする。(DirectX9も可、一部機能不可)
+    // Effekseerを使用するには必ず設定する。
+    SetUseDirect3DVersion(DX_DIRECT3D_11);
     if (DxLib_Init() == -1)    // ＤＸライブラリ初期化処理
     {
         return;    // エラーが起きたら直ちに終了
     }
 
-    // DirectX11を使用するようにする。(DirectX9も可、一部機能不可)
-  // Effekseerを使用するには必ず設定する。
-    SetUseDirect3DVersion(DX_DIRECT3D_11);
+    //SetUsePremulAlphaConvertLoad(FALSE);
+    
 
     // 引数には画面に表示する最大パーティクル数を設定する。
-    if (Effkseer_Init(20000) == -1) { DxLib_End(); }
+    if (Effkseer_Init(1000) == -1) { DxLib_End(); }
 
     // フルスクリーンウインドウの切り替えでリソースが消えるのを防ぐ。
     // Effekseerを使用する場合は必ず設定する。
@@ -49,8 +52,6 @@ Application::Application()
     SetUseBackCulling(FALSE);		// バックカリングを行う
 
     SetUseSetDrawScreenSettingReset(FALSE);
-
-    
 
     scene_manager_ = std::make_shared<SceneManager>();
     

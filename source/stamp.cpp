@@ -65,6 +65,7 @@ BehaviorStatus Stamp::Update()
 	{
 		auto owner_rigid_body = owner_physics->GetRigidBody();
 
+		// 着地の瞬間
 		if (owner_rigid_body->GetIsLanding()) 
 		{
 			// この瞬間に当たり判定を発生する
@@ -95,14 +96,14 @@ void Stamp::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 	auto owner = std::dynamic_pointer_cast<IPhysicsEventReceiver>(owner_.lock());
 	if (owner == nullptr) { return; }
 	auto owner_tag = owner->GetRigidBody()->GetTag();
-	auto object_tag = owner->GetRigidBody()->GetTag();
+	auto object_tag = object->GetRigidBody()->GetTag();
 
 	if (owner_tag == object_tag) { return; }
 
 	// オーナーが何者かを判別
 	if (owner_tag == "player")
 	{
-		//playerからダメージを受ける対象に変換
+		// playerからダメージを受ける対象に変換
 		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
 		{
 			takable_player->OnDamageFromPlayer(1,AttackType::kPhysical);

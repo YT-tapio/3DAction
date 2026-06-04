@@ -137,10 +137,14 @@ void Player::Init()
 	}
 	avoid_->Init();
 	test_behavior_->Init();
+	
 }
 
 void Player::Update()
 {
+	// エフェクトを発生
+	EffectUpdate();
+
 	if (status_container_->GetCurrentStatus().hp <= 0)
 	{
 		animator_->PlayRequest("death");
@@ -561,8 +565,9 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 	{
 		// この瞬間にエフェクトを描画
 		printfDx("無敵\n");
-		EffectManager::GetInstance().Play(EffectID::kAvoidCollect);
-		EffectManager::GetInstance().End(EffectID::kAvoidCollect, EffectEndState::kTotal);
+		EffectManager::GetInstance().Play(EffectID::kAvoidSuccess);
+		EffectManager::GetInstance().SetPos(EffectID::kAvoidSuccess,pos_);
+		EffectManager::GetInstance().End(EffectID::kAvoidSuccess, EffectEndState::kTotal);
 
 		return;
 	}
@@ -662,4 +667,11 @@ const VECTOR Player::GetInputDir() const
 	input_dir = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(*camera_dir_), VectorAssistant::VGetTan(input_dir));
 	input_dir = VNorm(input_dir);
 	return input_dir;
+}
+
+void Player::EffectUpdate()
+{
+	
+
+
 }
