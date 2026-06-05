@@ -285,96 +285,116 @@ void Physics::Gravity()
 
 void Physics::Collision()
 {
+	for (int i = 0; i < kLoopCollision; i++)
+	{
+		// 押し戻しされたか
+		bool is_resolve = TRUE;
+
+		for (auto& main_id_body : id_rigid_bodies_mp_)
+		{
+			auto main_id = main_id_body.first;
+			auto main_body = main_id_body.second;
+			if (!main_body->GetIsActive())
+			{
+				// 自分がactiveではないときはpairからなくす
+				// 消去
+				for (auto it = collisioned_pairs_id_.begin(); it != collisioned_pairs_id_.end();)
+				{
+					// first,secondどちらかに要素があるなら消去
+					if (it->first == main_id || it->second == main_id)
+					{
+						it = collisioned_pairs_id_.erase(it);
+					}
+					else
+					{
+						++it;
+					}
+				}
+				continue;
+			}
+			for (auto& target_id_body : id_rigid_bodies_mp_)
+			{
+				auto target_body = target_id_body.second;
+				if (!target_body->GetIsActive()) { continue; }
+				if (main_body == target_body) { continue; }
+				contact.polys.clear();
+				// コライダーにhitの確認を行う
+				auto my_coll = main_body->GetCollider();
+				auto target_coll = target_body->GetCollider();
+
+				// idが低い方を先にする
+
+				auto target_id = target_id_body.first;
+				std::pair<int, int> pair;
+
+				if (main_id < target_id)
+				{
+					pair = { main_id, target_id };
+				}
+				else
+				{
+					pair = { target_id,main_id };
+				}
+
+				if (my_coll->CheckCollision(main_body->GetPosition(), main_body->GetVelocity(), target_body->GetPosition(), target_body->GetVelocity(), target_coll, contact))
+				{
+					// ここで1フレーム前衝突しているかの確認をします
+					// それによってenterもしくはstayを呼ぶ
+
+					if (CheckCollisionedIDPair(pair))
+					{
+						// stay
+						main_body->OnCollisionStay(target_body->GetIPhysicsObject());
+						target_body->OnCollisionStay(main_body->GetIPhysicsObject());
+					}
+					else
+					{
+						// enter
+						// 要素の追加
+						collisioned_pairs_id_.emplace_back(pair);
+						// stay
+						main_body->OnCollisionEnter(target_body->GetIPhysicsObject());
+						target_body->OnCollisionEnter(main_body->GetIPhysicsObject());
+					}
+
+					if (main_body->GetIsKinematic()) { continue; }
+					if (!target_body->IsObject()) { continue; }
+					// 押し戻し
+					VECTOR offset_vel = my_coll->FixPos(main_body->GetPosition(), main_body->GetVelocity(), target_body->GetPosition(), target_coll, contact);
+					main_body->Update(offset_vel);
+					is_resolve = TRUE;
+				}
+				else
+				{
+					// ここで1フレーム前当たっているかを調べる
+
+					if (CheckCollisionedIDPair(pair))
+					{
+						// exitを呼び出す
+						main_body->OnCollisionExit(target_body->GetIPhysicsObject());
+						target_body->OnCollisionExit(main_body->GetIPhysicsObject());
+
+						// 要素の削除も行う
+						collisioned_pairs_id_.remove(pair);
+					}
+				}
+			}
+			
+		}
+
+		if (!is_resolve)
+		{
+			break;
+		}
+
+	}
+	// 位置更新
 	for (auto& main_id_body : id_rigid_bodies_mp_)
 	{
-		auto main_id = main_id_body.first;
-		auto main_body = main_id_body.second;
-		if (!main_body->GetIsActive()) 
-		{
-			// 自分がactiveではないときはpairからなくす
-			// 消去
-			for (auto it = collisioned_pairs_id_.begin(); it != collisioned_pairs_id_.end();)
-			{
-				// first,secondどちらかに要素があるなら消去
-				if(it->first == main_id || it->second == main_id)
-				{
-					it = collisioned_pairs_id_.erase(it);
-				}
-				else
-				{
-					++it;
-				}
-			}
-			continue;
-		}
-		for (auto& target_id_body : id_rigid_bodies_mp_)
-		{
-			auto target_body = target_id_body.second;
-			if (!target_body->GetIsActive()) { continue; }
-			if (main_body == target_body) { continue; }
-			contact.polys.clear();
-			// コライダーにhitの確認を行う
-			auto my_coll = main_body->GetCollider();
-			auto target_coll = target_body->GetCollider();
-
-			// idが低い方を先にする
-			
-			auto target_id = target_id_body.first;
-			std::pair<int, int> pair;
-
-			if (main_id < target_id)
-			{
-				pair = { main_id, target_id };
-			}
-			else
-			{
-				pair = { target_id,main_id };
-			}
-
-			if (my_coll->CheckCollision(main_body->GetPosition(), main_body->GetVelocity(), target_body->GetPosition(), target_body->GetVelocity(), target_coll, contact))
-			{
-				// ここで1フレーム前衝突しているかの確認をします
-				// それによってenterもしくはstayを呼ぶ
-
-				if (CheckCollisionedIDPair(pair))
-				{
-					// stay
-					main_body->OnCollisionStay(target_body->GetIPhysicsObject());
-					target_body->OnCollisionStay(main_body->GetIPhysicsObject());
-				}
-				else
-				{
-					// enter
-					// 要素の追加
-					collisioned_pairs_id_.emplace_back(pair);
-					// stay
-					main_body->OnCollisionEnter(target_body->GetIPhysicsObject());
-					target_body->OnCollisionEnter(main_body->GetIPhysicsObject());
-				}
-
-				if (main_body->GetIsKinematic()) { continue; }
-				if (!target_body->IsObject()) { continue; }
-				// 押し戻し
-				VECTOR offset_vel = my_coll->FixPos(main_body->GetPosition(), main_body->GetVelocity(), target_body->GetPosition(), target_coll, contact);
-				main_body->Update(offset_vel);
-			}
-			else
-			{
-				// ここで1フレーム前当たっているかを調べる
-				
-				if (CheckCollisionedIDPair(pair))
-				{
-					// exitを呼び出す
-					main_body->OnCollisionExit(target_body->GetIPhysicsObject());
-					target_body->OnCollisionExit(main_body->GetIPhysicsObject());
-
-					// 要素の削除も行う
-					collisioned_pairs_id_.remove(pair);
-				}
-			}
-		}
-		main_body->SetPos();
+		main_id_body.second->SetPos();
 	}
+
+
 
 }
 

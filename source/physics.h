@@ -99,6 +99,8 @@ private:
 	const float kGroundProjLength		= 0.25;		// 地面のレイの許容範囲
 	const float kOffsetCheckGround	= 0.015f;		// もともとのポジションから調整した値
 	
+	const int kLoopCollision = 10;
+
 	int rigid_body_id_ = 0;
 	Contact contact = {};
 

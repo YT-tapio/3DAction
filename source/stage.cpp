@@ -21,8 +21,8 @@ Stage::Stage()
 	{
 		printfDx("ì«Ç›çûÇ›Ç≈Ç´Ç»Ç¢\n");
 	}
-	pos_ = VGet(0.f, -10.f, 30.f);
-	scale_ = VectorAssistant::VGetSame(14.5f);
+	pos_ = VGet(0.f, -20.f, 30.f);
+	scale_ = VectorAssistant::VGetSame(25.5f);
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Mesh>(handle_), &pos_, FALSE, TRUE, 20.f,1.f);
 }
 
