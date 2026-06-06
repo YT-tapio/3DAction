@@ -119,10 +119,10 @@ void EnemyBase::Init()
 
 	// ƒ‰ƒ“ƒ_ƒ€‚Ìnode‚É‘ã“ü
 	std::vector<std::shared_ptr<NodeBase>>random_nodes;
-	random_nodes.emplace_back(stump_node);
+	//random_nodes.emplace_back(stump_node);
 	random_nodes.emplace_back(double_punch_node);
-	random_nodes.emplace_back(area_of_effect_node);
-	random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
+	//random_nodes.emplace_back(area_of_effect_node);
+	//random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
 
 	std::vector<std::shared_ptr<NodeBase>> random_nodes2;
 

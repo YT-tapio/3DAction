@@ -12,6 +12,7 @@ struct EffectData
 
 	float speed;			// 再生速度
 	float play_time;		// 現在の再生時間
+	float start_time;		// 再生開始時間
 	float total_time;		// トータル
 
 	bool loop;				// ループ再生か

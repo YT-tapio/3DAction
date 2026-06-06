@@ -79,6 +79,8 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	is_dash_ = FALSE;
 	is_attack_target_in_range_ = FALSE;
 	is_stop_ = FALSE;
+	can_move_ = TRUE;
+	on_damage_ = FALSE;
 	//input_ = input;
 	target_rot_y_ = 0;
 	speed_ = 0.f;
@@ -114,7 +116,8 @@ void Player::Init()
 			std::make_shared<CheckMyArea>(std::make_shared<Sphere>(20.f,
 				VectorAssistant::VGetZero()), &pos_), &pos_);
 	is_invincible_ = FALSE;
-	
+	can_move_ = TRUE;
+	on_damage_ = FALSE;
 	InputManager::GetInstance().AddInput(input_change);
 	// physicsの登録
 	Physics::GetInstance().AddBody(rigid_body_);
@@ -138,19 +141,19 @@ void Player::Init()
 	avoid_->Init();
 	test_behavior_->Init();
 	
+	EffectManager::GetInstance().Play(EffectID::kHandAura);
+	EffectManager::GetInstance().Play(EffectID::kHandAura2);
 }
 
 void Player::Update()
 {
-	// エフェクトを発生
-	EffectUpdate();
-
 	if (status_container_->GetCurrentStatus().hp <= 0)
 	{
 		animator_->PlayRequest("death");
 	}
 	else
 	{
+		
 		Move();
 		if (skill_ != nullptr)
 		{
@@ -164,13 +167,15 @@ void Player::Update()
 		avoid_->Update();
 		rigid_body_->SetTargetVelocity(vel_);
 		test_behavior_->Update();
-
 	}
 	
 	animator_->Update();
 	Setting();
 	// 参照の更新
 	UpdateBone();
+	// エフェクトを発生
+	EffectUpdate();
+	on_damage_ = FALSE;
 }
 
 void Player::LateUpdate()
@@ -364,6 +369,10 @@ void Player::MakeSkill(std::weak_ptr<Player> owner)
 
 void Player::Move()
 {
+	if (animator_->GetNowAnimName() == "idle") 
+	{
+		if (!on_damage_) { can_move_ = TRUE; }
+	}
 	VECTOR dir = VectorAssistant::VGetZero();
 	vel_ = VectorAssistant::VGetZero();
 	float speed = speed_;
@@ -374,7 +383,7 @@ void Player::Move()
 		dir.z = input_->GetMoveDir().y;
 	}
 	
-	if (VSize(dir) > 0 && !is_stop_)
+	if (VSize(dir) > 0 && !is_stop_ && can_move_)
 	{
 		auto input = std::dynamic_pointer_cast<const PlayerInput>(input_);
 		if (input != nullptr) 
@@ -499,29 +508,44 @@ void Player::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		if (!object->GetRigidBody()->CheckSameOwner(shared_from_this()))
 		{
 			animator_->PlayRequest("on_damage");
+			can_move_ = FALSE;
 		}
 		return;
 	}
 
 	if (target_tag == "double_punch")
 	{
-		// 自身とオーナーのパンチがplayerにcastしてnullptrなったら処理する
+		// rigidbodyのオーナと自身が一緒の場合は除外
 		if (!object->GetRigidBody()->CheckSameOwner(shared_from_this()))
 		{
 			animator_->PlayRequest("on_damage");
+			can_move_ = FALSE;
 		}
 		return;
 	}
 
 	if (target_tag == "tackle")
 	{
+		// 自身とオーナーがplayerにcastしてnullptrなったら処理する
+		if (!object->GetRigidBody()->CheckSameOwner(shared_from_this()))
+		{
+			animator_->PlayRequest("knock_back");
+			can_move_ = FALSE;
+		}
+		return;
+	}
+
+	if (target_tag == "area_of_effect")
+	{
 		// 自身とオーナーのパンチがplayerにcastしてnullptrなったら処理する
 		if (!object->GetRigidBody()->CheckSameOwner(shared_from_this()))
 		{
 			animator_->PlayRequest("knock_back");
+			can_move_ = FALSE;
 		}
 		return;
 	}
+
 }
 
 void Player::OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object)
@@ -531,12 +555,6 @@ void Player::OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object)
 
 void Player::OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object)
 {
-
-}
-
-void Player::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
-{
-	
 
 }
 
@@ -568,9 +586,9 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 		EffectManager::GetInstance().Play(EffectID::kAvoidSuccess);
 		EffectManager::GetInstance().SetPos(EffectID::kAvoidSuccess,pos_);
 		EffectManager::GetInstance().End(EffectID::kAvoidSuccess, EffectEndState::kTotal);
-
 		return;
 	}
+	on_damage_ = TRUE;
 	status_container_->TakeDamage(damage,type);
 	//printfDx("ダメージを受けちゃってます\n");
 }
@@ -645,6 +663,11 @@ const bool Player::GetIsStop() const
 	return is_stop_;
 }
 
+const bool Player::GetCanMove() const
+{
+	return can_move_;
+}
+
 const VECTOR Player::GetDirection() const
 {
 	return dir_;
@@ -671,7 +694,9 @@ const VECTOR Player::GetInputDir() const
 
 void Player::EffectUpdate()
 {
-	
+	VECTOR effect_right_hand_pos = VGet(right_hand_pos_.x, right_hand_pos_.y - 1.f, right_hand_pos_.z);
+	VECTOR effect_left_hand_pos = VGet(left_hand_pos_.x, left_hand_pos_.y - 1.f, left_hand_pos_.z);
 
-
+	EffectManager::GetInstance().SetPos(EffectID::kHandAura,effect_right_hand_pos);
+	EffectManager::GetInstance().SetPos(EffectID::kHandAura2,effect_left_hand_pos);
 }

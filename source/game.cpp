@@ -47,13 +47,13 @@ Game::~Game()
 void Game::Init()
 {
 	Physics::GetInstance().Init();
+	EffectManager::GetInstance().Init();
 	PlayerGroup::GetInstance().Init();
 	for (auto& obj : objects_)
 	{
 		obj->Init();
 	}
 	Brain::GetInstance().CreatePlaySceneVirtualCamera(camera_->GetPos(), camera_->GetTargetPos());
-	EffectManager::GetInstance().Init();
 	camera_->Init();
 }
 

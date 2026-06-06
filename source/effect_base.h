@@ -52,5 +52,5 @@ private:
 	bool is_end_;
 
 	int end_id_;
-
+	float start_speed_;
 };

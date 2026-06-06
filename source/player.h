@@ -52,8 +52,6 @@ public:
 
 	void OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
-	void OnHit(std::shared_ptr<IPhysicsEventReceiver> object) override;
-
 	void OnGround(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
 	void UnGround() override;
@@ -90,6 +88,8 @@ public:
 
 	const bool GetIsStop() const;
 
+	const bool GetCanMove() const;
+
 	const VECTOR GetDirection()const;
 
 	const VECTOR GetInputDir() const;
@@ -123,10 +123,12 @@ private:
 
 	float detection_radius_;
 
+	bool on_damage_;	// UŒ‚‚ğ‚­‚ç‚Á‚½uŠÔ
 	bool is_move_;
 	bool is_dash_;
 	bool* is_punch_;
-	bool is_stop_;
+	bool can_move_;		// ˆÚ“®‚Ì‹–‰Â
+	bool is_stop_;		// ‘€ì‚ğ‚³‚¹‚È‚¢‚½‚ß‚Ìƒtƒ‰ƒO
 	bool is_attack_target_in_range_;		// UŒ‚‘ÎÛ‚ª”ÍˆÍ“à‚É‚¢‚é‚Ì‚©
 
 	// ŠÖ”ŒQ

@@ -207,11 +207,11 @@ void EffectManager::LoadFile()
 		effect_data.scale			= CSVFileAssistant::GetVectorOfCSVFile(ss, data);		// 大きさ
 		effect_data.speed			= CSVFileAssistant::GetFloatOfCSVFile(ss, data);			// speed
 		effect_data.play_time		= 0.f;																		// 再生時間を初期化
+		effect_data.start_time		= CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		effect_data.total_time		= CSVFileAssistant::GetFloatOfCSVFile(ss, data);			// effectの再生トータル時間
 		effect_data.loop				= CSVFileAssistant::GetBoolOfCSVFile(ss, data);			// ループ
 		effects_[id]					= std::make_shared<EffectBase>(effect_data);			// エフェクトを生成
 	}
-
 
 }
 

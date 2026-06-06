@@ -1,7 +1,8 @@
-﻿id,path,pos,,,rot,,,scale,,,speed,totla_time,loop
-,,x,y,z,x,y,z,x,y,z,,,
-0,data/effect/3D/Effekseer01/Laser03.efkefc,0,0,0,0,90,0,1,1,1,1,100,1
-1,data/effect/3D/Effekseer01/Laser03.efkefc,0,10,0,0,0,0,1,1,1,1,100,1
-2,data/effect/3D/Effekseer01/Simple_Sprite_FixedYAxis.efkefc,0,0,0,0,0,0,2,2,2,5,160,0
-3,data/effect/3D/MAGICALxSPIRAL/avoid_success.efkefc,0,0,0,0,0,0,50,50,50,1,60,0
-4,data/effect/3D/NextSoft01/hand_aura.efkefc,0,0,0,0,0,0,1,1,1,1,30,1
+﻿id,path,pos,,,rot,,,scale,,,speed,start_speed,totla_time,loop
+,,x,y,z,x,y,z,x,y,z,,,,
+0,data/effect/3D/Effekseer01/Laser03.efkefc,0,0,0,0,90,0,1,1,1,1,0,100,1
+1,data/effect/3D/Effekseer01/Laser03.efkefc,0,10,0,0,0,0,1,1,1,1,0,100,1
+2,data/effect/3D/Effekseer01/Simple_Sprite_FixedYAxis.efkefc,0,0,0,0,0,0,2,2,2,5,0,160,0
+3,data/effect/3D/MAGICALxSPIRAL/avoid_success.efkefc,0,0,0,0,0,0,50,50,50,1,0,60,0
+4,data/effect/3D/NextSoft01/hand_aura.efkefc,0,0,0,0,0,0,1,1,1,0.6,0,60,1
+5,data/effect/3D/NextSoft01/hand_aura.efkefc,0,0,0,0,0,0,1,1,1,0.6,0,60,1

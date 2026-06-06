@@ -15,6 +15,7 @@ EffectBase::EffectBase(EffectData data)
 	, is_stop_(FALSE)
 	, is_end_(FALSE)
 	, end_id_(EffectEndState::kNothing)
+	, start_speed_(0.f)
 {
 	
 }
@@ -37,7 +38,8 @@ void EffectBase::Update()
 {
 	if (!is_play_) { return; }
 	// 再生時間
-	float speed = data_.speed * (FPS::GetInstance().GetDeltaTime() * 60.f);
+	float speed = data_.speed * (FPS::GetInstance().GetDeltaTime() * 60.f) + start_speed_;
+	start_speed_ = 0.f;
 	if (is_stop_) { speed = 0.f; }
 
 	if (end_id_ == EffectEndState::kMoment)
@@ -67,7 +69,7 @@ void EffectBase::Update()
 				return;
 			}
 			data_.playing_handle = PlayEffekseer3DEffect(data_.handle);
-			data_.play_time = data_.play_time - data_.total_time;
+			data_.play_time = data_.play_time - data_.total_time + data_.start_time;
 			SetSpeedPlayingEffekseer3DEffect(data_.playing_handle, data_.play_time);
 		}
 		else
@@ -85,6 +87,9 @@ void EffectBase::Play()
 	data_.play_time = 0.f;
 	end_id_ = EffectEndState::kNothing;
 	is_end_ = TRUE;
+	// 初期の開始時間をセットする
+	// それをにspeedに足してあげる
+	start_speed_ = data_.start_time;
 }
 
 void EffectBase::Stop()
