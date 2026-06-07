@@ -119,16 +119,18 @@ void Game::Update()
 void Game::Draw()
 {
 
-	//DrawCapsule3D(capsule_pos, VAdd(capsule_pos,VGet(0,vertical,0)), capsule_r, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
-	//DrawCapsule3D(capsule2_pos, VAdd(capsule2_pos,VGet(capsule2_vertical,0.f,0.f)),capsule2_r, 20, GetColor(255, 0, 0), GetColor(255, 255, 255), FALSE);
-
 	PlayerGroup::GetInstance().Draw();
 	for (auto& obj : objects_)
 	{
 		obj->Draw();
 	}
 	// Physics::GetInstance().Debug();
-
+	
+	PlayerGroup::GetInstance().Draw2D();
+	for (auto& obj : objects_)
+	{
+		obj->Draw2D();
+	}
 	
 	if (Debug::GetInstance().GetIsDisp())
 	{

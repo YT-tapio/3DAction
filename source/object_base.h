@@ -17,6 +17,8 @@ public:
 
 	virtual void Draw();
 
+	virtual void Draw2D();
+
 	virtual void  Debug();
 
 	const bool GetIsActive() const;

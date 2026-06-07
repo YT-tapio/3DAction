@@ -15,20 +15,26 @@ Stage::Stage()
 {
 	LoadFile();
 
-	handle_ = MV1LoadModel("data/model/stage/stage_field_test.mv1");
+	handle_ = MV1LoadModel("data/model/stage/field.mv1");
+	coll_handle_ = MV1LoadModel("data/model/stage/stage_field_test.mv1");
+	// “–‚½‚è”»’è—pƒ‚ƒfƒ‹
 
 	if (handle_ == -1)
 	{
 		printfDx("“Ç‚İ‚İ‚Å‚«‚È‚¢\n");
 	}
+	if (coll_handle_ == -1)
+	{
+		printfDx("“Ç‚İ‚İ‚Å‚«‚È‚¢\n");
+	}
 	pos_ = VGet(0.f, -20.f, 30.f);
 	scale_ = VectorAssistant::VGetSame(0.3f);
-	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Mesh>(handle_), &pos_, FALSE, TRUE, 20.f,1.f);
+	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Mesh>(coll_handle_), &pos_, FALSE, TRUE, 20.f,1.f);
 }
 
 Stage::~Stage()
 {
-
+	MV1DeleteModel(coll_handle_);
 }
 
 void Stage::Init()
@@ -38,6 +44,7 @@ void Stage::Init()
 	// RigidBody‚Ì“o˜^
 	Physics::GetInstance().AddBody(rigid_body_);
 	ObjectSetter::GetInstance().AddResource(handle_, &pos_, &rot_, &scale_);
+	ObjectSetter::GetInstance().AddResource(coll_handle_, &pos_, &rot_, &scale_);
 }
 
 void Stage::Update()

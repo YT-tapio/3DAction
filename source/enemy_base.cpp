@@ -58,7 +58,11 @@ EnemyBase::EnemyBase(const VECTOR& pos)
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(5.5f, 18.f, VectorAssistant::VGetZero()), 
 		&pos_, TRUE, FALSE, 0.03f,0.1f);
 	fall_speed_ = 0.f;
-	status_container_ = std::make_shared<StatusContainer>("zako");
+
+	VECTOR hp_pos = VectorAssistant::VGet2D(1000.f, 100.f);
+	VECTOR hp_size = VectorAssistant::VGet2D(500.f, 50.f);
+
+	status_container_ = std::make_shared<StatusContainer>("zako",hp_pos,hp_size);
 }
 
 EnemyBase::~EnemyBase()
@@ -188,7 +192,6 @@ void EnemyBase::Update()
 {
 	if (CheckHitKey(KEY_INPUT_J)) { status_container_->TakeHeal(10); }
 
-
 	if (status_container_->GetCurrentStatus().hp <= 0)
 	{
 		animator_->PlayRequest("death");
@@ -223,6 +226,11 @@ void EnemyBase::LateUpdate()
 void EnemyBase::Draw()
 {
 	MV1DrawModel(handle_);
+}
+
+void EnemyBase::Draw2D()
+{
+	status_container_->Draw();
 }
 
 void EnemyBase::Debug()

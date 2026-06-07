@@ -73,7 +73,9 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	UpdateBone();
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), 
 		&pos_, TRUE, FALSE, 0.03f, 0.1f);
-	status_container_ = std::make_shared<StatusContainer>(name_);
+	VECTOR hp_pos = VectorAssistant::VGet2D(300.f, 800.f);
+	VECTOR hp_size = VectorAssistant::VGet2D(100.f, 30.f);
+	status_container_ = std::make_shared<StatusContainer>(name_,hp_pos, hp_size);
 	fall_speed_ = 0.f;
 	is_move_ = FALSE;
 	is_dash_ = FALSE;
@@ -220,8 +222,14 @@ void Player::Draw()
 	MV1DrawModel(handle_);
 }
 
+void Player::Draw2D()
+{
+	status_container_->Draw();
+}
+
 void Player::Debug()
 {
+	
 	if (FALSE) { return; }
 	if (skill_ != nullptr) { skill_->Debug(); }
 	if (second_skill_ != nullptr) { second_skill_->Debug(); }

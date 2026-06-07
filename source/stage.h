@@ -30,7 +30,8 @@ protected:
 private:
 
 	std::shared_ptr<RigidBody> rigid_body_;
-
+	// “–‚½‚è”»’è—pƒ‚ƒfƒ‹
+	int coll_handle_;
 
 	void LoadFile();
 

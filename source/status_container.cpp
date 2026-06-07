@@ -1,6 +1,7 @@
 #include<fstream>
 #include<sstream>
 #include<string>
+#include"DxLib.h"
 #include"status.h"
 #include"status_container.h"
 #include"csv_file_assistant.h"
@@ -10,10 +11,13 @@
 #include"attack_type.h"
 #include"debug.h"
 #include"color.h"
+#include"vector_assistant.h"
 
-StatusContainer::StatusContainer(const std::string owner_name)
+StatusContainer::StatusContainer(const std::string owner_name,const VECTOR& hp_pos, const VECTOR& hp_size)
 	: base_status_{}
 	, current_status_{}
+	,hp_pos_(hp_pos)
+	, hp_size_(hp_size)
 {
 	LoadFile(owner_name);
 	Init();
@@ -33,6 +37,40 @@ void StatusContainer::Update()
 {
 	// バフされる量をあらかじめ決めておく
 
+}
+
+void StatusContainer::Draw()
+{
+	// HPの描画
+	// 棒状のものが減るようにして、下の方にhpの数値を書くような形で
+
+	// 右上のpos
+	VECTOR box_right_pos = VectorAssistant::VGet2D((hp_pos_.x - (hp_size_.x * 0.5f)), (hp_pos_.y - (hp_size_.y * 0.5f)));
+
+	// 後ろのものmaxまで表示されるもの
+	DrawBox(static_cast<int>(box_right_pos.x),
+		static_cast<int>(box_right_pos.y),
+		static_cast<int>(box_right_pos.x + hp_size_.x),
+		static_cast<int>(box_right_pos.y + hp_size_.y),
+		GetColor(255, 0, 0), TRUE);
+
+	float hp_size_x = 0;
+	
+	if (current_status_.hp > 0)
+	{
+		hp_size_x = hp_size_.x * (current_status_.hp / base_status_.hp);
+
+		DrawBox(static_cast<int>(box_right_pos.x),
+			static_cast<int>(box_right_pos.y),
+			static_cast<int>(box_right_pos.x + hp_size_x),
+			static_cast<int>(box_right_pos.y + hp_size_.y),
+			GetColor(0, 220, 30), TRUE);
+	}
+
+	// 下にhpの実数値を描画
+	VECTOR hp_num_pos = VectorAssistant::VGet2D(hp_pos_.x - (hp_size_.x * 0.5f), hp_pos_.y + (hp_size_.y * 0.5f) + 2.f);
+	DrawFormatString(static_cast<int>(hp_num_pos.x), static_cast<int>(hp_num_pos.y),
+		GetColor(0, 0, 3), "HP：%d", static_cast<int>(current_status_.hp));
 }
 
 void StatusContainer::Debug()

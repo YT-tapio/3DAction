@@ -1,5 +1,6 @@
 #include<memory>
 #include<string>
+#include"DxLib.h"
 #include"status_holder_interface.h"
 #include"status.h"
 #include"status_container.h"

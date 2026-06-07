@@ -69,6 +69,14 @@ void PlayerGroup::Draw()
 	}
 }
 
+void PlayerGroup::Draw2D()
+{
+	for (auto& player : players_)
+	{
+		player->Draw2D();
+	}
+}
+
 void PlayerGroup::Debug()
 {
 	for (auto& player : players_)
