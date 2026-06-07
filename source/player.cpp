@@ -147,6 +147,7 @@ void Player::Init()
 
 void Player::Update()
 {
+	if (CheckHitKey(KEY_INPUT_I)) { status_container_->TakeHeal(10); }
 	if (status_container_->GetCurrentStatus().hp <= 0)
 	{
 		animator_->PlayRequest("death");

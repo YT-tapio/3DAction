@@ -110,6 +110,13 @@ void StatusContainer::TakeDamage(float atk,AttackType type)
 	if (current_status_.hp < 0.f) { current_status_.hp = 0.f; }
 }
 
+void StatusContainer::TakeHeal(float heal)
+{
+	current_status_.hp += heal;
+
+	if (current_status_.hp > base_status_.hp) { current_status_.hp = base_status_.hp; }
+}
+
 const Status StatusContainer::GetCurrentStatus() const
 {
 	return current_status_;

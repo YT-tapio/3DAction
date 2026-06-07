@@ -20,6 +20,8 @@ public:
 
 	void TakeDamage(float atk,AttackType type);
 
+	void TakeHeal(float heal);
+
 	const Status GetCurrentStatus() const;
 
 private:

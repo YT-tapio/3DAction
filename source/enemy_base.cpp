@@ -186,6 +186,9 @@ void EnemyBase::Init()
 
 void EnemyBase::Update()
 {
+	if (CheckHitKey(KEY_INPUT_J)) { status_container_->TakeHeal(10); }
+
+
 	if (status_container_->GetCurrentStatus().hp <= 0)
 	{
 		animator_->PlayRequest("death");
