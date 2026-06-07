@@ -310,7 +310,8 @@ void AnimatorBase::BlendUpdate()
 		blend_rate_		= 1.f;
 		//printfDx("now_anim		: %s\n", now_anim_name_.c_str());
 		//printfDx("before_anim	: %s\n", before_anim_name_.c_str());
-
+		MV1SetAttachAnimBlendRate(handle_, before_anim_data.attach_index, 1.f - blend_rate_);
+		MV1SetAttachAnimBlendRate(handle_, animation_datas_[now_anim_name_].attach_index, blend_rate_);
 		MV1DetachAnim(handle_, before_anim_data.attach_index);
 		before_anim_data.attach_index	= -1;
 		before_anim_data.play_time		= 0.f;

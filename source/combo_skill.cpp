@@ -76,7 +76,6 @@ void ComboSkill::Update()
 			Correction(combo_action);
 			//owner_.lock()->SetIsStop(TRUE);
 		}
-
 	}
 
 	behavior_->Update();

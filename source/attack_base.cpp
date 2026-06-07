@@ -67,3 +67,9 @@ std::shared_ptr<RigidBody> AttackBase::GetRigidBody()
 {
 	return rigid_body_;
 }
+
+bool AttackBase::CheckSameOwner(std::shared_ptr<ObjectBase> other_owner)
+{
+	auto owner = owner_.lock();
+	return owner == other_owner;
+}

@@ -8,4 +8,5 @@ namespace EffectID
 	static const int kAvoidSuccess = 3;
 	static const int kHandAura = 4;
 	static const int kHandAura2 = 5;
+	static const int kStamp = 6;
 }

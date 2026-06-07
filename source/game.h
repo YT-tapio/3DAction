@@ -20,6 +20,8 @@ public:
 
 	void Draw() override;
 
+	const std::string GetName() const override;
+
 private:
 
 	VECTOR capsule_pos = VGet(-10, 0, 20);

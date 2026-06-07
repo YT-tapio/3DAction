@@ -93,6 +93,9 @@ private:
 	/// <returns></returns>
 	bool IsSamePair(std::pair<int, int> my_pair, std::pair<int, int> target_pair);
 
+	//ˆø”‚Ìpairs‚Ì’†‚É’²‚×‚éˆø”‚Ìpair‚ª‚ ‚é‚©‚ğ’²‚×‚é
+	bool CheckInPair(std::vector<std::pair<int, int>> pairs, std::pair<int, int> pair);
+
 private:
 
 	const float kResistanceNum			= 0.18f;	// ’ïR‚Ì‹­‚³

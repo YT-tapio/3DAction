@@ -14,8 +14,11 @@ public:
 
 	virtual void Draw();
 
-private:
+	const virtual std::string GetName() const;
 
-	
+protected:
+
+
+private:
 
 };

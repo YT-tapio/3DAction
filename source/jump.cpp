@@ -42,7 +42,7 @@ void Jump::Entry()
 	{
 		owner->GetAnimator()->PlayRequest(my_anim_name_);
 	}
-	printfDx("jump_entry\n");
+	// printfDx("jump_entry\n");
 }
 
 BehaviorStatus Jump::Update()

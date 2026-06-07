@@ -95,7 +95,7 @@ void EnemyBase::Init()
 		"jumping_attack", timing, 1.f)));
 
 	stump_nodes.push_back(std::make_shared<ActionNode>
-		(std::make_shared<Stamp>(obj_mine, &pos_, 10.f,"jumping_attack")));
+		(std::make_shared<Stamp>(obj_mine, &pos_, 60.f,"jumping_attack")));
 
 	std::shared_ptr<NodeBase> stump_node = std::make_shared<SequenceNode>(stump_nodes);
 	
@@ -119,11 +119,12 @@ void EnemyBase::Init()
 
 	// ƒ‰ƒ“ƒ_ƒ€‚Ìnode‚É‘ã“ü
 	std::vector<std::shared_ptr<NodeBase>>random_nodes;
-	//random_nodes.emplace_back(stump_node);
+	random_nodes.emplace_back(stump_node);
 	random_nodes.emplace_back(double_punch_node);
-	//random_nodes.emplace_back(area_of_effect_node);
-	//random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
+	random_nodes.emplace_back(area_of_effect_node);
+	random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
 
+	// ’Ç‚¢‚©‚¯‚é‚Æ‚«‚Ìƒm[ƒh
 	std::vector<std::shared_ptr<NodeBase>> random_nodes2;
 
 	random_nodes2.emplace_back(area_of_effect_node);
@@ -134,7 +135,7 @@ void EnemyBase::Init()
 
 	target_player_pos_ = PlayerGroup::GetInstance().MostNearPlayerPos(pos_);
 	std::shared_ptr<NodeBase> chase_node = std::make_shared<ActionNode>(std::make_shared<ChasePlayer>(obj_mine,
-		"run", &target_player_pos_, 0.1f));
+		"run", &target_player_pos_, 0.5f));
 
 	random_nodes2.emplace_back(chase_node);
 
@@ -188,7 +189,7 @@ void EnemyBase::Update()
 	if (status_container_->GetCurrentStatus().hp <= 0)
 	{
 		animator_->PlayRequest("death");
-		printfDx("%s\n",animator_->GetNowAnimName().c_str());
+		// printfDx("%s\n",animator_->GetNowAnimName().c_str());
 	}
 	else
 	{

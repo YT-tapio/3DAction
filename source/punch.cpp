@@ -25,6 +25,7 @@ Punch::Punch(std::weak_ptr<ObjectBase> owner, VECTOR* pos,
 {
 	pos_ = pos;
 	rigid_body_ = body;
+	frame_ = 0;
 }
 
 Punch::~Punch()
@@ -42,10 +43,10 @@ void Punch::Init()
 
 BehaviorStatus Punch::Update()
 {
+	frame_++;
 	// どうしよう
 	// 正直今この中ではただ手に当たり判定を持たせているだけなんだよな
 	// ownerにpunchを発生させたいよな
-	rigid_body_->NotActive();
 	auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
 	
 	if (owner == nullptr) { return BehaviorStatus::kFailure; }
@@ -56,7 +57,14 @@ BehaviorStatus Punch::Update()
 
 	float punch_play_time = owner_animator->GetRatio(my_anim_name_);
 	// 当たり判定をのactiveをします
-	if (punch_play_time > coll_timing_min_ && punch_play_time < coll_timing_max_) { rigid_body_->Active(); }
+	if (punch_play_time > coll_timing_min_ && punch_play_time < coll_timing_max_) 
+	{ 
+		rigid_body_->Active();
+	}
+	else
+	{
+		rigid_body_->NotActive();
+	}
 
 	return BehaviorStatus::kRunning;
 }
@@ -82,7 +90,7 @@ void Punch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 	auto object_tag = object->GetRigidBody()->GetTag();
 	// タグが同じだと早期リターン
 	if (owner_tag == object_tag) { return; }
-
+	
 	// タグが違う場合は相手にダメージを加える
 	// ownerがpalyerだったら
 	if (owner_tag == "player")
@@ -91,6 +99,7 @@ void Punch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
 		{
 			takable_player->OnDamageFromPlayer(1, AttackType::kPhysical);
+			//printfDx("frame：%d\n",frame_);
 		}
 		return;
 	}
@@ -109,7 +118,7 @@ void Punch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 
 void Punch::OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object)
 {
-
+	
 }
 
 void Punch::OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object)

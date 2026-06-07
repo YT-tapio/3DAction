@@ -16,6 +16,9 @@
 #include"takable_damage_player_interface.h"
 #include"takable_damage_enemy_interface.h"
 #include"attack_type.h"
+#include"effect_id.h"
+#include"effect_end_state.h"
+#include"effect_manager.h"
 
 Stamp::Stamp(std::weak_ptr<ObjectBase> owner, VECTOR* pos, float radius,std::string my_anim_name)
 	: AttackBase(owner,0,0)
@@ -43,7 +46,7 @@ void Stamp::Entry()
 {
 	rigid_body_->NotActive();
 	is_stamp_ = FALSE;
-	printfDx("stamp_entry\n");
+	//printfDx("stamp_entry\n");
 }
 
 BehaviorStatus Stamp::Update()
@@ -55,7 +58,7 @@ BehaviorStatus Stamp::Update()
 		if (auto character = std::dynamic_pointer_cast<CharacterBase>(owner_.lock()))
 		{
 			if(character->GetAnimator()->GetNowAnimName() != my_anim_name_)
-			{ 
+			{
 				return BehaviorStatus::kComplete;
 			}
 		}
@@ -71,6 +74,8 @@ BehaviorStatus Stamp::Update()
 			// ‚±‚ÌuŠÔ‚É“–‚½‚è”»’è‚ð”­¶‚·‚é
 			rigid_body_->Active();
 			is_stamp_ = TRUE;
+			EffectManager::GetInstance().Play(EffectID::kStamp);
+			EffectManager::GetInstance().SetPos(EffectID::kStamp,owner_.lock()->GetPosition());
 		}
 	}
 	// printfDx("stamp\n");

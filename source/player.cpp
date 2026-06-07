@@ -505,10 +505,14 @@ void Player::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 	if (target_tag == "punch")
 	{
 		// 自身とオーナーが一緒かを確認
-		if (!object->GetRigidBody()->CheckSameOwner(shared_from_this()))
+		if (is_invincible_) { return; }
+		if (auto punch = std::dynamic_pointer_cast<Punch>(object))
 		{
-			animator_->PlayRequest("on_damage");
-			can_move_ = FALSE;
+			if (!punch->CheckSameOwner(std::dynamic_pointer_cast<ObjectBase>(shared_from_this())))
+			{
+				animator_->PlayRequest("on_damage");
+				can_move_ = FALSE;
+			}
 		}
 		return;
 	}
@@ -516,6 +520,7 @@ void Player::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 	if (target_tag == "double_punch")
 	{
 		// rigidbodyのオーナと自身が一緒の場合は除外
+		if (is_invincible_) { return; }
 		if (!object->GetRigidBody()->CheckSameOwner(shared_from_this()))
 		{
 			animator_->PlayRequest("on_damage");
@@ -526,17 +531,23 @@ void Player::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 
 	if (target_tag == "tackle")
 	{
-		// 自身とオーナーがplayerにcastしてnullptrなったら処理する
-		if (!object->GetRigidBody()->CheckSameOwner(shared_from_this()))
-		{
-			animator_->PlayRequest("knock_back");
-			can_move_ = FALSE;
-		}
+		if (is_invincible_) { return; }
+		animator_->PlayRequest("knock_back");
+		can_move_ = FALSE;
 		return;
 	}
 
-	if (target_tag == "area_of_effect")
+	if (target_tag == "stamp")
 	{
+		if (is_invincible_) { return; }
+		animator_->PlayRequest("on_damage");
+		can_move_ = FALSE;
+		return;
+	}
+
+	if (target_tag == "effect_attack")
+	{
+		if (is_invincible_) { return; }
 		// 自身とオーナーのパンチがplayerにcastしてnullptrなったら処理する
 		if (!object->GetRigidBody()->CheckSameOwner(shared_from_this()))
 		{
@@ -582,7 +593,7 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 	if (is_invincible_) 
 	{
 		// この瞬間にエフェクトを描画
-		printfDx("無敵\n");
+		//printfDx("無敵\n");
 		EffectManager::GetInstance().Play(EffectID::kAvoidSuccess);
 		EffectManager::GetInstance().SetPos(EffectID::kAvoidSuccess,pos_);
 		EffectManager::GetInstance().End(EffectID::kAvoidSuccess, EffectEndState::kTotal);

@@ -65,7 +65,7 @@ void DoublePunch::Entry()
 	// オーナーの正面方向に当たり判定を生成
 	pos_ = VAdd(owner_pos, VScale(front_dir, 5.f));
 
-	printfDx("double_punch_entry\n");
+	//printfDx("double_punch_entry\n");
 }
 
 BehaviorStatus DoublePunch::Update()

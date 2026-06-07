@@ -27,3 +27,8 @@ void SceneBase::Draw()
 {
 
 }
+
+const std::string SceneBase::GetName() const
+{
+	return "nothing";
+}

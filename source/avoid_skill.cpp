@@ -34,7 +34,7 @@ void AvoidSkill::Init()
 void AvoidSkill::Update()
 {
 	if (!CheckMyOwner()) { return; }
-	auto owner = std::dynamic_pointer_cast<Player>(owner_.lock());
+	auto owner = owner_.lock();
 
 	// player‚É•ÏŠ·‚Å‚«‚é‚©
 	if (owner == nullptr)
@@ -51,8 +51,7 @@ void AvoidSkill::Update()
 			owner->SetIsStop(FALSE);
 		}
 	}
-
-	if (!is_active_)
+	else
 	{
 		if (CheckIsAvoid(owner))
 		{
@@ -62,6 +61,7 @@ void AvoidSkill::Update()
 			DecideVelocity(owner);
 		}
 	}
+
 	// ‰ñ”ð‚Ìupdate
 	behavior_->Update();
 }
@@ -77,7 +77,6 @@ bool AvoidSkill::CheckIsAvoid(std::shared_ptr<Player> owner)
 	if (!owner->GetInput()->IsAvoid()) { return FALSE; }
 	if (!owner->GetOnGround())														{ return FALSE; }
 	if (owner->GetAnimator()->GetNowAnimName() == "avoid")	{ return FALSE; }
-
 	return TRUE;
 }
 

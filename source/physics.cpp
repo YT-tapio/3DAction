@@ -34,14 +34,12 @@ void Physics::AddBody(std::shared_ptr<RigidBody> body)
 void Physics::Debug()
 {
 	int i = 0;
-	if (TRUE) { return; }
-	/*
-	printfDx("%d\n", collisioned_pairs_id_.size());
-	*/
+	if (FALSE) { return; }
+	
 	
 	for (const auto& pair : collisioned_pairs_id_)
 	{
-		DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), GetColor(255, 255, 255), "first - %d：second - %d", pair.first, pair.second);
+		DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), GetColor(0, 0, 0), "first - %d：second - %d", pair.first, pair.second);
 		Debug::GetInstance().Add();
 	}
 
@@ -285,6 +283,8 @@ void Physics::Gravity()
 
 void Physics::Collision()
 {
+	std::vector<std::pair<int, int>> current_collisioned_pairs_id;
+
 	for (int i = 0; i < kLoopCollision; i++)
 	{
 		// 押し戻しされたか
@@ -338,24 +338,13 @@ void Physics::Collision()
 
 				if (my_coll->CheckCollision(main_body->GetPosition(), main_body->GetVelocity(), target_body->GetPosition(), target_body->GetVelocity(), target_coll, contact))
 				{
-					// ここで1フレーム前衝突しているかの確認をします
-					// それによってenterもしくはstayを呼ぶ
+					// 同じものがない場合はこの中であたったものを保存
+					if (!CheckInPair(current_collisioned_pairs_id,pair))
+					{
+						// 中にないのならpiarを追加
+						current_collisioned_pairs_id.emplace_back(pair);
+					}
 
-					if (CheckCollisionedIDPair(pair))
-					{
-						// stay
-						main_body->OnCollisionStay(target_body->GetIPhysicsObject());
-						target_body->OnCollisionStay(main_body->GetIPhysicsObject());
-					}
-					else
-					{
-						// enter
-						// 要素の追加
-						collisioned_pairs_id_.emplace_back(pair);
-						// stay
-						main_body->OnCollisionEnter(target_body->GetIPhysicsObject());
-						target_body->OnCollisionEnter(main_body->GetIPhysicsObject());
-					}
 
 					if (main_body->GetIsKinematic()) { continue; }
 					if (!target_body->IsObject()) { continue; }
@@ -364,22 +353,7 @@ void Physics::Collision()
 					main_body->Update(offset_vel);
 					is_resolve = TRUE;
 				}
-				else
-				{
-					// ここで1フレーム前当たっているかを調べる
-
-					if (CheckCollisionedIDPair(pair))
-					{
-						// exitを呼び出す
-						main_body->OnCollisionExit(target_body->GetIPhysicsObject());
-						target_body->OnCollisionExit(main_body->GetIPhysicsObject());
-
-						// 要素の削除も行う
-						collisioned_pairs_id_.remove(pair);
-					}
-				}
 			}
-			
 		}
 
 		if (!is_resolve)
@@ -388,14 +362,75 @@ void Physics::Collision()
 		}
 
 	}
+
+	// OnCollision系の処理をする
+	// 今あたっているもの
+	for (const auto& current_collisioned_pair : current_collisioned_pairs_id)
+	{
+		// 範囲内
+		bool is_in_pair = FALSE;
+		// 1フレーム前あたっていたもの
+		for (const auto& collisioned_pair : collisioned_pairs_id_)
+		{
+			if (IsSamePair(collisioned_pair, current_collisioned_pair))
+			{
+				// 中にあるんだったらstay
+				auto& first_rigid_body = id_rigid_bodies_mp_[current_collisioned_pair.first];
+				auto& second_rigid_body = id_rigid_bodies_mp_[current_collisioned_pair.second];
+				first_rigid_body->OnCollisionStay(second_rigid_body->GetIPhysicsObject());
+				second_rigid_body->OnCollisionStay(first_rigid_body->GetIPhysicsObject());
+				is_in_pair = TRUE;
+				break;
+			}
+		}
+		if (!is_in_pair)
+		{
+			// 中にないのならenter
+			auto& first_rigid_body = id_rigid_bodies_mp_[current_collisioned_pair.first];
+			auto& second_rigid_body = id_rigid_bodies_mp_[current_collisioned_pair.second];
+			first_rigid_body->OnCollisionEnter(second_rigid_body->GetIPhysicsObject());
+			second_rigid_body->OnCollisionEnter(first_rigid_body->GetIPhysicsObject());
+
+			// 要素の追加
+			collisioned_pairs_id_.emplace_back(current_collisioned_pair);
+		}
+	}
+
+	// 1フレーム前当たっていたもの
+	for (auto it = collisioned_pairs_id_.begin();it != collisioned_pairs_id_.end();)
+	{
+		bool now_hit = FALSE;
+		// 今あたっているもの
+		for (const auto& current_collisioned_pair : current_collisioned_pairs_id)
+		{
+			// 同じのがある場合
+			if (IsSamePair(*it, current_collisioned_pair))
+			{
+				now_hit = TRUE;
+				break;
+			}
+		}
+		if(!now_hit)
+		{
+			// Exit
+			auto& first_rigid_body = id_rigid_bodies_mp_[it->first];
+			auto& second_rigid_body = id_rigid_bodies_mp_[it->second];
+			first_rigid_body->OnCollisionExit(second_rigid_body->GetIPhysicsObject());
+			second_rigid_body->OnCollisionExit(first_rigid_body->GetIPhysicsObject());
+			// 要素の削除も行う
+			it = collisioned_pairs_id_.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+	
 	// 位置更新
 	for (auto& main_id_body : id_rigid_bodies_mp_)
 	{
 		main_id_body.second->SetPos();
 	}
-
-
-
 }
 
 void Physics::CheckGround()
@@ -438,7 +473,7 @@ void Physics::CheckGround()
 
 }
 
-//あればTRUEを返す
+// あればTRUEを返す
 bool Physics::CheckCollisionedIDPair(std::pair<int, int> id_pair)
 {
 	// collisioned_pairsの中に自分のpairがあるかを判断する
@@ -460,5 +495,19 @@ bool Physics::CheckCollisionedIDPair(std::pair<int, int> id_pair)
 bool Physics::IsSamePair(std::pair<int,int>my_pair,std::pair<int,int> target_pair)
 {
 	if (my_pair.first == target_pair.first && my_pair.second == target_pair.second) { return TRUE; }	// 一緒かどうか
+	return FALSE;
+}
+
+bool Physics::CheckInPair(std::vector<std::pair<int, int>>pairs, std::pair<int, int> my_pair)
+{
+	if (pairs.size() == 0) { return FALSE; }
+	for (const auto& pair : pairs)
+	{
+		if (IsSamePair(pair, my_pair))
+		{
+			return TRUE;
+		}
+	}
+
 	return FALSE;
 }

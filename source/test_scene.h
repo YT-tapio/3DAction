@@ -15,6 +15,8 @@ public:
 
 	void Draw() override;
 
+	const std::string GetName() const override;
+
 private:
 
 

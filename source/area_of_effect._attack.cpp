@@ -96,7 +96,7 @@ void AreaOfEffectAttack::Exit()
 
 void AreaOfEffectAttack::Debug()
 {
-
+	rigid_body_->Debug();
 }
 
 void AreaOfEffectAttack::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)

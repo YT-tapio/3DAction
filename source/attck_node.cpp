@@ -17,10 +17,5 @@ AttackNode::~AttackNode()
 
 BehaviorStatus AttackNode::Update()
 {
-	static bool test = FALSE;
-	if (test) { return BehaviorStatus::kComplete; }
-	printfDx("wow");
-	test = TRUE;
-
 	return BehaviorStatus::kComplete;
 }

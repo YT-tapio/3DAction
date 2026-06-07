@@ -2,7 +2,7 @@
 idle,data/model/player/animation/Idle.mv1,0,1,0,1,0,nothing
 run,data/model/player/animation/Standard_Run.mv1,0,0.96,2,1,0,nothing
 jogging,data/model/player/animation/Running.mv1,0,0.7,1,1,0,nothing
-on_damage,data/model/player/animation/Stomach_Hit.mv1,0,1,4,0,-1,nothing
+on_damage,data/model/player/animation/Stomach_Hit.mv1,0,1,500,0,-1,nothing
 punch,data/model/player/animation/Hook.mv1,0,1,3,0,-1,nothing
 punch_conbo1,data/model/player/animation/punch_conbo_attacker/punch_conbo1.mv1,0,0.8,5,0,-1,nothing
 punch_conbo2,data/model/player/animation/punch_conbo_attacker/punch_conbo2.mv1,0,0.8,6,0,-1,nothing

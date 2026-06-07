@@ -33,5 +33,6 @@ private:
 	VECTOR* pos_;
 
 	std::string my_anim_name_;
+	int frame_;
 
 };

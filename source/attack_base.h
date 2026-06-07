@@ -34,6 +34,9 @@ public:
 
 	std::shared_ptr<RigidBody> GetRigidBody() override;
 
+	// オーナーが一緒なのかを判別する
+	bool CheckSameOwner(std::shared_ptr<ObjectBase> other_owner);
+
 protected:
 
 	std::shared_ptr<RigidBody> rigid_body_;
