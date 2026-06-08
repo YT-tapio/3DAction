@@ -229,6 +229,9 @@
     <Filter Include="ソース ファイル\object\collision_mesh">
       <UniqueIdentifier>{a4098630-b74f-49bc-89a5-2e6efef03097}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\object\object2D">
+      <UniqueIdentifier>{0abfe81d-a96a-4551-8228-9954321b7bf9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
