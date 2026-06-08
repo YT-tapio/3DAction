@@ -29,15 +29,16 @@ public:
 	void OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
 	void OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object) override;
+
 private:
 
 	// “–‚½‚è”»’è‚Ì”­¶ŠÔ
 	std::shared_ptr<ConditionTimer> activate_timer_;
 
 	VECTOR vel_;
-	
+	VECTOR offset_vel_;
 	std::string anim_name_;
 
 	float speed_;
-
+	
 };

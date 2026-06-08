@@ -14,6 +14,9 @@
 #include"takable_damage_player_interface.h"
 #include"takable_damage_enemy_interface.h"
 #include"attack_type.h"
+#include"effect_manager.h"
+#include"effect_id.h"
+#include"effect_end_state.h"
 
 Tackle::Tackle(std::weak_ptr<ObjectBase> owner, std::shared_ptr<RigidBody> rigid_body,
 	std::string anim_name,const float time, const float speed)
@@ -21,6 +24,7 @@ Tackle::Tackle(std::weak_ptr<ObjectBase> owner, std::shared_ptr<RigidBody> rigid
 	, activate_timer_(std::make_shared<ConditionTimer>(time))
 	, anim_name_(anim_name)
 	, vel_(VectorAssistant::VGetZero())
+	, offset_vel_(VectorAssistant::VGetZero())
 	, speed_(speed)
 {
 	rigid_body_ = rigid_body;
@@ -52,6 +56,8 @@ void Tackle::Entry()
 		dir = VectorAssistant::VGetDir(owner->GetPosition(), owner->GetAttackTargetPos());
 		owner->SetRotation(VGet(0.f, VectorAssistant::VGetTan(VectorAssistant::VGetReverce(dir)), 0.f));
 		vel_ = VScale(dir, speed_);
+		offset_vel_ = VScale(dir, 20.f);
+		offset_vel_.y = 22.f;
 	}
 	
 	// 当たり判定発生と発生時間のタイマーを開始
@@ -59,14 +65,17 @@ void Tackle::Entry()
 	activate_timer_->Init();
 	activate_timer_->Start();
 
-	// velocityの設定をする
-	
+	// effectの発生
+	EffectManager::GetInstance().Play(EffectID::kTackle);
+	EffectManager::GetInstance().SetPos(EffectID::kTackle, VAdd(owner_.lock()->GetPosition(), offset_vel_));
+	EffectManager::GetInstance().SetRot(EffectID::kTackle, VGet(0.f, VectorAssistant::VGetTan(VNorm(vel_)), 0.f));
 }
 
 BehaviorStatus Tackle::Update()
 {
 	// タイマーの更新
 	activate_timer_->Update();
+	EffectManager::GetInstance().SetPos(EffectID::kTackle, VAdd(owner_.lock()->GetPosition(), offset_vel_));
 	// 移動量を設定
 	if (activate_timer_->GetIsEnd())
 	{
@@ -77,6 +86,8 @@ BehaviorStatus Tackle::Update()
 		}
 		// 当たり判定をなくす
 		rigid_body_->NotActive();
+		// effectを消す
+		EffectManager::GetInstance().End(EffectID::kTackle,EffectEndState::kMoment);
 		return BehaviorStatus::kComplete;	// 終了を返す
 	}
 	else
