@@ -232,6 +232,12 @@
     <Filter Include="ソース ファイル\object\object2D">
       <UniqueIdentifier>{0abfe81d-a96a-4551-8228-9954321b7bf9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\object\ui">
+      <UniqueIdentifier>{d08cf72f-0eaa-434a-afff-9a844662bdf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\ui\HP">
+      <UniqueIdentifier>{6238fd5a-21a4-4b7c-96fb-96b25438b703}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -545,6 +551,18 @@
     </ClCompile>
     <ClCompile Include="source\collision_mesh_obj.cpp">
       <Filter>ソース ファイル\object\collision_mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="source\object_2D.cpp">
+      <Filter>ソース ファイル\object\object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="source\hp_body.cpp">
+      <Filter>ソース ファイル\object\ui\HP</Filter>
+    </ClCompile>
+    <ClCompile Include="source\hp_frame.cpp">
+      <Filter>ソース ファイル\object\ui\HP</Filter>
+    </ClCompile>
+    <ClCompile Include="source\hp_background.cpp">
+      <Filter>ソース ファイル\object\ui\HP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -937,6 +955,18 @@
     </ClInclude>
     <ClInclude Include="source\collision_mesh_obj.h">
       <Filter>ソース ファイル\object\collision_mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="source\object_2D.h">
+      <Filter>ソース ファイル\object\object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="source\hp_body.h">
+      <Filter>ソース ファイル\object\ui\HP</Filter>
+    </ClInclude>
+    <ClInclude Include="source\hp_frame.h">
+      <Filter>ソース ファイル\object\ui\HP</Filter>
+    </ClInclude>
+    <ClInclude Include="source\hp_background.h">
+      <Filter>ソース ファイル\object\ui\HP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

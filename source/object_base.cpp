@@ -30,7 +30,7 @@ void ObjectBase::LateUpdate()
 
 void ObjectBase::Draw()
 {
-
+	
 }
 
 void ObjectBase::Draw2D()
