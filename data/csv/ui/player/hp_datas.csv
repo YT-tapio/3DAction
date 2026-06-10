@@ -1,5 +1,5 @@
 ﻿id,path,original_width,original_height,pos,,size,rot_y
 ,,,,x,y,,
-0,data/ui/player/hp/hp_background.png,793,72,300,500,0.509,0
-1,data/ui/player/hp/hp_body.png,793,72,300,500,0.508,0
-2,data/ui/player/hp/hp_frame.png,793,72,300,500,0.5,0
+0,data/ui/player/hp/hp_background.png,793,72,330,745,0.458,0
+1,data/ui/player/hp/hp_body.png,793,72,330,745,0.456,0
+2,data/ui/player/hp/hp_frame.png,793,72,330,745,0.45,0

@@ -1,5 +1,7 @@
 #pragma once
 
+class SubScreen;
+
 class HPBody : public Object2D
 {
 public:
@@ -19,14 +21,24 @@ public:
 
 private:
 
+	/// <summary>
+	/// screenを起動して描画を行う
+	/// </summary>
+	void SetUpScreen();
+
+private:
+
 	// 関数ポインタでhpを取得する
 	std::function<int()> get_base_hp_;
 	std::function<int()> get_current_hp_;
 
+	// このscreenに描画する
+	std::shared_ptr<SubScreen> screen_;
+
+	VECTOR blind_box_pos_;
+
 	// bodyを隠すためのboxの大きさ
 	float blind_width_;
 	float blind_height_;
-
-
 
 };

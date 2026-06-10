@@ -179,6 +179,7 @@
     <ClCompile Include="source\csv_loader.cpp" />
     <ClCompile Include="source\decorator_node.cpp" />
     <ClCompile Include="source\double_punch.cpp" />
+    <ClCompile Include="source\draw_2D.cpp" />
     <ClCompile Include="source\effect_base.cpp" />
     <ClCompile Include="source\effect_data.cpp" />
     <ClCompile Include="source\effect_manager.cpp" />
@@ -212,6 +213,7 @@
     <ClCompile Include="source\status_buff_container.cpp" />
     <ClCompile Include="source\status_container.cpp" />
     <ClCompile Include="source\status_holder_interface.cpp" />
+    <ClCompile Include="source\sub_screen.cpp" />
     <ClCompile Include="source\tackle.cpp" />
     <ClCompile Include="source\takable_damage_enemy_interface.cpp" />
     <ClCompile Include="source\takable_damage_player_interface.cpp" />
@@ -289,6 +291,7 @@
     <ClInclude Include="source\csv_loader.h" />
     <ClInclude Include="source\decorator_node.h" />
     <ClInclude Include="source\double_punch.h" />
+    <ClInclude Include="source\draw_2D.h" />
     <ClInclude Include="source\effect_base.h" />
     <ClInclude Include="source\effect_data.h" />
     <ClInclude Include="source\effect_end_state.h" />
@@ -335,6 +338,7 @@
     <ClInclude Include="source\status_buff_container.h" />
     <ClInclude Include="source\status_container.h" />
     <ClInclude Include="source\status_holder_interface.h" />
+    <ClInclude Include="source\sub_screen.h" />
     <ClInclude Include="source\tackle.h" />
     <ClInclude Include="source\takable_damage_enemy_interface.h" />
     <ClInclude Include="source\takable_damage_player_interface.h" />

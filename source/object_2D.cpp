@@ -11,6 +11,7 @@ Object2D::Object2D(const ImageData data, const VECTOR& pos, float size_rate, flo
 {
 	handle_ = LoadGraph(data_.path.c_str());
 	if (handle_ == -1) { printfDx("2DÅFì«Ç›çûÇ›ÉGÉâÅ[\n"); }
+
 	pos_ = pos;
 	rot_ = VGet(0.f, 0.f, rot);
 }
