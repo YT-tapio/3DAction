@@ -27,6 +27,6 @@ private:
 	float blind_width_;
 	float blind_height_;
 
-	float 
+
 
 };

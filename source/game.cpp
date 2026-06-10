@@ -84,7 +84,7 @@ void Game::Update()
 		obj->LateUpdate();
 	}
 
-
+	PlayerUIGroup::GetInstance().Update();
 	
 	if (CheckHitKey(KEY_INPUT_5)) 
 	{ 
