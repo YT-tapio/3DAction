@@ -5,6 +5,7 @@
 #include<sstream>
 #include<string>
 #include<unordered_map>
+#include<functional>
 #include"DxLib.h"
 #include"player.h"
 #include"capsule.h"
@@ -45,6 +46,7 @@
 #include"effect_manager.h"
 #include"effect_id.h"
 #include"effect_end_state.h"
+#include"player_ui_group.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name)
 	: CharacterBase("player")
@@ -126,6 +128,18 @@ void Player::Init()
 	// setter‚Ö‚Ì“o˜^
 	ObjectSetter::GetInstance().AddResource(handle_, &pos_,&rot_,&scale_);
 	
+	std::function<int()> get_base_hp = [this]() -> int
+		{
+			return static_cast<int>(status_container_->GetBaseStatus().hp);
+		};
+	std::function<int()> get_current_hp = [this]() -> int
+		{
+			return static_cast<int>(status_container_->GetCurrentStatus().hp);
+		};
+
+	// ui•\Ž¦
+	PlayerUIGroup::GetInstance().MakeHPUI(get_base_hp, get_current_hp);
+
 	target_rot_y_ = rot_.y;
 
 	animator_ = std::make_shared<AnimatorPlayer>(handle_, name_);

@@ -2,7 +2,8 @@
 
 class HPFrame : public Object2D
 {
-	HPFrame(const std::string path);
+public:
+	HPFrame(const ImageData& data, const VECTOR& pos,float size_rate, float rot);
 
 	~HPFrame() override;
 
@@ -10,8 +11,10 @@ class HPFrame : public Object2D
 
 	void Update() override;
 
-	void Draw() override;
-
 	void Debug() override;
+
+private:
+
+
 
 };

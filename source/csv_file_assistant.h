@@ -80,5 +80,21 @@ namespace CSVFileAssistant
 		return vec;
 	}
 
+	/// <summary>
+	/// csvからvectorを受け取る(二連続でデータを受けっているだけなのでそこに注意)
+	/// </summary>
+	/// <param name="ss"></param>
+	/// <param name="data"></param>
+	/// <returns>vector</returns>
+	inline VECTOR GetVector2DOfCSVFile(std::stringstream& ss, std::string& data)
+	{
+		VECTOR vec = VectorAssistant::VGetZero();
+
+		vec.x = GetFloatOfCSVFile(ss, data);
+		vec.y = GetFloatOfCSVFile(ss, data);
+
+		return vec;
+	}
+
 }
 

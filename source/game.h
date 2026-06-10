@@ -34,5 +34,4 @@ private:
 
 	std::shared_ptr<Camera> camera_;
 	std::vector<std::shared_ptr<ObjectBase>> objects_;
-
 };

@@ -238,6 +238,9 @@
     <Filter Include="ソース ファイル\object\ui\HP">
       <UniqueIdentifier>{6238fd5a-21a4-4b7c-96fb-96b25438b703}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ui">
+      <UniqueIdentifier>{02af4910-8028-494a-951c-cc18ccec8253}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -563,6 +566,15 @@
     </ClCompile>
     <ClCompile Include="source\hp_background.cpp">
       <Filter>ソース ファイル\object\ui\HP</Filter>
+    </ClCompile>
+    <ClCompile Include="source\hp_bar.cpp">
+      <Filter>ソース ファイル\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\image_data.cpp">
+      <Filter>ソース ファイル\object\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\player_ui_group.cpp">
+      <Filter>ソース ファイル\ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -967,6 +979,15 @@
     </ClInclude>
     <ClInclude Include="source\hp_background.h">
       <Filter>ソース ファイル\object\ui\HP</Filter>
+    </ClInclude>
+    <ClInclude Include="source\hp_bar.h">
+      <Filter>ソース ファイル\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\image_data.h">
+      <Filter>ソース ファイル\object\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\player_ui_group.h">
+      <Filter>ソース ファイル\ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -24,6 +24,8 @@ public:
 
 	void TakeHeal(float heal);
 
+	const Status GetBaseStatus() const;
+
 	const Status GetCurrentStatus() const;
 
 private:

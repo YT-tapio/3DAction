@@ -155,6 +155,11 @@ void StatusContainer::TakeHeal(float heal)
 	if (current_status_.hp > base_status_.hp) { current_status_.hp = base_status_.hp; }
 }
 
+const Status StatusContainer::GetBaseStatus() const
+{
+	return base_status_;
+}
+
 const Status StatusContainer::GetCurrentStatus() const
 {
 	return current_status_;

@@ -4,7 +4,8 @@ class HPBody : public Object2D
 {
 public:
 	
-	HPBody(const std::string path);
+	HPBody(const ImageData& data, const VECTOR& pos, float size_rate, float rot
+		, std::function<int()> get_base_hp_, std::function<int()> get_current_hp_);
 
 	~HPBody() override;
 
@@ -16,12 +17,16 @@ public:
 
 	void Debug() override;
 
-protected:
-
-
-
 private:
 
+	// ŠÖ”ƒ|ƒCƒ“ƒ^‚Åhp‚ğæ“¾‚·‚é
+	std::function<int()> get_base_hp_;
+	std::function<int()> get_current_hp_;
 
+	// body‚ğ‰B‚·‚½‚ß‚Ìbox‚Ì‘å‚«‚³
+	float blind_width_;
+	float blind_height_;
+
+	float 
 
 };

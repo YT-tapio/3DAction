@@ -1,6 +1,7 @@
 #include<iostream>
 #include<memory>
 #include<unordered_map>
+#include<functional>
 #include"DxLib.h"
 #include"game.h"
 #include"camera.h"
@@ -22,6 +23,8 @@
 #include"random.h"
 #include"skydome.h"
 #include"collision_mesh_obj.h"
+#include"player_ui_group.h"
+
 Game::Game()
 	: SceneBase()
 {
@@ -125,13 +128,14 @@ void Game::Draw()
 		obj->Draw();
 	}
 	// Physics::GetInstance().Debug();
-	
 	PlayerGroup::GetInstance().Draw2D();
 	for (auto& obj : objects_)
 	{
 		obj->Draw2D();
 	}
-	
+
+	PlayerUIGroup::GetInstance().Draw();
+
 	if (Debug::GetInstance().GetIsDisp())
 	{
 		PlayerGroup::GetInstance().Debug();
