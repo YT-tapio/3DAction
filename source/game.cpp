@@ -128,12 +128,6 @@ void Game::Draw()
 		obj->Draw();
 	}
 	// Physics::GetInstance().Debug();
-	PlayerGroup::GetInstance().Draw2D();
-	for (auto& obj : objects_)
-	{
-		obj->Draw2D();
-	}
-
 	PlayerUIGroup::GetInstance().Draw();
 
 	if (Debug::GetInstance().GetIsDisp())

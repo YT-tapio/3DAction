@@ -33,11 +33,6 @@ void ObjectBase::Draw()
 	
 }
 
-void ObjectBase::Draw2D()
-{
-
-}
-
 void ObjectBase::Debug()
 {
 

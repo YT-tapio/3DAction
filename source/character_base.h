@@ -17,8 +17,6 @@ public:
 
 	virtual void Draw() override;
 
-	virtual void Draw2D() override;
-
 	virtual void Debug() override;
 
 	void SetInvincible(bool flag);

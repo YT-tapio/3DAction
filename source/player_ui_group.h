@@ -2,6 +2,7 @@
 
 class HPBar;
 class HPActualValueUI;
+class PlayerLastBackGroundUI;
 
 class PlayerUIGroup
 {
@@ -35,4 +36,6 @@ private:
 	// プレイヤーに関するuiたち
 	std::shared_ptr<HPBar> hpbar_ui_;
 	std::shared_ptr<HPActualValueUI> hp_actual_ui_;	// 実数値
+	std::shared_ptr<PlayerLastBackGroundUI> last_background_;
+
 };

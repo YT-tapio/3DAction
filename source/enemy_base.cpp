@@ -226,11 +226,6 @@ void EnemyBase::Draw()
 	MV1DrawModel(handle_);
 }
 
-void EnemyBase::Draw2D()
-{
-	status_container_->Draw();
-}
-
 void EnemyBase::Debug()
 {
 	if (FALSE) { return; }
@@ -250,8 +245,6 @@ void EnemyBase::Debug()
 	Debug::GetInstance().DrawVector(target_player_pos_);
 	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "%s", animator_->GetNowAnimName().c_str());
 	Debug::GetInstance().Add();
-
-	
 
 	// test_behavior_->Debug();
 }

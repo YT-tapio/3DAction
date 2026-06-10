@@ -58,10 +58,6 @@ void HPBody::Update()
 
 void HPBody::Draw()
 {
-
-	DrawFormatString(700, 400, GetColor(0, 0, 0), "%d", get_base_hp_());
-	DrawFormatString(800, 400, GetColor(0, 0, 0), "%d", get_current_hp_());
-
 	// “§‰ß
 	GraphFilter(screen_->GetHandle(), DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_LESS, 10, TRUE, GetColor(0, 255, 0), 0);
 	// •\Ž¦

@@ -27,8 +27,6 @@ public:
 
 	virtual void Draw() override;
 
-	virtual void Draw2D() override;
-
 	virtual void Debug() override;
 
 	virtual void OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object) override;

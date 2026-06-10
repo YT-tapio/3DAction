@@ -236,11 +236,6 @@ void Player::Draw()
 	MV1DrawModel(handle_);
 }
 
-void Player::Draw2D()
-{
-	status_container_->Draw();
-}
-
 void Player::Debug()
 {
 	

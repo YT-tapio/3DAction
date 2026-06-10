@@ -27,7 +27,7 @@ void HPActualValueUI::Init()
 
 const void HPActualValueUI::Draw() const
 {
-	DrawFormatStringToHandle(static_cast<int>(pos_.x), static_cast<int>(pos_.y), Color::kRed, font_handle_, "%d", get_current_hp_());
+	DrawFormatStringToHandle(static_cast<int>(pos_.x), static_cast<int>(pos_.y), GetColor(255,228,255), font_handle_, "HPÅ@Å@%d", get_current_hp_());
 }
 
 void HPActualValueUI::LoadFile(const std::string& file_path,std::function<int()> get_current_hp)

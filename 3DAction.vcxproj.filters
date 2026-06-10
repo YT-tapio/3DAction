@@ -232,12 +232,6 @@
     <Filter Include="ソース ファイル\object\object2D">
       <UniqueIdentifier>{0abfe81d-a96a-4551-8228-9954321b7bf9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\object\ui">
-      <UniqueIdentifier>{d08cf72f-0eaa-434a-afff-9a844662bdf0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\object\ui\HP">
-      <UniqueIdentifier>{6238fd5a-21a4-4b7c-96fb-96b25438b703}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\ui">
       <UniqueIdentifier>{02af4910-8028-494a-951c-cc18ccec8253}</UniqueIdentifier>
     </Filter>
@@ -249,6 +243,9 @@
     </Filter>
     <Filter Include="ソース ファイル\font">
       <UniqueIdentifier>{d07df32e-d1fe-4b01-9659-8e26218775a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ui\HP">
+      <UniqueIdentifier>{6238fd5a-21a4-4b7c-96fb-96b25438b703}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -567,21 +564,6 @@
     <ClCompile Include="source\object_2D.cpp">
       <Filter>ソース ファイル\object\object2D</Filter>
     </ClCompile>
-    <ClCompile Include="source\hp_body.cpp">
-      <Filter>ソース ファイル\object\ui\HP</Filter>
-    </ClCompile>
-    <ClCompile Include="source\hp_frame.cpp">
-      <Filter>ソース ファイル\object\ui\HP</Filter>
-    </ClCompile>
-    <ClCompile Include="source\hp_background.cpp">
-      <Filter>ソース ファイル\object\ui\HP</Filter>
-    </ClCompile>
-    <ClCompile Include="source\hp_bar.cpp">
-      <Filter>ソース ファイル\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="source\image_data.cpp">
-      <Filter>ソース ファイル\object\ui</Filter>
-    </ClCompile>
     <ClCompile Include="source\player_ui_group.cpp">
       <Filter>ソース ファイル\ui</Filter>
     </ClCompile>
@@ -591,11 +573,29 @@
     <ClCompile Include="source\draw_2D.cpp">
       <Filter>ソース ファイル\Draw2D</Filter>
     </ClCompile>
-    <ClCompile Include="source\hp_actual_value_ui.cpp">
-      <Filter>ソース ファイル\ui</Filter>
-    </ClCompile>
     <ClCompile Include="source\font.cpp">
       <Filter>ソース ファイル\font</Filter>
+    </ClCompile>
+    <ClCompile Include="source\player_last_background_ui.cpp">
+      <Filter>ソース ファイル\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\image_data.cpp">
+      <Filter>ソース ファイル\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\hp_actual_value_ui.cpp">
+      <Filter>ソース ファイル\ui\HP</Filter>
+    </ClCompile>
+    <ClCompile Include="source\hp_background.cpp">
+      <Filter>ソース ファイル\ui\HP</Filter>
+    </ClCompile>
+    <ClCompile Include="source\hp_bar.cpp">
+      <Filter>ソース ファイル\ui\HP</Filter>
+    </ClCompile>
+    <ClCompile Include="source\hp_body.cpp">
+      <Filter>ソース ファイル\ui\HP</Filter>
+    </ClCompile>
+    <ClCompile Include="source\hp_frame.cpp">
+      <Filter>ソース ファイル\ui\HP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -992,21 +992,6 @@
     <ClInclude Include="source\object_2D.h">
       <Filter>ソース ファイル\object\object2D</Filter>
     </ClInclude>
-    <ClInclude Include="source\hp_body.h">
-      <Filter>ソース ファイル\object\ui\HP</Filter>
-    </ClInclude>
-    <ClInclude Include="source\hp_frame.h">
-      <Filter>ソース ファイル\object\ui\HP</Filter>
-    </ClInclude>
-    <ClInclude Include="source\hp_background.h">
-      <Filter>ソース ファイル\object\ui\HP</Filter>
-    </ClInclude>
-    <ClInclude Include="source\hp_bar.h">
-      <Filter>ソース ファイル\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="source\image_data.h">
-      <Filter>ソース ファイル\object\ui</Filter>
-    </ClInclude>
     <ClInclude Include="source\player_ui_group.h">
       <Filter>ソース ファイル\ui</Filter>
     </ClInclude>
@@ -1016,11 +1001,29 @@
     <ClInclude Include="source\draw_2D.h">
       <Filter>ソース ファイル\Draw2D</Filter>
     </ClInclude>
-    <ClInclude Include="source\hp_actual_value_ui.h">
-      <Filter>ソース ファイル\ui</Filter>
-    </ClInclude>
     <ClInclude Include="source\font.h">
       <Filter>ソース ファイル\font</Filter>
+    </ClInclude>
+    <ClInclude Include="source\player_last_background_ui.h">
+      <Filter>ソース ファイル\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\image_data.h">
+      <Filter>ソース ファイル\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\hp_actual_value_ui.h">
+      <Filter>ソース ファイル\ui\HP</Filter>
+    </ClInclude>
+    <ClInclude Include="source\hp_background.h">
+      <Filter>ソース ファイル\ui\HP</Filter>
+    </ClInclude>
+    <ClInclude Include="source\hp_bar.h">
+      <Filter>ソース ファイル\ui\HP</Filter>
+    </ClInclude>
+    <ClInclude Include="source\hp_body.h">
+      <Filter>ソース ファイル\ui\HP</Filter>
+    </ClInclude>
+    <ClInclude Include="source\hp_frame.h">
+      <Filter>ソース ファイル\ui\HP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

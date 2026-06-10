@@ -16,8 +16,6 @@ public:
 
 	void Update();
 
-	void Draw();
-
 	void Debug();
 
 	void TakeDamage(float atk,AttackType type);

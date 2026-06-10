@@ -27,8 +27,6 @@ public:
 
 	void Draw();
 
-	void Draw2D();
-
 	void Debug();
 
 	VECTOR* GetCurrentPlayerHeadPos();

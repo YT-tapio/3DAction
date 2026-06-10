@@ -34,11 +34,6 @@ void CharacterBase::Draw()
 	MV1DrawModel(handle_);
 }
 
-void CharacterBase::Draw2D()
-{
-	
-}
-
 void CharacterBase::Debug()
 {
 
