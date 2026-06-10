@@ -247,6 +247,9 @@
     <Filter Include="ソース ファイル\Draw2D">
       <UniqueIdentifier>{09943cff-9435-4e26-8666-93b4b1909182}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\font">
+      <UniqueIdentifier>{d07df32e-d1fe-4b01-9659-8e26218775a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -590,6 +593,9 @@
     </ClCompile>
     <ClCompile Include="source\hp_actual_value_ui.cpp">
       <Filter>ソース ファイル\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\font.cpp">
+      <Filter>ソース ファイル\font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1012,6 +1018,9 @@
     </ClInclude>
     <ClInclude Include="source\hp_actual_value_ui.h">
       <Filter>ソース ファイル\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\font.h">
+      <Filter>ソース ファイル\font</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

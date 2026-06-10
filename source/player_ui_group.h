@@ -1,6 +1,7 @@
 #pragma once
 
 class HPBar;
+class HPActualValueUI;
 
 class PlayerUIGroup
 {
@@ -23,6 +24,8 @@ public:
 
 	void MakeHPUI(std::function<int()> get_base_hp, std::function<int()> get_current_hp);
 
+	void End();
+
 private:
 
 	PlayerUIGroup();
@@ -30,6 +33,6 @@ private:
 private:
 
 	// プレイヤーに関するuiたち
-	std::shared_ptr<HPBar> hp_ui_;
-
+	std::shared_ptr<HPBar> hpbar_ui_;
+	std::shared_ptr<HPActualValueUI> hp_actual_ui_;	// 実数値
 };
