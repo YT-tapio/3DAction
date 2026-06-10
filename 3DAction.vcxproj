@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\action_node.cpp" />
+    <ClCompile Include="source\hp_actual_value_ui.cpp" />
     <ClCompile Include="source\ai_input.cpp" />
     <ClCompile Include="source\animator_base.cpp" />
     <ClCompile Include="source\animator_enemy.cpp" />
@@ -262,6 +263,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\action_node.h" />
+    <ClInclude Include="source\hp_actual_value_ui.h" />
     <ClInclude Include="source\ai_input.h" />
     <ClInclude Include="source\animation_data.h" />
     <ClInclude Include="source\animator_enemy.h" />

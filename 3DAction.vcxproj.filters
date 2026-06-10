@@ -588,6 +588,9 @@
     <ClCompile Include="source\draw_2D.cpp">
       <Filter>ソース ファイル\Draw2D</Filter>
     </ClCompile>
+    <ClCompile Include="source\hp_actual_value_ui.cpp">
+      <Filter>ソース ファイル\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1006,6 +1009,9 @@
     </ClInclude>
     <ClInclude Include="source\draw_2D.h">
       <Filter>ソース ファイル\Draw2D</Filter>
+    </ClInclude>
+    <ClInclude Include="source\hp_actual_value_ui.h">
+      <Filter>ソース ファイル\ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
