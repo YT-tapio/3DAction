@@ -32,19 +32,6 @@ namespace Draw2D
 	}
 
 	/// <summary>
-	/// エッジ付きの文字を描画
-	/// </summary>
-	/// <param name="pos"></param>
-	/// <param name="string"></param>
-	/// <param name="handle"></param>
-	/// <param name="font_color"></param>
-	/// <param name="edge_color"></param>
-	inline void EdgeStringToHandle(const VECTOR& pos, const char* string, const int& handle, const int& font_color, const int& edge_color)
-	{
-		DrawStringToHandle(static_cast<int>(pos.x), static_cast<int>(pos.y), string, font_color, handle, edge_color);
-	}
-
-	/// <summary>
 	/// 画像のサイズを変えることができる
 	/// </summary>
 	/// <param name="pos"></param>
@@ -76,12 +63,50 @@ namespace Draw2D
 	}
 
 	/// <summary>
+	/// 文字列(数値なし)
+	/// </summary>
+	/// <param name="pos"></param>
+	/// <param name="string"></param>
+	/// <param name="color"></param>
+	/// <param name="handle"></param>
+	/// <param name="edge_color"></param>
+	inline void StringToHandle(const VECTOR& pos, std::string string, int color,int handle,int edge_color = -1)
+	{
+		if (edge_color != -1)
+		{
+			DrawStringToHandle(static_cast<int>(pos.x), static_cast<int>(pos.y), string.c_str(), color, handle);
+		}
+		else
+		{
+			DrawStringToHandle(static_cast<int>(pos.x), static_cast<int>(pos.y), string.c_str(), color, handle, edge_color);
+		}
+		
+	}
+	/// <summary>
+	/// 文字列(数値も描画)
+	/// </summary>
+	/// <typeparam name="T">int,float,double</typeparam>
+	/// <param name="pos"></param>
+	/// <param name="string"></param>
+	/// <param name="color"></param>
+	/// <param name="handle"></param>
+	/// <param name="t"></param>
+	template <typename T>
+	inline void FormatStringToHandle(const VECTOR& pos, std::string string, int color, int handle,const T& t)
+	{
+		DrawFormatStringToHandle(static_cast<int>(pos.x), static_cast<int>(pos.y), color, handle, string.c_str(), t);
+
+	}
+
+	/// <summary>
 	/// 透過を行う
 	/// </summary>
 	/// <param name="draw">描画のポインタ関数</param>
 	/// <param name="alpha_num"></param>
 	inline void Blend(std::function<void()> draw,int alpha_num)
 	{
+		// 完全に透過だと早期リターン
+		if (alpha_num == 0) { return; }
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(alpha_num));
 		draw();
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);

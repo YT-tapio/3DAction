@@ -85,7 +85,7 @@ void Game::Update()
 	}
 
 	PlayerUIGroup::GetInstance().Update();
-	
+
 	if (CheckHitKey(KEY_INPUT_5)) 
 	{ 
 		EffectManager::GetInstance().Play(EffectID::test);

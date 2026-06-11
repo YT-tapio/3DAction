@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\action_node.cpp" />
+    <ClCompile Include="source\character_name_ui.cpp" />
     <ClCompile Include="source\font.cpp" />
     <ClCompile Include="source\hp_actual_value_ui.cpp" />
     <ClCompile Include="source\ai_input.cpp" />
@@ -217,6 +218,7 @@
     <ClCompile Include="source\status_buff_container.cpp" />
     <ClCompile Include="source\status_container.cpp" />
     <ClCompile Include="source\status_holder_interface.cpp" />
+    <ClCompile Include="source\string_ui.cpp" />
     <ClCompile Include="source\sub_screen.cpp" />
     <ClCompile Include="source\tackle.cpp" />
     <ClCompile Include="source\takable_damage_enemy_interface.cpp" />
@@ -227,6 +229,7 @@
     <ClCompile Include="source\tracking_camera.cpp" />
     <ClCompile Include="source\transform.cpp" />
     <ClCompile Include="source\image_data.cpp" />
+    <ClCompile Include="source\ui_interface.cpp" />
     <ClCompile Include="source\variable_timer.cpp" />
     <ClCompile Include="source\virtual_camera_base.cpp" />
     <ClCompile Include="source\brain.cpp" />
@@ -266,6 +269,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\action_node.h" />
+    <ClInclude Include="source\character_name_ui.h" />
     <ClInclude Include="source\font.h" />
     <ClInclude Include="source\hp_actual_value_ui.h" />
     <ClInclude Include="source\ai_input.h" />
@@ -346,6 +350,7 @@
     <ClInclude Include="source\status_buff_container.h" />
     <ClInclude Include="source\status_container.h" />
     <ClInclude Include="source\status_holder_interface.h" />
+    <ClInclude Include="source\string_ui.h" />
     <ClInclude Include="source\sub_screen.h" />
     <ClInclude Include="source\tackle.h" />
     <ClInclude Include="source\takable_damage_enemy_interface.h" />
@@ -356,6 +361,7 @@
     <ClInclude Include="source\tracking_camera.h" />
     <ClInclude Include="source\transform.h" />
     <ClInclude Include="source\image_data.h" />
+    <ClInclude Include="source\ui_interface.h" />
     <ClInclude Include="source\variable_timer.h" />
     <ClInclude Include="source\virtual_camera_base.h" />
     <ClInclude Include="source\camera.h" />

@@ -138,7 +138,7 @@ void Player::Init()
 		};
 
 	// ui•\Ž¦
-	PlayerUIGroup::GetInstance().MakeHPUI(get_base_hp, get_current_hp);
+	PlayerUIGroup::GetInstance().MakeHPUI(get_base_hp, get_current_hp,name_);
 
 	target_rot_y_ = rot_.y;
 

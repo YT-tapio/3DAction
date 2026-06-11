@@ -600,6 +600,15 @@
     <ClCompile Include="source\player_icon_ui.cpp">
       <Filter>ソース ファイル\ui</Filter>
     </ClCompile>
+    <ClCompile Include="source\ui_interface.cpp">
+      <Filter>ソース ファイル\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\character_name_ui.cpp">
+      <Filter>ソース ファイル\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\string_ui.cpp">
+      <Filter>ソース ファイル\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1029,6 +1038,15 @@
       <Filter>ソース ファイル\ui\HP</Filter>
     </ClInclude>
     <ClInclude Include="source\player_icon_ui.h">
+      <Filter>ソース ファイル\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui_interface.h">
+      <Filter>ソース ファイル\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\character_name_ui.h">
+      <Filter>ソース ファイル\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\string_ui.h">
       <Filter>ソース ファイル\ui</Filter>
     </ClInclude>
   </ItemGroup>
