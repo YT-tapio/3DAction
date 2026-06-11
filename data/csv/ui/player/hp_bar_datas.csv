@@ -1,4 +1,4 @@
-﻿id,path,original_width,original_height,pos,,size,rot_y
+﻿id,path,original_width,original_height,pos,,size,rot_z
 ,,,,x,y,,
 0,data/ui/player/hp/hp_background.png,793,72,330,745,0.458,0
 1,data/ui/player/hp/hp_body.png,793,72,330,745,0.456,0
