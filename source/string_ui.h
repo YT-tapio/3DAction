@@ -24,6 +24,8 @@ protected:
 	// ƒtƒHƒ“ƒg
 	int font_handle_;
 
+	unsigned int color_;
+
 	// •`‰æêŠ
 	VECTOR pos_;
 

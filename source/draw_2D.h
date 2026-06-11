@@ -70,15 +70,15 @@ namespace Draw2D
 	/// <param name="color"></param>
 	/// <param name="handle"></param>
 	/// <param name="edge_color"></param>
-	inline void StringToHandle(const VECTOR& pos, std::string string, int color,int handle,int edge_color = -1)
+	inline void StringToHandle(const VECTOR& pos, std::string string, unsigned int color,int handle,int edge_color = -1)
 	{
 		if (edge_color != -1)
 		{
-			DrawStringToHandle(static_cast<int>(pos.x), static_cast<int>(pos.y), string.c_str(), color, handle);
+			DrawStringToHandle(static_cast<int>(pos.x), static_cast<int>(pos.y), string.c_str(), color, handle,edge_color);
 		}
 		else
 		{
-			DrawStringToHandle(static_cast<int>(pos.x), static_cast<int>(pos.y), string.c_str(), color, handle, edge_color);
+			DrawStringToHandle(static_cast<int>(pos.x), static_cast<int>(pos.y), string.c_str(), color, handle);
 		}
 		
 	}

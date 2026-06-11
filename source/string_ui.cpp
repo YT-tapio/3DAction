@@ -55,7 +55,13 @@ void StringUI::LoadFile(const std::string& data_file_path)
 
 		font_data_path	= CSVFileAssistant::GetStringOfCSVFile(ss, data);
 		pos				= CSVFileAssistant::GetVector2DOfCSVFile(ss, data);
+
+		int red = CSVFileAssistant::GetIntOfCSVFile(ss, data);
+		int green = CSVFileAssistant::GetIntOfCSVFile(ss, data);
+		int blue = CSVFileAssistant::GetIntOfCSVFile(ss, data);
+		color_ = GetColor(red, green, blue);
 	}
+
 	font_handle_ = Font::CreateHandleOfFile(font_data_path);
 	pos_ = pos;
 }

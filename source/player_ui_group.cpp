@@ -29,6 +29,7 @@ void PlayerUIGroup::Draw()
 	if(hpbar_ != nullptr){ hpbar_->Draw(); }
 	if (hp_actual_ != nullptr) { hp_actual_->Draw(); }
 	if (icon_ != nullptr) { icon_->Draw(); }
+	if (player_name_ != nullptr) { player_name_->Draw(); }
 }
 
 void PlayerUIGroup::MakeHPUI(std::function<int()> get_base_hp, std::function<int()> get_current_hp,const std::string& name)

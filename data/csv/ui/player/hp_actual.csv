@@ -1,3 +1,3 @@
-﻿font_file_path,pos,
-,x,y
-data/csv/font/hp_font_data.csv,200,760
+﻿font_file_path,pos,,color,,
+,x,y,red,green,blue
+data/csv/font/hp_font_data.csv,200,760,255,228,255
