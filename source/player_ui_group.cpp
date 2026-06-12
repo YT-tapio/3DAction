@@ -12,6 +12,8 @@
 #include"player_last_background_ui.h"
 #include"player_icon_ui.h"
 #include"character_name_ui.h"
+#include"animator_2d.h"
+#include"draw_2D.h"
 
 void PlayerUIGroup::Init()
 {
@@ -21,6 +23,7 @@ void PlayerUIGroup::Init()
 void PlayerUIGroup::Update()
 {
 	if (hpbar_ != nullptr) { hpbar_->Update(); }
+	if (animator_ != nullptr) { animator_->Update(); }
 }
 
 void PlayerUIGroup::Draw()
@@ -30,6 +33,9 @@ void PlayerUIGroup::Draw()
 	if (hp_actual_ != nullptr) { hp_actual_->Draw(); }
 	if (icon_ != nullptr) { icon_->Draw(); }
 	if (player_name_ != nullptr) { player_name_->Draw(); }
+
+	Draw2D::RotaGraph(VGet(300, 300,0), 1.f, 0, animator_->GetNowHandle(), TRUE);
+
 }
 
 void PlayerUIGroup::MakeHPUI(std::function<int()> get_base_hp, std::function<int()> get_current_hp,const std::string& name)
@@ -39,6 +45,12 @@ void PlayerUIGroup::MakeHPUI(std::function<int()> get_base_hp, std::function<int
 	last_background_ = std::make_shared<PlayerLastBackGroundUI>();
 	icon_ = std::make_shared<PlayerIconUI>(name);
 	player_name_ = std::make_shared<CharacterNameUI>("data/csv/ui/player/" + name + "/" + name + "_name_data.csv", name);
+	animator_ = std::make_shared<Animator2D>("data/csv/test/test_animation.csv");
+}
+
+void PlayerUIGroup::End()
+{
+
 }
 
 PlayerUIGroup::PlayerUIGroup()

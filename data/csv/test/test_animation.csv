@@ -1,0 +1,3 @@
+﻿name,path,index,,size,,priority,total_time,loop,next_anim_name
+,,side,vertical,width,height,,s,,
+test,data/effect/2D/image/hit2.png,5,2,960,384,0,0.1,1,nothing

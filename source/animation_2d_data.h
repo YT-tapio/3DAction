@@ -4,6 +4,7 @@ struct Animation2DData
 {
 	std::vector<int> handles;		// アニメーション
 	int current_anim_index;			// 今のアニメーションがいつなのか
+	int max_anim_index;				// 全ての要素
 	int priority;							// 優先度
 	
 	float total_time;						// 合計の時間

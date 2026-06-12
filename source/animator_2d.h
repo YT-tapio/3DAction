@@ -33,9 +33,23 @@ public:
 
 	const std::string GetNowAnimName() const;
 
+	/// <summary>
+	/// 現在のアニメーションを返す
+	/// </summary>
+	/// <param name="name"></param>
+	/// <returns></returns>
+	const int GetNowHandle() const;
+
+	/// <summary>
+	/// 指定されたアニメーションのデータを返す
+	/// </summary>
+	/// <param name="name"></param>
+	/// <returns></returns>
+	const int GetHandle(const std::string& name) const;
+
 private:
 
-	void LoadFile();
+	void LoadFile(const std::string& data_file_path);
 
 private:
 
@@ -44,4 +58,5 @@ private:
 	std::unordered_map<std::string, Animation2DData> datas_;
 
 	std::string now_anim_name_;
+	std::string before_anim_name_;
 };
