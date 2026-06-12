@@ -37,8 +37,8 @@ private:
 
 	VECTOR blind_box_pos_;
 
+	float now_ratio_;
 	// body‚ð‰B‚·‚½‚ß‚Ìbox‚Ì‘å‚«‚³
 	float blind_width_;
 	float blind_height_;
-
 };

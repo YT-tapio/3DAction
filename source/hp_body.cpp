@@ -1,6 +1,7 @@
 #include<string>
 #include<functional>
 #include<memory>
+#include<vector>
 #include"DxLib.h"
 #include"object_base.h"
 #include"image_data.h"
@@ -9,6 +10,7 @@
 #include"vector_assistant.h"
 #include"sub_screen.h"
 #include"color.h"
+#include"lerp.h"
 
 HPBody::HPBody(const ImageData& data, const VECTOR& pos, float size_rate, float rot, std::function<int()> get_base_hp, std::function<int()> get_current_hp)
 	: Object2D(data, pos, size_rate, rot)
@@ -17,6 +19,7 @@ HPBody::HPBody(const ImageData& data, const VECTOR& pos, float size_rate, float 
 	, blind_width_(0.f)
 	, blind_height_(0.f)
 	, blind_box_pos_(VectorAssistant::VGetZero())
+	, now_ratio_(0.f)
 {
 	screen_ = std::make_shared<SubScreen>(1920, 1080);
 }
@@ -28,29 +31,24 @@ HPBody::~HPBody()
 
 void HPBody::Init()
 {
-
+	
 }
 
 void HPBody::Update()
 {
+	if (now_ratio_ == 1.f) { return; }
 	// ï`âÊÇ≥ÇÍÇƒÇ¢ÇÈsize
 	const auto kDispWidth = data_.width * size_rate_;
 	const auto kDispHeight= data_.height * size_rate_;
 	blind_height_ = kDispHeight;
 
-	// TODOÅFå∏Ç¡ÇΩéûÇÃlerpÇÇ∑ÇÈ
+	auto target_hp = get_current_hp_();
+	
+	auto target_ratio = 1 - float(target_hp) / get_base_hp_();
+	// ï‚äÆ
+	now_ratio_ = Lerp::Dampf(now_ratio_, target_ratio, 0.1f);
+	blind_width_ = kDispWidth * now_ratio_;
 
-	if (get_current_hp_() > 0)
-	{
-		auto ratio = 1 - float(get_current_hp_()) / get_base_hp_();
-		blind_width_ = kDispWidth * ratio;
-		// blind_height_ = kDispHeight * ratio;
-	}
-	else
-	{
-		blind_width_ = 0.f;
-		// blind_height_ = 0.f;
-	}
 	blind_box_pos_ = VectorAssistant::VGet2D(pos_.x + (kDispWidth * 0.5f), pos_.y - (kDispHeight * 0.5f));
 	//Ç±ÇÃíÜÇ≈screenÇóßÇøè„Ç∞Çƒï`âÊ
 	SetUpScreen();
