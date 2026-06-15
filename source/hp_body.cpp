@@ -11,6 +11,8 @@
 #include"sub_screen.h"
 #include"color.h"
 #include"lerp.h"
+#include"draw_2D.h"
+#include"FPS.h"
 
 HPBody::HPBody(const ImageData& data, const VECTOR& pos, float size_rate, float rot, std::function<int()> get_base_hp, std::function<int()> get_current_hp)
 	: Object2D(data, pos, size_rate, rot)
@@ -20,6 +22,10 @@ HPBody::HPBody(const ImageData& data, const VECTOR& pos, float size_rate, float 
 	, blind_height_(0.f)
 	, blind_box_pos_(VectorAssistant::VGetZero())
 	, now_ratio_(0.f)
+	, flash_value_(0.f)
+	, target_flash_value_(100.f)
+	, flash_up_(TRUE)
+	, red_flash_(FALSE)
 {
 	screen_ = std::make_shared<SubScreen>(1920, 1080);
 }
@@ -41,7 +47,7 @@ void HPBody::Update()
 	const auto kDispWidth = data_.width * size_rate_;
 	const auto kDispHeight= data_.height * size_rate_;
 	blind_height_ = kDispHeight;
-
+	
 	auto target_hp = get_current_hp_();
 	
 	auto target_ratio = 1 - float(target_hp) / get_base_hp_();
@@ -50,16 +56,29 @@ void HPBody::Update()
 	blind_width_ = kDispWidth * now_ratio_;
 
 	blind_box_pos_ = VectorAssistant::VGet2D(pos_.x + (kDispWidth * 0.5f), pos_.y - (kDispHeight * 0.5f));
-	//‚±‚Ì’†‚Åscreen‚ð—§‚¿ã‚°‚Ä•`‰æ
+	
+	// ratio‚ªˆê’èˆÈã‚É‚È‚é‚Æ“Á•Êˆ—
+	if (now_ratio_ >= 0.65f)
+	{
+		if (flash_value_ >= kMaxFlashValue) { target_flash_value_ = 0.f; }
+		if (flash_value_ <= 0.f) { target_flash_value_ = kMaxFlashValue; }
+		flash_value_ = Lerp::Lerpf(flash_value_, target_flash_value_, 3.5f * FPS::GetInstance().GetDeltaTime() * 60.f);
+	}
+	if (target_ratio == now_ratio_) { red_flash_ = TRUE; }
+
+	// ‚±‚Ì’†‚Åscreen‚ð—§‚¿ã‚°‚Ä•`‰æ
 	SetUpScreen();
 }
 
 void HPBody::Draw()
-{
+{	
 	// “§‰ß
 	GraphFilter(screen_->GetHandle(), DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_LESS, 10, TRUE, GetColor(0, 255, 0), 0);
+	GraphFilter(screen_->GetHandle(), DX_GRAPH_FILTER_HSB, 0, 0, 0, static_cast<int>(flash_value_));
+	// SetDrawBright(255, 0, 0);
 	// •\Ž¦
 	DrawGraph(0, 0, screen_->GetHandle(), TRUE);
+	// SetDrawBright(255, 255, 255);
 }
 
 void HPBody::Debug()

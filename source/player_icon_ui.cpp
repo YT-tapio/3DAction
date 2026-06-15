@@ -7,10 +7,19 @@
 #include"object_2D.h"
 #include"player_icon_ui.h"
 #include"csv_file_assistant.h"
+#include<unordered_map>
+#include<list>
+#include"animator_2d.h"
+#include<functional>
+#include"draw_2D.h"
 
 PlayerIconUI::PlayerIconUI(const std::string& name)
 {
 	LoadFile(name);
+	animation_ = std::make_shared<Animator2D>("data/csv/test/test_animation.csv");
+	animation_->PlayRequest("test");
+	effect_pos_ = icon_->GetPosition();
+	
 }
 
 PlayerIconUI::~PlayerIconUI()
@@ -18,8 +27,14 @@ PlayerIconUI::~PlayerIconUI()
 
 }
 
+void PlayerIconUI::Update()
+{
+	animation_->Update();
+}
+
 const void PlayerIconUI::Draw() const
 {
+	Draw2D::RotaGraph(VAdd(effect_pos_,VGet(0.f,-10.f,0.f)), 5.f, 0.f, animation_->GetNowHandle(), TRUE);
 	icon_->Draw();
 }
 

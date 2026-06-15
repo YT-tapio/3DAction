@@ -18,6 +18,10 @@ public:
 
 	virtual void Debug() override;
 
+	const ImageData GetImageData() const;
+
+	const float GetSizeRate() const;
+
 protected:
 
 	int handle_;

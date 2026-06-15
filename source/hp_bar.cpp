@@ -13,6 +13,7 @@
 #include"hp_body.h"
 #include"vector_assistant.h"
 #include"csv_file_assistant.h"
+#include"animator_2d.h"
 
 HPBar::HPBar(const std::string path, std::function<int()> get_base_hp, std::function<int()> get_current_hp)
 {

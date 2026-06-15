@@ -28,6 +28,8 @@ private:
 
 private:
 
+	static constexpr float kMaxFlashValue = 200.f;
+
 	// 関数ポインタでhpを取得する
 	std::function<int()> get_base_hp_;
 	std::function<int()> get_current_hp_;
@@ -37,8 +39,16 @@ private:
 
 	VECTOR blind_box_pos_;
 
+	// 点滅する際のひかりのつよさ　
+	float flash_value_;
+	float target_flash_value_;
+
 	float now_ratio_;
 	// bodyを隠すためのboxの大きさ
 	float blind_width_;
 	float blind_height_;
+
+	// 点滅の際に白くなるか
+	bool flash_up_;
+	bool red_flash_;
 };

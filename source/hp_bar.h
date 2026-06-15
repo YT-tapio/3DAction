@@ -1,6 +1,7 @@
 #pragma once
 
 class Object2D;
+class Animator2D;
 
 class HPBar
 {
@@ -24,5 +25,7 @@ private:
 
 	// ui
 	std::vector<std::shared_ptr<Object2D>> ui_;
+
+	// 2Dアニメーション
 
 };

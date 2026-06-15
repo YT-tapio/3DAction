@@ -42,6 +42,4 @@ private:
 	std::shared_ptr<PlayerIconUI> icon_;
 	std::shared_ptr<StringUI> player_name_;
 
-	std::shared_ptr<Animator2D> animator_;
-
 };

@@ -41,3 +41,13 @@ void Object2D::Debug()
 {
 	
 }
+
+const ImageData Object2D::GetImageData() const
+{
+	return data_;
+}
+
+const float Object2D::GetSizeRate() const
+{
+	return size_rate_;
+}
