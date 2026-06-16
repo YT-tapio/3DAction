@@ -150,6 +150,7 @@
     <ClCompile Include="source\animation_2d_data.cpp" />
     <ClCompile Include="source\animator_2d.cpp" />
     <ClCompile Include="source\character_name_ui.cpp" />
+    <ClCompile Include="source\enemy_ui_group.cpp" />
     <ClCompile Include="source\font.cpp" />
     <ClCompile Include="source\hp_actual_value_ui.cpp" />
     <ClCompile Include="source\ai_input.cpp" />
@@ -274,6 +275,7 @@
     <ClInclude Include="source\animation_2d_data.h" />
     <ClInclude Include="source\animator_2d.h" />
     <ClInclude Include="source\character_name_ui.h" />
+    <ClInclude Include="source\enemy_ui_group.h" />
     <ClInclude Include="source\font.h" />
     <ClInclude Include="source\hp_actual_value_ui.h" />
     <ClInclude Include="source\ai_input.h" />
