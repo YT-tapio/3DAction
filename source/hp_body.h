@@ -28,7 +28,10 @@ private:
 
 private:
 
-	static constexpr float kMaxFlashValue = 200.f;
+	static constexpr float kMaxFlashValue = 50.f;
+	static constexpr float kMinFlashValue = 0.f;
+
+	static constexpr float kFlashSpeed = 2.3f;
 
 	// ŠÖ”ƒ|ƒCƒ“ƒ^‚Åhp‚ğæ“¾‚·‚é
 	std::function<int()> get_base_hp_;

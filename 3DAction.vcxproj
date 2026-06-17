@@ -232,6 +232,7 @@
     <ClCompile Include="source\tracking_camera.cpp" />
     <ClCompile Include="source\transform.cpp" />
     <ClCompile Include="source\image_data.cpp" />
+    <ClCompile Include="source\ui_group.cpp" />
     <ClCompile Include="source\ui_interface.cpp" />
     <ClCompile Include="source\variable_timer.cpp" />
     <ClCompile Include="source\virtual_camera_base.cpp" />
@@ -367,6 +368,7 @@
     <ClInclude Include="source\tracking_camera.h" />
     <ClInclude Include="source\transform.h" />
     <ClInclude Include="source\image_data.h" />
+    <ClInclude Include="source\ui_group.h" />
     <ClInclude Include="source\ui_interface.h" />
     <ClInclude Include="source\variable_timer.h" />
     <ClInclude Include="source\virtual_camera_base.h" />

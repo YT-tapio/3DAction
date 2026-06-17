@@ -256,6 +256,9 @@
     <Filter Include="ソース ファイル\ui\player_ui_group">
       <UniqueIdentifier>{b64a15ae-5760-47f6-a1d1-f506f0238920}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ui\ui_group">
+      <UniqueIdentifier>{1ef488d4-eed2-4640-9e91-5ae3b847d27c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -626,6 +629,9 @@
     </ClCompile>
     <ClCompile Include="source\enemy_ui_group.cpp">
       <Filter>ソース ファイル\ui\enemy_ui_group</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui_group.cpp">
+      <Filter>ソース ファイル\ui\ui_group</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1075,6 +1081,9 @@
     </ClInclude>
     <ClInclude Include="source\enemy_ui_group.h">
       <Filter>ソース ファイル\ui\enemy_ui_group</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui_group.h">
+      <Filter>ソース ファイル\ui\ui_group</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

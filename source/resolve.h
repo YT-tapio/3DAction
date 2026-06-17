@@ -17,11 +17,10 @@ namespace Resolve
 		// ƒZƒOƒƒ“ƒg‚Ì‹——£
 		VECTOR segment_dist = VectorAssistant::VGetSegmentDist(capsule1_start_pos, capsule1_end_pos, capsule2_start_pos, capsule2_end_pos);
 		VECTOR norm_segment_dist = VNorm(segment_dist);
-		// ŠOÏ(1.f`-1.f)
+		// “àÏ(1.f`-1.f)
 		float velocity_to_segment_dist_dot = VDot(capsule1_velocity,norm_segment_dist);
 		VECTOR pushback_vel = VScale(norm_segment_dist, velocity_to_segment_dist_dot);
 		if (velocity_to_segment_dist_dot > 0.f) { offset_vel = VSub(offset_vel, pushback_vel); }
-
 		return offset_vel;
 	}
 

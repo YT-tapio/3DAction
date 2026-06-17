@@ -22,7 +22,6 @@ PlayerLastBackGroundUI::~PlayerLastBackGroundUI()
 
 void PlayerLastBackGroundUI::Draw()
 {
-	// “§‰ß‚·‚é
 	Draw2D::Blend([this]() -> void {last_background_->Draw(); }, alpha_value_);
 }
 
