@@ -66,7 +66,7 @@ void AreaOfEffectAttack::Entry()
 	EffectManager::GetInstance().SetPos(effect_id_, effect_pos_);
 	EffectManager::GetInstance().SetScale(effect_id_, effect_scale_);
 	// タイマーの起動
-	activate_timer_->Start();
+	activate_timer_->ReStart();
 	state_ = AreaOfEffectAttackState::kCharge();
 }
 

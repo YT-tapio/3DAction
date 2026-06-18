@@ -42,14 +42,14 @@ void ConditionTimer::Stop()
 void ConditionTimer::Start()
 {
 	is_stop_ = FALSE;
-	is_end_ = FALSE;
-	time_ = 0.f;
+	is_end_  = FALSE;
 }
 
 void ConditionTimer::ReStart()
 {
 	is_stop_ = FALSE;
-	is_end_ = FALSE;
+	is_end_  = FALSE;
+	time_	 = 0.f;
 }
 
 const bool ConditionTimer::GetIsStop() const

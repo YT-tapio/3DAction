@@ -24,12 +24,12 @@ public:
 	void Stop();
 
 	/// <summary>
-	/// Å‰‚©‚çn‚ß‚é
+	/// ¡‚ÌŠÔ‚©‚çn‚ß‚é
 	/// </summary>
 	void Start();
 
 	/// <summary>
-	/// “r’†‚©‚çn‚ß‚é
+	/// ‰‚ß‚©‚ç
 	/// </summary>
 	void ReStart();
 

@@ -122,7 +122,7 @@ BehaviorStatus JumpingAttack::UpdateJumping(std::shared_ptr<CharacterBase> owner
 	// 上昇値がなくなったら
 	if (owner->GetVelocity().y <= 0.f)
 	{
-		condition_timer_->Start();	// タイマーをスタート
+		condition_timer_->ReStart();	// タイマーをスタート
 		jumping_state_ = JumpingAttackState::kAirStandby;
 	}
 	

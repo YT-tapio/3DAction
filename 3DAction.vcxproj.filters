@@ -633,6 +633,9 @@
     <ClCompile Include="source\ui_group.cpp">
       <Filter>ソース ファイル\ui\ui_group</Filter>
     </ClCompile>
+    <ClCompile Include="source\attack_range.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1084,6 +1087,9 @@
     </ClInclude>
     <ClInclude Include="source\ui_group.h">
       <Filter>ソース ファイル\ui\ui_group</Filter>
+    </ClInclude>
+    <ClInclude Include="source\attack_range.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

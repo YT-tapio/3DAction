@@ -13,7 +13,7 @@ Object3D::Object3D(const char* id)
 	scale_ = VectorAssistant::VGetSame(kDefaultSize);
 
 	
-	LoadFile();
+	//LoadFile();
 }
 
 Object3D::~Object3D()
@@ -60,9 +60,10 @@ void Object3D::Setting()
 	// MV1SetScale(handle_, scale_);
 	// MV1SetPosition(handle_, pos_);
 }
-
+/*
 void Object3D::LoadFile()
 {
 
 
 }
+*/

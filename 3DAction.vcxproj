@@ -149,6 +149,7 @@
     <ClCompile Include="source\action_node.cpp" />
     <ClCompile Include="source\animation_2d_data.cpp" />
     <ClCompile Include="source\animator_2d.cpp" />
+    <ClCompile Include="source\attack_range.cpp" />
     <ClCompile Include="source\character_name_ui.cpp" />
     <ClCompile Include="source\enemy_ui_group.cpp" />
     <ClCompile Include="source\font.cpp" />
@@ -275,6 +276,7 @@
     <ClInclude Include="source\action_node.h" />
     <ClInclude Include="source\animation_2d_data.h" />
     <ClInclude Include="source\animator_2d.h" />
+    <ClInclude Include="source\attack_range.h" />
     <ClInclude Include="source\character_name_ui.h" />
     <ClInclude Include="source\enemy_ui_group.h" />
     <ClInclude Include="source\font.h" />

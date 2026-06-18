@@ -170,7 +170,7 @@ void Player::Update()
 	}
 	else
 	{
-		
+		status_container_->Update();
 		Move();
 		if (skill_ != nullptr)
 		{
@@ -410,11 +410,14 @@ void Player::Move()
 		}
 		dir_ = VNorm(dir_);
 		
-		if (input_->IsDash())
+		if (input_->IsDash() && status_container_->CanUseStamina())
 		{
 			speed *= 2.5f;
 			is_dash_ = TRUE;
 			animator_->PlayRequest("run");
+
+			// ここでスタミナを減らす
+			status_container_->StaminaDown(0.5f * FPS::GetInstance().GetDeltaTime());
 		}
 		else
 		{

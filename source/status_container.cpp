@@ -12,15 +12,19 @@
 #include"debug.h"
 #include"color.h"
 #include"vector_assistant.h"
+#include"FPS.h"
 
 StatusContainer::StatusContainer(const std::string owner_name,const VECTOR& hp_pos, const VECTOR& hp_size)
 	: base_status_{}
 	, current_status_{}
-	,hp_pos_(hp_pos)
-	, hp_size_(hp_size)
+	, can_use_stamina_(TRUE)
+	, stamina_recovery_value_(0.f)
 {
 	LoadFile(owner_name);
+	stamina_recovery_timer_ = std::make_shared<ConditionTimer>(1.8f);
+	stamina_recovery_timer_->Init();
 	Init();
+	stamina_recovery_value_ = 0.6f;
 }
 
 StatusContainer::~StatusContainer()
@@ -31,12 +35,13 @@ StatusContainer::~StatusContainer()
 void StatusContainer::Init()
 {
 	current_status_ = base_status_;
+	stamina_recovery_timer_->Init();
 }
 
 void StatusContainer::Update()
 {
 	// バフされる量をあらかじめ決めておく
-
+	StaminaUpdate();
 }
 
 void StatusContainer::Debug()
@@ -89,6 +94,20 @@ void StatusContainer::Debug()
 
 }
 
+void StatusContainer::StaminaDown(const float down_value)
+{
+	current_status_.stamina -= down_value;
+
+	if (current_status_.stamina < 0)
+	{
+		current_status_.stamina = 0;
+		can_use_stamina_ = FALSE;
+	}
+
+	// スタミナ回復のタイマーを最初からスタート
+	stamina_recovery_timer_->ReStart();
+}
+
 void StatusContainer::TakeDamage(float atk,AttackType type)
 {
 	// 攻撃力と防御力の計算を行う
@@ -129,6 +148,51 @@ const Status StatusContainer::GetBaseStatus() const
 const Status StatusContainer::GetCurrentStatus() const
 {
 	return current_status_;
+}
+
+const bool StatusContainer::CanUseStamina() const
+{
+	return can_use_stamina_;
+}
+
+void StatusContainer::StaminaUpdate()
+{
+	// スタミナが使えないときはmaxになるまで使えない
+	if (!can_use_stamina_)
+	{
+		current_status_.stamina += stamina_recovery_value_ * FPS::GetInstance().GetDeltaTime();
+		if (StaminaRecovery())
+		{
+			// スタミナ使用を許可
+			can_use_stamina_ = TRUE;
+		}
+		return;
+	}
+
+	// baseと一緒なら処理をしない
+	if (current_status_.stamina == base_status_.stamina) { return; }
+	// タイマーを加算
+	stamina_recovery_timer_->Update();
+
+	// タイマーが終わったら
+	if (stamina_recovery_timer_->GetIsEnd())
+	{
+		current_status_.stamina += stamina_recovery_value_ * FPS::GetInstance().GetDeltaTime();
+		// スタミナを回復する
+		StaminaRecovery();
+	}
+}
+
+bool StatusContainer::StaminaRecovery()
+{
+	// スタミナを回復する
+	
+	if (current_status_.stamina >= base_status_.stamina)
+	{
+		current_status_.stamina = base_status_.stamina;
+		return TRUE;
+	}
+	return FALSE;
 }
 
 void StatusContainer::LoadFile(const std::string owner_name)

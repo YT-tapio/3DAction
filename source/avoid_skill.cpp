@@ -13,6 +13,9 @@
 #include"animator_base.h"
 #include"FPS.h"
 #include"vector_assistant.h"
+#include"status.h"
+#include"status_container.h"
+
 
 AvoidSkill::AvoidSkill(std::weak_ptr<Player> owner,float speed)
 	: SkillBase(owner,std::make_shared<Avoid>(owner))
@@ -55,6 +58,8 @@ void AvoidSkill::Update()
 	{
 		if (CheckIsAvoid(owner))
 		{
+			// スタミナを減らす
+			owner->GetStatusContainer()->StaminaDown(3);
 			is_active_ = TRUE;
 			owner->GetAnimator()->PlayRequest("avoid");
 			owner->SetIsStop(TRUE);
@@ -74,8 +79,9 @@ void AvoidSkill::Debug()
 bool AvoidSkill::CheckIsAvoid(std::shared_ptr<Player> owner)
 {
 	if (!owner->GetCanMove()) { return FALSE; }
+	if (!owner->GetStatusContainer()->CanUseStamina()) { return FALSE; }
 	if (!owner->GetInput()->IsAvoid()) { return FALSE; }
-	if (!owner->GetOnGround())														{ return FALSE; }
+	if (!owner->GetOnGround())								{ return FALSE; }
 	if (owner->GetAnimator()->GetNowAnimName() == "avoid")	{ return FALSE; }
 	return TRUE;
 }

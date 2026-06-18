@@ -32,6 +32,6 @@ protected:
 
 private:
 
-	void LoadFile();
+	//void LoadFile();
 
 };

@@ -63,7 +63,7 @@ void Tackle::Entry()
 	// 当たり判定発生と発生時間のタイマーを開始
 	rigid_body_->Active();
 	activate_timer_->Init();
-	activate_timer_->Start();
+	activate_timer_->ReStart();
 
 	// effectの発生
 	EffectManager::GetInstance().Play(EffectID::kTackle);
