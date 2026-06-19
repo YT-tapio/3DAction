@@ -259,6 +259,9 @@
     <Filter Include="ソース ファイル\ui\ui_group">
       <UniqueIdentifier>{1ef488d4-eed2-4640-9e91-5ae3b847d27c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ui\attack_range">
+      <UniqueIdentifier>{ba13f8b8-113c-4394-b5ae-3a4c7f6e2a74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -634,7 +637,13 @@
       <Filter>ソース ファイル\ui\ui_group</Filter>
     </ClCompile>
     <ClCompile Include="source\attack_range.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ui\attack_range</Filter>
+    </ClCompile>
+    <ClCompile Include="source\attack_range_group.cpp">
+      <Filter>ソース ファイル\ui\attack_range</Filter>
+    </ClCompile>
+    <ClCompile Include="source\disp_attack_range.cpp">
+      <Filter>ソース ファイル\behavior</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1089,7 +1098,13 @@
       <Filter>ソース ファイル\ui\ui_group</Filter>
     </ClInclude>
     <ClInclude Include="source\attack_range.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ui\attack_range</Filter>
+    </ClInclude>
+    <ClInclude Include="source\attack_range_group.h">
+      <Filter>ソース ファイル\ui\attack_range</Filter>
+    </ClInclude>
+    <ClInclude Include="source\disp_attack_range.h">
+      <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

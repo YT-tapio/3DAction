@@ -5,15 +5,17 @@
 #include"attack_range.h"
 #include"object_setter.h"
 #include"csv_file_assistant.h"
+#include"lerp.h"
 
 AttackRange::AttackRange()
 	: Object3D("")
+	, target_scale_(VectorAssistant::VGetZero())
 {
 	LoadFile();
+	scale_ = VectorAssistant::VGetSame(1.f);
 	// objectsetterへ登録
 	ObjectSetter::GetInstance().AddResource(handle_,&pos_,&rot_,&scale_);
 }
-
 
 AttackRange::~AttackRange()
 {
@@ -22,12 +24,25 @@ AttackRange::~AttackRange()
 
 void AttackRange::Init()
 {
+	pos_				= VectorAssistant::VGetZero();
+	scale_			= VectorAssistant::VGetSame(1.f);
+	target_scale_	= VectorAssistant::VGetSame(0.f);
+}
 
+void AttackRange::Init(const VECTOR& pos, const VECTOR& scale)
+{
+	pos_				= pos;
+	scale_ = VectorAssistant::VGetSame(1.f);
+	target_scale_	= scale;
 }
 
 void AttackRange::Update()
 {
+	if (VSize(target_scale_) == 0) { return; }					// ターゲットを変更していないのなら
+	if (VSize(target_scale_) == VSize(scale_)) { return; }	// 一緒になったら除外
 
+	// Dampする
+	scale_ = Lerp::DampV(scale_, target_scale_, 0.4f);
 }
 
 void AttackRange::Draw()
@@ -38,13 +53,6 @@ void AttackRange::Draw()
 void AttackRange::Debug()
 {
 
-}
-
-void AttackRange::SetTransform(const VECTOR& pos, const VECTOR& rot, const VECTOR& scale)
-{
-	pos_ = pos;
-	rot_ = rot;
-	scale_ = scale;
 }
 
 void AttackRange::LoadFile()

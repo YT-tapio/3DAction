@@ -40,6 +40,7 @@
 #include"attack_type.h"
 #include"status.h"
 #include"status_container.h"
+#include"disp_attack_range.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos)
 	: CharacterBase("enemy")
@@ -93,17 +94,32 @@ void EnemyBase::Init()
 	// 上から降ってくるノードを生成
 	std::vector<std::shared_ptr<NodeBase>> stump_nodes;
 
+	auto ui_stump_end_function = [this]() -> bool {return rigid_body_->GetIsLanding(); };
+	float stump_radius = 60.f;
+	stump_nodes.push_back(std::make_shared<ActionNode>
+		(std::make_shared<DispAttackRange>(obj_mine, &pos_, VGet(stump_radius, 1.f, stump_radius), ui_stump_end_function)));
+
 	stump_nodes.push_back(std::make_shared<ActionNode>(std::make_shared<Jump>(mine,
 		"jumping_attack", timing, 1.f)));
 
 	stump_nodes.push_back(std::make_shared<ActionNode>
-		(std::make_shared<Stamp>(obj_mine, &pos_, 60.f,"jumping_attack")));
+		(std::make_shared<Stamp>(obj_mine, &pos_, stump_radius,"jumping_attack")));
 
 	std::shared_ptr<NodeBase> stump_node = std::make_shared<SequenceNode>(stump_nodes);
 	
 	// エフェクトによる攻撃
+	std::vector<std::shared_ptr<NodeBase>>  area_of_effect_nodes;
+	float area_of_effect_radius = 10.f;
+	auto ui_AoE_end_function = [this]() -> bool {return FALSE; };
+	// ui表示
+	std::shared_ptr<NodeBase> area_of_effect_ui_node = std::make_shared<ActionNode>(std::make_shared<DispAttackRange>(
+		obj_mine, &target_player_pos_, VGet(area_of_effect_radius, 1.f, area_of_effect_radius), ui_AoE_end_function));
+	// 攻撃
 	std::shared_ptr<NodeBase> area_of_effect_node = std::make_shared<ActionNode>(std::make_shared<AreaOfEffectAttack>(
-		obj_mine, "charge", 0.f, 0.9f, VectorAssistant::VGetSame(2.f), 10.f, EffectID::kAreaOfEffect, 2.f));
+		obj_mine, "charge", 0.f, 0.9f, VectorAssistant::VGetSame(2.f), area_of_effect_radius, EffectID::kAreaOfEffect, 2.f));
+
+	area_of_effect_nodes.push_back(area_of_effect_ui_node);
+	area_of_effect_nodes.push_back(area_of_effect_node);
 
 	// タックルの前の予備動作
 	std::shared_ptr<NodeBase> charge_tackle_node = 
@@ -122,9 +138,9 @@ void EnemyBase::Init()
 	// ランダムのnodeに代入
 	std::vector<std::shared_ptr<NodeBase>> random_nodes;
 	random_nodes.emplace_back(stump_node);
-	random_nodes.emplace_back(double_punch_node);
-	random_nodes.emplace_back(area_of_effect_node);
-	random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
+	//random_nodes.emplace_back(double_punch_node);
+	random_nodes.emplace_back(std::make_shared<SequenceNode>(area_of_effect_nodes));
+	//andom_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
 
 	// 追いかけるときのノード
 	std::vector<std::shared_ptr<NodeBase>> random_nodes2;
@@ -188,8 +204,6 @@ void EnemyBase::Init()
 
 void EnemyBase::Update()
 {
-	if (CheckHitKey(KEY_INPUT_J)) { status_container_->TakeHeal(10); }
-
 	if (status_container_->GetCurrentStatus().hp <= 0)
 	{
 		animator_->PlayRequest("death");

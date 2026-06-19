@@ -2,6 +2,7 @@
 #include<memory>
 #include<unordered_map>
 #include<functional>
+#include<vector>
 #include"DxLib.h"
 #include"game.h"
 #include"camera.h"
@@ -24,10 +25,12 @@
 #include"skydome.h"
 #include"collision_mesh_obj.h"
 #include"player_ui_group.h"
+#include"attack_range_group.h"
 
 Game::Game()
 	: SceneBase()
 {
+	AttackRangeGroup::GetInstance().Awake();
 	camera_ = std::make_shared<Camera>();
 
 	objects_.push_back(std::make_shared<EnemyBase>(VGet(10, 0, 10)));
@@ -49,6 +52,7 @@ Game::~Game()
 
 void Game::Init()
 {
+	AttackRangeGroup::GetInstance().Init();
 	Physics::GetInstance().Init();
 	EffectManager::GetInstance().Init();
 	PlayerGroup::GetInstance().Init();
@@ -117,6 +121,7 @@ void Game::Update()
 	}
 
 	EffectManager::GetInstance().Update();
+	AttackRangeGroup::GetInstance().Update();
 }
 
 void Game::Draw()
@@ -127,6 +132,8 @@ void Game::Draw()
 	{
 		obj->Draw();
 	}
+	AttackRangeGroup::GetInstance().Draw();
+	
 	// Physics::GetInstance().Debug();
 	PlayerUIGroup::GetInstance().Draw();
 
