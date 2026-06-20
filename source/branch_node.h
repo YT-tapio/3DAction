@@ -30,8 +30,6 @@ private:
 	// 関数ポインタが必要になってくる
 	std::pair<std::shared_ptr<NodeBase>, std::shared_ptr<NodeBase>> nodes_;
 	std::function<bool()> condition_;
-
-	BehaviorStatus status_;
 	
 	bool is_first_update_;
 };

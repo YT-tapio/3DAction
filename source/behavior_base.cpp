@@ -4,8 +4,8 @@
 #include"behavior_status.h"
 
 BehaviorBase::BehaviorBase(std::weak_ptr<ObjectBase> owner)
-	:owner_(owner)
-	,is_active_(FALSE)
+	: owner_(owner)
+	, is_active_(FALSE)
 {
 
 }

@@ -18,6 +18,7 @@
 #include"punch.h"
 #include"check_my_area.h"
 #include"behavior_tree.h"
+#include"behavior_status.h"
 #include"behavior_base.h"
 #include"character_behavior.h"
 #include"double_punch.h"
@@ -110,14 +111,21 @@ void EnemyBase::Init()
 	// エフェクトによる攻撃
 	std::vector<std::shared_ptr<NodeBase>>  area_of_effect_nodes;
 	float area_of_effect_radius = 10.f;
-	auto ui_AoE_end_function = [this]() -> bool {return FALSE; };
-	// ui表示
-	std::shared_ptr<NodeBase> area_of_effect_ui_node = std::make_shared<ActionNode>(std::make_shared<DispAttackRange>(
-		obj_mine, &target_player_pos_, VGet(area_of_effect_radius, 1.f, area_of_effect_radius), ui_AoE_end_function));
+
 	// 攻撃
 	std::shared_ptr<NodeBase> area_of_effect_node = std::make_shared<ActionNode>(std::make_shared<AreaOfEffectAttack>(
 		obj_mine, "charge", 0.f, 0.9f, VectorAssistant::VGetSame(2.f), area_of_effect_radius, EffectID::kAreaOfEffect, 2.f));
+	
+	// ノード終わりじゃなく当たり判定が終わったら描画させたいよね
+	// 終了条件はこのbehaviorが終了しているとき
+	auto ui_AoE_end_function = [area_of_effect_node]() -> bool { return area_of_effect_node->GetStatus() == BehaviorStatus::kComplete; };
 
+	// ui表示
+	std::shared_ptr<NodeBase> area_of_effect_ui_node = std::make_shared<ActionNode>(std::make_shared<DispAttackRange>(
+		obj_mine, &target_player_pos_, VGet(area_of_effect_radius, 1.f, area_of_effect_radius), ui_AoE_end_function));
+
+
+	// ui表示から先に入れる
 	area_of_effect_nodes.push_back(area_of_effect_ui_node);
 	area_of_effect_nodes.push_back(area_of_effect_node);
 
@@ -138,9 +146,9 @@ void EnemyBase::Init()
 	// ランダムのnodeに代入
 	std::vector<std::shared_ptr<NodeBase>> random_nodes;
 	random_nodes.emplace_back(stump_node);
-	//random_nodes.emplace_back(double_punch_node);
+	random_nodes.emplace_back(double_punch_node);
 	random_nodes.emplace_back(std::make_shared<SequenceNode>(area_of_effect_nodes));
-	//andom_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
+	random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
 
 	// 追いかけるときのノード
 	std::vector<std::shared_ptr<NodeBase>> random_nodes2;

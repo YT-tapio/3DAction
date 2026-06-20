@@ -9,7 +9,6 @@ BranchNode::BranchNode(std::pair<std::shared_ptr<NodeBase>,std::shared_ptr<NodeB
 	: NodeBase()
 	, nodes_(nodes)
 	, condition_(condition)
-	, status_(BehaviorStatus::kFailure)
 	, is_first_update_(false)
 {
 	

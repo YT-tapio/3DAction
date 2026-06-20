@@ -27,7 +27,8 @@ void ActionNode::Entry()
 BehaviorStatus ActionNode::Update()
 {
 	// アクションの実行
-	return action_->Update();
+	status_ = action_->Update();
+	return status_;
 }
 
 void ActionNode::Exit()

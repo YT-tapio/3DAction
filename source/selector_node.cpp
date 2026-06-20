@@ -21,9 +21,9 @@ BehaviorStatus SelectorNode::Update()
 	// ‚»‚Ì’†‚Åsuccess‚Ìê‡‚Íbreak‚·‚é
 	while (current_node_ < nodes_.size())
 	{
-		auto status = nodes_[current_node_]->Update();
+		status_ = nodes_[current_node_]->Update();
 		
-		switch (status)
+		switch (status_)
 		{
 			// ÀsŠ®—¹
 		case BehaviorStatus::kComplete:

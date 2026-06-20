@@ -21,6 +21,5 @@ public:
 	void Debug() override;
 
 private:
-	
-	BehaviorStatus status_;
+
 };

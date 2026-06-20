@@ -20,9 +20,11 @@ public:
 
 	virtual void Debug();
 
+	const BehaviorStatus GetStatus() const;
+
 protected:
 
-
+	BehaviorStatus status_;
 
 private:
 

@@ -8,7 +8,6 @@
 
 RandomNode::RandomNode(std::vector<std::shared_ptr<NodeBase>> nodes)
 	: CompositeNode(nodes)
-	, status_(BehaviorStatus::kFailure)
 {
 
 }
