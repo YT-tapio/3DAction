@@ -79,6 +79,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	VECTOR hp_size = VectorAssistant::VGet2D(100.f, 30.f);
 	status_container_ = std::make_shared<StatusContainer>(name_,hp_pos, hp_size);
 	fall_speed_ = 0.f;
+	avoid_stamina_consumption_ = -1.f;
 	is_move_ = FALSE;
 	is_dash_ = FALSE;
 	is_attack_target_in_range_ = FALSE;
@@ -128,17 +129,35 @@ void Player::Init()
 	// setterへの登録
 	ObjectSetter::GetInstance().AddResource(handle_, &pos_,&rot_,&scale_);
 	
+	// もともとのhp
 	std::function<int()> get_base_hp = [this]() -> int
 		{
 			return static_cast<int>(status_container_->GetBaseStatus().hp);
 		};
+	// 現在のhp
 	std::function<int()> get_current_hp = [this]() -> int
 		{
 			return static_cast<int>(status_container_->GetCurrentStatus().hp);
 		};
+	// もともとのstamina
+	std::function<float()> get_base_stamina = [this]() -> float
+		{
+			return status_container_->GetBaseStatus().stamina;
+		};
+	// 現在のstamina
+	std::function<float()> get_current_stamina = [this]() -> float
+		{
+			return status_container_->GetCurrentStatus().stamina;
+		};
+	// スタミナが使えるか
+	std::function<bool()> can_use_stamina = [this]() -> bool
+		{
+			return status_container_->CanUseStamina();
+		};
 
 	// ui表示
-	PlayerUIGroup::GetInstance().MakeHPUI(get_base_hp, get_current_hp,name_);
+	PlayerUIGroup::GetInstance().MakeHPUI(get_base_hp, get_current_hp, name_,
+		get_base_stamina, get_current_stamina, can_use_stamina);
 
 	target_rot_y_ = rot_.y;
 
@@ -354,6 +373,7 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 		
 		speed_		= CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		avoid_speed = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+		avoid_stamina_consumption_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		job = CSVFileAssistant::GetStringOfCSVFile(ss, data);
 
 		break;
@@ -362,13 +382,11 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 	/*スキルを作っていくよ*/
 	//avoidskill
 
-	avoid_ = std::make_shared<AvoidSkill>(std::dynamic_pointer_cast<Player>(shared_from_this()),avoid_speed);
-
+	avoid_ = std::make_shared<AvoidSkill>(std::dynamic_pointer_cast<Player>(shared_from_this()),avoid_speed,avoid_stamina_consumption_);
 }
 
 void Player::MakeSkill(std::weak_ptr<Player> owner)
 {
-
 	auto skill = SkillLoader::GetInstance().SkillLoad(skill1_id_, name_, owner);
 	auto second_skill = SkillLoader::GetInstance().SkillLoad(skill2_id_, name_, owner);
 	skill_ = skill;

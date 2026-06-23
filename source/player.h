@@ -121,6 +121,8 @@ private:
 	float target_rot_y_;
 	float fall_speed_;
 
+	float avoid_stamina_consumption_;
+
 	float detection_radius_;
 
 	bool on_damage_;	// UŒ‚‚ğ‚­‚ç‚Á‚½uŠÔ

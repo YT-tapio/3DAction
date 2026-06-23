@@ -17,9 +17,10 @@
 #include"status_container.h"
 
 
-AvoidSkill::AvoidSkill(std::weak_ptr<Player> owner,float speed)
+AvoidSkill::AvoidSkill(std::weak_ptr<Player> owner,float speed,float stamina_consumption)
 	: SkillBase(owner,std::make_shared<Avoid>(owner))
 	, speed_(speed)
+	, stamina_consumption_(stamina_consumption)
 {
 
 }
@@ -59,7 +60,7 @@ void AvoidSkill::Update()
 		if (CheckIsAvoid(owner))
 		{
 			// スタミナを減らす
-			owner->GetStatusContainer()->StaminaDown(3);
+			owner->GetStatusContainer()->StaminaDown(stamina_consumption_);
 			is_active_ = TRUE;
 			owner->GetAnimator()->PlayRequest("avoid");
 			owner->SetIsStop(TRUE);

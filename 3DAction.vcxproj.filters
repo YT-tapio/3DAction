@@ -262,6 +262,9 @@
     <Filter Include="ソース ファイル\ui\attack_range">
       <UniqueIdentifier>{ba13f8b8-113c-4394-b5ae-3a4c7f6e2a74}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ui\stamina">
+      <UniqueIdentifier>{c2628d23-a095-432f-9060-bd9870b4cf2c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -644,6 +647,9 @@
     </ClCompile>
     <ClCompile Include="source\disp_attack_range.cpp">
       <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="source\stamina_ui.cpp">
+      <Filter>ソース ファイル\ui\stamina</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1105,6 +1111,9 @@
     </ClInclude>
     <ClInclude Include="source\disp_attack_range.h">
       <Filter>ソース ファイル\behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\stamina_ui.h">
+      <Filter>ソース ファイル\ui\stamina</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

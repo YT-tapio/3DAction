@@ -20,9 +20,6 @@ Application::Application()
         return;    // エラーが起きたら直ちに終了
     }
 
-    //SetUsePremulAlphaConvertLoad(FALSE);
-    
-
     // 引数には画面に表示する最大パーティクル数を設定する。
     if (Effkseer_Init(1000) == -1) { DxLib_End(); }
 

@@ -179,7 +179,7 @@ std::shared_ptr<SkillBase> SkillLoader::MakeAvoidSkill(std::ifstream& file, std:
 
 		float speed = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 
-		skill = std::make_shared<AvoidSkill>(owner,speed);
+		//skill = std::make_shared<AvoidSkill>(owner,speed);
 
 		break;
 	}

@@ -26,9 +26,27 @@ namespace Draw2D
 	/// <param name="radius"></param>
 	/// <param name="color"></param>
 	/// <param name="alpha"></param>
-	inline void Circle(const VECTOR& pos, const float& radius, int color, bool alpha)
+	/// <param name="thickness"></param>
+	inline void Circle(const VECTOR& pos, const float& radius, int color, bool alpha,int thickness = 1)
 	{
-		DrawCircle(static_cast<int>(pos.x), static_cast<int>(pos.y), radius, color, alpha);
+		DrawCircle(static_cast<int>(pos.x), static_cast<int>(pos.y), radius, color, alpha,thickness);
+	}
+
+	/// <summary>
+	/// 円形上に画像を切り抜く、画像は正方形
+	/// </summary>
+	/// <param name="pos">中心座標</param>
+	/// <param name="percent">円の角度の割合(1～0)</param>
+	/// <param name="handle">画像</param>
+	/// <param name="start_percent">初期パーセント</param>
+	/// <param name="scale">大きさ</param>
+	/// <param name="reverse_x">回転</param>
+	/// <param name="reverse_y">回転</param>
+	inline void CircleGauge(const VECTOR& center_pos, float percent,const int handle,float start_percent = 0.f,
+		float scale = 1.f,int reverse_x = 0, int reverse_y = 0)
+	{
+		DrawCircleGauge(static_cast<int>(center_pos.x), static_cast<int>(center_pos.y), static_cast<double>(percent * 100),
+			handle, static_cast<double>(start_percent), static_cast<double>(scale), reverse_x, reverse_y);
 	}
 
 	/// <summary>
@@ -82,6 +100,7 @@ namespace Draw2D
 		}
 		
 	}
+
 	/// <summary>
 	/// 文字列(数値も描画)
 	/// </summary>
@@ -95,7 +114,6 @@ namespace Draw2D
 	inline void FormatStringToHandle(const VECTOR& pos, std::string string, int color, int handle,const T& t)
 	{
 		DrawFormatStringToHandle(static_cast<int>(pos.x), static_cast<int>(pos.y), color, handle, string.c_str(), t);
-
 	}
 
 	/// <summary>
@@ -107,6 +125,11 @@ namespace Draw2D
 	{
 		// 完全に透過だと早期リターン
 		if (alpha_num == 0) { return; }
+		if (alpha_num >= 255) 
+		{
+			draw();
+			return;
+		}
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(alpha_num));
 		draw();
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);

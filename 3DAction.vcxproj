@@ -220,6 +220,7 @@
     <ClCompile Include="source\skydome.cpp" />
     <ClCompile Include="source\sound_player.cpp" />
     <ClCompile Include="source\sphere_camera.cpp" />
+    <ClCompile Include="source\stamina_ui.cpp" />
     <ClCompile Include="source\stamp.cpp" />
     <ClCompile Include="source\status_buff_container.cpp" />
     <ClCompile Include="source\status_container.cpp" />
@@ -359,6 +360,7 @@
     <ClInclude Include="source\skydome.h" />
     <ClInclude Include="source\sound_player.h" />
     <ClInclude Include="source\sphere_camera.h" />
+    <ClInclude Include="source\stamina_ui.h" />
     <ClInclude Include="source\stamp.h" />
     <ClInclude Include="source\status_buff_container.h" />
     <ClInclude Include="source\status_container.h" />

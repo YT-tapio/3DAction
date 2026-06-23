@@ -1,10 +1,11 @@
 #pragma once
+#include"screen_size.h"
 
 class SubScreen
 {
 public:
 
-	SubScreen(int screen_width, int screen_height);
+	SubScreen(int screen_width = kScreenWidth, int screen_height = kScreenHeight);
 
 	~SubScreen();
 

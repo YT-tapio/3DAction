@@ -21,10 +21,10 @@ StatusContainer::StatusContainer(const std::string owner_name,const VECTOR& hp_p
 	, stamina_recovery_value_(0.f)
 {
 	LoadFile(owner_name);
-	stamina_recovery_timer_ = std::make_shared<ConditionTimer>(1.8f);
+	stamina_recovery_timer_ = std::make_shared<ConditionTimer>(0.5f);
 	stamina_recovery_timer_->Init();
 	Init();
-	stamina_recovery_value_ = 0.6f;
+	stamina_recovery_value_ = 1.f;
 }
 
 StatusContainer::~StatusContainer()

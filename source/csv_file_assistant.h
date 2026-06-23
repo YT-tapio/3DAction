@@ -21,12 +21,12 @@ namespace CSVFileAssistant
 	}
 
 	/// <summary>
-	/// std::stringを受け取る
+	/// intのデータを受け取る
 	/// </summary>
 	/// <param name="ss"></param>
 	/// <param name="data"></param>
 	/// <returns>文字列</returns>
-	inline float GetIntOfCSVFile(std::stringstream& ss, std::string& data)
+	inline int GetIntOfCSVFile(std::stringstream& ss, std::string& data)
 	{
 		int value = 0;
 
@@ -34,6 +34,24 @@ namespace CSVFileAssistant
 		value = stoi(data);
 
 		return value;
+	}
+
+	/// <summary>
+	/// colorを受け取る(intを三連続受け取っているだけなので注意)
+	/// </summary>
+	/// <param name="ss"></param>
+	/// <param name="data"></param>
+	/// <returns></returns>
+	inline int GetColorOfCSVFile(std::stringstream& ss, std::string& data)
+	{
+		int color = -1;
+
+		int red = GetIntOfCSVFile(ss, data);
+		int green = GetIntOfCSVFile(ss, data);
+		int blue = GetIntOfCSVFile(ss, data);
+		color = GetColor(red, green, blue);
+
+		return color;
 	}
 
 	/// <summary>
@@ -58,7 +76,7 @@ namespace CSVFileAssistant
 	/// <param name="ss"></param>
 	/// <param name="data"></param>
 	/// <returns>文字列</returns>
-	inline float GetBoolOfCSVFile(std::stringstream& ss, std::string& data)
+	inline bool GetBoolOfCSVFile(std::stringstream& ss, std::string& data)
 	{
 		return GetIntOfCSVFile(ss, data) == 1;
 	}

@@ -5,6 +5,7 @@ class StringUI;
 class PlayerLastBackGroundUI;
 class PlayerIconUI;
 class Animator2D;
+class IUIObject;
 
 class PlayerUIGroup
 {
@@ -25,7 +26,9 @@ public:
 
 	void Draw();
 
-	void MakeHPUI(std::function<int()> get_base_hp, std::function<int()> get_current_hp, const std::string& name);
+	void MakeHPUI(std::function<int()> get_base_hp, std::function<int()> get_current_hp, const std::string& name, 
+		std::function<float()> get_base_stamina, std::function<float()> get_current_stamina,
+		std::function<bool()> can_use_stamina);
 
 	void End();
 
@@ -41,5 +44,5 @@ private:
 	std::shared_ptr<PlayerLastBackGroundUI> last_background_;
 	std::shared_ptr<PlayerIconUI> icon_;
 	std::shared_ptr<StringUI> player_name_;
-
+	std::shared_ptr<IUIObject> stamina_ui_;
 };
