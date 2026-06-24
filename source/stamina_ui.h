@@ -40,7 +40,7 @@ private:
 
 	std::function<float()> get_base_stamina_;
 	std::function<float()> get_current_stamina_;
-	std::function<bool()> can_use_stamina_;
+	std::function<bool()> can_use_stamina_func_;
 
 	// ‘S•”‚Ì
 	VECTOR base_center_pos_;	// ’†SÀ•W
@@ -51,9 +51,17 @@ private:
 
 	// body
 	int body_color_;
-	float body_percent_;
+	int body_base_color_;
+	float body_ratio_;
 	float body_radius_;
 	float body_thickness_;
+
+	// HP‚ª’á‚¢‚É•`‰æ‚·‚éŠÛ‚Ìƒf[ƒ^
+	int low_stamina_color_;
+	float low_stamina_current_blend_value_;
+	float low_stamina_target_blend_value_;
+	float low_stamina_blend_speed_;
+	float low_stamina_ratio_;	// ‚±‚ÌratioˆÈ‰º‚Í•`‰æ‚·‚é
 
 	// ”wŒi‚Ìcolor
 	int background_color_;

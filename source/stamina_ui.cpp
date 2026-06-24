@@ -19,22 +19,27 @@ StaminaUI::StaminaUI(std::function<float()> get_base_stamina, std::function<floa
 	std::function<bool()> can_use_stamina)
 	: get_base_stamina_(get_base_stamina)
 	, get_current_stamina_(get_current_stamina)
-	, can_use_stamina_(can_use_stamina)
+	, can_use_stamina_func_(can_use_stamina)
 	, base_center_pos_(VectorAssistant::VGetZero())
 	, base_scale_(0.f)
 	, current_blend_value_(0.f)
 	, target_blend_value_(0.f)
 	, base_blend_speed_(0.f)
-	, body_color_(-1.f)
-	, body_percent_(0.f)
+	, body_color_(0)
+	, body_base_color_(0)
+	, body_ratio_(0.f)
 	, body_radius_(-1.f)
-	, background_color_(-1)
+	, low_stamina_color_(0)
+	, low_stamina_current_blend_value_(0.f)
+	, low_stamina_target_blend_value_(0.f)
+	, low_stamina_blend_speed_(0.f)
+	, low_stamina_ratio_(0.f)
+	, background_color_(0)
 	, background_radius_(-1.f)
 	, background_blend_value_(-1)
-	, edge_color_(-1)
+	, edge_color_(0)
 	, edge_radius_(-1.f)
 	, edge_thickness_(-1.f)
-	
 {
 	// 画面を作る
 	stamina_body_screen_ = std::make_shared<SubScreen>(110, 110);
@@ -59,7 +64,7 @@ void StaminaUI::Update()
 	StaminaBodyUpdate();
 
 	// スタミナがmaxの際表示をやめる
-	if (body_percent_ == 1.f)
+	if (body_ratio_ == 1.f)
 	{
 		// タイマーを更新
 		disp_timer_->Update();
@@ -93,8 +98,30 @@ const void StaminaUI::Draw() const
 void StaminaUI::StaminaBodyUpdate()
 {
 	// スタミナの割合を決める
-	body_percent_ = (get_current_stamina_() / get_base_stamina_());
-	// スタミナが使えないときはbodyの色を変える
+	body_ratio_ = (get_current_stamina_() / get_base_stamina_());
+	
+	// スタミナの量が低い時かつスタミナを使用できるとき
+	if (body_ratio_ < low_stamina_ratio_ && can_use_stamina_func_())
+	{
+		if (low_stamina_current_blend_value_ == 180) { low_stamina_target_blend_value_ = 0.f; }
+		if (low_stamina_current_blend_value_ == 0) { low_stamina_target_blend_value_ = 180; }
+		low_stamina_current_blend_value_ = Lerp::Lerpf(low_stamina_current_blend_value_, low_stamina_target_blend_value_,
+			low_stamina_blend_speed_ * FPS::GetInstance().GetDeltaTime() * 60.f);
+	}
+	else
+	{
+		low_stamina_target_blend_value_ = 0.f;
+		low_stamina_current_blend_value_ = 0.f;
+	}
+
+	if (can_use_stamina_func_())
+	{
+		body_color_ = body_base_color_;
+	}
+	else
+	{
+		body_color_ = Color::kRed;
+	}
 
 	// screenに丸を描画
 	stamina_body_screen_->Up();
@@ -108,9 +135,9 @@ const void StaminaUI::UseBlendDraw() const
 	Draw2D::Blend([this]() {Draw2D::Circle(base_center_pos_, background_radius_ * base_scale_, background_color_, TRUE); }, background_blend_value_);	// 背景の描画
 	
 	// 赤く点滅する円を描画
-
-	Draw2D::CircleGauge(base_center_pos_, body_percent_, stamina_body_screen_->GetHandle(), 0.f, base_scale_);	// 本体の描画
-
+	Draw2D::Blend([this]() {Draw2D::Circle(base_center_pos_, body_radius_ * base_scale_, low_stamina_color_, FALSE, body_thickness_ * base_scale_); }, low_stamina_current_blend_value_);
+	Draw2D::CircleGauge(base_center_pos_, body_ratio_, stamina_body_screen_->GetHandle(), 0.f, base_scale_);	// 本体の描画
+	
 	auto edge_thickness = edge_thickness_ * base_scale_;
 	auto edge_radius = body_radius_ * base_scale_;
 	Draw2D::Circle(base_center_pos_, edge_radius - (body_thickness_ * 0.5f + edge_thickness * 0.5f), edge_color_, FALSE, edge_thickness);
@@ -144,9 +171,15 @@ void StaminaUI::LoadFile()
 		
 		// 本体
 		body_color_ = CSVFileAssistant::GetColorOfCSVFile(ss, data);
+		body_base_color_ = body_color_;
 		body_radius_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		body_thickness_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		
+		// hpが低い時に描画する丸
+		low_stamina_color_ = CSVFileAssistant::GetColorOfCSVFile(ss, data);
+		low_stamina_blend_speed_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+		low_stamina_ratio_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+
 		// 背景
 		background_color_ = CSVFileAssistant::GetColorOfCSVFile(ss, data);
 		background_blend_value_ = CSVFileAssistant::GetIntOfCSVFile(ss, data);
