@@ -25,6 +25,7 @@
 #include"skydome.h"
 #include"collision_mesh_obj.h"
 #include"player_ui_group.h"
+#include"enemy_ui_group.h"
 #include"attack_range_group.h"
 
 Game::Game()
@@ -89,36 +90,7 @@ void Game::Update()
 	}
 
 	PlayerUIGroup::GetInstance().Update();
-
-	if (CheckHitKey(KEY_INPUT_5)) 
-	{ 
-		EffectManager::GetInstance().Play(EffectID::test);
-	}
-
-	if (CheckHitKey(KEY_INPUT_6))
-	{
-		EffectManager::GetInstance().Play(EffectID::test2);
-	}
-
-	if (CheckHitKey(KEY_INPUT_7))
-	{
-		EffectManager::GetInstance().Stop(EffectID::test);
-	}
-	
-	if (CheckHitKey(KEY_INPUT_8))
-	{
-		EffectManager::GetInstance().RePlay(EffectID::test);
-	}
-
-	if (CheckHitKey(KEY_INPUT_9))
-	{
-		EffectManager::GetInstance().End(EffectID::test,EffectEndState::kMoment);
-	}
-
-	if (CheckHitKey(KEY_INPUT_0))
-	{
-		EffectManager::GetInstance().End(EffectID::test, EffectEndState::kTotal);
-	}
+	EnemyUIGroup::GetInstance().Update();
 
 	EffectManager::GetInstance().Update();
 	AttackRangeGroup::GetInstance().Update();
@@ -136,6 +108,7 @@ void Game::Draw()
 	
 	// Physics::GetInstance().Debug();
 	PlayerUIGroup::GetInstance().Draw();
+	EnemyUIGroup::GetInstance().Draw();
 
 	if (Debug::GetInstance().GetIsDisp())
 	{

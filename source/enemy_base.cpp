@@ -42,6 +42,7 @@
 #include"status.h"
 #include"status_container.h"
 #include"disp_attack_range.h"
+#include"enemy_ui_group.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos)
 	: CharacterBase("enemy")
@@ -186,6 +187,20 @@ void EnemyBase::Init()
 	*/
 	
 	behavior_tree_ = std::make_shared<BehaviorTree>(first_node);
+
+	std::function<int()> get_base_hp = [this]()-> int
+		{
+			return static_cast<int>(status_container_->GetBaseStatus().hp);
+		};
+
+	std::function<int()> get_current_hp = [this]()-> int
+		{
+			return static_cast<int>(status_container_->GetCurrentStatus().hp);
+		};
+
+	// ui‚ğì¬
+	EnemyUIGroup::GetInstance().MakeStatusUI(get_base_hp, get_current_hp, "zako");
+
 
 	UpdateBone();
 	/*

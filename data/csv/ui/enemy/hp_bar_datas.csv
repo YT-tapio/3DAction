@@ -1,0 +1,5 @@
+﻿id,path,original_width,original_height,pos,,size,rot_z
+,,,,x,y,,
+0,data/ui/enemy/hp/hp_background.png,793,72,800,100,0.8,0
+1,data/ui/enemy/hp/hp_body.png,793,72,800,100,0.8,0
+2,data/ui/enemy/hp/hp_frame.png,793,72,800,100,0.8,0

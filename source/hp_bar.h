@@ -7,7 +7,7 @@ class HPBar
 {
 public:
 
-	HPBar(const std::string path, std::function<int()> get_base_hp_, std::function<int()> get_current_hp_);
+	HPBar(const std::string path, std::function<int()> get_base_hp, std::function<int()> get_current_hp);
 
 	~HPBar();
 
