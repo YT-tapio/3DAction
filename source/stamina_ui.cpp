@@ -29,6 +29,7 @@ StaminaUI::StaminaUI(std::function<float()> get_base_stamina, std::function<floa
 	, body_base_color_(0)
 	, body_ratio_(0.f)
 	, body_radius_(-1.f)
+	, avoid_stamina_ratio_(0.f)
 	, low_stamina_color_(0)
 	, low_stamina_current_blend_value_(0.f)
 	, low_stamina_target_blend_value_(0.f)
@@ -43,6 +44,7 @@ StaminaUI::StaminaUI(std::function<float()> get_base_stamina, std::function<floa
 {
 	// ‰æ–Ê‚ðì‚é
 	stamina_body_screen_ = std::make_shared<SubScreen>(110, 110);
+	avoid_stamina_screen_ = std::make_shared<SubScreen>(110, 110);
 	disp_timer_ = std::make_shared<ConditionTimer>(0.1f);
 
 	LoadFile();
@@ -62,7 +64,7 @@ void StaminaUI::Init()
 void StaminaUI::Update()
 {
 	StaminaBodyUpdate();
-
+	AvoidStaminaUpdate();
 	// ƒXƒ^ƒ~ƒi‚ªmax‚ÌÛ•\Ž¦‚ð‚â‚ß‚é
 	if (body_ratio_ == 1.f)
 	{
@@ -83,16 +85,19 @@ void StaminaUI::Update()
 
 	if (current_blend_value_ != target_blend_value_)
 	{
-		current_blend_value_ = Lerp::Lerpf(current_blend_value_, target_blend_value_, FPS::GetInstance().GetDeltaTime() * 60.f * base_blend_speed_);
+		current_blend_value_ = Lerp::Lerpf(current_blend_value_, target_blend_value_, FPS::GetInstance().GetDeltaTime()*60.f * base_blend_speed_);
 	}
 	
 }
 
 const void StaminaUI::Draw() const
 {
+	printfDx("%.2f\n", current_blend_value_);
 	if (current_blend_value_ == 0.f) { return; }
-
-	Draw2D::Blend([this]() {UseBlendDraw(); }, current_blend_value_);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, current_blend_value_);
+	UseBlendDraw();
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	
 }
 
 void StaminaUI::StaminaBodyUpdate()
@@ -130,18 +135,39 @@ void StaminaUI::StaminaBodyUpdate()
 	stamina_body_screen_->Down();
 }
 
+void StaminaUI::AvoidStaminaUpdate()
+{
+	//avoid_stamina_ratio_ = get_avoid_use_stamina_value_() / get_base_stamina_();
+	avoid_stamina_ratio_ = 0.3f;
+	//screen‚ðŽg‚¤
+	avoid_stamina_screen_->Up();
+
+	auto draw_func = [this]()
+		{
+			Draw2D::Circle(VectorAssistant::VGet2D(float(stamina_body_screen_->GetScreenWidth()) * 0.5f,
+				float(stamina_body_screen_->GetScreenHeight()) * 0.5f), body_radius_, Color::kBlack, FALSE, body_thickness_);
+		};
+	Draw2D::Blend(draw_func, 120);
+	avoid_stamina_screen_->Down();
+}
+
 const void StaminaUI::UseBlendDraw() const
 {
+
 	Draw2D::Blend([this]() {Draw2D::Circle(base_center_pos_, background_radius_ * base_scale_, background_color_, TRUE); }, background_blend_value_);	// ”wŒi‚Ì•`‰æ
 	
 	// Ô‚­“_–Å‚·‚é‰~‚ð•`‰æ
 	Draw2D::Blend([this]() {Draw2D::Circle(base_center_pos_, body_radius_ * base_scale_, low_stamina_color_, FALSE, body_thickness_ * base_scale_); }, low_stamina_current_blend_value_);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, current_blend_value_);
 	Draw2D::CircleGauge(base_center_pos_, body_ratio_, stamina_body_screen_->GetHandle(), 0.f, base_scale_);	// –{‘Ì‚Ì•`‰æ
-	
+	float avoid_stamina_ratio = body_ratio_ - avoid_stamina_ratio_;
+	if (avoid_stamina_ratio < 0) { avoid_stamina_ratio = 0.f; }
+	Draw2D::CircleGauge(base_center_pos_, body_ratio_, avoid_stamina_screen_->GetHandle(), avoid_stamina_ratio, base_scale_);
 	auto edge_thickness = edge_thickness_ * base_scale_;
 	auto edge_radius = body_radius_ * base_scale_;
 	Draw2D::Circle(base_center_pos_, edge_radius - (body_thickness_ * 0.5f + edge_thickness * 0.5f), edge_color_, FALSE, edge_thickness);
 	Draw2D::Circle(base_center_pos_, edge_radius + (body_thickness_ * 0.5f + edge_thickness * 0.5f), edge_color_, FALSE, edge_thickness);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 void StaminaUI::LoadFile()

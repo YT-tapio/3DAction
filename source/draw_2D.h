@@ -38,7 +38,7 @@ namespace Draw2D
 	/// <param name="pos">’†SÀ•W</param>
 	/// <param name="percent">‰~‚ÌŠp“x‚ÌŠ„‡(1`0)</param>
 	/// <param name="handle">‰æ‘œ</param>
-	/// <param name="start_percent">‰Šúƒp[ƒZƒ“ƒg</param>
+	/// <param name="start_percent">‰Šú‚Ì‰~‚ÌŠp“x,w’è‚µ‚È‚©‚Á‚½‚ç0(1`0)</param>
 	/// <param name="scale">‘å‚«‚³</param>
 	/// <param name="reverse_x">‰ñ“]</param>
 	/// <param name="reverse_y">‰ñ“]</param>
@@ -46,7 +46,7 @@ namespace Draw2D
 		float scale = 1.f,int reverse_x = 0, int reverse_y = 0)
 	{
 		DrawCircleGauge(static_cast<int>(center_pos.x), static_cast<int>(center_pos.y), static_cast<double>(percent * 100),
-			handle, static_cast<double>(start_percent), static_cast<double>(scale), reverse_x, reverse_y);
+			handle, static_cast<double>(start_percent * 100), static_cast<double>(scale), reverse_x, reverse_y);
 	}
 
 	/// <summary>
@@ -130,7 +130,7 @@ namespace Draw2D
 			draw();
 			return;
 		}
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(alpha_num));
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha_num);
 		draw();
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}

@@ -26,7 +26,12 @@ private:
 	void StaminaBodyUpdate();
 
 	/// <summary>
-	/// ブレンドを使うもののdraw
+	/// 回避に使うスタミナに関するupdate
+	/// </summary>
+	void AvoidStaminaUpdate();
+
+	/// <summary>
+	/// ブレンドを使うものを描画する
 	/// </summary>
 	const void UseBlendDraw() const;
 
@@ -34,13 +39,15 @@ private:
 
 private:
 
-	// スタミナを描画するscreenを用意
-	std::shared_ptr<SubScreen> stamina_body_screen_;
+	std::shared_ptr<SubScreen> stamina_body_screen_;	// スタミナを描画するscreenを用意
+	std::shared_ptr<SubScreen> avoid_stamina_screen_;	// 回避に使うサークルを描画するscreenを用意
 	std::shared_ptr<ConditionTimer> disp_timer_;
 
-	std::function<float()> get_base_stamina_;
-	std::function<float()> get_current_stamina_;
-	std::function<bool()> can_use_stamina_func_;
+	// TODO:playerGroupから現在の操作している対象のを取得する
+	std::function<float()> get_base_stamina_;					// もともとのスタミナ
+	std::function<float()> get_current_stamina_;				// 現在のスタミナ
+	std::function<bool()> can_use_stamina_func_;			// スタミナが使えるか
+	std::function<float()> get_avoid_use_stamina_value_;	// 回避に使うスタミナ量
 
 	// 全部の
 	VECTOR base_center_pos_;	// 中心座標
@@ -55,6 +62,9 @@ private:
 	float body_ratio_;
 	float body_radius_;
 	float body_thickness_;
+
+	// 回避に使うスタミナの割合
+	float avoid_stamina_ratio_;
 
 	// HPが低い時に描画する丸のデータ
 	int low_stamina_color_;
