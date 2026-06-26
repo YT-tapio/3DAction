@@ -155,12 +155,15 @@ void Player::Init()
 			return status_container_->CanUseStamina();
 		};
 
+	// 回避に使うスタミナ量
+	std::function<float()> get_avoid_stamina = [this]() {return avoid_stamina_consumption_; };
+
 	// ui表示
-	PlayerUIGroup::GetInstance().MakeHPUI(get_base_hp, get_current_hp, name_,
-		get_base_stamina, get_current_stamina, can_use_stamina);
+	PlayerUIGroup::GetInstance().MakeHPUI(get_base_hp, get_current_hp, name_);
+
+	PlayerUIGroup::GetInstance().MakeStaminaUI(get_base_stamina, get_current_stamina, can_use_stamina, get_avoid_stamina);
 
 	target_rot_y_ = rot_.y;
-
 	animator_ = std::make_shared<AnimatorPlayer>(handle_, name_);
 	animator_->Init();
 	my_area_->Init();

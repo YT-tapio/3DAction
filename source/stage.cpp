@@ -55,7 +55,6 @@ void Stage::Update()
 void Stage::Draw()
 {
 	SetUseLighting(FALSE);
-	DrawSphere3D(pos_, 0.01f, 20, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
 	MV1DrawModel(handle_);
 	SetUseLighting(TRUE);
 }

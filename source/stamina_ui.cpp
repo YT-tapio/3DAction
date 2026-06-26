@@ -16,10 +16,11 @@
 #include"csv_file_assistant.h"
 
 StaminaUI::StaminaUI(std::function<float()> get_base_stamina, std::function<float()> get_current_stamina,
-	std::function<bool()> can_use_stamina)
+	std::function<bool()> can_use_stamina,std::function<float()> get_avoid_use_stamina_value)
 	: get_base_stamina_(get_base_stamina)
 	, get_current_stamina_(get_current_stamina)
 	, can_use_stamina_func_(can_use_stamina)
+	, get_avoid_use_stamina_value_(get_avoid_use_stamina_value)
 	, base_center_pos_(VectorAssistant::VGetZero())
 	, base_scale_(0.f)
 	, current_blend_value_(0.f)
@@ -42,13 +43,15 @@ StaminaUI::StaminaUI(std::function<float()> get_base_stamina, std::function<floa
 	, edge_radius_(-1.f)
 	, edge_thickness_(-1.f)
 {
-	// ‰æ–Ê‚ğì‚é
-	stamina_body_screen_ = std::make_shared<SubScreen>(110, 110);
-	avoid_stamina_screen_ = std::make_shared<SubScreen>(110, 110);
-	disp_timer_ = std::make_shared<ConditionTimer>(0.1f);
-
 	LoadFile();
 
+	const float kScreenWidth = (body_radius_ * 2.f) + body_thickness_;
+	const float kScreenHeight = (body_radius_ * 2.f) + body_thickness_;
+
+	// ‰æ–Ê‚ğì‚é
+	stamina_body_screen_ = std::make_shared<SubScreen>(kScreenWidth, kScreenHeight);
+	avoid_stamina_screen_ = std::make_shared<SubScreen>(kScreenWidth, kScreenHeight);
+	disp_timer_ = std::make_shared<ConditionTimer>(0.1f);
 }
 
 StaminaUI::~StaminaUI()
@@ -92,12 +95,10 @@ void StaminaUI::Update()
 
 const void StaminaUI::Draw() const
 {
-	printfDx("%.2f\n", current_blend_value_);
 	if (current_blend_value_ == 0.f) { return; }
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, current_blend_value_);
 	UseBlendDraw();
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	
 }
 
 void StaminaUI::StaminaBodyUpdate()
@@ -137,17 +138,19 @@ void StaminaUI::StaminaBodyUpdate()
 
 void StaminaUI::AvoidStaminaUpdate()
 {
-	//avoid_stamina_ratio_ = get_avoid_use_stamina_value_() / get_base_stamina_();
-	avoid_stamina_ratio_ = 0.3f;
-	//screen‚ğg‚¤
-	avoid_stamina_screen_->Up();
+	avoid_stamina_ratio_ = get_avoid_use_stamina_value_() / get_base_stamina_();
 
-	auto draw_func = [this]()
-		{
-			Draw2D::Circle(VectorAssistant::VGet2D(float(stamina_body_screen_->GetScreenWidth()) * 0.5f,
-				float(stamina_body_screen_->GetScreenHeight()) * 0.5f), body_radius_, Color::kBlack, FALSE, body_thickness_);
-		};
-	Draw2D::Blend(draw_func, 120);
+	// screen‚ğg‚¤
+	avoid_stamina_screen_->Up();
+	if (can_use_stamina_func_())
+	{
+		auto draw_func = [this]()
+			{
+				Draw2D::Circle(VectorAssistant::VGet2D(float(stamina_body_screen_->GetScreenWidth()) * 0.5f,
+					float(stamina_body_screen_->GetScreenHeight()) * 0.5f), body_radius_, Color::kBlack, FALSE, body_thickness_);
+			};
+		Draw2D::Blend(draw_func, 120);
+	}
 	avoid_stamina_screen_->Down();
 }
 

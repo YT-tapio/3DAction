@@ -10,7 +10,6 @@ Application::Application()
     
     SetGraphMode(kScreenWidth,kScreenHeight, 32);			//ウィンドウのサイズとカラーモードを決める
     ChangeWindowMode(TRUE);				//ウィンドウモードにする
-    SetFullSceneAntiAliasingMode(4, 0);
     
     // DirectX11を使用するようにする。(DirectX9も可、一部機能不可)
     // Effekseerを使用するには必ず設定する。
@@ -32,7 +31,6 @@ Application::Application()
     Effekseer_SetGraphicsDeviceLostCallbackFunctions();
 
     SetLightEnable(TRUE);
-
 
     // Zバッファを有効にする。
     // Effekseerを使用する場合、2DゲームでもZバッファを使用する。

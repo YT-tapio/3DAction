@@ -27,17 +27,20 @@
 #include"player_ui_group.h"
 #include"enemy_ui_group.h"
 #include"attack_range_group.h"
+#include"shadow_map.h"
 
 Game::Game()
 	: SceneBase()
 {
 	AttackRangeGroup::GetInstance().Awake();
 	camera_ = std::make_shared<Camera>();
-
+	shadow_map_ = std::make_shared<ShadowMap>();
 	objects_.push_back(std::make_shared<EnemyBase>(VGet(10, 0, 10)));
 	objects_.push_back(std::make_shared<Stage>());
-	objects_.push_back(std::make_shared<SkyDome>());
 	objects_.push_back(std::make_shared<CollisionMeshObject>());
+
+	no_shadow_objects_.push_back(std::make_shared<SkyDome>());
+	
 	EffectManager::GetInstance().Awake();
 	PlayerGroup::GetInstance().Awake(&camera_->dir_);
 	Init();
@@ -46,6 +49,7 @@ Game::Game()
 Game::~Game()
 {
 	objects_.clear();
+	no_shadow_objects_.clear();
 	Physics::GetInstance().End();
 	PlayerGroup::GetInstance().End();
 	EffectManager::GetInstance().End();
@@ -61,21 +65,28 @@ void Game::Init()
 	{
 		obj->Init();
 	}
+
+	for (auto obj : no_shadow_objects_)
+	{
+		obj->Init();
+	}
 	Brain::GetInstance().CreatePlaySceneVirtualCamera(camera_->GetPos(), camera_->GetTargetPos());
 	camera_->Init();
+	shadow_map_->Init();
 }
 
 void Game::Update()
 {
-	//printfDx("%d\n", GetRandom(0, 3));
 	PlayerGroup::GetInstance().Update();
-	//printfDx("---‚Ü‚¢‚é[‚Õ---\n");
 	for (auto& obj : objects_)
 	{
 		if (!obj->GetIsActive()) { continue; }
 		obj->Update();
 	}
-	
+	for (auto obj : no_shadow_objects_)
+	{
+		obj->Update();
+	}
 	Brain::GetInstance().Update();
 	camera_->Update();
 
@@ -89,6 +100,11 @@ void Game::Update()
 		obj->LateUpdate();
 	}
 
+	for (auto obj : no_shadow_objects_)
+	{
+		obj->LateUpdate();
+	}
+
 	PlayerUIGroup::GetInstance().Update();
 	EnemyUIGroup::GetInstance().Update();
 
@@ -98,14 +114,46 @@ void Game::Update()
 
 void Game::Draw()
 {
+	if (FALSE)
+	{
+		PlayerGroup::GetInstance().Draw();
+		for (const auto& obj : objects_)
+		{
+			obj->Draw();
+		}
+	}
+	else
+	{
+		shadow_map_->UpDrawShadowObject();
+		PlayerGroup::GetInstance().Draw();
+		for (const auto& obj : objects_)
+		{
+			obj->Draw();
+		}
+		DrawTriangle3D(VGet(5.f, -3.f, 5.f), VGet(50.f, -15.f, 5.f), VGet(5.f, -3.f, 50.f), GetColor(255, 255, 255), TRUE);
+		shadow_map_->DownDrawShadowObject();
 
-	PlayerGroup::GetInstance().Draw();
-	for (auto& obj : objects_)
+		shadow_map_->UpDrawnShadowObject();
+		PlayerGroup::GetInstance().Draw();
+		for (const auto& obj : objects_)
+		{
+			obj->Draw();
+		}
+		DrawTriangle3D(VGet(5.f, -3.f, 5.f), VGet(50.f, -15.f, 5.f), VGet(5.f, -3.f, 50.f), GetColor(255, 255, 255), TRUE);
+		shadow_map_->DownDrawnShadowObject();
+	}
+	
+	
+	AttackRangeGroup::GetInstance().Draw();
+
+	// DrawSphere3D(VGet(-500.0f, -100.0f, -500.0f), 10, 10, GetColor(255, 255, 255), GetColor(255, 255, 255), TRUE);
+	// DrawSphere3D(VGet(500.0f, 50.0f, 500.0f), 10, 10, GetColor(255, 255, 255), GetColor(255, 255, 255), TRUE);
+
+	for (auto obj : no_shadow_objects_)
 	{
 		obj->Draw();
 	}
-	AttackRangeGroup::GetInstance().Draw();
-	
+
 	// Physics::GetInstance().Debug();
 	PlayerUIGroup::GetInstance().Draw();
 	EnemyUIGroup::GetInstance().Draw();

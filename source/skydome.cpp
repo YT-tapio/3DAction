@@ -31,11 +31,7 @@ void SkyDome::Update()
 
 void SkyDome::Draw()
 {
-	SetUseLighting(FALSE);
-	SetLightEnable(FALSE);
 	MV1DrawModel(handle_);
-	SetUseLighting(TRUE);
-	SetLightEnable(TRUE);
 }
 
 void SkyDome::Debug()

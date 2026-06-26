@@ -8,7 +8,7 @@ class StaminaUI : public IUIObject
 public:
 
 	StaminaUI(std::function<float()> get_base_stamina, std::function<float()> get_current_stamina,
-		std::function<bool()> can_use_stamina);
+		std::function<bool()> can_use_stamina,std::function<float()> get_avoid_use_stamina_value);
 
 	~StaminaUI();
 
@@ -41,7 +41,7 @@ private:
 
 	std::shared_ptr<SubScreen> stamina_body_screen_;	// スタミナを描画するscreenを用意
 	std::shared_ptr<SubScreen> avoid_stamina_screen_;	// 回避に使うサークルを描画するscreenを用意
-	std::shared_ptr<ConditionTimer> disp_timer_;
+	std::shared_ptr<ConditionTimer> disp_timer_;			// 
 
 	// TODO:playerGroupから現在の操作している対象のを取得する
 	std::function<float()> get_base_stamina_;					// もともとのスタミナ

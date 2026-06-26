@@ -38,7 +38,7 @@ void CollisionMeshObject::Init()
 void CollisionMeshObject::Debug()
 {
 	// ‚±‚±‚Å“–‚½‚è”»’è‚Ì•`‰æ
-	MV1DrawModel(handle_);
+	// MV1DrawModel(handle_);
 	//DrawSphere3D(pos_, 1.f, 20, Color::kWhite, Color::kWhite, TRUE);
 }
 

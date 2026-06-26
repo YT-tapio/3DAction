@@ -265,6 +265,9 @@
     <Filter Include="ソース ファイル\ui\stamina">
       <UniqueIdentifier>{c2628d23-a095-432f-9060-bd9870b4cf2c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\shadow_map">
+      <UniqueIdentifier>{4ffe8d81-df1d-4f53-9033-af262cce9557}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -650,6 +653,9 @@
     </ClCompile>
     <ClCompile Include="source\stamina_ui.cpp">
       <Filter>ソース ファイル\ui\stamina</Filter>
+    </ClCompile>
+    <ClCompile Include="source\shadow_map.cpp">
+      <Filter>ソース ファイル\shadow_map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1114,6 +1120,9 @@
     </ClInclude>
     <ClInclude Include="source\stamina_ui.h">
       <Filter>ソース ファイル\ui\stamina</Filter>
+    </ClInclude>
+    <ClInclude Include="source\shadow_map.h">
+      <Filter>ソース ファイル\shadow_map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

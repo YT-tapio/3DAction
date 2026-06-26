@@ -4,7 +4,7 @@
 
 class Camera;
 class ObjectBase;
-class EffectBase;
+class ShadowMap;
 
 class Game : public SceneBase
 {
@@ -33,5 +33,8 @@ private:
 	float capsule2_r = 3.f;
 
 	std::shared_ptr<Camera> camera_;
+	std::shared_ptr<ShadowMap> shadow_map_;
 	std::vector<std::shared_ptr<ObjectBase>> objects_;
+	// ‰e‚ª‚Â‚©‚È‚¢‚à‚Ì
+	std::vector<std::shared_ptr<ObjectBase>> no_shadow_objects_;
 };

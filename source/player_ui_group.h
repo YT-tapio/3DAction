@@ -26,9 +26,10 @@ public:
 
 	void Draw();
 
-	void MakeHPUI(std::function<int()> get_base_hp, std::function<int()> get_current_hp, const std::string& name, 
-		std::function<float()> get_base_stamina, std::function<float()> get_current_stamina,
-		std::function<bool()> can_use_stamina);
+	void MakeHPUI(std::function<int()> get_base_hp, std::function<int()> get_current_hp, const std::string& name);
+
+	void MakeStaminaUI(std::function<float()> get_base_stamina, std::function<float()> get_current_stamina,
+		std::function<bool()> can_use_stamina, std::function<float()> get_avoid_use_stamina_value);
 
 	void End();
 

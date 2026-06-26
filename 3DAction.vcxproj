@@ -215,6 +215,7 @@
     <ClCompile Include="source\random_node.cpp" />
     <ClCompile Include="source\selector_node.cpp" />
     <ClCompile Include="source\sequence_node.cpp" />
+    <ClCompile Include="source\shadow_map.cpp" />
     <ClCompile Include="source\skill_base.cpp" />
     <ClCompile Include="source\skill_loader.cpp" />
     <ClCompile Include="source\skydome.cpp" />
@@ -344,6 +345,7 @@
     <ClInclude Include="source\random_node.h" />
     <ClInclude Include="source\selector_node.h" />
     <ClInclude Include="source\sequence_node.h" />
+    <ClInclude Include="source\shadow_map.h" />
     <ClInclude Include="source\skill_base.h" />
     <ClInclude Include="source\check_my_area.h" />
     <ClInclude Include="source\enemy_base.h" />
