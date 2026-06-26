@@ -3,6 +3,7 @@
 
 ShadowMap::ShadowMap()
 {
+	//画像の読み込み
 	handle_ = MakeShadowMap(1024, 1024);
 	if (handle_ == -1) { printfDx("影：読み込みエラー"); }
 	// ライトの方向を設定
