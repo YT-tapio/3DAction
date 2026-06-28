@@ -8,6 +8,7 @@
 #include"load_animation.h"
 #include"csv_file_assistant.h"
 #include"FPS.h"
+#include"time.h"
 
 AnimatorBase::AnimatorBase(const std::string data_file_path, int handle)
 {
@@ -39,7 +40,7 @@ void AnimatorBase::Init()
 	blend_rate_ = 0.f;
 }
 
-void AnimatorBase::Update()
+void AnimatorBase::Update(std::shared_ptr<const Time> owner_time)
 {
 	// もし次に続くアニメーションがあるなら
 	if (CheckNextAnimation())
@@ -98,9 +99,9 @@ void AnimatorBase::Update()
 	auto& now_anim_data = animation_datas_[now_anim_name_];
 
 	//ここで
-	if (is_blending_) { 	PlayTimeUpdate(animation_datas_[before_anim_name_]); }
+	if (is_blending_) { 	PlayTimeUpdate(animation_datas_[before_anim_name_],owner_time); }
 
-	PlayTimeUpdate(now_anim_data);
+	PlayTimeUpdate(now_anim_data, owner_time);
 
 	if(now_anim_data.play_time == now_anim_data.total_time)
 	{
@@ -110,7 +111,7 @@ void AnimatorBase::Update()
 	{
 		is_end_ = FALSE;
 	}
-	BlendUpdate();
+	BlendUpdate(owner_time);
 
 	ResetRequest();
 
@@ -279,10 +280,10 @@ const bool AnimatorBase::CheckNextAnimation() const
 	return TRUE;
 }
 
-void AnimatorBase::PlayTimeUpdate(AnimationData& data)
+void AnimatorBase::PlayTimeUpdate(AnimationData& data,std::shared_ptr<const Time> owner_time)
 {
 	//stopじゃないときはアニメーションの再生を行う
-	if (!is_stop_) { data.play_time += data.play_speed * FPS::GetInstance().GetDeltaTime() * 60.f; }
+	if (!is_stop_) { data.play_time += data.play_speed * owner_time->GetFPSRate(); }
 
 	// トータルタイムを超えた時
 	if (data.play_time >= data.total_time)
@@ -300,7 +301,7 @@ void AnimatorBase::PlayTimeUpdate(AnimationData& data)
 		data.play_time);
 }
 
-void AnimatorBase::BlendUpdate()
+void AnimatorBase::BlendUpdate(std::shared_ptr<const Time> owner_time)
 {
 	if (!is_blending_) { return; }
 	auto& before_anim_data = animation_datas_[before_anim_name_];
@@ -319,5 +320,5 @@ void AnimatorBase::BlendUpdate()
 	}
 	MV1SetAttachAnimBlendRate(handle_, before_anim_data.attach_index, 1.f - blend_rate_);
 	MV1SetAttachAnimBlendRate(handle_, animation_datas_[now_anim_name_].attach_index, blend_rate_);
-	blend_rate_ += FPS::GetInstance().GetDeltaTime() * 10.f;
+	blend_rate_ += owner_time->GetDeltaTime() * 10.f;
 }

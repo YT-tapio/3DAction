@@ -202,6 +202,7 @@
     <ClCompile Include="source\input_change_interface.cpp" />
     <ClCompile Include="source\jump.cpp" />
     <ClCompile Include="source\jumping_attack.cpp" />
+    <ClCompile Include="source\loop_timer.cpp" />
     <ClCompile Include="source\node_base.cpp" />
     <ClCompile Include="source\object_2D.cpp" />
     <ClCompile Include="source\object_behavior.cpp" />
@@ -234,6 +235,7 @@
     <ClCompile Include="source\takable_heal_enemy_interface.cpp" />
     <ClCompile Include="source\takable_heal_player_interface.cpp" />
     <ClCompile Include="source\test_scene.cpp" />
+    <ClCompile Include="source\time.cpp" />
     <ClCompile Include="source\tracking_camera.cpp" />
     <ClCompile Include="source\transform.cpp" />
     <ClCompile Include="source\image_data.cpp" />
@@ -331,6 +333,7 @@
     <ClInclude Include="source\jump.h" />
     <ClInclude Include="source\jumping_attack.h" />
     <ClInclude Include="source\jumping_attack_state.h" />
+    <ClInclude Include="source\loop_timer.h" />
     <ClInclude Include="source\node_base.h" />
     <ClInclude Include="source\behavior_status.h" />
     <ClInclude Include="source\object_2D.h" />
@@ -375,6 +378,7 @@
     <ClInclude Include="source\takable_heal_enemy_interface.h" />
     <ClInclude Include="source\takable_heal_player_interface.h" />
     <ClInclude Include="source\test_scene.h" />
+    <ClInclude Include="source\time.h" />
     <ClInclude Include="source\tracking_camera.h" />
     <ClInclude Include="source\transform.h" />
     <ClInclude Include="source\image_data.h" />

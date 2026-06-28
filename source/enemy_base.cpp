@@ -43,6 +43,7 @@
 #include"status_container.h"
 #include"disp_attack_range.h"
 #include"enemy_ui_group.h"
+#include"time.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos)
 	: CharacterBase("enemy")
@@ -154,7 +155,7 @@ void EnemyBase::Init()
 	// 追いかけるときのノード
 	std::vector<std::shared_ptr<NodeBase>> random_nodes2;
 
-	random_nodes2.emplace_back(area_of_effect_node);
+	//random_nodes2.emplace_back(area_of_effect_node);
 	/*
 	
 	*/
@@ -163,14 +164,37 @@ void EnemyBase::Init()
 	target_player_pos_ = PlayerGroup::GetInstance().MostNearPlayerPos(pos_);
 	std::shared_ptr<NodeBase> chase_node = std::make_shared<ActionNode>(std::make_shared<ChasePlayer>(obj_mine,
 		"run", &target_player_pos_, 0.5f));
+	/*------*/
 
+		// エフェクトによる攻撃
+	std::vector<std::shared_ptr<NodeBase>>  area_of_effect_nodes2;
+	float area_of_effect_radius2 = 10.f;
+
+	// 攻撃
+	std::shared_ptr<NodeBase> area_of_effect_node2 = std::make_shared<ActionNode>(std::make_shared<AreaOfEffectAttack>(
+		obj_mine, "charge", 0.f, 0.9f, VectorAssistant::VGetSame(2.f), area_of_effect_radius2, EffectID::kAreaOfEffect, 2.f));
+
+	// ノード終わりじゃなく当たり判定が終わったら描画させたいよね
+	// 終了条件はこのbehaviorが終了しているとき
+	auto ui_AoE_end_function2 = [area_of_effect_node2]() -> bool { return area_of_effect_node2->GetStatus() == BehaviorStatus::kComplete; };
+
+	// ui表示
+	std::shared_ptr<NodeBase> area_of_effect_ui_node2 = std::make_shared<ActionNode>(std::make_shared<DispAttackRange>(
+		obj_mine, &target_player_pos_, VGet(area_of_effect_radius2, 1.f, area_of_effect_radius2), ui_AoE_end_function2));
+
+
+	// ui表示から先に入れる
+	area_of_effect_nodes2.push_back(area_of_effect_ui_node2);
+	area_of_effect_nodes2.push_back(area_of_effect_node2);
+	/*-------*/
+	random_nodes2.emplace_back(std::make_shared<SequenceNode>(area_of_effect_nodes2));
 	random_nodes2.emplace_back(chase_node);
 
 	std::shared_ptr<NodeBase> random_far_nodes2 = std::make_shared<RandomNode>(random_nodes2);
 
 	std::pair<std::shared_ptr<NodeBase>, std::shared_ptr<NodeBase>> nodes_;
 	//nodes_.first = random_far_nodes2;
-	nodes_.first = chase_node;
+	nodes_.first = random_far_nodes2;
 	nodes_.second = radom_attack_node;
 	
 	std::function<bool()> condition = [this]()-> bool
@@ -197,6 +221,7 @@ void EnemyBase::Init()
 		{
 			return static_cast<int>(status_container_->GetCurrentStatus().hp);
 		};
+	time_->Init();
 
 	// uiを作成
 	EnemyUIGroup::GetInstance().MakeStatusUI(get_base_hp, get_current_hp, "zako");
@@ -227,6 +252,7 @@ void EnemyBase::Init()
 
 void EnemyBase::Update()
 {
+	time_->Update();
 	if (status_container_->GetCurrentStatus().hp <= 0)
 	{
 		animator_->PlayRequest("death");
@@ -247,7 +273,7 @@ void EnemyBase::Update()
 		//test_behavior_->Update();
 	}
 
-	animator_->Update();
+	animator_->Update(time_);
 	UpdateBone();
 	
 	

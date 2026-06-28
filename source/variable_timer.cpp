@@ -1,6 +1,3 @@
-
-/*
-
 #include"condition_timer.h"
 #include"variable_timer.h"
  
@@ -20,4 +17,3 @@ void VariableTimer::ChangeMaxTime(float max_time)
 	if (!is_stop_) { return; }
 	max_time_ = max_time;
 }
-*/

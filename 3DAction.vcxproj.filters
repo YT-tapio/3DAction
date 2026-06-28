@@ -268,6 +268,9 @@
     <Filter Include="ソース ファイル\shadow_map">
       <UniqueIdentifier>{4ffe8d81-df1d-4f53-9033-af262cce9557}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\time">
+      <UniqueIdentifier>{7c44cc97-cb08-4362-9b54-51a05f559880}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -656,6 +659,12 @@
     </ClCompile>
     <ClCompile Include="source\shadow_map.cpp">
       <Filter>ソース ファイル\shadow_map</Filter>
+    </ClCompile>
+    <ClCompile Include="source\time.cpp">
+      <Filter>ソース ファイル\time</Filter>
+    </ClCompile>
+    <ClCompile Include="source\loop_timer.cpp">
+      <Filter>ソース ファイル\timer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1123,6 +1132,12 @@
     </ClInclude>
     <ClInclude Include="source\shadow_map.h">
       <Filter>ソース ファイル\shadow_map</Filter>
+    </ClInclude>
+    <ClInclude Include="source\time.h">
+      <Filter>ソース ファイル\time</Filter>
+    </ClInclude>
+    <ClInclude Include="source\loop_timer.h">
+      <Filter>ソース ファイル\timer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

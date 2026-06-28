@@ -31,6 +31,8 @@ public:
 
 	const float GetDeltaTime() const { return delta_time_; }
 
+	const float GetTargetFPS() const { return kTargetFps; }
+
 	void Debug();
 	
 private:

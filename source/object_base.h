@@ -1,5 +1,8 @@
 #pragma once
+#include<memory>
 #include"DxLib.h"
+
+class Time;
 
 class ObjectBase
 {
@@ -19,11 +22,15 @@ public:
 
 	virtual void  Debug();
 
+	std::shared_ptr<Time> GetTime();
+
 	const bool GetIsActive() const;
 
 	const VECTOR GetPosition() const;
 
 protected:
+
+	std::shared_ptr<Time> time_;
 
 	VECTOR pos_;
 	VECTOR rot_;

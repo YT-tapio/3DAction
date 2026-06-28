@@ -12,6 +12,8 @@
 #include"animator_base.h"
 #include"vector_assistant.h"
 #include"FPS.h"
+#include"time.h"
+
 ChasePlayer::ChasePlayer(std::weak_ptr<ObjectBase> owner,
 	std::string my_anim_name, VECTOR* target_player_pos, float chase_speed)
 	: BehaviorBase(owner)
@@ -51,11 +53,10 @@ BehaviorStatus ChasePlayer::Update()
 	if (VSize(velocity) > chase_speed_)
 	{
 		// スピードの調整
-		velocity = VScale(VNorm(velocity), chase_speed_ * FPS::GetInstance().GetDeltaTime() * 60.f);
+		velocity = VScale(VNorm(velocity), chase_speed_ * owner->GetTime()->GetFPSRate());
 	}
 	auto owner_rigid_body = owner_physics->GetRigidBody();
 	owner_rigid_body->SetTargetVelocity(velocity);
-
 
 	if (auto character = std::dynamic_pointer_cast<CharacterBase>(owner))
 	{
@@ -64,9 +65,11 @@ BehaviorStatus ChasePlayer::Update()
 		character->SetRotation(VGet(0.f,VectorAssistant::VGetTan(VectorAssistant::VGetReverce(VNorm(dist))), 0.f));	// ターゲットに向けたい
 	}
 
-	
+	if (VSize(dist) <= 10.f) { return BehaviorStatus::kComplete; }
+
+
 	// 必ず成功を返す
-	return BehaviorStatus::kComplete;
+	return BehaviorStatus::kRunning;
 }
 
 void ChasePlayer::Exit()

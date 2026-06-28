@@ -1,6 +1,7 @@
 #pragma once
 
 struct AnimationData;
+class Time;
 
 class AnimatorBase
 {
@@ -12,7 +13,7 @@ public:
 
 	void Init();
 
-	void Update();
+	void Update(std::shared_ptr<const Time> owner_time);
 
 	void PlayRequest(std::string name);
 
@@ -58,6 +59,8 @@ protected:
 
 	const bool ChangeCondition() const;
 
+protected:
+
 	std::string kDataFilePath;
 
 	const std::string kNothing = "nothing";
@@ -79,9 +82,9 @@ protected:
 
 private:
 
-	void PlayTimeUpdate(AnimationData& data);
+	void PlayTimeUpdate(AnimationData& data, std::shared_ptr<const Time> owner_time);
 
-	void BlendUpdate();
+	void BlendUpdate(std::shared_ptr<const Time> owner_time);
 
 private:
 

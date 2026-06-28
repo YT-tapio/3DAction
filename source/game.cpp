@@ -114,7 +114,7 @@ void Game::Update()
 
 void Game::Draw()
 {
-	if (FALSE)
+	if (TRUE)
 	{
 		PlayerGroup::GetInstance().Draw();
 		for (const auto& obj : objects_)
@@ -124,13 +124,15 @@ void Game::Draw()
 	}
 	else
 	{
+		// ‰e
+
 		shadow_map_->UpDrawShadowObject();
 		PlayerGroup::GetInstance().Draw();
 		for (const auto& obj : objects_)
 		{
 			obj->Draw();
 		}
-		DrawTriangle3D(VGet(5.f, -3.f, 5.f), VGet(50.f, -15.f, 5.f), VGet(5.f, -3.f, 50.f), GetColor(255, 255, 255), TRUE);
+		// DrawTriangle3D(VGet(5.f, -3.f, 5.f), VGet(50.f, -15.f, 5.f), VGet(5.f, -3.f, 50.f), GetColor(255, 255, 255), TRUE);
 		shadow_map_->DownDrawShadowObject();
 
 		shadow_map_->UpDrawnShadowObject();
@@ -139,10 +141,9 @@ void Game::Draw()
 		{
 			obj->Draw();
 		}
-		DrawTriangle3D(VGet(5.f, -3.f, 5.f), VGet(50.f, -15.f, 5.f), VGet(5.f, -3.f, 50.f), GetColor(255, 255, 255), TRUE);
+		// DrawTriangle3D(VGet(5.f, -3.f, 5.f), VGet(50.f, -15.f, 5.f), VGet(5.f, -3.f, 50.f), GetColor(255, 255, 255), TRUE);
 		shadow_map_->DownDrawnShadowObject();
 	}
-	
 	
 	AttackRangeGroup::GetInstance().Draw();
 

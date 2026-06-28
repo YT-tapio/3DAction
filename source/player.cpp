@@ -47,6 +47,7 @@
 #include"effect_id.h"
 #include"effect_end_state.h"
 #include"player_ui_group.h"
+#include"time.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name)
 	: CharacterBase("player")
@@ -179,12 +180,15 @@ void Player::Init()
 	avoid_->Init();
 	test_behavior_->Init();
 	
+	time_->Init();
+
 	EffectManager::GetInstance().Play(EffectID::kHandAura);
 	EffectManager::GetInstance().Play(EffectID::kHandAura2);
 }
 
 void Player::Update()
 {
+	time_->Update();
 	if (CheckHitKey(KEY_INPUT_I)) { status_container_->TakeHeal(10); }
 	if (status_container_->GetCurrentStatus().hp <= 0)
 	{
@@ -208,7 +212,7 @@ void Player::Update()
 		test_behavior_->Update();
 	}
 	
-	animator_->Update();
+	animator_->Update(time_);
 	Setting();
 	// 参照の更新
 	UpdateBone();
@@ -408,10 +412,11 @@ void Player::MakeSkill(std::weak_ptr<Player> owner)
 
 void Player::Move()
 {
-	if (animator_->GetNowAnimName() == "idle") 
+	if (animator_->GetNowAnimName() == "idle")
 	{
 		if (!on_damage_) { can_move_ = TRUE; }
 	}
+
 	VECTOR dir = VectorAssistant::VGetZero();
 	vel_ = VectorAssistant::VGetZero();
 	float speed = speed_;
@@ -438,7 +443,7 @@ void Player::Move()
 			animator_->PlayRequest("run");
 
 			// ここでスタミナを減らす
-			status_container_->StaminaDown(0.5f * FPS::GetInstance().GetDeltaTime());
+			status_container_->StaminaDown(0.5f * time_->GetDeltaTime());
 		}
 		else
 		{
@@ -454,11 +459,10 @@ void Player::Move()
 		is_dash_ = FALSE;
 
 		animator_->PlayRequest("idle");
-
 	}
 	
 	
-	vel_ = VScale(vel_, FPS::GetInstance().GetDeltaTime() * 60.f);
+	vel_ = VScale(vel_, time_->GetFPSRate());
 	vel_ = VAdd(vel_, VGet(0.f, -fall_speed_, 0.f));
 	
 	if (VSize(dir) > 0.f)
@@ -467,7 +471,7 @@ void Player::Move()
 		target_rot_y_ = VectorAssistant::VGetTan(VectorAssistant::VGetReverce(dir_));
 	}
 	if (is_stop_) { return; }
-	rot_.y = RadianAssistant::Lerp(rot_.y, target_rot_y_, RadianAssistant::kOneRad * 15.f * FPS::GetInstance().GetDeltaTime() * 60.f);
+	rot_.y = RadianAssistant::Lerp(rot_.y, target_rot_y_, RadianAssistant::kOneRad * 15.f * time_->GetFPSRate());
 	if (CheckHitKey(KEY_INPUT_SPACE)) { pos_ = VGet(0.f, 0.f, 0.f); vel_ = VGet(0.f, 0.f, 0.f); is_ground_ = FALSE; fall_speed_ = 0.f;}
 }
 

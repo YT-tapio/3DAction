@@ -15,6 +15,7 @@
 #include"attack_correction.h"
 #include"vector_assistant.h"
 #include"FPS.h"
+#include"time.h"
 
 ComboSkill::ComboSkill(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior, std::unordered_map<int, std::pair<float,float>> approach_speed_ratio_mp)
 	: SkillBase(owner,behavior)
@@ -99,7 +100,7 @@ void ComboSkill::Correction(std::shared_ptr<ComboAction> combo_action)
 	auto approach_speed_ratio = approach_speed_ratio_mp->second;	// speed‚Æratio‚Ì‚Å[‚½
 	float approach_speed = approach_speed_ratio.first;		// speed
 	float approach_ratio = approach_speed_ratio.second;	// ratio
-	AttackCorrection::GetInstance().ApproachTheNearestEnemy(owner_.lock(), vel, approach_speed * FPS::GetInstance().GetDeltaTime() * 60.f, approach_ratio);
+	AttackCorrection::GetInstance().ApproachTheNearestEnemy(owner_.lock(), vel, approach_speed * owner_.lock()->GetTime()->GetFPSRate(), approach_ratio);
 }
 
 bool ComboSkill::IsStartcomboAction(std::shared_ptr<ComboAction> combo_action)

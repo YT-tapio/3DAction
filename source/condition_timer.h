@@ -6,17 +6,17 @@ public:
 
 	ConditionTimer(float max_time);
 
-	~ConditionTimer();
+	virtual ~ConditionTimer();
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Init();
+	virtual void Init();
 
 	/// <summary>
 	/// タイマー更新
 	/// </summary>
-	void Update();
+	virtual void Update();
 
 	/// <summary>
 	/// stopさせる

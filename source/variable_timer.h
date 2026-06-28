@@ -1,5 +1,5 @@
 #pragma once
-/*
+
 class ConditionTimer;
 
 ///可変式のタイマー
@@ -22,4 +22,4 @@ private:
 
 
 };
-*/
+

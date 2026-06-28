@@ -1,8 +1,10 @@
 #include"object_base.h"
 #include"vector_assistant.h"
+#include"time.h"
 
 ObjectBase::ObjectBase()
 {
+	time_ = std::make_shared<Time>();
 	pos_ = VectorAssistant::VGetZero();
 	rot_ = VectorAssistant::VGetZero();
 	is_active_ = TRUE;
@@ -36,6 +38,11 @@ void ObjectBase::Draw()
 void ObjectBase::Debug()
 {
 
+}
+
+std::shared_ptr<Time> ObjectBase::GetTime()
+{
+	return time_;
 }
 
 const bool ObjectBase::GetIsActive() const
