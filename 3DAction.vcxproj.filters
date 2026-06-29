@@ -666,6 +666,9 @@
     <ClCompile Include="source\loop_timer.cpp">
       <Filter>ソース ファイル\timer</Filter>
     </ClCompile>
+    <ClCompile Include="source\time_transition_method.cpp">
+      <Filter>ソース ファイル\time</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1138,6 +1141,9 @@
     </ClInclude>
     <ClInclude Include="source\loop_timer.h">
       <Filter>ソース ファイル\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\time_transition_method.h">
+      <Filter>ソース ファイル\time</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

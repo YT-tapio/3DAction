@@ -42,6 +42,11 @@ namespace Lerp
 		float value = 0.f;
 		float offset_speed = speed;
 		float diff = target - now;
+		if (fabs(diff) < 0.0001f)
+		{
+			value = target - diff;
+			return value;
+		}
 		if (offset_speed > 1.f) { offset_speed = 1.f; }
 		value = (diff * offset_speed) + now;
 		

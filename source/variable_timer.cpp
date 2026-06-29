@@ -14,6 +14,6 @@ VariableTimer::~VariableTimer()
 
 void VariableTimer::ChangeMaxTime(float max_time)
 {
-	if (!is_stop_) { return; }
+	if (is_stop_) { return; }
 	max_time_ = max_time;
 }

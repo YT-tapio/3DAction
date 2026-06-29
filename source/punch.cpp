@@ -18,6 +18,8 @@
 #include"status_holder_interface.h"
 #include"attack_type.h"
 #include"time.h"
+#include"effect_id.h"
+#include"effect_manager.h"
 
 Punch::Punch(std::weak_ptr<ObjectBase> owner, VECTOR* pos,
 	std::string my_anim_name, float min_coll_ratio, float max_coll_ratio, std::shared_ptr<RigidBody> body)
@@ -100,9 +102,12 @@ void Punch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
 		{
 			takable_player->OnDamageFromPlayer(1, AttackType::kPhysical);
-			//printfDx("frame：%d\n",frame_);
+			// ヒットストップ
+			owner_.lock()->GetTime()->SetTimeScale(0.f, 0.2f, TimeTransitionMethod::kMoment);
+			// エフェクトの描画
+			EffectManager::GetInstance().Play(EffectID::kPunchHit);
+			EffectManager::GetInstance().SetPos(EffectID::kPunchHit, *pos_);
 		}
-		owner_.lock()->GetTime()->SetTimeScale(0.f);
 		return;
 	}
 
