@@ -3,6 +3,8 @@
 class ColliderBase;
 class IPhysicsEventReceiver;
 class ColliderGroup;
+class VariableTimer;
+
 
 class RigidBody
 {
@@ -32,12 +34,19 @@ public:
 	/// </summary>
 	void NotActive();
 
-	void Update(const VECTOR& vel);
+	/// <summary>
+	/// 更新処理
+	/// </summary>
+	void Update();
+
+	/// <summary>
+	/// velocityの更新
+	/// </summary>
+	/// <param name="vel"></param>
+	void UpdateVelocity(const VECTOR& vel);
 
 	// 重力処理
 	void AddForce();
-
-	void ResetGravity();
 
 	void SetPos();
 
@@ -46,6 +55,10 @@ public:
 	/// </summary>
 	/// <param name="speed"></param>
 	void SetUpSpeed(float speed);
+	
+	void CanMove();
+
+	void SetStop(const float& time = -1.f);
 
 	void OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object);
 
@@ -69,15 +82,17 @@ public:
 
 	const float GetFallSpeed() const;
 
+	const float GetOwnerDeltaTime() const;
+
 	const VECTOR GetPosition()const;
 
 	const VECTOR GetVelocity()const;
 
-	const VECTOR GetBeforeVelocity() const;
-
 	const VECTOR GetTargetVelocity() const;
 
 	const bool IsMove() const;
+
+	const bool IsStop() const;
 
 	const bool GetUseGravity() const;
 
@@ -115,9 +130,9 @@ private:
 	VECTOR vel_;
 	VECTOR dir_;
 
-	VECTOR before_vel_;		// 1つ前の移動量を保存
 	VECTOR target_vel_;
 
+	bool is_stop_;
 
 	bool use_gravity_;		// 重力
 	bool is_kinematic_;		// 摩擦や重力による変更を受けない(TRUE : 受けない,FALSE ： 受ける)
@@ -134,7 +149,6 @@ private:
 	bool tag_first_change_;	// タグの最初のチェンジ
 	std::shared_ptr<ColliderBase>	coll_;				// 自分の当たり判定
 	std::weak_ptr<IPhysicsEventReceiver>				object_;	// インターフェースを継承したオブジェクト
-
-	
+	std::shared_ptr<VariableTimer> stop_timer_;	// どのくらい時間を止めるかのタイマー
 
 };

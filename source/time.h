@@ -21,6 +21,8 @@ public:
 
 	const float GetDeltaTime() const;
 
+	const float GetTimeScale() const;
+
 	const float GetFPSRate() const;
 
 private:

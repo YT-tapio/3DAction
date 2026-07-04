@@ -32,8 +32,6 @@ public:
 
 	void ResetVelocity();
 
-	void SetTragetVelocity(const VECTOR& velocity);
-
 	void SetVelocity(const VECTOR& velocity);
 
 	void SetRotation(const VECTOR& rot) override;
@@ -73,6 +71,8 @@ public:
 	std::vector<std::weak_ptr<ObjectBase>> GetMyAreaObject();
 
 	std::shared_ptr<RigidBody> GetRigidBody() override;
+
+	const float GetDeltaTime() const override;
 
 	std::shared_ptr<StatusContainer> GetStatusContainer() override;
 

@@ -108,6 +108,21 @@ void StatusContainer::StaminaDown(const float down_value)
 	stamina_recovery_timer_->ReStart();
 }
 
+void StatusContainer::StaminaUp(const float up_value)
+{
+	current_status_.stamina += up_value;
+	if (current_status_.stamina > base_status_.stamina)
+	{
+		current_status_.stamina = base_status_.stamina;
+	}
+}
+
+void StatusContainer::StaminaUpMax()
+{
+	current_status_.stamina = base_status_.stamina;
+	can_use_stamina_ = TRUE;
+}
+
 void StatusContainer::TakeDamage(float atk,AttackType type)
 {
 	// UŒ‚—Í‚Æ–hŒä—Í‚ÌŒvZ‚ğs‚¤

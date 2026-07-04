@@ -26,6 +26,17 @@ public:
 	void StaminaDown(const float down_value);
 
 	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="up_value"></param>
+	void StaminaUp(const float up_value);
+
+	/// <summary>
+	/// 全回復
+	/// </summary>
+	void StaminaUpMax();
+
+	/// <summary>
 	/// ダメージを受ける
 	/// </summary>
 	/// <param name="atk"></param>
@@ -72,6 +83,9 @@ private:
 
 	// スタミナ回復を行うインターバルのタイマー：このタイマーがたまればスタミナを回復
 	std::shared_ptr<ConditionTimer> stamina_recovery_timer_;
+	
+	// TODO：バフ系は後から
+
 
 	Status base_status_;		// 初期状態
 	Status current_status_;		// 現在の状態
@@ -79,7 +93,5 @@ private:
 	float stamina_recovery_value_;
 
 	bool can_use_stamina_;
-
-	// TODO：バフ系は後から
 
 };

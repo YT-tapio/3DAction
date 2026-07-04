@@ -64,8 +64,8 @@ void Time::Update()
 			}
 		}
 
-		printfDx("time_scale:%.2f\n", time_scale_);
-		printfDx("target_time_scale:%.2f\n", target_time_scale_);
+		// printfDx("time_scale:%.2f\n", time_scale_);
+		// printfDx("target_time_scale:%.2f\n", target_time_scale_);
 
 	}
 
@@ -87,6 +87,11 @@ void Time::SetTimeScale(const float& target_time_scale, const float& time,TimeTr
 const float Time::GetDeltaTime() const
 {
 	return delta_time_;
+}
+
+const float Time::GetTimeScale() const
+{
+	return time_scale_;
 }
 
 const float Time::GetFPSRate() const

@@ -44,3 +44,8 @@ std::shared_ptr<RigidBody> IPhysicsEventReceiver::GetRigidBody()
 {
 	return nullptr;
 }
+
+const float IPhysicsEventReceiver::GetDeltaTime() const
+{
+	return 1.f;
+}

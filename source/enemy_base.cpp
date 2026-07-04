@@ -378,6 +378,11 @@ std::shared_ptr<RigidBody> EnemyBase::GetRigidBody()
 	return rigid_body_;
 }
 
+const float EnemyBase::GetDeltaTime() const
+{
+	return time_->GetFPSRate();
+}
+
 const VECTOR EnemyBase::GetAttackTargetPos() const
 {
 	return target_player_pos_;

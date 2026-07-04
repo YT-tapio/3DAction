@@ -54,6 +54,8 @@ private:
 
 	bool CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidBody> other, Contact& contact, const float& ground_proj_length);
 
+	void UpdateRigidBody();
+
 	/// <summary>
 	/// “Š‰e
 	/// </summary>

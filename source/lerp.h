@@ -83,15 +83,15 @@ namespace Lerp
 	/// </summary>
 	/// <param name="now"></param>
 	/// <param name="target"></param>
-	/// <param name="speed">0`1‚ÌŠÔ</param>
+	/// <param name="speed">0`1‚ÌŠÔ(’²®—Ê)</param>
 	/// <returns>Å‰‚ªÅ‚‘¬“x‚ÌˆÚ“®’l</returns>
 	inline VECTOR DampV(const VECTOR& now, const VECTOR& target, const float& speed)
 	{
-		//speed‚ª1‚É‚È‚ç‚È‚¢‚æ‚¤1‚É‘I‘ğ‚È‚ç’²®‚·‚é
+		// speed‚ª1‚ğ’´‚¦‚È‚¢‚æ‚¤‚É’²®‚·‚é
 		float offset_speed = speed;
+		if (offset_speed > 1.f) { offset_speed = 1.f; }
 		VECTOR value = VectorAssistant::VGetZero();
 		VECTOR diff = VSub(target, now);
-		if (speed > 1.f) { offset_speed = 1.f; }
 		value = VAdd(now, VScale(diff, offset_speed));
 		return value;
 	}

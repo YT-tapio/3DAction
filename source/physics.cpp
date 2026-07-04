@@ -68,6 +68,7 @@ void Physics::Debug()
 
 void Physics::Update()
 {
+	UpdateRigidBody();
 	// èdóÕ
 	Gravity();
 	// ínè„ÇÃìäâe
@@ -210,7 +211,7 @@ bool Physics::CheckHitFoot(std::shared_ptr<RigidBody> me, std::shared_ptr<RigidB
 		break;
 	}
 
-	me->Update(offset_proj);
+	me->UpdateVelocity(offset_proj);
 
 	return is_hit;
 }
@@ -225,6 +226,7 @@ void Physics::GroundProj()
 		if (!main_body->GetIsActive()) { continue; }
 		if (VSize(main_body->GetVelocity()) == 0.f) { continue; }
 		if (main_body->GetIsKinematic()) { continue; }
+		if (main_body->IsStop()) { continue; }
 		// if (main_body->GetFallSpeed() != 0.f) { continue; }
 		// if (main_body->GetFallSpeed() != 0.f) { printfDx("a"); }
 		
@@ -259,7 +261,7 @@ void Physics::Resistance()
 	for (auto& id_rigid_body : id_rigid_bodies_mp_)
 	{
 		auto body = id_rigid_body.second;
-
+		if (body->IsStop()) { continue; }
 		// ìKâûÇéÛÇØÇ»Ç¢Ç‡ÇÃ
 		if (body->GetIsKinematic()) { continue; }
 
@@ -267,9 +269,19 @@ void Physics::Resistance()
 		VECTOR target_flat_vel	= VectorAssistant::VGetFlat(body->GetTargetVelocity());
 		float target_y = body->GetTargetVelocity().y;
 		float friction = body->GetFriction();
-		VECTOR vel = Lerp::DampV(now_flat_vel, target_flat_vel,friction);
+		float delta_time = body->GetOwnerDeltaTime();
+		VECTOR vel = Lerp::DampV(now_flat_vel, target_flat_vel, friction * delta_time);
 		vel = VAdd(vel, VGet(0.f, target_y, 0.f));
 		body->SetVelocity(vel);
+	}
+}
+
+void Physics::UpdateRigidBody()
+{
+	for (auto& id_rigid_body : id_rigid_bodies_mp_)
+	{
+		auto body = id_rigid_body.second;
+		body->Update();
 	}
 }
 
@@ -277,7 +289,10 @@ void Physics::Gravity()
 {
 	for (auto& main_body : id_rigid_bodies_mp_)
 	{
-		main_body.second->AddForce();
+		if (!main_body.second->IsStop())
+		{
+			main_body.second->AddForce();
+		}
 	}
 }
 
@@ -350,7 +365,7 @@ void Physics::Collision()
 					if (!target_body->IsObject()) { continue; }
 					// âüÇµñﬂÇµ
 					VECTOR offset_vel = my_coll->FixPos(main_body->GetPosition(), main_body->GetVelocity(), target_body->GetPosition(), target_coll, contact);
-					main_body->Update(offset_vel);
+					main_body->UpdateVelocity(offset_vel);
 					is_resolve = TRUE;
 				}
 			}

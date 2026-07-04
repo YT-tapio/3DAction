@@ -271,6 +271,9 @@
     <Filter Include="ソース ファイル\time">
       <UniqueIdentifier>{7c44cc97-cb08-4362-9b54-51a05f559880}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\status\buff">
+      <UniqueIdentifier>{4063158d-e7aa-4e4f-8552-3cbe79e9d01f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -564,12 +567,6 @@
     <ClCompile Include="source\variable_timer.cpp">
       <Filter>ソース ファイル\timer</Filter>
     </ClCompile>
-    <ClCompile Include="source\status_buff_container.cpp">
-      <Filter>ソース ファイル\status</Filter>
-    </ClCompile>
-    <ClCompile Include="source\buff_data.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="source\status_holder_interface.cpp">
       <Filter>ソース ファイル\interface\status_holder</Filter>
     </ClCompile>
@@ -668,6 +665,12 @@
     </ClCompile>
     <ClCompile Include="source\time_transition_method.cpp">
       <Filter>ソース ファイル\time</Filter>
+    </ClCompile>
+    <ClCompile Include="source\buff_data.cpp">
+      <Filter>ソース ファイル\status\buff</Filter>
+    </ClCompile>
+    <ClCompile Include="source\status_buff_container.cpp">
+      <Filter>ソース ファイル\status\buff</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1031,15 +1034,6 @@
     <ClInclude Include="source\variable_timer.h">
       <Filter>ソース ファイル\timer</Filter>
     </ClInclude>
-    <ClInclude Include="source\status_buff_container.h">
-      <Filter>ソース ファイル\status</Filter>
-    </ClInclude>
-    <ClInclude Include="source\buff_data.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="source\buff_type.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="source\attack_type.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
@@ -1144,6 +1138,15 @@
     </ClInclude>
     <ClInclude Include="source\time_transition_method.h">
       <Filter>ソース ファイル\time</Filter>
+    </ClInclude>
+    <ClInclude Include="source\buff_data.h">
+      <Filter>ソース ファイル\status\buff</Filter>
+    </ClInclude>
+    <ClInclude Include="source\buff_type.h">
+      <Filter>ソース ファイル\status\buff</Filter>
+    </ClInclude>
+    <ClInclude Include="source\status_buff_container.h">
+      <Filter>ソース ファイル\status\buff</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

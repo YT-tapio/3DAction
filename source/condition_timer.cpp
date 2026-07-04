@@ -61,3 +61,8 @@ const bool ConditionTimer::GetIsEnd() const
 {
 	return is_end_;
 }
+
+const float ConditionTimer::GetMaxTime() const
+{
+	return max_time_;
+}

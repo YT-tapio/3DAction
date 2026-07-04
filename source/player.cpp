@@ -231,11 +231,6 @@ void Player::ResetVelocity()
 	rigid_body_->ResetVelocity();
 }
 
-void Player::SetTragetVelocity(const VECTOR& velocity)
-{
-	vel_ = velocity;
-}
-
 void Player::SetVelocity(const VECTOR& velocity)
 {
 	vel_ = velocity;
@@ -636,10 +631,25 @@ void Player::OnHealFromPlayer(float heal)
 void Player::OnDamageFromEnemy(float damage,AttackType type)
 {
 	// 無敵時はダメージを受けない
-	if (is_invincible_) 
+	if (is_invincible_)
 	{
+		// 許容量
+		const float kJustAvoidRatio = 0.3f;
+		// ダメージを受けない
+		// 無敵かつジャスト入力中かつアニメーションが最初のほうなら特別処理
+		if (animator_->GetRatio("avoid") < kJustAvoidRatio)
+		{
+			// バフをかける
+			status_container_->StaminaUpMax();
+			// この時ジャスト回避
+			printfDx("ジャスト回避\n");
+			time_->SetTimeScale(0.f, 0.15f);
+			rigid_body_->SetStop(0.15f);
+
+			// エフェクトを描画
+		}
+
 		// この瞬間にエフェクトを描画
-		//printfDx("無敵\n");
 		EffectManager::GetInstance().Play(EffectID::kAvoidSuccess);
 		EffectManager::GetInstance().SetPos(EffectID::kAvoidSuccess,pos_);
 		EffectManager::GetInstance().End(EffectID::kAvoidSuccess, EffectEndState::kTotal);
@@ -663,6 +673,11 @@ std::vector<std::weak_ptr<ObjectBase>> Player::GetMyAreaObject()
 std::shared_ptr<RigidBody> Player::GetRigidBody()
 {
 	return rigid_body_;
+}
+
+const float Player::GetDeltaTime() const
+{
+	return time_->GetFPSRate();
 }
 
 VECTOR* Player::GetHeadPos()

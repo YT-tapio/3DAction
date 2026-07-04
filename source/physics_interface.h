@@ -41,4 +41,9 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	virtual std::shared_ptr<RigidBody> GetRigidBody();
+
+	/// <summary>
+	/// ƒvƒŒƒCƒ„[‚Ìdelta_time‚ğæ“¾‚·‚é
+	/// </summary>
+	virtual const float GetDeltaTime() const;
 };

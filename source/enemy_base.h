@@ -49,6 +49,8 @@ public:
 
 	std::shared_ptr<RigidBody> GetRigidBody() override;
 
+	const float GetDeltaTime() const override;
+
 	const VECTOR GetAttackTargetPos() const override;
 
 protected:

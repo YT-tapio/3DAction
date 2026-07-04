@@ -9,26 +9,30 @@
 #include"FPS.h"
 #include"debug.h"
 #include"color.h"
+#include"condition_timer.h"
+#include"variable_timer.h"
 
 RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll,VECTOR* pos,bool gravity, bool kinematic,float mass,float friction)
+	: pos_(pos)
+	, vel_(VectorAssistant::VGetZero())
+	, dir_(VectorAssistant::VGetZero())
+	, target_vel_(VectorAssistant::VGetZero())
+	, coll_(coll)
+	, use_gravity_(gravity)
+	, is_kinematic_(kinematic)
+	, mass_(mass)
+	, friction_(friction)
+	, fall_speed_(0.f)
+	, is_active_(TRUE)
+	, is_object_(FALSE)
+	, on_ground_(FALSE)
+	, is_landing_(FALSE)
+	, is_stop_(FALSE)
+	, tag_("Nothing")
+	, tag_first_change_(FALSE)
+	, stop_timer_(std::make_shared<VariableTimer>(0.f))
 {
-	pos_		= pos;
-	vel_		= VectorAssistant::VGetZero();
-	dir_		= VectorAssistant::VGetZero();
-	before_vel_ = VectorAssistant::VGetZero();
-	target_vel_ = VectorAssistant::VGetZero();
-	coll_ = coll;
-	use_gravity_ = gravity;
-	is_kinematic_ = kinematic;
-	mass_ = mass;
-	friction_ = friction;
-	fall_speed_ = 0.f;
-	is_active_ = TRUE;
-	is_object_ = FALSE;
-	on_ground_ = FALSE;
-	is_landing_ = FALSE;
-	tag_ = "Nothing";
-	tag_first_change_ = FALSE;
+	
 }
 
 RigidBody::~RigidBody()
@@ -42,6 +46,18 @@ void RigidBody::Init(std::weak_ptr<IPhysicsEventReceiver> object)
 	// objectを変換する
 	auto obj = std::dynamic_pointer_cast<ObjectBase>(object_.lock());
 	is_object_ = obj != nullptr;
+	
+	vel_ = VectorAssistant::VGetZero();
+	dir_ = VectorAssistant::VGetZero();
+	target_vel_ = VectorAssistant::VGetZero();
+	fall_speed_ = 0.f;
+	// is_active_ = TRUE;
+	//is_object_ = FALSE;
+	on_ground_ = FALSE;
+	is_landing_ = FALSE;
+	is_stop_ = FALSE;
+	tag_ = "Nothing";
+	tag_first_change_ = FALSE;
 	tag_ = "Nothing";
 }
 
@@ -53,6 +69,7 @@ void RigidBody::ResetVelocity()
 
 void RigidBody::SetVelocity(const VECTOR& vel)
 {
+	if (is_stop_) { return; }
 	vel_ = vel;
 	dir_ = VNorm(vel_);
 }
@@ -69,7 +86,6 @@ void RigidBody::SetTag(std::string tag)
 		tag_ = tag;
 		tag_first_change_ = TRUE;
 	}
-
 }
 
 void RigidBody::Active()
@@ -82,9 +98,22 @@ void RigidBody::NotActive()
 	is_active_ = FALSE;
 }
 
-void RigidBody::Update(const VECTOR& vel)
+void RigidBody::Update()
 {
-	before_vel_ = vel_;
+	if (is_stop_)
+	{
+		// is_stopのタイマーの更新を行う
+		stop_timer_->Update();
+		if (stop_timer_->GetIsEnd())
+		{
+			is_stop_ = FALSE;
+		}
+	}
+}
+
+void RigidBody::UpdateVelocity(const VECTOR& vel)
+{
+	if (is_stop_) { return; }
 	vel_ = vel;
 	dir_ = VNorm(vel);
 }
@@ -92,6 +121,7 @@ void RigidBody::Update(const VECTOR& vel)
 void RigidBody::AddForce()
 {
 	if (!use_gravity_) { return; }
+	if (is_stop_) { return; }
 	// 重力処理
 	if (!on_ground_)
 	{
@@ -101,20 +131,41 @@ void RigidBody::AddForce()
 	}
 }
 
-void RigidBody::ResetGravity()
-{
-	before_vel_.y = 0.f;
-}
 
 void RigidBody::SetPos()
 {
-	*pos_ = VAdd(*pos_, vel_);
+	// もしstopなら更新しない
+	if (is_stop_)
+	{
+		//printfDx("x:%.2f y:%.2f z:%.2f\n", vel_.x, vel_.y, vel_.z);
+		return;
+	}
+	
+	if (VSize(vel_) > 0.f)
+	{
+		*pos_ = VAdd(*pos_, vel_);
+	}
 }
 
 void RigidBody::SetUpSpeed(float speed)
 {
 	fall_speed_ = speed;
 	target_vel_.y = fall_speed_;
+}
+
+void RigidBody::CanMove()
+{
+	is_stop_ = FALSE;
+}
+
+void RigidBody::SetStop(const float& time)
+{
+	// もし時間を設定していない場合は無限に止める
+	is_stop_ = TRUE;
+	if (time == -1.f) { return; }
+	stop_timer_->Start();
+	stop_timer_->ChangeMaxTime(time);
+	stop_timer_->ReStart();
 }
 
 void RigidBody::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
@@ -237,6 +288,15 @@ const float RigidBody::GetFallSpeed() const
 	return fall_speed_;
 }
 
+const float RigidBody::GetOwnerDeltaTime() const
+{
+	if (auto obj = object_.lock())
+	{
+		return obj->GetDeltaTime();
+	}
+	return 1.f;
+}
+
 const VECTOR RigidBody::GetPosition() const
 {
 	return *pos_;
@@ -247,11 +307,6 @@ const VECTOR RigidBody::GetVelocity() const
 	return vel_;
 }
 
-const VECTOR RigidBody::GetBeforeVelocity() const
-{
-	return before_vel_;
-}
-
 const VECTOR RigidBody::GetTargetVelocity() const
 {
 	return target_vel_;
@@ -260,9 +315,13 @@ const VECTOR RigidBody::GetTargetVelocity() const
 const bool RigidBody::IsMove() const
 {
 	// 現在も前も動いていないときは
-	if (VSize(VectorAssistant::VGetFlat(vel_))			!= 0.f) { return TRUE; }
-	if (VSize(VectorAssistant::VGetFlat(before_vel_))	!= 0.f) { return TRUE; }
+	if (VSize(VectorAssistant::VGetFlat(vel_)) != 0.f) { return TRUE; }
 	return FALSE;
+}
+
+const bool RigidBody::IsStop() const
+{
+	return is_stop_;
 }
 
 const bool RigidBody::GetUseGravity() const
