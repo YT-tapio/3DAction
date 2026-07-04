@@ -11,4 +11,5 @@ namespace EffectID
 	static const int kStamp = 6;
 	static const int kTackle = 7;
 	static const int kPunchHit = 8;
+	static const int kFullStamina = 9;
 }

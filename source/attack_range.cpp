@@ -47,7 +47,9 @@ void AttackRange::Update()
 
 void AttackRange::Draw()
 {
+	SetUseLighting(FALSE);
 	MV1DrawModel(handle_);
+	SetUseLighting(TRUE);
 }
 
 void AttackRange::Debug()

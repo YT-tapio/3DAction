@@ -641,6 +641,9 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 		{
 			// バフをかける
 			status_container_->StaminaUpMax();
+			EffectManager::GetInstance().Play(EffectID::kFullStamina);
+			EffectManager::GetInstance().SetPos(EffectID::kFullStamina, pos_);
+			EffectManager::GetInstance().End(EffectID::kFullStamina, EffectEndState::kTotal);
 			// この時ジャスト回避
 			printfDx("ジャスト回避\n");
 			time_->SetTimeScale(0.f, 0.15f);

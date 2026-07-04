@@ -286,6 +286,10 @@ void EnemyBase::LateUpdate()
 
 void EnemyBase::Draw()
 {
+	//MV1SetDifColorScale(handle_, GetColorF(100.0f, 0.0f, 0.0f, 1.0f));
+	//MV1SetSpcColorScale(handle_, GetColorF(100.0f, 0.0f, 0.0f, 1.0f));
+	//MV1SetEmiColorScale(handle_, GetColorF(100.0f, 0.0f, 0.0f, 1.0f));
+	MV1SetAmbColorScale(handle_, GetColorF(1.0f, 0.0f, 0.0f, 1.0f));
 	MV1DrawModel(handle_);
 }
 
@@ -361,6 +365,8 @@ void EnemyBase::UnGround()
 void EnemyBase::OnDamageFromPlayer(float damage,AttackType type)
 {
 	status_container_->TakeDamage(damage,type);
+	// ‘Ì‚ğÔ‚­‚·‚é
+	
 }
 
 const bool EnemyBase::GetOnGround() const
