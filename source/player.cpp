@@ -633,6 +633,9 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 	// 無敵時はダメージを受けない
 	if (is_invincible_)
 	{
+		// padの振動
+
+
 		// 許容量
 		const float kJustAvoidRatio = 0.3f;
 		// ダメージを受けない

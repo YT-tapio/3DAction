@@ -2,12 +2,12 @@
 
 class ConditionTimer;
 
-///可変式のタイマー
+///時間が可変のタイマー
 class VariableTimer : public ConditionTimer
 {
 public:
 
-	VariableTimer(float max_time);
+	VariableTimer(float max_time = 0.f);
 
 	~VariableTimer() override;
 

@@ -2,7 +2,7 @@
 
 enum class BuffType
 {
-	kPhysicalATK,
+	kPhysicalATK = 1,
 	kPhysicalDEF,
 	kMagicATK,
 	kMagicDEF

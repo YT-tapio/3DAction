@@ -1,7 +1,7 @@
 #pragma once
-/*
-struct BuffData;
 
+struct BuffData;
+enum class BuffType;
 /// <summary>
 /// バフ,デバフの管理を行う
 /// </summary>
@@ -15,17 +15,18 @@ public:
 
 	void Init();
 
+	void Update();
 
 private:
 
+	// バフの量
+	const int kMaxBuff = 5;
+
+	std::vector<Condition> buffs;
+
 	// バフ群
-	std::unordered_map<BuffType,BuffData> buffs_;
+	std::unordered_map<BuffType,std::vector<std::pair<bool,BuffData>>> buffs_;
 
 	// デバフ群
-	std::unordered_map<BuffType, BuffData> debuffs_;
+	std::unordered_map<BuffType,std::vector<std::pair<bool, BuffData>>> debuffs_;
 };
-
-/*
-バフを重複できるように実装してほしい
-*/
-
