@@ -67,6 +67,8 @@ void HitRedBody::Update()
 			target_red_ratio_ = 1.f;
 		}
 	}
+
+	if (red_ratio_ != 0.f){ MV1SetAmbColorScale(handle_, GetColorF(red_ratio_, 1.f, 1.f, 1.f)); }
 }
 
 void HitRedBody::DoRedColor()
@@ -78,7 +80,7 @@ void HitRedBody::DoRedColor()
 		return;
 	}
 	if (red_ratio_ == 0.f)	{ return; }
-	MV1SetAmbColorScale(handle_, GetColorF(red_ratio_, 1.f, 1.f, 1.f));
+	
 }
 
 void HitRedBody::Request(const ChangeMethod change_method,const float time)
