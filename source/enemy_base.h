@@ -10,6 +10,7 @@ class Punch;
 class BehaviorBase;
 class BehaviorTree;
 class StatusContainer;
+class HitRedBody;
 
 class EnemyBase : public CharacterBase, public IPhysicsEventReceiver,public ITakableDamagePlayer,public IStatusHolder
 {
@@ -64,6 +65,7 @@ protected:
 	std::shared_ptr<BehaviorTree> behavior_tree_;
 
 	std::shared_ptr<StatusContainer> status_container_;
+	std::shared_ptr<HitRedBody> hit_red_body_;	// ƒqƒbƒgÔ‚­‚È‚é
 
 	std::string my_name_;
 
@@ -72,7 +74,6 @@ protected:
 	VECTOR target_player_pos_;
 
 	float fall_speed_;
-
 
 private:
 

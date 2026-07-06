@@ -48,6 +48,7 @@ void AttackRange::Update()
 void AttackRange::Draw()
 {
 	SetUseLighting(FALSE);
+	MV1SetOpacityRate(handle_, 0.6f);
 	MV1DrawModel(handle_);
 	SetUseLighting(TRUE);
 }

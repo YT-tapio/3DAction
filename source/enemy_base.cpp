@@ -44,6 +44,8 @@
 #include"disp_attack_range.h"
 #include"enemy_ui_group.h"
 #include"time.h"
+#include"change_method.h"
+#include"hit_red_body.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos)
 	: CharacterBase("enemy")
@@ -67,6 +69,7 @@ EnemyBase::EnemyBase(const VECTOR& pos)
 	VECTOR hp_size = VectorAssistant::VGet2D(500.f, 50.f);
 
 	status_container_ = std::make_shared<StatusContainer>("zako",hp_pos,hp_size);
+	hit_red_body_ =	 std::make_shared<HitRedBody>(handle_);
 }
 
 EnemyBase::~EnemyBase()
@@ -245,6 +248,7 @@ void EnemyBase::Init()
 	animator_ = std::make_shared<AnimatorEnemy>(handle_,"enemy");
 	animator_->Init();
 	status_container_->Init();
+	hit_red_body_->Init();
 	// test_behavior_->Init();
 	behavior_tree_->Init();
 	dir_ = VectorAssistant::VGetDirFromRotY(rot_);
@@ -272,10 +276,10 @@ void EnemyBase::Update()
 		behavior_tree_->Update();
 		//test_behavior_->Update();
 	}
-
+	
 	animator_->Update(time_);
 	UpdateBone();
-	
+	hit_red_body_->Update();
 	
 }
 
@@ -289,7 +293,9 @@ void EnemyBase::Draw()
 	//MV1SetDifColorScale(handle_, GetColorF(100.0f, 0.0f, 0.0f, 1.0f));
 	//MV1SetSpcColorScale(handle_, GetColorF(100.0f, 0.0f, 0.0f, 1.0f));
 	//MV1SetEmiColorScale(handle_, GetColorF(100.0f, 0.0f, 0.0f, 1.0f));
-	MV1SetAmbColorScale(handle_, GetColorF(1.0f, 0.0f, 0.0f, 1.0f));
+	//MV1SetAmbColorScale(handle_, GetColorF(1.f, 1.f, 1.f, 1.f));
+	hit_red_body_->DoRedColor();
+	
 	MV1DrawModel(handle_);
 }
 
@@ -366,7 +372,7 @@ void EnemyBase::OnDamageFromPlayer(float damage,AttackType type)
 {
 	status_container_->TakeDamage(damage,type);
 	// ‘Ì‚ðÔ‚­‚·‚é
-	
+	hit_red_body_->Request(ChangeMethod::kLerp, 0.2f);
 }
 
 const bool EnemyBase::GetOnGround() const
