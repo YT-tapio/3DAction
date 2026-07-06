@@ -22,7 +22,7 @@ private:
 	// バフの量
 	const int kMaxBuff = 5;
 
-	std::vector<Condition> buffs;
+	//std::vector<Condition> buffs;
 
 	// バフ群
 	std::unordered_map<BuffType,std::vector<std::pair<bool,BuffData>>> buffs_;

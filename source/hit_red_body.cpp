@@ -1,7 +1,7 @@
 #include"change_method.h"
 #include"DxLib.h"
 #include"hit_red_body.h"
-
+#include"lerp.h"
 
 HitRedBody::HitRedBody(int handle)
 	: handle_(handle)
@@ -27,7 +27,9 @@ void HitRedBody::Update()
 	switch (change_method_)
 	{
 	case ChangeMethod::kMoment:
-		//red_ratio_ = 
+		
+		// èuä‘ÇÃèÍçáÇÕ
+
 		break;
 
 	case ChangeMethod::kLerp:
@@ -38,12 +40,12 @@ void HitRedBody::Update()
 
 		break;
 	}
-
 }
 
 void HitRedBody::DoRedColor()
 {
-	if(is_change_)
+	if (!is_change_) { return; }
+	if (red_ratio_ == 0.f) { return; }
 	MV1SetAmbColorScale(handle_, GetColorF(red_ratio_, 0.f, 0.f, 1.f));
 }
 
