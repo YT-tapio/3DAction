@@ -17,6 +17,10 @@
 #include"takable_damage_player_interface.h"
 #include"takable_damage_enemy_interface.h"
 #include"attack_type.h"
+#include"status_holder_interface.h"
+#include"status.h"
+#include"status_container.h"
+
 
 DoublePunch::DoublePunch(std::weak_ptr<ObjectBase> owner, std::string my_anim_name,
 	float min_coll_ratio, float max_coll_ratio,VECTOR* pos,float vertical,float radius)
@@ -119,7 +123,8 @@ void DoublePunch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object
 		// objectがplayerからダメージを受ける対象なのか変換する
 		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
 		{
-			takable_player->OnDamageFromPlayer(1, AttackType::kPhysical);
+			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
+			takable_player->OnDamageFromPlayer(owner_status_container->GetCurrentStatus().physical_atk, AttackType::kPhysical);
 		}
 		return;
 	}
@@ -130,7 +135,8 @@ void DoublePunch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object
 		//objectがenemyからダメージを受ける対象なのか変換する
 		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
 		{
-			takable_enemy->OnDamageFromEnemy(1, AttackType::kPhysical);
+			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
+			takable_enemy->OnDamageFromEnemy(owner_status_container->GetCurrentStatus().physical_atk, AttackType::kPhysical);
 		}
 		return;
 	}

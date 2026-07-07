@@ -19,6 +19,9 @@
 #include"effect_id.h"
 #include"effect_end_state.h"
 #include"effect_manager.h"
+#include"status_holder_interface.h"
+#include"status.h"
+#include"status_container.h"
 
 Stamp::Stamp(std::weak_ptr<ObjectBase> owner, VECTOR* pos, float radius,std::string my_anim_name)
 	: AttackBase(owner,0,0)
@@ -111,7 +114,8 @@ void Stamp::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		// player‚©‚çƒ_ƒ[ƒW‚ğó‚¯‚é‘ÎÛ‚É•ÏŠ·
 		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
 		{
-			takable_player->OnDamageFromPlayer(1,AttackType::kPhysical);
+			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
+			takable_player->OnDamageFromPlayer(owner_status_container->GetCurrentStatus().physical_atk, AttackType::kPhysical);
 		}
 		return;
 	}

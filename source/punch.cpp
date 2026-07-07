@@ -101,7 +101,8 @@ void Punch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		// objectがプレイヤーからダメージを受けるインターフェースを継承しているかをチェック
 		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
 		{
-			takable_player->OnDamageFromPlayer(1, AttackType::kPhysical);
+			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
+			takable_player->OnDamageFromPlayer(owner_status_container->GetCurrentStatus().physical_atk, AttackType::kPhysical);
 			// ヒットストップ
 			owner_.lock()->GetTime()->SetTimeScale(0.f, 0.2f, TimeTransitionMethod::kMoment);
 			// エフェクトの描画
@@ -117,7 +118,8 @@ void Punch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		// objectがプレイヤーからダメージを受けるインターフェースを継承しているかをチェック
 		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
 		{
-			takable_enemy->OnDamageFromEnemy(1, AttackType::kPhysical);
+			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
+			takable_enemy->OnDamageFromEnemy(owner_status_container->GetCurrentStatus().physical_atk, AttackType::kPhysical);
 		}
 		return;
 	}
