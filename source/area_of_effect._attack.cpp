@@ -20,6 +20,9 @@
 #include"takable_damage_player_interface.h"
 #include"takable_damage_enemy_interface.h"
 #include"attack_type.h"
+#include"status_holder_interface.h"
+#include"status.h"
+#include"status_container.h"
 
 AreaOfEffectAttack::AreaOfEffectAttack(std::weak_ptr<ObjectBase> owner, 
 	std::string charge_anim,float min_coll_ratio, 
@@ -112,7 +115,8 @@ void AreaOfEffectAttack::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver>
 		// playerからダメージを受ける対象に変換
 		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
 		{
-			takable_player->OnDamageFromPlayer(1, AttackType::kMagic);
+			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
+			takable_player->OnDamageFromPlayer(owner_status_container->GetCurrentStatus().magic_atk, AttackType::kMagic);
 		}
 		return;
 	}
@@ -123,7 +127,8 @@ void AreaOfEffectAttack::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver>
 		//playerからダメージを受ける対象に変換
 		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
 		{
-			takable_enemy->OnDamageFromEnemy(1, AttackType::kMagic);
+			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
+			takable_enemy->OnDamageFromEnemy(owner_status_container->GetCurrentStatus().magic_atk, AttackType::kMagic);
 		}
 		return;
 	}

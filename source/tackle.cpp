@@ -17,6 +17,9 @@
 #include"effect_manager.h"
 #include"effect_id.h"
 #include"effect_end_state.h"
+#include"status_holder_interface.h"
+#include"status.h"
+#include"status_container.h"
 
 Tackle::Tackle(std::weak_ptr<ObjectBase> owner, std::shared_ptr<RigidBody> rigid_body,
 	std::string anim_name,const float time, const float speed)
@@ -132,7 +135,8 @@ void Tackle::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		// objectがプレイヤーからダメージを受けるインターフェースを継承しているかをチェック
 		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
 		{
-			takable_player->OnDamageFromPlayer(1, AttackType::kPhysical);
+			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
+			takable_player->OnDamageFromPlayer(owner_status_container->GetCurrentStatus().physical_atk, AttackType::kPhysical);
 		}
 		return;
 	}
@@ -143,7 +147,8 @@ void Tackle::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		// objectがプレイヤーからダメージを受けるインターフェースを継承しているかをチェック
 		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
 		{
-			takable_enemy->OnDamageFromEnemy(1, AttackType::kPhysical);
+			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
+			takable_enemy->OnDamageFromEnemy(owner_status_container->GetCurrentStatus().physical_atk, AttackType::kPhysical);
 		}
 		return;
 	}

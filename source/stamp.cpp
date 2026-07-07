@@ -126,7 +126,8 @@ void Stamp::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		//player‚©‚çƒ_ƒ[ƒW‚ğó‚¯‚é‘ÎÛ‚É•ÏŠ·
 		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
 		{
-			takable_enemy->OnDamageFromEnemy(1, AttackType::kPhysical);
+			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
+			takable_enemy->OnDamageFromEnemy(owner_status_container->GetCurrentStatus().physical_atk, AttackType::kPhysical);
 		}
 		return;
 	}
