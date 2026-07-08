@@ -41,7 +41,6 @@
 #include"double_punch.h"
 #include"status.h"
 #include"status_container.h"
-#include"buff_type.h"
 #include"attack_type.h"
 #include"effect_manager.h"
 #include"effect_id.h"
@@ -90,6 +89,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	//input_ = input;
 	target_rot_y_ = 0;
 	speed_ = 0.f;
+	job_ = "nothing";
 }
 
 Player::~Player()
@@ -377,7 +377,7 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 		avoid_speed = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		avoid_stamina_consumption_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		job = CSVFileAssistant::GetStringOfCSVFile(ss, data);
-
+		job_ = job;
 		break;
 	}
 	file.close();
@@ -644,6 +644,7 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 		{
 			// ƒoƒt‚ð‚©‚¯‚é
 			status_container_->StaminaUpMax();
+			status_container_->Activation(job_ + "_avoid");
 			EffectManager::GetInstance().Play(EffectID::kFullStamina);
 			EffectManager::GetInstance().SetPos(EffectID::kFullStamina, pos_);
 			EffectManager::GetInstance().End(EffectID::kFullStamina, EffectEndState::kTotal);

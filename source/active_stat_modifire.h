@@ -1,24 +1,25 @@
 #pragma once
+#include"stat_modifire.h"
 
-enum class EffecacyCategory;
+enum class StatType;
 struct Status;
-struct EffecacyData;
 class VariableTimer;
 
-
-class EffecacyAdaptation
+class ActiveStatModifire
 {
 public:
 
-	EffecacyAdaptation();
+	ActiveStatModifire();
 
-	~EffecacyAdaptation();
+	~ActiveStatModifire();
 
 	void Init();
 
 	void Update(const Status& base_status, Status& current_status);
 
-	void Adaptation(const Status& base_status, Status& current_status,const EffecacyData& effecacy_data);
+	void Activation(const Status& base_status, Status& current_status,const StatModifire& effecacy_data);
+
+	const bool GetIsActive() const;
 
 private:
 
@@ -29,7 +30,7 @@ private:
 	// 効果時間を示してくれるタイマー
 	std::shared_ptr<VariableTimer> timer_;
 	
-	EffecacyData data_;
+	StatModifire data_;
 	bool is_active_;
 
 

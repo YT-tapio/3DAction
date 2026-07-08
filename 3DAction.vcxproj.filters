@@ -277,11 +277,17 @@
     <Filter Include="ソース ファイル\json">
       <UniqueIdentifier>{da6e9177-f8e7-449e-92d2-812f4978e85d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\status\effecacy">
+    <Filter Include="ソース ファイル\status\container">
+      <UniqueIdentifier>{c0531e88-9647-414e-8867-a8c6bd53eb0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\status\stat_modifire">
       <UniqueIdentifier>{4063158d-e7aa-4e4f-8552-3cbe79e9d01f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\status\effecacy\adaptation">
+    <Filter Include="ソース ファイル\status\stat_modifire\active_modifire">
       <UniqueIdentifier>{e9e19d23-f9e6-4a40-bf48-bc0b5f53ffe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\status\stat_modifire\group">
+      <UniqueIdentifier>{0147f6a9-d290-4f8d-bfa4-f45e12aeb190}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -570,9 +576,6 @@
     <ClCompile Include="source\object_behavior.cpp">
       <Filter>ソース ファイル\behavior\object</Filter>
     </ClCompile>
-    <ClCompile Include="source\status_container.cpp">
-      <Filter>ソース ファイル\status</Filter>
-    </ClCompile>
     <ClCompile Include="source\variable_timer.cpp">
       <Filter>ソース ファイル\timer</Filter>
     </ClCompile>
@@ -678,8 +681,17 @@
     <ClCompile Include="source\hit_red_body.cpp">
       <Filter>ソース ファイル\hit_red_body</Filter>
     </ClCompile>
-    <ClCompile Include="source\effecacy_adaptation.cpp">
-      <Filter>ソース ファイル\status\effecacy\adaptation</Filter>
+    <ClCompile Include="source\active_stat_modifire.cpp">
+      <Filter>ソース ファイル\status\stat_modifire\active_modifire</Filter>
+    </ClCompile>
+    <ClCompile Include="source\stat_modifires.cpp">
+      <Filter>ソース ファイル\status\stat_modifire</Filter>
+    </ClCompile>
+    <ClCompile Include="source\status_container.cpp">
+      <Filter>ソース ファイル\status\container</Filter>
+    </ClCompile>
+    <ClCompile Include="source\stat_modifire_group.cpp">
+      <Filter>ソース ファイル\status\stat_modifire\group</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1037,9 +1049,6 @@
     <ClInclude Include="source\status.h">
       <Filter>ソース ファイル\status</Filter>
     </ClInclude>
-    <ClInclude Include="source\status_container.h">
-      <Filter>ソース ファイル\status</Filter>
-    </ClInclude>
     <ClInclude Include="source\variable_timer.h">
       <Filter>ソース ファイル\timer</Filter>
     </ClInclude>
@@ -1154,17 +1163,26 @@
     <ClInclude Include="source\change_method.h">
       <Filter>ソース ファイル\change_method</Filter>
     </ClInclude>
-    <ClInclude Include="source\effecacy_data.h">
-      <Filter>ソース ファイル\status\effecacy</Filter>
+    <ClInclude Include="source\stat_modifire.h">
+      <Filter>ソース ファイル\status\stat_modifire</Filter>
     </ClInclude>
-    <ClInclude Include="source\effecacy_type.h">
-      <Filter>ソース ファイル\status\effecacy</Filter>
+    <ClInclude Include="source\modifire_operation.h">
+      <Filter>ソース ファイル\status\stat_modifire</Filter>
     </ClInclude>
-    <ClInclude Include="source\effecacy_category.h">
-      <Filter>ソース ファイル\status\effecacy</Filter>
+    <ClInclude Include="source\stat_type.h">
+      <Filter>ソース ファイル\status\stat_modifire</Filter>
     </ClInclude>
-    <ClInclude Include="source\effecacy_adaptation.h">
-      <Filter>ソース ファイル\status\effecacy\adaptation</Filter>
+    <ClInclude Include="source\active_stat_modifire.h">
+      <Filter>ソース ファイル\status\stat_modifire\active_modifire</Filter>
+    </ClInclude>
+    <ClInclude Include="source\stat_modifires.h">
+      <Filter>ソース ファイル\status\stat_modifire</Filter>
+    </ClInclude>
+    <ClInclude Include="source\status_container.h">
+      <Filter>ソース ファイル\status\container</Filter>
+    </ClInclude>
+    <ClInclude Include="source\stat_modifire_group.h">
+      <Filter>ソース ファイル\status\stat_modifire\group</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@
 enum class AttackType;
 class VariableTimer;
 class Status;
+class ActiveStatModifireGroup;
 
 class ConditionTimer;
 class StatusContainer
@@ -50,6 +51,12 @@ public:
 	void TakeHeal(float heal);
 
 	/// <summary>
+	/// 引数の効果を適応させる
+	/// </summary>
+	/// <param name="name">効果名</param>
+	void Activation(const std::string& name);
+
+	/// <summary>
 	/// もともとのステータス
 	/// </summary>
 	/// <returns></returns>
@@ -84,8 +91,8 @@ private:
 	// スタミナ回復を行うインターバルのタイマー：このタイマーがたまればスタミナを回復
 	std::shared_ptr<ConditionTimer> stamina_recovery_timer_;
 	
-	// TODO：バフ系は後から
-
+	// ステータスにバフやデバフをかける
+	std::shared_ptr<ActiveStatModifireGroup> stat_modifire_group_;
 
 	Status base_status_;		// 初期状態
 	Status current_status_;		// 現在の状態

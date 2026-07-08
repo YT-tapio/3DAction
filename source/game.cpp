@@ -3,6 +3,7 @@
 #include<unordered_map>
 #include<functional>
 #include<vector>
+#include<string>
 #include"DxLib.h"
 #include"game.h"
 #include"camera.h"
@@ -28,11 +29,14 @@
 #include"enemy_ui_group.h"
 #include"attack_range_group.h"
 #include"shadow_map.h"
+#include"stat_modifire.h"
+#include"stat_modifires.h"
 
 Game::Game()
 	: SceneBase()
 {
 	AttackRangeGroup::GetInstance().Awake();
+	StatModifires::GetInstance().Awake();
 	camera_ = std::make_shared<Camera>();
 	shadow_map_ = std::make_shared<ShadowMap>();
 	objects_.push_back(std::make_shared<EnemyBase>(VGet(10, 0, 10)));

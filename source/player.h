@@ -114,6 +114,7 @@ private:
 	VECTOR attack_target_pos_;
 
 	std::string name_;
+	std::string job_;
 	int skill1_id_;
 	int skill2_id_;
 

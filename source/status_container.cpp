@@ -1,6 +1,8 @@
 #include<fstream>
 #include<sstream>
 #include<string>
+#include<memory>
+#include<vector>
 #include"DxLib.h"
 #include"status.h"
 #include"status_container.h"
@@ -12,6 +14,8 @@
 #include"color.h"
 #include"vector_assistant.h"
 #include"FPS.h"
+#include"status.h"
+#include"stat_modifire_group.h"
 
 StatusContainer::StatusContainer(const std::string owner_name,const VECTOR& hp_pos, const VECTOR& hp_size)
 	: base_status_{}
@@ -22,8 +26,9 @@ StatusContainer::StatusContainer(const std::string owner_name,const VECTOR& hp_p
 	LoadFile(owner_name);
 	stamina_recovery_timer_ = std::make_shared<ConditionTimer>(0.5f);
 	stamina_recovery_timer_->Init();
-	Init();
 	stamina_recovery_value_ = 1.f;
+	stat_modifire_group_ = std::make_shared<ActiveStatModifireGroup>();
+	Init();
 }
 
 StatusContainer::~StatusContainer()
@@ -35,12 +40,14 @@ void StatusContainer::Init()
 {
 	current_status_ = base_status_;
 	stamina_recovery_timer_->Init();
+	stat_modifire_group_->Init();
 }
 
 void StatusContainer::Update()
 {
 	// ƒoƒt‚³‚ê‚é—Ê‚ð‚ ‚ç‚©‚¶‚ßŒˆ‚ß‚Ä‚¨‚­
 	StaminaUpdate();
+	stat_modifire_group_->Update(base_status_, current_status_);
 }
 
 void StatusContainer::Debug()
@@ -152,6 +159,11 @@ void StatusContainer::TakeHeal(float heal)
 	current_status_.hp += heal;
 
 	if (current_status_.hp > base_status_.hp) { current_status_.hp = base_status_.hp; }
+}
+
+void StatusContainer::Activation(const std::string& name)
+{
+	stat_modifire_group_->Activation(base_status_, current_status_, name);
 }
 
 const Status StatusContainer::GetBaseStatus() const
