@@ -45,7 +45,7 @@ public:
 	void TakeDamage(float atk,AttackType type);
 
 	/// <summary>
-	/// ‰ñ•œ
+	/// ”’l‚Ì‰ñ•œ
 	/// </summary>
 	/// <param name="heal"></param>
 	void TakeHeal(float heal);

@@ -644,7 +644,17 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 		{
 			// ƒoƒt‚ð‚©‚¯‚é
 			status_container_->StaminaUpMax();
-			status_container_->Activation(job_ + "_avoid");
+
+			if (job_ != "healer")
+			{
+				// hp‚Ì‰ñ•œ
+				status_container_->TakeHeal(status_container_->GetCurrentStatus().magic_atk);
+			}
+			else
+			{
+				status_container_->Activation(job_ + "_avoid");
+			}
+
 			EffectManager::GetInstance().Play(EffectID::kFullStamina);
 			EffectManager::GetInstance().SetPos(EffectID::kFullStamina, pos_);
 			EffectManager::GetInstance().End(EffectID::kFullStamina, EffectEndState::kTotal);

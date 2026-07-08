@@ -27,8 +27,6 @@ void ActiveStatModifire::Init()
 void ActiveStatModifire::Update(const Status& base_status,Status& current_status)
 {
 	// 効果量
-	float effecacy_num = 0.f;
-
 	timer_->Update();
 
 	// タイマーが終了したらバフの解除
