@@ -7,7 +7,6 @@
 #include"csv_file_assistant.h"
 #include"condition_timer.h"
 #include"variable_timer.h"
-#include"buff_type.h"
 #include"attack_type.h"
 #include"debug.h"
 #include"color.h"

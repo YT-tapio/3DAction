@@ -1,8 +1,8 @@
 #pragma once
 
-enum class BuffType
+enum class EffecacyCategory
 {
-	kPhysicalATK = 1,
+	kPhysicalATK,
 	kPhysicalDEF,
 	kMagicATK,
 	kMagicDEF

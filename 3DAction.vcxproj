@@ -153,6 +153,7 @@
     <ClCompile Include="source\attack_range_group.cpp" />
     <ClCompile Include="source\character_name_ui.cpp" />
     <ClCompile Include="source\disp_attack_range.cpp" />
+    <ClCompile Include="source\effecacy_adaptation.cpp" />
     <ClCompile Include="source\enemy_ui_group.cpp" />
     <ClCompile Include="source\font.cpp" />
     <ClCompile Include="source\hit_red_body.cpp" />
@@ -175,7 +176,6 @@
     <ClCompile Include="source\behavior_tree.cpp" />
     <ClCompile Include="source\branch_node.cpp" />
     <ClCompile Include="source\animation_charge.cpp" />
-    <ClCompile Include="source\buff_data.cpp" />
     <ClCompile Include="source\character_behavior.cpp" />
     <ClCompile Include="source\chase_player.cpp" />
     <ClCompile Include="source\check_my_area.cpp" />
@@ -225,7 +225,6 @@
     <ClCompile Include="source\sphere_camera.cpp" />
     <ClCompile Include="source\stamina_ui.cpp" />
     <ClCompile Include="source\stamp.cpp" />
-    <ClCompile Include="source\status_buff_container.cpp" />
     <ClCompile Include="source\status_container.cpp" />
     <ClCompile Include="source\status_holder_interface.cpp" />
     <ClCompile Include="source\string_ui.cpp" />
@@ -289,6 +288,10 @@
     <ClInclude Include="source\change_method.h" />
     <ClInclude Include="source\character_name_ui.h" />
     <ClInclude Include="source\disp_attack_range.h" />
+    <ClInclude Include="source\effecacy_adaptation.h" />
+    <ClInclude Include="source\effecacy_category.h" />
+    <ClInclude Include="source\effecacy_data.h" />
+    <ClInclude Include="source\effecacy_type.h" />
     <ClInclude Include="source\enemy_ui_group.h" />
     <ClInclude Include="source\font.h" />
     <ClInclude Include="source\hp_actual_value_ui.h" />
@@ -307,8 +310,6 @@
     <ClInclude Include="source\avoid_skill.h" />
     <ClInclude Include="source\behavior_tree.h" />
     <ClInclude Include="source\branch_node.h" />
-    <ClInclude Include="source\buff_data.h" />
-    <ClInclude Include="source\buff_type.h" />
     <ClInclude Include="source\character_behavior.h" />
     <ClInclude Include="source\chase_player.h" />
     <ClInclude Include="source\collision_mesh_obj.h" />
@@ -370,7 +371,6 @@
     <ClInclude Include="source\sphere_camera.h" />
     <ClInclude Include="source\stamina_ui.h" />
     <ClInclude Include="source\stamp.h" />
-    <ClInclude Include="source\status_buff_container.h" />
     <ClInclude Include="source\status_container.h" />
     <ClInclude Include="source\status_holder_interface.h" />
     <ClInclude Include="source\string_ui.h" />
