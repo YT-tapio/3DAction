@@ -21,7 +21,7 @@ void RandomNode::Entry()
 {
 	constexpr int kMin = 0;
 	int max = nodes_.size();
-	current_node_ = GetRandom(kMin, max);
+	current_node_ = GetUniformRandom(kMin, max);
 	nodes_[current_node_]->Entry();
 	status_ = BehaviorStatus::kRunning;
 }
@@ -33,7 +33,7 @@ BehaviorStatus RandomNode::Update()
 		nodes_[current_node_]->Exit();
 		constexpr int kMin = 0;
 		int max = nodes_.size();
-		current_node_ = GetRandom(kMin, max);
+		current_node_ = GetUniformRandom(kMin, max);
 		nodes_[current_node_]->Entry();
 	}
 	status_ = nodes_[current_node_]->Update();

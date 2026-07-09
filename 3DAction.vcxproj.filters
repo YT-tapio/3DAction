@@ -289,6 +289,9 @@
     <Filter Include="ソース ファイル\status\stat_modifire\group">
       <UniqueIdentifier>{0147f6a9-d290-4f8d-bfa4-f45e12aeb190}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\random">
+      <UniqueIdentifier>{a9e854ce-3170-4415-8bc3-66bdb9ea5bc4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -1013,9 +1016,6 @@
     <ClInclude Include="source\chase_player.h">
       <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
-    <ClInclude Include="source\random.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="source\random_node.h">
       <Filter>ソース ファイル\behavior_tree\node\random_node</Filter>
     </ClInclude>
@@ -1183,6 +1183,9 @@
     </ClInclude>
     <ClInclude Include="source\stat_modifire_group.h">
       <Filter>ソース ファイル\status\stat_modifire\group</Filter>
+    </ClInclude>
+    <ClInclude Include="source\random.h">
+      <Filter>ソース ファイル\random</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

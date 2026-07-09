@@ -42,7 +42,7 @@ public:
 	/// </summary>
 	/// <param name="atk"></param>
 	/// <param name="type"></param>
-	void TakeDamage(float atk,AttackType type);
+	float TakeDamage(float atk,AttackType type);
 
 	/// <summary>
 	/// 数値の回復
@@ -67,6 +67,18 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	const Status GetCurrentStatus() const;
+
+	/// <summary>
+	/// 正規分布した物理ダメージ
+	/// </summary>
+	/// <returns></returns>
+	const float GetPhysicalATK() const;
+
+	/// <summary>
+	/// 正規分布した魔法ダメージ
+	/// </summary>
+	/// <returns></returns>
+	const float GetMagicATK() const;
 
 	/// <summary>
 	/// スタミナを使えるか

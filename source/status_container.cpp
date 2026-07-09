@@ -14,8 +14,8 @@
 #include"color.h"
 #include"vector_assistant.h"
 #include"FPS.h"
-#include"status.h"
 #include"stat_modifire_group.h"
+#include"random.h"
 
 StatusContainer::StatusContainer(const std::string owner_name,const VECTOR& hp_pos, const VECTOR& hp_size)
 	: base_status_{}
@@ -129,7 +129,7 @@ void StatusContainer::StaminaUpMax()
 	can_use_stamina_ = TRUE;
 }
 
-void StatusContainer::TakeDamage(float atk,AttackType type)
+float StatusContainer::TakeDamage(float atk,AttackType type)
 {
 	// UŒ‚—Í‚Æ–hŒä—Í‚ÌŒvZ‚ğs‚¤
 	float damage = 0.f;
@@ -152,6 +152,7 @@ void StatusContainer::TakeDamage(float atk,AttackType type)
 
 	current_status_.hp -= damage;
 	if (current_status_.hp < 0.f) { current_status_.hp = 0.f; }
+	return damage;
 }
 
 void StatusContainer::TakeHeal(float heal)
@@ -174,6 +175,20 @@ const Status StatusContainer::GetBaseStatus() const
 const Status StatusContainer::GetCurrentStatus() const
 {
 	return current_status_;
+}
+
+const float StatusContainer::GetPhysicalATK() const
+{
+	// 
+	float damage = GetNormalRandom(current_status_.physical_atk, 10.f);
+	return damage;
+}
+
+const float StatusContainer::GetMagicATK() const
+{
+	// 
+	float damage = GetNormalRandom(current_status_.magic_atk, 10.f);
+	return damage;
 }
 
 const bool StatusContainer::CanUseStamina() const

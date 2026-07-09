@@ -688,8 +688,14 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 		return;
 	}
 	on_damage_ = TRUE;
-	status_container_->TakeDamage(damage,type);
-	//printfDx("ダメージを受けちゃってます\n");
+	// ダメージ量をもらう
+	auto final_damage = status_container_->TakeDamage(damage,type);
+
+	// ui描画を行う
+	// 頭のpositionにしようかな
+
+
+
 }
 
 void Player::InputChange(std::shared_ptr<InputBase> input)
