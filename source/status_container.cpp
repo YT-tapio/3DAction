@@ -16,6 +16,7 @@
 #include"FPS.h"
 #include"stat_modifire_group.h"
 #include"random.h"
+#include"my_math.h"
 
 StatusContainer::StatusContainer(const std::string owner_name,const VECTOR& hp_pos, const VECTOR& hp_size)
 	: base_status_{}
@@ -180,15 +181,24 @@ const Status StatusContainer::GetCurrentStatus() const
 
 const float StatusContainer::GetPhysicalATK() const
 {
+	// 
+	auto current_physical_atk = current_status_.physical_atk;
 	// ばらつきのある物理ダメージ
-	float damage = GetNormalRandom(current_status_.physical_atk, 10.f);
+	float damage = GetNormalRandom(current_physical_atk, 10.f);
+	// clampする
+	damage = MyMath::Clamp(damage, current_physical_atk, current_physical_atk);
+
 	return damage;
 }
 
 const float StatusContainer::GetMagicATK() const
 {
+	// 
+	float current_magic_atk = current_status_.magic_atk;
+	
 	// ばらつきのある魔法ダメージを
-	float damage = GetNormalRandom(current_status_.magic_atk, 10.f);
+	float damage = GetNormalRandom(current_magic_atk, 10.f);
+	damage = MyMath::Clamp(damage, current_magic_atk, current_magic_atk);
 	return damage;
 }
 
