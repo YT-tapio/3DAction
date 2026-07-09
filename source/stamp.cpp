@@ -115,7 +115,7 @@ void Stamp::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
 		{
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
-			takable_player->OnDamageFromPlayer(owner_status_container->GetCurrentStatus().physical_atk, AttackType::kPhysical);
+			takable_player->OnDamageFromPlayer(owner_status_container->GetPhysicalATK(), AttackType::kPhysical);
 		}
 		return;
 	}
@@ -127,7 +127,7 @@ void Stamp::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
 		{
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
-			takable_enemy->OnDamageFromEnemy(owner_status_container->GetCurrentStatus().physical_atk, AttackType::kPhysical);
+			takable_enemy->OnDamageFromEnemy(owner_status_container->GetPhysicalATK(), AttackType::kPhysical);
 		}
 		return;
 	}

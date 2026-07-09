@@ -116,7 +116,7 @@ void AreaOfEffectAttack::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver>
 		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
 		{
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
-			takable_player->OnDamageFromPlayer(owner_status_container->GetCurrentStatus().magic_atk, AttackType::kMagic);
+			takable_player->OnDamageFromPlayer(owner_status_container->GetMagicATK(), AttackType::kMagic);
 		}
 		return;
 	}
@@ -128,7 +128,7 @@ void AreaOfEffectAttack::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver>
 		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
 		{
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
-			takable_enemy->OnDamageFromEnemy(owner_status_container->GetCurrentStatus().magic_atk, AttackType::kMagic);
+			takable_enemy->OnDamageFromEnemy(owner_status_container->GetMagicATK(), AttackType::kMagic);
 		}
 		return;
 	}

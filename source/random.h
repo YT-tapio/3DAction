@@ -29,6 +29,6 @@ inline T GetNormalRandom(const T& average,const T& swing)
 {
 	static std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_real_distribution<> dis(average, swing);
+	std::normal_distribution<T> dis(average, swing);
 	return dis(gen);
 }

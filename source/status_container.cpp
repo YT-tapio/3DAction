@@ -152,6 +152,7 @@ float StatusContainer::TakeDamage(float atk,AttackType type)
 
 	current_status_.hp -= damage;
 	if (current_status_.hp < 0.f) { current_status_.hp = 0.f; }
+	printfDx("%.2f\n", damage);
 	return damage;
 }
 
@@ -179,14 +180,14 @@ const Status StatusContainer::GetCurrentStatus() const
 
 const float StatusContainer::GetPhysicalATK() const
 {
-	// 
+	// ばらつきのある物理ダメージ
 	float damage = GetNormalRandom(current_status_.physical_atk, 10.f);
 	return damage;
 }
 
 const float StatusContainer::GetMagicATK() const
 {
-	// 
+	// ばらつきのある魔法ダメージを
 	float damage = GetNormalRandom(current_status_.magic_atk, 10.f);
 	return damage;
 }
