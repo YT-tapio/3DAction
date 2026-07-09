@@ -12,4 +12,7 @@ namespace EffectID
 	static const int kTackle = 7;
 	static const int kPunchHit = 8;
 	static const int kFullStamina = 9;
+	static const int kAttackerJastAvoid = 10;
+	static const int kHealerJastAvoid = kAttackerJastAvoid + 1;
+	static const int kDefenderJastAvoid = kAttackerJastAvoid + 2;
 }

@@ -645,7 +645,7 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 			// バフをかける
 			status_container_->StaminaUpMax();
 
-			if (job_ != "healer")
+			if (job_ == "healer")
 			{
 				// hpの回復
 				status_container_->TakeHeal(status_container_->GetCurrentStatus().magic_atk);
@@ -655,17 +655,32 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 				status_container_->Activation(job_ + "_avoid");
 			}
 
-			EffectManager::GetInstance().Play(EffectID::kFullStamina);
-			EffectManager::GetInstance().SetPos(EffectID::kFullStamina, pos_);
-			EffectManager::GetInstance().End(EffectID::kFullStamina, EffectEndState::kTotal);
+			int effect_id = -1;
+
+			if (job_ == "attacker")
+			{ 
+				effect_id = EffectID::kAttackerJastAvoid;
+			}
+			else if (job_ != "healer")
+			{
+				effect_id = EffectID::kHealerJastAvoid;
+			}
+			else if (job_ == "")
+			{
+				effect_id = EffectID::kDefenderJastAvoid;
+			}
+
+			EffectManager::GetInstance().Play(effect_id);
+			EffectManager::GetInstance().SetPos(effect_id, pos_);
+			EffectManager::GetInstance().End(effect_id, EffectEndState::kTotal);
+			
+			
 			// この時ジャスト回避
 			printfDx("ジャスト回避\n");
 			time_->SetTimeScale(0.f, 0.15f);
 			rigid_body_->SetStop(0.15f);
-
-			// エフェクトを描画
 		}
-
+		
 		// この瞬間にエフェクトを描画
 		EffectManager::GetInstance().Play(EffectID::kAvoidSuccess);
 		EffectManager::GetInstance().SetPos(EffectID::kAvoidSuccess,pos_);
