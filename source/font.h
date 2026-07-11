@@ -19,7 +19,7 @@ namespace Font
 	/// DX_FONTTYPE_ANTIALIASING_EDGE_4X4　 : アンチエイリアス＆エッジ付きフォント(4x4サンプリング)
 	/// DX_FONTTYPE_ANTIALIASING_EDGE_8X8　 : アンチエイリアス＆エッジ付きフォント(8x8サンプリング) </param>
 	/// <returns>フォントのデータ</returns>
-	inline int GreatFontHandle(const std::string& file_path,const std::string& font_name,int size,int edge,int font_type)
+	inline int CreatFontHandle(const std::string& file_path,const std::string& font_name,int size,int edge,int font_type)
 	{
 		int handle = -1;
 		AddFontResourceExA(file_path.c_str(), FR_PRIVATE, nullptr);
@@ -55,7 +55,7 @@ namespace Font
 			int size = CSVFileAssistant::GetIntOfCSVFile(ss, data);
 			int edge = CSVFileAssistant::GetIntOfCSVFile(ss, data);
 			int type = CSVFileAssistant::GetIntOfCSVFile(ss, data);
-			handle = Font::GreatFontHandle(font_file_path.c_str(), font_name.c_str(), size, edge, type);
+			handle = Font::CreatFontHandle(font_file_path.c_str(), font_name.c_str(), size, edge, type);
 		}
 
 		return handle;

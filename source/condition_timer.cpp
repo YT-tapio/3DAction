@@ -22,7 +22,7 @@ ConditionTimer::~ConditionTimer()
 void ConditionTimer::Init()
 {
 	time_ = 0.f;
-	is_stop_ = FALSE;
+	is_stop_ = TRUE;
 	is_end_ = FALSE;
 }
 

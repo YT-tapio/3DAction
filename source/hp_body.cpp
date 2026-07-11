@@ -62,6 +62,14 @@ void HPBody::Update()
 		if (flash_value_ <= kMinFlashValue) { target_flash_value_ = kMaxFlashValue; }
 		flash_value_ = Lerp::Lerpf(flash_value_, target_flash_value_, kFlashSpeed * FPS::GetInstance().GetDeltaTime() * 60.f);
 	}
+	else
+	{
+		if (flash_value_ != 0.f)
+		{
+			flash_value_ = Lerp::Lerpf(flash_value_, 0.f, kFlashSpeed * FPS::GetInstance().GetDeltaTime() * 60.f);
+		}
+		
+	}
 
 	// ‚±‚Ì’†‚Åscreen‚ð—§‚¿ã‚°‚Ä•`‰æ
 	SetUpScreen();

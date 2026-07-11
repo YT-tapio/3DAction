@@ -13,6 +13,8 @@ public:
 
 	virtual void Update();
 
+	void SetPos(const VECTOR& pos);
+
 	virtual const void Draw() const;
 
 protected:
@@ -25,6 +27,9 @@ protected:
 	int font_handle_;
 
 	unsigned int color_;
+
+	// •`‰æ‚³‚ê‚é•¶š—ñ
+	std::string drawn_string;
 
 	// •`‰æêŠ
 	VECTOR pos_;

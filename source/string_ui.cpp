@@ -28,6 +28,11 @@ void StringUI::Update()
 
 }
 
+void StringUI::SetPos(const VECTOR& pos)
+{
+	pos_ = pos;
+}
+
 const void StringUI::Draw() const
 {
 	

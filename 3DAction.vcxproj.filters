@@ -292,6 +292,12 @@
     <Filter Include="ソース ファイル\random">
       <UniqueIdentifier>{a9e854ce-3170-4415-8bc3-66bdb9ea5bc4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ui\damage_ui">
+      <UniqueIdentifier>{cbca12a1-15d4-46c2-9055-6de5d727ac5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\2d_gravity">
+      <UniqueIdentifier>{c414a24e-d6de-4747-a6fb-b9fbff902d5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -695,6 +701,12 @@
     </ClCompile>
     <ClCompile Include="source\stat_modifire_group.cpp">
       <Filter>ソース ファイル\status\stat_modifire\group</Filter>
+    </ClCompile>
+    <ClCompile Include="source\damage_ui.cpp">
+      <Filter>ソース ファイル\ui\damage_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\damage_ui_group.cpp">
+      <Filter>ソース ファイル\ui\damage_ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1186,6 +1198,15 @@
     </ClInclude>
     <ClInclude Include="source\random.h">
       <Filter>ソース ファイル\random</Filter>
+    </ClInclude>
+    <ClInclude Include="source\damage_ui.h">
+      <Filter>ソース ファイル\ui\damage_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\2d_gravity.h">
+      <Filter>ソース ファイル\2d_gravity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\damage_ui_group.h">
+      <Filter>ソース ファイル\ui\damage_ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

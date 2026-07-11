@@ -47,6 +47,7 @@
 #include"effect_end_state.h"
 #include"player_ui_group.h"
 #include"time.h"
+#include"damage_ui_group.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name)
 	: CharacterBase("player")
@@ -694,7 +695,7 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 	// ui•`‰æ‚ğs‚¤
 	// “ª‚Ìposition‚É‚µ‚æ‚¤‚©‚È
 
-
+	DamageUIGroup::GetInstance().Spawn(VectorAssistant::VGet2D(300.f, 400.f), final_damage);
 
 }
 

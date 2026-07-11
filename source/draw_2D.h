@@ -80,6 +80,19 @@ namespace Draw2D
 			size_rate, rot_z, data, alpha);
 	}
 
+
+	inline void String(const VECTOR& pos, std::string string, unsigned int color)
+	{
+		DrawString(static_cast<int>(pos.x), static_cast<int>(pos.y), string.c_str(), color);
+	}
+
+	
+	template <typename T>
+	inline void FormatString(const VECTOR& pos, std::string string, unsigned int color, const T& t)
+	{
+		DrawFormatString(static_cast<int>(pos.x), static_cast<int>(pos.y), color, string.c_str(), t);
+	}
+
 	/// <summary>
 	/// ï∂éöóÒ(êîílÇ»Çµ)
 	/// </summary>
@@ -98,7 +111,6 @@ namespace Draw2D
 		{
 			DrawStringToHandle(static_cast<int>(pos.x), static_cast<int>(pos.y), string.c_str(), color, handle);
 		}
-		
 	}
 
 	/// <summary>
@@ -114,6 +126,24 @@ namespace Draw2D
 	inline void FormatStringToHandle(const VECTOR& pos, std::string string, int color, int handle,const T& t)
 	{
 		DrawFormatStringToHandle(static_cast<int>(pos.x), static_cast<int>(pos.y), color, handle, string.c_str(), t);
+	}
+
+	/// <summary>
+	/// ï∂éöóÒï`âÊÇÃ
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="pos"></param>
+	/// <param name="width_rate"></param>
+	/// <param name="height_rate"></param>
+	/// <param name="string"></param>
+	/// <param name="color"></param>
+	/// <param name="handle"></param>
+	/// <param name="t"></param>
+	template <typename T>
+	inline void ExtendFormatStringToHandle(const VECTOR& pos, const float width_rate, const float height_rate,std::string string, int color, int handle, const T& t)
+	{
+		DrawExtendFormatStringToHandle(static_cast<int>(pos.x), static_cast<int>(pos.y),
+			width_rate, height_rate, color, handle, string.c_str(), t);
 	}
 
 	/// <summary>

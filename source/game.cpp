@@ -31,6 +31,7 @@
 #include"shadow_map.h"
 #include"stat_modifire.h"
 #include"stat_modifires.h"
+#include"damage_ui_group.h"
 
 Game::Game()
 	: SceneBase()
@@ -47,6 +48,7 @@ Game::Game()
 	
 	EffectManager::GetInstance().Awake();
 	PlayerGroup::GetInstance().Awake(&camera_->dir_);
+	DamageUIGroup::GetInstance().Awake();
 	Init();
 }
 
@@ -57,6 +59,7 @@ Game::~Game()
 	Physics::GetInstance().End();
 	PlayerGroup::GetInstance().End();
 	EffectManager::GetInstance().End();
+	DamageUIGroup::GetInstance().End();
 }
 
 void Game::Init()
@@ -75,6 +78,7 @@ void Game::Init()
 		obj->Init();
 	}
 	Brain::GetInstance().CreatePlaySceneVirtualCamera(camera_->GetPos(), camera_->GetTargetPos());
+	DamageUIGroup::GetInstance().Init();
 	camera_->Init();
 	shadow_map_->Init();
 }
@@ -111,7 +115,7 @@ void Game::Update()
 
 	PlayerUIGroup::GetInstance().Update();
 	EnemyUIGroup::GetInstance().Update();
-
+	DamageUIGroup::GetInstance().Update();
 	EffectManager::GetInstance().Update();
 	AttackRangeGroup::GetInstance().Update();
 }
@@ -162,7 +166,7 @@ void Game::Draw()
 	// Physics::GetInstance().Debug();
 	PlayerUIGroup::GetInstance().Draw();
 	EnemyUIGroup::GetInstance().Draw();
-
+	DamageUIGroup::GetInstance().Draw();
 	if (Debug::GetInstance().GetIsDisp())
 	{
 		PlayerGroup::GetInstance().Debug();

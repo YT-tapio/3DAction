@@ -152,6 +152,8 @@
     <ClCompile Include="source\attack_range.cpp" />
     <ClCompile Include="source\attack_range_group.cpp" />
     <ClCompile Include="source\character_name_ui.cpp" />
+    <ClCompile Include="source\damage_ui.cpp" />
+    <ClCompile Include="source\damage_ui_group.cpp" />
     <ClCompile Include="source\disp_attack_range.cpp" />
     <ClCompile Include="source\active_stat_modifire.cpp" />
     <ClCompile Include="source\stat_modifires.cpp" />
@@ -282,6 +284,7 @@
     <ClCompile Include="source\player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\2d_gravity.h" />
     <ClInclude Include="source\action_node.h" />
     <ClInclude Include="source\animation_2d_data.h" />
     <ClInclude Include="source\animator_2d.h" />
@@ -289,6 +292,8 @@
     <ClInclude Include="source\attack_range_group.h" />
     <ClInclude Include="source\change_method.h" />
     <ClInclude Include="source\character_name_ui.h" />
+    <ClInclude Include="source\damage_ui.h" />
+    <ClInclude Include="source\damage_ui_group.h" />
     <ClInclude Include="source\disp_attack_range.h" />
     <ClInclude Include="source\active_stat_modifire.h" />
     <ClInclude Include="source\stat_modifire_group.h" />
