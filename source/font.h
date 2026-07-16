@@ -2,7 +2,7 @@
 
 namespace Font
 {
-
+	
 	/// <summary>
 	/// 
 	/// </summary>
@@ -11,19 +11,19 @@ namespace Font
 	/// <param name="size"></param>
 	/// <param name="edge"></param>
 	/// <param name="font_type">>
-	/// DX_FONTTYPE_NORMAL　　　　　　		: ノーマルフォント
-	/// DX_FONTTYPE_EDGE　　　　　　　　	: エッジつきフォント
-	/// DX_FONTTYPE_ANTIALIASING　　　　	: アンチエイリアスフォント
-	/// DX_FONTTYPE_ANTIALIASING_4X4　　　	: アンチエイリアスフォント(4x4サンプリング)
-	/// DX_FONTTYPE_ANTIALIASING_8X8　　	: アンチエイリアスフォント(8x8サンプリング)
-	/// DX_FONTTYPE_ANTIALIASING_EDGE_4X4　 : アンチエイリアス＆エッジ付きフォント(4x4サンプリング)
-	/// DX_FONTTYPE_ANTIALIASING_EDGE_8X8　 : アンチエイリアス＆エッジ付きフォント(8x8サンプリング) </param>
+	/// DX_FONTTYPE_NORMAL　　　　　　		: ノーマルフォント,0
+	/// DX_FONTTYPE_EDGE　　　　　　　　	: エッジつきフォント,1
+	/// DX_FONTTYPE_ANTIALIASING　　　　	: アンチエイリアスフォント,2
+	/// DX_FONTTYPE_ANTIALIASING_4X4　　　	: アンチエイリアスフォント(4x4サンプリング),3
+	/// DX_FONTTYPE_ANTIALIASING_8X8　　	: アンチエイリアスフォント(8x8サンプリング),4
+	/// DX_FONTTYPE_ANTIALIASING_EDGE_4X4　 : アンチエイリアス＆エッジ付きフォント(4x4サンプリング),5
+	/// DX_FONTTYPE_ANTIALIASING_EDGE_8X8　 : アンチエイリアス＆エッジ付きフォント(8x8サンプリング),6 </param>
 	/// <returns>フォントのデータ</returns>
-	inline int CreatFontHandle(const std::string& file_path,const std::string& font_name,int size,int edge,int font_type)
+	inline int CreatFontHandle(const std::string& file_path,const std::string& font_name,int size,int edge,int font_type,int edge_size)
 	{
 		int handle = -1;
 		AddFontResourceExA(file_path.c_str(), FR_PRIVATE, nullptr);
-		handle = CreateFontToHandle(font_name.c_str(), size, edge, font_type);
+		handle = CreateFontToHandle(font_name.c_str(), size, edge, font_type,-1,edge_size);
 		return handle;
 	}
 
@@ -55,7 +55,8 @@ namespace Font
 			int size = CSVFileAssistant::GetIntOfCSVFile(ss, data);
 			int edge = CSVFileAssistant::GetIntOfCSVFile(ss, data);
 			int type = CSVFileAssistant::GetIntOfCSVFile(ss, data);
-			handle = Font::CreatFontHandle(font_file_path.c_str(), font_name.c_str(), size, edge, type);
+			int edge_size = CSVFileAssistant::GetIntOfCSVFile(ss, data);
+			handle = Font::CreatFontHandle(font_file_path.c_str(), font_name.c_str(), size, edge, type,edge_size);
 		}
 
 		return handle;

@@ -8,7 +8,7 @@ class DamageUI
 {
 public:
 
-	DamageUI(int font_handle_);
+	DamageUI(const std::string& file_path);
 
 	~DamageUI();
 
@@ -33,6 +33,8 @@ private:
 
 	void DrawDamage();
 
+	void LoadFile(const std::string& path);
+
 private:
 
 	// ~‚Ü‚Á‚Ä‚¢‚éŠÔ
@@ -44,6 +46,8 @@ private:
 	VECTOR pos_;
 
 	int font_handle_;
+	int font_color_;
+	int edge_color_;
 
 	float default_up_speed_;	// ‰Šú‚Ìã¸—Ê
 	float current_up_speed_;

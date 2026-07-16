@@ -123,9 +123,9 @@ namespace Draw2D
 	/// <param name="handle"></param>
 	/// <param name="t"></param>
 	template <typename T>
-	inline void FormatStringToHandle(const VECTOR& pos, std::string string, int color, int handle,const T& t)
+	inline void FormatStringToHandle(const VECTOR& pos, std::string string, int color, int handle,const T& t,int edge_color = 0)
 	{
-		DrawFormatStringToHandle(static_cast<int>(pos.x), static_cast<int>(pos.y), color, handle, string.c_str(), t);
+		DrawFormatStringToHandle(static_cast<int>(pos.x), static_cast<int>(pos.y), color, handle, string.c_str(), t,edge_color);
 	}
 
 	/// <summary>

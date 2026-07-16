@@ -2,9 +2,8 @@
 #include<memory>
 #include"DxLib.h"
 #include"damage_ui_group.h"
-#include"damage_ui.h"
-#include<memory>
 #include<string>
+#include"damage_ui.h"
 #include<sstream>
 #include<fstream>
 #include<windows.h>
@@ -13,13 +12,10 @@
 
 void DamageUIGroup::Awake()
 {
-	// fontを準備
-	int handle = Font::CreateHandleOfFile("data/csv/font/damage_font_data.csv");
-	int enemy_handle = Font::CreateHandleOfFile("data/csv/font/damage_font_data.csv");
 	// インスタンスを生成
 	for (int i = 0; i < kMaxDamageUI; i++)
 	{
-		damage_uis_.emplace_back(std::make_shared<DamageUI>(handle));
+		damage_uis_.emplace_back(std::make_shared<DamageUI>("data/csv/ui/damage/player_damage_ui.csv"));
 	}
 }
 

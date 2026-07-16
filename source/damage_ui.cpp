@@ -17,12 +17,14 @@
 #include"csv_file_assistant.h"
 #include"font.h"
 
-DamageUI::DamageUI(int font_handle)
+DamageUI::DamageUI(const std::string& file_path)
 	: stop_timer_(std::make_shared<ConditionTimer>(2.f))
 	, time_(std::make_shared<Time>())
 	, pos_(VectorAssistant::VGetZero())
 	, spawn_pos_(VectorAssistant::VGetZero())
-	, font_handle_(font_handle)
+	, font_handle_(-1)
+	, font_color_(-1)
+	, edge_color_(-1)
 	, default_up_speed_(1.f)
 	, current_up_speed_(0.f)
 	, out_up_speed_(0.4f)
@@ -31,6 +33,7 @@ DamageUI::DamageUI(int font_handle)
 	, is_jump_(FALSE)
 	, is_active_(FALSE)
 {
+	LoadFile(file_path);
 	damage_screen_ = std::make_shared<SubScreen>(400, 400);
 }
 
@@ -138,6 +141,35 @@ void DamageUI::DrawDamage()
 	VECTOR start_pos = VSub(center_pos, VectorAssistant::VGet2D(width * 0.5f, height * 0.5f));
 	// 描画
 	damage_screen_->Up();
-	Draw2D::FormatStringToHandle(start_pos, "%d", GetColor(0, 0, 0), font_handle_, static_cast<int>(damage_));
+	// SetFontEdgeSize(10);
+	Draw2D::FormatStringToHandle(start_pos, "%d", font_color_, font_handle_, static_cast<int>(damage_), edge_color_);
 	damage_screen_->Down();
+}
+
+void DamageUI::LoadFile(const std::string& path)
+{
+	// 
+	std::ifstream file(path);
+	std::string line;
+
+	if (!file)
+	{
+		printfDx("csvファイル読み込み失敗\n");
+	}
+
+	// 2行を飛ばす
+	std::getline(file, line);
+	std::getline(file, line);
+	while (std::getline(file, line))
+	{
+		std::stringstream ss(line);
+		std::string data;			// csvからの文字列をもらう
+
+		// 
+		auto font_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
+		font_handle_ = Font::CreateHandleOfFile(font_path);	// color
+		font_color_ = CSVFileAssistant::GetColorOfCSVFile(ss,data);
+		edge_color_ = CSVFileAssistant::GetColorOfCSVFile(ss, data);
+	}
+
 }
