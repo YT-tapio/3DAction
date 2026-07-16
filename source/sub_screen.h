@@ -26,13 +26,13 @@ public:
 	/// よこ
 	/// </summary>
 	/// <returns>screen_width_</returns>
-	const int GetScreenWidth() const;
+	const int GetWidth() const;
 
 	/// <summary>
 	/// たて
 	/// </summary>
 	/// <returns>screen_height_</returns>
-	const int GetScreenHeight() const;
+	const int GetHeight() const;
 
 	/// <summary>
 	/// 
@@ -40,12 +40,16 @@ public:
 	/// <returns>handle_</returns>
 	const int GetHandle() const;
 
+	/// <summary>
+	/// スクリーン内の中心座標
+	/// </summary>
+	/// <returns></returns>
+	const VECTOR GetCenterPos() const;
+
 private:
 
 	int handle_;
-	int screen_width_;
-	int screen_height_;
-
-
+	int width_;
+	int height_;
 
 };

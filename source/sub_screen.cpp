@@ -3,8 +3,8 @@
 
 
 SubScreen::SubScreen(int screen_width, int screen_height)
-	: screen_width_(screen_width)
-	, screen_height_(screen_height)
+	: width_(screen_width)
+	, height_(screen_height)
 {
 	// スクリーンを用意
 	handle_ = MakeScreen(screen_width, screen_height, TRUE);
@@ -33,18 +33,24 @@ void SubScreen::Down()
 	SetDrawScreen(DX_SCREEN_BACK);
 }
 
-const int SubScreen::GetScreenWidth() const
+const int SubScreen::GetWidth() const
 {
-	return screen_height_;
+	return width_;
 }
 
-const int SubScreen::GetScreenHeight() const
+const int SubScreen::GetHeight() const
 {
-	return screen_height_;
+	return height_;
 }
 
 const int SubScreen::GetHandle() const
 {
 	return handle_;
+}
+
+const VECTOR SubScreen::GetCenterPos() const
+{
+	VECTOR center_pos = VGet(static_cast<float>(width_) * 0.5, static_cast<float>(height_) * 0.5, 0.f);
+	return center_pos;
 }
 

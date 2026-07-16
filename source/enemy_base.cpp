@@ -46,6 +46,7 @@
 #include"time.h"
 #include"change_method.h"
 #include"hit_red_body.h"
+#include"damage_ui_group.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos)
 	: CharacterBase("enemy")
@@ -370,7 +371,10 @@ void EnemyBase::UnGround()
 
 void EnemyBase::OnDamageFromPlayer(float damage,AttackType type)
 {
-	status_container_->TakeDamage(damage,type);
+	auto final_damage = status_container_->TakeDamage(damage,type);
+
+	DamageUIGroup::GetInstance().Spawn(VectorAssistant::VGet2D(100,200),final_damage);
+
 	// ‘Ì‚ðÔ‚­‚·‚é
 	hit_red_body_->Request(ChangeMethod::kLerp, 0.2f);
 }

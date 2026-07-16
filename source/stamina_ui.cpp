@@ -131,8 +131,8 @@ void StaminaUI::StaminaBodyUpdate()
 
 	// screen‚ÉŠÛ‚ð•`‰æ
 	stamina_body_screen_->Up();
-	Draw2D::Circle(VectorAssistant::VGet2D(float(stamina_body_screen_->GetScreenWidth()) * 0.5f, 
-		float(stamina_body_screen_->GetScreenHeight()) * 0.5f), body_radius_, body_color_, FALSE, body_thickness_);
+	Draw2D::Circle(VectorAssistant::VGet2D(float(stamina_body_screen_->GetWidth()) * 0.5f, 
+		float(stamina_body_screen_->GetHeight()) * 0.5f), body_radius_, body_color_, FALSE, body_thickness_);
 	stamina_body_screen_->Down();
 }
 
@@ -146,8 +146,8 @@ void StaminaUI::AvoidStaminaUpdate()
 	{
 		auto draw_func = [this]()
 			{
-				Draw2D::Circle(VectorAssistant::VGet2D(float(stamina_body_screen_->GetScreenWidth()) * 0.5f,
-					float(stamina_body_screen_->GetScreenHeight()) * 0.5f), body_radius_, Color::kBlack, FALSE, body_thickness_);
+				Draw2D::Circle(VectorAssistant::VGet2D(float(stamina_body_screen_->GetWidth()) * 0.5f,
+					float(stamina_body_screen_->GetHeight()) * 0.5f), body_radius_, Color::kBlack, FALSE, body_thickness_);
 			};
 		Draw2D::Blend(draw_func, 120);
 	}

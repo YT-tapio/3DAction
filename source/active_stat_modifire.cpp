@@ -65,7 +65,7 @@ void ActiveStatModifire::Activation(const Status& base_status, Status& current_s
 		printfDx("‚»‚ÌƒJƒeƒSƒŠ‚Í‚È‚¢‚Å‚·\n");
 		break;
 	}
-	timer_->GetIsStop();
+	timer_->Stop();
 	timer_->ChangeMaxTime(data_.time);
 	timer_->ReStart();
 	is_active_ = TRUE;

@@ -18,7 +18,7 @@ inline T GetUniformRandom(const T& min,const T& max)
 }
 
 /// <summary>
-/// 
+/// ³‹K•ª•z
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="average">•½‹Ï’l</param>

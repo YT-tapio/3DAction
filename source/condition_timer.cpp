@@ -36,7 +36,7 @@ void ConditionTimer::Update()
 
 void ConditionTimer::Stop()
 {
-	is_stop_ = FALSE;
+	is_stop_ = TRUE;
 }
 
 void ConditionTimer::Start()

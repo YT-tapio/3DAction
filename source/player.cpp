@@ -694,9 +694,7 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 
 	// ui•`‰æ‚ğs‚¤
 	// “ª‚Ìposition‚É‚µ‚æ‚¤‚©‚È
-
-	DamageUIGroup::GetInstance().Spawn(VectorAssistant::VGet2D(300.f, 400.f), final_damage);
-
+	DamageUIGroup::GetInstance().Spawn(head_pos_, final_damage);
 }
 
 void Player::InputChange(std::shared_ptr<InputBase> input)

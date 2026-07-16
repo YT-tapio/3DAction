@@ -163,7 +163,7 @@ void RigidBody::SetStop(const float& time)
 	// ‚à‚µŽžŠÔ‚ðÝ’è‚µ‚Ä‚¢‚È‚¢ê‡‚Í–³ŒÀ‚ÉŽ~‚ß‚é
 	is_stop_ = TRUE;
 	if (time == -1.f) { return; }
-	stop_timer_->Start();
+	stop_timer_->Stop();
 	stop_timer_->ChangeMaxTime(time);
 	stop_timer_->ReStart();
 }

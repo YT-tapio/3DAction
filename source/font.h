@@ -61,5 +61,32 @@ namespace Font
 		return handle;
 	}
 
+	/// <summary>
+	/// 1•¶Žš‚Ì‘å‚«‚³
+	/// </summary>
+	/// <param name="handle"></param>
+	/// <returns></returns>
+	inline int GetFontSize(int handle)
+	{
+		TCHAR* name;
+		int size;
+		int thick;
+		GetFontStateToHandle(name, &size, &thick, handle);
+		return size;
+	}
+
+	/// <summary>
+	/// ŠO˜g‚Ì‘å‚«‚³
+	/// </summary>
+	/// <param name="handle"></param>
+	/// <returns></returns>
+	inline int GetFontThick(int handle)
+	{
+		TCHAR* name;
+		int size;
+		int thick;
+		GetFontStateToHandle(name, &size, &thick, handle);
+		return thick;
+	}
 
 }
