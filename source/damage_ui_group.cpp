@@ -15,13 +15,19 @@ void DamageUIGroup::Awake()
 	// インスタンスを生成
 	for (int i = 0; i < kMaxDamageUI; i++)
 	{
-		damage_uis_.emplace_back(std::make_shared<DamageUI>("data/csv/ui/damage/player_damage_ui.csv"));
+		player_damage_uis_.emplace_back(std::make_shared<DamageUI>("data/csv/ui/damage/player_damage_ui.csv"));
+	}
+
+	// インスタンスを生成
+	for (int i = 0; i < kMaxDamageUI; i++)
+	{
+		enemy_damage_uis_.emplace_back(std::make_shared<DamageUI>("data/csv/ui/damage/enemy_damage_ui.csv"));
 	}
 }
 
 void DamageUIGroup::Init()
 {
-	for (auto damage_ui : damage_uis_)
+	for (auto damage_ui : player_damage_uis_)
 	{
 		damage_ui->Init();
 	}
@@ -29,9 +35,17 @@ void DamageUIGroup::Init()
 
 void DamageUIGroup::Update()
 {
-	for (auto damage_ui : damage_uis_)
+	for (auto damage_ui : player_damage_uis_)
 	{
 		if (damage_ui->GetIsActive()) 
+		{
+			damage_ui->Update();
+		}
+	}
+	// 敵が攻撃を受けた時描画
+	for (auto damage_ui : enemy_damage_uis_)
+	{
+		if (damage_ui->GetIsActive())
 		{
 			damage_ui->Update();
 		}
@@ -40,18 +54,44 @@ void DamageUIGroup::Update()
 
 const void DamageUIGroup::Draw() const
 {
-	for (const auto damage_ui : damage_uis_)
+	SetUseZBuffer3D(FALSE);
+	SetWriteZBuffer3D(FALSE);
+
+	for (const auto damage_ui : player_damage_uis_)
 	{
 		if (damage_ui->GetIsActive())
 		{
 			damage_ui->Draw();
 		}
 	}
+	for (const auto damage_ui : enemy_damage_uis_)
+	{
+		if (damage_ui->GetIsActive())
+		{
+			damage_ui->Draw();
+		}
+	}
+
+	// 元に戻す
+	SetUseZBuffer3D(TRUE);
+	SetWriteZBuffer3D(TRUE);
 }
 
-void DamageUIGroup::Spawn(const VECTOR& pos,const float& damage)
+void DamageUIGroup::SpawnPlayerDamageUI(const VECTOR& pos,const float& damage)
 {
-	for (auto damage_ui : damage_uis_)
+	for (auto damage_ui : player_damage_uis_)
+	{
+		if (!damage_ui->GetIsActive())
+		{
+			damage_ui->Spawn(pos, damage);
+			break;
+		}
+	}
+}
+
+void DamageUIGroup::SpawnEnemyDamageUI(const VECTOR& pos, const float& damage)
+{
+	for (auto damage_ui : enemy_damage_uis_)
 	{
 		if (!damage_ui->GetIsActive())
 		{
@@ -63,7 +103,8 @@ void DamageUIGroup::Spawn(const VECTOR& pos,const float& damage)
 
 void DamageUIGroup::End()
 {
-	damage_uis_.clear();
+	player_damage_uis_.clear();
+	enemy_damage_uis_.clear();
 }
 
 DamageUIGroup::DamageUIGroup()

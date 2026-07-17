@@ -39,7 +39,8 @@ DamageUI::DamageUI(const std::string& file_path)
 
 DamageUI::~DamageUI()
 {
-
+	// フォントデータの開放
+	DeleteFontToHandle(font_handle_);
 }
 
 void DamageUI::Init()
@@ -55,7 +56,7 @@ void DamageUI::Init()
 
 void DamageUI::Update()
 {
-	if(is_active_ && alpha_value_ == 0.f)
+	if(alpha_value_ < 0.1f)
 	{
 		is_active_ = FALSE;
 	}
@@ -83,16 +84,20 @@ void DamageUI::Update()
 			pos_.y += out_up_speed_ * time_->GetFPSRate();
 		}
 	}
+	
 }
 
 const void DamageUI::Draw() const
 {
-	if (alpha_value_ == 0.f) { return; }
+	if (alpha_value_ == 0.f) 
+	{ 
+		return;
+	}
 
 	// 描画する
 	auto function = [this]() -> void
 		{
-			DrawBillboard3D(pos_, 0.5f, 0.5f, 5.f, 0.f, damage_screen_->GetHandle(), TRUE);
+			DrawBillboard3D(pos_, 0.5f, 0.5f, 10.f, 0.f, damage_screen_->GetHandle(), TRUE);
 		};
 
 	Draw2D::Blend(function, alpha_value_);
@@ -123,7 +128,7 @@ const bool DamageUI::GetIsActive() const
 VECTOR DamageUI::RandomSpawnPos(const VECTOR& pos)
 {
 	VECTOR random_pos = VectorAssistant::VGetZero();
-	int random_width = GetUniformRandom(-1, 1);
+	int random_width = GetUniformRandom(-10, 10);
 	int random_height = -GetUniformRandom(-3, 0);
 	random_pos = VAdd(pos, VectorAssistant::VGet2D(random_width, random_height));
 	// printfDx("x：%.2f,y：%.2f\n", random_pos.x, random_pos.y);

@@ -23,7 +23,9 @@ public:
 
 	const void Draw() const;
 
-	void Spawn(const VECTOR& pos,const float& damage);
+	void SpawnPlayerDamageUI(const VECTOR& pos,const float& damage);
+
+	void SpawnEnemyDamageUI(const VECTOR& pos, const float& damage);
 
 	void End();
 
@@ -33,9 +35,9 @@ private:
 
 private:
 
-	const int kMaxDamageUI = 15;
+	const int kMaxDamageUI = 10;
 
-	std::vector<std::shared_ptr<DamageUI>> damage_uis_;
-
+	std::vector<std::shared_ptr<DamageUI>> player_damage_uis_;	// player‚ªƒ_ƒ[ƒW‚ğó‚¯‚½Û‚É•`‰æ‚·‚é
+	std::vector<std::shared_ptr<DamageUI>> enemy_damage_uis_;	// enemy‚ªUŒ‚‚ğó‚¯‚½Û‚É•`‰æ‚·‚é
 
 };

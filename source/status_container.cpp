@@ -184,9 +184,11 @@ const float StatusContainer::GetPhysicalATK() const
 	// 現在の攻撃量z
 	auto current_physical_atk = current_status_.physical_atk;
 	// ばらつきのある物理ダメージ
-	float damage = GetNormalRandom(current_physical_atk, 10.f);
+	float damage = GetNormalRandom(current_physical_atk, current_physical_atk * 0.3f);
 	// clampする
-	damage = MyMath::Clamp(damage, current_physical_atk, current_physical_atk);
+	const float kMaxDamage = current_physical_atk + current_physical_atk * 0.3f;
+	const float kMinDamage = current_physical_atk - current_physical_atk * 0.3f;
+	damage = MyMath::Clamp(damage, kMinDamage, kMaxDamage);
 
 	return damage;
 }
@@ -198,7 +200,10 @@ const float StatusContainer::GetMagicATK() const
 	
 	// ばらつきのある魔法ダメージを
 	float damage = GetNormalRandom(current_magic_atk, 10.f);
-	damage = MyMath::Clamp(damage, current_magic_atk, current_magic_atk);
+	// clampする
+	const float kMaxDamage = current_magic_atk + current_magic_atk * 0.3f;
+	const float kMinDamage = current_magic_atk - current_magic_atk * 0.3f;
+	damage = MyMath::Clamp(damage, kMinDamage, kMaxDamage);
 	return damage;
 }
 

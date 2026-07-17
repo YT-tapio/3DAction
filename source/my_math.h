@@ -17,12 +17,9 @@ namespace MyMath
 
 	inline float Clampf(const float& me, const float& min, const float& max)
 	{
-		float num = me;
-
-		if (me < min) { num = min; }
-		if (me > max) { num = max; }
-
-		return num;
+		if (me < min) { return min; }
+		if (me > max) { return max; }
+		return me;
 	}
 
 
