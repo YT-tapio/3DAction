@@ -181,7 +181,7 @@ const Status StatusContainer::GetCurrentStatus() const
 
 const float StatusContainer::GetPhysicalATK() const
 {
-	// Œ»İ‚ÌUŒ‚—Êz
+	// Œ»İ‚ÌUŒ‚—Ê
 	auto current_physical_atk = current_status_.physical_atk;
 	// ‚Î‚ç‚Â‚«‚Ì‚ ‚é•¨—ƒ_ƒ[ƒW
 	float damage = GetNormalRandom(current_physical_atk, current_physical_atk * 0.3f);
