@@ -1,6 +1,7 @@
 #pragma once
 
 class ActiveStatModifire;
+class IPlayerUIGroup;
 
 class ActiveStatModifireGroup
 {
@@ -17,7 +18,7 @@ public:
 	/// <summary>
 	/// ˆø”‚Ìƒoƒt‚ğ”­“®‚·‚é
 	/// </summary>
-	void Activation(const Status& base_status, Status& current_status, const std::string& name);
+	void Activation(const Status& base_status, Status& current_status, const std::string& name, std::shared_ptr<IPlayerUIGroup> player_ui_group);
 
 private:
 

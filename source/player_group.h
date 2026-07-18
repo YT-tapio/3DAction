@@ -1,6 +1,7 @@
 #pragma once
 
 class Player;
+class IPlayerUIGroup;
 
 class PlayerGroup
 {
@@ -15,7 +16,7 @@ public:
 	PlayerGroup(const PlayerGroup&) = delete;
 	PlayerGroup& operator = (const PlayerGroup&) = delete;
 
-	void Awake(VECTOR* camera_dir);
+	void Awake(VECTOR* camera_dir, std::shared_ptr<IPlayerUIGroup> player_ui_group);
 
 	void Init();
 

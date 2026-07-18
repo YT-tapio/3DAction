@@ -4,6 +4,7 @@
 #include"condition_timer.h"
 #include"variable_timer.h"
 #include"status.h"
+#include"player_ui_group_interface.h"
 
 ActiveStatModifire::ActiveStatModifire()
 	: timer_(std::make_shared<VariableTimer>())
@@ -38,12 +39,12 @@ void ActiveStatModifire::Update(const Status& base_status,Status& current_status
 	}
 }
 
-void ActiveStatModifire::Activation(const Status& base_status, Status& current_status, const StatModifire& effecacy_data)
+void ActiveStatModifire::Activation(const Status& base_status, Status& current_status, const StatModifire& stat_modifire,std::shared_ptr<IPlayerUIGroup> player_ui_group)
 {
 	// ‚±‚ÌuŠÔ‚ÉŒø‰Ê‚ð”­Šö‚³‚¹‚é
-	data_ = effecacy_data;
+	data_ = stat_modifire;
 
-	switch (data_.category)
+	switch (data_.type)
 	{
 	case StatType::kPhysicalATK:
 		current_status.physical_atk += base_status.physical_atk * data_.rate;
@@ -66,14 +67,21 @@ void ActiveStatModifire::Activation(const Status& base_status, Status& current_s
 		break;
 	}
 
-	// ‚±‚ÌuŠÔ‚Éui•`‰æ‚³‚¹‚½‚¢‚ðs‚í‚¹‚½‚¢
-
-
+	
 
 	timer_->Stop();
 	timer_->ChangeMaxTime(data_.time);
 	timer_->ReStart();
 	is_active_ = TRUE;
+
+	std::function<bool()> end_condition = [this]() -> bool
+		{
+			return timer_->GetIsEnd();
+		};
+
+	// ‚±‚ÌuŠÔ‚Éui•`‰æ‚³‚¹‚½‚¢
+	player_ui_group->SpawnStatModifire(end_condition, data_.type, data_.operation);
+
 }
 
 const bool ActiveStatModifire::GetIsActive() const
@@ -83,7 +91,7 @@ const bool ActiveStatModifire::GetIsActive() const
 
 void ActiveStatModifire::Release(const Status& base_status, Status& current_status)
 {
-	switch (data_.category)
+	switch (data_.type)
 	{
 	case StatType::kPhysicalATK:
 		current_status.physical_atk -= base_status.physical_atk * data_.rate;

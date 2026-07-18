@@ -44,13 +44,13 @@ void ActiveStatModifireGroup::Update(const Status& base_status, Status& current_
 	}
 }
 
-void ActiveStatModifireGroup::Activation(const Status& base_status, Status& current_status,const std::string& name)
+void ActiveStatModifireGroup::Activation(const Status& base_status, Status& current_status,const std::string& name, std::shared_ptr<IPlayerUIGroup> player_ui_group)
 {
 	for (auto active_stat_modifire : active_stat_modifires_)
 	{
 		if (!active_stat_modifire->GetIsActive())
 		{
-			active_stat_modifire->Activation(base_status, current_status, StatModifires::GetInstance().GetData(name));
+			active_stat_modifire->Activation(base_status, current_status, StatModifires::GetInstance().GetData(name),player_ui_group);
 			break;
 		}
 	}

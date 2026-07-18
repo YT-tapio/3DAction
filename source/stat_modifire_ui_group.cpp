@@ -15,7 +15,7 @@ StatModifireUIGroup::StatModifireUIGroup(const std::string& file_path)
 
 StatModifireUIGroup::~StatModifireUIGroup()
 {
-	active_stat_modifire_uis_.clear();
+
 }
 
 void StatModifireUIGroup::Init()
@@ -68,7 +68,7 @@ void StatModifireUIGroup::Draw()
 		auto pos = base_pos_;
 		
 		// —v‘f‚ª‚ ‚éê‡
-		if (handle != -1)
+		if (handle  > 0)
 		{
 			Draw2D::RotaGraph(pos, size_rate_, rot_z_, handle, TRUE);
 		}
@@ -78,6 +78,20 @@ void StatModifireUIGroup::Draw()
 		}
 		else
 		{
+			break;
+		}
+	}
+}
+
+void StatModifireUIGroup::Spawn(std::function<bool()> end_condition,StatType stat_type,ModifireOperation operation)
+{
+	for (int i = 0; i < kMaxStatModifireUINum; i++)
+	{
+		// nullptr‚ÌŽž
+		if (active_stat_modifire_uis_[i].end_condition == nullptr)
+		{
+			active_stat_modifire_uis_[i].end_condition = end_condition;
+			active_stat_modifire_uis_[i].handle = -2;
 			break;
 		}
 	}
@@ -102,7 +116,7 @@ void StatModifireUIGroup::LoadFile(const std::string& file_path)
 		std::stringstream ss(line);
 		std::string data;			// csv‚©‚ç‚Ì•¶Žš—ñ‚ð‚à‚ç‚¤
 
-		base_pos_ = CSVFileAssistant::GetVectorOfCSVFile(ss, data);
+		base_pos_ = CSVFileAssistant::GetVector2DOfCSVFile(ss, data);
 		size_rate_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		rot_z_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 	}

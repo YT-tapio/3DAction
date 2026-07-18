@@ -1,6 +1,6 @@
 #pragma once
 
-enum class StatType : int
+enum class StatType : char
 {
 	kEmpty = -1,
 	kPhysicalATK = 0,

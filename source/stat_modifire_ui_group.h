@@ -1,6 +1,7 @@
 #pragma once
 #include"active_stat_modifire_ui.h"
-
+#include"stat_type.h"
+#include"modifire_operation.h"
 class StatModifireUIGroup
 {
 public:
@@ -14,6 +15,8 @@ public:
 	void Update();
 
 	void Draw();
+
+	void Spawn(std::function<bool()> end_condition, StatType stat_type, ModifireOperation operation);
 
 private:
 

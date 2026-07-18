@@ -1,6 +1,6 @@
 #pragma once
 
-enum class EfficacyType : int
+enum class ModifireOperation : char
 {
 	kEmpty = -1,
 	kBuff = 0,

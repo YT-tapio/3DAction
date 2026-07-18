@@ -14,13 +14,14 @@ class SkillBase;
 class ObjectBase;
 class BehaviorBase;
 class StatusContainer;
+class IPlayerUIGroup;
 
 class Player : public CharacterBase , public IPhysicsEventReceiver
 	,public ITakableHealPlayer,public ITakableDamageEnemy,public IInputChange,public IStatusHolder
 {
 public:
 
-	Player(VECTOR* camera_dir, std::shared_ptr<const InputBase> input,const std::string name);
+	Player(VECTOR* camera_dir, std::shared_ptr<const InputBase> input,const std::string name,std::shared_ptr<IPlayerUIGroup> player_ui_group);
 
 	~Player() override;
 
@@ -104,7 +105,7 @@ private:
 	std::shared_ptr<BehaviorBase> test_behavior_;
 	std::shared_ptr<SkillBase> avoid_;
 	std::shared_ptr<StatusContainer> status_container_;
-
+	std::shared_ptr<IPlayerUIGroup> player_ui_group_;
 
 	VECTOR* camera_dir_;
 	VECTOR right_hand_pos_;

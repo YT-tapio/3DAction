@@ -51,8 +51,8 @@ void StatModifires::LoadFile()
 		auto name	 = CSVFileAssistant::GetStringOfCSVFile(ss, string_data);	// 名前
 		data.rate = CSVFileAssistant::GetFloatOfCSVFile(ss, string_data);	// バフの量
 		data.time = CSVFileAssistant::GetFloatOfCSVFile(ss, string_data);	// 時間
-		data.type = static_cast<EfficacyType>(CSVFileAssistant::GetIntOfCSVFile(ss, string_data));	//  バフかデバフか
-		data.category = static_cast<StatType>(CSVFileAssistant::GetIntOfCSVFile(ss, string_data));	// カテゴリ
+		data.operation = static_cast<ModifireOperation>(CSVFileAssistant::GetIntOfCSVFile(ss, string_data));	//  バフかデバフか
+		data.type = static_cast<StatType>(CSVFileAssistant::GetIntOfCSVFile(ss, string_data));	// カテゴリ
 
 		effecacy_datas_[name] = data;
 	}

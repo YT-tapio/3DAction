@@ -12,20 +12,21 @@
 #include"ai_input.h"
 #include"input_manager.h"
 #include"vector_assistant.h"
+#include"player_ui_group.h"
 
 PlayerGroup::PlayerGroup()
 {
 
 }
 
-void PlayerGroup::Awake(VECTOR* camera_dir)
+void PlayerGroup::Awake(VECTOR* camera_dir,std::shared_ptr<IPlayerUIGroup> player_ui_group)
 {
 	current_player_head_pos_ = VectorAssistant::VGetZero();
 	camera_dir_ = camera_dir;
 	//players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer2Input(),"healer"));
 	//players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer3Input(), "defender"));
 	//players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer3Input(), "attacker2"));
-	players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer1Input(), "attacker"));
+	players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer1Input(), "attacker",player_ui_group));
 }
 
 void PlayerGroup::Init()

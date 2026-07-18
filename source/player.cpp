@@ -45,15 +45,16 @@
 #include"effect_manager.h"
 #include"effect_id.h"
 #include"effect_end_state.h"
-#include"player_ui_group.h"
 #include"time.h"
 #include"damage_ui_group.h"
+#include"player_ui_group_interface.h"
 
-Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name)
+Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name, std::shared_ptr<IPlayerUIGroup> player_ui_group)
 	: CharacterBase("player")
 	, IPhysicsEventReceiver()
 	, name_(name)
 	, input_(input)
+	, player_ui_group_(player_ui_group)
 {
 	
 	camera_dir_ = camera_dir;
@@ -161,9 +162,10 @@ void Player::Init()
 	std::function<float()> get_avoid_stamina = [this]() {return avoid_stamina_consumption_; };
 
 	// ui表示
-	PlayerUIGroup::GetInstance().MakeHPUI(get_base_hp, get_current_hp, name_);
+	player_ui_group_->MakeUI(get_base_hp, get_current_hp, name_);
 
-	PlayerUIGroup::GetInstance().MakeStaminaUI(get_base_stamina, get_current_stamina, can_use_stamina, get_avoid_stamina);
+	// スタミナのui表示
+	player_ui_group_->MakeStaminaUI(get_base_stamina, get_current_stamina, can_use_stamina, get_avoid_stamina);
 
 	target_rot_y_ = rot_.y;
 	animator_ = std::make_shared<AnimatorPlayer>(handle_, name_);
@@ -636,7 +638,6 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 	{
 		// padの振動
 
-
 		// 許容量
 		const float kJustAvoidRatio = 0.3f;
 		// ダメージを受けない
@@ -654,7 +655,7 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 			else
 			{
 				// バフ
-				status_container_->Activation(job_ + "_avoid");
+				status_container_->Activation(job_ + "_avoid",player_ui_group_);
 			}
 
 			int effect_id = -1;

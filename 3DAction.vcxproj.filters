@@ -714,6 +714,9 @@
     <ClCompile Include="source\stat_modifire_ui_group.cpp">
       <Filter>ソース ファイル\ui\stat_modifire_group</Filter>
     </ClCompile>
+    <ClCompile Include="source\player_ui_group_interface.cpp">
+      <Filter>ソース ファイル\ui\player_ui_group</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1219,6 +1222,9 @@
     </ClInclude>
     <ClInclude Include="source\stat_modifire_ui_group.h">
       <Filter>ソース ファイル\ui\stat_modifire_group</Filter>
+    </ClInclude>
+    <ClInclude Include="source\player_ui_group_interface.h">
+      <Filter>ソース ファイル\ui\player_ui_group</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

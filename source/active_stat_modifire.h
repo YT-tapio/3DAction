@@ -1,9 +1,10 @@
 #pragma once
 #include"stat_modifire.h"
-
-enum class StatType;
+#include"stat_type.h"
 struct Status;
 class VariableTimer;
+
+class IPlayerUIGroup;
 
 class ActiveStatModifire
 {
@@ -17,7 +18,7 @@ public:
 
 	void Update(const Status& base_status, Status& current_status);
 
-	void Activation(const Status& base_status, Status& current_status,const StatModifire& effecacy_data);
+	void Activation(const Status& base_status, Status& current_status,const StatModifire& effecacy_data, std::shared_ptr<IPlayerUIGroup> player_ui_group);
 
 	const bool GetIsActive() const;
 

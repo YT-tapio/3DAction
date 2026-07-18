@@ -44,10 +44,12 @@ Game::Game()
 	objects_.push_back(std::make_shared<Stage>());
 	objects_.push_back(std::make_shared<CollisionMeshObject>());
 
+	player_ui_group_ = std::make_shared<PlayerUIGroup>();
+
 	no_shadow_objects_.push_back(std::make_shared<SkyDome>());
 	
 	EffectManager::GetInstance().Awake();
-	PlayerGroup::GetInstance().Awake(&camera_->dir_);
+	PlayerGroup::GetInstance().Awake(&camera_->dir_,player_ui_group_);
 	DamageUIGroup::GetInstance().Awake();
 	Init();
 }
@@ -77,6 +79,8 @@ void Game::Init()
 	{
 		obj->Init();
 	}
+	player_ui_group_->Init();
+
 	Brain::GetInstance().CreatePlaySceneVirtualCamera(camera_->GetPos(), camera_->GetTargetPos());
 	DamageUIGroup::GetInstance().Init();
 	camera_->Init();
@@ -112,8 +116,7 @@ void Game::Update()
 	{
 		obj->LateUpdate();
 	}
-
-	PlayerUIGroup::GetInstance().Update();
+	player_ui_group_->Update();
 	EnemyUIGroup::GetInstance().Update();
 	DamageUIGroup::GetInstance().Update();
 	EffectManager::GetInstance().Update();
@@ -164,7 +167,7 @@ void Game::Draw()
 	}
 
 	// Physics::GetInstance().Debug();
-	PlayerUIGroup::GetInstance().Draw();
+	player_ui_group_->Draw();
 	EnemyUIGroup::GetInstance().Draw();
 	DamageUIGroup::GetInstance().Draw();
 	if (Debug::GetInstance().GetIsDisp())
