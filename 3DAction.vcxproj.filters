@@ -298,6 +298,9 @@
     <Filter Include="ソース ファイル\2d_gravity">
       <UniqueIdentifier>{c414a24e-d6de-4747-a6fb-b9fbff902d5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ui\stat_modifire_group">
+      <UniqueIdentifier>{8e85742d-0b57-4803-aaed-91feb2b07715}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -707,6 +710,9 @@
     </ClCompile>
     <ClCompile Include="source\damage_ui_group.cpp">
       <Filter>ソース ファイル\ui\damage_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\stat_modifire_ui_group.cpp">
+      <Filter>ソース ファイル\ui\stat_modifire_group</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1207,6 +1213,12 @@
     </ClInclude>
     <ClInclude Include="source\damage_ui_group.h">
       <Filter>ソース ファイル\ui\damage_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\active_stat_modifire_ui.h">
+      <Filter>ソース ファイル\ui\stat_modifire_group</Filter>
+    </ClInclude>
+    <ClInclude Include="source\stat_modifire_ui_group.h">
+      <Filter>ソース ファイル\ui\stat_modifire_group</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

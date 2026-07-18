@@ -17,6 +17,7 @@ const StatModifire StatModifires::GetData(const std::string& name) const
 	auto data = effecacy_datas_.find(name);
 	if(data == effecacy_datas_.end())
 	{
+		printfDx("‚»‚ñ‚Èƒoƒt‚Í‚È‚¢‚Å‚·\n");
 		return empty_data_;
 	}
 	return data->second;

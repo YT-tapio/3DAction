@@ -653,6 +653,7 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 			}
 			else
 			{
+				// ƒoƒt
 				status_container_->Activation(job_ + "_avoid");
 			}
 

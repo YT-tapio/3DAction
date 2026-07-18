@@ -156,6 +156,7 @@
     <ClCompile Include="source\damage_ui_group.cpp" />
     <ClCompile Include="source\disp_attack_range.cpp" />
     <ClCompile Include="source\active_stat_modifire.cpp" />
+    <ClCompile Include="source\stat_modifire_ui_group.cpp" />
     <ClCompile Include="source\stat_modifires.cpp" />
     <ClCompile Include="source\enemy_ui_group.cpp" />
     <ClCompile Include="source\font.cpp" />
@@ -296,6 +297,8 @@
     <ClInclude Include="source\damage_ui_group.h" />
     <ClInclude Include="source\disp_attack_range.h" />
     <ClInclude Include="source\active_stat_modifire.h" />
+    <ClInclude Include="source\active_stat_modifire_ui.h" />
+    <ClInclude Include="source\stat_modifire_ui_group.h" />
     <ClInclude Include="source\stat_modifire_group.h" />
     <ClInclude Include="source\stat_type.h" />
     <ClInclude Include="source\stat_modifire.h" />
