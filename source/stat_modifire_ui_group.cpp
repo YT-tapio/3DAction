@@ -6,16 +6,17 @@
 #include<fstream>
 #include<sstream>
 #include"csv_file_assistant.h"
-
+#include"stat_modifire_ui_data.h"
 StatModifireUIGroup::StatModifireUIGroup(const std::string& file_path)
 {
 	LoadFile(file_path);
 	Init();
+	handle_ = LoadGraph("data/ui/stat_modifire/physical_attack.png");
 }
 
 StatModifireUIGroup::~StatModifireUIGroup()
 {
-
+	DeleteGraph(handle_);
 }
 
 void StatModifireUIGroup::Init()
@@ -64,16 +65,21 @@ void StatModifireUIGroup::Draw()
 	for (int i = 0; i < kMaxStatModifireUINum; i++)
 	{
 		auto handle = active_stat_modifire_uis_[i].handle;
-		// •`‰æ‚·‚épos‚ð’è‚ß‚é
-		auto pos = base_pos_;
+		int handle_width = -1;
+		int handle_height = -1;
+		GetGraphSize(handle, &handle_width, &handle_height);
+		// i‚Ì‘å‚«‚³‚É‚æ‚Á‚Ä•`‰æ‚·‚éêŠ‚ð•Ï‰»
+		VECTOR pos = VGet(0.f, 0.f, 0.f);
 		
 		// —v‘f‚ª‚ ‚éê‡
 		if (handle  > 0)
 		{
+			pos = VAdd(base_pos_, VGet(handle_width * i, 0.f, 0.f));
 			Draw2D::RotaGraph(pos, size_rate_, rot_z_, handle, TRUE);
 		}
 		else if(handle == -2)
 		{
+			pos = VAdd(base_pos_, VGet(10 * i, 0.f, 0.f));
 			Draw2D::Box(pos, 10, 10, GetColor(0, 0, 0), TRUE);
 		}
 		else
@@ -91,7 +97,8 @@ void StatModifireUIGroup::Spawn(std::function<bool()> end_condition,StatType sta
 		if (active_stat_modifire_uis_[i].end_condition == nullptr)
 		{
 			active_stat_modifire_uis_[i].end_condition = end_condition;
-			active_stat_modifire_uis_[i].handle = -2;
+			// ‘Î‰ž‚µ‚Ä‚¢‚é‰æ‘œ‚ðŽæ“¾‚·‚é
+			active_stat_modifire_uis_[i].handle = StatModifireUIData::GetInstance().GetHandle(stat_type,operation);
 			break;
 		}
 	}

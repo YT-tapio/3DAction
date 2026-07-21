@@ -1,6 +1,6 @@
 #pragma once
 
-enum class ModifireOperation : char
+enum class ModifireOperation : int
 {
 	kEmpty = -1,
 	kBuff = 0,

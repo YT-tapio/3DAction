@@ -1,0 +1,5 @@
+﻿stat_modifire_name,image_file_path
+physical_atk_buff,data/ui/stat_modifire/physical_attack.png
+physical_atk_debuff,data/ui/stat_modifire/physical_attack.png
+physical_def_buff,data/ui/stat_modifire/physical_defence.png
+physical_def_debuff,data/ui/stat_modifire/physical_defence.png

@@ -2,6 +2,7 @@
 #include"active_stat_modifire_ui.h"
 #include"stat_type.h"
 #include"modifire_operation.h"
+
 class StatModifireUIGroup
 {
 public:
@@ -27,6 +28,8 @@ private:
 private:
 
 	const int kMaxStatModifireUINum = 5;
+
+	int handle_;
 
 	std::unordered_map<int, ActiveStatModifireUI> active_stat_modifire_uis_;
 

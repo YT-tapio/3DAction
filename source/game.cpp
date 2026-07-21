@@ -32,7 +32,7 @@
 #include"stat_modifire.h"
 #include"stat_modifires.h"
 #include"damage_ui_group.h"
-
+#include"stat_modifire_ui_data.h"
 Game::Game()
 	: SceneBase()
 {
@@ -51,6 +51,7 @@ Game::Game()
 	EffectManager::GetInstance().Awake();
 	PlayerGroup::GetInstance().Awake(&camera_->dir_,player_ui_group_);
 	DamageUIGroup::GetInstance().Awake();
+	StatModifireUIData::GetInstance().Load();
 	Init();
 }
 
@@ -62,6 +63,7 @@ Game::~Game()
 	PlayerGroup::GetInstance().End();
 	EffectManager::GetInstance().End();
 	DamageUIGroup::GetInstance().End();
+	StatModifireUIData::GetInstance().End();
 }
 
 void Game::Init()
