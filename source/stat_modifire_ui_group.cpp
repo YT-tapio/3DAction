@@ -74,7 +74,7 @@ void StatModifireUIGroup::Draw()
 		// —v‘f‚ª‚ ‚éê‡
 		if (handle  > 0)
 		{
-			pos = VAdd(base_pos_, VGet(handle_width * i, 0.f, 0.f));
+			pos = VAdd(base_pos_, VGet((handle_width * size_rate_) * i, 0.f, 0.f));
 			Draw2D::RotaGraph(pos, size_rate_, rot_z_, handle, TRUE);
 		}
 		else if(handle == -2)
