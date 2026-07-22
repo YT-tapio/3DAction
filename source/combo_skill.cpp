@@ -41,13 +41,16 @@ void ComboSkill::Update()
 	if (combo_action == nullptr) { return; }
 	bool is_attack = FALSE;
 
-	cool_time_->Update();
+	
 	if (!can_use_)
 	{
+		cool_time_->Update();
 		if (cool_time_->GetIsEnd())
 		{
+			printfDx("終了\n");
 			can_use_ = TRUE;
 		}
+		
 	}
 
 	if (IsStartcomboAction(combo_action))
@@ -57,9 +60,10 @@ void ComboSkill::Update()
 		owner_.lock()->SetIsStop(TRUE);
 		is_attack = TRUE;
 		Correction(combo_action);
+		cool_time_->ReSet();
 		can_use_ = FALSE;
 	}
-
+	printfDx("%.2f\n", cool_time_->GetRatio());
 	if (is_active_)
 	{
 		// コンボが終了したかの判断
@@ -71,6 +75,7 @@ void ComboSkill::Update()
 			owner_.lock()->SetIsStop(FALSE);
 			// ここでcool_timeを開始
 			cool_time_->ReStart();
+			//printfDx("変化");
 			return;
 		}
 

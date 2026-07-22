@@ -34,6 +34,11 @@ public:
 	void ReStart();
 
 	/// <summary>
+	/// ‰Šúó‘Ô‚É–ß‚·
+	/// </summary>
+	void ReSet();
+
+	/// <summary>
 	/// 
 	/// </summary>
 	/// <returns></returns>

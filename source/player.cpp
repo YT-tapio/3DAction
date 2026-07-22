@@ -392,8 +392,8 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 
 void Player::MakeSkill(std::weak_ptr<Player> owner)
 {
-	auto skill = SkillLoader::GetInstance().SkillLoad(skill1_id_, name_, owner);
-	auto second_skill = SkillLoader::GetInstance().SkillLoad(skill2_id_, name_, owner);
+	auto skill = SkillLoader::SkillLoad(skill1_id_, name_, owner);//SkillLoader::GetInstance().SkillLoad(skill1_id_, name_, owner);
+	auto second_skill = SkillLoader::SkillLoad(skill2_id_, name_, owner);//SkillLoader::GetInstance().SkillLoad(skill2_id_, name_, owner);
 
 	skill_ = skill;
 	second_skill_ = second_skill;
