@@ -27,7 +27,7 @@ private:
 
 private:
 
-	const int kMaxStatModifireUINum = 5;
+	const int kMaxStatModifireUINum = 20;
 
 	int handle_;
 

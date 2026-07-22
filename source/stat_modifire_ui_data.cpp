@@ -48,6 +48,7 @@ const int StatModifireUIData::GetHandle(StatType type, ModifireOperation operati
 {
 	std::string name;
 
+	// どんな効果か
 	switch (type)
 	{
 	case StatType::kPhysicalATK:
@@ -63,12 +64,14 @@ const int StatModifireUIData::GetHandle(StatType type, ModifireOperation operati
 	case StatType::kMagicDEF:
 		name = "magic_def_";
 		break;
+	case StatType::kEmpty:
 	default:
 		printfDx("そのような効果はないです\n");
 		return -2;
 		break;
 	}
 
+	// バフかデバフ
 	switch (operation)
 	{
 	case ModifireOperation::kBuff:

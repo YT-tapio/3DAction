@@ -22,7 +22,7 @@ public:
 
 private:
 
-	static const int kMaxStatModifire = 10;
+	static const int kMaxStatModifire = 20;
 
 	// vectorでデータの確保
 	std::vector<std::shared_ptr<ActiveStatModifire>> active_stat_modifires_;
