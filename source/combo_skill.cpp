@@ -17,8 +17,8 @@
 #include"FPS.h"
 #include"time.h"
 
-ComboSkill::ComboSkill(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior, std::unordered_map<int, std::pair<float,float>> approach_speed_ratio_mp)
-	: SkillBase(owner,behavior)
+ComboSkill::ComboSkill(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior, std::unordered_map<int, std::pair<float,float>> approach_speed_ratio_mp, float cool_time)
+	: SkillBase(owner,behavior,cool_time)
 	, id_approach_speed_ratio_mp_(approach_speed_ratio_mp)
 {
 
@@ -41,6 +41,15 @@ void ComboSkill::Update()
 	if (combo_action == nullptr) { return; }
 	bool is_attack = FALSE;
 
+	cool_time_->Update();
+	if (!can_use_)
+	{
+		if (cool_time_->GetIsEnd())
+		{
+			can_use_ = TRUE;
+		}
+	}
+
 	if (IsStartcomboAction(combo_action))
 	{
 		is_active_ = TRUE;
@@ -48,6 +57,7 @@ void ComboSkill::Update()
 		owner_.lock()->SetIsStop(TRUE);
 		is_attack = TRUE;
 		Correction(combo_action);
+		can_use_ = FALSE;
 	}
 
 	if (is_active_)
@@ -60,7 +70,7 @@ void ComboSkill::Update()
 			combo_action->Exit();
 			owner_.lock()->SetIsStop(FALSE);
 			// ここでcool_timeを開始
-			
+			cool_time_->ReStart();
 			return;
 		}
 
@@ -69,7 +79,7 @@ void ComboSkill::Update()
 			combo_action->GoNext();
 		}
 		
-		if (combo_action->CheckChangecombo())
+		if (combo_action->CheckChangeCombo())
 		{
 			// ここで補正が発生する
 			//printfDx("change\n");
@@ -107,7 +117,8 @@ bool ComboSkill::IsStartcomboAction(std::shared_ptr<ComboAction> combo_action)
 {
 	auto owner = owner_.lock();
 	
-	if (is_active_)													{ return FALSE; }
+	if (!can_use_)											{ return FALSE; }
+	if (is_active_)											{ return FALSE; }
 	if (!owner->GetOnGround())								{ return FALSE; }
 	if (owner->GetIsStop())									{ return FALSE; }
 	//inputの確認

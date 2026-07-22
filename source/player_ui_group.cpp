@@ -70,6 +70,16 @@ void PlayerUIGroup::MakeStaminaUI(std::function<float()> get_base_stamina, std::
 	stamina_ui_ = std::make_shared<StaminaUI>(get_base_stamina, get_current_stamina, can_use_stamina, get_avoid_use_stamina_value);
 }
 
+void PlayerUIGroup::MakeNormalSkillUI(int handle, std::function<bool()> can_use, std::function<float()> cool_time_ratio)
+{
+	
+}
+
+void PlayerUIGroup::MakeStrongSkillUI(int handle, std::function<bool()> can_use, std::function<float()> cool_time_ratio)
+{
+
+}
+
 void PlayerUIGroup::SpawnStatModifire(std::function<bool()> end_condition, StatType stat_type, ModifireOperation operation)
 {
 	// 

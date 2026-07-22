@@ -96,6 +96,24 @@ public:
 	const VECTOR GetInputDir() const;
 
 private:
+
+	// ŠÖ”ŒQ
+
+	void LoadFile(const char* file_path, const std::string my_name);
+
+	void MakeSkill(std::weak_ptr<Player> owner);
+
+	void Move();
+
+	void Gravity();
+
+	void UpdateBone();
+
+	void DecideAttackTarget();
+
+	void EffectUpdate();
+
+private:
 	
 	std::shared_ptr<RigidBody> rigid_body_;
 	std::shared_ptr<const InputBase> input_;
@@ -134,21 +152,5 @@ private:
 	bool can_move_;		// ˆÚ“®‚Ì‹–‰Â
 	bool is_stop_;		// ‘€ì‚ğ‚³‚¹‚È‚¢‚½‚ß‚Ìƒtƒ‰ƒO
 	bool is_attack_target_in_range_;		// UŒ‚‘ÎÛ‚ª”ÍˆÍ“à‚É‚¢‚é‚Ì‚©
-
-	// ŠÖ”ŒQ
-
-	void LoadFile(const char* file_path, const std::string my_name);
-
-	void MakeSkill(std::weak_ptr<Player> owner);
-
-	void Move();
-
-	void Gravity();
-
-	void UpdateBone();
-
-	void DecideAttackTarget();
-
-	void EffectUpdate();
 
 };

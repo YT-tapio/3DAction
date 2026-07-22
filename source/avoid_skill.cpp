@@ -18,7 +18,7 @@
 #include"time.h"
 
 AvoidSkill::AvoidSkill(std::weak_ptr<Player> owner,float speed,float stamina_consumption)
-	: SkillBase(owner,std::make_shared<Avoid>(owner))
+	: SkillBase(owner,std::make_shared<Avoid>(owner),0.f)
 	, speed_(speed)
 	, stamina_consumption_(stamina_consumption)
 {

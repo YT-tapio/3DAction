@@ -28,6 +28,10 @@ public:
 	void MakeStaminaUI(std::function<float()> get_base_stamina, std::function<float()> get_current_stamina,
 		std::function<bool()> can_use_stamina, std::function<float()> get_avoid_use_stamina_value) override;
 
+	void MakeNormalSkillUI(int skill_id, std::function<bool()> can_use, std::function<float()> cool_time_ratio) override;
+
+	void MakeStrongSkillUI(int skill_id, std::function<bool()> can_use, std::function<float()> cool_time_ratio) override;
+
 	void SpawnStatModifire(std::function<bool()> end_condition, StatType stat_type, ModifireOperation operation);
 
 private:

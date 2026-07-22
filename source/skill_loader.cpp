@@ -120,7 +120,7 @@ std::shared_ptr<SkillBase> SkillLoader::MakeSkill(const int skill_name, std::ifs
 
 	case SkillName::kcomboAttack:
 
-		skill = MakecomboAttackSkill(file, line, name, owner);
+		skill = MakeComboAttackSkill(file, line, name, owner);
 
 		break;
 	}
@@ -148,17 +148,17 @@ std::shared_ptr<SkillBase> SkillLoader::MakePunchSkill(std::ifstream& file, std:
 		float radius = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		float approach_speed = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		float approach_ratio = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
-
+		float cool_time = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		auto owner_ptr = owner.lock();
 
 		// right
 		if (is_right)
 		{
-			skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetRightHandPos(), anim_name, radius, min_coll_ratio, max_coll_ratio, owner_ptr->GetDetectionRadius(),approach_speed,approach_ratio);
+			skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetRightHandPos(), anim_name, radius, min_coll_ratio, max_coll_ratio, owner_ptr->GetDetectionRadius(),approach_speed,approach_ratio,cool_time);
 		}
 		else
 		{
-			skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetLeftHandPos(), anim_name, radius, min_coll_ratio, max_coll_ratio, owner_ptr->GetDetectionRadius(), approach_speed, approach_ratio);
+			skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetLeftHandPos(), anim_name, radius, min_coll_ratio, max_coll_ratio, owner_ptr->GetDetectionRadius(), approach_speed, approach_ratio,cool_time);
 		}
 
 		break;
@@ -199,10 +199,10 @@ std::shared_ptr<SkillBase>SkillLoader::MakeAreaHealSkill(std::ifstream& file, st
 		float radius = 0.f;
 		std::getline(ss, data, ',');
 		radius = stof(data);
-		
+		float cool_time = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		auto owner_ptr = owner.lock();
 		
-		skill = std::make_shared<AreaHealSkill>(owner, owner_ptr->GetPosPtr(), radius);
+		skill = std::make_shared<AreaHealSkill>(owner, owner_ptr->GetPosPtr(), radius, cool_time);
 		
 		break;
 	}
@@ -210,7 +210,7 @@ std::shared_ptr<SkillBase>SkillLoader::MakeAreaHealSkill(std::ifstream& file, st
 	return skill;
 }
 
-std::shared_ptr<SkillBase>SkillLoader::MakecomboAttackSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner)
+std::shared_ptr<SkillBase>SkillLoader::MakeComboAttackSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner)
 {
 	const std::string kSame = "same";
 	std::shared_ptr<SkillBase> skill = nullptr;
@@ -221,7 +221,8 @@ std::shared_ptr<SkillBase>SkillLoader::MakecomboAttackSkill(std::ifstream& file,
 	float approach_speed = 0.45f;
 	float approach_ratio = 0.3f;
 	std::unordered_map<int, std::pair<float, float>> id_approach_speed_ratio_mp;
-
+	float cool_time = 0.f;
+	VECTOR* hand_pos;
 	while (std::getline(file, line))
 	{
 		std::stringstream ss(line);
@@ -256,12 +257,13 @@ std::shared_ptr<SkillBase>SkillLoader::MakecomboAttackSkill(std::ifstream& file,
 			float friction						= CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 			float approach_speed = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 			float approach_ratio = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+			cool_time = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 			auto owner_ptr = owner.lock();
 			approach_speed_ratio = { approach_speed,approach_ratio };
 			
-			hand_pos_ = is_right ? owner_ptr->GetRightHandPos() : owner_ptr->GetLeftHandPos();
-			const auto rigid_body = std::make_shared<RigidBody>(std::make_shared<Sphere>(radius, VectorAssistant::VGetZero()),hand_pos_, FALSE, TRUE, mass, friction);
-			const auto punch = std::make_shared<Punch>(owner, hand_pos_, anim_name, min_coll_ratio, max_coll_ratio,rigid_body);
+			hand_pos = is_right ? owner_ptr->GetRightHandPos() : owner_ptr->GetLeftHandPos();
+			const auto rigid_body = std::make_shared<RigidBody>(std::make_shared<Sphere>(radius, VectorAssistant::VGetZero()),hand_pos, FALSE, TRUE, mass, friction);
+			const auto punch = std::make_shared<Punch>(owner, hand_pos, anim_name, min_coll_ratio, max_coll_ratio,rigid_body);
 			combo = std::make_shared<Combo>(owner, min_coll_ratio, max_coll_ratio, go_next_timing, anim_name,punch);
 
 			id_approach_speed_ratio_mp[combo_num] = approach_speed_ratio;
@@ -276,7 +278,7 @@ std::shared_ptr<SkillBase>SkillLoader::MakecomboAttackSkill(std::ifstream& file,
 	if (is_target)
 	{
 		skill = std::make_shared<ComboSkill>(owner,
-			std::make_shared<ComboAction>(owner,combos), id_approach_speed_ratio_mp);
+			std::make_shared<ComboAction>(owner,combos), id_approach_speed_ratio_mp,cool_time);
 	}
 
 	return skill;

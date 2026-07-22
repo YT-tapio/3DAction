@@ -8,7 +8,7 @@ class PunchSkill : public SkillBase
 public:
 
 	PunchSkill(std::weak_ptr<Player> owner,VECTOR* pos,std::string my_anim_name,const float r, float min_coll_ratio, 
-		float max_coll_ratio,const float detection_radius,float approach_speed, float approach_ratio);
+		float max_coll_ratio,const float detection_radius,float approach_speed, float approach_ratio, float cool_time);
 
 	~PunchSkill() override;
 

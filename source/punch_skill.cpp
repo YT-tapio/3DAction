@@ -20,8 +20,8 @@
 #include"FPS.h"
 #include"attack_correction.h"
 
-PunchSkill::PunchSkill(std::weak_ptr<Player> owner,VECTOR* pos,std::string my_anim_name,const float r, float min_coll_ratio, float max_coll_ratio,const float detection_radius, float approach_speed, float approach_ratio)
-	: SkillBase(owner,std::make_shared<Punch>(owner,pos,my_anim_name,min_coll_ratio,max_coll_ratio, std::make_shared<RigidBody>(std::make_shared<Sphere>(r, VGet(0, 0, 0)), pos, FALSE, TRUE, 1.f, 1.f)))
+PunchSkill::PunchSkill(std::weak_ptr<Player> owner,VECTOR* pos,std::string my_anim_name,const float r, float min_coll_ratio, float max_coll_ratio,const float detection_radius, float approach_speed, float approach_ratio, float cool_time)
+	: SkillBase(owner,std::make_shared<Punch>(owner,pos,my_anim_name,min_coll_ratio,max_coll_ratio, std::make_shared<RigidBody>(std::make_shared<Sphere>(r, VGet(0, 0, 0)), pos, FALSE, TRUE, 1.f, 1.f)),cool_time)
 	, my_anim_name_(my_anim_name)
 	, approach_speed_(approach_speed)
 	, approach_ratio_(approach_ratio)
@@ -39,6 +39,7 @@ PunchSkill::~PunchSkill()
 void PunchSkill::Init()
 {
 	behavior_->Init();
+	cool_time_->Init();
 }
 
 void PunchSkill::Update()
@@ -50,7 +51,15 @@ void PunchSkill::Update()
 		printfDx("player以外にはskillを適応できません\n");
 		return;
 	}
-
+	if (!can_use_)
+	{
+		cool_time_->Update();
+		if (cool_time_->GetIsEnd())
+		{
+			can_use_ = TRUE;
+		}
+	}
+	
 	if (is_active_)
 	{
 		// skillが終わる条件
@@ -59,7 +68,7 @@ void PunchSkill::Update()
 			is_active_ = FALSE;
 			owner->SetIsStop(FALSE);
 			// cool_timeの開始
-
+			cool_time_->ReStart();
 		}
 	}
 
@@ -74,6 +83,7 @@ void PunchSkill::Update()
 			VECTOR vel = VectorAssistant::VGetZero();
 			bool is_in_site = AttackCorrection::GetInstance().ApproachTheNearestEnemy(owner, vel, 18.5f, 0.45f);
 			owner->SetIsStop(TRUE);
+			can_use_ = FALSE;
 		}
 	}
 	// behaviorのupdate
@@ -148,6 +158,7 @@ void PunchSkill::DecideTarget(std::vector<std::weak_ptr<ObjectBase>> owner_area_
 
 bool PunchSkill::CheckIsPunch(std::shared_ptr<Player> owner)
 {
+	if (!can_use_)								{ return FALSE; }
 	if (owner->GetIsStop())										{ return FALSE; }
 	if (!owner->GetOnGround())									{ return FALSE; }	// 着地していない
 	if (owner->GetIsInvincible())								{ return FALSE; }

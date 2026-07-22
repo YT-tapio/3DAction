@@ -6,9 +6,11 @@
 #include"behavior_base.h"
 #include"skill_base.h"
 
-SkillBase::SkillBase(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior)
+SkillBase::SkillBase(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior,float cool_time)
 	: owner_(owner)
 	, behavior_(behavior)
+	, cool_time_(std::make_shared<ConditionTimer>(cool_time))
+	, can_use_(TRUE)
 {
 	is_active_ = FALSE;
 }
@@ -38,9 +40,14 @@ void SkillBase::Debug()
 
 }
 
-void SkillBase::SetOwner(std::weak_ptr<Player>owner)
+const float SkillBase::GetCoolTiemRatio() const
 {
-	owner_ = owner;
+	return cool_time_->GetRatio();
+}
+
+const bool SkillBase::CanUseSkill() const
+{
+	return can_use_;
 }
 
 const bool SkillBase::CheckMyOwner() const

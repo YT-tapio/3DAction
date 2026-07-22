@@ -7,6 +7,7 @@
 #include<sstream>
 #include"csv_file_assistant.h"
 #include"stat_modifire_ui_data.h"
+
 StatModifireUIGroup::StatModifireUIGroup(const std::string& file_path)
 {
 	LoadFile(file_path);

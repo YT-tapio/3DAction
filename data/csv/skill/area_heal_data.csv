@@ -1,5 +1,5 @@
-﻿name,radius
-attacker,20
-healer,20
-defender,20
-attacker2,20
+﻿name,radius,cool_time
+attacker,20,5
+healer,20,5
+defender,20,5
+attacker2,20,5

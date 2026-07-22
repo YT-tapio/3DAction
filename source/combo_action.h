@@ -40,7 +40,7 @@ public:
 
 	const bool CheckIsEnd() const;
 
-	const bool CheckChangecombo() const;
+	const bool CheckChangeCombo() const;
 
 	const std::string GetFirstcomboAnimation() const;
 

@@ -394,16 +394,26 @@ void Player::MakeSkill(std::weak_ptr<Player> owner)
 {
 	auto skill = SkillLoader::GetInstance().SkillLoad(skill1_id_, name_, owner);
 	auto second_skill = SkillLoader::GetInstance().SkillLoad(skill2_id_, name_, owner);
+
 	skill_ = skill;
 	second_skill_ = second_skill;
 	if (skill_ == nullptr)
 	{
 		printfDx("é∏îs\n");
 	}
+	else
+	{
+		// ÉXÉLÉãÇÃUIÇê∂ê¨
+		
+	}
 
 	if (second_skill_ == nullptr)
 	{
 		printfDx("é∏îs\n");
+	}
+	else
+	{
+
 	}
 
 }

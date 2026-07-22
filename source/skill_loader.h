@@ -3,6 +3,23 @@
 class SkillBase;
 class Player;
 
+namespace SkillLoader2
+{
+	std::shared_ptr<SkillBase> SkillLoad(const int skill_name, const std::string name, std::weak_ptr<Player> owner);
+
+	void DecideFile(const int skill_name, std::string& file_path, int& skip_line_num);
+
+	std::shared_ptr<SkillBase> MakeSkill(const int skill_name, std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner);
+
+	std::shared_ptr<SkillBase> MakePunchSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner);
+
+	std::shared_ptr<SkillBase> MakeAvoidSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner);
+
+	std::shared_ptr<SkillBase> MakeAreaHealSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner);
+
+	std::shared_ptr<SkillBase> MakeComboAttackSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner);
+}
+
 class SkillLoader
 {
 public:
@@ -32,8 +49,8 @@ private:
 
 	std::shared_ptr<SkillBase> MakeAreaHealSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner);
 
-	std::shared_ptr<SkillBase> MakecomboAttackSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner);
+	std::shared_ptr<SkillBase> MakeComboAttackSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner);
 
-	VECTOR* hand_pos_;
+	// VECTOR* hand_pos_;
 
 };

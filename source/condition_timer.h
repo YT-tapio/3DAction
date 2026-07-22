@@ -34,6 +34,14 @@ public:
 	void ReStart();
 
 	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
+	const float GetMaxTime() const;
+
+	const float GetRatio() const;
+
+	/// <summary>
 	/// is_stop_を返す
 	/// </summary>
 	/// <returns>タイマーストップを返す</returns>
@@ -45,14 +53,13 @@ public:
 	/// <returns>タイマーがマックスまで達しているか</returns>
 	const bool GetIsEnd() const;
 
-	const float GetMaxTime() const;
-
 protected:
+
+	float max_time_;
+	float time_;
 
 	bool is_stop_;
 	bool is_end_;
-	float max_time_;
-	float time_;
 
 private:
 

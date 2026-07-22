@@ -3,6 +3,7 @@
 #include<functional>
 #include"stat_type.h"
 #include"modifire_operation.h"
+
 class IPlayerUIGroup
 {
 public:
@@ -13,4 +14,9 @@ public:
 		std::function<bool()> can_use_stamina, std::function<float()> get_avoid_use_stamina_value) {};
 
 	virtual void SpawnStatModifire(std::function<bool()> end_condition,StatType stat_type, ModifireOperation operation) {};
+
+	virtual void MakeNormalSkillUI(int skill_id,std::function<bool()> can_use, std::function<float()> cool_time_ratio) {};
+
+	virtual void MakeStrongSkillUI(int skill_id, std::function<bool()> can_use, std::function<float()> cool_time_ratio) {};
+
 };

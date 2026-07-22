@@ -52,6 +52,16 @@ void ConditionTimer::ReStart()
 	time_	 = 0.f;
 }
 
+const float ConditionTimer::GetMaxTime() const
+{
+	return max_time_;
+}
+
+const float ConditionTimer::GetRatio() const
+{
+	return time_ / max_time_;
+}
+
 const bool ConditionTimer::GetIsStop() const
 {
 	return is_stop_;
@@ -62,7 +72,3 @@ const bool ConditionTimer::GetIsEnd() const
 	return is_end_;
 }
 
-const float ConditionTimer::GetMaxTime() const
-{
-	return max_time_;
-}

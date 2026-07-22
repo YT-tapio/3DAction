@@ -301,6 +301,9 @@
     <Filter Include="ソース ファイル\ui\stat_modifire_group">
       <UniqueIdentifier>{8e85742d-0b57-4803-aaed-91feb2b07715}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ui\skill">
+      <UniqueIdentifier>{3823b612-263a-4dfe-bbcb-79293cc1c2a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">

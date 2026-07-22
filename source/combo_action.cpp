@@ -98,7 +98,7 @@ const bool ComboAction::CheckIsEnd() const
 	return TRUE;
 }
 
-const bool ComboAction::CheckChangecombo() const
+const bool ComboAction::CheckChangeCombo() const
 {
 	return is_change_;
 }
