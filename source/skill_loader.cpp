@@ -205,7 +205,7 @@ void DecideFile(const int skill_name, std::string& file_path, int& skip_line_num
 		skip_line_num = 1;
 		break;
 
-	case SkillName::kcomboAttack:
+	case SkillName::kComboAttack:
 		// ”ÍˆÍ‰ñ•œ
 		file_path = file_path + "combo_attack";
 		skip_line_num = 1;
@@ -243,7 +243,7 @@ std::shared_ptr<SkillBase> MakeSkill(const int skill_name, std::ifstream& file, 
 
 		break;
 
-	case SkillName::kcomboAttack:
+	case SkillName::kComboAttack:
 
 		skill = MakeComboAttackSkill(file, line, name, owner);
 

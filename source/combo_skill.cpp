@@ -47,7 +47,7 @@ void ComboSkill::Update()
 		cool_time_->Update();
 		if (cool_time_->GetIsEnd())
 		{
-			printfDx("終了\n");
+			//printfDx("終了\n");
 			can_use_ = TRUE;
 		}
 		
@@ -63,7 +63,7 @@ void ComboSkill::Update()
 		cool_time_->ReSet();
 		can_use_ = FALSE;
 	}
-	printfDx("%.2f\n", cool_time_->GetRatio());
+	// printfDx("%.2f\n", cool_time_->GetRatio());
 	if (is_active_)
 	{
 		// コンボが終了したかの判断

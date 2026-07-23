@@ -33,6 +33,8 @@
 #include"stat_modifires.h"
 #include"damage_ui_group.h"
 #include"stat_modifire_ui_data.h"
+#include"player_skill_ui_group.h"
+
 Game::Game()
 	: SceneBase()
 {
@@ -45,7 +47,7 @@ Game::Game()
 	objects_.push_back(std::make_shared<CollisionMeshObject>());
 
 	player_ui_group_ = std::make_shared<PlayerUIGroup>();
-
+	player_skill_ui_group_ = std::make_shared<PlayerSkillUIGroup>();
 	no_shadow_objects_.push_back(std::make_shared<SkyDome>());
 	
 	EffectManager::GetInstance().Awake();
@@ -170,6 +172,7 @@ void Game::Draw()
 
 	// Physics::GetInstance().Debug();
 	player_ui_group_->Draw();
+	player_skill_ui_group_->Draw();
 	EnemyUIGroup::GetInstance().Draw();
 	DamageUIGroup::GetInstance().Draw();
 	if (Debug::GetInstance().GetIsDisp())

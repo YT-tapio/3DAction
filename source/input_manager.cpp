@@ -113,6 +113,8 @@ void InputManager::ChangeInput()
 
 		(input_changers_[num].lock())->InputChange(input_id_mp_.find(num)->second);
 		(input_changers_[change_player_id].lock())->InputChange(input_id_mp_.find(change_player_id)->second);
+		// チェンジ先のデータに切り替え
+		
 		return;
 	}
 }

@@ -41,6 +41,7 @@ namespace Font
 		if (!file)
 		{
 			printfDx("csvファイル読み込み失敗\n");
+			return -1;
 		}
 		// 最初の行を飛ばす
 		std::getline(file, line);

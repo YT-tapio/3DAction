@@ -304,6 +304,9 @@
     <Filter Include="ソース ファイル\ui\skill">
       <UniqueIdentifier>{3823b612-263a-4dfe-bbcb-79293cc1c2a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ui\skill\group">
+      <UniqueIdentifier>{5fdd0a8d-e0fd-4cfb-963b-c83ad91aba8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -722,6 +725,15 @@
     </ClCompile>
     <ClCompile Include="source\stat_modifire_ui_data.cpp">
       <Filter>ソース ファイル\ui\stat_modifire_group</Filter>
+    </ClCompile>
+    <ClCompile Include="source\player_skill_ui.cpp">
+      <Filter>ソース ファイル\ui\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="source\player_skill_ui_group.cpp">
+      <Filter>ソース ファイル\ui\skill\group</Filter>
+    </ClCompile>
+    <ClCompile Include="source\skill_ui_datas.cpp">
+      <Filter>ソース ファイル\ui\skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1234,6 +1246,18 @@
     </ClInclude>
     <ClInclude Include="source\stat_modifire_ui_data.h">
       <Filter>ソース ファイル\ui\stat_modifire_group</Filter>
+    </ClInclude>
+    <ClInclude Include="source\player_skill_ui.h">
+      <Filter>ソース ファイル\ui\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="source\player_skill_ui_group.h">
+      <Filter>ソース ファイル\ui\skill\group</Filter>
+    </ClInclude>
+    <ClInclude Include="source\skill_ui_data.h">
+      <Filter>ソース ファイル\ui\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="source\skill_ui_datas.h">
+      <Filter>ソース ファイル\ui\skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
