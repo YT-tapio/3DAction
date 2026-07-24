@@ -4,6 +4,7 @@
 #include<fstream>
 #include<sstream>
 #include<unordered_map>
+#include<functional>
 #include"DxLib.h"
 #include"player_group.h"
 #include"player.h"
@@ -28,6 +29,9 @@ void PlayerGroup::Awake(VECTOR* camera_dir,std::shared_ptr<IPlayerUIGroup> playe
 	//players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer3Input(), "attacker2"));
 	players_.push_back(std::make_shared<Player>(camera_dir_, InputManager::GetInstance().GetPlayer1Input(), "attacker",player_ui_group));
 	
+	// メイン(操作しているキャラ)スキルのクールタイムや使えるか取得
+
+
 }
 
 void PlayerGroup::Init()
@@ -105,6 +109,20 @@ VECTOR PlayerGroup::MostNearPlayerPos(const VECTOR& pos)
 	return most_near_player_pos;
 }
 
+const int PlayerGroup::GetCurrentPlayerSkillID(SkillType type) const
+{
+	return -1;
+}
+
+const float PlayerGroup::GetCurrentPlayerSkillCoolTime(SkillType type) const
+{
+	return 0.f;
+}
+
+const bool PlayerGroup::GetCurrentPlayerSkillCanUse(SkillType type) const
+{
+	return TRUE;
+}
 
 void PlayerGroup::CheckCurrentPlayerHeadPos()
 {

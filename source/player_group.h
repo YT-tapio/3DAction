@@ -1,4 +1,5 @@
 #pragma once
+#include"skill_type.h"
 
 class Player;
 class IPlayerUIGroup;
@@ -39,11 +40,19 @@ public:
 	/// <returns></returns>
 	VECTOR MostNearPlayerPos(const VECTOR& pos);
 
+	const int GetCurrentPlayerSkillID(SkillType type) const;
+
+	const float GetCurrentPlayerSkillCoolTime(SkillType type) const;
+
+	const bool GetCurrentPlayerSkillCanUse(SkillType type) const;
+
 private:
 
 	PlayerGroup();
 
 	void CheckCurrentPlayerHeadPos();
+
+private:
 
 	std::vector<std::shared_ptr<Player>> players_;
 
