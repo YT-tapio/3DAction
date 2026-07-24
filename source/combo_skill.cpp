@@ -17,8 +17,8 @@
 #include"FPS.h"
 #include"time.h"
 
-ComboSkill::ComboSkill(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior, std::unordered_map<int, std::pair<float,float>> approach_speed_ratio_mp, float cool_time)
-	: SkillBase(owner,behavior,cool_time)
+ComboSkill::ComboSkill(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior, std::unordered_map<int, std::pair<float,float>> approach_speed_ratio_mp,SkillType type, float cool_time)
+	: SkillBase(owner,behavior, type, cool_time)
 	, id_approach_speed_ratio_mp_(approach_speed_ratio_mp)
 {
 
@@ -127,7 +127,7 @@ bool ComboSkill::IsStartcomboAction(std::shared_ptr<ComboAction> combo_action)
 	if (!owner->GetOnGround())								{ return FALSE; }
 	if (owner->GetIsStop())									{ return FALSE; }
 	//inputの確認
-	if (!owner->GetInput()->IsStrongSkill()) { return FALSE; }
+	if (!PushMyType()) { return FALSE; }
 
 	return TRUE;
 }
@@ -138,7 +138,7 @@ bool ComboSkill::CheckGoNextcombo(std::shared_ptr<ComboAction> combo_action)
 	if (!owner->GetOnGround()) { return FALSE; }
 	if (!combo_action->CheckNextcomboReady()) { return FALSE; }
 	//inputの確認
-	if (!owner->GetInput()->IsStrongSkill()) { return FALSE; }
+	if (!PushMyType()) { return FALSE; }
 
 	return TRUE;
 }

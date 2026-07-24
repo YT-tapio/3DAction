@@ -306,6 +306,7 @@
     <ClInclude Include="source\player_skill_ui.h" />
     <ClInclude Include="source\player_skill_ui_group.h" />
     <ClInclude Include="source\player_ui_group_interface.h" />
+    <ClInclude Include="source\skill_type.h" />
     <ClInclude Include="source\skill_ui_data.h" />
     <ClInclude Include="source\skill_ui_datas.h" />
     <ClInclude Include="source\stat_modifire_ui_data.h" />

@@ -5,7 +5,7 @@ class AreaHealSkill : public SkillBase
 {
 public:
 
-	AreaHealSkill(std::weak_ptr<Player> owner,VECTOR* pos,const float radius, float cool_time);
+	AreaHealSkill(std::weak_ptr<Player> owner,VECTOR* pos,const float radius, SkillType type, float cool_time);
 
 	~AreaHealSkill() override;
 

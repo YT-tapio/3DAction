@@ -1,6 +1,6 @@
 #pragma once
 #include"condition_timer.h"
-
+#include"skill_type.h"
 class Player;
 class BehaviorBase;
 
@@ -8,7 +8,7 @@ class SkillBase
 {
 public:
 
-	SkillBase(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior, float cool_time = 0.f);
+	SkillBase(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior, SkillType type, float cool_time = 0.f);
 
 	virtual ~SkillBase();
 
@@ -28,13 +28,21 @@ protected:
 
 	const bool CheckMyOwner() const;
 
+	/// <summary>
+	/// Ž©•ª‚Ìƒ^ƒCƒv‚ª“ü—Í‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©
+	/// </summary>
+	/// <returns></returns>
+	const bool PushMyType() const;
+
 protected:
 
 	std::weak_ptr<Player> owner_;
 	std::shared_ptr<BehaviorBase> behavior_;
 
 	std::shared_ptr<ConditionTimer> cool_time_;
-	
+
+	SkillType type_;
+
 	bool is_active_;
 
 	bool can_use_;

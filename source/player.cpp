@@ -392,8 +392,8 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 
 void Player::MakeSkill(std::weak_ptr<Player> owner)
 {
-	auto skill = SkillLoader::SkillLoad(skill1_id_, name_, owner);//SkillLoader::GetInstance().SkillLoad(skill1_id_, name_, owner);
-	auto second_skill = SkillLoader::SkillLoad(skill2_id_, name_, owner);//SkillLoader::GetInstance().SkillLoad(skill2_id_, name_, owner);
+	auto skill = SkillLoader::SkillLoad(skill1_id_, name_, owner,SkillType::kNormal);
+	auto second_skill = SkillLoader::SkillLoad(skill2_id_, name_, owner,SkillType::kStrong);
 
 	skill_ = skill;
 	second_skill_ = second_skill;
@@ -401,19 +401,10 @@ void Player::MakeSkill(std::weak_ptr<Player> owner)
 	{
 		printfDx("é∏îs\n");
 	}
-	else
-	{
-		// ÉXÉLÉãÇÃUIÇê∂ê¨
-		
-	}
 
 	if (second_skill_ == nullptr)
 	{
 		printfDx("é∏îs\n");
-	}
-	else
-	{
-
 	}
 
 }

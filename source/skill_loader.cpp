@@ -23,7 +23,7 @@
 #include"rigid_body.h"
 
 
-std::shared_ptr<SkillBase> MakePunchSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner)
+std::shared_ptr<SkillBase> MakePunchSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner, SkillType type)
 {
 	std::shared_ptr<SkillBase> skill = nullptr;
 
@@ -47,11 +47,11 @@ std::shared_ptr<SkillBase> MakePunchSkill(std::ifstream& file, std::string& line
 		// right
 		if (is_right)
 		{
-			skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetRightHandPos(), anim_name, radius, min_coll_ratio, max_coll_ratio, owner_ptr->GetDetectionRadius(), approach_speed, approach_ratio, cool_time);
+			skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetRightHandPos(), anim_name, radius, min_coll_ratio, max_coll_ratio, owner_ptr->GetDetectionRadius(), approach_speed, approach_ratio, type,cool_time);
 		}
 		else
 		{
-			skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetLeftHandPos(), anim_name, radius, min_coll_ratio, max_coll_ratio, owner_ptr->GetDetectionRadius(), approach_speed, approach_ratio, cool_time);
+			skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetLeftHandPos(), anim_name, radius, min_coll_ratio, max_coll_ratio, owner_ptr->GetDetectionRadius(), approach_speed, approach_ratio, type,cool_time);
 		}
 
 		break;
@@ -59,7 +59,7 @@ std::shared_ptr<SkillBase> MakePunchSkill(std::ifstream& file, std::string& line
 	return skill;
 }
 
-std::shared_ptr<SkillBase> MakeAvoidSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner)
+std::shared_ptr<SkillBase> MakeAvoidSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner, SkillType type)
 {
 	std::shared_ptr<SkillBase> skill = nullptr;
 	while (std::getline(file, line))
@@ -72,14 +72,14 @@ std::shared_ptr<SkillBase> MakeAvoidSkill(std::ifstream& file, std::string& line
 
 		float speed = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 
-		//skill = std::make_shared<AvoidSkill>(owner,speed);
+		//skill = std::make_shared<AvoidSkill>(owner,speed,type,cool_time);
 
 		break;
 	}
 	return skill;
 }
 
-std::shared_ptr<SkillBase> MakeAreaHealSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner)
+std::shared_ptr<SkillBase> MakeAreaHealSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner, SkillType type)
 {
 	std::shared_ptr<SkillBase> skill = nullptr;
 	while (std::getline(file, line))
@@ -95,7 +95,7 @@ std::shared_ptr<SkillBase> MakeAreaHealSkill(std::ifstream& file, std::string& l
 		float cool_time = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		auto owner_ptr = owner.lock();
 
-		skill = std::make_shared<AreaHealSkill>(owner, owner_ptr->GetPosPtr(), radius, cool_time);
+		skill = std::make_shared<AreaHealSkill>(owner, owner_ptr->GetPosPtr(), radius, type,cool_time);
 
 		break;
 	}
@@ -103,7 +103,7 @@ std::shared_ptr<SkillBase> MakeAreaHealSkill(std::ifstream& file, std::string& l
 	return skill;
 }
 
-std::shared_ptr<SkillBase> MakeComboAttackSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner)
+std::shared_ptr<SkillBase> MakeComboAttackSkill(std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner, SkillType type)
 {
 	const std::string kSame = "same";
 	std::shared_ptr<SkillBase> skill = nullptr;
@@ -171,13 +171,11 @@ std::shared_ptr<SkillBase> MakeComboAttackSkill(std::ifstream& file, std::string
 	if (is_target)
 	{
 		skill = std::make_shared<ComboSkill>(owner,
-			std::make_shared<ComboAction>(owner, combos), id_approach_speed_ratio_mp, cool_time);
+			std::make_shared<ComboAction>(owner, combos), id_approach_speed_ratio_mp, type,cool_time);
 	}
 
 	return skill;
 }
-
-
 
 void DecideFile(const int skill_name, std::string& file_path, int& skip_line_num)
 {
@@ -216,7 +214,7 @@ void DecideFile(const int skill_name, std::string& file_path, int& skip_line_num
 
 }
 
-std::shared_ptr<SkillBase> MakeSkill(const int skill_name, std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner)
+std::shared_ptr<SkillBase> MakeSkill(const int skill_name, std::ifstream& file, std::string& line, const std::string name, std::weak_ptr<Player> owner, SkillType type)
 {
 	std::shared_ptr<SkillBase> skill = nullptr;
 	switch (skill_name)
@@ -227,25 +225,25 @@ std::shared_ptr<SkillBase> MakeSkill(const int skill_name, std::ifstream& file, 
 
 	case SkillName::kPunch:
 
-		skill = MakePunchSkill(file, line, name, owner);
+		skill = MakePunchSkill(file, line, name, owner,type);
 
 		break;
 
 	case SkillName::kAvoid:
 
-		skill = MakeAvoidSkill(file, line, name, owner);
+		skill = MakeAvoidSkill(file, line, name, owner,type);
 
 		break;
 
 	case SkillName::kAreaHeal:
 
-		skill = MakeAreaHealSkill(file, line, name, owner);
+		skill = MakeAreaHealSkill(file, line, name, owner,type);
 
 		break;
 
 	case SkillName::kComboAttack:
 
-		skill = MakeComboAttackSkill(file, line, name, owner);
+		skill = MakeComboAttackSkill(file, line, name, owner,type);
 
 		break;
 	}
@@ -256,7 +254,7 @@ std::shared_ptr<SkillBase> MakeSkill(const int skill_name, std::ifstream& file, 
 }
 
 
-std::shared_ptr<SkillBase> SkillLoader::SkillLoad(const int skill_name, const std::string name, std::weak_ptr<Player> owner)
+std::shared_ptr<SkillBase> SkillLoader::SkillLoad(const int skill_name, const std::string name, std::weak_ptr<Player> owner, SkillType type)
 {
 	std::string file_path = "data/csv/skill/";
 	std::shared_ptr<SkillBase> skill = nullptr;
@@ -278,7 +276,7 @@ std::shared_ptr<SkillBase> SkillLoader::SkillLoad(const int skill_name, const st
 		std::getline(file, line);
 	}
 
-	skill = MakeSkill(skill_name, file, line, name,owner);
+	skill = MakeSkill(skill_name, file, line, name,owner,type);
 
 	return skill;
 }

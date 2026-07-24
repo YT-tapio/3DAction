@@ -16,9 +16,9 @@
 #include"vector_assistant.h"
 #include"input_base.h"
 
-AreaHealSkill::AreaHealSkill(std::weak_ptr<Player> owner, VECTOR* pos,const float radius, float cool_time)
+AreaHealSkill::AreaHealSkill(std::weak_ptr<Player> owner, VECTOR* pos,const float radius, SkillType type, float cool_time)
 	: SkillBase(owner,std::make_shared<AreaHealGivePlayer>(owner,
-		std::make_shared<CheckMyArea>(std::make_shared<Sphere>(radius,VectorAssistant::VGetZero()),pos ), pos),cool_time)
+		std::make_shared<CheckMyArea>(std::make_shared<Sphere>(radius,VectorAssistant::VGetZero()),pos ), pos),type,cool_time)
 {
 
 }
@@ -69,7 +69,7 @@ void AreaHealSkill::Debug()
 bool AreaHealSkill::CheckIsAreaHeal(std::shared_ptr<Player> owner)
 {
 	if (owner->GetIsStop())							{ return FALSE; }
-	if (!owner->GetInput()->IsStrongSkill())	{ return FALSE; }
+	if (!PushMyType())	{ return FALSE; }
 
 	return TRUE;
 }

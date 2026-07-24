@@ -1259,6 +1259,9 @@
     <ClInclude Include="source\skill_ui_datas.h">
       <Filter>ソース ファイル\ui\skill</Filter>
     </ClInclude>
+    <ClInclude Include="source\skill_type.h">
+      <Filter>ソース ファイル\skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\json\player_data.json">

@@ -10,7 +10,7 @@ class ComboSkill : public SkillBase
 {
 public:
 
-	ComboSkill(std::weak_ptr<Player> owner, std::shared_ptr<BehaviorBase> behavior, std::unordered_map<int, std::pair<float, float>> approach_speed_ratio_mp,float cool_time);
+	ComboSkill(std::weak_ptr<Player> owner, std::shared_ptr<BehaviorBase> behavior, std::unordered_map<int, std::pair<float, float>> approach_speed_ratio_mp, SkillType type, float cool_time);
 
 	~ComboSkill() override;
 
