@@ -268,7 +268,7 @@ void Player::Debug()
 	if (second_skill_ != nullptr) { second_skill_->Debug(); }
 	
 	status_container_->Debug();
-	if (TRUE) { return; }
+	if (FALSE) { return; }
 	//my_area_->Debug();
 	rigid_body_->Debug();
 	
@@ -385,8 +385,7 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 	}
 	file.close();
 	/*ÉXÉLÉãÇçÏÇ¡ÇƒÇ¢Ç≠ÇÊ*/
-	//avoidskill
-
+	
 	avoid_ = std::make_shared<AvoidSkill>(std::dynamic_pointer_cast<Player>(shared_from_this()),avoid_speed,avoid_stamina_consumption_);
 }
 
@@ -397,6 +396,7 @@ void Player::MakeSkill(std::weak_ptr<Player> owner)
 
 	skill_ = skill;
 	second_skill_ = second_skill;
+
 	if (skill_ == nullptr)
 	{
 		printfDx("é∏îs\n");
@@ -406,7 +406,6 @@ void Player::MakeSkill(std::weak_ptr<Player> owner)
 	{
 		printfDx("é∏îs\n");
 	}
-
 }
 
 void Player::Move()
@@ -614,6 +613,7 @@ void Player::OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object)
 
 }
 
+
 void Player::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 	auto check_area = std::dynamic_pointer_cast<CheckMyArea>(object);
@@ -809,6 +809,6 @@ void Player::EffectUpdate()
 	VECTOR effect_right_hand_pos = VGet(right_hand_pos_.x, right_hand_pos_.y - 1.f, right_hand_pos_.z);
 	VECTOR effect_left_hand_pos = VGet(left_hand_pos_.x, left_hand_pos_.y - 1.f, left_hand_pos_.z);
 
-	EffectManager::GetInstance().SetPos(EffectID::kHandAura,effect_right_hand_pos);
-	EffectManager::GetInstance().SetPos(EffectID::kHandAura2,effect_left_hand_pos);
+	//EffectManager::GetInstance().SetPos(EffectID::kHandAura,effect_right_hand_pos);
+	//EffectManager::GetInstance().SetPos(EffectID::kHandAura2,effect_left_hand_pos);
 }

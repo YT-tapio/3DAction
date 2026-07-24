@@ -11,7 +11,7 @@ class DoublePunch : public AttackBase
 public:
 
 	DoublePunch(std::weak_ptr<ObjectBase> owner, std::string my_anim_name,
-		float min_coll_ratio, float max_coll_ratio, VECTOR* pos,float vertical, float radius);
+		float min_coll_ratio, float max_coll_ratio, VECTOR* pos,float vertical, float radius,float damage_rate);
 
 	~DoublePunch() override;
 

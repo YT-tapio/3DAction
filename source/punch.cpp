@@ -22,8 +22,8 @@
 #include"effect_manager.h"
 
 Punch::Punch(std::weak_ptr<ObjectBase> owner, VECTOR* pos,
-	std::string my_anim_name, float min_coll_ratio, float max_coll_ratio, std::shared_ptr<RigidBody> body)
-	: AttackBase(owner, min_coll_ratio, max_coll_ratio)
+	std::string my_anim_name, float min_coll_ratio, float max_coll_ratio, std::shared_ptr<RigidBody> body,float damage_rate)
+	: AttackBase(owner, min_coll_ratio, max_coll_ratio,damage_rate)
 	, my_anim_name_(my_anim_name)
 {
 	pos_ = pos;
@@ -102,7 +102,7 @@ void Punch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
 		{
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
-			takable_player->OnDamageFromPlayer(owner_status_container->GetPhysicalATK(), AttackType::kPhysical);
+			takable_player->OnDamageFromPlayer(owner_status_container->GetPhysicalATK() * damage_rate_, AttackType::kPhysical);
 			// ヒットストップ
 			owner_.lock()->GetTime()->SetTimeScale(0.f, 0.2f, TimeTransitionMethod::kMoment);
 			// エフェクトの描画

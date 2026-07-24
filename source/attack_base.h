@@ -10,7 +10,7 @@ class AttackBase : public BehaviorBase , public IPhysicsEventReceiver
 {
 public:
 
-	AttackBase(std::weak_ptr<ObjectBase> owner,float min_coll_ratio, float max_coll_ratio);
+	AttackBase(std::weak_ptr<ObjectBase> owner,float min_coll_ratio, float max_coll_ratio,float damage_rate);
 
 	virtual ~AttackBase() override;
 
@@ -43,6 +43,9 @@ protected:
 
 	float coll_timing_min_;	// 当たり判定の発動タイミング：アニメーション基準
 	float coll_timing_max_;	// 当たり判定の終了タイミング：アニメーション基準
+
+	// ダメージ倍率
+	float damage_rate_;
 
 private:
 

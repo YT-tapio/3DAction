@@ -62,7 +62,7 @@ EnemyBase::EnemyBase(const VECTOR& pos)
 	my_name_ = "";
 	handle_ = MV1LoadModel("data/model/enemy/zako/Demon_T_Wiezzorek.mv1");
 	if (handle_ == -1) { printfDx("読み込みエラー\n"); }
-	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(5.5f, 18.f, VectorAssistant::VGetZero()), 
+	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(6.5f, 18.f, VectorAssistant::VGetZero()), 
 		&pos_, TRUE, FALSE, 0.03f,0.1f);
 	fall_speed_ = 0.f;
 
@@ -95,7 +95,7 @@ void EnemyBase::Init()
 	timing.second = 0.45f;
 	// 両手パンチのノードを生成
 	std::shared_ptr<BehaviorBase> double_punch = std::make_shared<DoublePunch>(std::dynamic_pointer_cast<ObjectBase>(mine),
-		"double_punch", 0.35f, 0.5f, &double_punch_coll_pos_, 3.0f, 6.f);
+		"double_punch", 0.35f, 0.5f, &double_punch_coll_pos_, 3.0f, 6.f,1.f);
 	std::shared_ptr<NodeBase> double_punch_node = std::make_shared<ActionNode>(double_punch);
 
 	// 上から降ってくるノードを生成
@@ -110,7 +110,7 @@ void EnemyBase::Init()
 		"jumping_attack", timing, 1.f)));
 
 	stump_nodes.push_back(std::make_shared<ActionNode>
-		(std::make_shared<Stamp>(obj_mine, &pos_, stump_radius,"jumping_attack")));
+		(std::make_shared<Stamp>(obj_mine, &pos_, stump_radius,"jumping_attack",2.f)));
 
 	std::shared_ptr<NodeBase> stump_node = std::make_shared<SequenceNode>(stump_nodes);
 	
@@ -120,7 +120,7 @@ void EnemyBase::Init()
 
 	// 攻撃
 	std::shared_ptr<NodeBase> area_of_effect_node = std::make_shared<ActionNode>(std::make_shared<AreaOfEffectAttack>(
-		obj_mine, "charge", 0.f, 0.9f, VectorAssistant::VGetSame(2.f), area_of_effect_radius, EffectID::kAreaOfEffect, 2.f));
+		obj_mine, "charge", 0.f, 0.9f, VectorAssistant::VGetSame(2.f), area_of_effect_radius, EffectID::kAreaOfEffect, 2.f,1.f));
 	
 	// ノード終わりじゃなく当たり判定が終わったら描画させたいよね
 	// 終了条件はこのbehaviorが終了しているとき
@@ -142,7 +142,7 @@ void EnemyBase::Init()
 	// タックル
 	std::shared_ptr<NodeBase> tackle_node = std::make_shared<ActionNode>(
 		std::make_shared<Tackle>(mine,
-			std::make_shared<RigidBody>(std::make_shared<Capsule>(10.5f, 18.f, VectorAssistant::VGetZero()), &pos_, FALSE, TRUE, 0.1f, 1.f), "tackle", 1.f, 2.f));
+			std::make_shared<RigidBody>(std::make_shared<Capsule>(10.5f, 18.f, VectorAssistant::VGetZero()), &pos_, FALSE, TRUE, 0.1f, 1.f), "tackle", 1.f, 2.f,1.f));
 	
 	std::vector<std::shared_ptr<NodeBase>> tackle_nodes;
 	
@@ -176,7 +176,7 @@ void EnemyBase::Init()
 
 	// 攻撃
 	std::shared_ptr<NodeBase> area_of_effect_node2 = std::make_shared<ActionNode>(std::make_shared<AreaOfEffectAttack>(
-		obj_mine, "charge", 0.f, 0.9f, VectorAssistant::VGetSame(2.f), area_of_effect_radius2, EffectID::kAreaOfEffect, 2.f));
+		obj_mine, "charge", 0.f, 0.9f, VectorAssistant::VGetSame(2.f), area_of_effect_radius2, EffectID::kAreaOfEffect, 2.f,1.f));
 
 	// ノード終わりじゃなく当たり判定が終わったら描画させたいよね
 	// 終了条件はこのbehaviorが終了しているとき

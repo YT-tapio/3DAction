@@ -20,8 +20,8 @@
 #include"FPS.h"
 #include"attack_correction.h"
 
-PunchSkill::PunchSkill(std::weak_ptr<Player> owner,VECTOR* pos,std::string my_anim_name,const float r, float min_coll_ratio, float max_coll_ratio,const float detection_radius, float approach_speed, float approach_ratio, SkillType type, float cool_time)
-	: SkillBase(owner,std::make_shared<Punch>(owner,pos,my_anim_name,min_coll_ratio,max_coll_ratio, std::make_shared<RigidBody>(std::make_shared<Sphere>(r, VGet(0, 0, 0)), pos, FALSE, TRUE, 1.f, 1.f)),type,cool_time)
+PunchSkill::PunchSkill(std::weak_ptr<Player> owner,VECTOR* pos,std::string my_anim_name,const float r, float min_coll_ratio, float max_coll_ratio,const float detection_radius, float approach_speed, float approach_ratio, SkillType type, float cool_time,float damage_rate)
+	: SkillBase(owner,std::make_shared<Punch>(owner,pos,my_anim_name,min_coll_ratio,max_coll_ratio, std::make_shared<RigidBody>(std::make_shared<Sphere>(r, VGet(0, 0, 0)), pos, FALSE, TRUE, 1.f, 1.f),damage_rate),type,cool_time)
 	, my_anim_name_(my_anim_name)
 	, approach_speed_(approach_speed)
 	, approach_ratio_(approach_ratio)
@@ -81,6 +81,7 @@ void PunchSkill::Update()
 			owner->GetAnimator()->PlayRequest(my_anim_name_);	//ƒpƒ“ƒ`‚Ìanimation‚ðÄ¶‚ð‚¨Šè‚¢‚·‚é
 			VECTOR vel = VectorAssistant::VGetZero();
 			bool is_in_site = AttackCorrection::GetInstance().ApproachTheNearestEnemy(owner, vel, 18.5f, 0.45f);
+			cool_time_->ReSet();
 			owner->SetIsStop(TRUE);
 			can_use_ = FALSE;
 		}

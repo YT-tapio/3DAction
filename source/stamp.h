@@ -7,7 +7,7 @@ class Stamp :public AttackBase
 {
 public:
 
-	Stamp(std::weak_ptr<ObjectBase> owner, VECTOR* pos,float radius,std::string my_anim_name);
+	Stamp(std::weak_ptr<ObjectBase> owner, VECTOR* pos,float radius,std::string my_anim_name, float damage_rate);
 
 	~Stamp() override;
 

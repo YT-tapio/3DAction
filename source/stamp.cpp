@@ -23,8 +23,8 @@
 #include"status.h"
 #include"status_container.h"
 
-Stamp::Stamp(std::weak_ptr<ObjectBase> owner, VECTOR* pos, float radius,std::string my_anim_name)
-	: AttackBase(owner,0,0)
+Stamp::Stamp(std::weak_ptr<ObjectBase> owner, VECTOR* pos, float radius,std::string my_anim_name, float damage_rate)
+	: AttackBase(owner,0,0,damage_rate)
 	, is_stamp_(FALSE)
 	, my_anim_name_(my_anim_name)
 {
@@ -115,7 +115,7 @@ void Stamp::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
 		{
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
-			takable_player->OnDamageFromPlayer(owner_status_container->GetPhysicalATK(), AttackType::kPhysical);
+			takable_player->OnDamageFromPlayer(owner_status_container->GetPhysicalATK() * damage_rate_, AttackType::kPhysical);
 		}
 		return;
 	}
@@ -127,7 +127,7 @@ void Stamp::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
 		{
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
-			takable_enemy->OnDamageFromEnemy(owner_status_container->GetPhysicalATK(), AttackType::kPhysical);
+			takable_enemy->OnDamageFromEnemy(owner_status_container->GetPhysicalATK() * damage_rate_, AttackType::kPhysical);
 		}
 		return;
 	}

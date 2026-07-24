@@ -27,8 +27,8 @@
 AreaOfEffectAttack::AreaOfEffectAttack(std::weak_ptr<ObjectBase> owner, 
 	std::string charge_anim,float min_coll_ratio, 
 	float max_coll_ratio,VECTOR effect_scale, 
-	float hit_radius, int effect_id,float activate_time)
-	: AttackBase(owner,min_coll_ratio,max_coll_ratio)
+	float hit_radius, int effect_id,float activate_time,float damage_rate)
+	: AttackBase(owner,min_coll_ratio,max_coll_ratio,damage_rate)
 	, activate_timer_(std::make_shared<ConditionTimer>(activate_time))
 	, charge_anim_(charge_anim)
 	, state_(AreaOfEffectAttackState::kCharge)
@@ -116,7 +116,7 @@ void AreaOfEffectAttack::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver>
 		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
 		{
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
-			takable_player->OnDamageFromPlayer(owner_status_container->GetMagicATK(), AttackType::kMagic);
+			takable_player->OnDamageFromPlayer(owner_status_container->GetMagicATK() * damage_rate_, AttackType::kMagic);
 		}
 		return;
 	}
@@ -128,7 +128,7 @@ void AreaOfEffectAttack::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver>
 		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
 		{
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
-			takable_enemy->OnDamageFromEnemy(owner_status_container->GetMagicATK(), AttackType::kMagic);
+			takable_enemy->OnDamageFromEnemy(owner_status_container->GetMagicATK() * damage_rate_, AttackType::kMagic);
 		}
 		return;
 	}

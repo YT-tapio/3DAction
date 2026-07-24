@@ -18,7 +18,7 @@
 
 JumpingAttack::JumpingAttack(std::weak_ptr<ObjectBase> owner, VECTOR* pos ,float min_coll_ratio, float max_coll_ratio,
 	std::string my_anim_name)
-	: AttackBase(owner,min_coll_ratio,max_coll_ratio)
+	: AttackBase(owner,min_coll_ratio,max_coll_ratio,1.f)
 	, coll_pos_(pos)
 	, jumping_timing_(0.35f)
 	, jumping_anim_stop_timing_(0.5f)

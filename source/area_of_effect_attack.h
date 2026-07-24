@@ -12,7 +12,7 @@ public:
 	AreaOfEffectAttack(std::weak_ptr<ObjectBase> owner,
 		std::string stand_by_anim,float min_coll_ratio,
 		float max_coll_ratio,VECTOR effect_scale,
-		float hit_radius, int effect_id,float activate_time);
+		float hit_radius, int effect_id,float activate_time,float damage_rate);
 
 	~AreaOfEffectAttack() override;
 

@@ -42,16 +42,18 @@ std::shared_ptr<SkillBase> MakePunchSkill(std::ifstream& file, std::string& line
 		float approach_speed = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		float approach_ratio = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		float cool_time = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+		float damage_rate = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		auto owner_ptr = owner.lock();
+
 
 		// right
 		if (is_right)
 		{
-			skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetRightHandPos(), anim_name, radius, min_coll_ratio, max_coll_ratio, owner_ptr->GetDetectionRadius(), approach_speed, approach_ratio, type,cool_time);
+			skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetRightHandPos(), anim_name, radius, min_coll_ratio, max_coll_ratio, owner_ptr->GetDetectionRadius(), approach_speed, approach_ratio, type,cool_time,damage_rate);
 		}
 		else
 		{
-			skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetLeftHandPos(), anim_name, radius, min_coll_ratio, max_coll_ratio, owner_ptr->GetDetectionRadius(), approach_speed, approach_ratio, type,cool_time);
+			skill = std::make_shared<PunchSkill>(owner, owner_ptr->GetLeftHandPos(), anim_name, radius, min_coll_ratio, max_coll_ratio, owner_ptr->GetDetectionRadius(), approach_speed, approach_ratio, type,cool_time,damage_rate);
 		}
 
 		break;
@@ -151,12 +153,13 @@ std::shared_ptr<SkillBase> MakeComboAttackSkill(std::ifstream& file, std::string
 			float approach_speed = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 			float approach_ratio = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 			cool_time = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+			float damage_rate = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 			auto owner_ptr = owner.lock();
 			approach_speed_ratio = { approach_speed,approach_ratio };
 
 			hand_pos = is_right ? owner_ptr->GetRightHandPos() : owner_ptr->GetLeftHandPos();
 			const auto rigid_body = std::make_shared<RigidBody>(std::make_shared<Sphere>(radius, VectorAssistant::VGetZero()), hand_pos, FALSE, TRUE, mass, friction);
-			const auto punch = std::make_shared<Punch>(owner, hand_pos, anim_name, min_coll_ratio, max_coll_ratio, rigid_body);
+			const auto punch = std::make_shared<Punch>(owner, hand_pos, anim_name, min_coll_ratio, max_coll_ratio, rigid_body,damage_rate);
 			combo = std::make_shared<Combo>(owner, min_coll_ratio, max_coll_ratio, go_next_timing, anim_name, punch);
 
 			id_approach_speed_ratio_mp[combo_num] = approach_speed_ratio;

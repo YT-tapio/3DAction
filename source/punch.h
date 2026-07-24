@@ -10,7 +10,7 @@ class Punch : public AttackBase
 public:
 
 	Punch(std::weak_ptr<ObjectBase> owner,VECTOR* pos, std::string my_anim_name,
-		float min_coll_ratio, float max_coll_ratio,std::shared_ptr<RigidBody> body);
+		float min_coll_ratio, float max_coll_ratio,std::shared_ptr<RigidBody> body, float damage_rate);
 
 	~Punch()override;
 
