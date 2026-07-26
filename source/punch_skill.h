@@ -20,6 +20,8 @@ public:
 
 	void Debug() override;
 
+	const int GetID() const override;
+
 protected:
 
 	void DecideTarget(std::vector<std::weak_ptr<ObjectBase>> owner_area_objects, std::shared_ptr<Player> owner);

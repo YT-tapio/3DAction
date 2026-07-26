@@ -5,6 +5,7 @@
 #include"takable_damage_enemy_interface.h"
 #include"input_change_interface.h"
 #include"status_holder_interface.h"
+#include"skill_type.h"
 
 enum class AttackType;
 class RigidBody;
@@ -79,6 +80,12 @@ public:
 
 	const std::shared_ptr<const InputBase> GetInput() const;
 
+	const int GetSkillID(SkillType type) const;
+
+	const float GetSkillCoolTime(SkillType type) const;
+	
+	const bool GetSkillCanUse(SkillType type) const;
+	
 	const float GetDetectionRadius() const;
 
 	const bool GetIsMove() const;

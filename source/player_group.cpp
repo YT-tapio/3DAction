@@ -14,6 +14,8 @@
 #include"input_manager.h"
 #include"vector_assistant.h"
 #include"player_ui_group.h"
+#include"skill_type.h"
+#include"player_skill_ui_group.h"
 
 PlayerGroup::PlayerGroup()
 {
@@ -29,17 +31,33 @@ void PlayerGroup::Awake(VECTOR* camera_dir,std::shared_ptr<IPlayerUIGroup> playe
 	//players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer3Input(), "attacker2"));
 	players_.push_back(std::make_shared<Player>(camera_dir_, InputManager::GetInstance().GetPlayer1Input(), "attacker",player_ui_group));
 	
-	// メイン(操作しているキャラ)スキルのクールタイムや使えるか取得
-
-
+	
 }
 
-void PlayerGroup::Init()
+void PlayerGroup::Init(std::shared_ptr<PlayerSkillUIGroup> skill_ui_group)
 {
 	for (auto& player : players_)
 	{
 		player->Init();
 	}
+	// メインキャラ(操作しているキャラ)のスキルのクールタイムや使えるか取得
+	for (auto player : players_)
+	{
+		if (std::dynamic_pointer_cast<const PlayerInput>(player->GetInput()))
+		{
+			auto normal_skill_id = player->GetSkillID(SkillType::kNormal);
+			auto normal_skill_cool_time = [player]() ->float {return player->GetSkillCoolTime(SkillType::kNormal); };
+			auto normal_skill_can_use = [player]() ->bool {return player->GetSkillCanUse(SkillType::kNormal); };
+			auto strong_skill_id = player->GetSkillID(SkillType::kStrong);
+			auto strong_skill_cool_time = [player]() ->float {return player->GetSkillCoolTime(SkillType::kStrong); };
+			auto strong_skill_can_use = [player]() ->bool {return player->GetSkillCanUse(SkillType::kStrong); };
+
+			skill_ui_group->ChangeSkill(normal_skill_id, normal_skill_cool_time, normal_skill_can_use,
+				strong_skill_id, strong_skill_cool_time, strong_skill_can_use);
+			break;
+		}
+	}
+
 }
 
 void PlayerGroup::Update()
@@ -111,6 +129,7 @@ VECTOR PlayerGroup::MostNearPlayerPos(const VECTOR& pos)
 
 const int PlayerGroup::GetCurrentPlayerSkillID(SkillType type) const
 {
+	
 	return -1;
 }
 

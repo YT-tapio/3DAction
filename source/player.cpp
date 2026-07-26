@@ -750,6 +750,60 @@ const std::shared_ptr<const InputBase> Player::GetInput() const
 	return input_;
 }
 
+const int Player::GetSkillID(SkillType type) const
+{
+	switch (type)
+	{
+	case SkillType::kNormal:
+		return skill_->GetID();
+		break;
+	case SkillType::kStrong:
+		return second_skill_->GetID();
+		break;
+	case SkillType::kConstant:
+	default:
+		return -1;
+		break;
+	}
+	return FALSE;
+}
+
+const float Player::GetSkillCoolTime(SkillType type) const
+{
+	switch (type)
+	{
+	case SkillType::kNormal:
+		return skill_->GetCoolTiemRatio();
+		break;
+	case SkillType::kStrong:
+		return second_skill_->GetCoolTiemRatio();
+		break;
+	case SkillType::kConstant:
+	default:
+		return -1.f;
+		break;
+	}
+	return -1.f;
+}
+
+const bool Player::GetSkillCanUse(SkillType type) const
+{
+	switch (type)
+	{
+	case SkillType::kNormal:
+		return skill_->CanUseSkill();
+		break;
+	case SkillType::kStrong:
+		return second_skill_->CanUseSkill();
+		break;
+	case SkillType::kConstant:
+	default:
+		return FALSE;
+		break;
+	}
+	return FALSE;
+}
+
 const float Player::GetDetectionRadius() const
 {
 	return detection_radius_;

@@ -73,7 +73,7 @@ void Game::Init()
 	AttackRangeGroup::GetInstance().Init();
 	Physics::GetInstance().Init();
 	EffectManager::GetInstance().Init();
-	PlayerGroup::GetInstance().Init();
+	PlayerGroup::GetInstance().Init(player_skill_ui_group_);
 	for (auto& obj : objects_)
 	{
 		obj->Init();
@@ -121,6 +121,7 @@ void Game::Update()
 		obj->LateUpdate();
 	}
 	player_ui_group_->Update();
+	player_skill_ui_group_->Update();
 	EnemyUIGroup::GetInstance().Update();
 	DamageUIGroup::GetInstance().Update();
 	EffectManager::GetInstance().Update();

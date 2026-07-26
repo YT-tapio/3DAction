@@ -16,6 +16,7 @@
 #include"vector_assistant.h"
 #include"FPS.h"
 #include"time.h"
+#include"skill_name.h"
 
 ComboSkill::ComboSkill(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior, std::unordered_map<int, std::pair<float,float>> approach_speed_ratio_mp,SkillType type, float cool_time)
 	: SkillBase(owner,behavior, type, cool_time)
@@ -141,4 +142,9 @@ bool ComboSkill::CheckGoNextcombo(std::shared_ptr<ComboAction> combo_action)
 	if (!PushMyType()) { return FALSE; }
 
 	return TRUE;
+}
+
+const int ComboSkill::GetID() const
+{
+	return SkillName::kComboAttack;
 }

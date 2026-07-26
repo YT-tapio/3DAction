@@ -22,6 +22,8 @@ public:
 
 	void Debug() override;
 
+	const int GetID() const override;
+
 private:
 
 	/// <summary>

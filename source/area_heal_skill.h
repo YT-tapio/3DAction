@@ -17,6 +17,8 @@ public:
 
 	void Debug() override;
 
+	const int GetID() const override;
+
 protected:
 
 

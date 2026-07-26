@@ -43,6 +43,9 @@ private:
 	VECTOR normal_skill_pos_;
 	VECTOR strong_skill_pos_;
 
+	int normal_skill_input_handle_;
+	int strong_skill_input_handle_;
+
 	int font_handle_;
 	int body_color_;
 	int edge_color_;

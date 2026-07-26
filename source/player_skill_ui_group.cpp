@@ -16,16 +16,13 @@ PlayerSkillUIGroup::PlayerSkillUIGroup()
 	, font_handle_(-1)
 	, body_color_(-1)
 	, edge_color_(-1)
-
 {
 	// fontをダウンロード
 	LoadFile();
-
-	normal_skill_ui_ = std::make_shared<PlayerSkillUI>(normal_skill_pos_, font_handle_, body_color_, edge_color_);
-	strong_skill_ui_ = std::make_shared<PlayerSkillUI>(strong_skill_pos_, font_handle_, body_color_, edge_color_);
+	normal_skill_ui_ = std::make_shared<PlayerSkillUI>(normal_skill_pos_, normal_skill_input_handle_,font_handle_, body_color_, edge_color_);
+	strong_skill_ui_ = std::make_shared<PlayerSkillUI>(strong_skill_pos_, strong_skill_input_handle_,font_handle_, body_color_, edge_color_);
+	
 	skill_ui_datas_ = std::make_unique<SkillUIDatas>();
-	// いったん最初にデータを挿入
-	ChangeSkill(0, nullptr, nullptr, 3, nullptr, nullptr);
 }
 
 PlayerSkillUIGroup::~PlayerSkillUIGroup()
@@ -40,7 +37,8 @@ void PlayerSkillUIGroup::Init()
 
 void PlayerSkillUIGroup::Update()
 {
-
+	normal_skill_ui_->Update();
+	strong_skill_ui_->Update();
 }
 
 void PlayerSkillUIGroup::Draw()
@@ -52,8 +50,6 @@ void PlayerSkillUIGroup::Draw()
 void PlayerSkillUIGroup::ChangeSkill(const int normal_skill_id, std::function<float()> normal_skill_cool_time_ratio, std::function<bool()> normal_skill_can_use
 	, const int strong_skill_id, std::function<float()> strong_skill_cool_time_ratio, std::function<bool()> strong_skill_can_use)
 {
-	// スキルの切り替え
-
 	// データを取得
 	auto normal_skill_data = skill_ui_datas_->GetData(normal_skill_id);
 	auto strong_skill_data = skill_ui_datas_->GetData(strong_skill_id);
@@ -85,8 +81,15 @@ void PlayerSkillUIGroup::LoadFile()
 
 		normal_skill_pos_ = CSVFileAssistant::GetVector2DOfCSVFile(ss, data);
 		strong_skill_pos_ = CSVFileAssistant::GetVector2DOfCSVFile(ss, data);
+		normal_skill_input_handle_ = LoadGraph(CSVFileAssistant::GetStringOfCSVFile(ss, data).c_str());
+		strong_skill_input_handle_ = LoadGraph(CSVFileAssistant::GetStringOfCSVFile(ss, data).c_str());
+
+		if (normal_skill_input_handle_ == -1) { printfDx("読み込み失敗\n"); }
+		if (strong_skill_input_handle_ == -1) { printfDx("読み込み失敗\n"); }
 		font_handle_ = Font::CreateHandleOfFile(CSVFileAssistant::GetStringOfCSVFile(ss, data).c_str());
 		body_color_ = CSVFileAssistant::GetColorOfCSVFile(ss, data);
 		edge_color_ = CSVFileAssistant::GetColorOfCSVFile(ss, data);
+
+
 	}
 }

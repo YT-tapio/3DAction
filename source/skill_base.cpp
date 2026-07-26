@@ -42,6 +42,11 @@ void SkillBase::Debug()
 
 }
 
+const int SkillBase::GetID() const
+{
+	return -1;
+}
+
 const float SkillBase::GetCoolTiemRatio() const
 {
 	return cool_time_->GetRatio();

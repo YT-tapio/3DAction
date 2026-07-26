@@ -274,7 +274,7 @@ void EnemyBase::Update()
 		double_punch_coll_pos_ = VAdd(pos_, VScale(dir_, 5.f));
 
 		rigid_body_->SetTargetVelocity(vel_);
-		//behavior_tree_->Update();
+		behavior_tree_->Update();
 		//test_behavior_->Update();
 	}
 	

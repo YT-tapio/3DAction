@@ -16,6 +16,7 @@ public:
 
 	void Debug() override;
 
+
 private:
 
 	bool CheckIsAvoid(std::shared_ptr<Player> owner);

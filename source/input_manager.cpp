@@ -79,7 +79,7 @@ void InputManager::Awake()
 	ai_input_3 = std::make_shared<AIInput>();
 
 	*/
-	changers_num_ = 1;
+	changers_num_ = kPlayer1Id;
 }
 
 void InputManager::ChangeInput()
@@ -107,14 +107,14 @@ void InputManager::ChangeInput()
 			change_player_id = kPlayer1Id;
 		}
 
-		auto changer_input = input_id_mp_.find(change_player_id)->second;			//先にplayer2の情報を保存
-		input_id_mp_.find(change_player_id)->second = input_id_mp_.find(num)->second;// player1の情報をplayer2に代入
+		auto changer_input = input_id_mp_.find(change_player_id)->second;			//先にp情報を保存
+		input_id_mp_.find(change_player_id)->second = input_id_mp_.find(num)->second;// 代入
 		input_id_mp_.find(num)->second = changer_input;		// 保存していたものを入れる
 
-		(input_changers_[num].lock())->InputChange(input_id_mp_.find(num)->second);
-		(input_changers_[change_player_id].lock())->InputChange(input_id_mp_.find(change_player_id)->second);
-		// チェンジ先のデータに切り替え
-		
+		input_changers_[num].lock()->InputChange(input_id_mp_.find(num)->second);
+		input_changers_[change_player_id].lock()->InputChange(input_id_mp_.find(change_player_id)->second);
+		// ここでuiのチェンジ
+
 		return;
 	}
 }

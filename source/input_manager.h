@@ -38,6 +38,8 @@ private:
 
 	void ChangeInput();
 	
+private:
+
 	static constexpr int kPlayer1Id = 1;
 	static constexpr int kPlayer2Id = 2;
 	static constexpr int kPlayer3Id = 3;

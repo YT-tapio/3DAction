@@ -25,11 +25,11 @@ namespace Draw2D
 	/// <param name="pos"></param>
 	/// <param name="radius"></param>
 	/// <param name="color"></param>
-	/// <param name="alpha"></param>
+	/// <param name="body">ñ{ëÃÇ©Ç«Ç§Ç©(TRUEÅFñ{ëÃ)</param>
 	/// <param name="thickness"></param>
-	inline void Circle(const VECTOR& pos, const float& radius, int color, bool alpha,int thickness = 1)
+	inline void Circle(const VECTOR& pos, const float& radius, int color, bool body,int thickness = 1)
 	{
-		DrawCircle(static_cast<int>(pos.x), static_cast<int>(pos.y), radius, color, alpha,thickness);
+		DrawCircle(static_cast<int>(pos.x), static_cast<int>(pos.y), radius, color, body,thickness);
 	}
 
 	/// <summary>

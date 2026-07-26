@@ -15,6 +15,7 @@
 #include"sphere.h"
 #include"vector_assistant.h"
 #include"input_base.h"
+#include"skill_name.h"
 
 AreaHealSkill::AreaHealSkill(std::weak_ptr<Player> owner, VECTOR* pos,const float radius, SkillType type, float cool_time)
 	: SkillBase(owner,std::make_shared<AreaHealGivePlayer>(owner,
@@ -66,6 +67,11 @@ void AreaHealSkill::Debug()
 
 }
 
+const int AreaHealSkill::GetID() const
+{
+	return SkillName::kAreaHeal;
+}
+
 bool AreaHealSkill::CheckIsAreaHeal(std::shared_ptr<Player> owner)
 {
 	if (owner->GetIsStop())							{ return FALSE; }
@@ -73,3 +79,4 @@ bool AreaHealSkill::CheckIsAreaHeal(std::shared_ptr<Player> owner)
 
 	return TRUE;
 }
+

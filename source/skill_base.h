@@ -20,6 +20,8 @@ public:
 
 	virtual void Debug();
 
+	virtual const int GetID() const;
+
 	const float GetCoolTiemRatio() const;
 
 	const bool CanUseSkill() const;

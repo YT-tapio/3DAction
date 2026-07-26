@@ -3,6 +3,7 @@
 
 class Player;
 class IPlayerUIGroup;
+class PlayerSkillUIGroup;
 
 class PlayerGroup
 {
@@ -19,7 +20,7 @@ public:
 
 	void Awake(VECTOR* camera_dir, std::shared_ptr<IPlayerUIGroup> player_ui_group);
 
-	void Init();
+	void Init(std::shared_ptr<PlayerSkillUIGroup> skill_ui_group);
 
 	void Update();
 
@@ -40,10 +41,25 @@ public:
 	/// <returns></returns>
 	VECTOR MostNearPlayerPos(const VECTOR& pos);
 
+	/// <summary>
+	/// åªç›ÇÃSkillIDÇéÊìæ
+	/// </summary>
+	/// <param name="type"></param>
+	/// <returns></returns>
 	const int GetCurrentPlayerSkillID(SkillType type) const;
 
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="type"></param>
+	/// <returns></returns>
 	const float GetCurrentPlayerSkillCoolTime(SkillType type) const;
 
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="type"></param>
+	/// <returns></returns>
 	const bool GetCurrentPlayerSkillCanUse(SkillType type) const;
 
 private:
@@ -58,4 +74,8 @@ private:
 
 	VECTOR current_player_head_pos_;
 	VECTOR* camera_dir_;
+
+	int current_player_skill_id_;
+	float current_player_skill_cool_time_;
+	bool current_player_skill_can_use_;
 };
