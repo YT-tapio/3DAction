@@ -59,6 +59,10 @@ BehaviorStatus ComboAction::Update()
 
 void ComboAction::Exit()
 {
+	for (auto combo : combos_)
+	{
+		combo.second->Exit();
+	}
 	current_combo_ = 0;
 	go_next_ = FALSE;
 }
