@@ -165,4 +165,53 @@ namespace Draw2D
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="draw"></param>
+	/// <param name="red_percent">(0`1)</param>
+	/// <param name="green_percent">(0`1)</param>
+	/// <param name="blue_percent">(0`1)</param>
+	inline void BrightGraph(std::function<void()> draw, float red_percent, float green_percent, float blue_percent)
+	{
+		
+		// ‚·‚×‚Ä‚à‚Æ‚à‚Æ‚Ì–¾‚é‚³‚ğ’´‚¦‚Ä‚¢‚½‚ç
+		if (red_percent >= 1.f && green_percent >= 1.f && blue_percent >= 1.f)
+		{
+			draw();
+			return;
+		}
+		// ‚à‚Æ‚à‚Æ‚Ì–¾‚é‚³
+		const int kDefaultRight = 255;
+		SetDrawBright(static_cast<int>(float(kDefaultRight) * red_percent), 
+			static_cast<int>(float(kDefaultRight) * green_percent), static_cast<int>(float(kDefaultRight) * blue_percent));
+		draw();
+		SetDrawBright(kDefaultRight, kDefaultRight, kDefaultRight);
+	}
+
+	/// <summary>
+	/// •`‰æ‚·‚é‚à‚Ì‚ğˆÃ‚­‚·‚éŠÖ”
+	/// </summary>
+	/// <param name="draw"></param>
+	/// <param name="percent">‚Ç‚ê‚¾‚¯‚­‚ç‚¢‚©(0`1)1‚ªŠ®‘S^‚ÁˆÃ</param>
+	inline void Dark(std::function<void()> draw, float percent)
+	{
+		// ”½“]
+		const float kResolvePercent = 1.f - percent;
+		// ƒfƒtƒH‚Ì–¾‚é‚³‚Ìê‡‚Í‚»‚Ì‚Ü‚Ü•`‰æ
+		if (kResolvePercent >= 0.99f)
+		{
+			draw();
+			return;
+		}
+
+		// ƒfƒtƒHƒ‹ƒg‚Ì–¾‚é‚³
+		const int kDefaultRight = 255;
+
+		const int kOffsetRightValue = static_cast<int>(kDefaultRight * kResolvePercent);
+		SetDrawBright(kOffsetRightValue, kOffsetRightValue, kOffsetRightValue);
+		draw();
+		SetDrawBright(kDefaultRight, kDefaultRight, kDefaultRight);
+	}
+
 }

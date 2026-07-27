@@ -4,13 +4,16 @@
 #include<functional>
 #include"DxLib.h"
 #include"player_skill_ui.h"
+#include"vector_assistant.h"
 #include"csv_file_assistant.h"
 #include"draw_2d.h"
 #include"sub_screen.h"
 #include"lerp.h"
+#include"time.h"
 
-PlayerSkillUI::PlayerSkillUI(const VECTOR& pos, const int& pad_handle,const int font_handle,const int body_color,const int edge_color)
+PlayerSkillUI::PlayerSkillUI(const VECTOR& pos, const int& pad_handle, const int font_handle, const int body_color, const int edge_color)
 	: pos_(pos)
+	, offset_input_icon_pos_(VectorAssistant::VGet2D(-50.f,18.f))
 	, cool_time_ratio_(nullptr)
 	, can_use_(nullptr)
 	, input_handle_(pad_handle)
@@ -19,7 +22,9 @@ PlayerSkillUI::PlayerSkillUI(const VECTOR& pos, const int& pad_handle,const int 
 	, edge_color_(edge_color)
 	, current_alpha_value_(0.f)
 	, target_alpha_value_(0.f)
+	, dark_percent_(0.f)
 {
+	time_ = std::make_shared<Time>();
 	//LoadFile();
 
 	// 丸が描画された画像を作る
@@ -38,35 +43,33 @@ void PlayerSkillUI::Init()
 
 void PlayerSkillUI::Update()
 {
-	// クールタイムの割合を取得し円をへらす
+	time_->Update();
 
-	// ここで消える処理をする
-	
-	// canuseがFALSEの場合は消える
+	// 暗くする
+
+	// スキルが使えるとき
 	if (can_use_())
 	{
 		target_alpha_value_ = 0.f;
+		dark_percent_ = 0.f;
 	}
 	else
 	{
 		target_alpha_value_ = 255.f;
+		dark_percent_ = 0.5f;
 	}
-	current_alpha_value_ = Lerp::Dampf(current_alpha_value_, target_alpha_value_, 0.3f);
+	// ラープ処理
+	current_alpha_value_ = Lerp::Dampf(current_alpha_value_, target_alpha_value_, kBlendSpeed * time_->GetFPSRate());
 
 }
 
 void PlayerSkillUI::Draw()
 {
-	// 自分に対応している操作ボタンの描画
+	// 暗くなるものを描画
+	auto draw_icon = [this]() -> void {DrawDarkUI(); };
+	Draw2D::Dark(draw_icon, dark_percent_);
+	
 
-	// アイコンなどの描画
-	Draw2D::RotaGraph(VAdd(pos_,VGet(-50.f,18.f,0.f)), 0.07f, 0.f, input_handle_, TRUE);
-	Draw2D::RotaGraph(pos_, 1.f, 0.f, data_.icon_handle, TRUE);
-	int icon_width = -1;
-	int icon_height = -1;
-	GetGraphSize(data_.icon_handle, &icon_width, &icon_height);
-	VECTOR name_pos = VAdd(pos_, VGet(icon_width, 0.f, 0.f));
-	Draw2D::FormatStringToHandle(name_pos, "%s", body_color_, font_handle_, data_.name.c_str(), edge_color_);
 	auto draw_cool_time_gauge = [this]() -> void {Draw2D::CircleGauge(pos_, cool_time_ratio_(), sub_screen_->GetHandle()); };
 	Draw2D::Blend(draw_cool_time_gauge, current_alpha_value_);
 }
@@ -108,7 +111,23 @@ void PlayerSkillUI::MakeCircleHandle()
 	sub_screen_ = std::make_shared<SubScreen>(100, 100);
 
 	sub_screen_->Up();
-	Draw2D::Circle(sub_screen_->GetCenterPos(), 33.f, GetColor(255, 255, 255), FALSE,3.f);
+	Draw2D::Circle(sub_screen_->GetCenterPos(), 33.f, GetColor(124, 255, 90), FALSE,3.f);
 	sub_screen_->Down();
+}
 
+void PlayerSkillUI::DrawDarkUI()
+{
+	// 操作アイコンの表示
+	Draw2D::RotaGraph(VAdd(pos_, offset_input_icon_pos_), 0.07f, 0.f, input_handle_, TRUE);
+	auto draw_back_ground = [this]() -> void { Draw2D::Circle(pos_, 33.f, GetColor(101, 110, 128), TRUE); };
+	Draw2D::Blend(draw_back_ground, 100);
+	// アイコンの表示
+	Draw2D::RotaGraph(pos_, 1.f, 0.f, data_.icon_handle, TRUE);
+	
+	int icon_width = -1;
+	int icon_height = -1;
+	GetGraphSize(data_.icon_handle, &icon_width, &icon_height);
+	VECTOR name_pos = VAdd(pos_, VGet(icon_width, 0.f, 0.f));
+	// スキル名描画
+	Draw2D::FormatStringToHandle(name_pos, "%s", body_color_, font_handle_, data_.name.c_str(), edge_color_);
 }

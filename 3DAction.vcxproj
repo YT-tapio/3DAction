@@ -247,6 +247,7 @@
     <ClCompile Include="source\test_scene.cpp" />
     <ClCompile Include="source\time.cpp" />
     <ClCompile Include="source\time_transition_method.cpp" />
+    <ClCompile Include="source\title.cpp" />
     <ClCompile Include="source\tracking_camera.cpp" />
     <ClCompile Include="source\transform.cpp" />
     <ClCompile Include="source\image_data.cpp" />
@@ -407,6 +408,7 @@
     <ClInclude Include="source\test_scene.h" />
     <ClInclude Include="source\time.h" />
     <ClInclude Include="source\time_transition_method.h" />
+    <ClInclude Include="source\title.h" />
     <ClInclude Include="source\tracking_camera.h" />
     <ClInclude Include="source\transform.h" />
     <ClInclude Include="source\image_data.h" />

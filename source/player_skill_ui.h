@@ -2,6 +2,7 @@
 #include"skill_ui_data.h"
 
 class SubScreen;
+class Time;
 
 class PlayerSkillUI
 {
@@ -28,11 +29,20 @@ private:
 	/// </summary>
 	void MakeCircleHandle();
 
+	/// <summary>
+	/// 暗くなるUIの描画
+	/// </summary>
+	void DrawDarkUI();
+
 private:
 
+	const float kBlendSpeed = 0.3f;
+
 	VECTOR pos_;
+	VECTOR offset_input_icon_pos_;
 
 	std::shared_ptr<SubScreen> sub_screen_;
+	std::shared_ptr<Time> time_;
 
 	std::function<float()> cool_time_ratio_;	// クールタイムの割合
 	std::function<bool()> can_use_;				// スキルを使う子ができるか
@@ -45,6 +55,9 @@ private:
 	int body_color_;
 	int edge_color_;
 
+	float dark_percent_;
+
 	float target_alpha_value_;
 	float current_alpha_value_;
+	
 };

@@ -4,6 +4,7 @@
 #include"scene_manager.h"
 #include"scene_base.h"
 #include"game.h"
+#include"title.h"
 #include"FPS.h"
 #include"color.h"
 #include"Debug.h"
@@ -13,7 +14,7 @@
 
 SceneManager::SceneManager()
 {
-	scene_ = std::make_shared<Game>();
+	scene_ = std::make_shared<Title>();
 	FPS::GetInstance();
 	InputManager::GetInstance();
 	Brain::GetInstance();
@@ -35,7 +36,7 @@ void SceneManager::Update()
 	Debug::GetInstance().Update();
 	scene_->Update();
 	scene_->Draw();
-	if (TRUE) { FPS::GetInstance().Debug(); }
+	// if (TRUE) { FPS::GetInstance().Debug(); }
 	ScreenFlip();
 	FPS::GetInstance().Wait();
 }
