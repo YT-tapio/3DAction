@@ -12,19 +12,7 @@
 #include"brain.h"
 #include"test_scene.h"
 
-SceneManager::SceneManager()
-{
-	scene_ = std::make_shared<Title>();
-	FPS::GetInstance();
-	InputManager::GetInstance();
-	Brain::GetInstance();
-}
 
-
-SceneManager::~SceneManager()
-{
-
-}
 
 void SceneManager::Update()
 {
@@ -36,7 +24,30 @@ void SceneManager::Update()
 	Debug::GetInstance().Update();
 	scene_->Update();
 	scene_->Draw();
-	// if (TRUE) { FPS::GetInstance().Debug(); }
 	ScreenFlip();
 	FPS::GetInstance().Wait();
+}
+
+void SceneManager::LoadScene(const std::string& next_scene)
+{
+	if (next_scene == scene_->GetName()) { return; }
+
+	if (next_scene == "title") { scene_ = std::make_shared<Title>(); }
+	if (next_scene == "game") { scene_ = std::make_shared<Game>(); }
+	//if (next_scene == "result") { scene_ = std::make_shared<Result>(); }
+
+	scene_->Init();
+}
+
+void SceneManager::End()
+{
+	scene_ = nullptr;
+}
+
+SceneManager::SceneManager()
+{
+	scene_ = std::make_shared<Title>();
+	FPS::GetInstance();
+	InputManager::GetInstance();
+	Brain::GetInstance();
 }

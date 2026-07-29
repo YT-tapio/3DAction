@@ -48,13 +48,12 @@ Application::Application()
 
     SetUseSetDrawScreenSettingReset(FALSE);
 
-    scene_manager_ = std::make_shared<SceneManager>();
-    
+    SceneManager::GetInstance();
 }
-
 
 Application::~Application()
 {
+    SceneManager::GetInstance().End();
     Effkseer_End();
 	DxLib_End();        // ＤＸライブラリ使用の終了処理
 }
@@ -63,6 +62,6 @@ void Application::Update()
 {
     while (ProcessMessage() == 0 && !CheckHitKey(KEY_INPUT_ESCAPE))
     {
-        scene_manager_->Update();
+        SceneManager::GetInstance().Update();
     }
 }

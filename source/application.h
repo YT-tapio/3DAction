@@ -14,6 +14,4 @@ public:
 
 private:
 
-	std::shared_ptr<SceneManager> scene_manager_;
-
 };

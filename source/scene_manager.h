@@ -7,11 +7,21 @@ class SceneManager
 {
 public:
 
-	SceneManager();
-
-	~SceneManager();
+	static SceneManager& GetInstance()
+	{
+		static SceneManager instance;
+		return instance;
+	}
 
 	void Update();
+
+	void LoadScene(const std::string& next_scene);
+
+	void End();
+
+private:
+
+	SceneManager();
 
 private:
 

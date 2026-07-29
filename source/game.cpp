@@ -34,6 +34,7 @@
 #include"damage_ui_group.h"
 #include"stat_modifire_ui_data.h"
 #include"player_skill_ui_group.h"
+#include"scene_manager.h"
 
 Game::Game()
 	: SceneBase()
@@ -61,8 +62,8 @@ Game::~Game()
 {
 	objects_.clear();
 	no_shadow_objects_.clear();
-	Physics::GetInstance().End();
 	PlayerGroup::GetInstance().End();
+	Physics::GetInstance().End();
 	EffectManager::GetInstance().End();
 	DamageUIGroup::GetInstance().End();
 	StatModifireUIData::GetInstance().End();
@@ -93,6 +94,11 @@ void Game::Init()
 
 void Game::Update()
 {
+	if (CheckHitKey(KEY_INPUT_5))
+	{
+		SceneManager::GetInstance().LoadScene("title");
+		return;
+	}
 	PlayerGroup::GetInstance().Update();
 	for (auto& obj : objects_)
 	{

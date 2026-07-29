@@ -84,9 +84,16 @@ void Physics::Update()
 void Physics::End()
 {
 	// 後始末
+	printfDx("消去\n");
 	rigid_body_id_ = 0;
+	
+	printfDx("size前：%d\n", collisioned_pairs_id_.size());
 	collisioned_pairs_id_.clear();
+	printfDx("size後：%d\n", collisioned_pairs_id_.size());
+
+	printfDx("size前：%d\n", id_rigid_bodies_mp_.size());
 	id_rigid_bodies_mp_.clear();
+	printfDx("size後：%d\n", id_rigid_bodies_mp_.size());
 }
 
 bool Physics::CheckHitGroundProj(std::shared_ptr<RigidBody>other, Contact& contact, const VECTOR& segment_start_pos, const float& ground_proj_length)
@@ -221,7 +228,7 @@ void Physics::GroundProj()
 	// 坂の投影を行います
 	for (auto& id_main_body : id_rigid_bodies_mp_)
 	{
-		auto main_body = id_main_body.second;
+		auto main_body = id_main_body.second.lock();
 		// アクティブ状態じゃない、ボーンによる影響しか受けない場合をのぞく
 		if (!main_body->GetIsActive()) { continue; }
 		if (VSize(main_body->GetVelocity()) == 0.f) { continue; }
@@ -240,7 +247,7 @@ void Physics::GroundProj()
 
 		for (auto& target_id_body : id_rigid_bodies_mp_)
 		{
-			auto target_body = target_id_body.second;
+			auto target_body = target_id_body.second.lock();
 			// 同じものは除外
 			if (target_body == main_body) { continue; }
 			// ここで昔のposが当たっているのかをcheckする
@@ -260,7 +267,7 @@ void Physics::Resistance()
 	// 摩擦等の抵抗の適応適応
 	for (auto& id_rigid_body : id_rigid_bodies_mp_)
 	{
-		auto body = id_rigid_body.second;
+		auto body = id_rigid_body.second.lock();
 		if (body->IsStop()) { continue; }
 		// 適応を受けないもの
 		if (body->GetIsKinematic()) { continue; }
@@ -280,7 +287,7 @@ void Physics::UpdateRigidBody()
 {
 	for (auto& id_rigid_body : id_rigid_bodies_mp_)
 	{
-		auto body = id_rigid_body.second;
+		auto body = id_rigid_body.second.lock();
 		body->Update();
 	}
 }
@@ -289,9 +296,9 @@ void Physics::Gravity()
 {
 	for (auto& main_body : id_rigid_bodies_mp_)
 	{
-		if (!main_body.second->IsStop())
+		if (!main_body.second.lock()->IsStop())
 		{
-			main_body.second->AddForce();
+			main_body.second.lock()->AddForce();
 		}
 	}
 }
@@ -308,7 +315,7 @@ void Physics::Collision()
 		for (auto& main_id_body : id_rigid_bodies_mp_)
 		{
 			auto main_id = main_id_body.first;
-			auto main_body = main_id_body.second;
+			auto main_body = main_id_body.second.lock();
 			if (!main_body->GetIsActive())
 			{
 				// 自分がactiveではないときはpairからなくす
@@ -329,7 +336,7 @@ void Physics::Collision()
 			}
 			for (auto& target_id_body : id_rigid_bodies_mp_)
 			{
-				auto target_body = target_id_body.second;
+				auto target_body = target_id_body.second.lock();
 				if (!target_body->GetIsActive()) { continue; }
 				if (main_body == target_body) { continue; }
 				contact.polys.clear();
@@ -390,8 +397,8 @@ void Physics::Collision()
 			if (IsSamePair(collisioned_pair, current_collisioned_pair))
 			{
 				// 中にあるんだったらstay
-				auto& first_rigid_body = id_rigid_bodies_mp_[current_collisioned_pair.first];
-				auto& second_rigid_body = id_rigid_bodies_mp_[current_collisioned_pair.second];
+				auto first_rigid_body = id_rigid_bodies_mp_[current_collisioned_pair.first].lock();
+				auto second_rigid_body = id_rigid_bodies_mp_[current_collisioned_pair.second].lock();
 				first_rigid_body->OnCollisionStay(second_rigid_body->GetIPhysicsObject());
 				second_rigid_body->OnCollisionStay(first_rigid_body->GetIPhysicsObject());
 				is_in_pair = TRUE;
@@ -401,8 +408,8 @@ void Physics::Collision()
 		if (!is_in_pair)
 		{
 			// 中にないのならenter
-			auto& first_rigid_body = id_rigid_bodies_mp_[current_collisioned_pair.first];
-			auto& second_rigid_body = id_rigid_bodies_mp_[current_collisioned_pair.second];
+			auto first_rigid_body = id_rigid_bodies_mp_[current_collisioned_pair.first].lock();
+			auto second_rigid_body = id_rigid_bodies_mp_[current_collisioned_pair.second].lock();
 			first_rigid_body->OnCollisionEnter(second_rigid_body->GetIPhysicsObject());
 			second_rigid_body->OnCollisionEnter(first_rigid_body->GetIPhysicsObject());
 
@@ -428,8 +435,8 @@ void Physics::Collision()
 		if(!now_hit)
 		{
 			// Exit
-			auto& first_rigid_body = id_rigid_bodies_mp_[it->first];
-			auto& second_rigid_body = id_rigid_bodies_mp_[it->second];
+			auto first_rigid_body = id_rigid_bodies_mp_[it->first].lock();
+			auto second_rigid_body = id_rigid_bodies_mp_[it->second].lock();
 			first_rigid_body->OnCollisionExit(second_rigid_body->GetIPhysicsObject());
 			second_rigid_body->OnCollisionExit(first_rigid_body->GetIPhysicsObject());
 			// 要素の削除も行う
@@ -444,7 +451,7 @@ void Physics::Collision()
 	// 位置更新
 	for (auto& main_id_body : id_rigid_bodies_mp_)
 	{
-		main_id_body.second->SetPos();
+		main_id_body.second.lock()->SetPos();
 	}
 }
 
@@ -453,7 +460,7 @@ void Physics::CheckGround()
 	// 着地の判定
 	for (auto& main_id_body : id_rigid_bodies_mp_)
 	{
-		auto main_body = main_id_body.second;
+		auto main_body = main_id_body.second.lock();
 		bool on_ground = FALSE;
 		if (!main_body->GetUseGravity()) { continue; }
 		
@@ -461,7 +468,7 @@ void Physics::CheckGround()
 		if (area != nullptr) { continue; }
 		for (auto& target_id_body : id_rigid_bodies_mp_)
 		{
-			auto target_body = target_id_body.second;
+			auto target_body = target_id_body.second.lock();
 			if (!target_body->GetIsActive()) { continue; }
 			if (main_body == target_body) { continue; }
 			if (!target_body->IsObject()) { continue; }
