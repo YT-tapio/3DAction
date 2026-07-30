@@ -41,6 +41,8 @@ private:
 
 private:
 
+	static const int kMaxAttackRangeNum = 5;
+
 	std::vector<std::pair<bool,std::shared_ptr<AttackRange>>> attack_ranges_ui_;
 	std::unordered_map<int,std::function<bool()>> end_functions_;
 };

@@ -159,6 +159,7 @@
     <ClCompile Include="source\player_skill_ui.cpp" />
     <ClCompile Include="source\player_skill_ui_group.cpp" />
     <ClCompile Include="source\player_ui_group_interface.cpp" />
+    <ClCompile Include="source\result.cpp" />
     <ClCompile Include="source\skill_ui_datas.cpp" />
     <ClCompile Include="source\stat_modifire_ui_data.cpp" />
     <ClCompile Include="source\stat_modifire_ui_group.cpp" />
@@ -289,6 +290,7 @@
     <ClCompile Include="source\sphere.cpp" />
     <ClCompile Include="source\stage.cpp" />
     <ClCompile Include="source\player.cpp" />
+    <ClCompile Include="source\wait_node.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\2d_gravity.h" />
@@ -307,6 +309,7 @@
     <ClInclude Include="source\player_skill_ui.h" />
     <ClInclude Include="source\player_skill_ui_group.h" />
     <ClInclude Include="source\player_ui_group_interface.h" />
+    <ClInclude Include="source\result.h" />
     <ClInclude Include="source\skill_type.h" />
     <ClInclude Include="source\skill_ui_data.h" />
     <ClInclude Include="source\skill_ui_datas.h" />
@@ -467,6 +470,7 @@
     <ClInclude Include="source\animation_charge.h" />
     <ClInclude Include="source\status.h" />
     <ClInclude Include="source\hit_red_body.h" />
+    <ClInclude Include="source\wait_node.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\json\player_data.json" />

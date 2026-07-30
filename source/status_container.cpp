@@ -153,7 +153,8 @@ float StatusContainer::TakeDamage(float atk,AttackType type)
 
 	current_status_.hp -= damage;
 	if (current_status_.hp < 0.f) { current_status_.hp = 0.f; }
-	printfDx("%.2f\n", damage);
+	// 受けたダメージの表示
+	//printfDx("%.2f\n", damage);
 	return damage;
 }
 

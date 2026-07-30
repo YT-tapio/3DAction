@@ -52,6 +52,16 @@ const bool InputBase::IsStrongSkill() const
 	return FALSE;
 }
 
+const bool InputBase::GoNextScene() const
+{
+	return FALSE;
+}
+
+const bool InputBase::GoResult() const
+{
+	return FALSE;
+}
+
 const VECTOR InputBase::GetMoveDir() const
 {
 	return VectorAssistant::VGetZero();

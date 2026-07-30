@@ -160,6 +160,7 @@ void PunchSkill::DecideTarget(std::vector<std::weak_ptr<ObjectBase>> owner_area_
 bool PunchSkill::CheckIsPunch(std::shared_ptr<Player> owner)
 {
 	if (!can_use_)								{ return FALSE; }
+	if (!owner->GetCanMove()) { return FALSE; }
 	if (owner->GetIsStop())										{ return FALSE; }
 	if (!owner->GetOnGround())									{ return FALSE; }	// ’…’n‚µ‚Ä‚¢‚È‚¢
 	if (owner->GetIsInvincible())								{ return FALSE; }

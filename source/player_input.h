@@ -35,6 +35,10 @@ public:
 
 	const bool IsStrongSkill() const override;
 
+	const bool GoNextScene() const override;
+
+	const bool GoResult() const override;
+
 	const VECTOR GetMoveDir() const override;
 
 	const VECTOR GetCameraDir() const override;

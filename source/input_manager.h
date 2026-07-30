@@ -30,6 +30,8 @@ public:
 	
 	const std::shared_ptr<const InputBase> GetPlayer4Input() const;
 
+	const std::shared_ptr<const InputBase> GetMainPlayerInput() const;
+
 private:
 
 	InputManager();

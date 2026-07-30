@@ -48,7 +48,7 @@ bool AttackCorrection::ApproachTheNearestEnemy(std::shared_ptr<Player> player, V
 		ratio = 0.f;
 	}
 	
-	velocity = VScale(dir, speed * ratio);
+	velocity = VScale(VectorAssistant::VGetFlat(dir), speed * ratio);
 	player->ResetVelocity();
 	player->SetRotation(VGet(0.f, VectorAssistant::VGetTan(VectorAssistant::VGetReverce(dir)), 0.f));
 	player->SetDirection(dir);

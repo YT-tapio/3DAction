@@ -11,11 +11,10 @@
 
 void AttackRangeGroup::Awake()
 {
-	attack_ranges_ui_.push_back(std::make_pair(FALSE,std::make_shared<AttackRange>()));
-	attack_ranges_ui_.push_back(std::make_pair(FALSE, std::make_shared<AttackRange>()));
-	attack_ranges_ui_.push_back(std::make_pair(FALSE, std::make_shared<AttackRange>()));
-	attack_ranges_ui_.push_back(std::make_pair(FALSE, std::make_shared<AttackRange>()));
-	attack_ranges_ui_.push_back(std::make_pair(FALSE, std::make_shared<AttackRange>()));
+	for (int i = 0; i < kMaxAttackRangeNum; i++)
+	{
+		attack_ranges_ui_.push_back(std::make_pair(FALSE, std::make_shared<AttackRange>()));
+	}
 }
 
 void AttackRangeGroup::Init()
@@ -62,6 +61,7 @@ void AttackRangeGroup::Draw()
 
 void AttackRangeGroup::End()
 {
+	end_functions_.clear();
 	attack_ranges_ui_.clear();
 }
 

@@ -11,7 +11,7 @@
 #include"input_manager.h"
 #include"brain.h"
 #include"test_scene.h"
-
+#include"result.h"
 
 
 void SceneManager::Update()
@@ -24,19 +24,21 @@ void SceneManager::Update()
 	Debug::GetInstance().Update();
 	scene_->Update();
 	scene_->Draw();
+	DrawString(100, 860, "Esc‚ð‰Ÿ‚·‚ÆƒQ[ƒ€I—¹", GetColor(255, 0, 0));
 	ScreenFlip();
 	FPS::GetInstance().Wait();
 }
 
-void SceneManager::LoadScene(const std::string& next_scene)
+bool SceneManager::LoadScene(const std::string& next_scene)
 {
-	if (next_scene == scene_->GetName()) { return; }
+	if (next_scene == scene_->GetName()) { return FALSE; }
 
 	if (next_scene == "title") { scene_ = std::make_shared<Title>(); }
 	if (next_scene == "game") { scene_ = std::make_shared<Game>(); }
-	//if (next_scene == "result") { scene_ = std::make_shared<Result>(); }
+	if (next_scene == "result") { scene_ = std::make_shared<Result>(); }
 
 	scene_->Init();
+	return TRUE;
 }
 
 void SceneManager::End()

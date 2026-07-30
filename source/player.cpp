@@ -185,8 +185,8 @@ void Player::Init()
 	
 	time_->Init();
 
-	EffectManager::GetInstance().Play(EffectID::kHandAura);
-	EffectManager::GetInstance().Play(EffectID::kHandAura2);
+	//EffectManager::GetInstance().Play(EffectID::kHandAura);
+	//EffectManager::GetInstance().Play(EffectID::kHandAura2);
 }
 
 void Player::Update()
@@ -470,7 +470,7 @@ void Player::Move()
 	}
 	if (is_stop_) { return; }
 	rot_.y = RadianAssistant::Lerp(rot_.y, target_rot_y_, RadianAssistant::kOneRad * 15.f * time_->GetFPSRate());
-	if (CheckHitKey(KEY_INPUT_SPACE)) { pos_ = VGet(0.f, 0.f, 0.f); vel_ = VGet(0.f, 0.f, 0.f); is_ground_ = FALSE; fall_speed_ = 0.f;}
+	// if (CheckHitKey(KEY_INPUT_SPACE)) { pos_ = VGet(0.f, 0.f, 0.f); vel_ = VGet(0.f, 0.f, 0.f); is_ground_ = FALSE; fall_speed_ = 0.f;}
 }
 
 void Player::Gravity()
@@ -680,7 +680,7 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 			
 			
 			// この時ジャスト回避
-			printfDx("ジャスト回避\n");
+			//printfDx("ジャスト回避\n");
 			time_->SetTimeScale(0.f, 0.15f);
 			rigid_body_->SetStop(0.15f);
 		}

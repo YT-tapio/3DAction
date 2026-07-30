@@ -60,6 +60,18 @@ const std::shared_ptr<const InputBase> InputManager::GetPlayer4Input() const
 	return input;
 }
 
+const std::shared_ptr<const InputBase> InputManager::GetMainPlayerInput() const
+{
+	for (auto& input_id : input_id_mp_)
+	{
+		auto player_input = std::dynamic_pointer_cast<PlayerInput>(input_id.second);
+		if (player_input == nullptr) { continue; }
+		return player_input;
+	}
+
+	return nullptr;
+}
+
 InputManager::InputManager()
 {
 	Awake();
@@ -67,7 +79,6 @@ InputManager::InputManager()
 
 void InputManager::Awake()
 {
-
 	input_id_mp_[kPlayer1Id] = std::make_shared<PlayerInput>();
 	input_id_mp_[kPlayer2Id] = std::make_shared<AIInput>();
 	input_id_mp_[kPlayer3Id] = std::make_shared<AIInput>();

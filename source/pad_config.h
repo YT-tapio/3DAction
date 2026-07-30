@@ -11,4 +11,7 @@ namespace PadConfig
 
 	static int change_player_up = XINPUT_BUTTON_DPAD_UP;
 	static int change_player_donw = XINPUT_BUTTON_DPAD_DOWN;
+
+	static int go_next = XINPUT_BUTTON_A;
+	static int go_result = XINPUT_BUTTON_DPAD_RIGHT;
 }

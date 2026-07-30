@@ -310,6 +310,12 @@
     <Filter Include="ソース ファイル\scene\title">
       <UniqueIdentifier>{a7d2fc9a-8023-4b89-96dd-c4d8f0152a73}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\scene\result">
+      <UniqueIdentifier>{697bab08-60a6-4923-9613-37ca82a5595a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\behavior_tree\node\wait_node">
+      <UniqueIdentifier>{01a8c452-6787-41d9-a330-2e30238552d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -740,6 +746,12 @@
     </ClCompile>
     <ClCompile Include="source\title.cpp">
       <Filter>ソース ファイル\scene\title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\result.cpp">
+      <Filter>ソース ファイル\scene\result</Filter>
+    </ClCompile>
+    <ClCompile Include="source\wait_node.cpp">
+      <Filter>ソース ファイル\behavior_tree\node\wait_node</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1270,6 +1282,12 @@
     </ClInclude>
     <ClInclude Include="source\title.h">
       <Filter>ソース ファイル\scene\title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\result.h">
+      <Filter>ソース ファイル\scene\result</Filter>
+    </ClInclude>
+    <ClInclude Include="source\wait_node.h">
+      <Filter>ソース ファイル\behavior_tree\node\wait_node</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

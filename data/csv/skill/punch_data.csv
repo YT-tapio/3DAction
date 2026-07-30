@@ -1,5 +1,5 @@
 ﻿name,right,animation_name,min_coll_ratio,max_coll_ratio,collider_radius,approach_speed,approach_ratio,cool_time,damage_rate
-attacker,1,punch,0.3,0.7,1.5,11,0.45,10,3
+attacker,1,punch,0.3,0.7,1.5,11,0.45,10,3.8
 healer,1,punch,0.3,0.7,1.5,11,0.45,10,1
 defender,1,punch,0.3,0.7,1.5,11,0.45,10,1
 attacker2,1,punch,0.3,0.7,1.5,11,0.45,10,1

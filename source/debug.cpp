@@ -17,7 +17,7 @@ void Debug::Update()
 	{
 		if (!is_push)
 		{
-			is_disp_ = !is_disp_;
+			//is_disp_ = !is_disp_;
 		}
 		is_push = TRUE;
 	}
@@ -66,5 +66,5 @@ const bool Debug::GetIsDisp() const
 Debug::Debug()
 {
 	num_ = 0;
-	is_disp_ = TRUE;
+	is_disp_ = FALSE;
 }

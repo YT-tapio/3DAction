@@ -84,16 +84,15 @@ void Physics::Update()
 void Physics::End()
 {
 	// 後始末
-	printfDx("消去\n");
 	rigid_body_id_ = 0;
 	
-	printfDx("size前：%d\n", collisioned_pairs_id_.size());
+	//printfDx("size前：%d\n", collisioned_pairs_id_.size());
 	collisioned_pairs_id_.clear();
-	printfDx("size後：%d\n", collisioned_pairs_id_.size());
+	//printfDx("size後：%d\n", collisioned_pairs_id_.size());
 
-	printfDx("size前：%d\n", id_rigid_bodies_mp_.size());
+	//printfDx("size前：%d\n", id_rigid_bodies_mp_.size());
 	id_rigid_bodies_mp_.clear();
-	printfDx("size後：%d\n", id_rigid_bodies_mp_.size());
+	//printfDx("size後：%d\n", id_rigid_bodies_mp_.size());
 }
 
 bool Physics::CheckHitGroundProj(std::shared_ptr<RigidBody>other, Contact& contact, const VECTOR& segment_start_pos, const float& ground_proj_length)

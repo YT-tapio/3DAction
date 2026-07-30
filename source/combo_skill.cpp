@@ -126,6 +126,7 @@ bool ComboSkill::IsStartcomboAction(std::shared_ptr<ComboAction> combo_action)
 	if (!can_use_)											{ return FALSE; }
 	if (is_active_)											{ return FALSE; }
 	if (!owner->GetOnGround())								{ return FALSE; }
+	if (!owner->GetCanMove()) { return FALSE; }
 	if (owner->GetIsStop())									{ return FALSE; }
 	//input‚ÌŠm”F
 	if (!PushMyType()) { return FALSE; }

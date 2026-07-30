@@ -20,4 +20,7 @@ namespace KeyConfig
 
 	static int normal_skill		= 0;
 	static int strong_skill		= 1;
+
+	static int go_next = KEY_INPUT_SPACE;
+	static int go_result = KEY_INPUT_RETURN;
 }

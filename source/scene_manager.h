@@ -15,7 +15,7 @@ public:
 
 	void Update();
 
-	void LoadScene(const std::string& next_scene);
+	bool LoadScene(const std::string& next_scene);
 
 	void End();
 

@@ -9,7 +9,7 @@ Application::Application()
 {
     
     SetGraphMode(kScreenWidth,kScreenHeight, 32);			//ウィンドウのサイズとカラーモードを決める
-    ChangeWindowMode(TRUE);				//ウィンドウモードにする
+    ChangeWindowMode(FALSE);				//ウィンドウモードにする
     
     // DirectX11を使用するようにする。(DirectX9も可、一部機能不可)
     // Effekseerを使用するには必ず設定する。

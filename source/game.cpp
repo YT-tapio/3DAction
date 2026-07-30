@@ -35,6 +35,7 @@
 #include"stat_modifire_ui_data.h"
 #include"player_skill_ui_group.h"
 #include"scene_manager.h"
+#include"input_base.h"
 
 Game::Game()
 	: SceneBase()
@@ -45,7 +46,6 @@ Game::Game()
 	shadow_map_ = std::make_shared<ShadowMap>();
 	objects_.push_back(std::make_shared<EnemyBase>(VGet(10, 0, 10)));
 	objects_.push_back(std::make_shared<Stage>());
-	objects_.push_back(std::make_shared<CollisionMeshObject>());
 
 	player_ui_group_ = std::make_shared<PlayerUIGroup>();
 	player_skill_ui_group_ = std::make_shared<PlayerSkillUIGroup>();
@@ -94,10 +94,14 @@ void Game::Init()
 
 void Game::Update()
 {
-	if (CheckHitKey(KEY_INPUT_5))
+	auto player_input = InputManager::GetInstance().GetMainPlayerInput();
+
+	if (player_input != nullptr)
 	{
-		SceneManager::GetInstance().LoadScene("title");
-		return;
+		if (player_input->GoResult())
+		{
+			if (SceneManager::GetInstance().LoadScene("result")) { return; }
+		}
 	}
 	PlayerGroup::GetInstance().Update();
 	for (auto& obj : objects_)
@@ -195,6 +199,7 @@ void Game::Draw()
 	}
 	
 	EffectManager::GetInstance().Draw();
+	DrawString(1200, 860, "十字 右ボタン、Enterを押してリザルトへ", GetColor(0, 0, 0));
 }
 
 const std::string Game::GetName() const
