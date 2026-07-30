@@ -45,8 +45,6 @@ private:
 	float near_;
 	float far_;
 
-	float fov_;
-
-	
+	float fov_;	
 
 };

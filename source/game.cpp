@@ -60,6 +60,7 @@ Game::Game()
 
 Game::~Game()
 {
+	//ObjectSetter::GetInstance().DeleteResource();
 	objects_.clear();
 	no_shadow_objects_.clear();
 	PlayerGroup::GetInstance().End();

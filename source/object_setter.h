@@ -22,6 +22,8 @@ public:
 
 	void Update();
 
+	void DeleteResource();
+
 private:
 	
 	ObjectSetter() = default;

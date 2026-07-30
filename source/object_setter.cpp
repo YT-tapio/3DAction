@@ -9,6 +9,13 @@ void ObjectSetter::AddResource(const int& handle, VECTOR* pos, VECTOR* rot, VECT
 	set_objects_.push_back(std::make_shared<SetObject>(handle, pos, rot, scale));
 }
 
+void ObjectSetter::DeleteResource()
+{
+	printfDx("サイズ：%d\n", set_objects_.size());
+	set_objects_.clear();
+	printfDx("サイズ：%d\n", set_objects_.size());
+}
+
 void ObjectSetter::Update()
 {
 	for (auto& obj : set_objects_)

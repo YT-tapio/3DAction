@@ -76,7 +76,7 @@ void HitRedBody::DoRedColor()
 	if (!is_change_)
 	{
 		// Ç‡Ç∆Ç‡Ç∆ÇÃêFÇ…ñﬂÇ∑
-		MV1SetAmbColorScale(handle_, GetColorF(1, 1.f, 1.f, 1.f));
+		MV1SetAmbColorScale(handle_, GetColorF(1.f, 1.f, 1.f, 1.f));
 		return;
 	}
 	if (red_ratio_ == 0.f)	{ return; }

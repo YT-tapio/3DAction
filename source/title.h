@@ -1,6 +1,8 @@
 #pragma once
 #include"scene_base.h"
 
+class SkyDome;
+
 class Title : public SceneBase
 {
 public:
@@ -19,7 +21,8 @@ public:
 
 private:
 
-	
-
-	
+	int player_handle_;
+	int enemy_handle_;
+	int stage_handle_;
+	int sky_dome_handle_;
 };
