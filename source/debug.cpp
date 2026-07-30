@@ -17,7 +17,7 @@ void Debug::Update()
 	{
 		if (!is_push)
 		{
-			//is_disp_ = !is_disp_;
+			is_disp_ = !is_disp_;
 		}
 		is_push = TRUE;
 	}
