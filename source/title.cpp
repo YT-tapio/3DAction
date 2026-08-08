@@ -11,41 +11,43 @@
 #include"object_setter.h"
 #include"radian_assistant.h"
 #include"vector_assistant.h"
+#include<functional>
+#include"draw_2D.h"
+#include"screen_size.h"
 
 Title::Title()
 	: SceneBase()
 {
-	player_handle_ = MV1LoadModel("data/model/player/attacker/Lola_B_Styperek.mv1");
-	enemy_handle_ = MV1LoadModel("data/model/enemy/zako/Demon_T_Wiezzorek.mv1");
-	stage_handle_ = MV1LoadModel("data/model/stage/field.mv1");
-	sky_dome_handle_ = MV1LoadModel("data/model/skydome/SkyDome.mv1");
+	title_logo_handle_		= LoadGraph("data/ui/title/title_logo.png");
+	player_handle_			= MV1LoadModel("data/model/player/attacker/Lola_B_Styperek.mv1");
+	enemy_handle_			= MV1LoadModel("data/model/enemy/zako/Demon_T_Wiezzorek.mv1");
+	stage_handle_			= MV1LoadModel("data/model/stage/field.mv1");
+	sky_dome_handle_		= MV1LoadModel("data/model/skydome/SkyDome.mv1");
+
 	if (player_handle_ == -1)
 	{
 		printfDx("モデル読み込みエラー\n");
 	}
-
 	if (enemy_handle_ == -1)
 	{
 		printfDx("モデル読み込みエラー\n");
 	}
-
 	if (stage_handle_ == -1)
 	{
 		printfDx("モデル読み込みエラー\n");
 	}
-
 	if (sky_dome_handle_ == -1)
 	{
 		printfDx("モデル読み込みエラー\n");
 	}
 
-	float near_ = 0.1f;
-	float far_ = 1000.f;
+	float near_feat = 0.1f;
+	float far_feat = 500.f;
 
 	float fov = RadianAssistant::TheNumRadian(75.f);
 	VECTOR pos = VGet(0, 0, 0);
 	VECTOR target_pos = VGet(0, 0, 10);
-	SetCameraNearFar(near_, far_);
+	SetCameraNearFar(near_feat, far_feat);
 	SetupCamera_Perspective(fov);
 	SetCameraPositionAndTarget_UpVecY(pos, target_pos);
 
@@ -72,6 +74,9 @@ Title::Title()
 
 Title::~Title()
 {
+	DeleteGraph(title_logo_handle_);
+	MV1DeleteModel(stage_handle_);
+	MV1DeleteModel(sky_dome_handle_);
 	MV1DeleteModel(player_handle_);
 	MV1DeleteModel(enemy_handle_);
 }
@@ -102,9 +107,9 @@ void Title::Draw()
 	MV1DrawModel(player_handle_);
 	MV1DrawModel(enemy_handle_);
 	MV1DrawModel(sky_dome_handle_);
-	//MV1DrawModel(stage_handle_);
-	//DrawString(100, 100, "Title", GetColor(255, 255, 255));
-	//DrawString(500, 700, "Aボタン、スペースを押してゲームスタート", GetColor(255, 255, 255));
+	Draw2D::RotaGraph(VectorAssistant::VGet2D(static_cast<float>(kScreenWidth * 0.5f), 750.f), 0.7f, 0.f, title_logo_handle_, TRUE);
+	DrawString(100, 100, "Title", GetColor(255, 255, 255));
+	DrawString(500, 700, "Aボタン、スペースを押してゲームスタート", GetColor(255, 255, 255));
 }
 
 const std::string Title::GetName() const

@@ -161,6 +161,7 @@
     <ClCompile Include="source\player_ui_group_interface.cpp" />
     <ClCompile Include="source\result.cpp" />
     <ClCompile Include="source\skill_ui_datas.cpp" />
+    <ClCompile Include="source\sound_base.cpp" />
     <ClCompile Include="source\stat_modifire_ui_data.cpp" />
     <ClCompile Include="source\stat_modifire_ui_group.cpp" />
     <ClCompile Include="source\stat_modifires.cpp" />
@@ -471,6 +472,7 @@
     <ClInclude Include="source\status.h" />
     <ClInclude Include="source\hit_red_body.h" />
     <ClInclude Include="source\wait_node.h" />
+    <ClInclude Include="source\sound_base.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\json\player_data.json" />

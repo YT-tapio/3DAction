@@ -316,6 +316,9 @@
     <Filter Include="ソース ファイル\behavior_tree\node\wait_node">
       <UniqueIdentifier>{01a8c452-6787-41d9-a330-2e30238552d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\sound">
+      <UniqueIdentifier>{53c19a16-66a2-469e-a314-ca65a389f20e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -752,6 +755,9 @@
     </ClCompile>
     <ClCompile Include="source\wait_node.cpp">
       <Filter>ソース ファイル\behavior_tree\node\wait_node</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sound_base.cpp">
+      <Filter>ソース ファイル\sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1288,6 +1294,9 @@
     </ClInclude>
     <ClInclude Include="source\wait_node.h">
       <Filter>ソース ファイル\behavior_tree\node\wait_node</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sound_base.h">
+      <Filter>ソース ファイル\sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

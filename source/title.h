@@ -21,6 +21,7 @@ public:
 
 private:
 
+	int title_logo_handle_;
 	int player_handle_;
 	int enemy_handle_;
 	int stage_handle_;

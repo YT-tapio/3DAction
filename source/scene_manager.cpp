@@ -23,7 +23,7 @@ void SceneManager::Update()
 	Debug::GetInstance().Update();
 	scene_->Update();
 	scene_->Draw();
-	//DrawString(100, 860, "Escを押すとゲーム終了", GetColor(255, 0, 0));
+	DrawString(100, 860, "Escを押すとゲーム終了", GetColor(255, 0, 0));
 	ScreenFlip();
 	FPS::GetInstance().Wait();
 }
