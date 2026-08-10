@@ -42,7 +42,6 @@ void ComboSkill::Update()
 	auto combo_action = std::dynamic_pointer_cast<ComboAction>(behavior_);
 	if (combo_action == nullptr) { return; }
 	bool is_attack = FALSE;
-
 	
 	if (!can_use_)
 	{

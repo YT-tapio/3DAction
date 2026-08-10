@@ -20,5 +20,5 @@ private:
 private:
 
 	VECTOR pos_;
-
+	float radius_;
 };

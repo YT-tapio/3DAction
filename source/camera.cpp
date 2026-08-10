@@ -75,6 +75,8 @@ void Camera::Update()
 	rigid_body_->SetTargetVelocity(vel_);
 	Setting();
 	
+	// ƒŠƒXƒi[‚Ìİ’è
+	Set3DSoundListenerPosAndFrontPos_UpVecY(pos_, target_pos_);
 }
 
 void Camera::Debug()

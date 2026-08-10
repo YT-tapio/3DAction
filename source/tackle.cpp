@@ -20,7 +20,7 @@
 #include"status_holder_interface.h"
 #include"status.h"
 #include"status_container.h"
-
+#include"sound_manager.h"
 Tackle::Tackle(std::weak_ptr<ObjectBase> owner, std::shared_ptr<RigidBody> rigid_body,
 	std::string anim_name,const float time, const float speed, float damage_rate)
 	: AttackBase(owner,0.f,0.f,damage_rate)
@@ -72,6 +72,8 @@ void Tackle::Entry()
 	EffectManager::GetInstance().Play(EffectID::kTackle);
 	EffectManager::GetInstance().SetPos(EffectID::kTackle, VAdd(owner_.lock()->GetPosition(), offset_vel_));
 	EffectManager::GetInstance().SetRot(EffectID::kTackle, VGet(0.f, VectorAssistant::VGetTan(VNorm(vel_)), 0.f));
+	SoundManager::GetInstance().SetPos("tackle",owner_.lock()->GetPosition());
+	SoundManager::GetInstance().Play3DSound("tackle");
 }
 
 BehaviorStatus Tackle::Update()

@@ -21,6 +21,7 @@
 #include"attack_correction.h"
 #include"skill_name.h"
 #include"sound_manager.h"
+
 PunchSkill::PunchSkill(std::weak_ptr<Player> owner,VECTOR* pos,std::string my_anim_name,const float r, float min_coll_ratio, float max_coll_ratio,const float detection_radius, float approach_speed, float approach_ratio, SkillType type, float cool_time,float damage_rate)
 	: SkillBase(owner,std::make_shared<Punch>(owner,pos,my_anim_name,min_coll_ratio,max_coll_ratio, std::make_shared<RigidBody>(std::make_shared<Sphere>(r, VGet(0, 0, 0)), pos, FALSE, TRUE, 1.f, 1.f),damage_rate),type,cool_time)
 	, my_anim_name_(my_anim_name)

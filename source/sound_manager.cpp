@@ -12,9 +12,9 @@
 void SoundManager::Load()
 {
 	Load2DSound();
-
-	SetCreate3DSoundFlag(TRUE);
-	//Load3DSound();
+	// セッティング
+	Set3DSoundOneMetre(1.f);
+	Load3DSound();
 	SetCreate3DSoundFlag(FALSE);
 }
 
