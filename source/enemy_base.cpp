@@ -47,6 +47,7 @@
 #include"change_method.h"
 #include"hit_red_body.h"
 #include"damage_ui_group.h"
+#include"play_sound.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos)
 	: CharacterBase("enemy")
@@ -112,7 +113,7 @@ void EnemyBase::Init()
 	stump_nodes.push_back(std::make_shared<ActionNode>
 		(std::make_shared<Stamp>(obj_mine, &pos_, stump_radius,"jumping_attack",2.f)));
 
-	std::shared_ptr<NodeBase> stump_node = std::make_shared<SequenceNode>(stump_nodes);
+	std::shared_ptr<NodeBase> stamp_node = std::make_shared<SequenceNode>(stump_nodes);
 	
 	// エフェクトによる攻撃
 	std::vector<std::shared_ptr<NodeBase>>  area_of_effect_nodes;
@@ -135,6 +136,9 @@ void EnemyBase::Init()
 	area_of_effect_nodes.push_back(area_of_effect_ui_node);
 	area_of_effect_nodes.push_back(area_of_effect_node);
 
+	std::shared_ptr<NodeBase> tackle_voice_node = std::make_shared<ActionNode>(
+		std::make_shared<PlaySound3D>(mine, &pos_, "tackle_voice"));
+
 	// タックルの前の予備動作
 	std::shared_ptr<NodeBase> charge_tackle_node = 
 		std::make_shared<ActionNode>(std::make_shared<AnimationCharge>(mine, "charge_tackle", 0.9f));
@@ -146,15 +150,16 @@ void EnemyBase::Init()
 	
 	std::vector<std::shared_ptr<NodeBase>> tackle_nodes;
 	
+	tackle_nodes.emplace_back(tackle_voice_node);
 	tackle_nodes.emplace_back(charge_tackle_node);
 	tackle_nodes.emplace_back(tackle_node);
 
 	// ランダムのnodeに代入
 	std::vector<std::shared_ptr<NodeBase>> random_nodes;
-	//random_nodes.emplace_back(stump_node);
+	random_nodes.emplace_back(stamp_node);
 	//random_nodes.emplace_back(double_punch_node);
 	//random_nodes.emplace_back(std::make_shared<SequenceNode>(area_of_effect_nodes));
-	random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
+	//random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
 
 	// 追いかけるときのノード
 	std::vector<std::shared_ptr<NodeBase>> random_nodes2;

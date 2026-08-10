@@ -10,6 +10,8 @@ public:
 
 	virtual void Init();
 
+	virtual void Update();
+
 	void Play();
 
 	void Stop();

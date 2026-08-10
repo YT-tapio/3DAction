@@ -12,6 +12,7 @@
 #include"animator_base.h"
 #include"physics_interface.h"
 #include"rigid_body.h"
+#include"sound_manager.h"
 
 Jump::Jump(std::weak_ptr<CharacterBase> owner, std::string my_anim_name, 
 	std::pair<float,float> timing, float speed)
@@ -61,6 +62,8 @@ BehaviorStatus Jump::Update()
 			{
 				played_ = TRUE;
 				owner_rigid_body->GetRigidBody()->SetUpSpeed(speed_);
+				SoundManager::GetInstance().SetPos("enemy_up",owner->GetPosition());
+				SoundManager::GetInstance().Play3DSound("enemy_up");
 				return BehaviorStatus::kComplete;
 			}
 		}

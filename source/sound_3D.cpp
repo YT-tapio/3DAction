@@ -56,7 +56,7 @@ void Sound3D::LoadFile(const std::string& file_path)
 		pos_					= CSVFileAssistant::GetVectorOfCSVFile(ss, data);
 		radius_				= CSVFileAssistant::GetFloatOfCSVFile(ss, data);	// •·‚±‚¦‚é”ÍˆÍ
 	}
-	SetCreate3DSoundFlag(TRUE);
+
 	handle_ = LoadSoundMem(data_file_path.c_str());
 	if (handle_ == -1) { printfDx("3DƒTƒEƒ“ƒh“Ç‚İ‚İ¸”s\n"); }
 

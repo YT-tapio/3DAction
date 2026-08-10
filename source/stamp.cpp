@@ -22,6 +22,7 @@
 #include"status_holder_interface.h"
 #include"status.h"
 #include"status_container.h"
+#include"sound_manager.h"
 
 Stamp::Stamp(std::weak_ptr<ObjectBase> owner, VECTOR* pos, float radius,std::string my_anim_name, float damage_rate)
 	: AttackBase(owner,0,0,damage_rate)
@@ -78,7 +79,10 @@ BehaviorStatus Stamp::Update()
 			rigid_body_->Active();
 			is_stamp_ = TRUE;
 			EffectManager::GetInstance().Play(EffectID::kStamp);
-			EffectManager::GetInstance().SetPos(EffectID::kStamp,owner_.lock()->GetPosition());
+			const VECTOR owner_pos = owner_.lock()->GetPosition();
+			EffectManager::GetInstance().SetPos(EffectID::kStamp,owner_pos);
+			SoundManager::GetInstance().SetPos("stamp", owner_pos);
+			SoundManager::GetInstance().Play3DSound("stamp");
 		}
 	}
 	// printfDx("stamp\n");

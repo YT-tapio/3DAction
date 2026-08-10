@@ -1,2 +1,6 @@
 ﻿data_file_path
 data/csv/sound/3D/tackle_se_data.csv
+data/csv/sound/3D/enemy_tackle_voice_data.csv
+data/csv/sound/3D/area_of_effect_se_data.csv
+data/csv/sound/3D/enemy_jump_se_data.csv
+data/csv/sound/3D/stamp_se_data.csv

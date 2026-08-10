@@ -14,6 +14,7 @@ void SoundManager::Load()
 	Load2DSound();
 	// セッティング
 	Set3DSoundOneMetre(1.f);
+	SetCreate3DSoundFlag(TRUE);
 	Load3DSound();
 	SetCreate3DSoundFlag(FALSE);
 }

@@ -771,6 +771,9 @@
     <ClCompile Include="source\sound_manager.cpp">
       <Filter>ソース ファイル\sound\manager</Filter>
     </ClCompile>
+    <ClCompile Include="source\play_sound.cpp">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1318,6 +1321,9 @@
     </ClInclude>
     <ClInclude Include="source\sound_manager.h">
       <Filter>ソース ファイル\sound\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\play_sound.h">
+      <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

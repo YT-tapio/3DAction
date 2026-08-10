@@ -72,8 +72,10 @@ void Tackle::Entry()
 	EffectManager::GetInstance().Play(EffectID::kTackle);
 	EffectManager::GetInstance().SetPos(EffectID::kTackle, VAdd(owner_.lock()->GetPosition(), offset_vel_));
 	EffectManager::GetInstance().SetRot(EffectID::kTackle, VGet(0.f, VectorAssistant::VGetTan(VNorm(vel_)), 0.f));
+
 	SoundManager::GetInstance().SetPos("tackle",owner_.lock()->GetPosition());
 	SoundManager::GetInstance().Play3DSound("tackle");
+
 }
 
 BehaviorStatus Tackle::Update()
@@ -81,6 +83,7 @@ BehaviorStatus Tackle::Update()
 	// タイマーの更新
 	activate_timer_->Update();
 	EffectManager::GetInstance().SetPos(EffectID::kTackle, VAdd(owner_.lock()->GetPosition(), offset_vel_));
+	SoundManager::GetInstance().SetPos("tackle", owner_.lock()->GetPosition());
 	// 移動量を設定
 	if (activate_timer_->GetIsEnd())
 	{

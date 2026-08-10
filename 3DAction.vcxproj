@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\play_sound.cpp" />
     <ClCompile Include="source\sound_2D.cpp" />
     <ClCompile Include="source\action_node.cpp" />
     <ClCompile Include="source\animation_2d_data.cpp" />
@@ -298,6 +299,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\2d_gravity.h" />
+    <ClInclude Include="source\play_sound.h" />
     <ClInclude Include="source\sound_2D.h" />
     <ClInclude Include="source\action_node.h" />
     <ClInclude Include="source\animation_2d_data.h" />

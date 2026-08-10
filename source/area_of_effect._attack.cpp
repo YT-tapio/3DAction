@@ -23,6 +23,7 @@
 #include"status_holder_interface.h"
 #include"status.h"
 #include"status_container.h"
+#include"sound_manager.h"
 
 AreaOfEffectAttack::AreaOfEffectAttack(std::weak_ptr<ObjectBase> owner, 
 	std::string charge_anim,float min_coll_ratio, 
@@ -155,8 +156,11 @@ BehaviorStatus AreaOfEffectAttack::UpdateCharge()
 		rigid_body_->Active();
 		// エフェクトの再生
 		EffectManager::GetInstance().Play(effect_id_);
+		SoundManager::GetInstance().SetPos("area_of_effect", effect_pos_);
+		SoundManager::GetInstance().Play3DSound("area_of_effect");
 		// 次のステートへ
 		state_ = AreaOfEffectAttackState::kPlay;
+		
 	}
 	return BehaviorStatus::kRunning;
 }
@@ -169,6 +173,12 @@ BehaviorStatus AreaOfEffectAttack::UpdatePlay()
 		rigid_body_->NotActive();
 		EffectManager::GetInstance().End(effect_id_, EffectEndState::kTotal);
 	}
+	else
+	{
+		SoundManager::GetInstance().SetPos("area_of_effect", effect_pos_);
+		SoundManager::GetInstance().Play3DSound("area_of_effect");
+	}
+	
 	auto chara = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
 	//アニメーション終了時,completeを返す
 	if(chara->GetAnimator()->GetNowAnimName() != charge_anim_){ return BehaviorStatus::kComplete; }

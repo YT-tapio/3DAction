@@ -17,6 +17,11 @@ void SoundBase::Init()
 
 }
 
+void SoundBase::Update()
+{
+
+}
+
 void SoundBase::Play()
 {
 	PlaySoundMem(handle_, DX_PLAYTYPE_BACK);
