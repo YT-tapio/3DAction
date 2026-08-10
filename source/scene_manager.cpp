@@ -12,7 +12,7 @@
 #include"brain.h"
 #include"test_scene.h"
 #include"result.h"
-
+#include"sound_manager.h"
 void SceneManager::Update()
 {
 	ClearDrawScreen();
@@ -47,6 +47,7 @@ void SceneManager::End()
 
 SceneManager::SceneManager()
 {
+	SoundManager::GetInstance().Load();
 	scene_ = std::make_shared<Title>();
 	FPS::GetInstance();
 	InputManager::GetInstance();

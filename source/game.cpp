@@ -36,6 +36,7 @@
 #include"player_skill_ui_group.h"
 #include"scene_manager.h"
 #include"input_base.h"
+#include"sound_manager.h"
 
 Game::Game()
 	: SceneBase()
@@ -56,6 +57,7 @@ Game::Game()
 	DamageUIGroup::GetInstance().Awake();
 	StatModifireUIData::GetInstance().Load();
 	Init();
+	SoundManager::GetInstance().Play2DSound("game_bgm");
 }
 
 Game::~Game()

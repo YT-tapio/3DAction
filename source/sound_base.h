@@ -10,25 +10,20 @@ public:
 
 	virtual void Init();
 
-	void Play(const std::string& name);
+	void Play();
 
 	void Stop();
 
-
-protected:
-
-	/// <summary>
-	/// Ä¶‚·‚éî•ñ‚ğƒZƒbƒg‚·‚é
-	/// </summary>
-	virtual void SetPlayData(const std::string& name);
+	const std::string GetName() const;
 
 protected:
 
 	int handle_;
-	
+	int volume_;
+
+	std::string name_;
 
 private:
-
 	
 
 };

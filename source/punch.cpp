@@ -20,7 +20,7 @@
 #include"time.h"
 #include"effect_id.h"
 #include"effect_manager.h"
-
+#include"sound_manager.h"
 Punch::Punch(std::weak_ptr<ObjectBase> owner, VECTOR* pos,
 	std::string my_anim_name, float min_coll_ratio, float max_coll_ratio, std::shared_ptr<RigidBody> body,float damage_rate)
 	: AttackBase(owner, min_coll_ratio, max_coll_ratio,damage_rate)
@@ -94,6 +94,7 @@ void Punch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 	// タグが同じだと早期リターン
 	if (owner_tag == object_tag) { return; }
 	
+	
 	// タグが違う場合は相手にダメージを加える
 	// ownerがpalyerだったら
 	if (owner_tag == "player")
@@ -108,6 +109,8 @@ void Punch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 			// エフェクトの描画
 			EffectManager::GetInstance().Play(EffectID::kPunchHit);
 			EffectManager::GetInstance().SetPos(EffectID::kPunchHit, *pos_);
+			// パンチの音を発生
+			SoundManager::GetInstance().Play2DSound("punch_hit");
 			//printfDx("damage:%.2f\n",)
 		}
 		return;
@@ -121,6 +124,8 @@ void Punch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		{
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
 			takable_enemy->OnDamageFromEnemy(owner_status_container->GetPhysicalATK(), AttackType::kPhysical);
+			// パンチの音を発生
+			SoundManager::GetInstance().Play2DSound("punch_hit");
 		}
 		return;
 	}

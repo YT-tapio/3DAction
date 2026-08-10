@@ -1,0 +1,2 @@
+﻿name,data_file_path,"volume(persent,0 ～ 100)",loop
+avoid,data/sound/2D/avoid.mp3,100,0

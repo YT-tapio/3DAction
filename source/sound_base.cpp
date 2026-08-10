@@ -1,4 +1,5 @@
 #include<string>
+#include"DxLib.h"
 #include"sound_base.h"
 
 SoundBase::SoundBase()
@@ -8,7 +9,7 @@ SoundBase::SoundBase()
 
 SoundBase::~SoundBase()
 {
-
+	DeleteSoundMem(handle_);
 }
 
 void SoundBase::Init()
@@ -16,20 +17,17 @@ void SoundBase::Init()
 
 }
 
-void SoundBase::Play(const std::string& name)
+void SoundBase::Play()
 {
-	SetPlayData(name);
-
-	
+	PlaySoundMem(handle_, DX_PLAYTYPE_BACK);
 }
 
 void SoundBase::Stop()
 {
-
+	StopSoundMem(handle_);
 }
 
-void SoundBase::SetPlayData(const std::string& name)
+const std::string SoundBase::GetName() const
 {
-	// ‚±‚±‚Å‰¹‚Ìî•ñ‚ğæ“¾‚·‚é
-
+	return name_;
 }

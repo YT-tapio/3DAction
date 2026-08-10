@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\sound_2D.cpp" />
     <ClCompile Include="source\action_node.cpp" />
     <ClCompile Include="source\animation_2d_data.cpp" />
     <ClCompile Include="source\animator_2d.cpp" />
@@ -161,7 +162,9 @@
     <ClCompile Include="source\player_ui_group_interface.cpp" />
     <ClCompile Include="source\result.cpp" />
     <ClCompile Include="source\skill_ui_datas.cpp" />
+    <ClCompile Include="source\sound_3D.cpp" />
     <ClCompile Include="source\sound_base.cpp" />
+    <ClCompile Include="source\sound_manager.cpp" />
     <ClCompile Include="source\stat_modifire_ui_data.cpp" />
     <ClCompile Include="source\stat_modifire_ui_group.cpp" />
     <ClCompile Include="source\stat_modifires.cpp" />
@@ -295,6 +298,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\2d_gravity.h" />
+    <ClInclude Include="source\sound_2D.h" />
     <ClInclude Include="source\action_node.h" />
     <ClInclude Include="source\animation_2d_data.h" />
     <ClInclude Include="source\animator_2d.h" />
@@ -314,6 +318,8 @@
     <ClInclude Include="source\skill_type.h" />
     <ClInclude Include="source\skill_ui_data.h" />
     <ClInclude Include="source\skill_ui_datas.h" />
+    <ClInclude Include="source\sound_3D.h" />
+    <ClInclude Include="source\sound_manager.h" />
     <ClInclude Include="source\stat_modifire_ui_data.h" />
     <ClInclude Include="source\stat_modifire_ui_group.h" />
     <ClInclude Include="source\stat_modifire_group.h" />

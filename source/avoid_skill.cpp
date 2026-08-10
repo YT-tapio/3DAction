@@ -16,6 +16,7 @@
 #include"status.h"
 #include"status_container.h"
 #include"time.h"
+#include"sound_manager.h"
 
 AvoidSkill::AvoidSkill(std::weak_ptr<Player> owner,float speed,float stamina_consumption)
 	: SkillBase(owner,std::make_shared<Avoid>(owner),SkillType::kConstant,0.f)
@@ -61,6 +62,7 @@ void AvoidSkill::Update()
 		{
 			// スタミナを減らす
 			owner->GetStatusContainer()->StaminaDown(stamina_consumption_);
+			SoundManager::GetInstance().Play2DSound("avoid");
 			is_active_ = TRUE;
 			owner->GetAnimator()->PlayRequest("avoid");
 			owner->SetIsStop(TRUE);

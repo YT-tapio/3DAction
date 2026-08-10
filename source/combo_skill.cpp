@@ -17,6 +17,7 @@
 #include"FPS.h"
 #include"time.h"
 #include"skill_name.h"
+#include"sound_manager.h"
 
 ComboSkill::ComboSkill(std::weak_ptr<Player> owner,std::shared_ptr<BehaviorBase> behavior, std::unordered_map<int, std::pair<float,float>> approach_speed_ratio_mp,SkillType type, float cool_time)
 	: SkillBase(owner,behavior, type, cool_time)
@@ -63,6 +64,7 @@ void ComboSkill::Update()
 		Correction(combo_action);
 		cool_time_->ReSet();
 		can_use_ = FALSE;
+		SoundManager::GetInstance().Play2DSound("approach_enemy");
 	}
 	// printfDx("%.2f\n", cool_time_->GetRatio());
 	if (is_active_)
@@ -91,6 +93,7 @@ void ComboSkill::Update()
 			//printfDx("change\n");
 			VECTOR vel = VectorAssistant::VGetZero();
 			Correction(combo_action);
+			SoundManager::GetInstance().Play2DSound("approach_enemy");
 			//owner_.lock()->SetIsStop(TRUE);
 		}
 	}

@@ -48,6 +48,7 @@
 #include"time.h"
 #include"damage_ui_group.h"
 #include"player_ui_group_interface.h"
+#include"sound_manager.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name, std::shared_ptr<IPlayerUIGroup> player_ui_group)
 	: CharacterBase("player")
@@ -683,12 +684,15 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 			//printfDx("ジャスト回避\n");
 			time_->SetTimeScale(0.f, 0.15f);
 			rigid_body_->SetStop(0.15f);
+			SoundManager::GetInstance().Play2DSound("just_avoid");
 		}
-		
+
+		SoundManager::GetInstance().Play2DSound("avoid_collect");
 		// この瞬間にエフェクトを描画
 		EffectManager::GetInstance().Play(EffectID::kAvoidSuccess);
 		EffectManager::GetInstance().SetPos(EffectID::kAvoidSuccess,pos_);
 		EffectManager::GetInstance().End(EffectID::kAvoidSuccess, EffectEndState::kTotal);
+		
 		return;
 	}
 	on_damage_ = TRUE;
