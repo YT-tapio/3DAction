@@ -99,7 +99,6 @@ void Title::Update()
 		}
 	}
 	ObjectSetter::GetInstance().Update();
-
 }
 
 void Title::Draw()

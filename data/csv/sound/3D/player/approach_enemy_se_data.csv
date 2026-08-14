@@ -1,3 +1,3 @@
 ﻿name,data_file_path,"volume(persent,0 ～ 100)",loop,pos,,,radius(聞こえる範囲)
 ,,,,x,y,z,
-area_of_effect,data/sound/3D/area_of_effect.mp3,170,0,0,0,0,200
+approach_enemy,data/sound/3D/player/approach_enemy.mp3,200,0,0,0,0,200

@@ -1,13 +1,13 @@
 #pragma once
 #include"node_base.h"
 
-class ConditionTimer;
+class VariableTimer;
 
 class WaitNode : public NodeBase
 {
 public:
 
-	WaitNode(std::shared_ptr<NodeBase> node,const float time = 1.f);
+	WaitNode(std::shared_ptr<NodeBase> node, const float& min,const float& max);
 
 	~WaitNode() override;
 
@@ -25,5 +25,8 @@ public:
 private:
 
 	std::shared_ptr<NodeBase> node_;
-	std::shared_ptr<ConditionTimer> timer_;
+	std::shared_ptr<VariableTimer> timer_;
+
+	float min_;
+	float max_;
 };

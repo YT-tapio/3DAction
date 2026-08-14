@@ -20,7 +20,7 @@
 #include"status_holder_interface.h"
 #include"status.h"
 #include"status_container.h"
-
+#include"sound_manager.h"
 
 DoublePunch::DoublePunch(std::weak_ptr<ObjectBase> owner, std::string my_anim_name,
 	float min_coll_ratio, float max_coll_ratio,VECTOR* pos,float vertical,float radius,float damage_rate)
@@ -59,9 +59,16 @@ void DoublePunch::Entry()
 
 		// オーナーの位置を取得
 		owner_pos = character->GetPosition();
+
+		auto target_pos = character->GetAttackTargetPos();
+		// プレイヤーの方向に向ける
+		auto rot = VectorAssistant::VGetDir(target_pos, owner_pos);
+		rot.y = VectorAssistant::VGetTan(rot);
+		rot.x = 0.f;
+		rot.z = 0.f;
+		character->SetRotation(rot);
 		// 正面方向を取得
 		front_dir = character->GetFrontDir();
-	
 	}
 	rigid_body_->NotActive();
 	played_ = FALSE;
@@ -76,8 +83,14 @@ BehaviorStatus DoublePunch::Update()
 {
 	if (CheckCollActive())
 	{
-		rigid_body_->Active();
-		played_ = TRUE;
+		if (!played_)
+		{
+			rigid_body_->Active();
+			played_ = TRUE;
+			// 音の再生
+			SoundManager::GetInstance().SetPos("double_punch", pos_);
+			SoundManager::GetInstance().Play3DSound("double_punch");
+		}
 	}
 	else
 	{

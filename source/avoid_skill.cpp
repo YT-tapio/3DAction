@@ -62,7 +62,8 @@ void AvoidSkill::Update()
 		{
 			// スタミナを減らす
 			owner->GetStatusContainer()->StaminaDown(stamina_consumption_);
-			SoundManager::GetInstance().Play2DSound("avoid");
+			SoundManager::GetInstance().SetPos("avoid", owner->GetPosition());
+			SoundManager::GetInstance().Play3DSound("avoid");
 			is_active_ = TRUE;
 			owner->GetAnimator()->PlayRequest("avoid");
 			owner->SetIsStop(TRUE);

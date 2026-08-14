@@ -63,7 +63,8 @@ void ComboSkill::Update()
 		Correction(combo_action);
 		cool_time_->ReSet();
 		can_use_ = FALSE;
-		SoundManager::GetInstance().Play2DSound("approach_enemy");
+		SoundManager::GetInstance().SetPos("approach_enemy", owner_.lock()->GetPosition());
+		SoundManager::GetInstance().Play3DSound("approach_enemy");
 	}
 	// printfDx("%.2f\n", cool_time_->GetRatio());
 	if (is_active_)
@@ -92,7 +93,8 @@ void ComboSkill::Update()
 			//printfDx("change\n");
 			VECTOR vel = VectorAssistant::VGetZero();
 			Correction(combo_action);
-			SoundManager::GetInstance().Play2DSound("approach_enemy");
+			SoundManager::GetInstance().SetPos("approach_enemy", owner_.lock()->GetPosition());
+			SoundManager::GetInstance().Play3DSound("approach_enemy");
 			//owner_.lock()->SetIsStop(TRUE);
 		}
 	}

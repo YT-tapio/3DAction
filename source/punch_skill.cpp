@@ -83,7 +83,8 @@ void PunchSkill::Update()
 			owner->GetAnimator()->PlayRequest(my_anim_name_);	//ƒpƒ“ƒ`‚Ìanimation‚ðÄ¶‚ð‚¨Šè‚¢‚·‚é
 			VECTOR vel = VectorAssistant::VGetZero();
 			bool is_in_site = AttackCorrection::GetInstance().ApproachTheNearestEnemy(owner, vel, 18.5f, 0.45f);
-			SoundManager::GetInstance().Play2DSound("approach_enemy");
+			SoundManager::GetInstance().SetPos("approach_enemy", owner->GetPosition());
+			SoundManager::GetInstance().Play3DSound("approach_enemy");
 			cool_time_->ReSet();
 			owner->SetIsStop(TRUE);
 			can_use_ = FALSE;

@@ -110,7 +110,8 @@ void Punch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 			EffectManager::GetInstance().Play(EffectID::kPunchHit);
 			EffectManager::GetInstance().SetPos(EffectID::kPunchHit, *pos_);
 			// パンチの音を発生
-			SoundManager::GetInstance().Play2DSound("punch_hit");
+			SoundManager::GetInstance().SetPos("punch_hit", *pos_);
+			SoundManager::GetInstance().Play3DSound("punch_hit");
 			//printfDx("damage:%.2f\n",)
 		}
 		return;
@@ -125,7 +126,8 @@ void Punch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
 			takable_enemy->OnDamageFromEnemy(owner_status_container->GetPhysicalATK(), AttackType::kPhysical);
 			// パンチの音を発生
-			SoundManager::GetInstance().Play2DSound("punch_hit");
+			SoundManager::GetInstance().SetPos("punch_hit", *pos_);
+			SoundManager::GetInstance().Play3DSound("punch_hit");
 		}
 		return;
 	}

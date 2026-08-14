@@ -556,6 +556,7 @@ void Player::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 			if (!punch->CheckSameOwner(std::dynamic_pointer_cast<ObjectBase>(shared_from_this())))
 			{
 				animator_->PlayRequest("on_damage");
+				
 				can_move_ = FALSE;
 			}
 		}
@@ -684,21 +685,23 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 			//printfDx("ジャスト回避\n");
 			time_->SetTimeScale(0.f, 0.15f);
 			rigid_body_->SetStop(0.15f);
-			SoundManager::GetInstance().Play2DSound("just_avoid");
+			SoundManager::GetInstance().SetPos("just_avoid", pos_);
+			SoundManager::GetInstance().Play3DSound("just_avoid");
 		}
-
-		SoundManager::GetInstance().Play2DSound("avoid_collect");
+		SoundManager::GetInstance().SetPos("avoid_collect", pos_);
+		SoundManager::GetInstance().Play3DSound("avoid_collect");
 		// この瞬間にエフェクトを描画
 		EffectManager::GetInstance().Play(EffectID::kAvoidSuccess);
 		EffectManager::GetInstance().SetPos(EffectID::kAvoidSuccess,pos_);
 		EffectManager::GetInstance().End(EffectID::kAvoidSuccess, EffectEndState::kTotal);
-		
 		return;
 	}
 	on_damage_ = TRUE;
 	// ダメージ量をもらう
 	auto final_damage = status_container_->TakeDamage(damage,type);
 
+	// サウンドを再生
+	SoundManager::GetInstance().Play3DSound("palyer_on_damage");
 	// ui描画を行う
 	// 頭のpositionにしようかな
 	DamageUIGroup::GetInstance().SpawnPlayerDamageUI(head_pos_, final_damage);

@@ -4,6 +4,7 @@
 #include<fstream>
 #include<sstream>
 #include"csv_file_assistant.h"
+
 Sound2D::Sound2D(const std::string& file_path)
 {
 	LoadFile(file_path);

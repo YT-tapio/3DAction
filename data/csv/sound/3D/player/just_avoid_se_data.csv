@@ -1,0 +1,3 @@
+﻿name,data_file_path,"volume(persent,0 ～ 100)",loop,pos,,,radius(聞こえる範囲)
+,,,,x,y,z,
+just_avoid,data/sound/3D/player/just_avoid.mp3,200,0,0,0,0,200

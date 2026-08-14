@@ -1,6 +1,12 @@
 ﻿data_file_path
-data/csv/sound/3D/tackle_se_data.csv
-data/csv/sound/3D/enemy_tackle_voice_data.csv
-data/csv/sound/3D/area_of_effect_se_data.csv
-data/csv/sound/3D/enemy_jump_se_data.csv
-data/csv/sound/3D/stamp_se_data.csv
+data/csv/sound/3D/player/approach_enemy_se_data.csv
+data/csv/sound/3D/player/avoid_collect_se_data.csv
+data/csv/sound/3D/player/avoid_se_data.csv
+data/csv/sound/3D/player/just_avoid_se_data.csv
+data/csv/sound/3D/player/punch_hit_se_data.csv
+data/csv/sound/3D/enemy/tackle_se_data.csv
+data/csv/sound/3D/enemy/enemy_tackle_voice_data.csv
+data/csv/sound/3D/enemy/area_of_effect_se_data.csv
+data/csv/sound/3D/enemy/enemy_jump_se_data.csv
+data/csv/sound/3D/enemy/stamp_se_data.csv
+data/csv/sound/3D/enemy/enemy_double_punch_se_data.csv
