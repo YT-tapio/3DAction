@@ -7,6 +7,7 @@
 
 
 InputBase::InputBase()
+	: is_stop_(FALSE)
 {
 	
 }
@@ -24,6 +25,16 @@ void InputBase::Init()
 void InputBase::Update()
 {
 
+}
+
+void InputBase::Stop()
+{
+	is_stop_ = TRUE;
+}
+
+void InputBase::Start()
+{
+	is_stop_ = FALSE;
 }
 
 const bool InputBase::IsDash() const

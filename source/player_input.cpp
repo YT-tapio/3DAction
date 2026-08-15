@@ -60,6 +60,7 @@ const int PlayerInput::GetPlayerChangeNum(const int& current_player_id) const
 
 const bool PlayerInput::IsDash() const
 {
+	if (is_stop_) { return FALSE; }
 	// ダッシュに対応されているボタンを見る
 	// padはbボタン長押しで
 	for (auto& input : inputs_)
@@ -83,6 +84,7 @@ const bool PlayerInput::IsDash() const
 
 const bool PlayerInput::IsPunch() const
 {
+	if (is_stop_) { return FALSE; }
 	// 攻撃に対応されているボタンを見る
 	// padはbボタン長押しで
 	for (auto& input : inputs_)
@@ -110,6 +112,7 @@ const bool PlayerInput::IsPunch() const
 
 const bool PlayerInput::IsAvoid() const
 {
+	if (is_stop_) { return FALSE; }
 	// 攻撃に対応されているボタンを見る
 	// padはbボタン長押しで
 	for (auto& input : inputs_)
@@ -144,6 +147,7 @@ const bool PlayerInput::IsAvoid() const
 
 const bool PlayerInput::IsNormalSkill() const
 {
+	if (is_stop_) { return FALSE; }
 	// 攻撃に対応されているボタンを見る
 	// padはbボタン長押しで
 	for (auto& input : inputs_)
@@ -171,6 +175,7 @@ const bool PlayerInput::IsNormalSkill() const
 
 const bool PlayerInput::IsStrongSkill() const
 {
+	if (is_stop_) { return FALSE; }
 	// 攻撃に対応されているボタンを見る
 	// padはbボタン長押しで
 	for (auto& input : inputs_)
@@ -198,6 +203,7 @@ const bool PlayerInput::IsStrongSkill() const
 
 const bool PlayerInput::GoNextScene() const
 {
+	if (is_stop_) { return FALSE; }
 	for (auto& input : inputs_)
 	{
 		auto pad = std::dynamic_pointer_cast<Pad>(input);
@@ -223,6 +229,7 @@ const bool PlayerInput::GoNextScene() const
 
 const bool PlayerInput::GoResult() const
 {
+	if (is_stop_) { return FALSE; }
 	for (auto& input : inputs_)
 	{
 		auto pad = std::dynamic_pointer_cast<Pad>(input);
@@ -249,7 +256,7 @@ const bool PlayerInput::GoResult() const
 const VECTOR PlayerInput::GetMoveDir() const
 {
 	VECTOR move_dir = VectorAssistant::VGetZero();
-
+	if (is_stop_) { return move_dir; }
 	// 入力値を受け取る
 	for (auto& input : inputs_)
 	{
@@ -282,7 +289,7 @@ const VECTOR PlayerInput::GetMoveDir() const
 const VECTOR PlayerInput::GetCameraDir() const
 {
 	VECTOR input_move_camera_dir = VectorAssistant::VGetZero();
-
+	if (is_stop_) { return input_move_camera_dir; }
 	for (auto& input : inputs_)
 	{
 		auto pad = std::dynamic_pointer_cast<Pad>(input);
@@ -313,7 +320,7 @@ const VECTOR PlayerInput::GetCameraDir() const
 const VECTOR PlayerInput::GetCameraVelocity() const
 {
 	VECTOR input_move_camera_vel = VectorAssistant::VGetZero();
-
+	if (is_stop_) { return input_move_camera_vel; }
 	for (auto& input : inputs_)
 	{
 		auto pad = std::dynamic_pointer_cast<Pad>(input);
@@ -344,7 +351,6 @@ const VECTOR PlayerInput::GetCameraVelocity() const
 const VECTOR PlayerInput::MoveDirPC(std::shared_ptr<PC> pc) const
 {
 	VECTOR move_dir = VectorAssistant::VGetZero();
-
 	if (pc->GetPushingTimeKey(KeyConfig::move_front)		>= 0.f) { move_dir.y += 1.f; }
 	if (pc->GetPushingTimeKey(KeyConfig::move_back)		>= 0.f) { move_dir.y -= 1.f; }
 	if (pc->GetPushingTimeKey(KeyConfig::move_left)		>= 0.f) { move_dir.x -= 1.f; }
@@ -364,7 +370,6 @@ const VECTOR PlayerInput::MoveDirPad(std::shared_ptr<Pad> pad) const
 const VECTOR PlayerInput::CameraMoveDirPC(std::shared_ptr<PC> pc) const
 {
 	VECTOR camera_move_dir = VectorAssistant::VGetZero();
-
 	// 情報を受け取る
 	camera_move_dir = pc->GetMouseDir();
 

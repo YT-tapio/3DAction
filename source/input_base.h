@@ -14,6 +14,10 @@ public:
 
 	virtual void Update();
 
+	void Stop();
+
+	void Start();
+
 	virtual const bool IsDash() const;
 
 	virtual const bool IsPunch() const;
@@ -36,6 +40,7 @@ public:
 
 protected:
 
+	bool is_stop_;
 
 private:
 

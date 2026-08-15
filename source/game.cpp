@@ -37,6 +37,7 @@
 #include"scene_manager.h"
 #include"input_base.h"
 #include"sound_manager.h"
+#include"game_start_timer.h"
 
 Game::Game()
 	: SceneBase()
@@ -51,7 +52,7 @@ Game::Game()
 	player_ui_group_ = std::make_shared<PlayerUIGroup>();
 	player_skill_ui_group_ = std::make_shared<PlayerSkillUIGroup>();
 	no_shadow_objects_.push_back(std::make_shared<SkyDome>());
-	
+	game_start_timer_ = std::make_shared<GameStartTimer>();
 	EffectManager::GetInstance().Awake();
 	PlayerGroup::GetInstance().Awake(&camera_->dir_,player_ui_group_);
 	DamageUIGroup::GetInstance().Awake();
@@ -93,12 +94,13 @@ void Game::Init()
 	DamageUIGroup::GetInstance().Init();
 	camera_->Init();
 	shadow_map_->Init();
+	game_start_timer_->Init();
 }
 
 void Game::Update()
 {
 	auto player_input = InputManager::GetInstance().GetMainPlayerInput();
-
+	game_start_timer_->Update();
 	if (player_input != nullptr)
 	{
 		if (player_input->GoResult())

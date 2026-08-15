@@ -22,6 +22,10 @@ public:
 
 	void Update();
 
+	void StopAllInput();
+
+	void StartAllInput();
+
 	const std::shared_ptr<const InputBase> GetPlayer1Input() const;
 
 	const std::shared_ptr<const InputBase> GetPlayer2Input() const;

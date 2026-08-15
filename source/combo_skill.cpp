@@ -51,7 +51,6 @@ void ComboSkill::Update()
 			//printfDx("èIóπ\n");
 			can_use_ = TRUE;
 		}
-		
 	}
 
 	if (IsStartcomboAction(combo_action))

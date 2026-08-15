@@ -36,6 +36,22 @@ void InputManager::Update()
 	
 }
 
+void InputManager::StopAllInput()
+{
+	for (auto& input_id : input_id_mp_)
+	{
+		input_id.second->Stop();
+	}
+}
+
+void InputManager::StartAllInput()
+{
+	for (auto& input_id : input_id_mp_)
+	{
+		input_id.second->Start();  
+	}
+}
+
 const std::shared_ptr<const InputBase> InputManager::GetPlayer1Input() const
 {
 	std::shared_ptr<const InputBase> input = input_id_mp_.find(kPlayer1Id)->second;
