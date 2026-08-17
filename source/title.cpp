@@ -14,6 +14,7 @@
 #include<functional>
 #include"draw_2D.h"
 #include"screen_size.h"
+#include"fade.h"
 
 Title::Title()
 	: SceneBase()
@@ -95,10 +96,15 @@ void Title::Update()
 		if (player_input->GoNextScene())
 		{
 			//Physics::GetInstance().End();
-			SceneManager::GetInstance().LoadScene("game");
+			Fade::GetInstance().StartFadeIn(1.f, FadeColorType::kBlack);
 		}
 	}
-	ObjectSetter::GetInstance().Update();
+
+	if (Fade::GetInstance().IsFinished())
+	{
+		SceneManager::GetInstance().LoadScene("game");
+	}
+
 }
 
 void Title::Draw()

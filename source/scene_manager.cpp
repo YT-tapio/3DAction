@@ -13,6 +13,8 @@
 #include"test_scene.h"
 #include"result.h"
 #include"sound_manager.h"
+#include"fade.h"
+
 void SceneManager::Update()
 {
 	ClearDrawScreen();
@@ -22,10 +24,13 @@ void SceneManager::Update()
 	Debug::GetInstance().Reset();
 	Debug::GetInstance().Update();
 	scene_->Update();
+	Fade::GetInstance().Update();
 	scene_->Draw();
+	Fade::GetInstance().Draw();
 	DrawString(100, 860, "Esc‚ğ‰Ÿ‚·‚ÆƒQ[ƒ€I—¹", GetColor(255, 0, 0));
 	ScreenFlip();
 	FPS::GetInstance().Wait();
+	
 }
 
 bool SceneManager::LoadScene(const std::string& next_scene)
@@ -52,4 +57,5 @@ SceneManager::SceneManager()
 	FPS::GetInstance();
 	InputManager::GetInstance();
 	Brain::GetInstance();
+	Fade::GetInstance().Awake();
 }

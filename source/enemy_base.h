@@ -16,7 +16,7 @@ class EnemyBase : public CharacterBase, public IPhysicsEventReceiver,public ITak
 {
 public:
 
-	EnemyBase(const VECTOR& pos);
+	EnemyBase(const VECTOR& pos,bool* game_start);
 
 	virtual ~EnemyBase() override;
 
@@ -77,5 +77,6 @@ protected:
 
 private:
 
+	bool* game_start_;
 
 };

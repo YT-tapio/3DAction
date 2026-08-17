@@ -19,6 +19,7 @@ Camera::Camera()
 	far_					= 1000.f;
 	fov_					= RadianAssistant::TheNumRadian(kRad);
 	pos_					= VectorAssistant::VGetZero();
+	//pos_ = VGet(6,-1.f,-8.5f);
 	vel_					= VectorAssistant::VGetZero();
 	target_vel_		= VectorAssistant::VGetZero();
 	target_pos_		= VGet(0.f, 0.f, 25.f);

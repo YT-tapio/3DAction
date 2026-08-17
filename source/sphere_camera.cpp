@@ -72,8 +72,7 @@ void SphereCamera::Update()
 	target_to_camera_dist.z = (sinf(pitch_) * pitch_size);
 
 	future_pos_ = VAdd(*target_pos_, target_to_camera_dist);
-
-
+	//future_pos_ = VectorAssistant::VGetZero();
 	next_pos = Lerp::DampV(*pos_, future_pos_, 0.2f * FPS::GetInstance().GetDeltaTime() * 60.f);
 
 	vel_ = VAdd(vel_, VSub(next_pos, *pos_));

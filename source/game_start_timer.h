@@ -6,7 +6,7 @@ class GameStartTimer
 {
 public:
 
-	GameStartTimer();
+	GameStartTimer(bool* game_start);
 
 	~GameStartTimer();
 
@@ -20,6 +20,6 @@ private:
 
 	// タイマーと処理の終了
 	bool end_;
-
+	bool* game_start_;
 
 };

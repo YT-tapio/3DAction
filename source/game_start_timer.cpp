@@ -5,9 +5,10 @@
 #include"condition_timer.h"
 #include"input_manager.h"
 
-GameStartTimer::GameStartTimer()
+GameStartTimer::GameStartTimer(bool* game_start)
 	: timer_(std::make_shared<ConditionTimer>(3.f))
 	, end_(FALSE)
+	, game_start_(game_start)
 {
 	timer_->ReStart();
 	InputManager::GetInstance().StopAllInput();
@@ -39,8 +40,8 @@ void GameStartTimer::Update()
 
 		// スタート文字の表示
 
-
 		end_ = TRUE;
+		*game_start_ = TRUE;
 	}
 
 }

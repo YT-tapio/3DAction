@@ -38,27 +38,32 @@
 #include"input_base.h"
 #include"sound_manager.h"
 #include"game_start_timer.h"
+#include"fade.h"
 
 Game::Game()
 	: SceneBase()
 {
+	
 	AttackRangeGroup::GetInstance().Awake();
 	StatModifires::GetInstance().Awake();
+	EffectManager::GetInstance().Awake();
+	DamageUIGroup::GetInstance().Awake();
+	StatModifireUIData::GetInstance().Load();
+	game_start_ = FALSE;
 	camera_ = std::make_shared<Camera>();
 	shadow_map_ = std::make_shared<ShadowMap>();
-	objects_.push_back(std::make_shared<EnemyBase>(VGet(10, 0, 10)));
+	objects_.push_back(std::make_shared<EnemyBase>(VGet(0, 0, 0),&game_start_));
 	objects_.push_back(std::make_shared<Stage>());
 
 	player_ui_group_ = std::make_shared<PlayerUIGroup>();
 	player_skill_ui_group_ = std::make_shared<PlayerSkillUIGroup>();
 	no_shadow_objects_.push_back(std::make_shared<SkyDome>());
-	game_start_timer_ = std::make_shared<GameStartTimer>();
-	EffectManager::GetInstance().Awake();
+	game_start_timer_ = std::make_shared<GameStartTimer>(&game_start_);
 	PlayerGroup::GetInstance().Awake(&camera_->dir_,player_ui_group_);
-	DamageUIGroup::GetInstance().Awake();
-	StatModifireUIData::GetInstance().Load();
 	Init();
+	
 	SoundManager::GetInstance().Play2DSound("game_bgm");
+	Fade::GetInstance().StartFadeOut(2.f);
 }
 
 Game::~Game()
@@ -193,6 +198,7 @@ void Game::Draw()
 	DamageUIGroup::GetInstance().Draw();
 	if (Debug::GetInstance().GetIsDisp())
 	{
+		camera_->Debug();
 		PlayerGroup::GetInstance().Debug();
 		for (auto& obj : objects_)
 		{
@@ -200,7 +206,7 @@ void Game::Draw()
 		}
 		Physics::GetInstance().Debug();
 
-		camera_->Debug();
+		
 	}
 	
 	EffectManager::GetInstance().Draw();

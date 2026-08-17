@@ -49,9 +49,10 @@
 #include"damage_ui_group.h"
 #include"play_sound.h"
 
-EnemyBase::EnemyBase(const VECTOR& pos)
+EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start)
 	: CharacterBase("enemy")
 	, IPhysicsEventReceiver()
+	, game_start_(game_start)
 {
 	vel_ = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
@@ -266,21 +267,20 @@ void EnemyBase::Update()
 	if (status_container_->GetCurrentStatus().hp <= 0)
 	{
 		animator_->PlayRequest("death");
-		// printfDx("%s\n",animator_->GetNowAnimName().c_str());
 	}
 	else
 	{
 		// 一番近いプレイヤーの位置を取得
 		target_player_pos_ = PlayerGroup::GetInstance().MostNearPlayerPos(pos_);
 		VECTOR dir = VectorAssistant::VGetZero();
-		//dir_ = VectorAssistant::VGetZero();
-		// vel_ = dir;
 
 		double_punch_coll_pos_ = VAdd(pos_, VScale(dir_, 5.f));
 
 		rigid_body_->SetTargetVelocity(vel_);
-		behavior_tree_->Update();
-		//test_behavior_->Update();
+		if (*game_start_)
+		{
+			behavior_tree_->Update();
+		}
 	}
 	
 	animator_->Update(time_);
