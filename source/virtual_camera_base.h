@@ -8,6 +8,8 @@ public:
 
 	virtual ~VirtualCameraBase();
 
+	virtual void Awake();
+
 	virtual void Init();
 
 	/// @brief 独自のupdateを行い戻り値を返す
@@ -24,8 +26,8 @@ public:
 
 protected:
 
-	VECTOR* pos_;							// 自分の位置
-	VECTOR* target_pos_;				// 見る位置
+	VECTOR* main_camera_pos_;							// 自分の位置
+	VECTOR* main_camera_target_pos_;				// 見る位置
 	VECTOR vel_;						// 自分の移動量
 	VECTOR target_vel_;	// ターゲットの移動量
 

@@ -6,6 +6,7 @@
 #include"player.h"
 #include"enemy_base.h"
 #include"vector_assistant.h"
+#include"rigid_body.h"
 
 bool AttackCorrection::ApproachTheNearestEnemy(std::shared_ptr<Player> player, VECTOR& velocity, float speed, float move_ratio)
 {
@@ -19,6 +20,7 @@ bool AttackCorrection::ApproachTheNearestEnemy(std::shared_ptr<Player> player, V
 	{
 		auto enemy = std::dynamic_pointer_cast<EnemyBase>(object.lock());
 		if (enemy == nullptr) { continue; }
+		if (!enemy->GetRigidBody()->GetIsActive()) { continue; }
 		float dist_size = 0.f;
 		VECTOR enemy_pos = enemy->GetPosition();
 		dist_size = VSize(VSub(enemy_pos, my_pos));

@@ -795,6 +795,9 @@
     <ClCompile Include="source\roar.cpp">
       <Filter>ソース ファイル\behavior</Filter>
     </ClCompile>
+    <ClCompile Include="source\won_camera.cpp">
+      <Filter>ソース ファイル\camera\virtual_camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1360,6 +1363,9 @@
     </ClInclude>
     <ClInclude Include="source\roar.h">
       <Filter>ソース ファイル\behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\won_camera.h">
+      <Filter>ソース ファイル\camera\virtual_camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

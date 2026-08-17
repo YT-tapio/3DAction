@@ -54,6 +54,8 @@ public:
 
 	const VECTOR GetAttackTargetPos() const override;
 
+	const VECTOR GetCenterPos() const override;
+
 protected:
 
 	virtual void UpdateBone();

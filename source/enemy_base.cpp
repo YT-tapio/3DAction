@@ -51,6 +51,7 @@
 #include"play_sound.h"
 #include"roar.h"
 #include"just_one_node.h"
+#include"brain.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start)
 	: CharacterBase("enemy")
@@ -390,6 +391,14 @@ void EnemyBase::OnDamageFromPlayer(float damage,AttackType type)
 
 	// ‘Ì‚ðÔ‚­‚·‚é
 	hit_red_body_->Request(ChangeMethod::kLerp, 0.2f);
+
+	if (status_container_->GetCurrentStatus().hp <= 0)
+	{
+		Brain::GetInstance().ChangeCamera("won");
+		rigid_body_->NotActive();
+		animator_->PlayRequest("death");
+	}
+
 }
 
 const bool EnemyBase::GetOnGround() const
@@ -415,6 +424,12 @@ const float EnemyBase::GetDeltaTime() const
 const VECTOR EnemyBase::GetAttackTargetPos() const
 {
 	return target_player_pos_;
+}
+
+const VECTOR EnemyBase::GetCenterPos() const
+{
+	VECTOR center_pos = VAdd(pos_, VGet(0.f, 6.f, 0.f));
+	return center_pos;
 }
 
 void EnemyBase::UpdateBone()

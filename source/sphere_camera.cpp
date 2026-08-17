@@ -24,10 +24,10 @@ SphereCamera::~SphereCamera()
 
 }
 
-void SphereCamera::Init()
+void SphereCamera::Awake()
 {
-	VECTOR target_to_camera_dist		= VSub(*pos_, *target_pos_);
-	VECTOR target_pos_to_camera_dir		= VNorm(target_to_camera_dist);
+	VECTOR target_to_camera_dist = VSub(*main_camera_pos_, *main_camera_target_pos_);
+	VECTOR target_pos_to_camera_dir = VNorm(target_to_camera_dist);
 	// 真上
 	VECTOR above = VGet(0.f, 1.f, 0.f);
 
@@ -36,7 +36,12 @@ void SphereCamera::Init()
 	pitch_ = atan2f(target_pos_to_camera_dir.z, target_pos_to_camera_dir.x);
 	target_to_camera_dist_size_ = VSize(target_to_camera_dist);
 
-	target_vel_ = VSub(*center_pos_, *target_pos_);
+	target_vel_ = VSub(*center_pos_, *main_camera_target_pos_);
+}
+
+void SphereCamera::Init()
+{
+	
 }
 
 void SphereCamera::Update()
@@ -71,14 +76,14 @@ void SphereCamera::Update()
 	target_to_camera_dist.x = (cosf(pitch_) * pitch_size);
 	target_to_camera_dist.z = (sinf(pitch_) * pitch_size);
 
-	future_pos_ = VAdd(*target_pos_, target_to_camera_dist);
+	future_pos_ = VAdd(*main_camera_target_pos_, target_to_camera_dist);
 	//future_pos_ = VectorAssistant::VGetZero();
-	next_pos = Lerp::DampV(*pos_, future_pos_, 0.2f * FPS::GetInstance().GetDeltaTime() * 60.f);
+	next_pos = Lerp::DampV(*main_camera_pos_, future_pos_, 0.2f * FPS::GetInstance().GetDeltaTime() * 60.f);
 
-	vel_ = VAdd(vel_, VSub(next_pos, *pos_));
-	if (!VectorAssistant::IsSamePos(*center_pos_, *target_pos_))
+	vel_ = VAdd(vel_, VSub(next_pos, *main_camera_pos_));
+	if (!VectorAssistant::IsSamePos(*center_pos_, *main_camera_target_pos_))
 	{
-		target_vel_ = VSub(*center_pos_, *target_pos_);
+		target_vel_ = VSub(*center_pos_, *main_camera_target_pos_);
 	}
 	else
 	{
@@ -90,7 +95,7 @@ void SphereCamera::Update()
 void SphereCamera::MakeYawPitch()
 {
 	// 真上
-	VECTOR target_to_camera_dist = VSub(*pos_, *target_pos_);
+	VECTOR target_to_camera_dist = VSub(*main_camera_pos_, *main_camera_target_pos_);
 	VECTOR target_pos_to_camera_dir = VNorm(target_to_camera_dist);
 	VECTOR above = VGet(0.f, 1.f, 0.f);
 	// 角度を出す

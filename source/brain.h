@@ -21,11 +21,17 @@ public:
 
 	void Init();
 
-	void CreatePlaySceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos);
+	void CreatePlaySceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos, std::function<VECTOR()> enemy_center_pos, std::function<VECTOR()> enemy_dir);
 
 	void Update();
 
 	void DeleteVirtualCamera();
+
+	void ChangeCamera(const std::string& request_name);
+
+	void CollisionNotActive();
+
+	void CollisionActive();
 
 	const VECTOR GetVelocity() const;
 
@@ -39,10 +45,13 @@ private:
 	const std::string kSphere = "Sphere";
 
 	std::string now_camera_;
+	std::string before_camera_;
 
 	std::unordered_map<std::string, std::shared_ptr<VirtualCameraBase>> virtual_cameras_;
 
 	VECTOR vel_;
 	VECTOR target_vel_;
+
+	bool can_hit_;
 
 };

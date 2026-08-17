@@ -52,7 +52,17 @@ Game::Game()
 	game_start_ = FALSE;
 	camera_ = std::make_shared<Camera>();
 	shadow_map_ = std::make_shared<ShadowMap>();
-	objects_.push_back(std::make_shared<EnemyBase>(VGet(0, 0, 0),&game_start_));
+	std::shared_ptr<EnemyBase> enemy = std::make_shared<EnemyBase>(VGet(0, 0, 0), &game_start_);
+	get_enemy_pos_ = [enemy]()
+		{
+			return enemy->GetCenterPos();
+		}; 
+	
+	get_enemy_dir_ = [enemy]()
+		{
+			return enemy->GetFrontDir();
+		};
+	objects_.push_back(enemy);
 	objects_.push_back(std::make_shared<Stage>());
 
 	player_ui_group_ = std::make_shared<PlayerUIGroup>();
@@ -94,8 +104,7 @@ void Game::Init()
 		obj->Init();
 	}
 	player_ui_group_->Init();
-
-	Brain::GetInstance().CreatePlaySceneVirtualCamera(camera_->GetPos(), camera_->GetTargetPos());
+	Brain::GetInstance().CreatePlaySceneVirtualCamera(camera_->GetPos(), camera_->GetTargetPos(), get_enemy_pos_, get_enemy_dir_);
 	DamageUIGroup::GetInstance().Init();
 	camera_->Init();
 	shadow_map_->Init();

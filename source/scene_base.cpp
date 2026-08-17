@@ -1,6 +1,7 @@
 #include<iostream>
 #include"DxLib.h"
 #include"scene_base.h"
+#include<functional>
 #include"brain.h"
 
 SceneBase::SceneBase()

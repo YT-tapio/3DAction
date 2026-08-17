@@ -1,5 +1,6 @@
 #include<iostream>
 #include<unordered_map>
+#include<functional>
 #include"DxLib.h"
 #include"scene_manager.h"
 #include"scene_base.h"

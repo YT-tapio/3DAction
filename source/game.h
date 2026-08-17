@@ -38,6 +38,9 @@ private:
 	// ‰e‚ª‚Â‚©‚È‚¢‚à‚Ì
 	std::vector<std::shared_ptr<ObjectBase>> no_shadow_objects_;
 
+	std::function<VECTOR()> get_enemy_pos_;
+	std::function<VECTOR()> get_enemy_dir_;
+
 	bool game_start_;
 	bool is_finished_fade_;
 };

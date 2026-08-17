@@ -82,6 +82,11 @@ const VECTOR CharacterBase::GetVelocity() const
 	return vel_;
 }
 
+const VECTOR CharacterBase::GetCenterPos() const
+{
+	return VectorAssistant::VGetZero();
+}
+
 std::shared_ptr<AnimatorBase> CharacterBase::GetAnimator()
 {
 	return animator_;

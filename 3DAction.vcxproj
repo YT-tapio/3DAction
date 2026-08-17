@@ -300,9 +300,11 @@
     <ClCompile Include="source\stage.cpp" />
     <ClCompile Include="source\player.cpp" />
     <ClCompile Include="source\wait_node.cpp" />
+    <ClCompile Include="source\won_camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\2d_gravity.h" />
+    <ClInclude Include="source\won_camera.h" />
     <ClInclude Include="source\fade.h" />
     <ClInclude Include="source\fade_color_type.h" />
     <ClInclude Include="source\game_start_timer.h" />

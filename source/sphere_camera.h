@@ -11,6 +11,8 @@ public:
 
 	~SphereCamera()override;
 
+	void Awake() override;
+
 	void Init() override;
 
 	void Update() override;

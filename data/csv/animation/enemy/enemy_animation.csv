@@ -10,4 +10,4 @@ charge,data/model/enemy/zako/animation/Charge.mv1,0,0.65,4,0,-1,nothing
 tackle,data/model/enemy/zako/animation/tackle.mv1,0,1,7,1,-1,nothing
 charge_tackle,data/model/enemy/zako/animation/charge_tackle.mv1,0,0.65,6,0,-1,nothing
 death,data/model/enemy/zako/animation/enemy_zako_death.mv1,0,0.5,1000,0,-1,nothing
-roar,data/model/enemy/zako/animation/roar.mv1,0,0.5,10,0,-1,noothing
+roar,data/model/enemy/zako/animation/roar.mv1,0,0.73,10,0,-1,noothing

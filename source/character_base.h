@@ -35,6 +35,8 @@ public:
 
 	const VECTOR GetVelocity() const;
 
+	virtual const VECTOR GetCenterPos() const;
+
 	std::shared_ptr<AnimatorBase> GetAnimator();
 
 protected:

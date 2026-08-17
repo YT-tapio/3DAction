@@ -4,8 +4,8 @@
 
 VirtualCameraBase::VirtualCameraBase(VECTOR* pos,VECTOR* target_pos)
 {
-	pos_ = pos;
-	target_pos_ = target_pos;
+	main_camera_pos_ = pos;
+	main_camera_target_pos_ = target_pos;
 	vel_		= VectorAssistant::VGetZero();
 	target_vel_ = VectorAssistant::VGetZero();
 	is_active_ = FALSE;
@@ -20,6 +20,11 @@ VirtualCameraBase::~VirtualCameraBase()
 void VirtualCameraBase::Init()
 {
 	
+}
+
+void VirtualCameraBase::Awake()
+{
+
 }
 
 void VirtualCameraBase::Update()

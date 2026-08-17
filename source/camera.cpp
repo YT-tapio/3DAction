@@ -7,6 +7,7 @@
 #include"vector_assistant.h"
 #include"color.h"
 #include"debug.h"
+#include<functional>
 #include"brain.h"
 #include"rigid_body.h"
 #include"sphere.h"
