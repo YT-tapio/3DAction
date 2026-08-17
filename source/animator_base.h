@@ -45,6 +45,8 @@ public:
 
 	const bool GetIsBlending() const;
 
+	const bool GetIsEnd(const std::string name) const;
+
 	const std::string GetNowAnimName() const;
 
 protected:

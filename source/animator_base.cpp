@@ -239,6 +239,15 @@ const bool AnimatorBase::GetIsBlending() const
 	return is_blending_;
 }
 
+const bool AnimatorBase::GetIsEnd(const std::string name) const
+{
+	if (name != now_anim_name_) { return FALSE; }
+	auto data = animation_datas_.find(name);
+	if (data == animation_datas_.end()) { return FALSE; }
+	bool is_end = data->second.play_time == data->second.total_time;
+	return is_end;
+}
+
 const std::string AnimatorBase::GetNowAnimName() const
 {
 	return now_anim_name_;

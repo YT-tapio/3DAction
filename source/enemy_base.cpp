@@ -32,6 +32,7 @@
 #include"color.h"
 #include"node_base.h"
 #include"composite_node.h"
+#include"selector_node.h"
 #include"sequence_node.h"
 #include"random_node.h"
 #include"branch_node.h"
@@ -48,6 +49,8 @@
 #include"hit_red_body.h"
 #include"damage_ui_group.h"
 #include"play_sound.h"
+#include"roar.h"
+#include"just_one_node.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start)
 	: CharacterBase("enemy")
@@ -213,9 +216,14 @@ void EnemyBase::Init()
 		return dist_to_player > 10.f;
 	};
 	
-	std::shared_ptr<NodeBase> first_node = std::make_shared<BranchNode>(nodes_,
+	std::shared_ptr<NodeBase> action_branch_node = std::make_shared<BranchNode>(nodes_,
 		condition);
-	
+	std::shared_ptr<NodeBase> roar_node = std::make_shared<JustOneNode>(std::make_shared<Roar>(obj_mine));
+	std::vector<std::shared_ptr<NodeBase>> first_nodes;
+	first_nodes.emplace_back(roar_node);
+	first_nodes.emplace_back(action_branch_node);
+	std::shared_ptr<NodeBase> first_node = std::make_shared<SelectorNode>(first_nodes);
+	//std::shared_ptr<NodeBase> first_node = std::make_shared<BranchNode>()
 	/*
 	* std::shared_ptr<NodeBase> first_node = chase_node;
 	*/

@@ -23,8 +23,15 @@ void SceneManager::Update()
 	InputManager::GetInstance().Update();
 	Debug::GetInstance().Reset();
 	Debug::GetInstance().Update();
-	scene_->Update();
-	Fade::GetInstance().Update();
+	if (!is_change_)
+	{
+		scene_->Update();
+		Fade::GetInstance().Update();
+	}
+	else
+	{
+		is_change_ = FALSE;
+	}
 	scene_->Draw();
 	Fade::GetInstance().Draw();
 	DrawString(100, 860, "Esc‚ğ‰Ÿ‚·‚ÆƒQ[ƒ€I—¹", GetColor(255, 0, 0));
@@ -42,6 +49,7 @@ bool SceneManager::LoadScene(const std::string& next_scene)
 	if (next_scene == "result") { scene_ = std::make_shared<Result>(); }
 
 	scene_->Init();
+	is_change_ = TRUE;
 	return TRUE;
 }
 
@@ -58,4 +66,5 @@ SceneManager::SceneManager()
 	InputManager::GetInstance();
 	Brain::GetInstance();
 	Fade::GetInstance().Awake();
+	is_change_ = FALSE;
 }

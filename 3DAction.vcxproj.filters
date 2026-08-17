@@ -792,6 +792,9 @@
     <ClCompile Include="source\just_one_node.cpp">
       <Filter>ソース ファイル\behavior_tree\node\just_one_node</Filter>
     </ClCompile>
+    <ClCompile Include="source\roar.cpp">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1354,6 +1357,9 @@
     </ClInclude>
     <ClInclude Include="source\just_one_node.h">
       <Filter>ソース ファイル\behavior_tree\node\just_one_node</Filter>
+    </ClInclude>
+    <ClInclude Include="source\roar.h">
+      <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

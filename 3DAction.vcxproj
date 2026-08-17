@@ -150,6 +150,7 @@
     <ClCompile Include="source\game_start_timer.cpp" />
     <ClCompile Include="source\just_one_node.cpp" />
     <ClCompile Include="source\play_sound.cpp" />
+    <ClCompile Include="source\roar.cpp" />
     <ClCompile Include="source\sound_2D.cpp" />
     <ClCompile Include="source\action_node.cpp" />
     <ClCompile Include="source\animation_2d_data.cpp" />
@@ -307,6 +308,7 @@
     <ClInclude Include="source\game_start_timer.h" />
     <ClInclude Include="source\just_one_node.h" />
     <ClInclude Include="source\play_sound.h" />
+    <ClInclude Include="source\roar.h" />
     <ClInclude Include="source\sound_2D.h" />
     <ClInclude Include="source\action_node.h" />
     <ClInclude Include="source\animation_2d_data.h" />

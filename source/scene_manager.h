@@ -26,4 +26,6 @@ private:
 private:
 
 	std::shared_ptr<SceneBase> scene_;
+
+	bool is_change_;
 };

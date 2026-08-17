@@ -61,9 +61,9 @@ Game::Game()
 	game_start_timer_ = std::make_shared<GameStartTimer>(&game_start_);
 	PlayerGroup::GetInstance().Awake(&camera_->dir_,player_ui_group_);
 	Init();
-	
+	is_finished_fade_ = FALSE;
 	SoundManager::GetInstance().Play2DSound("game_bgm");
-	Fade::GetInstance().StartFadeOut(2.f);
+	Fade::GetInstance().StartFadeOut(3.f);
 }
 
 Game::~Game()
@@ -105,7 +105,17 @@ void Game::Init()
 void Game::Update()
 {
 	auto player_input = InputManager::GetInstance().GetMainPlayerInput();
-	game_start_timer_->Update();
+	
+	if (Fade::GetInstance().IsFinished())
+	{
+		is_finished_fade_ = TRUE;
+	}
+
+	if (is_finished_fade_)
+	{
+		game_start_timer_->Update();
+	}
+
 	if (player_input != nullptr)
 	{
 		if (player_input->GoResult())

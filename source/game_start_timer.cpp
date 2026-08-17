@@ -6,7 +6,7 @@
 #include"input_manager.h"
 
 GameStartTimer::GameStartTimer(bool* game_start)
-	: timer_(std::make_shared<ConditionTimer>(3.f))
+	: timer_(std::make_shared<ConditionTimer>(1.f))
 	, end_(FALSE)
 	, game_start_(game_start)
 {
@@ -31,7 +31,6 @@ void GameStartTimer::Update()
 {
 	if (end_) { return; }
 	timer_->Update();
-
 	if (timer_->GetIsEnd())
 	{
 		// ƒQ[ƒ€‚ğŠJn

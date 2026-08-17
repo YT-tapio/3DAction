@@ -19,5 +19,5 @@ private:
 
 	// start‚Ìnode‚ğ‚Â
 	std::shared_ptr<NodeBase> node_;
-
+	bool is_first_;
 };

@@ -17,6 +17,8 @@ public:
 
 	void End();
 
+	void AllStop();
+	
 	void Play2DSound(const std::string& name);
 
 	void Play3DSound(const std::string& name);

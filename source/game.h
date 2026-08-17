@@ -39,4 +39,5 @@ private:
 	std::vector<std::shared_ptr<ObjectBase>> no_shadow_objects_;
 
 	bool game_start_;
+	bool is_finished_fade_;
 };
