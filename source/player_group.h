@@ -5,6 +5,7 @@ class Player;
 class IPlayerUIGroup;
 class PlayerSkillUIGroup;
 class EnemyBase;
+class IPlayerObserver;
 
 class PlayerGroup
 {
@@ -18,6 +19,8 @@ public:
 
 	PlayerGroup(const PlayerGroup&) = delete;
 	PlayerGroup& operator = (const PlayerGroup&) = delete;
+
+	void AddPlayerObserver(IPlayerObserver* observer);
 
 	void Awake(VECTOR* camera_dir, std::shared_ptr<IPlayerUIGroup> player_ui_group,std::shared_ptr<EnemyBase> enemy);
 

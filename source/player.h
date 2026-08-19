@@ -18,6 +18,7 @@ class BehaviorBase;
 class StatusContainer;
 class IPlayerUIGroup;
 class ConditionTimer;
+class IPlayerObserver;
 
 class Player : public CharacterBase , public IPhysicsEventReceiver
 	,public ITakableHealPlayer,public ITakableDamageEnemy,public IInputChange,public IStatusHolder,public IEnemyObserver
@@ -27,6 +28,8 @@ public:
 	Player(VECTOR* camera_dir, std::shared_ptr<const InputBase> input,const std::string name,std::shared_ptr<IPlayerUIGroup> player_ui_group);
 
 	~Player() override;
+
+	void AddObserver(IPlayerObserver* observer);
 
 	void Init() override;
 
@@ -126,6 +129,8 @@ private:
 
 private:
 	
+	std::vector<IPlayerObserver*> observers_;
+
 	std::shared_ptr<RigidBody> rigid_body_;		// 
 	std::shared_ptr<const InputBase> input_;		// 
 	std::shared_ptr<CheckMyArea> my_area_;		// 

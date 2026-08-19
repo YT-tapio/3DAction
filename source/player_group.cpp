@@ -23,6 +23,14 @@ PlayerGroup::PlayerGroup()
 	
 }
 
+void PlayerGroup::AddPlayerObserver(IPlayerObserver* observer)
+{
+	for (auto& player : players_)
+	{
+		player->AddObserver(observer);
+	}
+}
+
 void PlayerGroup::Awake(VECTOR* camera_dir,std::shared_ptr<IPlayerUIGroup> player_ui_group,std::shared_ptr<EnemyBase> enemy)
 {
 	current_player_head_pos_ = VectorAssistant::VGetZero();

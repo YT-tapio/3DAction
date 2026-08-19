@@ -11,12 +11,16 @@
 #include"csv_file_assistant.h"
 #include"lerp.h"
 #include"fps.h"
+
 WonUI::WonUI()
 	: base_pos_(VectorAssistant::VGetZero())
 	, back_ground_size_(VectorAssistant::VGetZero())
 	, base_size_(1.f)
-	, target_back_ground_blend_num_(0)
-	, current_back_ground_blend_num_(0)
+	, just_avoid_num_(0)
+	, avoid_collect_num_(0)
+	, enemy_take_most_damage_(0.f)
+	, target_back_ground_blend_num_(0.f)
+	, current_back_ground_blend_num_(0.f)
 	, is_active_(FALSE)
 {
 	LoadFile();
@@ -31,7 +35,7 @@ WonUI::~WonUI()
 
 void WonUI::Init()
 {
-
+	avoid_collect_num_ = 0;
 }
 
 void WonUI::Update()
@@ -49,11 +53,26 @@ void WonUI::Draw()
 	DrawWonImage();
 }
 
+void WonUI::OnTakeDamage(const float& damage)
+{
+	if (damage > enemy_take_most_damage_) { enemy_take_most_damage_ = damage; }
+}
+
 void WonUI::OnEnemyDeath()
 {
 	// ここでタイマーの起動を行う描画させる
 	is_active_ = TRUE;
 	timer_->ReStart();
+}
+
+void WonUI::OnPlayerJustAvoid()
+{
+	just_avoid_num_++;
+}
+
+void WonUI::OnPlayerAvoidCollect()
+{
+	avoid_collect_num_++;
 }
 
 void WonUI::LoadFile()
@@ -103,7 +122,7 @@ void WonUI::DrawWonImage()
 
 void WonUI::DrawAvoidCollectNum()
 {
-	//Draw2D::Box(won_image_pos_, 250, 180, GetColor(255, 255, 255), TRUE);
+	Draw2D::Box(won_image_pos_, 250, 180, GetColor(255, 255, 255), TRUE);
 }
 
 void WonUI::DrawMostTakeDamageEnemy()

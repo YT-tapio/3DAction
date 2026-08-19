@@ -813,6 +813,9 @@
     <ClCompile Include="source\lose_camera.cpp">
       <Filter>ソース ファイル\camera\virtual_camera</Filter>
     </ClCompile>
+    <ClCompile Include="source\player_observer_interface.cpp">
+      <Filter>ソース ファイル\interface\observer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1390,6 +1393,9 @@
     </ClInclude>
     <ClInclude Include="source\lose_camera.h">
       <Filter>ソース ファイル\camera\virtual_camera</Filter>
+    </ClInclude>
+    <ClInclude Include="source\player_observer_interface.h">
+      <Filter>ソース ファイル\interface\observer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

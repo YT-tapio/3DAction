@@ -51,6 +51,7 @@
 #include"sound_manager.h"
 #include"condition_timer.h"
 #include"brain.h"
+#include"player_observer_interface.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name, std::shared_ptr<IPlayerUIGroup> player_ui_group)
 	: CharacterBase("player")
@@ -102,6 +103,11 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 Player::~Player()
 {
 	
+}
+
+void Player::AddObserver(IPlayerObserver* observer)
+{
+	observers_.push_back(observer);
 }
 
 void Player::Init()
@@ -704,6 +710,12 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 			rigid_body_->SetStop(0.15f);
 			SoundManager::GetInstance().SetPos("just_avoid", pos_);
 			SoundManager::GetInstance().Play3DSound("just_avoid");
+
+			for (auto& observer : observers_)
+			{
+				observer->OnPlayerJustAvoid();
+			}
+
 		}
 		SoundManager::GetInstance().SetPos("avoid_collect", pos_);
 		SoundManager::GetInstance().Play3DSound("avoid_collect");
@@ -711,6 +723,12 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 		EffectManager::GetInstance().Play(EffectID::kAvoidSuccess);
 		EffectManager::GetInstance().SetPos(EffectID::kAvoidSuccess,pos_);
 		EffectManager::GetInstance().End(EffectID::kAvoidSuccess, EffectEndState::kTotal);
+		
+		for (auto& observer : observers_)
+		{
+			observer->OnPlayerAvoidCollect();
+		}
+
 		return;
 	}
 	on_damage_ = TRUE;

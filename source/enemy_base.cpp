@@ -394,6 +394,11 @@ void EnemyBase::OnDamageFromPlayer(float damage,AttackType type)
 {
 	auto final_damage = status_container_->TakeDamage(damage,type);
 
+	for (auto& observer : observers_)
+	{
+		observer->OnTakeDamage(final_damage);
+	}
+
 	DamageUIGroup::GetInstance().SpawnEnemyDamageUI(VAdd(pos_,VGet(0.f,5.f,0.f)),final_damage);
 
 	// ‘Ì‚ğÔ‚­‚·‚é
