@@ -6,6 +6,7 @@
 #include"input_change_interface.h"
 #include"status_holder_interface.h"
 #include"skill_type.h"
+#include"enemy_observer_interface.h"
 
 enum class AttackType;
 class RigidBody;
@@ -16,9 +17,10 @@ class ObjectBase;
 class BehaviorBase;
 class StatusContainer;
 class IPlayerUIGroup;
+class ConditionTimer;
 
 class Player : public CharacterBase , public IPhysicsEventReceiver
-	,public ITakableHealPlayer,public ITakableDamageEnemy,public IInputChange,public IStatusHolder
+	,public ITakableHealPlayer,public ITakableDamageEnemy,public IInputChange,public IStatusHolder,public IEnemyObserver
 {
 public:
 
@@ -61,6 +63,8 @@ public:
 	void OnDamageFromEnemy(float damage,AttackType type) override;
 
 	void InputChange(std::shared_ptr<InputBase> input) override;
+
+	void OnEnemyDeath() override;
 
 	VECTOR* GetHeadPos();
 
@@ -132,6 +136,8 @@ private:
 	std::shared_ptr<StatusContainer> status_container_;
 	std::shared_ptr<IPlayerUIGroup> player_ui_group_;
 
+	std::shared_ptr<ConditionTimer> enemy_death_offset_timer_;	// ŠÔ‚ª‚½‚Á‚Ä‚©‚ç“G‚ª€‚ñ‚¾‚Æ‚«‚Ìˆ—‚ğs‚¤
+
 	VECTOR* camera_dir_;
 	VECTOR right_hand_pos_;
 	VECTOR left_hand_pos_;
@@ -159,5 +165,5 @@ private:
 	bool can_move_;		// ˆÚ“®‚Ì‹–‰Â
 	bool is_stop_;		// ‘€ì‚ğ‚³‚¹‚È‚¢‚½‚ß‚Ìƒtƒ‰ƒO
 	bool is_attack_target_in_range_;		// UŒ‚‘ÎÛ‚ª”ÍˆÍ“à‚É‚¢‚é‚Ì‚©
-
+	bool is_death_enemy_;
 };

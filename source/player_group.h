@@ -4,6 +4,7 @@
 class Player;
 class IPlayerUIGroup;
 class PlayerSkillUIGroup;
+class EnemyBase;
 
 class PlayerGroup
 {
@@ -18,7 +19,7 @@ public:
 	PlayerGroup(const PlayerGroup&) = delete;
 	PlayerGroup& operator = (const PlayerGroup&) = delete;
 
-	void Awake(VECTOR* camera_dir, std::shared_ptr<IPlayerUIGroup> player_ui_group);
+	void Awake(VECTOR* camera_dir, std::shared_ptr<IPlayerUIGroup> player_ui_group,std::shared_ptr<EnemyBase> enemy);
 
 	void Init(std::shared_ptr<PlayerSkillUIGroup> skill_ui_group);
 
@@ -28,11 +29,15 @@ public:
 
 	void LateUpdate();
 
+	void Stop();
+
 	void Draw();
 
 	void Debug();
 
 	VECTOR* GetCurrentPlayerHeadPos();
+
+	VECTOR* GetCurrentPlayerFrontDir();
 
 	/// <summary>
 	/// à¯êîÇ…àÍî‘ãﬂÇ¢playerÇÃà íuÇï‘Ç∑
@@ -66,13 +71,14 @@ private:
 
 	PlayerGroup();
 
-	void CheckCurrentPlayerHeadPos();
+	void CheckCurrentPlayerInfo();
 
 private:
 
 	std::vector<std::shared_ptr<Player>> players_;
 
 	VECTOR current_player_head_pos_;
+	VECTOR current_player_front_dir_;
 	VECTOR* camera_dir_;
 
 	int current_player_skill_id_;

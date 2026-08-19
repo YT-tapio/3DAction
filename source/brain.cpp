@@ -18,6 +18,7 @@ void Brain::CreatePlaySceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos,
 {
 	//virtual_cameras_[kTracking] = std::make_shared<TrackingCamera>(PlayerGroup::GetInstance().GetCurrentPlayerHeadPos(), camera_pos, target_pos);
 	virtual_cameras_[kSphere] = std::make_shared<SphereCamera>(PlayerGroup::GetInstance().GetCurrentPlayerHeadPos(), camera_pos, target_pos);
+	
 	virtual_cameras_["won"] = std::make_shared<WonCamera>(camera_pos, target_pos,enemy_center_pos,enemy_dir);
 	//virtual_cameras_[kTracking]->Init();
 	
@@ -27,7 +28,7 @@ void Brain::CreatePlaySceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos,
 	}
 
 	now_camera_ = kSphere;
-	now_camera_ = kSphere;
+	before_camera_ = kSphere;
 }
 
 void Brain::Update()

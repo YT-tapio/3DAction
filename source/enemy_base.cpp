@@ -52,6 +52,8 @@
 #include"roar.h"
 #include"just_one_node.h"
 #include"brain.h"
+#include"sound_manager.h"
+#include"enemy_observer_interface.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start)
 	: CharacterBase("enemy")
@@ -82,6 +84,11 @@ EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start)
 EnemyBase::~EnemyBase()
 {
 
+}
+
+void EnemyBase::AddObserver(IEnemyObserver* observer)
+{
+	observers_.push_back(observer);
 }
 
 void EnemyBase::Init()
@@ -394,9 +401,7 @@ void EnemyBase::OnDamageFromPlayer(float damage,AttackType type)
 
 	if (status_container_->GetCurrentStatus().hp <= 0)
 	{
-		Brain::GetInstance().ChangeCamera("won");
-		rigid_body_->NotActive();
-		animator_->PlayRequest("death");
+		Death();
 	}
 
 }
@@ -440,4 +445,17 @@ void EnemyBase::UpdateBone()
 	MATRIX hand_mat = MV1GetFrameLocalWorldMatrix(handle_, hand_bone_num);
 	VECTOR right_hand_pos = VectorAssistant::VGetPositionFromMatrix(hand_mat);
 	right_hand_pos_ = right_hand_pos;
+}
+
+void EnemyBase::Death()
+{
+	Brain::GetInstance().ChangeCamera("won");
+	rigid_body_->NotActive();
+	animator_->PlayRequest("death");
+	SoundManager::GetInstance().Stop("game_bgm");
+
+	for (auto observer : observers_)
+	{
+		observer->OnEnemyDeath();
+	}
 }

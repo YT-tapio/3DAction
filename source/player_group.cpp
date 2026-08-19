@@ -16,13 +16,14 @@
 #include"player_ui_group.h"
 #include"skill_type.h"
 #include"player_skill_ui_group.h"
+#include"enemy_base.h"
 
 PlayerGroup::PlayerGroup()
 {
 	
 }
 
-void PlayerGroup::Awake(VECTOR* camera_dir,std::shared_ptr<IPlayerUIGroup> player_ui_group)
+void PlayerGroup::Awake(VECTOR* camera_dir,std::shared_ptr<IPlayerUIGroup> player_ui_group,std::shared_ptr<EnemyBase> enemy)
 {
 	current_player_head_pos_ = VectorAssistant::VGetZero();
 	camera_dir_ = camera_dir;
@@ -31,6 +32,12 @@ void PlayerGroup::Awake(VECTOR* camera_dir,std::shared_ptr<IPlayerUIGroup> playe
 	//players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer3Input(), "attacker2"));
 	players_.push_back(std::make_shared<Player>(camera_dir_, InputManager::GetInstance().GetPlayer1Input(), "attacker",player_ui_group));
 	
+
+	for (auto player : players_)
+	{
+		enemy->AddObserver(player.get());
+	}
+
 }
 
 void PlayerGroup::Init(std::shared_ptr<PlayerSkillUIGroup> skill_ui_group)
@@ -61,8 +68,8 @@ void PlayerGroup::Init(std::shared_ptr<PlayerSkillUIGroup> skill_ui_group)
 
 void PlayerGroup::Update()
 {
-	CheckCurrentPlayerHeadPos();
-
+	CheckCurrentPlayerInfo();
+	
 	for (auto& player : players_)
 	{
 		player->Update();
@@ -80,7 +87,14 @@ void PlayerGroup::LateUpdate()
 	{
 		player->LateUpdate();
 	}
+}
 
+void PlayerGroup::Stop()
+{
+	for (auto& player : players_)
+	{
+		player->SetIsStop(TRUE);
+	}
 }
 
 void PlayerGroup::Draw()
@@ -102,6 +116,11 @@ void PlayerGroup::Debug()
 VECTOR* PlayerGroup::GetCurrentPlayerHeadPos()
 {
 	return &current_player_head_pos_;
+}
+
+VECTOR* PlayerGroup::GetCurrentPlayerFrontDir()
+{
+	return &current_player_front_dir_;
 }
 
 VECTOR PlayerGroup::MostNearPlayerPos(const VECTOR& pos)
@@ -142,13 +161,14 @@ const bool PlayerGroup::GetCurrentPlayerSkillCanUse(SkillType type) const
 	return TRUE;
 }
 
-void PlayerGroup::CheckCurrentPlayerHeadPos()
+void PlayerGroup::CheckCurrentPlayerInfo()
 {
 	for (auto& player : players_)
 	{
 		auto input = std::dynamic_pointer_cast<const PlayerInput>(player->GetInput());
 		if (input == nullptr) { continue; }
 		current_player_head_pos_ = *player->GetHeadPos();
+		current_player_front_dir_ = player->GetFrontDir();
 		break;
 	}
 }

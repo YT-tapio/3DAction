@@ -12,3 +12,5 @@ avoid,data/model/player/animation/Sprinting_Forward_Roll.mv1,0,1,100,0,-1,nothin
 knock_back,data/model/player/animation/Stunned.mv1,0,1,50,0,-1,stand_up
 stand_up,data/model/player/animation/Getting_Up.mv1,0,1,51,0,-1,nothing
 death,data/model/player/animation/player_death.mv1,0,0.7,1000,0,-1,nothing
+won,data/model/player/animation/won.mv1,0,1,200,0,-1,won_dance
+won_dance,data/model/player/animation/won_dance.mv1,0,1,201,1,-1,nothing

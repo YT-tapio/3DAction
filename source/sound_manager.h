@@ -16,12 +16,14 @@ public:
 	void Load();
 
 	void End();
-
-	void AllStop();
 	
 	void Play2DSound(const std::string& name);
 
 	void Play3DSound(const std::string& name);
+
+	void Stop(const std::string& name);
+
+	void AllStop();
 
 	void SetPos(const std::string& name,const VECTOR& pos);
 

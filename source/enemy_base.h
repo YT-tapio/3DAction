@@ -11,6 +11,7 @@ class BehaviorBase;
 class BehaviorTree;
 class StatusContainer;
 class HitRedBody;
+class IEnemyObserver;
 
 class EnemyBase : public CharacterBase, public IPhysicsEventReceiver,public ITakableDamagePlayer,public IStatusHolder
 {
@@ -19,6 +20,8 @@ public:
 	EnemyBase(const VECTOR& pos,bool* game_start);
 
 	virtual ~EnemyBase() override;
+
+	void AddObserver(IEnemyObserver* observer);
 
 	virtual void Init() override;
 
@@ -60,7 +63,11 @@ protected:
 
 	virtual void UpdateBone();
 
+	virtual void Death();
+
 protected:
+
+	std::vector<IEnemyObserver*> observers_;
 
 	std::shared_ptr<RigidBody> rigid_body_;
 	std::shared_ptr<BehaviorBase> test_behavior_;
@@ -69,7 +76,11 @@ protected:
 	std::shared_ptr<StatusContainer> status_container_;
 	std::shared_ptr<HitRedBody> hit_red_body_;	// ÉqÉbÉgéûê‘Ç≠Ç»ÇÈ
 
+	
+
 	std::string my_name_;
+
+	
 
 	VECTOR right_hand_pos_;
 	VECTOR double_punch_coll_pos_;

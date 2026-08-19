@@ -49,6 +49,7 @@
 #include"damage_ui_group.h"
 #include"player_ui_group_interface.h"
 #include"sound_manager.h"
+#include"condition_timer.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name, std::shared_ptr<IPlayerUIGroup> player_ui_group)
 	: CharacterBase("player")
@@ -78,6 +79,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	UpdateBone();
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), 
 		&pos_, TRUE, FALSE, 0.03f, 0.1f);
+	enemy_death_offset_timer_ = std::make_shared<ConditionTimer>(2.8f);
 	VECTOR hp_pos = VectorAssistant::VGet2D(300.f, 800.f);
 	VECTOR hp_size = VectorAssistant::VGet2D(100.f, 30.f);
 	status_container_ = std::make_shared<StatusContainer>(name_,hp_pos, hp_size);
@@ -89,6 +91,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	is_stop_ = FALSE;
 	can_move_ = TRUE;
 	on_damage_ = FALSE;
+	is_death_enemy_ = FALSE;
 	//input_ = input;
 	target_rot_y_ = 0;
 	speed_ = 0.f;
@@ -194,9 +197,21 @@ void Player::Update()
 {
 	time_->Update();
 	if (CheckHitKey(KEY_INPUT_I)) { status_container_->TakeHeal(10); }
+
+	if (is_death_enemy_)
+	{
+		enemy_death_offset_timer_->Update();
+		if (enemy_death_offset_timer_->GetIsEnd())
+		{
+			can_move_ = FALSE;
+			animator_->PlayRequest("won");
+		}
+	}
+
 	if (status_container_->GetCurrentStatus().hp <= 0)
 	{
 		animator_->PlayRequest("death");
+		rigid_body_->NotActive();
 	}
 	else
 	{
@@ -213,7 +228,8 @@ void Player::Update()
 		}
 		avoid_->Update();
 		rigid_body_->SetTargetVelocity(vel_);
-		test_behavior_->Update();
+		//test_behavior_->Update();
+		
 	}
 	
 	animator_->Update(time_);
@@ -413,7 +429,7 @@ void Player::Move()
 {
 	if (animator_->GetNowAnimName() == "idle")
 	{
-		if (!on_damage_) { can_move_ = TRUE; }
+		if (!on_damage_ && !is_death_enemy_) { can_move_ = TRUE; }
 	}
 
 	VECTOR dir = VectorAssistant::VGetZero();
@@ -710,6 +726,12 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 void Player::InputChange(std::shared_ptr<InputBase> input)
 {
 	input_ = input;
+}
+
+void Player::OnEnemyDeath()
+{
+	// 勝利アニメーションの再生
+	is_death_enemy_ = TRUE;
 }
 
 std::vector<std::weak_ptr<ObjectBase>> Player::GetMyAreaObject()

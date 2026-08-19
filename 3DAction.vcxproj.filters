@@ -331,6 +331,9 @@
     <Filter Include="ソース ファイル\behavior_tree\node\just_one_node">
       <UniqueIdentifier>{f672c8ae-7d40-487b-9072-459bf217732d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\interface\observer">
+      <UniqueIdentifier>{c687d620-fbcd-4fa4-a58e-ebc73a360c6b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -797,6 +800,9 @@
     </ClCompile>
     <ClCompile Include="source\won_camera.cpp">
       <Filter>ソース ファイル\camera\virtual_camera</Filter>
+    </ClCompile>
+    <ClCompile Include="source\enemy_observer_interface.cpp">
+      <Filter>ソース ファイル\interface\observer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1366,6 +1372,9 @@
     </ClInclude>
     <ClInclude Include="source\won_camera.h">
       <Filter>ソース ファイル\camera\virtual_camera</Filter>
+    </ClInclude>
+    <ClInclude Include="source\enemy_observer_interface.h">
+      <Filter>ソース ファイル\interface\observer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -25,13 +25,7 @@ void SoundManager::End()
 	sound_3ds_.clear();
 }
 
-void SoundManager::AllStop()
-{
-	for (auto& sound : sound_3ds_)
-	{
-		sound->Stop();
-	}
-}
+
 
 void SoundManager::Play2DSound(const std::string& name)
 {
@@ -52,6 +46,34 @@ void SoundManager::Play3DSound(const std::string& name)
 		{
 			sound->Play();
 		}
+	}
+}
+
+void SoundManager::Stop(const std::string& name)
+{
+	for (auto& sound : sound_2ds_)
+	{
+		if (name == sound->GetName())
+		{
+			sound->Stop();
+			break;
+		}
+	}
+	for (auto& sound : sound_3ds_)
+	{
+		if (name == sound->GetName())
+		{
+			sound->Stop();
+			break;
+		}
+	}
+}
+
+void SoundManager::AllStop()
+{
+	for (auto& sound : sound_3ds_)
+	{
+		sound->Stop();
 	}
 }
 

@@ -69,7 +69,7 @@ Game::Game()
 	player_skill_ui_group_ = std::make_shared<PlayerSkillUIGroup>();
 	no_shadow_objects_.push_back(std::make_shared<SkyDome>());
 	game_start_timer_ = std::make_shared<GameStartTimer>(&game_start_);
-	PlayerGroup::GetInstance().Awake(&camera_->dir_,player_ui_group_);
+	PlayerGroup::GetInstance().Awake(&camera_->dir_,player_ui_group_,enemy);
 	Init();
 	is_finished_fade_ = FALSE;
 	SoundManager::GetInstance().Play2DSound("game_bgm");
