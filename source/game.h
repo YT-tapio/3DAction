@@ -9,6 +9,8 @@ class PlayerUIGroup;
 class PlayerSkillUIGroup;
 class GameStartTimer;
 class WonUI;
+class LoseUI;
+class GameToNextScene;
 
 class Game : public SceneBase
 {
@@ -33,6 +35,8 @@ private:
 	std::shared_ptr<PlayerUIGroup> player_ui_group_;
 	std::shared_ptr<PlayerSkillUIGroup> player_skill_ui_group_;
 	std::shared_ptr<WonUI> won_ui_;
+	std::shared_ptr<LoseUI> lose_ui_;
+	std::shared_ptr<GameToNextScene> game_to_next_scene_;
 	std::shared_ptr<GameStartTimer> game_start_timer_;
 
 	std::vector<std::shared_ptr<ObjectBase>> objects_;

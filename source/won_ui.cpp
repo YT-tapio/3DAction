@@ -12,10 +12,14 @@
 #include"lerp.h"
 #include"fps.h"
 #include"font.h"
-
+#include"sound_manager.h"
 WonUI::WonUI()
 	: base_pos_(VectorAssistant::VGetZero())
 	, back_ground_size_(VectorAssistant::VGetZero())
+	, retry_ui_pos_(VectorAssistant::VGet2D(830.f,800.f))
+	, go_title_ui_pos_(VectorAssistant::VGet2D(1180.f,800.f))
+	, offset_(VGet(440,-100.f,0.f))
+	, offset_button_pos_(VectorAssistant::VGet2D(50.f,-20.f))
 	, base_size_(1.f)
 	, just_avoid_num_(0)
 	, avoid_collect_num_(0)
@@ -23,8 +27,14 @@ WonUI::WonUI()
 	, target_back_ground_blend_num_(0.f)
 	, current_back_ground_blend_num_(0.f)
 	, is_active_(FALSE)
+	, is_play_(FALSE)
 {
 	LoadFile();
+	Abutton_image_handle_ = LoadGraph("data/ui/input/pad/button_xbox_digital_a_1.png");
+	Bbutton_image_handle_ = LoadGraph("data/ui/input/pad/button_xbox_digital_b_1.png");
+	go_next_scene_font_.handle = Font::CreateHandleOfFile("data/csv/font/game_to_next_scene_font_data.csv");
+	go_next_scene_font_.body_color = GetColor(255, 255, 255);
+	go_next_scene_font_.body_color = GetColor(0, 0, 0);
 	timer_ = std::make_shared<ConditionTimer>(3.4f);
 	timer_->Init();
 }
@@ -36,6 +46,7 @@ WonUI::~WonUI()
 
 void WonUI::Init()
 {
+	is_active_ = FALSE;
 	avoid_collect_num_ = 0;
 }
 
@@ -45,6 +56,12 @@ void WonUI::Update()
 	timer_->Update();
 	if (!timer_->GetIsEnd()) { return; }
 	current_back_ground_blend_num_ = Lerp::Lerpf(current_back_ground_blend_num_, target_back_ground_blend_num_, back_ground_blend_speed_ * FPS::GetInstance().GetDeltaTime()* FPS::GetInstance().GetTargetFPS());
+	if (!is_play_)
+	{
+		SoundManager::GetInstance().Play2DSound("clear");
+		is_play_ = TRUE;
+	}
+	
 }
 
 void WonUI::Draw()
@@ -54,6 +71,7 @@ void WonUI::Draw()
 	DrawWonImage();
 	DrawAvoidCollectNum();
 	DrawMostTakeDamageEnemy();
+	DrawGameToNext();
 }
 
 void WonUI::OnTakeDamage(const float& damage)
@@ -133,23 +151,38 @@ void WonUI::DrawBackGround()
 {
 	auto draw_box = [this]()
 		{
-			//Draw2D::Box(base_pos_, static_cast<int>(back_ground_size_.x), static_cast<int>(back_ground_size_.y), GetColor(0, 0, 1), TRUE);
-			Draw2D::RotaGraph(base_pos_, won_image_size_, won_image_rot_, won_image_handle_, TRUE);
+			Draw2D::Box(base_pos_, static_cast<int>(back_ground_size_.x), static_cast<int>(back_ground_size_.y), GetColor(0, 0, 1), TRUE);
 		};
 	Draw2D::Blend(draw_box, 100);
 }
 
 void WonUI::DrawWonImage()
 {
-	Draw2D::Box(VAdd(base_pos_,won_image_pos_), 250, 180, GetColor(255, 255, 255), TRUE);
+	Draw2D::RotaGraph(VAdd(base_pos_,won_image_pos_), won_image_size_, won_image_rot_, won_image_handle_, TRUE);
 }
 
 void WonUI::DrawAvoidCollectNum()
 {
 	Draw2D::StringToHandle(VAdd(base_pos_, avoid_collect_pos_), "回避成功数", avoid_collect_font_.body_color, avoid_collect_font_.handle,avoid_collect_font_.edge_color);
+	auto offset_num_pos = VAdd(VAdd(base_pos_, avoid_collect_pos_), offset_);
+	Draw2D::ExtendFormatStringToHandleEdge(offset_num_pos, 3.f, 3.f, "%d", avoid_collect_font_.body_color, avoid_collect_font_.edge_color, avoid_collect_font_.handle, avoid_collect_num_);
 }
 
 void WonUI::DrawMostTakeDamageEnemy()
 {
-	Draw2D::StringToHandle(VAdd(base_pos_, most_damage_pos_), "最大ダメージ", most_damage_font_.body_color, most_damage_font_.handle,most_damage_font_.edge_color);
+	Draw2D::StringToHandle(VAdd(base_pos_, most_damage_pos_), "最大ダメージ", most_damage_font_.body_color, most_damage_font_.handle, most_damage_font_.edge_color);
+	//Draw2D::StringToHandle(VAdd(VAdd(base_pos_, most_damage_pos_), offset_), "最大ダメージ", most_damage_font_.body_color, most_damage_font_.handle, most_damage_font_.edge_color);
+	
+	auto offset_num_pos = VAdd(VAdd(base_pos_, most_damage_pos_), offset_);
+
+	Draw2D::ExtendFormatStringToHandleEdge(offset_num_pos, 3.f, 3.f, "%d", most_damage_font_.body_color, most_damage_font_.edge_color, most_damage_font_.handle, static_cast<int>(enemy_take_most_damage_));
+	//Draw2D::FormatStringToHandle(VAdd(VAdd(base_pos_, most_damage_pos_), offset_), "%d", most_damage_font_.body_color, most_damage_font_.handle, static_cast<int>(enemy_take_most_damage_), most_damage_font_.edge_color);
+}
+
+void WonUI::DrawGameToNext()
+{
+	Draw2D::RotaGraph(retry_ui_pos_, 0.15f, 0.f, Abutton_image_handle_, TRUE);
+	Draw2D::StringToHandle(VAdd(retry_ui_pos_, offset_button_pos_), "もう一度", go_next_scene_font_.body_color, go_next_scene_font_.handle, go_next_scene_font_.edge_color);
+	Draw2D::RotaGraph(go_title_ui_pos_, 0.15f, 0.f, Bbutton_image_handle_, TRUE);
+	Draw2D::StringToHandle(VAdd(go_title_ui_pos_, offset_button_pos_), "タイトルへ", go_next_scene_font_.body_color, go_next_scene_font_.handle, go_next_scene_font_.edge_color);
 }

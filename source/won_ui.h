@@ -44,6 +44,8 @@ private:
 	/// </summary>
 	void DrawMostTakeDamageEnemy();
 
+	void DrawGameToNext();
+
 private:
 
 	struct FontData
@@ -62,10 +64,21 @@ private:
 	VECTOR avoid_collect_pos_;	// 
 	VECTOR most_damage_pos_;	//
 
+	VECTOR retry_ui_pos_;
+	VECTOR go_title_ui_pos_;
+
+	VECTOR offset_;
+
+	VECTOR offset_button_pos_;
+
 	FontData avoid_collect_font_;
 	FontData most_damage_font_;
+	FontData go_next_scene_font_;
 
 	int won_image_handle_;
+
+	int Abutton_image_handle_;
+	int Bbutton_image_handle_;
 
 	int just_avoid_num_;
 	int avoid_collect_num_;
@@ -83,5 +96,5 @@ private:
 	float won_image_rot_;
 
 	bool is_active_;
-
+	bool is_play_;
 };

@@ -64,6 +64,7 @@ void WonCamera::Update()
 		future_target_pos_ = VAdd(*player_cneter_pos_, offset_target_pos);
 		future_pos_ = VAdd(future_pos_, player_target_offset_);
 		future_target_pos_ = VAdd(future_target_pos_, player_target_offset_);
+		
 	}
 	float camera_speed = 1.3f * FPS::GetInstance().GetDeltaTime() * FPS::GetInstance().GetTargetFPS();
 	float camera_target_speed = 1.f * FPS::GetInstance().GetDeltaTime() * FPS::GetInstance().GetTargetFPS();

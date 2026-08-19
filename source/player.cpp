@@ -738,6 +738,11 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 	if (status_container_->GetCurrentStatus().hp <= 0)
 	{
 		Brain::GetInstance().ChangeCamera("lose");
+
+		for (auto& observer : observers_)
+		{
+			observer->OnPlayerDeath();
+		}
 	}
 	// ƒTƒEƒ“ƒh‚ğÄ¶
 	SoundManager::GetInstance().Play3DSound("palyer_on_damage");

@@ -15,7 +15,7 @@ CheckMyArea::CheckMyArea(std::shared_ptr<ColliderBase> coll,VECTOR* pos)
 
 CheckMyArea::~CheckMyArea()
 {
-
+	my_area_objects_.clear();
 }
 
 void CheckMyArea::Init()

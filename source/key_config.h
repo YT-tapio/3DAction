@@ -23,4 +23,7 @@ namespace KeyConfig
 
 	static int go_next = KEY_INPUT_SPACE;
 	static int go_result = KEY_INPUT_RETURN;
+
+	static int retry = KEY_INPUT_SPACE;
+	static int game_to_title = KEY_INPUT_RETURN;
 }

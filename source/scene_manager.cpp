@@ -15,6 +15,7 @@
 #include"result.h"
 #include"sound_manager.h"
 #include"fade.h"
+#include"load.h"
 
 void SceneManager::Update()
 {
@@ -33,9 +34,11 @@ void SceneManager::Update()
 	{
 		is_change_ = FALSE;
 	}
+	
 	scene_->Draw();
 	Fade::GetInstance().Draw();
-	DrawString(100, 860, "Escを押すとゲーム終了", GetColor(255, 0, 0));
+
+	//DrawString(100, 860, "Escを押すとゲーム終了", GetColor(255, 0, 0));
 	ScreenFlip();
 	FPS::GetInstance().Wait();
 	
@@ -44,10 +47,33 @@ void SceneManager::Update()
 bool SceneManager::LoadScene(const std::string& next_scene)
 {
 	if (next_scene == scene_->GetName()) { return FALSE; }
+	bool check = FALSE;
+	if (next_scene == "title") 
+	{ 
+		scene_ = std::make_shared<Title>();
+		check = TRUE;
+	}
+	if (next_scene == "game") 
+	{ 
+		scene_ = std::make_shared<Game>();
+		check = TRUE;
+	}
+	if (next_scene == "result") 
+	{ 
+		scene_ = std::make_shared<Result>();
+		check = TRUE;
+	}
+	if (next_scene == "load") 
+	{
+		std::string next_scene_name = scene_->GetName();
+		scene_ = std::make_shared<Load>(next_scene_name);
+		check = TRUE;
+	}
 
-	if (next_scene == "title") { scene_ = std::make_shared<Title>(); }
-	if (next_scene == "game") { scene_ = std::make_shared<Game>(); }
-	if (next_scene == "result") { scene_ = std::make_shared<Result>(); }
+	if (!check)
+	{
+		printfDx("そのようなシーンは存在しません\n");
+	}
 
 	scene_->Init();
 	is_change_ = TRUE;
@@ -62,10 +88,11 @@ void SceneManager::End()
 SceneManager::SceneManager()
 {
 	SoundManager::GetInstance().Load();
-	scene_ = std::make_shared<Title>();
 	FPS::GetInstance();
 	InputManager::GetInstance();
 	Brain::GetInstance();
 	Fade::GetInstance().Awake();
+	//Fade::GetInstance().StartFadeOut(1.f);
+	scene_ = std::make_shared<Title>();
 	is_change_ = FALSE;
 }

@@ -29,5 +29,5 @@ void CharacterNameUI::Update()
 
 const void CharacterNameUI::Draw() const
 {
-	Draw2D::StringToHandle(pos_, name_, color_, font_handle_);
+	Draw2D::ExtendStringToHandle(pos_, 1.f, 1.f, name_, color_, font_handle_, edge_color_);
 }

@@ -253,6 +253,58 @@ const bool PlayerInput::GoResult() const
 	return FALSE;
 }
 
+const bool PlayerInput::Retry() const
+{
+	if (is_stop_) { return FALSE; }
+	for (auto& input : inputs_)
+	{
+		auto pad = std::dynamic_pointer_cast<Pad>(input);
+		float pushing_time = 0.f;
+		if (pad != nullptr)
+		{
+			pushing_time = pad->GetPushingTimeButton(PadConfig::retry);
+			if (pushing_time == 0.f) { return TRUE; }
+		}
+		else
+		{
+			auto pc = std::dynamic_pointer_cast<PC>(input);
+			if (pc != nullptr)
+			{
+				pushing_time = pc->GetPushingTimeKey(KeyConfig::retry);
+
+				if (pushing_time == 0.f) { return TRUE; }
+			}
+		}
+	}
+	return FALSE;
+}
+
+const bool PlayerInput::GameToTitle() const
+{
+	if (is_stop_) { return FALSE; }
+	for (auto& input : inputs_)
+	{
+		auto pad = std::dynamic_pointer_cast<Pad>(input);
+		float pushing_time = 0.f;
+		if (pad != nullptr)
+		{
+			pushing_time = pad->GetPushingTimeButton(PadConfig::game_to_title);
+			if (pushing_time == 0.f) { return TRUE; }
+		}
+		else
+		{
+			auto pc = std::dynamic_pointer_cast<PC>(input);
+			if (pc != nullptr)
+			{
+				pushing_time = pc->GetPushingTimeKey(KeyConfig::game_to_title);
+
+				if (pushing_time == 0.f) { return TRUE; }
+			}
+		}
+	}
+	return FALSE;
+}
+
 const VECTOR PlayerInput::GetMoveDir() const
 {
 	VECTOR move_dir = VectorAssistant::VGetZero();

@@ -73,6 +73,16 @@ const bool InputBase::GoResult() const
 	return FALSE;
 }
 
+const bool InputBase::Retry() const
+{
+	return FALSE;
+}
+
+const bool InputBase::GameToTitle() const
+{
+	return FALSE;
+}
+
 const VECTOR InputBase::GetMoveDir() const
 {
 	return VectorAssistant::VGetZero();

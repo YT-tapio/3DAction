@@ -1,0 +1,2 @@
+﻿name,data_file_path,"volume(persent,0 ～ 100)",loop
+clear,data/sound/2D/clear_bgm.mp3,200,1

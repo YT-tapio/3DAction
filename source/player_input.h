@@ -39,6 +39,10 @@ public:
 
 	const bool GoResult() const override;
 
+	const bool Retry() const override;
+
+	const bool GameToTitle() const override;
+
 	const VECTOR GetMoveDir() const override;
 
 	const VECTOR GetCameraDir() const override;

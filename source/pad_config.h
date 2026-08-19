@@ -14,4 +14,7 @@ namespace PadConfig
 
 	static int go_next = XINPUT_BUTTON_A;
 	static int go_result = XINPUT_BUTTON_DPAD_RIGHT;
+
+	static int retry = XINPUT_BUTTON_A;
+	static int game_to_title = XINPUT_BUTTON_B;
 }

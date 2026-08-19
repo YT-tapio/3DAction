@@ -1,2 +1,6 @@
 ﻿data_file_path
 data/csv/sound/2D/game_bgm_data.csv
+data/csv/sound/2D/title_bgm_data.csv
+data/csv/sound/2D/go_game_se_data.csv
+data/csv/sound/2D/go_title_se_data.csv
+data/csv/sound/2D/clear_bgm_data.csv

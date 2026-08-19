@@ -32,6 +32,10 @@ public:
 
 	virtual const bool GoResult() const;
 
+	virtual const bool Retry() const;
+
+	virtual const bool GameToTitle() const;
+
 	virtual const VECTOR GetMoveDir() const;
 
 	virtual const VECTOR GetCameraDir() const;

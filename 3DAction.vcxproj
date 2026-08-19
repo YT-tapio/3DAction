@@ -149,8 +149,11 @@
     <ClCompile Include="source\enemy_observer_interface.cpp" />
     <ClCompile Include="source\fade.cpp" />
     <ClCompile Include="source\game_start_timer.cpp" />
+    <ClCompile Include="source\game_to_next_scene.cpp" />
     <ClCompile Include="source\just_one_node.cpp" />
+    <ClCompile Include="source\load.cpp" />
     <ClCompile Include="source\lose_camera.cpp" />
+    <ClCompile Include="source\lose_ui.cpp" />
     <ClCompile Include="source\player_observer_interface.cpp" />
     <ClCompile Include="source\play_sound.cpp" />
     <ClCompile Include="source\roar.cpp" />
@@ -309,7 +312,10 @@
   <ItemGroup>
     <ClInclude Include="source\2d_gravity.h" />
     <ClInclude Include="source\enemy_observer_interface.h" />
+    <ClInclude Include="source\game_to_next_scene.h" />
+    <ClInclude Include="source\load.h" />
     <ClInclude Include="source\lose_camera.h" />
+    <ClInclude Include="source\lose_ui.h" />
     <ClInclude Include="source\player_observer_interface.h" />
     <ClInclude Include="source\won_camera.h" />
     <ClInclude Include="source\fade.h" />

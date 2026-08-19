@@ -337,6 +337,15 @@
     <Filter Include="ソース ファイル\ui\won_ui">
       <UniqueIdentifier>{e2ac9464-e0ae-4fb9-8e1c-683431d565f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ui\lose">
+      <UniqueIdentifier>{6e86fdf5-0399-46e1-a87c-ae562d7ee40e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\scene\load">
+      <UniqueIdentifier>{4459ff4d-1476-4f4c-bee8-e7b6f4032038}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\game_to_next_scene">
+      <UniqueIdentifier>{e52acdd9-61b3-4e34-b15b-ee5ac437f2df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -815,6 +824,15 @@
     </ClCompile>
     <ClCompile Include="source\player_observer_interface.cpp">
       <Filter>ソース ファイル\interface\observer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\lose_ui.cpp">
+      <Filter>ソース ファイル\ui\lose</Filter>
+    </ClCompile>
+    <ClCompile Include="source\load.cpp">
+      <Filter>ソース ファイル\scene\load</Filter>
+    </ClCompile>
+    <ClCompile Include="source\game_to_next_scene.cpp">
+      <Filter>ソース ファイル\game_to_next_scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1396,6 +1414,15 @@
     </ClInclude>
     <ClInclude Include="source\player_observer_interface.h">
       <Filter>ソース ファイル\interface\observer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\lose_ui.h">
+      <Filter>ソース ファイル\ui\lose</Filter>
+    </ClInclude>
+    <ClInclude Include="source\load.h">
+      <Filter>ソース ファイル\scene\load</Filter>
+    </ClInclude>
+    <ClInclude Include="source\game_to_next_scene.h">
+      <Filter>ソース ファイル\game_to_next_scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

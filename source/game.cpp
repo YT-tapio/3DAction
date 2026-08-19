@@ -40,6 +40,9 @@
 #include"game_start_timer.h"
 #include"fade.h"
 #include"won_ui.h"
+#include"lose_ui.h"
+#include"game_to_next_scene.h"
+
 Game::Game()
 	: SceneBase()
 {
@@ -63,17 +66,25 @@ Game::Game()
 			return enemy->GetFrontDir();
 		};
 	won_ui_ = std::make_shared<WonUI>();
+	lose_ui_ = std::make_shared<LoseUI>();
+	game_to_next_scene_ = std::make_shared<GameToNextScene>();
 	enemy->AddObserver(won_ui_.get());
-	objects_.push_back(enemy);
-	objects_.push_back(std::make_shared<Stage>());
+	enemy->AddObserver(game_to_next_scene_.get());
 
 	player_ui_group_ = std::make_shared<PlayerUIGroup>();
 	player_skill_ui_group_ = std::make_shared<PlayerSkillUIGroup>();
+
+	PlayerGroup::GetInstance().Awake(&camera_->dir_, player_ui_group_, enemy);
+	objects_.push_back(enemy);
+
+	objects_.push_back(std::make_shared<Stage>());
 	
 	no_shadow_objects_.push_back(std::make_shared<SkyDome>());
 	game_start_timer_ = std::make_shared<GameStartTimer>(&game_start_);
-	PlayerGroup::GetInstance().Awake(&camera_->dir_,player_ui_group_,enemy);
+	
 	PlayerGroup::GetInstance().AddPlayerObserver(won_ui_.get());
+	PlayerGroup::GetInstance().AddPlayerObserver(lose_ui_.get());
+	PlayerGroup::GetInstance().AddPlayerObserver(game_to_next_scene_.get());
 	Init();
 	is_finished_fade_ = FALSE;
 	SoundManager::GetInstance().Play2DSound("game_bgm");
@@ -82,12 +93,13 @@ Game::Game()
 
 Game::~Game()
 {
-	//ObjectSetter::GetInstance().DeleteResource();
-	//objects_.clear();
-	no_shadow_objects_.clear();
+	ObjectSetter::GetInstance().DeleteResource();
 	PlayerGroup::GetInstance().End();
+	objects_.clear();
+	no_shadow_objects_.clear();
 	Physics::GetInstance().End();
 	EffectManager::GetInstance().End();
+	AttackRangeGroup::GetInstance().End();
 	DamageUIGroup::GetInstance().End();
 	StatModifireUIData::GetInstance().End();
 	ObjectSetter::GetInstance().DeleteResource();
@@ -119,8 +131,6 @@ void Game::Init()
 
 void Game::Update()
 {
-	auto player_input = InputManager::GetInstance().GetMainPlayerInput();
-	
 	if (Fade::GetInstance().IsFinished())
 	{
 		is_finished_fade_ = TRUE;
@@ -131,13 +141,13 @@ void Game::Update()
 		game_start_timer_->Update();
 	}
 
-	if (player_input != nullptr)
+	if (game_to_next_scene_->Update()) { return; }
+
+	if (InputManager::GetInstance().GetMainPlayerInput()->GoResult())
 	{
-		if (player_input->GoResult())
-		{
-			if (SceneManager::GetInstance().LoadScene("result")) { return; }
-		}
+		if (SceneManager::GetInstance().LoadScene("title")) { return; }
 	}
+
 	PlayerGroup::GetInstance().Update();
 	for (auto& obj : objects_)
 	{
@@ -165,13 +175,16 @@ void Game::Update()
 	{
 		obj->LateUpdate();
 	}
+
 	player_ui_group_->Update();
 	player_skill_ui_group_->Update();
 	won_ui_->Update();
+	lose_ui_->Update();
 	EnemyUIGroup::GetInstance().Update();
 	DamageUIGroup::GetInstance().Update();
 	EffectManager::GetInstance().Update();
 	AttackRangeGroup::GetInstance().Update();
+	
 }
 
 void Game::Draw()
@@ -221,6 +234,7 @@ void Game::Draw()
 	player_ui_group_->Draw();
 	player_skill_ui_group_->Draw();
 	won_ui_->Draw();
+	lose_ui_->Draw();
 	EnemyUIGroup::GetInstance().Draw();
 	DamageUIGroup::GetInstance().Draw();
 	if (Debug::GetInstance().GetIsDisp())
@@ -232,12 +246,10 @@ void Game::Draw()
 			obj->Debug();
 		}
 		Physics::GetInstance().Debug();
-
-		
 	}
 	
 	EffectManager::GetInstance().Draw();
-	DrawString(1200, 860, "十字 右ボタン、Enterを押してリザルトへ", GetColor(0, 0, 0));
+	// DrawString(1200, 860, "十字 右ボタン、Enterを押してリザルトへ", GetColor(0, 0, 0));
 }
 
 const std::string Game::GetName() const

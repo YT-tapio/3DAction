@@ -1,3 +1,3 @@
-﻿font_file_path,pos,,color,,
-,x,y,red,green,blue
-data/csv/font/player_name_font_data.csv,200,690,255,228,255
+﻿font_file_path,pos,,color,,,edge_color,,
+,x,y,red,green,blue,red,green,blue
+data/csv/font/player_name_font_data.csv,200,690,255,228,255,0,0,0

@@ -27,7 +27,7 @@ protected:
 	int font_handle_;
 
 	unsigned int color_;
-
+	unsigned int edge_color_;
 	// •`‰æ‚³‚ê‚é•¶Žš—ñ
 	std::string drawn_string;
 

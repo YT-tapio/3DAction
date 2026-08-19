@@ -15,6 +15,7 @@
 #include"draw_2D.h"
 #include"screen_size.h"
 #include"fade.h"
+#include"sound_manager.h"
 
 Title::Title()
 	: SceneBase()
@@ -59,11 +60,11 @@ Title::Title()
 	MV1SetPosition(sky_dome_handle_, VGet(0, 0, 0));
 
 	MV1SetScale(player_handle_, VectorAssistant::VGetSame(0.05f));
-	MV1SetPosition(player_handle_, VGet(2.1f, -8.7f, 1.7f));
+	MV1SetPosition(player_handle_, VGet(2.1f, -8.5f, 1.7f));
 	MV1SetRotationXYZ(player_handle_, VGet(0.f, RadianAssistant::TheNumRadian(90), 0.f));
 
 	MV1SetScale(enemy_handle_, VectorAssistant::VGetSame(0.05f));
-	MV1SetPosition(enemy_handle_, VGet(-2.4f, -8.7f, 2.3f));
+	MV1SetPosition(enemy_handle_, VGet(-2.4f, -8.5f, 2.3f));
 	MV1SetRotationXYZ(enemy_handle_, VGet(0.f, RadianAssistant::TheNumRadian(-90), 0.f));
 
 	int player_anim_handle = MV1LoadModel("data/model/player/animation/Idle.mv1");
@@ -71,10 +72,15 @@ Title::Title()
 	//アニメーションのアタッチ
 	MV1AttachAnim(player_handle_, 0,player_anim_handle, FALSE);
 	MV1AttachAnim(enemy_handle_, 0, enemy_anim_handle, FALSE);
+
+	is_push_ = FALSE;
+	SoundManager::GetInstance().Play2DSound("title_bgm");
+	Fade::GetInstance().StartFadeOut(1.f);
 }
 
 Title::~Title()
 {
+	SoundManager::GetInstance().Stop("title_bgm");
 	DeleteGraph(title_logo_handle_);
 	MV1DeleteModel(stage_handle_);
 	MV1DeleteModel(sky_dome_handle_);
@@ -95,16 +101,17 @@ void Title::Update()
 	{
 		if (player_input->GoNextScene())
 		{
+			is_push_ = TRUE;
 			//Physics::GetInstance().End();
 			Fade::GetInstance().StartFadeIn(1.f, FadeColorType::kBlack);
+			SoundManager::GetInstance().Play2DSound("go_game");
 		}
 	}
 
-	if (Fade::GetInstance().IsFinished())
+	if (Fade::GetInstance().IsFinished() && is_push_)
 	{
 		SceneManager::GetInstance().LoadScene("game");
 	}
-
 }
 
 void Title::Draw()
@@ -113,8 +120,9 @@ void Title::Draw()
 	MV1DrawModel(enemy_handle_);
 	MV1DrawModel(sky_dome_handle_);
 	Draw2D::RotaGraph(VectorAssistant::VGet2D(static_cast<float>(kScreenWidth * 0.5f), 750.f), 0.7f, 0.f, title_logo_handle_, TRUE);
-	DrawString(100, 100, "Title", GetColor(255, 255, 255));
-	DrawString(500, 700, "Aボタン、スペースを押してゲームスタート", GetColor(255, 255, 255));
+	
+	//DrawString(100, 100, "Title", GetColor(255, 255, 255));
+	//DrawString(500, 700, "Aボタン、スペースを押してゲームスタート", GetColor(255, 255, 255));
 }
 
 const std::string Title::GetName() const

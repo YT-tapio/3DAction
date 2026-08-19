@@ -168,10 +168,10 @@ void EnemyBase::Init()
 
 	// ƒ‰ƒ“ƒ_ƒ€‚Ìnode‚É‘ã“ü
 	std::vector<std::shared_ptr<NodeBase>> random_nodes;
-	// random_nodes.emplace_back(stamp_node);
+	random_nodes.emplace_back(stamp_node);
 	random_nodes.emplace_back(double_punch_node);
-	//random_nodes.emplace_back(std::make_shared<SequenceNode>(area_of_effect_nodes));
-	//random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
+	random_nodes.emplace_back(std::make_shared<SequenceNode>(area_of_effect_nodes));
+	random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
 
 	// ’Ç‚¢‚©‚¯‚é‚Æ‚«‚Ìƒm[ƒh
 	std::vector<std::shared_ptr<NodeBase>> random_nodes2;
@@ -228,7 +228,7 @@ void EnemyBase::Init()
 		condition);
 	std::shared_ptr<NodeBase> roar_node = std::make_shared<JustOneNode>(std::make_shared<Roar>(obj_mine));
 	std::vector<std::shared_ptr<NodeBase>> first_nodes;
-	first_nodes.emplace_back(roar_node);
+	//first_nodes.emplace_back(roar_node);
 	first_nodes.emplace_back(action_branch_node);
 	std::shared_ptr<NodeBase> first_node = std::make_shared<SelectorNode>(first_nodes);
 	//std::shared_ptr<NodeBase> first_node = std::make_shared<BranchNode>()

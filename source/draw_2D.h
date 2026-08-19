@@ -128,6 +128,22 @@ namespace Draw2D
 		DrawFormatStringToHandle(static_cast<int>(pos.x), static_cast<int>(pos.y), color, handle, string.c_str(), t,edge_color);
 	}
 
+
+	inline void ExtendStringToHandle(const VECTOR& pos, const float width_rate, const float height_rate, const std::string& string, int color, int handle,int edge_color = -1)
+	{
+		const TCHAR* string_name = string.c_str();
+		if (edge_color == -1)
+		{
+			DrawExtendStringToHandle(static_cast<int>(pos.x), static_cast<int>(pos.y), width_rate, height_rate, string_name, color, handle);
+		}
+		else
+		{
+			DrawExtendStringToHandle(static_cast<int>(pos.x), static_cast<int>(pos.y), width_rate, height_rate, string_name, color, handle, edge_color);
+		}
+		
+	}
+	
+
 	/// <summary>
 	/// •¶š—ñ•`‰æ‚Ì
 	/// </summary>
@@ -140,10 +156,29 @@ namespace Draw2D
 	/// <param name="handle"></param>
 	/// <param name="t"></param>
 	template <typename T>
-	inline void ExtendFormatStringToHandle(const VECTOR& pos, const float width_rate, const float height_rate,std::string string, int color, int handle, const T& t)
+	inline void ExtendFormatStringToHandle(const VECTOR& pos, const float width_rate, const float height_rate,const std::string& string, int color, int handle, const T& t)
 	{
 		DrawExtendFormatStringToHandle(static_cast<int>(pos.x), static_cast<int>(pos.y),
 			width_rate, height_rate, color, handle, string.c_str(), t);
+	}
+
+	/// <summary>
+	/// •¶š—ñ•`‰æ(‘å‚«‚³•ÏX‰Â”\)
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="pos"></param>
+	/// <param name="width_rate"></param>
+	/// <param name="height_rate"></param>
+	/// <param name="string"></param>
+	/// <param name="color"></param>
+	/// <param name="edge_color"></param>
+	/// <param name="handle"></param>
+	/// <param name="t"></param>
+	template <typename T>
+	inline void ExtendFormatStringToHandleEdge(const VECTOR& pos, const float width_rate, const float height_rate, std::string string, int color, int edge_color, int handle, const T& t)
+	{
+		DrawExtendFormatString2ToHandle(static_cast<int>(pos.x), static_cast<int>(pos.y),
+			width_rate, height_rate, color, edge_color,handle, string.c_str(), t);
 	}
 
 	/// <summary>

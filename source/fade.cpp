@@ -12,7 +12,7 @@ void Fade::Awake()
 {
 	start_ = FALSE;
 	is_finished_ = FALSE;
-	fade_color_type_ = FadeColorType::kNone;
+	fade_color_type_ = FadeColorType::kBlack;
 	fade_type_ = FadeType::kNone;
 	timer_ = std::make_shared<VariableTimer>(1.f);
 }

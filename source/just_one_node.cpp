@@ -14,6 +14,12 @@ JustOneNode::~JustOneNode()
 
 }
 
+void JustOneNode::Entry()
+{
+	if (is_finished_) { return; }
+	ActionNode::Entry();
+}
+
 BehaviorStatus JustOneNode::Update()
 {
 	// ‚·‚Å‚ÉI‚í‚Á‚Ä‚¢‚é‚Ì‚È‚ç¸”s‚ğ•Ô‚·B

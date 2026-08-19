@@ -1,4 +1,4 @@
 ﻿base,,,back_ground,,,,won_image,,,,,avoid_collect,,,,,,,,,most_take_damage_enemy,,,,,,,,
 pos,,size,size,,target_blend_num,blend_speed,pos,,path,size,rot,pos,,font_data_path,body_color,,,edge_color,,,pos,,font_data_path,body_color,,,edge_color,,
 x,y,,x,y,,,x,y,,,,x,y,,r,g,b,r,g,b,x,y,,r,g,b,r,g,b
-1150,450,1,750,800,100,5,0,-270,data/ui/won/clear.png,1,0,220,100,data/csv/font/avoid_collect_font_data.csv,0,0,0,0,0,0,0,220,data/csv/font/enemy_most_damage_font_data.csv,0,0,0,0,0,0
+1150,450,1,750,800,100,5,0,-240,data/ui/won/clear.png,0.31,0,-350,-10,data/csv/font/avoid_collect_font_data.csv,210,236,93,57,53,0,-350,190,data/csv/font/enemy_most_damage_font_data.csv,244,80,30,42,1,1

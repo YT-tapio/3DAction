@@ -9,6 +9,8 @@ public:
 
 	virtual ~JustOneNode() override;
 
+	void Entry() override;
+
 	virtual BehaviorStatus Update() override;
 
 private:

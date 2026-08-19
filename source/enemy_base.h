@@ -76,11 +76,7 @@ protected:
 	std::shared_ptr<StatusContainer> status_container_;
 	std::shared_ptr<HitRedBody> hit_red_body_;	// ƒqƒbƒgÔ‚­‚È‚é
 
-	
-
 	std::string my_name_;
-
-	
 
 	VECTOR right_hand_pos_;
 	VECTOR double_punch_coll_pos_;
