@@ -123,7 +123,7 @@ void WonUI::LoadFile()
 		most_damage_font_.body_color = CSVFileAssistant::GetColorOfCSVFile(ss, data);
 		most_damage_font_.edge_color = CSVFileAssistant::GetColorOfCSVFile(ss, data);
 	}
-
+	won_image_handle_ = LoadGraph(won_image_file_path.c_str());
 	avoid_collect_font_.handle = Font::CreateHandleOfFile(avoid_collect_font_path);
 	most_damage_font_.handle = Font::CreateHandleOfFile(most_take_damage_font_path);
 
@@ -133,7 +133,8 @@ void WonUI::DrawBackGround()
 {
 	auto draw_box = [this]()
 		{
-			Draw2D::Box(base_pos_, static_cast<int>(back_ground_size_.x), static_cast<int>(back_ground_size_.y), GetColor(0, 0, 1), TRUE);
+			//Draw2D::Box(base_pos_, static_cast<int>(back_ground_size_.x), static_cast<int>(back_ground_size_.y), GetColor(0, 0, 1), TRUE);
+			Draw2D::RotaGraph(base_pos_, won_image_size_, won_image_rot_, won_image_handle_, TRUE);
 		};
 	Draw2D::Blend(draw_box, 100);
 }
