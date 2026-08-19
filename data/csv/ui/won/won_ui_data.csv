@@ -1,0 +1,4 @@
+﻿base,,,back_ground,,,,won_image,,,,,avoid_collect,most_take_damage_enemy
+pos,,size,size,,target_blend_num,blend_speed,pos,,path,size,rot,,
+x,y,,x,y,,,x,y,,,,,
+1150,450,1,750,800,100,5,0,-270,data/ui/won/won_image.png,1,0,,

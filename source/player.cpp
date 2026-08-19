@@ -50,6 +50,7 @@
 #include"player_ui_group_interface.h"
 #include"sound_manager.h"
 #include"condition_timer.h"
+#include"brain.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name, std::shared_ptr<IPlayerUIGroup> player_ui_group)
 	: CharacterBase("player")
@@ -716,6 +717,10 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 	// ダメージ量をもらう
 	auto final_damage = status_container_->TakeDamage(damage,type);
 
+	if (status_container_->GetCurrentStatus().hp <= 0)
+	{
+		Brain::GetInstance().ChangeCamera("lose");
+	}
 	// サウンドを再生
 	SoundManager::GetInstance().Play3DSound("palyer_on_damage");
 	// ui描画を行う

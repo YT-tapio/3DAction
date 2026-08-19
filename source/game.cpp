@@ -39,7 +39,7 @@
 #include"sound_manager.h"
 #include"game_start_timer.h"
 #include"fade.h"
-
+#include"won_ui.h"
 Game::Game()
 	: SceneBase()
 {
@@ -67,6 +67,8 @@ Game::Game()
 
 	player_ui_group_ = std::make_shared<PlayerUIGroup>();
 	player_skill_ui_group_ = std::make_shared<PlayerSkillUIGroup>();
+	won_ui_ = std::make_shared<WonUI>();
+	enemy->AddObserver(won_ui_.get());
 	no_shadow_objects_.push_back(std::make_shared<SkyDome>());
 	game_start_timer_ = std::make_shared<GameStartTimer>(&game_start_);
 	PlayerGroup::GetInstance().Awake(&camera_->dir_,player_ui_group_,enemy);
@@ -94,6 +96,7 @@ void Game::Init()
 	Physics::GetInstance().Init();
 	EffectManager::GetInstance().Init();
 	PlayerGroup::GetInstance().Init(player_skill_ui_group_);
+	won_ui_->Init();
 	for (auto& obj : objects_)
 	{
 		obj->Init();
@@ -161,6 +164,7 @@ void Game::Update()
 	}
 	player_ui_group_->Update();
 	player_skill_ui_group_->Update();
+	won_ui_->Update();
 	EnemyUIGroup::GetInstance().Update();
 	DamageUIGroup::GetInstance().Update();
 	EffectManager::GetInstance().Update();
@@ -213,6 +217,7 @@ void Game::Draw()
 	// Physics::GetInstance().Debug();
 	player_ui_group_->Draw();
 	player_skill_ui_group_->Draw();
+	won_ui_->Draw();
 	EnemyUIGroup::GetInstance().Draw();
 	DamageUIGroup::GetInstance().Draw();
 	if (Debug::GetInstance().GetIsDisp())

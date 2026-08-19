@@ -56,7 +56,7 @@ void WonCamera::Update()
 
 		// プレイヤーの少し横に行くように調整する前に行く
 
-		VECTOR offset_dir = VectorAssistant::VGetRotRadY(*player_dir_, -80.f);
+		VECTOR offset_dir = VectorAssistant::VGetRotRadY(*player_dir_, -90.f);
 		VECTOR offset_target_pos = VScale(VectorAssistant::VGetFlat(offset_dir), kOffsetDist);
 		VECTOR offset_pos = VAdd(offset_target_pos, VScale(*player_dir_, kCameraToPlayerDistSize));
 		//player_target

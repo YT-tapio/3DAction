@@ -2,6 +2,7 @@
 #include<unordered_map>
 #include<string>
 #include<memory>
+#include<vector>
 #include"virtual_camera_base.h"
 
 class Player;
@@ -43,6 +44,8 @@ private:
 
 	const std::string kTracking = "Tracking";
 	const std::string kSphere = "Sphere";
+
+	std::vector<std::string> camera_names_;
 
 	std::string now_camera_;
 	std::string before_camera_;

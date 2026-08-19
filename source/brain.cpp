@@ -7,6 +7,7 @@
 #include"sphere_camera.h"
 #include"player_group.h"
 #include"won_camera.h"
+#include"lose_camera.h"
 
 void Brain::Init()
 {
@@ -20,10 +21,12 @@ void Brain::CreatePlaySceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos,
 	virtual_cameras_[kSphere] = std::make_shared<SphereCamera>(PlayerGroup::GetInstance().GetCurrentPlayerHeadPos(), camera_pos, target_pos);
 	
 	virtual_cameras_["won"] = std::make_shared<WonCamera>(camera_pos, target_pos,enemy_center_pos,enemy_dir);
+	virtual_cameras_["lose"] = std::make_shared<LoseCamera>(camera_pos, target_pos);
 	//virtual_cameras_[kTracking]->Init();
 	
 	for (auto& virtual_camera : virtual_cameras_)
 	{
+		camera_names_.push_back(virtual_camera.first);
 		virtual_camera.second->Awake();
 	}
 
@@ -58,11 +61,18 @@ void Brain::Update()
 void Brain::DeleteVirtualCamera()
 {
 	virtual_cameras_.clear();
+	camera_names_.clear();
 }
 
 void Brain::ChangeCamera(const std::string& request_name)
 {
-	now_camera_ = request_name;
+	for (const auto camera_name : camera_names_)
+	{
+		if (camera_name == request_name)
+		{
+			now_camera_ = request_name;
+		}
+	}
 }
 
 void Brain::CollisionNotActive()

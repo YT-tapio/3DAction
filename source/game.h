@@ -8,6 +8,7 @@ class ShadowMap;
 class PlayerUIGroup;
 class PlayerSkillUIGroup;
 class GameStartTimer;
+class WonUI;
 
 class Game : public SceneBase
 {
@@ -31,7 +32,7 @@ private:
 	std::shared_ptr<ShadowMap> shadow_map_;
 	std::shared_ptr<PlayerUIGroup> player_ui_group_;
 	std::shared_ptr<PlayerSkillUIGroup> player_skill_ui_group_;
-
+	std::shared_ptr<WonUI> won_ui_;
 	std::shared_ptr<GameStartTimer> game_start_timer_;
 
 	std::vector<std::shared_ptr<ObjectBase>> objects_;

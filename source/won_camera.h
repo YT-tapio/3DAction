@@ -18,8 +18,8 @@ public:
 private:
 
 	const float kCameraToEnemyDistSize = 40.f;
-	const float kCameraToPlayerDistSize = 16.f;
-	const float kOffsetDist = 5.f;
+	const float kCameraToPlayerDistSize = 15.f;
+	const float kOffsetDist = 10.f;
 	std::shared_ptr<ConditionTimer> timer_;
 	
 	VECTOR enemy_target_offset_;	// 敵を見るときのオフセット値

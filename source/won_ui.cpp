@@ -1,0 +1,112 @@
+#include<string>
+#include<fstream>
+#include<sstream>
+#include<memory>
+#include<functional>
+#include"DxLib.h"
+#include"won_ui.h"
+#include"draw_2d.h"
+#include"vector_assistant.h"
+#include"condition_timer.h"
+#include"csv_file_assistant.h"
+#include"lerp.h"
+#include"fps.h"
+WonUI::WonUI()
+	: base_pos_(VectorAssistant::VGetZero())
+	, back_ground_size_(VectorAssistant::VGetZero())
+	, base_size_(1.f)
+	, target_back_ground_blend_num_(0)
+	, current_back_ground_blend_num_(0)
+	, is_active_(FALSE)
+{
+	LoadFile();
+	timer_ = std::make_shared<ConditionTimer>(3.4f);
+	timer_->Init();
+}
+
+WonUI::~WonUI()
+{
+
+}
+
+void WonUI::Init()
+{
+
+}
+
+void WonUI::Update()
+{
+	if (!is_active_) { return; }
+	timer_->Update();
+	if (!timer_->GetIsEnd()) { return; }
+	current_back_ground_blend_num_ = Lerp::Lerpf(current_back_ground_blend_num_, target_back_ground_blend_num_, back_ground_blend_speed_ * FPS::GetInstance().GetDeltaTime()* FPS::GetInstance().GetTargetFPS());
+}
+
+void WonUI::Draw()
+{
+	if (!timer_->GetIsEnd()) { return; }
+	DrawBackGround();
+	DrawWonImage();
+}
+
+void WonUI::OnEnemyDeath()
+{
+	// ここでタイマーの起動を行う描画させる
+	is_active_ = TRUE;
+	timer_->ReStart();
+}
+
+void WonUI::LoadFile()
+{
+	std::ifstream file("data/csv/ui/won/won_ui_data.csv");
+	std::string line;
+
+	if (!file)
+	{
+		printfDx("csvファイル読み込み失敗\n");
+	}
+	std::string won_image_file_path;
+	// 最初の行を飛ばす
+	std::getline(file, line);
+	std::getline(file, line);
+	std::getline(file, line);
+	while (std::getline(file, line))
+	{
+		std::stringstream ss(line);
+		std::string data;
+
+		base_pos_ = CSVFileAssistant::GetVector2DOfCSVFile(ss, data);
+		base_size_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+		back_ground_size_ = CSVFileAssistant::GetVector2DOfCSVFile(ss, data);
+		target_back_ground_blend_num_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+		back_ground_blend_speed_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+		won_image_pos_ = CSVFileAssistant::GetVector2DOfCSVFile(ss, data);
+		won_image_file_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
+		won_image_size_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+		won_image_rot_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+	}
+}
+
+void WonUI::DrawBackGround()
+{
+	auto draw_box = [this]()
+		{
+			Draw2D::Box(base_pos_, static_cast<int>(back_ground_size_.x), static_cast<int>(back_ground_size_.y), GetColor(0, 0, 1), TRUE);
+		};
+	Draw2D::Blend(draw_box, 100);
+}
+
+void WonUI::DrawWonImage()
+{
+	Draw2D::Box(VAdd(base_pos_,won_image_pos_), 250, 180, GetColor(255, 255, 255), TRUE);
+}
+
+void WonUI::DrawAvoidCollectNum()
+{
+	//Draw2D::Box(won_image_pos_, 250, 180, GetColor(255, 255, 255), TRUE);
+}
+
+void WonUI::DrawMostTakeDamageEnemy()
+{
+
+}

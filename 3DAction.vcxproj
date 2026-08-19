@@ -150,6 +150,7 @@
     <ClCompile Include="source\fade.cpp" />
     <ClCompile Include="source\game_start_timer.cpp" />
     <ClCompile Include="source\just_one_node.cpp" />
+    <ClCompile Include="source\lose_camera.cpp" />
     <ClCompile Include="source\play_sound.cpp" />
     <ClCompile Include="source\roar.cpp" />
     <ClCompile Include="source\sound_2D.cpp" />
@@ -302,10 +303,12 @@
     <ClCompile Include="source\player.cpp" />
     <ClCompile Include="source\wait_node.cpp" />
     <ClCompile Include="source\won_camera.cpp" />
+    <ClCompile Include="source\won_ui.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\2d_gravity.h" />
     <ClInclude Include="source\enemy_observer_interface.h" />
+    <ClInclude Include="source\lose_camera.h" />
     <ClInclude Include="source\won_camera.h" />
     <ClInclude Include="source\fade.h" />
     <ClInclude Include="source\fade_color_type.h" />
@@ -494,6 +497,7 @@
     <ClInclude Include="source\hit_red_body.h" />
     <ClInclude Include="source\wait_node.h" />
     <ClInclude Include="source\sound_base.h" />
+    <ClInclude Include="source\won_ui.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\json\player_data.json" />
