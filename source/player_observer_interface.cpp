@@ -9,3 +9,8 @@ void IPlayerObserver::OnPlayerAvoidCollect()
 {
 
 }
+
+void IPlayerObserver::OnPlayerDeath()
+{
+
+}

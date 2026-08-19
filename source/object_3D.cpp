@@ -12,13 +12,17 @@ Object3D::Object3D(const char* id)
 	handle_ = -1;
 	scale_ = VectorAssistant::VGetSame(kDefaultSize);
 
-	
 	//LoadFile();
 }
 
 Object3D::~Object3D()
 {
-	MV1DeleteModel(handle_);
+	if (handle_ != -1)
+	{
+		MV1DeleteModel(handle_);
+		handle_ = -1;
+	}
+	
 }
 
 void Object3D::Init()

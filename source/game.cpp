@@ -62,13 +62,14 @@ Game::Game()
 		{
 			return enemy->GetFrontDir();
 		};
+	won_ui_ = std::make_shared<WonUI>();
+	enemy->AddObserver(won_ui_.get());
 	objects_.push_back(enemy);
 	objects_.push_back(std::make_shared<Stage>());
 
 	player_ui_group_ = std::make_shared<PlayerUIGroup>();
 	player_skill_ui_group_ = std::make_shared<PlayerSkillUIGroup>();
-	won_ui_ = std::make_shared<WonUI>();
-	enemy->AddObserver(won_ui_.get());
+	
 	no_shadow_objects_.push_back(std::make_shared<SkyDome>());
 	game_start_timer_ = std::make_shared<GameStartTimer>(&game_start_);
 	PlayerGroup::GetInstance().Awake(&camera_->dir_,player_ui_group_,enemy);
@@ -82,13 +83,14 @@ Game::Game()
 Game::~Game()
 {
 	//ObjectSetter::GetInstance().DeleteResource();
-	objects_.clear();
+	//objects_.clear();
 	no_shadow_objects_.clear();
 	PlayerGroup::GetInstance().End();
 	Physics::GetInstance().End();
 	EffectManager::GetInstance().End();
 	DamageUIGroup::GetInstance().End();
 	StatModifireUIData::GetInstance().End();
+	ObjectSetter::GetInstance().DeleteResource();
 }
 
 void Game::Init()

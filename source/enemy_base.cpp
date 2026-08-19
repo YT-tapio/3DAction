@@ -83,7 +83,7 @@ EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start)
 
 EnemyBase::~EnemyBase()
 {
-
+	
 }
 
 void EnemyBase::AddObserver(IEnemyObserver* observer)

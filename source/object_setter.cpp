@@ -11,9 +11,7 @@ void ObjectSetter::AddResource(const int& handle, VECTOR* pos, VECTOR* rot, VECT
 
 void ObjectSetter::DeleteResource()
 {
-	printfDx("サイズ：%d\n", set_objects_.size());
 	set_objects_.clear();
-	printfDx("サイズ：%d\n", set_objects_.size());
 }
 
 void ObjectSetter::Update()

@@ -11,6 +11,7 @@
 #include"csv_file_assistant.h"
 #include"lerp.h"
 #include"fps.h"
+#include"font.h"
 
 WonUI::WonUI()
 	: base_pos_(VectorAssistant::VGetZero())
@@ -51,6 +52,8 @@ void WonUI::Draw()
 	if (!timer_->GetIsEnd()) { return; }
 	DrawBackGround();
 	DrawWonImage();
+	DrawAvoidCollectNum();
+	DrawMostTakeDamageEnemy();
 }
 
 void WonUI::OnTakeDamage(const float& damage)
@@ -83,8 +86,11 @@ void WonUI::LoadFile()
 	if (!file)
 	{
 		printfDx("csvファイル読み込み失敗\n");
+		return;
 	}
 	std::string won_image_file_path;
+	std::string avoid_collect_font_path;
+	std::string most_take_damage_font_path;
 	// 最初の行を飛ばす
 	std::getline(file, line);
 	std::getline(file, line);
@@ -99,11 +105,28 @@ void WonUI::LoadFile()
 		back_ground_size_ = CSVFileAssistant::GetVector2DOfCSVFile(ss, data);
 		target_back_ground_blend_num_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		back_ground_blend_speed_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+		
+		// 勝利の文字
 		won_image_pos_ = CSVFileAssistant::GetVector2DOfCSVFile(ss, data);
 		won_image_file_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
 		won_image_size_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		won_image_rot_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+
+		// 回避
+		avoid_collect_pos_ = CSVFileAssistant::GetVector2DOfCSVFile(ss, data);
+		avoid_collect_font_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
+		avoid_collect_font_.body_color = CSVFileAssistant::GetColorOfCSVFile(ss, data);
+		avoid_collect_font_.edge_color = CSVFileAssistant::GetColorOfCSVFile(ss, data);
+		// ダメージ
+		most_damage_pos_ = CSVFileAssistant::GetVector2DOfCSVFile(ss, data);
+		most_take_damage_font_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
+		most_damage_font_.body_color = CSVFileAssistant::GetColorOfCSVFile(ss, data);
+		most_damage_font_.edge_color = CSVFileAssistant::GetColorOfCSVFile(ss, data);
 	}
+
+	avoid_collect_font_.handle = Font::CreateHandleOfFile(avoid_collect_font_path);
+	most_damage_font_.handle = Font::CreateHandleOfFile(most_take_damage_font_path);
+
 }
 
 void WonUI::DrawBackGround()
@@ -122,10 +145,10 @@ void WonUI::DrawWonImage()
 
 void WonUI::DrawAvoidCollectNum()
 {
-	Draw2D::Box(won_image_pos_, 250, 180, GetColor(255, 255, 255), TRUE);
+	Draw2D::StringToHandle(VAdd(base_pos_, avoid_collect_pos_), "回避成功数", avoid_collect_font_.body_color, avoid_collect_font_.handle,avoid_collect_font_.edge_color);
 }
 
 void WonUI::DrawMostTakeDamageEnemy()
 {
-
+	Draw2D::StringToHandle(VAdd(base_pos_, most_damage_pos_), "最大ダメージ", most_damage_font_.body_color, most_damage_font_.handle,most_damage_font_.edge_color);
 }

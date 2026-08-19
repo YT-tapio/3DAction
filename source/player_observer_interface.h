@@ -8,4 +8,6 @@ public:
 	virtual void OnPlayerJustAvoid();
 
 	virtual void OnPlayerAvoidCollect();
+
+	virtual void OnPlayerDeath();
 };

@@ -46,13 +46,25 @@ private:
 
 private:
 
+	struct FontData
+	{
+		int handle;
+		int body_color;
+		int edge_color;
+	};
+
 	std::shared_ptr<ConditionTimer> timer_;
 
 	VECTOR base_pos_;
 	VECTOR back_ground_size_;	// ”wŒi‚Ì‘å‚«‚³
 
-	VECTOR won_image_pos_;
-	
+	VECTOR won_image_pos_;		//
+	VECTOR avoid_collect_pos_;	// 
+	VECTOR most_damage_pos_;	//
+
+	FontData avoid_collect_font_;
+	FontData most_damage_font_;
+
 	int won_image_handle_;
 
 	int just_avoid_num_;
