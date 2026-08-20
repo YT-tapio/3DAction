@@ -235,6 +235,7 @@ void Game::Draw()
 	player_skill_ui_group_->Draw();
 	won_ui_->Draw();
 	lose_ui_->Draw();
+	game_start_timer_->Draw();
 	EnemyUIGroup::GetInstance().Draw();
 	DamageUIGroup::GetInstance().Draw();
 	if (Debug::GetInstance().GetIsDisp())
