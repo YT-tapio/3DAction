@@ -75,6 +75,10 @@ void SoundManager::AllStop()
 	{
 		sound->Stop();
 	}
+	for (auto& sound : sound_2ds_)
+	{
+		sound->Stop();
+	}
 }
 
 void SoundManager::SetPos(const std::string& name, const VECTOR& pos)

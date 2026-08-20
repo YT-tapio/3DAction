@@ -103,6 +103,7 @@ Game::~Game()
 	DamageUIGroup::GetInstance().End();
 	StatModifireUIData::GetInstance().End();
 	ObjectSetter::GetInstance().DeleteResource();
+	SoundManager::GetInstance().AllStop();
 }
 
 void Game::Init()
@@ -184,7 +185,6 @@ void Game::Update()
 	DamageUIGroup::GetInstance().Update();
 	EffectManager::GetInstance().Update();
 	AttackRangeGroup::GetInstance().Update();
-	
 }
 
 void Game::Draw()

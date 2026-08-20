@@ -9,7 +9,7 @@ Application::Application()
 {
     
     SetGraphMode(kScreenWidth,kScreenHeight, 32);			//ウィンドウのサイズとカラーモードを決める
-    ChangeWindowMode(TRUE);				//ウィンドウモードにする
+    ChangeWindowMode(FALSE);				//ウィンドウモードにする
     
     // DirectX11を使用するようにする。(DirectX9も可、一部機能不可)
     // Effekseerを使用するには必ず設定する。
@@ -18,7 +18,7 @@ Application::Application()
     {
         return;    // エラーが起きたら直ちに終了
     }
-
+    SetMouseDispFlag(FALSE);
     // 引数には画面に表示する最大パーティクル数を設定する。
     if (Effkseer_Init(1000) == -1) { DxLib_End(); }
 
