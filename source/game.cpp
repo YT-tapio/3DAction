@@ -17,6 +17,7 @@
 #include"input_manager.h"
 #include"brain.h"
 #include"enemy_base.h"
+#include"boss_base.h"
 #include"effect_base.h"
 #include"effect_manager.h"
 #include"effect_id.h"
@@ -55,7 +56,7 @@ Game::Game()
 	game_start_ = FALSE;
 	camera_ = std::make_shared<Camera>();
 	shadow_map_ = std::make_shared<ShadowMap>();
-	std::shared_ptr<EnemyBase> enemy = std::make_shared<EnemyBase>(VGet(0, 0, 0), &game_start_);
+	std::shared_ptr<EnemyBase> enemy = std::make_shared<BossBase>(VGet(0, 0, 0), &game_start_);
 	get_enemy_pos_ = [enemy]()
 		{
 			return enemy->GetCenterPos();

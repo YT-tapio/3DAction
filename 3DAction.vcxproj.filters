@@ -834,6 +834,9 @@
     <ClCompile Include="source\object_2D.cpp">
       <Filter>ソース ファイル\object\object2D</Filter>
     </ClCompile>
+    <ClCompile Include="source\boss_base.cpp">
+      <Filter>ソース ファイル\object\enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1423,6 +1426,9 @@
     </ClInclude>
     <ClInclude Include="source\game_to_next_scene.h">
       <Filter>ソース ファイル\game_to_next_scene</Filter>
+    </ClInclude>
+    <ClInclude Include="source\boss_base.h">
+      <Filter>ソース ファイル\object\enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

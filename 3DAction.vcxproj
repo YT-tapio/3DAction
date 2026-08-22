@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\boss_base.cpp" />
     <ClCompile Include="source\enemy_observer_interface.cpp" />
     <ClCompile Include="source\fade.cpp" />
     <ClCompile Include="source\game_start_timer.cpp" />
@@ -311,6 +312,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\2d_gravity.h" />
+    <ClInclude Include="source\boss_base.h" />
     <ClInclude Include="source\enemy_observer_interface.h" />
     <ClInclude Include="source\game_to_next_scene.h" />
     <ClInclude Include="source\load.h" />
