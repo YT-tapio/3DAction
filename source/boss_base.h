@@ -12,6 +12,11 @@ public:
 
 	virtual void Init() override;
 
+
+protected:
+
+	virtual void LoadFile() override;
+
 private:
 
 

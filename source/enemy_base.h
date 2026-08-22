@@ -61,6 +61,8 @@ public:
 
 protected:
 
+	virtual void LoadFile();
+
 	virtual void UpdateBone();
 
 	virtual void Death();

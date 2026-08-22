@@ -265,3 +265,8 @@ void BossBase::Init()
 	behavior_tree_->Init();
 	dir_ = VectorAssistant::VGetDirFromRotY(rot_);
 }
+
+void BossBase::LoadFile()
+{
+
+}

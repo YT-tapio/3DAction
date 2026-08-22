@@ -243,6 +243,11 @@ const VECTOR EnemyBase::GetCenterPos() const
 	return center_pos;
 }
 
+void EnemyBase::LoadFile()
+{
+
+}
+
 void EnemyBase::UpdateBone()
 {
 	int hand_bone_num = 0;
