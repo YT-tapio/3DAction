@@ -651,9 +651,6 @@
     <ClCompile Include="source\collision_mesh_obj.cpp">
       <Filter>ソース ファイル\object\collision_mesh</Filter>
     </ClCompile>
-    <ClCompile Include="source\object_2D.cpp">
-      <Filter>ソース ファイル\object\object2D</Filter>
-    </ClCompile>
     <ClCompile Include="source\sub_screen.cpp">
       <Filter>ソース ファイル\sub_screen</Filter>
     </ClCompile>
@@ -833,6 +830,9 @@
     </ClCompile>
     <ClCompile Include="source\game_to_next_scene.cpp">
       <Filter>ソース ファイル\game_to_next_scene</Filter>
+    </ClCompile>
+    <ClCompile Include="source\object_2D.cpp">
+      <Filter>ソース ファイル\object\object2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

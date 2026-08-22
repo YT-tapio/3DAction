@@ -12,6 +12,11 @@ void StatModifires::Awake()
 	LoadFile();
 }
 
+void StatModifires::End()
+{
+	effecacy_datas_.clear();
+}
+
 const StatModifire StatModifires::GetData(const std::string& name) const
 {
 	auto data = effecacy_datas_.find(name);

@@ -4,7 +4,7 @@
 
 
 SetObject::SetObject(const int& handle, VECTOR* pos, VECTOR* rot, VECTOR* scale)
-	:handle_(handle)
+	: handle_(handle)
 	, pos_(pos)
 	, rot_(rot)
 	, scale_(scale)
@@ -14,7 +14,7 @@ SetObject::SetObject(const int& handle, VECTOR* pos, VECTOR* rot, VECTOR* scale)
 
 SetObject::~SetObject()
 {
-
+	MV1DeleteModel(handle_);
 }
 
 void SetObject::Update()

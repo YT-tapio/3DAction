@@ -17,7 +17,10 @@ public:
 
 	void Awake();
 
+	void End();
+
 	const StatModifire GetData(const std::string& name) const;
+
 
 private:
 

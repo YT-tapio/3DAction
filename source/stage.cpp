@@ -16,9 +16,9 @@ Stage::Stage()
 	LoadFile();
 
 	handle_ = MV1LoadModel("data/model/stage/field.mv1");
-	coll_handle_ = MV1LoadModel("data/model/stage/stage_field_test.mv1");
 	// “–‚½‚è”»’è—pƒ‚ƒfƒ‹
-
+	coll_handle_ = MV1LoadModel("data/model/stage/stage_field_test.mv1");
+	
 	if (handle_ == -1)
 	{
 		printfDx("“Ç‚İ‚İ‚Å‚«‚È‚¢\n");
@@ -49,7 +49,7 @@ void Stage::Init()
 
 void Stage::Update()
 {
-	Setting();
+	//Setting();
 }
 
 void Stage::Draw()

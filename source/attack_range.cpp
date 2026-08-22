@@ -19,7 +19,7 @@ AttackRange::AttackRange()
 
 AttackRange::~AttackRange()
 {
-
+	MV1DeleteModel(handle_);
 }
 
 void AttackRange::Init()

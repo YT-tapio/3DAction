@@ -14,7 +14,11 @@ SkillUIDatas::SkillUIDatas()
 
 SkillUIDatas::~SkillUIDatas()
 {
-
+	for (auto& data : skill_ui_datas_)
+	{
+		DeleteGraph(data.second.icon_handle);
+	}
+	skill_ui_datas_.clear();
 }
 
 const SkillUIData SkillUIDatas::GetData(const int skill_id) const

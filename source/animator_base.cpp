@@ -32,6 +32,7 @@ AnimatorBase::~AnimatorBase()
 		MV1DeleteModel(animation.second.handle);
 	}
 	animation_datas_.clear();
+	request_names_.clear();
 }
 
 void AnimatorBase::Init()

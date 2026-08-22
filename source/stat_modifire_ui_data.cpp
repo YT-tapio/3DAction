@@ -41,7 +41,12 @@ void StatModifireUIData::Load()
 
 void StatModifireUIData::End()
 {
-	
+	// データの開放
+	for (auto& handle : handles_)
+	{
+		DeleteGraph(handle.second);
+	}
+	handles_.clear();
 }
 
 const int StatModifireUIData::GetHandle(StatType type, ModifireOperation operation) const

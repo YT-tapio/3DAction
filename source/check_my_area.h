@@ -36,7 +36,6 @@ public:
 	/// <param name="object"></param>
 	virtual void OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
-
 	std::vector<std::weak_ptr<ObjectBase>> GetMyAreaObject();
 
 	std::shared_ptr<RigidBody> GetRigidBody() override;

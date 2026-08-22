@@ -101,8 +101,8 @@ Game::~Game()
 	EffectManager::GetInstance().End();
 	AttackRangeGroup::GetInstance().End();
 	DamageUIGroup::GetInstance().End();
+	StatModifires::GetInstance().End();
 	StatModifireUIData::GetInstance().End();
-	ObjectSetter::GetInstance().DeleteResource();
 	SoundManager::GetInstance().AllStop();
 }
 

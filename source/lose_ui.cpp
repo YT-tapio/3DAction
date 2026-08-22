@@ -40,7 +40,10 @@ LoseUI::LoseUI()
 
 LoseUI::~LoseUI()
 {
+	DeleteGraph(Abutton_image_handle_);
+	DeleteGraph(Bbutton_image_handle_);
 	DeleteGraph(game_over_handle_);
+	DeleteFontToHandle(font_handle_);
 }
 
 void LoseUI::Init()

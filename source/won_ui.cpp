@@ -13,6 +13,7 @@
 #include"fps.h"
 #include"font.h"
 #include"sound_manager.h"
+
 WonUI::WonUI()
 	: base_pos_(VectorAssistant::VGetZero())
 	, back_ground_size_(VectorAssistant::VGetZero())
@@ -41,7 +42,9 @@ WonUI::WonUI()
 
 WonUI::~WonUI()
 {
-
+	DeleteGraph(Abutton_image_handle_);
+	DeleteGraph(Bbutton_image_handle_);
+	DeleteFontToHandle(go_next_scene_font_.handle);
 }
 
 void WonUI::Init()

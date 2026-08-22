@@ -20,11 +20,12 @@ Animator2D::~Animator2D()
 	// アニメーションのデータ開放
 	for (auto& data : datas_)
 	{
-		for (auto handle : data.second.handles)
+		for (auto& handle : data.second.handles)
 		{
 			DeleteGraph(handle);
 		}
 	}
+	request_names_.clear();
 
 }
 

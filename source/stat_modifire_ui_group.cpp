@@ -12,12 +12,11 @@ StatModifireUIGroup::StatModifireUIGroup(const std::string& file_path)
 {
 	LoadFile(file_path);
 	Init();
-	handle_ = LoadGraph("data/ui/stat_modifire/physical_attack.png");
 }
 
 StatModifireUIGroup::~StatModifireUIGroup()
 {
-	DeleteGraph(handle_);
+	active_stat_modifire_uis_.clear();
 }
 
 void StatModifireUIGroup::Init()

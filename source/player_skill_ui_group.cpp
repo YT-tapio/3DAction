@@ -27,7 +27,9 @@ PlayerSkillUIGroup::PlayerSkillUIGroup()
 
 PlayerSkillUIGroup::~PlayerSkillUIGroup()
 {
-
+	DeleteFontToHandle(font_handle_);
+	DeleteGraph(normal_skill_input_handle_);
+	DeleteGraph(strong_skill_input_handle_);
 }
 
 void PlayerSkillUIGroup::Init()

@@ -665,7 +665,7 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 		// padの振動
 
 		// 許容量
-		const float kJustAvoidRatio = 0.3f;
+		const float kJustAvoidRatio = 0.37f;
 		// ダメージを受けない
 		// 無敵かつジャスト入力中かつアニメーションが最初のほうなら特別処理
 		if (animator_->GetRatio("avoid") < kJustAvoidRatio)

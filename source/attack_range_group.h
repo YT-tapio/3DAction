@@ -26,8 +26,6 @@ public:
 
 	void End();
 
-	void EndRequest(int num);
-
 	/// <summary>
 	/// •`‰æ‚ª‚Å‚«‚È‚¢—Ê‚È‚ç-1‚ð•Ô‚·
 	/// </summary>
