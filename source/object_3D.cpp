@@ -7,13 +7,13 @@
 Object3D::Object3D(const char* id)
 	:ObjectBase()
 {
-	static int count = 0;
+	//static int count = 0;
 	const float kDefaultSize = 1.f;
 	path_ = "";
 	handle_ = -1;
 	scale_ = VectorAssistant::VGetSame(kDefaultSize);
-	printfDx("Object3D destroyed: %d\n", count);
-	count++;
+	//printfDx("Object3D destroyed: %d\n", count);
+	//count++;
 	//LoadFile();
 }
 
@@ -25,9 +25,9 @@ Object3D::~Object3D()
 		MV1DeleteModel(handle_);
 		handle_ = -1;
 	}
-	static int count = 0;
-	printfDx("Object3D destroyed: %p,%d\n", this, count);
-	count++;
+	//static int count = 0;
+	//printfDx("Object3D destroyed: %p,%d\n", this, count);
+	//count++;
 }
 
 void Object3D::Init()

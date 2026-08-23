@@ -226,9 +226,6 @@
     <Filter Include="ソース ファイル\object\collision_mesh">
       <UniqueIdentifier>{a4098630-b74f-49bc-89a5-2e6efef03097}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\object\object2D">
-      <UniqueIdentifier>{0abfe81d-a96a-4551-8228-9954321b7bf9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\ui">
       <UniqueIdentifier>{02af4910-8028-494a-951c-cc18ccec8253}</UniqueIdentifier>
     </Filter>
@@ -345,6 +342,9 @@
     </Filter>
     <Filter Include="ソース ファイル\game_to_next_scene">
       <UniqueIdentifier>{e52acdd9-61b3-4e34-b15b-ee5ac437f2df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\object_2D">
+      <UniqueIdentifier>{0abfe81d-a96a-4551-8228-9954321b7bf9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -832,7 +832,7 @@
       <Filter>ソース ファイル\game_to_next_scene</Filter>
     </ClCompile>
     <ClCompile Include="source\object_2D.cpp">
-      <Filter>ソース ファイル\object\object2D</Filter>
+      <Filter>ソース ファイル\object\object_2D</Filter>
     </ClCompile>
     <ClCompile Include="source\boss_base.cpp">
       <Filter>ソース ファイル\object\enemy</Filter>
@@ -1212,7 +1212,7 @@
       <Filter>ソース ファイル\object\collision_mesh</Filter>
     </ClInclude>
     <ClInclude Include="source\object_2D.h">
-      <Filter>ソース ファイル\object\object2D</Filter>
+      <Filter>ソース ファイル\object\object_2D</Filter>
     </ClInclude>
     <ClInclude Include="source\sub_screen.h">
       <Filter>ソース ファイル\sub_screen</Filter>
