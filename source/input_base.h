@@ -28,6 +28,8 @@ public:
 
 	virtual const bool IsStrongSkill() const;
 
+	virtual const bool IsLockOnEnemy() const;
+
 	virtual const bool GoNextScene() const;
 
 	virtual const bool GoResult() const;

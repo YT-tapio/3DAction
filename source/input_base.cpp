@@ -63,6 +63,11 @@ const bool InputBase::IsStrongSkill() const
 	return FALSE;
 }
 
+const bool InputBase::IsLockOnEnemy() const
+{
+	return FALSE;
+}
+
 const bool InputBase::GoNextScene() const
 {
 	return FALSE;

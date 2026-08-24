@@ -8,20 +8,23 @@
 #include"player_group.h"
 #include"won_camera.h"
 #include"lose_camera.h"
+#include"enemy_lock_on_camera.h"
 
 void Brain::Init()
 {
-	now_camera_ = "nothing";
+	current_camera_ = "nothing";
 	before_camera_ = "nothing";
 }
 
 void Brain::CreatePlaySceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos, std::function<VECTOR()> enemy_center_pos, std::function<VECTOR()> enemy_dir)
 {
+	auto player_head_pos = PlayerGroup::GetInstance().GetCurrentPlayerHeadPos();
 	//virtual_cameras_[kTracking] = std::make_shared<TrackingCamera>(PlayerGroup::GetInstance().GetCurrentPlayerHeadPos(), camera_pos, target_pos);
-	virtual_cameras_[kSphere] = std::make_shared<SphereCamera>(PlayerGroup::GetInstance().GetCurrentPlayerHeadPos(), camera_pos, target_pos);
+	virtual_cameras_[kSphere] = std::make_shared<SphereCamera>(player_head_pos, camera_pos, target_pos);
 	
 	virtual_cameras_["won"] = std::make_shared<WonCamera>(camera_pos, target_pos,enemy_center_pos,enemy_dir);
 	virtual_cameras_["lose"] = std::make_shared<LoseCamera>(camera_pos, target_pos);
+	virtual_cameras_["lock_on_enemy"] = std::make_shared<EnemyLockOnCamera>(camera_pos,target_pos, player_head_pos,enemy_center_pos);
 	//virtual_cameras_[kTracking]->Init();
 	
 	for (auto& virtual_camera : virtual_cameras_)
@@ -30,17 +33,17 @@ void Brain::CreatePlaySceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos,
 		virtual_camera.second->Awake();
 	}
 
-	now_camera_ = kSphere;
+	current_camera_ = kSphere;
 	before_camera_ = kSphere;
 }
 
 void Brain::Update()
 {
 	// カメラの切り返したとき
-	if (now_camera_ != before_camera_)
+	if (current_camera_ != before_camera_)
 	{
 		//カメラの初期化
-		virtual_cameras_[now_camera_]->Init();
+		virtual_cameras_[current_camera_]->Init();
 	}
 	else
 	{
@@ -48,13 +51,13 @@ void Brain::Update()
 		// 切り替え
 		// 現在のシーンを見て切り替えのチェンジ
 		// VirtualCameraのupdate
-		virtual_cameras_[now_camera_]->Update();
+		virtual_cameras_[current_camera_]->Update();
 
-		vel_ = virtual_cameras_[now_camera_]->GetVelocity();
-		target_vel_ = virtual_cameras_[now_camera_]->GetTargetVelocity();
+		vel_ = virtual_cameras_[current_camera_]->GetVelocity();
+		target_vel_ = virtual_cameras_[current_camera_]->GetTargetVelocity();
 	}
 	
-	before_camera_ = now_camera_;
+	before_camera_ = current_camera_;
 }
 
 
@@ -70,7 +73,7 @@ void Brain::ChangeCamera(const std::string& request_name)
 	{
 		if (camera_name == request_name)
 		{
-			now_camera_ = request_name;
+			current_camera_ = request_name;
 		}
 	}
 }
@@ -83,6 +86,11 @@ void Brain::CollisionNotActive()
 void Brain::CollisionActive()
 {
 
+}
+
+const std::string Brain::GetCurrentCameraName() const
+{
+	return current_camera_;
 }
 
 const VECTOR Brain::GetVelocity() const

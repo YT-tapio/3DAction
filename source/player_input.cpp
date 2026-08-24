@@ -201,6 +201,34 @@ const bool PlayerInput::IsStrongSkill() const
 	return FALSE;
 }
 
+const bool PlayerInput::IsLockOnEnemy() const
+{
+	if (is_stop_) { return FALSE; }
+	// 攻撃に対応されているボタンを見る
+	// padはbボタン長押しで
+	for (auto& input : inputs_)
+	{
+		auto pad = std::dynamic_pointer_cast<Pad>(input);
+		float pushing_time = 0.f;
+		if (pad != nullptr)
+		{
+			pushing_time = pad->GetPushingTimeButton(PadConfig::lock_on_enemy);
+			if (pushing_time >= 0.f) { return TRUE; }
+		}
+		else
+		{
+			auto pc = std::dynamic_pointer_cast<PC>(input);
+			if (pc != nullptr)
+			{
+				pushing_time = pc->GetPushingTimeKey(KeyConfig::lock_on_enemy);
+
+				if (pushing_time >= 0.f) { return TRUE; }
+			}
+		}
+	}
+	return FALSE;
+}
+
 const bool PlayerInput::GoNextScene() const
 {
 	if (is_stop_) { return FALSE; }

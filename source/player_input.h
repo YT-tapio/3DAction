@@ -35,6 +35,8 @@ public:
 
 	const bool IsStrongSkill() const override;
 
+	const bool IsLockOnEnemy() const override;
+
 	const bool GoNextScene() const override;
 
 	const bool GoResult() const override;

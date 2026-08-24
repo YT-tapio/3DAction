@@ -21,6 +21,8 @@ private:
 
 	void MakeYawPitch();
 
+private:
+
 	static constexpr float kYawRadMax = 85.f;
 	static constexpr float kYawRadMin = 50.f;
 

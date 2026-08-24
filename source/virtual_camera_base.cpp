@@ -10,6 +10,7 @@ VirtualCameraBase::VirtualCameraBase(VECTOR* pos,VECTOR* target_pos)
 	target_vel_ = VectorAssistant::VGetZero();
 	is_active_ = FALSE;
 	priority_ = 0;
+	shake_power_ = 0.f;
 }
 
 VirtualCameraBase::~VirtualCameraBase()

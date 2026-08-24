@@ -205,6 +205,19 @@ void Player::Update()
 	time_->Update();
 	if (CheckHitKey(KEY_INPUT_I)) { status_container_->TakeHeal(10); }
 
+	if (input_->IsLockOnEnemy()) 
+	{
+		Brain::GetInstance().ChangeCamera("lock_on_enemy");
+	}
+	else
+	{
+		if (Brain::GetInstance().GetCurrentCameraName() == "lock_on_enemy")
+		{
+			Brain::GetInstance().ChangeCamera("sphere");
+		}
+	}
+	
+
 	if (is_death_enemy_)
 	{
 		enemy_death_offset_timer_->Update();

@@ -34,6 +34,8 @@ public:
 
 	void CollisionActive();
 
+	const std::string GetCurrentCameraName() const;
+
 	const VECTOR GetVelocity() const;
 
 	const VECTOR GetTargetVelocity() const;
@@ -42,12 +44,12 @@ private:
 	
 	Brain();
 
-	const std::string kTracking = "Tracking";
-	const std::string kSphere = "Sphere";
+	const std::string kTracking = "tracking";
+	const std::string kSphere = "sphere";
 
 	std::vector<std::string> camera_names_;
 
-	std::string now_camera_;
+	std::string current_camera_;
 	std::string before_camera_;
 
 	std::unordered_map<std::string, std::shared_ptr<VirtualCameraBase>> virtual_cameras_;

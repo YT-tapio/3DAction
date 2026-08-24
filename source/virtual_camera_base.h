@@ -1,4 +1,7 @@
 #pragma once
+#include<memory>
+
+class VariableTimer;
 
 class VirtualCameraBase
 {
@@ -32,6 +35,10 @@ protected:
 	VECTOR target_vel_;	// ターゲットの移動量
 
 private:
+
 	bool is_active_;
+
 	int priority_;
+	
+	float shake_power_;
 };
