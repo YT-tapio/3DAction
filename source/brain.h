@@ -6,6 +6,7 @@
 #include"virtual_camera_base.h"
 
 class Player;
+class Shake;
 
 class Brain
 {
@@ -30,6 +31,8 @@ public:
 
 	void ChangeCamera(const std::string& request_name);
 
+	void ShakeCamera(const float& power, const float& time);
+
 	void CollisionNotActive();
 
 	void CollisionActive();
@@ -44,11 +47,13 @@ private:
 	
 	Brain();
 
+private:
+
 	const std::string kTracking = "tracking";
 	const std::string kSphere = "sphere";
 
 	std::vector<std::string> camera_names_;
-
+	std::shared_ptr<Shake> shake_;
 	std::string current_camera_;
 	std::string before_camera_;
 

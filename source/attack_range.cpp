@@ -11,10 +11,7 @@ AttackRange::AttackRange()
 	: Object3D("")
 	, target_scale_(VectorAssistant::VGetZero())
 {
-	LoadFile();
-	scale_ = VectorAssistant::VGetSame(1.f);
-	// objectsetterへ登録
-	ObjectSetter::GetInstance().AddResource(handle_,&pos_,&rot_,&scale_);
+	
 }
 
 AttackRange::~AttackRange()
@@ -29,13 +26,6 @@ void AttackRange::Init()
 	target_scale_	= VectorAssistant::VGetSame(0.f);
 }
 
-void AttackRange::Init(const VECTOR& pos, const VECTOR& scale)
-{
-	pos_				= pos;
-	scale_ = VectorAssistant::VGetSame(1.f);
-	target_scale_	= scale;
-}
-
 void AttackRange::Update()
 {
 	if (VSize(target_scale_) == 0) { return; }					// ターゲットを変更していないのなら
@@ -43,6 +33,11 @@ void AttackRange::Update()
 
 	// Dampする
 	scale_ = Lerp::DampV(scale_, target_scale_, 0.4f);
+}
+
+void AttackRange::Active(const VECTOR& pos, const VECTOR& scale)
+{
+
 }
 
 void AttackRange::Draw()
@@ -56,29 +51,4 @@ void AttackRange::Draw()
 void AttackRange::Debug()
 {
 
-}
-
-void AttackRange::LoadFile()
-{
-	std::ifstream file("data/csv/attack_range/attack_range.csv");
-	std::string line;
-
-	if (!file)
-	{
-		printfDx("csvファイル読み込み失敗\n");
-		return;
-	}
-
-	// 最初の2行を飛ばす
-	std::getline(file, line);
-
-	while (std::getline(file, line))
-	{
-		std::stringstream ss(line);
-		std::string data;
-		std::string name;
-		name = CSVFileAssistant::GetStringOfCSVFile(ss, data);
-		handle_ = MV1LoadModel(name.c_str());
-		if (handle_ == -1) { printfDx("読み込み失敗\n"); }
-	}
 }

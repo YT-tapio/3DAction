@@ -268,6 +268,7 @@ void Physics::Resistance()
 	{
 		auto body = id_rigid_body.second.lock();
 		if (body->IsStop()) { continue; }
+		//if (!body->GetIsActive()) { continue; }
 		// “K‰ž‚ðŽó‚¯‚È‚¢‚à‚Ì
 		if (body->GetIsKinematic()) { continue; }
 
@@ -295,7 +296,7 @@ void Physics::Gravity()
 {
 	for (auto& main_body : id_rigid_bodies_mp_)
 	{
-		if (!main_body.second.lock()->IsStop())
+		if (!main_body.second.lock()->IsStop() && main_body.second.lock()->GetIsActive())
 		{
 			main_body.second.lock()->AddForce();
 		}

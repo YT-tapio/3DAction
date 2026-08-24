@@ -194,7 +194,7 @@ void EnemyBase::UnGround()
 void EnemyBase::OnDamageFromPlayer(float damage,AttackType type)
 {
 	auto final_damage = status_container_->TakeDamage(damage,type);
-
+	Brain::GetInstance().ShakeCamera(0.3f, 0.2f);
 	for (auto& observer : observers_)
 	{
 		observer->OnTakeDamage(final_damage);

@@ -23,6 +23,8 @@
 #include"status.h"
 #include"status_container.h"
 #include"sound_manager.h"
+#include<functional>
+#include"brain.h"
 
 Stamp::Stamp(std::weak_ptr<ObjectBase> owner, VECTOR* pos, float radius,std::string my_anim_name, float damage_rate)
 	: AttackBase(owner,0,0,damage_rate)
@@ -67,6 +69,7 @@ BehaviorStatus Stamp::Update()
 			}
 		}
 	}
+
 	// オーナーが着地したら成功を返します。
 	if (auto owner_physics = std::dynamic_pointer_cast<IPhysicsEventReceiver>(owner_.lock()))
 	{
@@ -83,8 +86,10 @@ BehaviorStatus Stamp::Update()
 			EffectManager::GetInstance().SetPos(EffectID::kStamp,owner_pos);
 			SoundManager::GetInstance().SetPos("stamp", owner_pos);
 			SoundManager::GetInstance().Play3DSound("stamp");
+			Brain::GetInstance().ShakeCamera(1.f, 0.3f);
 		}
 	}
+
 	// printfDx("stamp\n");
 
 	return BehaviorStatus::kRunning;

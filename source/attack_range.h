@@ -8,29 +8,24 @@ public:
 
 	AttackRange();
 
-	~AttackRange() override;
+	virtual ~AttackRange() override;
 
 	void Init() override;
 
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="pos"></param>
-	/// <param name="scale"></param>
-	void Init(const VECTOR& pos, const VECTOR& scale);
-
 	void Update() override;
+
+	virtual void Active(const VECTOR& pos, const VECTOR& scale);
 
 	void Draw() override;
 
 	void Debug() override;
 
-private:
-
-	void LoadFile();
-
-private:
+protected:
 
 	VECTOR target_scale_;
+
+private:
+
+	
 
 };

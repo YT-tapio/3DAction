@@ -231,6 +231,8 @@ void Player::Update()
 	if (status_container_->GetCurrentStatus().hp <= 0)
 	{
 		animator_->PlayRequest("death");
+		rigid_body_->SetTargetVelocity(VectorAssistant::VGetZero());
+		//rigid_body_->SetVelocity(VectorAssistant::VGetZero());
 		rigid_body_->NotActive();
 	}
 	else

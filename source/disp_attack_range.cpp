@@ -31,7 +31,7 @@ void DispAttackRange::Init()
 void DispAttackRange::Entry()
 {
 	// 当たり判定の描画をリクエスト
-	AttackRangeGroup::GetInstance().DrawRequest(VAdd(*pos_,VGet(0.f,0.1f,0.f)),attack_range_scale_,end_function_);
+	AttackRangeGroup::GetInstance().CircleDrawRequest(VAdd(*pos_,VGet(0.f,0.1f,0.f)),attack_range_scale_,end_function_);
 }
 
 BehaviorStatus DispAttackRange::Update()

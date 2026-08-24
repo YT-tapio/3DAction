@@ -99,7 +99,7 @@ void Title::Update()
 	
 	if (player_input != nullptr)
 	{
-		if (player_input->GoNextScene())
+		if (player_input->GoNextScene() && !is_push_)
 		{
 			is_push_ = TRUE;
 			//Physics::GetInstance().End();

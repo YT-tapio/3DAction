@@ -31,7 +31,9 @@ public:
 	/// </summary>
 	/// <param name="scale"></param>
 	/// <returns>-1à»äOÇÕê¨å˜</returns>
-	int DrawRequest(const VECTOR& pos, const VECTOR& scale, std::function<bool()>end_function);
+	int CircleDrawRequest(const VECTOR& pos, const VECTOR& scale, std::function<bool()>end_function);
+
+	int RectangleDrawRequest(const VECTOR& pos, const VECTOR& scale, std::function<bool()> end_function);
 
 private:
 
@@ -43,4 +45,8 @@ private:
 
 	std::vector<std::pair<bool,std::shared_ptr<AttackRange>>> attack_ranges_ui_;
 	std::unordered_map<int,std::function<bool()>> end_functions_;
+
+	std::vector<std::pair<bool, std::shared_ptr<AttackRange>>> attack_range_rectangles_ui_;
+	std::unordered_map<int, std::function<bool()>> rectangle_end_functions_;
+
 };

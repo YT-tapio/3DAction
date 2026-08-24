@@ -146,7 +146,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\attack_range_circle.cpp" />
+    <ClCompile Include="source\attack_range_rectangle.cpp" />
     <ClCompile Include="source\boss_base.cpp" />
+    <ClCompile Include="source\enemy_lock_on_camera.cpp" />
     <ClCompile Include="source\enemy_observer_interface.cpp" />
     <ClCompile Include="source\fade.cpp" />
     <ClCompile Include="source\game_start_timer.cpp" />
@@ -158,6 +161,7 @@
     <ClCompile Include="source\player_observer_interface.cpp" />
     <ClCompile Include="source\play_sound.cpp" />
     <ClCompile Include="source\roar.cpp" />
+    <ClCompile Include="source\shake.cpp" />
     <ClCompile Include="source\sound_2D.cpp" />
     <ClCompile Include="source\action_node.cpp" />
     <ClCompile Include="source\animation_2d_data.cpp" />
@@ -309,16 +313,21 @@
     <ClCompile Include="source\wait_node.cpp" />
     <ClCompile Include="source\won_camera.cpp" />
     <ClCompile Include="source\won_ui.cpp" />
+    <ClCompile Include="source\zoom.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\2d_gravity.h" />
+    <ClInclude Include="source\attack_range_circle.h" />
+    <ClInclude Include="source\attack_range_rectangle.h" />
     <ClInclude Include="source\boss_base.h" />
+    <ClInclude Include="source\enemy_lock_on_camera.h" />
     <ClInclude Include="source\enemy_observer_interface.h" />
     <ClInclude Include="source\game_to_next_scene.h" />
     <ClInclude Include="source\load.h" />
     <ClInclude Include="source\lose_camera.h" />
     <ClInclude Include="source\lose_ui.h" />
     <ClInclude Include="source\player_observer_interface.h" />
+    <ClInclude Include="source\shake.h" />
     <ClInclude Include="source\won_camera.h" />
     <ClInclude Include="source\fade.h" />
     <ClInclude Include="source\fade_color_type.h" />
@@ -508,6 +517,7 @@
     <ClInclude Include="source\wait_node.h" />
     <ClInclude Include="source\sound_base.h" />
     <ClInclude Include="source\won_ui.h" />
+    <ClInclude Include="source\zoom.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\json\player_data.json" />

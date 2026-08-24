@@ -9,6 +9,7 @@
 #include"won_camera.h"
 #include"lose_camera.h"
 #include"enemy_lock_on_camera.h"
+#include"shake.h"
 
 void Brain::Init()
 {
@@ -56,7 +57,7 @@ void Brain::Update()
 		vel_ = virtual_cameras_[current_camera_]->GetVelocity();
 		target_vel_ = virtual_cameras_[current_camera_]->GetTargetVelocity();
 	}
-	
+	shake_->Update();
 	before_camera_ = current_camera_;
 }
 
@@ -78,6 +79,12 @@ void Brain::ChangeCamera(const std::string& request_name)
 	}
 }
 
+void Brain::ShakeCamera(const float& power,const float& time)
+{
+	if (power == 0.f || time == 0.f) { return; }
+	shake_->Active(power, time);
+}
+
 void Brain::CollisionNotActive()
 {
 
@@ -95,18 +102,19 @@ const std::string Brain::GetCurrentCameraName() const
 
 const VECTOR Brain::GetVelocity() const
 {
-	return vel_;
+	return VAdd(vel_,shake_->GetShakeVel());
 }
 
 const VECTOR Brain::GetTargetVelocity() const
 {
-	return target_vel_;
+	return VAdd(target_vel_, shake_->GetShakeVel());
 }
 
 Brain::Brain()
 	: vel_(VectorAssistant::VGetZero())
 	, target_vel_(VectorAssistant::VGetZero())
 	, can_hit_(TRUE)
+	, shake_(std::make_shared<Shake>())
 {
 
 }

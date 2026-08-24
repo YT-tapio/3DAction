@@ -20,6 +20,10 @@ public:
 
 private:
 
+	const VECTOR GetRandomShakeVel() const;
+
+private:
+
 	std::shared_ptr<VariableTimer> timer_;
 	
 	VECTOR shake_vel_;
