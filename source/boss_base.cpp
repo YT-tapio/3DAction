@@ -42,6 +42,7 @@
 #include"area_of_effect_attack.h"
 #include"play_sound.h"
 #include"tackle.h"
+#include"roar_tackle.h"
 #include"animation_charge.h"
 #include"chase_player.h"
 #include"roar.h"
@@ -141,6 +142,7 @@ void BossBase::Init()
 		std::make_shared<PlaySound3D>(mine, &pos_, "tackle_voice"));
 
 	// タックルの前の予備動作
+	/*
 	std::shared_ptr<NodeBase> charge_tackle_node =
 		std::make_shared<ActionNode>(std::make_shared<AnimationCharge>(mine, "charge_tackle", 0.9f));
 
@@ -149,17 +151,22 @@ void BossBase::Init()
 		std::make_shared<Tackle>(mine,
 			std::make_shared<RigidBody>(std::make_shared<Capsule>(10.5f, 18.f, VectorAssistant::VGetZero()), &pos_, FALSE, TRUE, 0.1f, 1.f), "tackle", 1.f, 2.f, 1.f));
 
+	*/
+	std::shared_ptr<NodeBase> tackle_node = std::make_shared<ActionNode>(
+		std::make_shared<RoarTackle>(mine,
+			std::make_shared<RigidBody>(std::make_shared<Capsule>(10.5f, 18.f, 
+				VectorAssistant::VGetZero()), &pos_, FALSE, TRUE, 0.1f, 1.f), "tackle", 1.f, 2.f, 1.f));
 	std::vector<std::shared_ptr<NodeBase>> tackle_nodes;
 
 	tackle_nodes.emplace_back(tackle_voice_node);
-	tackle_nodes.emplace_back(charge_tackle_node);
+	//tackle_nodes.emplace_back(charge_tackle_node);
 	tackle_nodes.emplace_back(tackle_node);
 
 	// ランダムのnodeに代入
 	std::vector<std::shared_ptr<NodeBase>> random_nodes;
-	random_nodes.emplace_back(stamp_node);
-	random_nodes.emplace_back(double_punch_node);
-	random_nodes.emplace_back(std::make_shared<SequenceNode>(area_of_effect_nodes));
+	//random_nodes.emplace_back(stamp_node);
+	//random_nodes.emplace_back(double_punch_node);
+	//random_nodes.emplace_back(std::make_shared<SequenceNode>(area_of_effect_nodes));
 	random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
 
 	// 追いかけるときのノード

@@ -12,15 +12,15 @@ public:
 	Tackle(std::weak_ptr<ObjectBase> owner,std::shared_ptr<RigidBody> rigid_body,
 		std::string anim_name,const float time, const float speed, float damage_rate);
 
-	~Tackle() override;
+	virtual ~Tackle() override;
 
-	void Init() override;
+	virtual void Init() override;
 
-	void Entry() override;
+	virtual void Entry() override;
 
-	BehaviorStatus Update() override;
+	virtual BehaviorStatus Update() override;
 
-	void Exit() override;
+	virtual void Exit() override;
 
 	void Debug() override;
 

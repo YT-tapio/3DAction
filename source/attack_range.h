@@ -14,15 +14,22 @@ public:
 
 	void Update() override;
 
-	virtual void Active(const VECTOR& pos, const VECTOR& scale);
-
 	void Draw() override;
 
 	void Debug() override;
 
 protected:
 
+	std::function<float()> leading_up_ratio_;
+
 	VECTOR target_scale_;
+
+	// çUåÇÇ™Ç≈ÇÈÇ‹Ç≈ÇÃÉTÅ[ÉNÉã
+	int leading_up_attack_handle_;
+
+	VECTOR leading_up_pos_;
+	VECTOR leading_up_rot_;
+	VECTOR leading_up_scale_;
 
 private:
 

@@ -90,8 +90,6 @@ BehaviorStatus Stamp::Update()
 		}
 	}
 
-	// printfDx("stamp\n");
-
 	return BehaviorStatus::kRunning;
 }
 

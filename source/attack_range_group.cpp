@@ -9,6 +9,7 @@
 #include"attack_range.h"
 #include"attack_range_circle.h"
 #include"attack_range_rectangle.h"
+
 void AttackRangeGroup::Awake()
 {
 	for (int i = 0; i < kMaxAttackRangeNum; i++)
@@ -77,6 +78,14 @@ void AttackRangeGroup::Draw()
 			attack_range.second->Draw();
 		}
 	}
+
+	for (const auto& attack_range : attack_range_rectangles_ui_)
+	{
+		if (attack_range.first)
+		{
+			attack_range.second->Draw();
+		}
+	}
 }
 
 void AttackRangeGroup::End()
@@ -102,32 +111,66 @@ int AttackRangeGroup::CircleDrawRequest(const VECTOR& pos,const VECTOR& scale,st
 		i++;
 	}
 
-
 	return -1;
 }
 
-int AttackRangeGroup::RectangleDrawRequest(const VECTOR& pos, const VECTOR& scale, std::function<bool()> end_function)
+int AttackRangeGroup::RectangleDrawRequest(const VECTOR& pos, const VECTOR& scale, const VECTOR& dir,std::function<bool()> end_function)
 {
 	int i = 0;
-	for (auto& attack_range : attack_ranges_ui_)
+	for (auto& attack_range : attack_range_rectangles_ui_)
 	{
 		// FALSEÇ»ÇÁTRUEÇ…ÇµÇƒÇªÇÃî‘çÜÇï‘Ç∑
 		if (!attack_range.first)
 		{
 			attack_range.first = TRUE;
-			attack_range.second->Active(pos, scale);
+			attack_range.second->Active(pos, scale, dir);
 			// èIóπèåèÇÇ†ÇƒÇÕÇﬂÇÈ
-			end_functions_[i] = end_function;
+			rectangle_end_functions_[i] = end_function;
 			return i;
 		}
 		i++;
 	}
 
-
 	return -1;
+}
+
+void AttackRangeGroup::CircleSetPos(const int& id,const VECTOR& pos)
+{
+	if (attack_ranges_ui_.size() < id && attack_ranges_ui_.size() >= id)
+	{
+		auto attack_range_ui = attack_ranges_ui_[id];
+		if (attack_range_ui.first)
+		{
+			attack_range_ui.second->SetPos(pos);
+		}
+	}
+}
+
+void AttackRangeGroup::RectangleSetPos(const int& id, const VECTOR& pos)
+{
+	if (attack_range_rectangles_ui_.size() < id && attack_range_rectangles_ui_.size() >= id)
+	{
+		auto attack_range_ui = attack_range_rectangles_ui_[id];
+		if (attack_range_ui.first)
+		{
+			attack_range_ui.second->SetPos(pos);
+		}
+	}
+}
+
+void AttackRangeGroup::RectangleSetDir(const int& id, const VECTOR& dir)
+{
+	if (0 <= id && attack_range_rectangles_ui_.size() > id)
+	{
+		auto attack_range_ui = attack_range_rectangles_ui_[id];
+		if (attack_range_ui.first)
+		{
+			attack_range_ui.second->SetDir(dir);
+		}
+	}
 }
 
 AttackRangeGroup::AttackRangeGroup()
 {
-
+	
 }

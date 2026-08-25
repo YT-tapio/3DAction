@@ -9,11 +9,21 @@ public:
 
 	~AttackRangeRectangle() override;
 
-	void Active(const VECTOR& pos, const VECTOR& scale) override;
+	void Active(const VECTOR& base_pos, const VECTOR& scale, const VECTOR& dir,std::function<float()> ratio);
+
+	void SetPos(const VECTOR& pos);
+
+	void SetDir(const VECTOR& dir);
 
 private:
 
 	void LoadFile();
+
+	/// <summary>
+	/// dirÇ©ÇÁâÒì]ó ÇäÑÇËèoÇ∑
+	/// </summary>
+	/// <param name="dir"></param>
+	void RotToDir(const VECTOR& dir);
 
 private:
 

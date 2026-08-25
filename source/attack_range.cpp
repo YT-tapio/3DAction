@@ -1,5 +1,6 @@
 #include<fstream>
 #include<sstream>
+#include<functional>
 #include"DxLib.h"
 #include"object_3D.h"
 #include"attack_range.h"
@@ -10,6 +11,10 @@
 AttackRange::AttackRange()
 	: Object3D("")
 	, target_scale_(VectorAssistant::VGetZero())
+	, leading_up_ratio_(nullptr)
+	, leading_up_pos_(VectorAssistant::VGetZero())
+	, leading_up_rot_(VectorAssistant::VGetZero())
+	, leading_up_scale_(VectorAssistant::VGetZero())
 {
 	
 }
@@ -33,12 +38,14 @@ void AttackRange::Update()
 
 	// DampÇ∑ÇÈ
 	scale_ = Lerp::DampV(scale_, target_scale_, 0.4f);
+
+	// äÑçáÇ…çáÇÌÇπÇƒï`âÊ
+	if (leading_up_ratio_ == nullptr)
+	{
+		leading_up_scale_ = VScale(target_scale_, leading_up_ratio_());
+	}
 }
 
-void AttackRange::Active(const VECTOR& pos, const VECTOR& scale)
-{
-
-}
 
 void AttackRange::Draw()
 {

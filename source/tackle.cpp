@@ -21,6 +21,7 @@
 #include"status.h"
 #include"status_container.h"
 #include"sound_manager.h"
+
 Tackle::Tackle(std::weak_ptr<ObjectBase> owner, std::shared_ptr<RigidBody> rigid_body,
 	std::string anim_name,const float time, const float speed, float damage_rate)
 	: AttackBase(owner,0.f,0.f,damage_rate)

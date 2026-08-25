@@ -858,6 +858,9 @@
     <ClCompile Include="source\zoom.cpp">
       <Filter>ソース ファイル\camera\zoom</Filter>
     </ClCompile>
+    <ClCompile Include="source\roar_tackle.cpp">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1465,6 +1468,9 @@
     </ClInclude>
     <ClInclude Include="source\zoom.h">
       <Filter>ソース ファイル\camera\zoom</Filter>
+    </ClInclude>
+    <ClInclude Include="source\roar_tackle.h">
+      <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

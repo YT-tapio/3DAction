@@ -1,6 +1,7 @@
 #pragma once
 
-class AttackRange;
+class AttackRangeCircle;
+class AttackRangeRectangle;
 
 // UŒ‚”ÍˆÍ‚ğ•`‰æ‚·‚é•¨‚ğ“Š‡‚·‚é
 class AttackRangeGroup
@@ -33,7 +34,13 @@ public:
 	/// <returns>-1ˆÈŠO‚Í¬Œ÷</returns>
 	int CircleDrawRequest(const VECTOR& pos, const VECTOR& scale, std::function<bool()>end_function);
 
-	int RectangleDrawRequest(const VECTOR& pos, const VECTOR& scale, std::function<bool()> end_function);
+	int RectangleDrawRequest(const VECTOR& pos, const VECTOR& scale, const VECTOR& dir,std::function<bool()> end_function);
+
+	void CircleSetPos(const int& id,const VECTOR& pos);
+
+	void RectangleSetPos(const int& id, const VECTOR& pos);
+
+	void RectangleSetDir(const int& id, const VECTOR& dir);
 
 private:
 
@@ -43,10 +50,10 @@ private:
 
 	static const int kMaxAttackRangeNum = 5;
 
-	std::vector<std::pair<bool,std::shared_ptr<AttackRange>>> attack_ranges_ui_;
+	std::vector<std::pair<bool,std::shared_ptr<AttackRangeCircle>>> attack_ranges_ui_;
 	std::unordered_map<int,std::function<bool()>> end_functions_;
 
-	std::vector<std::pair<bool, std::shared_ptr<AttackRange>>> attack_range_rectangles_ui_;
+	std::vector<std::pair<bool, std::shared_ptr<AttackRangeRectangle>>> attack_range_rectangles_ui_;
 	std::unordered_map<int, std::function<bool()>> rectangle_end_functions_;
 
 };

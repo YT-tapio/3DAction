@@ -161,6 +161,7 @@
     <ClCompile Include="source\player_observer_interface.cpp" />
     <ClCompile Include="source\play_sound.cpp" />
     <ClCompile Include="source\roar.cpp" />
+    <ClCompile Include="source\roar_tackle.cpp" />
     <ClCompile Include="source\shake.cpp" />
     <ClCompile Include="source\sound_2D.cpp" />
     <ClCompile Include="source\action_node.cpp" />
@@ -327,6 +328,7 @@
     <ClInclude Include="source\lose_camera.h" />
     <ClInclude Include="source\lose_ui.h" />
     <ClInclude Include="source\player_observer_interface.h" />
+    <ClInclude Include="source\roar_tackle.h" />
     <ClInclude Include="source\shake.h" />
     <ClInclude Include="source\won_camera.h" />
     <ClInclude Include="source\fade.h" />
