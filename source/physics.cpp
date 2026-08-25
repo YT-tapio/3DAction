@@ -68,6 +68,7 @@ void Physics::Debug()
 
 void Physics::Update()
 {
+	// vel‚ÌXV
 	UpdateRigidBody();
 	// d—Í
 	Gravity();

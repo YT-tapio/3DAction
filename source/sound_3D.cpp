@@ -52,7 +52,7 @@ void Sound3D::LoadFile(const std::string& file_path)
 		name_				= CSVFileAssistant::GetStringOfCSVFile(ss, data);
 		data_file_path	= CSVFileAssistant::GetStringOfCSVFile(ss, data);
 		volume_			= CSVFileAssistant::GetIntOfCSVFile(ss, data);
-		auto loop			= CSVFileAssistant::GetBoolOfCSVFile(ss, data);
+		loop_					= CSVFileAssistant::GetBoolOfCSVFile(ss, data);
 		pos_					= CSVFileAssistant::GetVectorOfCSVFile(ss, data);
 		radius_				= CSVFileAssistant::GetFloatOfCSVFile(ss, data);	// •·‚±‚¦‚é”ÍˆÍ
 	}

@@ -44,7 +44,7 @@ void AttackRangeCircle::Update()
 void AttackRangeCircle::Active(const VECTOR& pos, const VECTOR scale, const float& time)
 {
 	pos_ = pos;
-	leading_up_pos_ = pos_;
+	leading_up_pos_ = VAdd(pos_,VGet(0.f,0.05f,0.f));
 	scale_ = VectorAssistant::VGetSame(1.f);
 	leading_up_scale_ = VectorAssistant::VGetZero();
 	target_scale_ = scale;

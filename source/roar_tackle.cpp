@@ -45,14 +45,14 @@ void RoarTackle::Entry()
 		owner->GetAnimator()->PlayRequest("charge_tackle");
 		VECTOR attack_target_pos = owner->GetAttackTargetPos();
 		attack_dir_ = VectorAssistant::VGetDir(owner->GetPosition(), attack_target_pos);
-		max_time = 1.86f;//owner->GetAnimator()->GetFPSTotalTime("charge_tacle");
+		max_time = 1.96f;//owner->GetAnimator()->GetFPSTotalTime("charge_tacle");
 	}
 	std::function<bool()> end_function = [this]()
 		{
 			return is_end_;
 		};
 
-	attack_range_ui_id_ = AttackRangeGroup::GetInstance().RectangleDrawRequest(owner_.lock()->GetPosition(), VGet(0.1f,1.f,1.f), attack_dir_, max_time,end_function);
+	attack_range_ui_id_ = AttackRangeGroup::GetInstance().RectangleDrawRequest(owner_.lock()->GetPosition(), VGet(8.5f,1.f,57.f), attack_dir_, max_time,end_function);
 }
 
 BehaviorStatus RoarTackle::Update()

@@ -20,10 +20,12 @@ public:
 
 protected:
 
+	std::string name_;
+
 	int handle_;
 	int volume_;
 
-	std::string name_;
+	bool loop_;
 
 private:
 	

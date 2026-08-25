@@ -24,7 +24,15 @@ void SoundBase::Update()
 
 void SoundBase::Play()
 {
-	PlaySoundMem(handle_, DX_PLAYTYPE_BACK);
+	if (loop_)
+	{
+		PlaySoundMem(handle_, DX_PLAYTYPE_LOOP);
+	}
+	else
+	{
+		PlaySoundMem(handle_, DX_PLAYTYPE_BACK);
+	}
+	
 }
 
 void SoundBase::Stop()

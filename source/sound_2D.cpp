@@ -44,6 +44,7 @@ void Sound2D::LoadFile(const std::string& file_path)
 		data_file_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
 		handle_ = LoadSoundMem(data_file_path.c_str());
 		volume_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
+		loop_ = CSVFileAssistant::GetBoolOfCSVFile(ss, data);
 		if (handle_ == -1)
 		{
 			printfDx("ÉTÉEÉìÉhì«Ç›çûÇ›ÇµÇ¡ÇœÇ¢\n");

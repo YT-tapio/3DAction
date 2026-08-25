@@ -112,7 +112,6 @@ public:
 private:
 
 	// ŠÖ”ŒQ
-
 	void LoadFile(const char* file_path, const std::string my_name);
 
 	void MakeSkill(std::weak_ptr<Player> owner);

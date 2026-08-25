@@ -1,2 +1,2 @@
 ﻿name,data_file_path,"volume(persent,0 ～ 100)",loop
-go_title,data/sound/2D/go_title.mp3,150,1
+go_title,data/sound/2D/go_title.mp3,150,0

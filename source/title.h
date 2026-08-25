@@ -27,6 +27,5 @@ private:
 	int stage_handle_;
 	int sky_dome_handle_;
 
-
 	bool is_push_;
 };

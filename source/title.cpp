@@ -121,8 +121,7 @@ void Title::Draw()
 	MV1DrawModel(sky_dome_handle_);
 	Draw2D::RotaGraph(VectorAssistant::VGet2D(static_cast<float>(kScreenWidth * 0.5f), 750.f), 0.7f, 0.f, title_logo_handle_, TRUE);
 	
-	//DrawString(100, 100, "Title", GetColor(255, 255, 255));
-	//DrawString(500, 700, "Aボタン、スペースを押してゲームスタート", GetColor(255, 255, 255));
+	DrawString(700, 400, "Aボタン、スペースを押してゲームスタート", GetColor(255, 0, 0));
 }
 
 const std::string Title::GetName() const

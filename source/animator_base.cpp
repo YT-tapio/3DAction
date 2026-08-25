@@ -87,7 +87,7 @@ void AnimatorBase::Update(std::shared_ptr<const Time> owner_time)
 		// トータルタイムを取得
 		now_anim_data.total_time = MV1GetAttachAnimTotalTime(handle_, now_anim_data.attach_index);
 		
-		printfDx("total_time: %s ：%.2f\n", now_anim_name_.c_str(), now_anim_data.total_time);
+		//printfDx("total_time: %s ：%.2f\n", now_anim_name_.c_str(), now_anim_data.total_time);
 		// キャンセルを定める
 		if (now_anim_data.cancel_time == -1)
 		{
@@ -332,7 +332,6 @@ void AnimatorBase::PlayTimeUpdate(AnimationData& data,std::shared_ptr<const Time
 		if (data.loop)
 		{
 			data.play_time -= data.total_time;
-			printfDx("%s:ループ\n",now_anim_name_.c_str());
 		}
 		else
 		{

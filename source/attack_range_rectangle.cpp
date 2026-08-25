@@ -50,6 +50,7 @@ void AttackRangeRectangle::Update()
 void AttackRangeRectangle::Active(const VECTOR& pos,const VECTOR& scale,const VECTOR& dir, const float& time)
 {
 	pos_ = pos;
+	//pos_ = pos;
 	leading_up_pos_ = VAdd(pos_, VGet(0.f, 0.1f, 0.f));
 	scale_ = VectorAssistant::VGetSame(1.f);
 	target_scale_ = scale;
@@ -58,6 +59,7 @@ void AttackRangeRectangle::Active(const VECTOR& pos,const VECTOR& scale,const VE
 	timer_->ReStart();
 	// dir‚©‚ç‰ñ“]—Ê‚ğo‚·
 	RotToDir(dir);
+
 }
 
 void AttackRangeRectangle::SetPos(const VECTOR& pos)

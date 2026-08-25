@@ -141,17 +141,6 @@ void BossBase::Init()
 	std::shared_ptr<NodeBase> tackle_voice_node = std::make_shared<ActionNode>(
 		std::make_shared<PlaySound3D>(mine, &pos_, "tackle_voice"));
 
-	// タックルの前の予備動作
-	/*
-	std::shared_ptr<NodeBase> charge_tackle_node =
-		std::make_shared<ActionNode>(std::make_shared<AnimationCharge>(mine, "charge_tackle", 0.9f));
-
-	// タックル
-	std::shared_ptr<NodeBase> tackle_node = std::make_shared<ActionNode>(
-		std::make_shared<Tackle>(mine,
-			std::make_shared<RigidBody>(std::make_shared<Capsule>(10.5f, 18.f, VectorAssistant::VGetZero()), &pos_, FALSE, TRUE, 0.1f, 1.f), "tackle", 1.f, 2.f, 1.f));
-
-	*/
 	std::shared_ptr<NodeBase> tackle_node = std::make_shared<ActionNode>(
 		std::make_shared<RoarTackle>(mine,
 			std::make_shared<RigidBody>(std::make_shared<Capsule>(10.5f, 18.f, 
@@ -160,24 +149,19 @@ void BossBase::Init()
 	std::vector<std::shared_ptr<NodeBase>> tackle_nodes;
 
 	tackle_nodes.emplace_back(tackle_voice_node);
-	//tackle_nodes.emplace_back(charge_tackle_node);
 	tackle_nodes.emplace_back(tackle_node);
 
 	// ランダムのnodeに代入
-	std::vector<std::shared_ptr<NodeBase>> random_nodes;
-	random_nodes.emplace_back(stamp_node);
-	random_nodes.emplace_back(double_punch_node);
-	random_nodes.emplace_back(std::make_shared<SequenceNode>(area_of_effect_nodes));
-	random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
+	std::vector<std::shared_ptr<NodeBase>> attack_random_nodes;
+	//attack_random_nodes.emplace_back(stamp_node);
+	//attack_random_nodes.emplace_back(double_punch_node);
+	//attack_random_nodes.emplace_back(std::make_shared<SequenceNode>(area_of_effect_nodes));
+	attack_random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
 
 	// 追いかけるときのノード
-	std::vector<std::shared_ptr<NodeBase>> random_nodes2;
+	std::vector<std::shared_ptr<NodeBase>> random_nodes_far;
 
-	//random_nodes2.emplace_back(area_of_effect_node);
-	/*
-
-	*/
-	std::shared_ptr<NodeBase> radom_attack_node = std::make_shared<RandomNode>(random_nodes);
+	std::shared_ptr<NodeBase> radom_attack_node = std::make_shared<RandomNode>(attack_random_nodes);
 
 	target_player_pos_ = PlayerGroup::GetInstance().MostNearPlayerPos(pos_);
 	std::shared_ptr<NodeBase> chase_node = std::make_shared<ActionNode>(std::make_shared<ChasePlayer>(obj_mine,
@@ -205,10 +189,10 @@ void BossBase::Init()
 	area_of_effect_nodes2.push_back(area_of_effect_ui_node2);
 	area_of_effect_nodes2.push_back(area_of_effect_node2);
 	/*-------*/
-	random_nodes2.emplace_back(std::make_shared<SequenceNode>(area_of_effect_nodes2));
-	random_nodes2.emplace_back(chase_node);
+	random_nodes_far.emplace_back(std::make_shared<SequenceNode>(area_of_effect_nodes2));
+	random_nodes_far.emplace_back(chase_node);
 
-	std::shared_ptr<NodeBase> random_far_nodes2 = std::make_shared<RandomNode>(random_nodes2);
+	std::shared_ptr<NodeBase> random_far_nodes2 = std::make_shared<RandomNode>(random_nodes_far);
 
 	std::pair<std::shared_ptr<NodeBase>, std::shared_ptr<NodeBase>> nodes_;
 	//nodes_.first = random_far_nodes2;
@@ -221,18 +205,15 @@ void BossBase::Init()
 			return dist_to_player > 10.f;
 		};
 
+	std::shared_ptr<NodeBase> roar_node = std::make_shared<JustOneNode>(std::make_shared<Roar>(obj_mine));
+
 	std::shared_ptr<NodeBase> action_branch_node = std::make_shared<BranchNode>(nodes_,
 		condition);
-	std::shared_ptr<NodeBase> roar_node = std::make_shared<JustOneNode>(std::make_shared<Roar>(obj_mine));
 	std::vector<std::shared_ptr<NodeBase>> first_nodes;
-	//first_nodes.emplace_back(roar_node);
 	first_nodes.emplace_back(action_branch_node);
 	std::shared_ptr<NodeBase> first_node = std::make_shared<SelectorNode>(first_nodes);
-	//std::shared_ptr<NodeBase> first_node = std::make_shared<BranchNode>()
-	/*
-	* std::shared_ptr<NodeBase> first_node = chase_node;
-	*/
 
+	// behavior_treeの生成
 	behavior_tree_ = std::make_shared<BehaviorTree>(first_node);
 
 	std::function<int()> get_base_hp = [this]()-> int
@@ -249,21 +230,7 @@ void BossBase::Init()
 	// uiを作成
 	EnemyUIGroup::GetInstance().MakeStatusUI(get_base_hp, get_current_hp, "zako");
 
-
 	UpdateBone();
-	/*
-	test_behavior_ = std::make_shared<DoublePunch>(std::dynamic_pointer_cast<ObjectBase>(mine),
-		"double_punch", 0.35f, 0.5f, &double_punch_coll_pos_, 3.0f, 6.f);
-	*/
-	/*
-	test_behavior_ = std::make_shared<JumpingAttack>
-		(obj_mine, &pos_, 0.5f, 0.75f, "jumping_attack");
-	*/
-	/*
-	test_behavior_ = std::make_shared<Jump>
-		(obj_mine, "jumping_attack" , 0.38f, 1.f);
-	*/
-
 
 	animator_ = std::make_shared<AnimatorEnemy>(handle_, "enemy");
 	animator_->Init();
