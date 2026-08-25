@@ -9,6 +9,7 @@ enum class AreaOfEffectAttackState;
 class AreaOfEffectAttack : public AttackBase
 {
 public:
+
 	AreaOfEffectAttack(std::weak_ptr<ObjectBase> owner,
 		std::string stand_by_anim,float min_coll_ratio,
 		float max_coll_ratio,VECTOR effect_scale,

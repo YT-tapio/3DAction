@@ -8,6 +8,9 @@
 #include"vector_assistant.h"
 #include"object_setter.h"
 #include"csv_file_assistant.h"
+#include"Lerp.h"
+#include"condition_timer.h"
+#include"variable_timer.h"
 
 AttackRangeRectangle::AttackRangeRectangle()
 	: AttackRange()
@@ -18,6 +21,8 @@ AttackRangeRectangle::AttackRangeRectangle()
 	ObjectSetter::GetInstance().AddResource(handle_, &pos_, &rot_, &scale_);
 	ObjectSetter::GetInstance().AddResource(leading_up_attack_handle_, &leading_up_pos_, &leading_up_rot_,
 		&leading_up_scale_);
+	leading_up_base_size_ = 1.f;
+
 }
 
 AttackRangeRectangle::~AttackRangeRectangle()
@@ -25,12 +30,32 @@ AttackRangeRectangle::~AttackRangeRectangle()
 
 }
 
-void AttackRangeRectangle::Active(const VECTOR& pos,const VECTOR& scale,const VECTOR& dir, std::function<float()> ratio)
+void AttackRangeRectangle::Update()
+{
+	if (VSize(target_scale_) == 0) { return; }					// É^Å[ÉQÉbÉgÇïœçXÇµÇƒÇ¢Ç»Ç¢ÇÃÇ»ÇÁ
+	// if (VSize(target_scale_) == VSize(scale_)) { return; }	// àÍèèÇ…Ç»Ç¡ÇΩÇÁèúäO
+	timer_->Update();
+	// DampÇ∑ÇÈ
+	scale_ = Lerp::DampV(scale_, target_scale_, 0.4f);
+	leading_up_scale_.z = scale_.z;
+	leading_up_scale_.y = scale_.y;
+	
+	auto ratio = timer_->GetRatio();
+	if (ratio == -1) { return; }
+	auto size = leading_up_base_size_ * ratio;
+
+	leading_up_scale_.x = target_scale_.x * size;
+}
+
+void AttackRangeRectangle::Active(const VECTOR& pos,const VECTOR& scale,const VECTOR& dir, const float& time)
 {
 	pos_ = pos;
+	leading_up_pos_ = VAdd(pos_, VGet(0.f, 0.1f, 0.f));
 	scale_ = VectorAssistant::VGetSame(1.f);
 	target_scale_ = scale;
-	leading_up_ratio_ = ratio;
+	timer_->Stop();
+	timer_->ChangeMaxTime(time);
+	timer_->ReStart();
 	// dirÇ©ÇÁâÒì]ó ÇèoÇ∑
 	RotToDir(dir);
 }
@@ -68,10 +93,14 @@ void AttackRangeRectangle::LoadFile()
 		name = CSVFileAssistant::GetStringOfCSVFile(ss, data);
 		handle_ = MV1LoadModel(name.c_str());
 		if (handle_ == -1) { printfDx("ì«Ç›çûÇ›é∏îs\n"); }
+		auto leading_up_attack_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
+		leading_up_attack_handle_ = MV1LoadModel(leading_up_attack_path.c_str());
+		if (leading_up_attack_handle_ == -1) { printfDx("ì«Ç›çûÇ›é∏îs\n"); }
 	}
 }
 
 void AttackRangeRectangle::RotToDir(const VECTOR& dir)
 {
 	rot_.y = VectorAssistant::VGetTan(dir);
+	leading_up_rot_ = rot_;
 }

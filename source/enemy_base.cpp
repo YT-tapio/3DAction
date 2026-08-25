@@ -94,9 +94,10 @@ void EnemyBase::Update()
 		double_punch_coll_pos_ = VAdd(pos_, VScale(dir_, 5.f));
 
 		rigid_body_->SetTargetVelocity(vel_);
+
 		if (*game_start_)
 		{
-			behavior_tree_->Update();
+			if (TRUE) { behavior_tree_->Update(); }
 		}
 	}
 	

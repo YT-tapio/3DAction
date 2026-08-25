@@ -94,7 +94,7 @@ void AttackRangeGroup::End()
 	attack_ranges_ui_.clear();
 }
 
-int AttackRangeGroup::CircleDrawRequest(const VECTOR& pos,const VECTOR& scale,std::function<bool()> end_function)
+int AttackRangeGroup::CircleDrawRequest(const VECTOR& pos,const VECTOR& scale, const float& time,std::function<bool()> end_function)
 {
 	int i = 0;
 	for (auto& attack_range : attack_ranges_ui_)
@@ -103,7 +103,7 @@ int AttackRangeGroup::CircleDrawRequest(const VECTOR& pos,const VECTOR& scale,st
 		if (!attack_range.first)
 		{
 			attack_range.first = TRUE;
-			attack_range.second->Active(pos, scale);
+			attack_range.second->Active(pos, scale,time);
 			// I—¹ğŒ‚ğ‚ ‚Ä‚Í‚ß‚é
 			end_functions_[i] = end_function;
 			return i;
@@ -114,7 +114,7 @@ int AttackRangeGroup::CircleDrawRequest(const VECTOR& pos,const VECTOR& scale,st
 	return -1;
 }
 
-int AttackRangeGroup::RectangleDrawRequest(const VECTOR& pos, const VECTOR& scale, const VECTOR& dir,std::function<bool()> end_function)
+int AttackRangeGroup::RectangleDrawRequest(const VECTOR& pos, const VECTOR& scale, const VECTOR& dir, const float& time,std::function<bool()> end_function)
 {
 	int i = 0;
 	for (auto& attack_range : attack_range_rectangles_ui_)
@@ -123,7 +123,7 @@ int AttackRangeGroup::RectangleDrawRequest(const VECTOR& pos, const VECTOR& scal
 		if (!attack_range.first)
 		{
 			attack_range.first = TRUE;
-			attack_range.second->Active(pos, scale, dir);
+			attack_range.second->Active(pos, scale, dir,time);
 			// I—¹ğŒ‚ğ‚ ‚Ä‚Í‚ß‚é
 			rectangle_end_functions_[i] = end_function;
 			return i;

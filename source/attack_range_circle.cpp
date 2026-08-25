@@ -8,6 +8,9 @@
 #include"vector_assistant.h"
 #include"object_setter.h"
 #include"csv_file_assistant.h"
+#include"lerp.h"
+#include"condition_timer.h"
+#include"variable_timer.h"
 
 AttackRangeCircle::AttackRangeCircle()
 	: AttackRange()
@@ -18,6 +21,7 @@ AttackRangeCircle::AttackRangeCircle()
 	ObjectSetter::GetInstance().AddResource(handle_, &pos_, &rot_, &scale_);
 	ObjectSetter::GetInstance().AddResource(leading_up_attack_handle_, &leading_up_pos_, 
 		&leading_up_rot_, &leading_up_scale_);
+	leading_up_base_size_ = 0.01f;
 }
 
 AttackRangeCircle::~AttackRangeCircle()
@@ -25,13 +29,28 @@ AttackRangeCircle::~AttackRangeCircle()
 
 }
 
-void AttackRangeCircle::Active(const VECTOR& pos, const VECTOR scale, std::function<float()> ratio)
+void AttackRangeCircle::Update()
+{
+	if (VSize(target_scale_) == 0) { return; }					// É^Å[ÉQÉbÉgÇïœçXÇµÇƒÇ¢Ç»Ç¢ÇÃÇ»ÇÁ
+	// if (VSize(target_scale_) == VSize(scale_)) { return; }	// àÍèèÇ…Ç»Ç¡ÇΩÇÁèúäO
+
+	timer_->Update();
+
+	// DampÇ∑ÇÈ
+	scale_ = Lerp::DampV(scale_, target_scale_, 0.4f);
+	leading_up_scale_ = VScale(target_scale_, leading_up_base_size_ * timer_->GetRatio());
+}
+
+void AttackRangeCircle::Active(const VECTOR& pos, const VECTOR scale, const float& time)
 {
 	pos_ = pos;
-	scale_ = VectorAssistant::VGetSame(1.f);
-	target_scale_ = scale;
 	leading_up_pos_ = pos_;
-	leading_up_ratio_ = ratio;
+	scale_ = VectorAssistant::VGetSame(1.f);
+	leading_up_scale_ = VectorAssistant::VGetZero();
+	target_scale_ = scale;
+	timer_->Stop();
+	timer_->ChangeMaxTime(time);
+	timer_->ReStart();
 }
 
 void AttackRangeCircle::SetPos(const VECTOR& pos)
@@ -62,5 +81,8 @@ void AttackRangeCircle::LoadFile()
 		name = CSVFileAssistant::GetStringOfCSVFile(ss, data);
 		handle_ = MV1LoadModel(name.c_str());
 		if (handle_ == -1) { printfDx("ì«Ç›çûÇ›é∏îs\n"); }
+		auto leading_up_attack_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
+		leading_up_attack_handle_ = MV1LoadModel(leading_up_attack_path.c_str());
+		if (leading_up_attack_handle_ == -1) { printfDx("ì«Ç›çûÇ›é∏îs"); }
 	}
 }

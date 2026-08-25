@@ -86,6 +86,8 @@ void AnimatorBase::Update(std::shared_ptr<const Time> owner_time)
 
 		// トータルタイムを取得
 		now_anim_data.total_time = MV1GetAttachAnimTotalTime(handle_, now_anim_data.attach_index);
+		
+		printfDx("total_time: %s ：%.2f\n", now_anim_name_.c_str(), now_anim_data.total_time);
 		// キャンセルを定める
 		if (now_anim_data.cancel_time == -1)
 		{
@@ -100,7 +102,10 @@ void AnimatorBase::Update(std::shared_ptr<const Time> owner_time)
 	auto& now_anim_data = animation_datas_[now_anim_name_];
 
 	//ここで
-	if (is_blending_) { 	PlayTimeUpdate(animation_datas_[before_anim_name_],owner_time); }
+	if (is_blending_) 
+	{
+		PlayTimeUpdate(animation_datas_[before_anim_name_],owner_time);
+	}
 
 	PlayTimeUpdate(now_anim_data, owner_time);
 
@@ -159,7 +164,8 @@ void AnimatorBase::LoadFile(const std::string file_path)
 		int anim_index		= -1;
 		int priority		= -1;
 		int loop = -1;
-		float play_speed	= 0.f;
+		float play_speed	= -1.f;
+		float total_time = 0.f;
 		float cancel_time	= 0.f;
 		AnimationData anim_data = {};
 
@@ -176,6 +182,7 @@ void AnimatorBase::LoadFile(const std::string file_path)
 
 		// アニメーションデータを生成
 		LoadAnimation(anim_data, anim_file_path.c_str(), anim_index, play_speed, priority, cancel_time, loop, next_anim_name);
+		
 		animation_datas_[anim_name] = anim_data;
 	}
 }
@@ -212,6 +219,18 @@ const float AnimatorBase::GetPlayTime(std::string name) const
 	return play_time;
 }
 
+const float AnimatorBase::GetFPSPlayTime(std::string name) const
+{
+	float fps_play_time = -1.f;
+
+	auto data = animation_datas_.find(name);
+	if (data == animation_datas_.end()) { return fps_play_time; }
+
+	fps_play_time = data->second.play_time / FPS::GetInstance().GetTargetFPS();
+
+	return fps_play_time;
+}
+
 const float AnimatorBase::GetTotalTime(std::string name) const
 {
 	float total_time = -1.f;
@@ -221,6 +240,18 @@ const float AnimatorBase::GetTotalTime(std::string name) const
 
 	total_time = data->second.total_time;
 	return total_time;
+}
+
+const float AnimatorBase::GetFPSTotalTime(std::string name) const
+{
+	float fps_total_time = -1.f;
+
+	auto data = animation_datas_.find(name);
+	if (data == animation_datas_.end()) { return fps_total_time; }
+
+	fps_total_time = data->second.total_time / FPS::GetInstance().GetTargetFPS();
+
+	return fps_total_time;
 }
 
 const float AnimatorBase::GetRatio(std::string name) const
@@ -252,7 +283,7 @@ const bool AnimatorBase::GetIsEnd(const std::string name) const
 const std::string AnimatorBase::GetNowAnimName() const
 {
 	return now_anim_name_;
-} 
+}
 
 const bool AnimatorBase::ChangeCondition() const
 {
@@ -301,6 +332,7 @@ void AnimatorBase::PlayTimeUpdate(AnimationData& data,std::shared_ptr<const Time
 		if (data.loop)
 		{
 			data.play_time -= data.total_time;
+			printfDx("%s:ループ\n",now_anim_name_.c_str());
 		}
 		else
 		{

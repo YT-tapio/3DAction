@@ -107,7 +107,7 @@ void BossBase::Init()
 	auto ui_stump_end_function = [this]() -> bool {return rigid_body_->GetIsLanding(); };
 	float stump_radius = 60.f;
 	stump_nodes.push_back(std::make_shared<ActionNode>
-		(std::make_shared<DispAttackRange>(obj_mine, &pos_, VGet(stump_radius, 1.f, stump_radius), ui_stump_end_function)));
+		(std::make_shared<DispAttackRange>(obj_mine, &pos_, VGet(stump_radius, 1.f, stump_radius), ui_stump_end_function,3.f)));
 
 	stump_nodes.push_back(std::make_shared<ActionNode>(std::make_shared<Jump>(mine,
 		"jumping_attack", timing, 1.f)));
@@ -120,7 +120,7 @@ void BossBase::Init()
 	// エフェクトによる攻撃
 	std::vector<std::shared_ptr<NodeBase>>  area_of_effect_nodes;
 	float area_of_effect_radius = 10.f;
-
+	//float area_of_effect_coll_start_time = 
 	// 攻撃
 	std::shared_ptr<NodeBase> area_of_effect_node = std::make_shared<ActionNode>(std::make_shared<AreaOfEffectAttack>(
 		obj_mine, "charge", 0.f, 0.9f, VectorAssistant::VGetSame(2.f), area_of_effect_radius, EffectID::kAreaOfEffect, 2.f, 1.f));
@@ -131,7 +131,7 @@ void BossBase::Init()
 
 	// ui表示
 	std::shared_ptr<NodeBase> area_of_effect_ui_node = std::make_shared<ActionNode>(std::make_shared<DispAttackRange>(
-		obj_mine, &target_player_pos_, VGet(area_of_effect_radius, 1.f, area_of_effect_radius), ui_AoE_end_function));
+		obj_mine, &target_player_pos_, VGet(area_of_effect_radius, 1.f, area_of_effect_radius), ui_AoE_end_function,2.f));
 
 
 	// ui表示から先に入れる
@@ -156,6 +156,7 @@ void BossBase::Init()
 		std::make_shared<RoarTackle>(mine,
 			std::make_shared<RigidBody>(std::make_shared<Capsule>(10.5f, 18.f, 
 				VectorAssistant::VGetZero()), &pos_, FALSE, TRUE, 0.1f, 1.f), "tackle", 1.f, 2.f, 1.f));
+	
 	std::vector<std::shared_ptr<NodeBase>> tackle_nodes;
 
 	tackle_nodes.emplace_back(tackle_voice_node);
@@ -164,9 +165,9 @@ void BossBase::Init()
 
 	// ランダムのnodeに代入
 	std::vector<std::shared_ptr<NodeBase>> random_nodes;
-	//random_nodes.emplace_back(stamp_node);
-	//random_nodes.emplace_back(double_punch_node);
-	//random_nodes.emplace_back(std::make_shared<SequenceNode>(area_of_effect_nodes));
+	random_nodes.emplace_back(stamp_node);
+	random_nodes.emplace_back(double_punch_node);
+	random_nodes.emplace_back(std::make_shared<SequenceNode>(area_of_effect_nodes));
 	random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
 
 	// 追いかけるときのノード
@@ -197,7 +198,7 @@ void BossBase::Init()
 
 	// ui表示
 	std::shared_ptr<NodeBase> area_of_effect_ui_node2 = std::make_shared<ActionNode>(std::make_shared<DispAttackRange>(
-		obj_mine, &target_player_pos_, VGet(area_of_effect_radius2, 1.f, area_of_effect_radius2), ui_AoE_end_function2));
+		obj_mine, &target_player_pos_, VGet(area_of_effect_radius2, 1.f, area_of_effect_radius2), ui_AoE_end_function2,2.f));
 
 
 	// ui表示から先に入れる

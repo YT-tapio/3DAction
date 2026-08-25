@@ -9,7 +9,9 @@ public:
 
 	~AttackRangeCircle() override;
 
-	void Active(const VECTOR& pos, const VECTOR scale, std::function<float()> ratio);
+	void Update() override;
+
+	void Active(const VECTOR& pos, const VECTOR scale, const float& time);
 
 	void SetPos(const VECTOR& pos);
 

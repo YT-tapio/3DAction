@@ -9,7 +9,9 @@ public:
 
 	~AttackRangeRectangle() override;
 
-	void Active(const VECTOR& base_pos, const VECTOR& scale, const VECTOR& dir,std::function<float()> ratio);
+	void Update() override;
+
+	void Active(const VECTOR& base_pos, const VECTOR& scale, const VECTOR& dir, const float& time);
 
 	void SetPos(const VECTOR& pos);
 

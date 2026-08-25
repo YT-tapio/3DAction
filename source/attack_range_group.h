@@ -32,9 +32,9 @@ public:
 	/// </summary>
 	/// <param name="scale"></param>
 	/// <returns>-1à»äOÇÕê¨å˜</returns>
-	int CircleDrawRequest(const VECTOR& pos, const VECTOR& scale, std::function<bool()>end_function);
+	int CircleDrawRequest(const VECTOR& pos, const VECTOR& scale,const float& time, std::function<bool()>end_function);
 
-	int RectangleDrawRequest(const VECTOR& pos, const VECTOR& scale, const VECTOR& dir,std::function<bool()> end_function);
+	int RectangleDrawRequest(const VECTOR& pos, const VECTOR& scale, const VECTOR& dir, const float& time, std::function<bool()> end_function);
 
 	void CircleSetPos(const int& id,const VECTOR& pos);
 

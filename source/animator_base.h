@@ -39,7 +39,26 @@ public:
 	/// <returns></returns>
 	const float GetPlayTime(std::string name) const;
 
+	/// <summary>
+	/// FPS換算したプレイタイムを受けとる
+	/// </summary>
+	/// <param name="name"></param>
+	/// <returns></returns>
+	const float GetFPSPlayTime(std::string name) const;
+
+	/// <summary>
+	/// トータルタイムを受け取る
+	/// </summary>
+	/// <param name="name"></param>
+	/// <returns></returns>
 	const float GetTotalTime(std::string name) const;
+
+	/// <summary>
+	/// FPS換算したトータルタイムを受けとる
+	/// </summary>
+	/// <param name="name"></param>
+	/// <returns></returns>
+	const float GetFPSTotalTime(std::string name) const;
 
 	const float GetRatio(std::string name) const;
 
