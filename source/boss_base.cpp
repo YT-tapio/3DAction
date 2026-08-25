@@ -153,7 +153,7 @@ void BossBase::Init()
 
 	// ƒ‰ƒ“ƒ_ƒ€‚Ìnode‚É‘ã“ü
 	std::vector<std::shared_ptr<NodeBase>> attack_random_nodes;
-	//attack_random_nodes.emplace_back(stamp_node);
+	attack_random_nodes.emplace_back(stamp_node);
 	//attack_random_nodes.emplace_back(double_punch_node);
 	//attack_random_nodes.emplace_back(std::make_shared<SequenceNode>(area_of_effect_nodes));
 	attack_random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
