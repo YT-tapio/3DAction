@@ -108,17 +108,33 @@ void BossBase::Init()
 	// 上から降ってくるノードを生成
 	std::vector<std::shared_ptr<NodeBase>> stump_nodes;
 
-	auto ui_stump_end_function = [this]() -> bool {return rigid_body_->GetIsLanding(); };
-	float stump_radius = 60.f;
+	float stump_radius = 60.f;	
+
+	// ジャンプ
+	auto jump_action_node = std::make_shared<ActionNode>(std::make_shared<Jump>(mine,
+		"jumping_attack", timing, 1.f));
+
+	
+	// スタンプ
+	auto stamp_action_node = std::make_shared<ActionNode>
+		(std::make_shared<Stamp>(obj_mine, &pos_, stump_radius, "jumping_attack", 2.f));
+	
+	
+
+	auto ui_stump_end_function = [this]() -> bool
+		{
+			if (animator_->GetRatio("jumping_attack") > 0.5f)
+			{
+				return rigid_body_->GetIsLanding();
+			}
+			return FALSE;
+		};
+
 	stump_nodes.push_back(std::make_shared<ActionNode>
-		(std::make_shared<DispAttackRange>(obj_mine, &pos_, VGet(stump_radius, 1.f, stump_radius), ui_stump_end_function,3.f)));
-
-	stump_nodes.push_back(std::make_shared<ActionNode>(std::make_shared<Jump>(mine,
-		"jumping_attack", timing, 1.f)));
-
-	stump_nodes.push_back(std::make_shared<ActionNode>
-		(std::make_shared<Stamp>(obj_mine, &pos_, stump_radius, "jumping_attack", 2.f)));
-
+		(std::make_shared<DispAttackRange>(obj_mine, &pos_, VGet(stump_radius, 1.f, stump_radius), ui_stump_end_function, 3.f)));
+	stump_nodes.push_back(jump_action_node);
+	stump_nodes.push_back(stamp_action_node);
+	
 	std::shared_ptr<NodeBase> stamp_node = std::make_shared<SequenceNode>(stump_nodes);
 
 	// エフェクトによる攻撃
@@ -158,8 +174,8 @@ void BossBase::Init()
 	// ランダムのnodeに代入
 	std::vector<std::shared_ptr<NodeBase>> attack_random_nodes;
 	attack_random_nodes.emplace_back(stamp_node);
-	//attack_random_nodes.emplace_back(double_punch_node);
-	//attack_random_nodes.emplace_back(std::make_shared<SequenceNode>(area_of_effect_nodes));
+	attack_random_nodes.emplace_back(double_punch_node);
+	attack_random_nodes.emplace_back(std::make_shared<SequenceNode>(area_of_effect_nodes));
 	attack_random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
 
 	// 追いかけるときのノード

@@ -1,5 +1,6 @@
 #include<memory>
 #include<unordered_map>
+#include<string>
 #include"DxLib.h"
 #include"pc.h"
 #include"pad.h"
@@ -86,6 +87,32 @@ const std::shared_ptr<const InputBase> InputManager::GetMainPlayerInput() const
 	}
 
 	return nullptr;
+}
+
+const bool InputManager::IsPushMainInput(const std::string& name) const
+{
+	if (name == "a_button")
+	{
+
+	}
+
+	if (name == "b_button")
+	{
+
+	}
+
+	if (name == "x_button")
+	{
+
+	}
+
+	if (name == "y_button")
+	{
+
+	}
+
+
+	return FALSE;
 }
 
 InputManager::InputManager()

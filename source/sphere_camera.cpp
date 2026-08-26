@@ -3,6 +3,7 @@
 #include"DxLib.h"
 #include"sphere_camera.h"
 #include"input_base.h"
+#include<string>
 #include"input_manager.h"
 #include"radian_assistant.h"
 #include"vector_assistant.h"

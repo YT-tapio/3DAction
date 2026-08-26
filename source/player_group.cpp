@@ -5,6 +5,7 @@
 #include<sstream>
 #include<unordered_map>
 #include<functional>
+#include<string>
 #include"DxLib.h"
 #include"player_group.h"
 #include"player.h"

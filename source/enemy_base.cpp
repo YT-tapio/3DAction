@@ -114,10 +114,6 @@ void EnemyBase::LateUpdate()
 
 void EnemyBase::Draw()
 {
-	//MV1SetDifColorScale(handle_, GetColorF(100.0f, 0.0f, 0.0f, 1.0f));
-	//MV1SetSpcColorScale(handle_, GetColorF(100.0f, 0.0f, 0.0f, 1.0f));
-	//MV1SetEmiColorScale(handle_, GetColorF(100.0f, 0.0f, 0.0f, 1.0f));
-	//MV1SetAmbColorScale(handle_, GetColorF(1.f, 1.f, 1.f, 1.f));
 	hit_red_body_->DoRedColor();
 	
 	MV1DrawModel(handle_);

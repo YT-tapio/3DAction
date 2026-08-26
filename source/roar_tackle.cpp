@@ -96,6 +96,7 @@ void RoarTackle::RoarUpdate()
 	}
 
 	AttackRangeGroup::GetInstance().RectangleSetDir(attack_range_ui_id_, attack_dir_);
+	AttackRangeGroup::GetInstance().RectangleSetPos(attack_range_ui_id_, owner_pos);
 }
 
 BehaviorStatus RoarTackle::TackleUpdate()

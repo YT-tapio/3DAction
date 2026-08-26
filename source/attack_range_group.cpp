@@ -92,6 +92,9 @@ void AttackRangeGroup::End()
 {
 	end_functions_.clear();
 	attack_ranges_ui_.clear();
+
+	rectangle_end_functions_.clear();
+	attack_range_rectangles_ui_.clear();
 }
 
 int AttackRangeGroup::CircleDrawRequest(const VECTOR& pos,const VECTOR& scale, const float& time,std::function<bool()> end_function)

@@ -36,6 +36,8 @@ public:
 
 	const std::shared_ptr<const InputBase> GetMainPlayerInput() const;
 
+	const bool IsPushMainInput(const std::string& name) const;
+
 private:
 
 	InputManager();
@@ -43,7 +45,9 @@ private:
 	void Awake();
 
 	void ChangeInput();
-	
+
+
+
 private:
 
 	static constexpr int kPlayer1Id = 1;

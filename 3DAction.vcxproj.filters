@@ -364,8 +364,14 @@
     <Filter Include="ソース ファイル\ui\button_data">
       <UniqueIdentifier>{e461e6eb-830d-4593-ae77-d6ebb5522c56}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\load_file_of_csv">
+    <Filter Include="ソース ファイル\load_csv_file">
       <UniqueIdentifier>{3c6156d9-4faf-430f-9427-4967b4efa19e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\config\key">
+      <UniqueIdentifier>{e3baaf8c-7b06-49cc-ab55-c7791eed6622}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\config\pad">
+      <UniqueIdentifier>{4a1245fc-42d1-44ec-8808-4e96323f09a9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -464,12 +470,6 @@
     </ClCompile>
     <ClCompile Include="source\pc.cpp">
       <Filter>ソース ファイル\input\device</Filter>
-    </ClCompile>
-    <ClCompile Include="source\key_config.cpp">
-      <Filter>ソース ファイル\config</Filter>
-    </ClCompile>
-    <ClCompile Include="source\pad_config.cpp">
-      <Filter>ソース ファイル\config</Filter>
     </ClCompile>
     <ClCompile Include="source\ai_input.cpp">
       <Filter>ソース ファイル\input\base</Filter>
@@ -891,8 +891,14 @@
     <ClCompile Include="source\button_ui_datas.cpp">
       <Filter>ソース ファイル\ui\button_data</Filter>
     </ClCompile>
-    <ClCompile Include="source\load_file_of_csv.cpp">
-      <Filter>ソース ファイル\load_file_of_csv</Filter>
+    <ClCompile Include="source\load_csv_file.cpp">
+      <Filter>ソース ファイル\load_csv_file</Filter>
+    </ClCompile>
+    <ClCompile Include="source\key_config.cpp">
+      <Filter>ソース ファイル\config\key</Filter>
+    </ClCompile>
+    <ClCompile Include="source\pad_config.cpp">
+      <Filter>ソース ファイル\config\pad</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1024,12 +1030,6 @@
     </ClInclude>
     <ClInclude Include="source\pc.h">
       <Filter>ソース ファイル\input\device</Filter>
-    </ClInclude>
-    <ClInclude Include="source\key_config.h">
-      <Filter>ソース ファイル\config</Filter>
-    </ClInclude>
-    <ClInclude Include="source\pad_config.h">
-      <Filter>ソース ファイル\config</Filter>
     </ClInclude>
     <ClInclude Include="source\ai_input.h">
       <Filter>ソース ファイル\input\base</Filter>
@@ -1520,8 +1520,26 @@
     <ClInclude Include="source\button_ui_datas.h">
       <Filter>ソース ファイル\ui\button_data</Filter>
     </ClInclude>
-    <ClInclude Include="source\load_file_of_csv.h">
-      <Filter>ソース ファイル\load_file_of_csv</Filter>
+    <ClInclude Include="source\load_csv_file.h">
+      <Filter>ソース ファイル\load_csv_file</Filter>
+    </ClInclude>
+    <ClInclude Include="source\config.h">
+      <Filter>ソース ファイル\config</Filter>
+    </ClInclude>
+    <ClInclude Include="source\config_name.h">
+      <Filter>ソース ファイル\config</Filter>
+    </ClInclude>
+    <ClInclude Include="source\key_config.h">
+      <Filter>ソース ファイル\config\key</Filter>
+    </ClInclude>
+    <ClInclude Include="source\pad_config.h">
+      <Filter>ソース ファイル\config\pad</Filter>
+    </ClInclude>
+    <ClInclude Include="source\key_config_data.h">
+      <Filter>ソース ファイル\config\key</Filter>
+    </ClInclude>
+    <ClInclude Include="source\pad_config_data.h">
+      <Filter>ソース ファイル\config\pad</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

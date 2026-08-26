@@ -6,6 +6,10 @@
 #include"FPS.h"
 #include"draw_2D.h"
 #include"button_ui_datas.h"
+#include<memory>
+#include<unordered_map>
+#include"input_manager.h"
+#include"input_base.h"
 
 ButtonUI::ButtonUI(const std::string& name,std::function<void()> execute)
 	: name_(name)
@@ -13,6 +17,7 @@ ButtonUI::ButtonUI(const std::string& name,std::function<void()> execute)
 	, current_size_(1.f)
 	, target_size_(1.f)
 	, is_execute_(FALSE)
+	, pos_(VectorAssistant::VGet2D(100.f,100.f))
 {
 
 }
@@ -34,7 +39,7 @@ void ButtonUI::Update()
 	{
 		target_size_ = default_size_ * 0.8f;
 		
-		// ˆ—‚ğ‘–‚ç‚¹‚é
+		// ˆ—‚ğÀs
 		if (execute_ != nullptr && !is_execute_)
 		{
 			execute_();
@@ -55,8 +60,6 @@ void ButtonUI::Draw()
 }
 
 bool ButtonUI::CheckMyButton()
-{
-
-
-	return FALSE;
+{	
+	return InputManager::GetInstance().IsPushMainInput(name_);
 }

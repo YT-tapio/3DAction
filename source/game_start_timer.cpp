@@ -3,8 +3,8 @@
 #include"DxLib.h"
 #include"game_start_timer.h"
 #include"condition_timer.h"
-#include"input_manager.h"
 #include<string>
+#include"input_manager.h"
 #include<functional>
 #include"draw_2D.h"
 #include"screen_size.h"

@@ -158,7 +158,7 @@
     <ClCompile Include="source\game_to_next_scene.cpp" />
     <ClCompile Include="source\just_one_node.cpp" />
     <ClCompile Include="source\load.cpp" />
-    <ClCompile Include="source\load_file_of_csv.cpp" />
+    <ClCompile Include="source\load_csv_file.cpp" />
     <ClCompile Include="source\lose_camera.cpp" />
     <ClCompile Include="source\lose_ui.cpp" />
     <ClCompile Include="source\player_observer_interface.cpp" />
@@ -329,13 +329,17 @@
     <ClInclude Include="source\boss_base.h" />
     <ClInclude Include="source\button_ui.h" />
     <ClInclude Include="source\button_ui_datas.h" />
+    <ClInclude Include="source\config.h" />
+    <ClInclude Include="source\config_name.h" />
     <ClInclude Include="source\enemy_lock_on_camera.h" />
     <ClInclude Include="source\enemy_observer_interface.h" />
     <ClInclude Include="source\game_to_next_scene.h" />
+    <ClInclude Include="source\key_config_data.h" />
     <ClInclude Include="source\load.h" />
-    <ClInclude Include="source\load_file_of_csv.h" />
+    <ClInclude Include="source\load_csv_file.h" />
     <ClInclude Include="source\lose_camera.h" />
     <ClInclude Include="source\lose_ui.h" />
+    <ClInclude Include="source\pad_config_data.h" />
     <ClInclude Include="source\player_observer_interface.h" />
     <ClInclude Include="source\roar_tackle.h" />
     <ClInclude Include="source\shadow_circle.h" />

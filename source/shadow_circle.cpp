@@ -4,6 +4,8 @@
 #include"shadow_circle.h"
 #include"vector_assistant.h"
 #include"csv_file_assistant.h"
+#include<unordered_map>
+#include"load_csv_file.h"
 #include"object_setter.h"
 
 ShadowCircle::ShadowCircle(VECTOR* owner_pos,const float& size)
@@ -44,6 +46,10 @@ const void ShadowCircle::Draw() const
 
 void ShadowCircle::LoadFile()
 {
+
+	//auto datas = LoadCSVFile().GetInstance().GetDatas();
+
+	
 	std::ifstream file("data/csv/shadow/shadow_circle_data.csv");
 	std::string line;
 
@@ -71,4 +77,6 @@ void ShadowCircle::LoadFile()
 			return;
 		}
 	}
+
+	
 }

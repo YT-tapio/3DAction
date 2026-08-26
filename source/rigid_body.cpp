@@ -210,6 +210,11 @@ void RigidBody::UnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 
 void RigidBody::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 {
+	if (object->GetRigidBody()->GetTag() == "player") { printfDx("プレイヤー\n"); }
+	if (object->GetRigidBody()->GetTag() != "stage") 
+	{ 
+		return;
+	}
 	if (auto obj = object_.lock())
 	{
 		object_.lock()->OnGround(object);
@@ -219,7 +224,7 @@ void RigidBody::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 	if (!on_ground_)
 	{
 		is_landing_ = TRUE;
-		//printfDx("aa\n");
+		printfDx("着地\n");
 	}
 	else
 	{

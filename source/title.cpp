@@ -16,6 +16,7 @@
 #include"screen_size.h"
 #include"fade.h"
 #include"sound_manager.h"
+#include"button_ui.h"
 
 Title::Title()
 	: SceneBase()
@@ -76,6 +77,11 @@ Title::Title()
 	is_push_ = FALSE;
 	SoundManager::GetInstance().Play2DSound("title_bgm");
 	Fade::GetInstance().StartFadeOut(1.f);
+	std::function<void()> start_function = [this]()
+		{
+			Fade::GetInstance().StartFadeIn(1.f, FadeColorType::kBlack);
+		};
+	start_button_ = std::make_shared<ButtonUI>("a_button", start_function);
 }
 
 Title::~Title()
@@ -97,6 +103,8 @@ void Title::Update()
 {
 	auto player_input = InputManager::GetInstance().GetMainPlayerInput();
 	
+	
+
 	if (player_input != nullptr)
 	{
 		if (player_input->GoNextScene() && !is_push_)
@@ -122,6 +130,7 @@ void Title::Draw()
 	Draw2D::RotaGraph(VectorAssistant::VGet2D(static_cast<float>(kScreenWidth * 0.5f), 750.f), 0.7f, 0.f, title_logo_handle_, TRUE);
 	
 	DrawString(700, 400, "Aボタン、スペースを押してゲームスタート", GetColor(255, 0, 0));
+	start_button_->Draw();
 }
 
 const std::string Title::GetName() const

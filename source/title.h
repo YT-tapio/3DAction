@@ -2,6 +2,7 @@
 #include"scene_base.h"
 
 class SkyDome;
+class ButtonUI;
 
 class Title : public SceneBase
 {
@@ -20,6 +21,8 @@ public:
 	const std::string GetName() const override;
 
 private:
+
+	std::shared_ptr<ButtonUI> start_button_;
 
 	int title_logo_handle_;
 	int player_handle_;
