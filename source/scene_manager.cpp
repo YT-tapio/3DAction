@@ -16,6 +16,7 @@
 #include"sound_manager.h"
 #include"fade.h"
 #include"load.h"
+#include"button_ui_datas.h"
 
 void SceneManager::Update()
 {
@@ -23,6 +24,7 @@ void SceneManager::Update()
 	SetLightAmbColor(GetColorF(1.f, 1.f, 1.f, 1.0f));
 	FPS::GetInstance().Update();
 	InputManager::GetInstance().Update();
+	
 	Debug::GetInstance().Reset();
 	Debug::GetInstance().Update();
 	if (!is_change_)
@@ -92,6 +94,7 @@ SceneManager::SceneManager()
 	InputManager::GetInstance();
 	Brain::GetInstance();
 	Fade::GetInstance().Awake();
+	ButtonUIDatas::GetInstance().Awake();
 	//Fade::GetInstance().StartFadeOut(1.f);
 	scene_ = std::make_shared<Title>();
 	is_change_ = FALSE;

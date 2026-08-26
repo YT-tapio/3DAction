@@ -352,6 +352,21 @@
     <Filter Include="ソース ファイル\camera\zoom">
       <UniqueIdentifier>{f56cc5de-d3d4-4c80-9cde-2c850f427337}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\shadow_map\shadow_circle">
+      <UniqueIdentifier>{ea43adc0-0e20-4367-9e3f-816a8b42b8a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\shadow_map\shadow_circle_controller">
+      <UniqueIdentifier>{bdae156d-c046-44c4-8042-af0b10e2d7b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ui\button_ui">
+      <UniqueIdentifier>{14537a0c-2add-428b-9204-f8ab43d84580}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ui\button_data">
+      <UniqueIdentifier>{e461e6eb-830d-4593-ae77-d6ebb5522c56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\load_file_of_csv">
+      <UniqueIdentifier>{3c6156d9-4faf-430f-9427-4967b4efa19e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -860,6 +875,24 @@
     </ClCompile>
     <ClCompile Include="source\roar_tackle.cpp">
       <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="source\shadow_circle.cpp">
+      <Filter>ソース ファイル\shadow_map\shadow_circle</Filter>
+    </ClCompile>
+    <ClCompile Include="source\shadow_circle_controller.cpp">
+      <Filter>ソース ファイル\shadow_map\shadow_circle_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="source\shadow_creater_interface.cpp">
+      <Filter>ソース ファイル\shadow_map\shadow_circle_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="source\button_ui.cpp">
+      <Filter>ソース ファイル\ui\button_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\button_ui_datas.cpp">
+      <Filter>ソース ファイル\ui\button_data</Filter>
+    </ClCompile>
+    <ClCompile Include="source\load_file_of_csv.cpp">
+      <Filter>ソース ファイル\load_file_of_csv</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1471,6 +1504,24 @@
     </ClInclude>
     <ClInclude Include="source\roar_tackle.h">
       <Filter>ソース ファイル\behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\shadow_circle.h">
+      <Filter>ソース ファイル\shadow_map\shadow_circle</Filter>
+    </ClInclude>
+    <ClInclude Include="source\shadow_circle_controller.h">
+      <Filter>ソース ファイル\shadow_map\shadow_circle_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="source\shadow_creater_interface.h">
+      <Filter>ソース ファイル\shadow_map\shadow_circle_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="source\button_ui.h">
+      <Filter>ソース ファイル\ui\button_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\button_ui_datas.h">
+      <Filter>ソース ファイル\ui\button_data</Filter>
+    </ClInclude>
+    <ClInclude Include="source\load_file_of_csv.h">
+      <Filter>ソース ファイル\load_file_of_csv</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -19,13 +19,14 @@ class StatusContainer;
 class IPlayerUIGroup;
 class ConditionTimer;
 class IPlayerObserver;
+class IShadowCreater;
 
 class Player : public CharacterBase , public IPhysicsEventReceiver
 	,public ITakableHealPlayer,public ITakableDamageEnemy,public IInputChange,public IStatusHolder,public IEnemyObserver
 {
 public:
 
-	Player(VECTOR* camera_dir, std::shared_ptr<const InputBase> input,const std::string name,std::shared_ptr<IPlayerUIGroup> player_ui_group);
+	Player(VECTOR* camera_dir, std::shared_ptr<const InputBase> input,const std::string name,std::shared_ptr<IPlayerUIGroup> player_ui_group, std::shared_ptr<IShadowCreater> shadow_creater);
 
 	~Player() override;
 

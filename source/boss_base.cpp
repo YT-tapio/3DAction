@@ -51,7 +51,9 @@
 #include"time.h"
 #include"vector_assistant.h"
 
-BossBase::BossBase(const VECTOR& pos, bool* game_start)
+#include"shadow_creater_interface.h"
+
+BossBase::BossBase(const VECTOR& pos, bool* game_start,std::shared_ptr<IShadowCreater> shadow_creater)
 	: EnemyBase(pos, game_start)
 {
 	vel_ = VectorAssistant::VGetZero();
@@ -73,6 +75,8 @@ BossBase::BossBase(const VECTOR& pos, bool* game_start)
 
 	status_container_ = std::make_shared<StatusContainer>("zako", hp_pos, hp_size);
 	hit_red_body_ = std::make_shared<HitRedBody>(handle_);
+	float shadow_size = 7.f;
+	shadow_creater->CreateShadow(&pos_, shadow_size);
 }
 
 BossBase::~BossBase()

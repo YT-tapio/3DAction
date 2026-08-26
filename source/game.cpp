@@ -43,6 +43,7 @@
 #include"won_ui.h"
 #include"lose_ui.h"
 #include"game_to_next_scene.h"
+#include"shadow_circle_controller.h"
 
 Game::Game()
 	: SceneBase()
@@ -53,10 +54,11 @@ Game::Game()
 	EffectManager::GetInstance().Awake();
 	DamageUIGroup::GetInstance().Awake();
 	StatModifireUIData::GetInstance().Load();
+	shadow_circle_controller_ = std::make_shared<ShadowCircleController>();
 	game_start_ = FALSE;
 	camera_ = std::make_shared<Camera>();
 	shadow_map_ = std::make_shared<ShadowMap>();
-	std::shared_ptr<EnemyBase> enemy = std::make_shared<BossBase>(VGet(0, 0, 0), &game_start_);
+	std::shared_ptr<EnemyBase> enemy = std::make_shared<BossBase>(VGet(0, 0, 0), &game_start_,shadow_circle_controller_);
 	get_enemy_pos_ = [enemy]()
 		{
 			return enemy->GetCenterPos();
@@ -75,7 +77,7 @@ Game::Game()
 	player_ui_group_ = std::make_shared<PlayerUIGroup>();
 	player_skill_ui_group_ = std::make_shared<PlayerSkillUIGroup>();
 
-	PlayerGroup::GetInstance().Awake(&camera_->dir_, player_ui_group_, enemy);
+	PlayerGroup::GetInstance().Awake(&camera_->dir_, player_ui_group_, enemy,shadow_circle_controller_);
 	objects_.push_back(enemy);
 
 	objects_.push_back(std::make_shared<Stage>());
@@ -90,6 +92,7 @@ Game::Game()
 	is_finished_fade_ = FALSE;
 	SoundManager::GetInstance().Play2DSound("game_bgm");
 	Fade::GetInstance().StartFadeOut(3.f);
+	
 }
 
 Game::~Game()
@@ -186,6 +189,7 @@ void Game::Update()
 	DamageUIGroup::GetInstance().Update();
 	EffectManager::GetInstance().Update();
 	AttackRangeGroup::GetInstance().Update();
+	shadow_circle_controller_->Update();
 }
 
 void Game::Draw()
@@ -197,6 +201,7 @@ void Game::Draw()
 		{
 			obj->Draw();
 		}
+		shadow_circle_controller_->Draw();
 	}
 	else
 	{

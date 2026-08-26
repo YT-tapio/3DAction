@@ -11,6 +11,7 @@ class GameStartTimer;
 class WonUI;
 class LoseUI;
 class GameToNextScene;
+class ShadowCircleController;
 
 class Game : public SceneBase
 {
@@ -38,6 +39,8 @@ private:
 	std::shared_ptr<LoseUI> lose_ui_;
 	std::shared_ptr<GameToNextScene> game_to_next_scene_;
 	std::shared_ptr<GameStartTimer> game_start_timer_;
+
+	std::shared_ptr<ShadowCircleController> shadow_circle_controller_;
 
 	std::vector<std::shared_ptr<ObjectBase>> objects_;
 	// ‰e‚ª‚Â‚©‚È‚¢‚à‚Ì

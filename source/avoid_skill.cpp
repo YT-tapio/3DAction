@@ -82,7 +82,14 @@ void AvoidSkill::Debug()
 
 bool AvoidSkill::CheckIsAvoid(std::shared_ptr<Player> owner)
 {
-	if (!owner->GetCanMove()) { return FALSE; }
+	if (!owner->GetCanMove())
+	{
+		// ‹N‚«ã‚ª‚è’†‚È‚ç‹–‚·
+		if (owner->GetAnimator()->GetNowAnimName() != "stand_up")
+		{
+			return FALSE;
+		}
+	}
 	if (!owner->GetStatusContainer()->CanUseStamina()) { return FALSE; }
 	if (!owner->GetInput()->IsAvoid()) { return FALSE; }
 	if (!owner->GetOnGround())								{ return FALSE; }

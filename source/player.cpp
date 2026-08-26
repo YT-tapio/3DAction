@@ -52,8 +52,9 @@
 #include"condition_timer.h"
 #include"brain.h"
 #include"player_observer_interface.h"
+#include"shadow_creater_interface.h"
 
-Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name, std::shared_ptr<IPlayerUIGroup> player_ui_group)
+Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name, std::shared_ptr<IPlayerUIGroup> player_ui_group,std::shared_ptr<IShadowCreater> shadow_creater)
 	: CharacterBase("player")
 	, IPhysicsEventReceiver()
 	, name_(name)
@@ -79,7 +80,8 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	handle_ = -1;
 	Setting();
 	UpdateBone();
-	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(1.5f, 6.f, VectorAssistant::VGetZero()), 
+	float radius = 1.5f;
+	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(radius, 6.f, VectorAssistant::VGetZero()), 
 		&pos_, TRUE, FALSE, 0.03f, 0.1f);
 	enemy_death_offset_timer_ = std::make_shared<ConditionTimer>(2.8f);
 	VECTOR hp_pos = VectorAssistant::VGet2D(300.f, 800.f);
@@ -98,6 +100,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	target_rot_y_ = 0;
 	speed_ = 0.f;
 	job_ = "nothing";
+	shadow_creater->CreateShadow(&pos_, radius +0.5f);
 }
 
 Player::~Player()
