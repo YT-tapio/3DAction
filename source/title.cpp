@@ -17,6 +17,8 @@
 #include"fade.h"
 #include"sound_manager.h"
 #include"button_ui.h"
+#include"condition_timer.h"
+#include"variable_timer.h"
 
 Title::Title()
 	: SceneBase()
@@ -73,15 +75,17 @@ Title::Title()
 	//アニメーションのアタッチ
 	MV1AttachAnim(player_handle_, 0,player_anim_handle, FALSE);
 	MV1AttachAnim(enemy_handle_, 0, enemy_anim_handle, FALSE);
-
-	is_push_ = FALSE;
+	offset_timer_ = std::make_shared<VariableTimer>(2.f);
+	offset_timer_->Stop();
 	SoundManager::GetInstance().Play2DSound("title_bgm");
 	Fade::GetInstance().StartFadeOut(1.f);
 	std::function<void()> start_function = [this]()
 		{
+			SoundManager::GetInstance().Play2DSound("go_game");
 			Fade::GetInstance().StartFadeIn(1.f, FadeColorType::kBlack);
+			offset_timer_->ReStart();
 		};
-	start_button_ = std::make_shared<ButtonUI>("a_button", start_function);
+	start_button_ = std::make_shared<ButtonUI>(ConfigName::play, VectorAssistant::VGet2D(700.f,650.f), start_function);
 }
 
 Title::~Title()
@@ -101,22 +105,10 @@ void Title::Init()
 
 void Title::Update()
 {
-	auto player_input = InputManager::GetInstance().GetMainPlayerInput();
+	start_button_->Update();
+	offset_timer_->Update();
 	
-	
-
-	if (player_input != nullptr)
-	{
-		if (player_input->GoNextScene() && !is_push_)
-		{
-			is_push_ = TRUE;
-			//Physics::GetInstance().End();
-			Fade::GetInstance().StartFadeIn(1.f, FadeColorType::kBlack);
-			SoundManager::GetInstance().Play2DSound("go_game");
-		}
-	}
-
-	if (Fade::GetInstance().IsFinished() && is_push_)
+	if (offset_timer_->GetIsEnd())
 	{
 		SceneManager::GetInstance().LoadScene("game");
 	}

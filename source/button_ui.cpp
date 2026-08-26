@@ -10,16 +10,19 @@
 #include<unordered_map>
 #include"input_manager.h"
 #include"input_base.h"
+#include"config_datas.h"
+#include"config_data.h"
 
-ButtonUI::ButtonUI(const std::string& name,std::function<void()> execute)
+ButtonUI::ButtonUI(const ConfigName& name,std::function<void()> execute)
 	: name_(name)
 	, execute_(execute)
-	, current_size_(1.f)
-	, target_size_(1.f)
+	, target_size_(0.1f)
+	, default_size_(0.1f)
 	, is_execute_(FALSE)
 	, pos_(VectorAssistant::VGet2D(100.f,100.f))
 {
-
+	current_size_ = default_size_;
+	
 }
 
 ButtonUI::~ButtonUI()
@@ -55,7 +58,8 @@ void ButtonUI::Update()
 
 void ButtonUI::Draw()
 {
-	int handle = ButtonUIDatas::GetInstance().GetHandle(name_);
+	auto name = ConfigDatas::GetInstance().GetConfigData(name_).pad.name;
+	int handle = ButtonUIDatas::GetInstance().GetHandle(name);
 	Draw2D::RotaGraph(pos_, current_size_, 0.f, handle, TRUE);
 }
 

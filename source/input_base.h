@@ -1,6 +1,7 @@
 #pragma once
-
+#include"config_name.h"
 class IInput;
+
 
 class InputBase
 {
@@ -17,6 +18,8 @@ public:
 	void Stop();
 
 	void Start();
+
+	virtual const bool IsPush(ConfigName name) const;
 
 	virtual const bool IsDash() const;
 

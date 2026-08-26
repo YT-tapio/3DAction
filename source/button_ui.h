@@ -1,10 +1,11 @@
 #pragma once
+#include"config_name.h"
 
 class ButtonUI
 {
 public:
 
-	ButtonUI(const std::string& name, std::function<void()> execute);
+	ButtonUI(const ConfigName& name, std::function<void()> execute);
 
 	~ButtonUI();
 
@@ -23,7 +24,7 @@ private:
 	VECTOR pos_;
 
 	std::function<void()> execute_;
-	std::string name_;
+	ConfigName name_;
 
 	int handle_;	// 自分の操作に対応しているボタンを画像ハンドルとして保持
 

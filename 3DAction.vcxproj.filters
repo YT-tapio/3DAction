@@ -373,6 +373,9 @@
     <Filter Include="ソース ファイル\config\pad">
       <UniqueIdentifier>{4a1245fc-42d1-44ec-8808-4e96323f09a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\config\datas">
+      <UniqueIdentifier>{5f097304-ba25-49e8-80b6-a7a0bba43567}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -899,6 +902,9 @@
     </ClCompile>
     <ClCompile Include="source\pad_config.cpp">
       <Filter>ソース ファイル\config\pad</Filter>
+    </ClCompile>
+    <ClCompile Include="source\config_datas.cpp">
+      <Filter>ソース ファイル\config\datas</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1535,11 +1541,11 @@
     <ClInclude Include="source\pad_config.h">
       <Filter>ソース ファイル\config\pad</Filter>
     </ClInclude>
-    <ClInclude Include="source\key_config_data.h">
-      <Filter>ソース ファイル\config\key</Filter>
+    <ClInclude Include="source\config_data.h">
+      <Filter>ソース ファイル\config</Filter>
     </ClInclude>
-    <ClInclude Include="source\pad_config_data.h">
-      <Filter>ソース ファイル\config\pad</Filter>
+    <ClInclude Include="source\config_datas.h">
+      <Filter>ソース ファイル\config\datas</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

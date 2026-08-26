@@ -3,6 +3,7 @@
 
 class SkyDome;
 class ButtonUI;
+class VariableTimer;
 
 class Title : public SceneBase
 {
@@ -23,6 +24,7 @@ public:
 private:
 
 	std::shared_ptr<ButtonUI> start_button_;
+	std::shared_ptr<VariableTimer> offset_timer_;
 
 	int title_logo_handle_;
 	int player_handle_;

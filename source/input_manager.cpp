@@ -89,29 +89,14 @@ const std::shared_ptr<const InputBase> InputManager::GetMainPlayerInput() const
 	return nullptr;
 }
 
-const bool InputManager::IsPushMainInput(const std::string& name) const
+const bool InputManager::IsPushMainInput(ConfigName name) const
 {
-	if (name == "a_button")
+	for (auto& input_id : input_id_mp_)
 	{
-
+		auto player_input = std::dynamic_pointer_cast<PlayerInput>(input_id.second);
+		if (player_input == nullptr) { continue; }
+		return player_input->IsPush(name);
 	}
-
-	if (name == "b_button")
-	{
-
-	}
-
-	if (name == "x_button")
-	{
-
-	}
-
-	if (name == "y_button")
-	{
-
-	}
-
-
 	return FALSE;
 }
 

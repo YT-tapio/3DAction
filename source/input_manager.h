@@ -1,4 +1,5 @@
 #pragma once
+#include"config_name.h"
 
 class InputBase;
 class IInputChange;
@@ -36,7 +37,7 @@ public:
 
 	const std::shared_ptr<const InputBase> GetMainPlayerInput() const;
 
-	const bool IsPushMainInput(const std::string& name) const;
+	const bool IsPushMainInput(ConfigName name) const;
 
 private:
 

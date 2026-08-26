@@ -18,6 +18,7 @@
 #include"fade.h"
 #include"load.h"
 #include"button_ui_datas.h"
+#include"config_datas.h"
 
 void SceneManager::Update()
 {
@@ -92,6 +93,7 @@ SceneManager::SceneManager()
 {
 	SoundManager::GetInstance().Load();
 	FPS::GetInstance();
+	ConfigDatas::GetInstance().Awake();
 	InputManager::GetInstance();
 	Brain::GetInstance();
 	Fade::GetInstance().Awake();

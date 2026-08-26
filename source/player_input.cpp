@@ -7,6 +7,9 @@
 #include"key_config.h"
 #include"pad_config.h"
 #include"input_creater.h"
+#include<unordered_map>
+#include"config_datas.h"
+#include"config_data.h"
 
 PlayerInput::PlayerInput()
 	:InputBase()
@@ -58,26 +61,58 @@ const int PlayerInput::GetPlayerChangeNum(const int& current_player_id) const
 	return 0;
 }
 
-const bool PlayerInput::IsDash() const
+const bool PlayerInput::IsPush(ConfigName name) const
 {
 	if (is_stop_) { return FALSE; }
 	// ダッシュに対応されているボタンを見る
 	// padはbボタン長押しで
+	auto config = ConfigDatas::GetInstance().GetConfigData(name);
 	for (auto& input : inputs_)
 	{
 		auto pad = std::dynamic_pointer_cast<Pad>(input);
+		float pushing_time = -1.f;
 		if (pad != nullptr)
 		{
-			if (pad->GetPushingTimeButton(PadConfig::dash) > kDashTiming) { return TRUE; }
+			pushing_time = pad->GetPushingTimeButton(config.pad.config);
 		}
 		else
 		{
 			auto pc = std::dynamic_pointer_cast<PC>(input);
 			if (pc != nullptr)
 			{
-				if (pc->GetPushingTimeKey(KeyConfig::dash) > kDashTiming) { return TRUE; }
+				pushing_time = pc->GetPushingTimeKey(KeyConfig::dash);
 			}
 		}
+		if (pushing_time >= 0.f) { return TRUE; }
+
+	}
+	return FALSE;
+}
+
+const bool PlayerInput::IsDash() const
+{
+	if (is_stop_) { return FALSE; }
+	// ダッシュに対応されているボタンを見る
+	// padはbボタン長押しで
+	auto config = ConfigDatas::GetInstance().GetConfigData(ConfigName::dash);
+	for (auto& input : inputs_)
+	{
+		auto pad = std::dynamic_pointer_cast<Pad>(input);
+		float pushing_time = -1.f;
+		if (pad != nullptr)
+		{
+			pushing_time = pad->GetPushingTimeButton(config.pad.config);
+		}
+		else
+		{
+			auto pc = std::dynamic_pointer_cast<PC>(input);
+			if (pc != nullptr)
+			{
+				pushing_time = pc->GetPushingTimeKey(KeyConfig::dash);
+			}
+		}
+		if (pushing_time > kDashTiming) { return TRUE; }
+
 	}
 	return FALSE;
 }
@@ -115,16 +150,16 @@ const bool PlayerInput::IsAvoid() const
 	if (is_stop_) { return FALSE; }
 	// 攻撃に対応されているボタンを見る
 	// padはbボタン長押しで
+	auto config_data = ConfigDatas::GetInstance().GetConfigData(ConfigName::avoid);
 	for (auto& input : inputs_)
 	{
 		auto pad = std::dynamic_pointer_cast<Pad>(input);
-		float pushing_time = 0.f;
+		float pushing_time = 10.f;
 		if (pad != nullptr)
 		{
 			if (pad->GetReleaseTimeButton(PadConfig::avoid) == 0.f)
 			{
-				pushing_time = pad->GetBeforePushingTimeButton(PadConfig::avoid);
-				if (pushing_time <= kDashTiming) { return TRUE; }
+				pushing_time = pad->GetBeforePushingTimeButton(config_data.pad.config);
 			}
 		}
 		else
@@ -134,13 +169,11 @@ const bool PlayerInput::IsAvoid() const
 			{
 				if (pc->GetReleaseTimeKey(KeyConfig::avoid) == 0.f)
 				{
-					pushing_time = pc->GetBeforePushingTimeKey(KeyConfig::avoid);
-
-					if (pushing_time <= kDashTiming){ return TRUE; }
+					pushing_time = pc->GetBeforePushingTimeKey(config_data.pc.config);
 				}
-
 			}
 		}
+		if (pushing_time <= kDashTiming) { return TRUE; }
 	}
 	return FALSE;
 }
@@ -150,25 +183,26 @@ const bool PlayerInput::IsNormalSkill() const
 	if (is_stop_) { return FALSE; }
 	// 攻撃に対応されているボタンを見る
 	// padはbボタン長押しで
+	auto config_data = ConfigDatas::GetInstance().GetConfigData(ConfigName::normal_skill);
 	for (auto& input : inputs_)
 	{
 		auto pad = std::dynamic_pointer_cast<Pad>(input);
 		float pushing_time = 0.f;
 		if (pad != nullptr)
 		{
-			pushing_time = pad->GetPushingTimeButton(PadConfig::normal_skil);
-			if (pushing_time == 0.f) { return TRUE; }
+			pushing_time = pad->GetPushingTimeButton(config_data.pad.config);
 		}
 		else
 		{
 			auto pc = std::dynamic_pointer_cast<PC>(input);
 			if (pc != nullptr)
 			{
-				pushing_time = pc->GetPushingTimeMouseButton(KeyConfig::normal_skill);
-
-				if (pushing_time == 0.f) { return TRUE; }
+				pushing_time = pc->GetPushingTimeMouseButton(config_data.pc.config);
 			}
 		}
+
+		if(pushing_time == 0.f) { return TRUE; }
+
 	}
 	return FALSE;
 }
@@ -178,13 +212,14 @@ const bool PlayerInput::IsStrongSkill() const
 	if (is_stop_) { return FALSE; }
 	// 攻撃に対応されているボタンを見る
 	// padはbボタン長押しで
+	auto config_data = ConfigDatas::GetInstance().GetConfigData(ConfigName::strong_skill);
 	for (auto& input : inputs_)
 	{
 		auto pad = std::dynamic_pointer_cast<Pad>(input);
-		float pushing_time = 0.f;
+		float pushing_time = -1.f;
 		if (pad != nullptr)
 		{
-			pushing_time = pad->GetPushingTimeButton(PadConfig::strong_skil);
+			pushing_time = pad->GetPushingTimeButton(config_data.pad.config);
 			if (pushing_time == 0.f) { return TRUE; }
 		}
 		else
@@ -192,7 +227,7 @@ const bool PlayerInput::IsStrongSkill() const
 			auto pc = std::dynamic_pointer_cast<PC>(input);
 			if (pc != nullptr)
 			{
-				pushing_time = pc->GetPushingTimeMouseButton(KeyConfig::strong_skill);
+				pushing_time = pc->GetPushingTimeMouseButton(config_data.pc.config);
 
 				if (pushing_time == 0.f) { return TRUE; }
 			}
@@ -206,6 +241,7 @@ const bool PlayerInput::IsLockOnEnemy() const
 	if (is_stop_) { return FALSE; }
 	// 攻撃に対応されているボタンを見る
 	// padはbボタン長押しで
+	auto config_data = ConfigDatas::GetInstance().GetConfigData(ConfigName::avoid);
 	for (auto& input : inputs_)
 	{
 		auto pad = std::dynamic_pointer_cast<Pad>(input);
@@ -213,7 +249,6 @@ const bool PlayerInput::IsLockOnEnemy() const
 		if (pad != nullptr)
 		{
 			pushing_time = pad->GetPushingTimeButton(PadConfig::lock_on_enemy);
-			if (pushing_time >= 0.f) { return TRUE; }
 		}
 		else
 		{
@@ -221,10 +256,9 @@ const bool PlayerInput::IsLockOnEnemy() const
 			if (pc != nullptr)
 			{
 				pushing_time = pc->GetPushingTimeKey(KeyConfig::lock_on_enemy);
-
-				if (pushing_time >= 0.f) { return TRUE; }
 			}
 		}
+		if (pushing_time >= 0.f) { return TRUE; }
 	}
 	return FALSE;
 }

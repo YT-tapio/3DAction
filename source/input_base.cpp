@@ -37,6 +37,11 @@ void InputBase::Start()
 	is_stop_ = FALSE;
 }
 
+const bool InputBase::IsPush(ConfigName name) const
+{
+	return FALSE;
+}
+
 const bool InputBase::IsDash() const
 {
 	//base‚Ì‚Ü‚Ü‚¾‚Æfalse

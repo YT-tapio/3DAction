@@ -25,6 +25,8 @@ public:
 	/// <returns></returns>
 	const int GetPlayerChangeNum(const int& current_player_id) const;
 
+	const bool IsPush(ConfigName name) const override;
+
 	const bool IsDash() const override;
 
 	const bool IsPunch() const override;

@@ -6,5 +6,6 @@ enum class ConfigName : int
 	avoid = 1,
 	normal_skill = 2,
 	strong_skill = 3,
-	target_skill = 4
+	lock_on = 4,
+	play = 5,
 };
