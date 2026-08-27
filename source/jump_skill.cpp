@@ -8,12 +8,12 @@
 #include"behavior_base.h"
 #include"jump_skill.h"
 #include"character_behavior.h"
-#include"no_anim_jump.h"
+#include"jump.h"
 #include"rigid_body.h"
 #include"input_base.h"
-
-JumpSkill::JumpSkill(std::weak_ptr<Player> owner, const float up_speed, float cool_time)
-	: SkillBase(owner,std::make_shared<NoAnimJump>(owner,up_speed),SkillType::kConstant,cool_time)
+#include"behavior_status.h"
+JumpSkill::JumpSkill(std::weak_ptr<Player> owner, std::pair<float,float> timing,const float up_speed, float cool_time)
+	: SkillBase(owner,std::make_shared<Jump>(owner,"jump", timing,up_speed), SkillType::kConstant, cool_time)
 {
 	state_ = JumpState::ready;
 }
@@ -41,17 +41,19 @@ void JumpSkill::Update()
 			// ‚³‚ê‚Ä‚¢‚½‚çƒWƒƒƒ“ƒv
 			behavior_->Entry();
 			state_ = JumpState::jump;
+			printfDx("push\n");
 		}
 		break;
 
 	case JumpState::jump:
 
-		behavior_->Update();
+		auto behavior_state = behavior_->Update();
 		if (auto owner = owner_.lock())
 		{
-			if (owner->GetRigidBody()->GetIsLanding())
+			if (behavior_state == BehaviorStatus::kComplete)
 			{
 				state_ = JumpState::ready;
+				printfDx("‚¨‚í‚è\n");
 			}
 		}
 		break;
@@ -63,6 +65,7 @@ const bool JumpSkill::IsPush() const
 {
 	auto owner = owner_.lock();
 	if (!owner->GetCanMove()) { return FALSE; }		// “®‚¯‚é‚©
+	if (owner->GetIsStop()) { return FALSE; }
 	if (!owner->GetRigidBody()->GetOnGround()) { return FALSE; }	// ’nã‚É‚¢‚é‚©
 	if (!owner->GetInput()->IsJump()) { return FALSE; }		//‰Ÿ‚³‚ê‚Ä‚é‚©
 	

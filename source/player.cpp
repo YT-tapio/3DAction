@@ -256,13 +256,14 @@ void Player::Update()
 		rigid_body_->SetTargetVelocity(vel_);
 		jump_->Update();
 	}
-	static int i = 0;
-	if (rigid_body_->GetUseGravity())
+	if (rigid_body_->GetOnGround())
 	{
-		//printfDx("%d\n", i);
-		i++;
+		animator_->PlayRequest("idle");
 	}
-	//printfDx("fall_speed：%.2f\n", rigid_body_->GetFallSpeed());
+	else
+	{
+		animator_->PlayRequest("falling");
+	}
 	animator_->Update(time_);
 	Setting();
 	// 参照の更新
@@ -435,7 +436,10 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 	/*スキルを作っていくよ*/
 	auto mine = std::dynamic_pointer_cast<Player>(shared_from_this());
 	avoid_ = std::make_shared<AvoidSkill>(mine,avoid_speed,avoid_stamina_consumption_);
-	jump_ = std::make_shared<JumpSkill>(mine, 1.f);
+	std::pair<float, float> timing;
+	timing.first = 0.17f;
+	timing.second = 1.f;
+	jump_ = std::make_shared<JumpSkill>(mine, timing,1.f);
 }
 
 void Player::MakeSkill(std::weak_ptr<Player> owner)
@@ -487,7 +491,11 @@ void Player::Move()
 		{
 			speed *= 2.5f;
 			is_dash_ = TRUE;
-			animator_->PlayRequest("run");
+			if(rigid_body_->GetOnGround())
+			{
+				animator_->PlayRequest("run");
+			}
+			
 
 			// ここでスタミナを減らす
 			status_container_->StaminaDown(0.5f * time_->GetDeltaTime());
@@ -495,7 +503,10 @@ void Player::Move()
 		else
 		{
 			is_dash_ = FALSE;
-			animator_->PlayRequest("jogging");
+			if (rigid_body_->GetOnGround())
+			{
+				animator_->PlayRequest("jogging");
+			}
 		}
 		is_move_ = TRUE;
 		vel_ = VScale(dir_, speed);
@@ -504,8 +515,6 @@ void Player::Move()
 	{
 		is_move_ = FALSE;
 		is_dash_ = FALSE;
-
-		animator_->PlayRequest("idle");
 	}
 	
 	
@@ -644,7 +653,9 @@ void Player::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		if (is_invincible_) { return; }
 		// 自身とオーナーのパンチがplayerにcastしてnullptrなったら処理する
 		float size = VSize(VSub(pos_, object->GetRigidBody()->GetPosition()));
-		printfDx("%.2f\n", size);
+		float my_radius = std::dynamic_pointer_cast<Capsule>(rigid_body_->GetCollider())->GetRadius();
+		float other_radius = std::dynamic_pointer_cast<Sphere>(object->GetRigidBody()->GetCollider())->GetRadius();
+		printfDx("my_radius:%.2f,other_radius:%.2f,%.2f\n", my_radius,other_radius,size);
 		if (!object->GetRigidBody()->CheckSameOwner(shared_from_this()))
 		{
 			animator_->PlayRequest("knock_back");
@@ -669,7 +680,7 @@ void Player::OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object)
 void Player::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 	auto check_area = std::dynamic_pointer_cast<CheckMyArea>(object);
-
+	
 	if (check_area != nullptr) { return; }
 }
 

@@ -82,7 +82,10 @@ void AnimatorBase::Update(std::shared_ptr<const Time> owner_time)
 		{
 			is_blending_ = FALSE;
 		}
-
+		if (now_anim_name_ == "jump_infite_attack")
+		{
+			//printfDx("アタック\n");
+		}
 		// アタッチ
 		now_anim_data.attach_index = MV1AttachAnim(handle_, now_anim_data.anim_index,
 			now_anim_data.handle, FALSE);
@@ -98,7 +101,6 @@ void AnimatorBase::Update(std::shared_ptr<const Time> owner_time)
 		}
 
 		now_anim_data.play_time = 0.f;
-
 		if (now_anim_data.attach_index == -1) { printfDx("アタッチに失敗しました\n"); }
 		if (now_anim_data.total_time < 0.f) { printfDx("トータルおかしい\n"); }
 	}
@@ -236,7 +238,6 @@ const float AnimatorBase::GetFPSTotalTime(std::string name) const
 const float AnimatorBase::GetRatio(std::string name) const
 {
 	float ratio = -1.f;
-	if (name == "jump") { return -0.5f; }
 	auto data	= animation_datas_.find(name);
 
 	if (data == animation_datas_.end()) { return ratio; }
@@ -305,7 +306,6 @@ void AnimatorBase::PlayTimeUpdate(AnimationData& data,std::shared_ptr<const Time
 {
 	//stopじゃないときはアニメーションの再生を行う
 	if (!is_stop_) { data.play_time += data.play_speed * owner_time->GetFPSRate(); }
-
 	// トータルタイムを超えた時
 	if (data.play_time >= data.total_time)
 	{

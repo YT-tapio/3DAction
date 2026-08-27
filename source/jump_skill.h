@@ -5,7 +5,7 @@ class JumpSkill : public SkillBase
 {
 public:
 
-	JumpSkill(std::weak_ptr<Player> owner,const float up_speed,float cool_time = 0.f);
+	JumpSkill(std::weak_ptr<Player> owner,std::pair<float,float> timing,const float up_speed,float cool_time = 0.f);
 
 	~JumpSkill() override;
 

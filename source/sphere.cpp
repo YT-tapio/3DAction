@@ -24,7 +24,7 @@ Sphere::~Sphere()
 bool Sphere::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR& other_pos, const VECTOR& other_vel, std::shared_ptr<ColliderBase> other_coll,Contact& contact)
 {
 	bool is_hit = FALSE;
-	VECTOR center_pos = VAdd(my_pos, VGet(0.f, r_, 0.f));
+	//VECTOR center_pos = VAdd(my_pos, VGet(0.f, r_, 0.f));
 	switch (other_coll->GetName())
 	{
 	case ColliderName::kAABB:
@@ -57,9 +57,9 @@ bool Sphere::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR
 		VECTOR capsule_start_pos = VAdd(other_pos, VGet(0.f, capsule_radius, 0.f));
 		VECTOR capsule_end_pos = VAdd(capsule_start_pos, VGet(0.f, capsule_vertical, 0.f));
 		//is_hit = Collision::CapsuleToCapsule(center_pos, VAdd(center_pos, VGet(0.f, 0.01f, 0.f)), r_, capsule_start_pos, capsule_end_pos, capsule_radius);
-		is_hit = Collision::SphereToSphere(center_pos, r_, capsule_start_pos, capsule_radius);
+		//is_hit = Collision::SphereToSphere(my_pos, r_, capsule_start_pos, capsule_radius);
 		//is_hit = Collision::SphereToCapsule(center_pos, r_, capsule_start_pos, capsule_end_pos, capsule_radius);
-		//is_hit = Collision::IsMoveSphereToCapsule(center_pos, r_, vel, capsule_start_pos, capsule_end_pos, capsule_radius, other_vel);
+		is_hit = Collision::IsMoveSphereToCapsule(my_pos, r_, vel, capsule_start_pos, capsule_end_pos, capsule_radius, other_vel);
 	}
 	break;
 	case ColliderName::kMesh:
@@ -67,7 +67,7 @@ bool Sphere::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR
 		// Œ^•ÏŠ·
 		auto mesh = std::dynamic_pointer_cast<Mesh>(other_coll);
 
-		is_hit = Collision::IsMoveSphereToMesh(center_pos, vel, r_, mesh->GetHandle(), contact);
+		is_hit = Collision::IsMoveSphereToMesh(my_pos, vel, r_, mesh->GetHandle(), contact);
 	}
 	break;
 

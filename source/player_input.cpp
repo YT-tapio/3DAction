@@ -164,7 +164,7 @@ const bool PlayerInput::IsJump() const
 	for (auto& input : inputs_)
 	{
 		auto pad = std::dynamic_pointer_cast<Pad>(input);
-		float pushing_time = 0.f;
+		float pushing_time = -1.f;
 		if (pad != nullptr)
 		{
 			pushing_time = pad->GetPushingTimeButton(config_data.pad.config);
@@ -174,11 +174,11 @@ const bool PlayerInput::IsJump() const
 			auto pc = std::dynamic_pointer_cast<PC>(input);
 			if (pc != nullptr)
 			{
-				pushing_time = pc->GetPushingTimeMouseButton(config_data.pc.config);
+				pushing_time = pc->GetPushingTimeKey(config_data.pc.config);
 			}
 		}
 
-		if (pushing_time == 0.f) { return TRUE; }
+		if (pushing_time > 0.f) { return TRUE; }
 
 	}
 

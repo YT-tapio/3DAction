@@ -5,7 +5,7 @@
 inline void LoadAnimation(AnimationData& data, const char name[], int ind, float play_speed, int priority, float cancel_time,bool loop,std::string next_anim_name)
 {
 	data.handle = MV1LoadModel(name);
-	if (data.handle == 1) { printfDx("データ読み込み失敗\n"); }
+	if (data.handle == -1) { printfDx("データ読み込み失敗\n"); }
 
 	data.anim_index = ind;
 	data.attach_index = 0;
@@ -32,7 +32,7 @@ inline void LoadAnimationToStringDatas(AnimationData& data, const std::vector<st
 	int index = init_index + 1;
 	data.handle = MV1LoadModel(string_datas[index].c_str());
 	index++;
-	if (data.handle == 1) { printfDx("データ読み込み失敗\n"); }
+	if (data.handle == -1) { printfDx("データ読み込み失敗\n"); }
 
 	data.anim_index = stoi(string_datas[index]);
 	index++;

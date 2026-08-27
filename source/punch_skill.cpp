@@ -76,9 +76,11 @@ void PunchSkill::Update()
 
 	if(!is_active_)
 	{
+
 		if (CheckIsPunch(owner))
 		{
 			is_active_ = TRUE;
+			
 			// punchさせる
 			owner->GetAnimator()->PlayRequest(my_anim_name_);	//パンチのanimationを再生をお願いする
 			VECTOR vel = VectorAssistant::VGetZero();
@@ -164,8 +166,8 @@ bool PunchSkill::CheckIsPunch(std::shared_ptr<Player> owner)
 {
 	if (!can_use_)								{ return FALSE; }
 	if (!owner->GetCanMove()) { return FALSE; }
+	if (!owner->GetOnGround()) { return FALSE; }
 	if (owner->GetIsStop())										{ return FALSE; }
-	if (!owner->GetOnGround())									{ return FALSE; }	// 着地していない
 	if (owner->GetIsInvincible())								{ return FALSE; }
 	if (owner->GetAnimator()->GetNowAnimName() == my_anim_name_)		{ return FALSE; }	// パンチじゃない
 	if (!PushMyType())													{ return FALSE; }	// 入力されているか

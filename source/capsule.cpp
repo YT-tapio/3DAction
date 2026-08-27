@@ -37,7 +37,7 @@ bool Capsule::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTO
 
 	bool is_hit = FALSE;
 
-	VECTOR start_pos	= VAdd(my_pos,		VGet(0.f, r_, 0.f));
+	VECTOR start_pos		= VAdd(my_pos,		VGet(0.f, r_, 0.f));
 	VECTOR end_pos		= VAdd(start_pos, VGet(0.f, vertical_, 0.f));
 
 	// colliderのキャッシュを行う
@@ -59,10 +59,7 @@ bool Capsule::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTO
 	{
 		// 型変換
 		auto sphere = std::dynamic_pointer_cast<Sphere>(other_coll);
-		//is_hit = Collision::CapsuleToCapsule(other_pos, VAdd(other_pos, VGet(0.f, 0.01f, 0.f)), sphere->GetRadius(), start_pos, end_pos, r_);
-		//is_hit = Collision::IsMoveSphereToCapsule(other_pos, sphere->GetRadius(), other_vel, start_pos, end_pos, r_, vel);
-		is_hit = Collision::SphereToSphere(other_pos, sphere->GetRadius(), start_pos, r_);
-		//is_hit = Collision::SphereToCapsule(other_pos, sphere->GetRadius(), start_pos, end_pos, r_);
+		is_hit = Collision::IsMoveSphereToCapsule(other_pos, sphere->GetRadius(), other_vel, start_pos, end_pos, r_, vel);
 	}
 		break;
 	case ColliderName::kCapsule:
@@ -71,7 +68,6 @@ bool Capsule::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTO
 		auto capsule = std::dynamic_pointer_cast<Capsule>(other_coll);
 		float other_radius = capsule->GetRadius();
 		float other_vertical = capsule->GetVertical();
-		
 		
 		VECTOR other_coll_start_pos = VAdd(other_pos, VGet(0.f, other_radius, 0.f));
 		VECTOR other_coll_end_pos = VAdd(other_coll_start_pos, VGet(0.f, other_vertical, 0.f));

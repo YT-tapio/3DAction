@@ -100,9 +100,9 @@ namespace Collision
 		if (all_size > dist) 
 		{
 			float y_dist_size = fabs(sphere1_pos.y - sphere2_pos.y);
-			if(y_dist_size > all_size)
+			if (sphere1_r == 1.5f)
 			{
-				printfDx("%.2f,%.2f\n", y_dist_size, dist);
+				printfDx("player");
 			}
 			return TRUE;
 		}
@@ -173,12 +173,6 @@ namespace Collision
 		VECTOR capsule1_segment = VSub(capsule1_end_pos,capsule1_start_pos);
 		VECTOR capsule2_segment = VSub(capsule2_end_pos, capsule2_start_pos);
 
-		VECTOR start_to_start = VSub(capsule1_start_pos, capsule2_start_pos);
-		if (VSize(start_to_start) < all_size) { return TRUE; }
-		
-		//VECTOR end_to_end = VSub(capsule1_end_pos, capsule2_end_pos);
-		//if (VSize(end_to_end) < all_size) { return TRUE; }
-		return FALSE;
 		// 垂直の例外処理
 		if (VectorAssistant::IsParallel(capsule1_segment, capsule2_segment))
 		{
@@ -188,10 +182,8 @@ namespace Collision
 		}
 
 		dist_size = VectorAssistant::VGetSegmentDistSize(capsule1_start_pos, capsule1_end_pos, capsule2_start_pos, capsule2_end_pos);
-
 		
-		
-		return FALSE;
+		return dist_size < all_size;
 	}
 
 	inline bool IsMoveSphereToSphere(const VECTOR& sphere1_pos, const float& sphere1_r, const VECTOR& sphere1_velocity,
@@ -207,7 +199,6 @@ namespace Collision
 	inline bool IsMoveSphereToCapsule(const VECTOR& sphere_pos, const float& sphere_r, const VECTOR& sphere_velocity,
 		const VECTOR& capsule_start_pos, const VECTOR& capsule_end_pos, const float& capsule_r, const VECTOR& capsule_velocity)
 	{
-		
 		VECTOR sphere_future_pos = VAdd(sphere_pos, sphere_velocity);
 
 		// 移動のカプセルを作る
