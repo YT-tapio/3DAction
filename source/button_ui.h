@@ -5,7 +5,7 @@ class ButtonUI
 {
 public:
 
-	ButtonUI(const ConfigName& name, std::function<void()> execute);
+	ButtonUI(const ConfigName& name,const VECTOR& pos, const float& default_size, std::function<void()> execute);
 
 	~ButtonUI();
 

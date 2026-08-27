@@ -13,16 +13,15 @@
 #include"config_datas.h"
 #include"config_data.h"
 
-ButtonUI::ButtonUI(const ConfigName& name,std::function<void()> execute)
+ButtonUI::ButtonUI(const ConfigName& name, const VECTOR& pos,const float& default_size,std::function<void()> execute)
 	: name_(name)
 	, execute_(execute)
-	, target_size_(0.1f)
-	, default_size_(0.1f)
+	, default_size_(default_size)
 	, is_execute_(FALSE)
-	, pos_(VectorAssistant::VGet2D(100.f,100.f))
+	, pos_(pos)
 {
+	target_size_ = default_size_;
 	current_size_ = default_size_;
-	
 }
 
 ButtonUI::~ButtonUI()

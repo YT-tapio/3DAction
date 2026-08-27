@@ -8,4 +8,7 @@ enum class ConfigName : int
 	strong_skill = 3,
 	lock_on = 4,
 	play = 5,
+	retry = 6,
+	go_title = 7,
+	jump = 8
 };

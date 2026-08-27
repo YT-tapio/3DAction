@@ -20,6 +20,39 @@ inline void LoadAnimation(AnimationData& data, const char name[], int ind, float
 	data.next_anim_name = next_anim_name;
 }
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="data">アニメーション</param>
+/// <param name="string_datas">文字データの集合体</param>
+/// <param name="row_num">何行目なのか</param>
+inline void LoadAnimationToStringDatas(AnimationData& data, const std::vector<std::string> string_datas,const int init_index)
+{
+	//今の行の一列目の要素は名前なのでとばす
+	int index = init_index + 1;
+	data.handle = MV1LoadModel(string_datas[index].c_str());
+	index++;
+	if (data.handle == 1) { printfDx("データ読み込み失敗\n"); }
+
+	data.anim_index = stoi(string_datas[index]);
+	index++;
+	data.attach_index = 0;
+
+	data.play_speed = stof(string_datas[index]);
+	index++;
+
+	data.priority = stoi(string_datas[index]);
+	index++;
+	data.play_time = 0.f;
+	data.total_time = 0.f;
+
+	data.loop = stoi(string_datas[index]);
+	index++;
+	data.cancel_time = stof(string_datas[index]);
+	index++;
+	data.next_anim_name = string_datas[index];
+}
+
 inline void LoadAnimation2D(Animation2DData& data, const std::string& file_path,
 	unsigned int side_index, unsigned int vertical_index,int image_width,int image_height, int priority,
 	float total_time,bool loop,const std::string& next_anim_name)

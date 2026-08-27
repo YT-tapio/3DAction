@@ -220,9 +220,6 @@
     <Filter Include="ソース ファイル\object\skydome">
       <UniqueIdentifier>{8a4bcf6c-0e28-4b3d-851e-940d412581ae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\sound_player">
-      <UniqueIdentifier>{1e59f04b-0bd0-41c6-9c44-40ca2c8032e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\object\collision_mesh">
       <UniqueIdentifier>{a4098630-b74f-49bc-89a5-2e6efef03097}</UniqueIdentifier>
     </Filter>
@@ -669,9 +666,6 @@
     <ClCompile Include="source\skydome.cpp">
       <Filter>ソース ファイル\object\skydome</Filter>
     </ClCompile>
-    <ClCompile Include="source\sound_player.cpp">
-      <Filter>ソース ファイル\sound_player</Filter>
-    </ClCompile>
     <ClCompile Include="source\collision_mesh_obj.cpp">
       <Filter>ソース ファイル\object\collision_mesh</Filter>
     </ClCompile>
@@ -905,6 +899,12 @@
     </ClCompile>
     <ClCompile Include="source\config_datas.cpp">
       <Filter>ソース ファイル\config\datas</Filter>
+    </ClCompile>
+    <ClCompile Include="source\jump_skill.cpp">
+      <Filter>ソース ファイル\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="source\no_anim_jump.cpp">
+      <Filter>ソース ファイル\behavior</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1268,9 +1268,6 @@
     <ClInclude Include="source\skydome.h">
       <Filter>ソース ファイル\object\skydome</Filter>
     </ClInclude>
-    <ClInclude Include="source\sound_player.h">
-      <Filter>ソース ファイル\sound_player</Filter>
-    </ClInclude>
     <ClInclude Include="source\collision_mesh_obj.h">
       <Filter>ソース ファイル\object\collision_mesh</Filter>
     </ClInclude>
@@ -1546,6 +1543,18 @@
     </ClInclude>
     <ClInclude Include="source\config_datas.h">
       <Filter>ソース ファイル\config\datas</Filter>
+    </ClInclude>
+    <ClInclude Include="source\file_data.h">
+      <Filter>ソース ファイル\load_csv_file</Filter>
+    </ClInclude>
+    <ClInclude Include="source\file_name_data.h">
+      <Filter>ソース ファイル\load_csv_file</Filter>
+    </ClInclude>
+    <ClInclude Include="source\jump_skill.h">
+      <Filter>ソース ファイル\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="source\no_anim_jump.h">
+      <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

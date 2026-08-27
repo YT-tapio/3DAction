@@ -9,6 +9,7 @@
 #include"csv_file_assistant.h"
 #include"FPS.h"
 #include"time.h"
+#include"load_csv_file.h"
 
 AnimatorBase::AnimatorBase(const std::string data_file_path, int handle)
 {
@@ -21,6 +22,7 @@ AnimatorBase::AnimatorBase(const std::string data_file_path, int handle)
 	is_blending_		= FALSE;
 	is_stop_			= FALSE;
 	can_cancel_		= FALSE;
+	is_loaded_ = FALSE;
 	blend_rate_ = 0.f;
 }
 
@@ -43,6 +45,7 @@ void AnimatorBase::Init()
 
 void AnimatorBase::Update(std::shared_ptr<const Time> owner_time)
 {
+	// printfDx("%d\n", animation_datas_.size());
 	// もし次に続くアニメーションがあるなら
 	if (CheckNextAnimation())
 	{
@@ -141,50 +144,26 @@ void AnimatorBase::PlayRequest(std::string name)
 	request_names_.push_back(name);
 }
 
-void AnimatorBase::LoadFile(const std::string file_path)
+void AnimatorBase::LoadFile(const std::string& file_path)
 {
-	std::ifstream file(file_path);
-	std::string line;
+	if (is_loaded_) { return; }
+	const auto file_data = LoadCSVFile::GetInstance().GetData(file_path, 1);
 
-	if (!file)
+	for (int i = 0; i < file_data.indices.size(); i++)
 	{
-		printfDx("csvファイル読み込み失敗\n");
-	}
+		int first_vertical_index = 0;
+		for (int j = 0; j < i; j++)
+		{
+			first_vertical_index += file_data.indices[j];
+		}
 
-	// 最初の行を飛ばす
-	std::getline(file, line);
-
-	while (std::getline(file, line))
-	{
-		std::stringstream ss(line);
-		std::string data;			// csvからの文字列をもらう
-		std::string anim_name;
-		std::string anim_file_path;
-		std::string next_anim_name;
-		int anim_index		= -1;
-		int priority		= -1;
-		int loop = -1;
-		float play_speed	= -1.f;
-		float total_time = 0.f;
-		float cancel_time	= 0.f;
+		const auto string_datas = file_data.string_datas;
 		AnimationData anim_data = {};
-
-
-		// アニメーションの名前
-		anim_name		= CSVFileAssistant::GetStringOfCSVFile(ss,data);  // アニメーションの名前 
-		anim_file_path	= CSVFileAssistant::GetStringOfCSVFile(ss,data);  // アニメーションファイルの名前
-		anim_index		= CSVFileAssistant::GetIntOfCSVFile(ss,data);	  // アニメーションの識別番号
-		play_speed		= CSVFileAssistant::GetFloatOfCSVFile(ss,data);	  // アニメーションの再生速度
-		priority		= CSVFileAssistant::GetIntOfCSVFile(ss,data);	  // アニメーションの優先度
-		loop			= CSVFileAssistant::GetBoolOfCSVFile(ss,data);	  // ループするかどうか
-		cancel_time		= CSVFileAssistant::GetFloatOfCSVFile(ss, data);  // animationのキャンセル可能時間
-		next_anim_name	= CSVFileAssistant::GetStringOfCSVFile(ss, data); // 次のanimationのなまえ
-
-		// アニメーションデータを生成
-		LoadAnimation(anim_data, anim_file_path.c_str(), anim_index, play_speed, priority, cancel_time, loop, next_anim_name);
-		
+		LoadAnimationToStringDatas(anim_data, string_datas, first_vertical_index);
+		std::string anim_name = string_datas[first_vertical_index];
 		animation_datas_[anim_name] = anim_data;
 	}
+	is_loaded_ = TRUE;
 }
 
 void AnimatorBase::ResetRequest()
@@ -257,6 +236,7 @@ const float AnimatorBase::GetFPSTotalTime(std::string name) const
 const float AnimatorBase::GetRatio(std::string name) const
 {
 	float ratio = -1.f;
+	if (name == "jump") { return -0.5f; }
 	auto data	= animation_datas_.find(name);
 
 	if (data == animation_datas_.end()) { return ratio; }

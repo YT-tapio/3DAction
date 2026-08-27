@@ -1,4 +1,5 @@
 #pragma once
+#include"file_data.h"
 
 class LoadCSVFile
 {
@@ -6,7 +7,7 @@ public:
 
 	~LoadCSVFile() = default;
 
-	static LoadCSVFile& Getnstnce()
+	static LoadCSVFile& GetInstance()
 	{
 		static LoadCSVFile instance;
 		return instance;
@@ -19,14 +20,16 @@ public:
 	/// <param name="pass_row">âΩçsÇ∆ÇŒÇ∑Ç©</param>
 	/// <param name="name">éwíËÇÃÇ‡ÇÃÇÇ∆ÇÈèÍçá</param>
 	/// <returns></returns>
-	std::vector<std::string> GetDatas(const std::string& file_path, const int pass_row,std::string name = "empty");
+	FileData GetData(const std::string& file_path, const int pass_row,std::string name = "empty");
 
 private:
 
 	LoadCSVFile();
 
+	bool CheckSameData(FileData& file_data);
+
 private:
 
-	std::unordered_map<std::string,std::vector<std::string>> string_datas_;
+	std::vector<FileData> file_datas_;
 
 };

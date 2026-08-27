@@ -38,6 +38,7 @@ void Camera::Init()
 {
 	// pysics‚Ö‚Ì“o˜^
 	rigid_body_->Init(weak_from_this());
+	rigid_body_->SetTag("camera");
 	Physics::GetInstance().AddBody(rigid_body_);
 }
 

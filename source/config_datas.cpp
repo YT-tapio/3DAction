@@ -17,6 +17,9 @@ void ConfigDatas::Awake()
 	datas_[ConfigName::strong_skill] = MakeConfig(KeyConfig::strong_skill, "right_mouse", PadConfig::strong_skill, "y_button");
 	datas_[ConfigName::lock_on] = MakeConfig(KeyConfig::lock_on_enemy, "space_key", PadConfig::lock_on_enemy, "left_button");
 	datas_[ConfigName::play] = MakeConfig(KeyConfig::go_next, "space_key", PadConfig::go_next, "a_button");
+	datas_[ConfigName::retry] = MakeConfig(KeyConfig::retry, "space_key", PadConfig::retry, "a_button");
+	datas_[ConfigName::go_title] = MakeConfig(KeyConfig::game_to_title , "enter_key", PadConfig::game_to_title, "b_button");
+	datas_[ConfigName::jump] = MakeConfig(KeyConfig::jump, "f_key", PadConfig::jump, "b_button");
 }
 
 const Config ConfigDatas::GetConfigData(ConfigName name) const

@@ -33,6 +33,8 @@ public:
 
 	const bool IsAvoid()const override;
 	
+	const bool IsJump() const override;
+
 	const bool IsNormalSkill() const override;
 
 	const bool IsStrongSkill() const override;

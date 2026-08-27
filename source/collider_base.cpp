@@ -25,7 +25,7 @@ bool ColliderBase::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const 
 {
 	
 
-	return TRUE;
+	return FALSE;
 }
 
 VECTOR ColliderBase::FixPos(const VECTOR& my_pos, const VECTOR& vel, const VECTOR& other_pos, std::shared_ptr<ColliderBase> other_coll, Contact& contact)

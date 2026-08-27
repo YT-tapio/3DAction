@@ -95,9 +95,18 @@ namespace Collision
 		float all_size = sphere1_r + sphere2_r;
 
 		float dist = VectorAssistant::VGetDistSize(sphere1_pos, sphere2_pos);
-
+		dist = VSize(VSub(sphere1_pos, sphere2_pos));
 		// 2‚Â‚Ì”¼Œa‚ð‘«‚µ‚½size‚æ‚è‚à’á‚¢‚Æ‚«
-		return (all_size > dist);
+		if (all_size > dist) 
+		{
+			float y_dist_size = fabs(sphere1_pos.y - sphere2_pos.y);
+			if(y_dist_size > all_size)
+			{
+				printfDx("%.2f,%.2f\n", y_dist_size, dist);
+			}
+			return TRUE;
+		}
+		return FALSE;
 	}
 	
 	/// <summary>
@@ -114,18 +123,35 @@ namespace Collision
 		float all_size = sphere_r + capsule_r;
 
 		// Å‰‚É‹…‚Æ‹…‚Ì“–‚½‚è”»’è‚ðs‚¤
-		if (SphereToSphere(sphere_pos, sphere_r, capsule_start_pos, capsule_r)) { return TRUE; }
-		if (SphereToSphere(sphere_pos, sphere_r, capsule_end_pos, capsule_r)) { return TRUE; }
+		if (SphereToSphere(sphere_pos, sphere_r, capsule_start_pos, capsule_r)) 
+		{
+			return TRUE;
+		}
+		if (SphereToSphere(sphere_pos, sphere_r, capsule_end_pos, capsule_r)) 
+		{
+			return TRUE;
+		}
 
-		VECTOR start_to_dist = VSub(sphere_pos,capsule_start_pos);
+		return  FALSE;
+		VECTOR start_to_sphere_dist = VSub(sphere_pos,capsule_start_pos);
 		VECTOR start_to_end_dist = VSub(capsule_end_pos, capsule_start_pos);
-		VECTOR proj_vel = VectorAssistant::VGetProj(start_to_end_dist, start_to_dist);
+		VECTOR proj_vel = VectorAssistant::VGetProj(start_to_end_dist, start_to_sphere_dist);
 
 		//start‚Ìpos‚©‚çproj_vel‚ð‘«‚µ‚½êŠ‚Ì‹——£‚ðŒ©‚é
 		// ˆê”Ô‹ß‚¢êŠ‚Ü‚Å‚Ì‹——£
 		float near_dist = VectorAssistant::VGetDistSize(sphere_pos, VAdd(capsule_start_pos, proj_vel));
-
-		return (all_size > near_dist);
+		
+		if (all_size > near_dist)
+		{
+			printfDx("%.2f\n", near_dist);
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
+		
+		return FALSE;
 	}
 
 	/// <summary>
@@ -143,11 +169,16 @@ namespace Collision
 	{
 		float all_size = capsule1_r + capsule2_r;
 
-
 		float dist_size = 0.f;
 		VECTOR capsule1_segment = VSub(capsule1_end_pos,capsule1_start_pos);
 		VECTOR capsule2_segment = VSub(capsule2_end_pos, capsule2_start_pos);
 
+		VECTOR start_to_start = VSub(capsule1_start_pos, capsule2_start_pos);
+		if (VSize(start_to_start) < all_size) { return TRUE; }
+		
+		//VECTOR end_to_end = VSub(capsule1_end_pos, capsule2_end_pos);
+		//if (VSize(end_to_end) < all_size) { return TRUE; }
+		return FALSE;
 		// ‚’¼‚Ì—áŠOˆ—
 		if (VectorAssistant::IsParallel(capsule1_segment, capsule2_segment))
 		{
@@ -158,7 +189,9 @@ namespace Collision
 
 		dist_size = VectorAssistant::VGetSegmentDistSize(capsule1_start_pos, capsule1_end_pos, capsule2_start_pos, capsule2_end_pos);
 
-		return (all_size > dist_size);
+		
+		
+		return FALSE;
 	}
 
 	inline bool IsMoveSphereToSphere(const VECTOR& sphere1_pos, const float& sphere1_r, const VECTOR& sphere1_velocity,

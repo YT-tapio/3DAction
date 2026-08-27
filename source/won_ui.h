@@ -3,6 +3,7 @@
 #include"player_observer_interface.h"
 
 class ConditionTimer;
+class ButtonUI;
 
 class WonUI : public IEnemyObserver , public IPlayerObserver
 {
@@ -56,6 +57,9 @@ private:
 	};
 
 	std::shared_ptr<ConditionTimer> timer_;
+
+	std::shared_ptr<ButtonUI> retry_button_;
+	std::shared_ptr<ButtonUI> go_title_button_;
 
 	VECTOR base_pos_;
 	VECTOR back_ground_size_;	// ”wŒi‚Ì‘å‚«‚³

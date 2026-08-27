@@ -13,6 +13,8 @@
 #include"fps.h"
 #include"font.h"
 #include"sound_manager.h"
+#include"button_ui.h"
+#include"config_name.h"
 
 WonUI::WonUI()
 	: base_pos_(VectorAssistant::VGetZero())
@@ -31,8 +33,9 @@ WonUI::WonUI()
 	, is_play_(FALSE)
 {
 	LoadFile();
-	Abutton_image_handle_ = LoadGraph("data/ui/input/pad/button_xbox_digital_a_1.png");
-	Bbutton_image_handle_ = LoadGraph("data/ui/input/pad/button_xbox_digital_b_1.png");
+	
+	retry_button_ = std::make_shared<ButtonUI>(ConfigName::retry, retry_ui_pos_, 0.15f, nullptr);
+	go_title_button_ = std::make_shared<ButtonUI>(ConfigName::go_title, go_title_ui_pos_, 0.15f, nullptr);
 	go_next_scene_font_.handle = Font::CreateHandleOfFile("data/csv/font/game_to_next_scene_font_data.csv");
 	go_next_scene_font_.body_color = GetColor(255, 255, 255);
 	go_next_scene_font_.body_color = GetColor(0, 0, 0);
@@ -42,8 +45,6 @@ WonUI::WonUI()
 
 WonUI::~WonUI()
 {
-	DeleteGraph(Abutton_image_handle_);
-	DeleteGraph(Bbutton_image_handle_);
 	DeleteFontToHandle(go_next_scene_font_.handle);
 }
 
@@ -64,7 +65,8 @@ void WonUI::Update()
 		SoundManager::GetInstance().Play2DSound("clear");
 		is_play_ = TRUE;
 	}
-	
+	retry_button_->Update();
+	go_title_button_->Update();
 }
 
 void WonUI::Draw()
@@ -184,8 +186,8 @@ void WonUI::DrawMostTakeDamageEnemy()
 
 void WonUI::DrawGameToNext()
 {
-	Draw2D::RotaGraph(retry_ui_pos_, 0.15f, 0.f, Abutton_image_handle_, TRUE);
+	retry_button_->Draw();
 	Draw2D::StringToHandle(VAdd(retry_ui_pos_, offset_button_pos_), "もう一度", go_next_scene_font_.body_color, go_next_scene_font_.handle, go_next_scene_font_.edge_color);
-	Draw2D::RotaGraph(go_title_ui_pos_, 0.15f, 0.f, Bbutton_image_handle_, TRUE);
+	go_title_button_->Draw();
 	Draw2D::StringToHandle(VAdd(go_title_ui_pos_, offset_button_pos_), "タイトルへ", go_next_scene_font_.body_color, go_next_scene_font_.handle, go_next_scene_font_.edge_color);
 }

@@ -72,7 +72,7 @@ protected:
 
 	virtual void ChangeAnimation();
 
-	void LoadFile(const std::string file_path);
+	void LoadFile(const std::string& file_path);
 
 	void ResetRequest();
 
@@ -110,6 +110,7 @@ private:
 private:
 
 	bool is_blending_;
+	bool is_loaded_;
 	float blend_rate_;
 
 };

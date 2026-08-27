@@ -202,6 +202,7 @@ void Game::Draw()
 			obj->Draw();
 		}
 		shadow_circle_controller_->Draw();
+		Physics::GetInstance().Debug();
 	}
 	else
 	{
@@ -252,7 +253,7 @@ void Game::Draw()
 		{
 			obj->Debug();
 		}
-		Physics::GetInstance().Debug();
+		
 	}
 	
 	EffectManager::GetInstance().Draw();

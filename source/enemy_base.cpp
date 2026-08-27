@@ -80,6 +80,7 @@ void EnemyBase::Init()
 
 void EnemyBase::Update()
 {
+	//printfDx("%.2f\n", rigid_body_->GetFallSpeed());
 	time_->Update();
 	if (status_container_->GetCurrentStatus().hp <= 0)
 	{

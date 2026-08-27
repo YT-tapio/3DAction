@@ -11,12 +11,16 @@
 #include"input_base.h"
 #include"sound_manager.h"
 
+
 GameToNextScene::GameToNextScene()
 	: timer_(std::make_shared<VariableTimer>(1.f))
 	, is_active_(FALSE)
 	, next_scene_("nothing")
 {
 	timer_->Init();
+
+	// ƒ{ƒ^ƒ“‚Ìì¬
+	//retry_button_ = std::make_shared<ButtonUI>(, VectorAssistant::VGet2D(,), 0.1f, nullptr)
 }
 
 GameToNextScene::~GameToNextScene()

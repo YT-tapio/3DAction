@@ -9,6 +9,7 @@
 #include"csv_file_assistant.h"
 #include"font.h"
 #include"skill_ui_datas.h"
+#include"config_name.h"
 
 PlayerSkillUIGroup::PlayerSkillUIGroup()
 	: normal_skill_pos_(VectorAssistant::VGetZero())
@@ -19,8 +20,8 @@ PlayerSkillUIGroup::PlayerSkillUIGroup()
 {
 	// fontをダウンロード
 	LoadFile();
-	normal_skill_ui_ = std::make_shared<PlayerSkillUI>(normal_skill_pos_, normal_skill_input_handle_,font_handle_, body_color_, edge_color_);
-	strong_skill_ui_ = std::make_shared<PlayerSkillUI>(strong_skill_pos_, strong_skill_input_handle_,font_handle_, body_color_, edge_color_);
+	normal_skill_ui_ = std::make_shared<PlayerSkillUI>(normal_skill_pos_, font_handle_, body_color_, edge_color_, ConfigName::normal_skill);
+	strong_skill_ui_ = std::make_shared<PlayerSkillUI>(strong_skill_pos_,font_handle_, body_color_, edge_color_, ConfigName::strong_skill);
 	
 	skill_ui_datas_ = std::make_unique<SkillUIDatas>();
 }

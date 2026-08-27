@@ -101,6 +101,7 @@ void AreaOfEffectAttack::Exit()
 void AreaOfEffectAttack::Debug()
 {
 	rigid_body_->Debug();
+	//DrawSphere3D(effect_pos_, 11.5f, 10, GetColor(255, 255, 255), GetColor(255, 255, 255), TRUE);
 }
 
 void AreaOfEffectAttack::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)

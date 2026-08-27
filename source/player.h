@@ -138,6 +138,7 @@ private:
 	std::shared_ptr<SkillBase> second_skill_;		// 
 	std::shared_ptr<BehaviorBase> test_behavior_;
 	std::shared_ptr<SkillBase> avoid_;
+	std::shared_ptr<SkillBase> jump_;
 	std::shared_ptr<StatusContainer> status_container_;
 	std::shared_ptr<IPlayerUIGroup> player_ui_group_;
 

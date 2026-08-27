@@ -46,11 +46,16 @@ const void ShadowCircle::Draw() const
 
 void ShadowCircle::LoadFile()
 {
-
-	//auto datas = LoadCSVFile().GetInstance().GetDatas();
-
+	const std::string file_path = "data/csv/shadow/shadow_circle_data.csv";
+	auto datas = LoadCSVFile::GetInstance().GetData(file_path, 1).string_datas;
 	
-	std::ifstream file("data/csv/shadow/shadow_circle_data.csv");
+	auto model_path = datas[0];
+	handle_ = MV1LoadModel(model_path.c_str());
+	base_y_ = stof(datas[1]);
+	blend_rate_ = stof(datas[2]);
+	if (handle_ == -1) { printfDx("ÉÇÉfÉãì«Ç›çûÇ›é∏îs\n"); }
+	/*
+	std::ifstream file();
 	std::string line;
 
 	if (!file)
@@ -77,6 +82,7 @@ void ShadowCircle::LoadFile()
 			return;
 		}
 	}
+	*/
 
 	
 }

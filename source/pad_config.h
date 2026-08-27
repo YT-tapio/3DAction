@@ -5,6 +5,7 @@ namespace PadConfig
 	static int punch		= XINPUT_BUTTON_X;
 	static int dash			= XINPUT_BUTTON_A;
 	static int avoid		= XINPUT_BUTTON_A;
+	static int jump			= XINPUT_BUTTON_B;
 
 	static int normal_skill = XINPUT_BUTTON_X;
 	static int strong_skill = XINPUT_BUTTON_Y;

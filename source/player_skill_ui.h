@@ -1,14 +1,16 @@
 #pragma once
 #include"skill_ui_data.h"
+#include"config_name.h"
 
 class SubScreen;
 class Time;
+class ButtonUI;
 
 class PlayerSkillUI
 {
 public:
 
-	PlayerSkillUI(const VECTOR& base_pos,const int& pad_handle, const int font_handle, const int body_color, const int edge_color);
+	PlayerSkillUI(const VECTOR& base_pos, const int font_handle, const int body_color, const int edge_color, const ConfigName& name);
 
 	~PlayerSkillUI();
 
@@ -39,13 +41,15 @@ private:
 	const float kBlendSpeed = 0.3f;
 
 	VECTOR pos_;
-	VECTOR offset_input_icon_pos_;
+	VECTOR offset_button_pos_;
 
 	std::shared_ptr<SubScreen> sub_screen_;
 	std::shared_ptr<Time> time_;
 
 	std::function<float()> cool_time_ratio_;	// クールタイムの割合
 	std::function<bool()> can_use_;				// スキルを使う子ができるか
+
+	std::shared_ptr<ButtonUI> button_;
 
 	SkillUIData data_;
 	

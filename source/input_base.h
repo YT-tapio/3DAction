@@ -27,6 +27,8 @@ public:
 
 	virtual const bool IsAvoid() const;
 
+	virtual const bool IsJump() const;
+
 	virtual const bool IsNormalSkill() const;
 
 	virtual const bool IsStrongSkill() const;

@@ -34,7 +34,16 @@ void Physics::AddBody(std::shared_ptr<RigidBody> body)
 void Physics::Debug()
 {
 	int i = 0;
-	if (FALSE) { return; }
+	for (auto& id_body : id_rigid_bodies_mp_)
+	{
+		auto body = id_body.second.lock();
+		if (body->GetTag() != "camera")
+		{
+			//body->GetCollider()->Draw(body->GetPosition());
+		}
+		
+	}
+	if (TRUE) { return; }
 	
 	
 	for (const auto& pair : collisioned_pairs_id_)
@@ -367,7 +376,6 @@ void Physics::Collision()
 						// ’†‚É‚È‚¢‚Ì‚È‚çpiar‚ð’Ç‰Á
 						current_collisioned_pairs_id.emplace_back(pair);
 					}
-
 
 					if (main_body->GetIsKinematic()) { continue; }
 					if (!target_body->IsObject()) { continue; }

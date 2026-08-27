@@ -3,6 +3,7 @@
 #include"enemy_observer_interface.h"
 
 class VariableTimer;
+class ButtonUI;
 
 class GameToNextScene : public IPlayerObserver, public IEnemyObserver
 {

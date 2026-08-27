@@ -53,9 +53,13 @@ bool Sphere::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR
 		auto capsule = std::dynamic_pointer_cast<Capsule>(other_coll);
 		float capsule_radius = capsule->GetRadius();
 		float capsule_vertical = capsule->GetVertical();
+		//VECTOR capsule_start_pos = other_pos;
 		VECTOR capsule_start_pos = VAdd(other_pos, VGet(0.f, capsule_radius, 0.f));
 		VECTOR capsule_end_pos = VAdd(capsule_start_pos, VGet(0.f, capsule_vertical, 0.f));
-		is_hit = Collision::IsMoveSphereToCapsule(center_pos, r_, vel, capsule_start_pos, capsule_end_pos, capsule_radius, other_vel);
+		//is_hit = Collision::CapsuleToCapsule(center_pos, VAdd(center_pos, VGet(0.f, 0.01f, 0.f)), r_, capsule_start_pos, capsule_end_pos, capsule_radius);
+		is_hit = Collision::SphereToSphere(center_pos, r_, capsule_start_pos, capsule_radius);
+		//is_hit = Collision::SphereToCapsule(center_pos, r_, capsule_start_pos, capsule_end_pos, capsule_radius);
+		//is_hit = Collision::IsMoveSphereToCapsule(center_pos, r_, vel, capsule_start_pos, capsule_end_pos, capsule_radius, other_vel);
 	}
 	break;
 	case ColliderName::kMesh:

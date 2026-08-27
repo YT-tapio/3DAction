@@ -10,13 +10,13 @@
 #include"sub_screen.h"
 #include"lerp.h"
 #include"time.h"
+#include"button_ui.h"
 
-PlayerSkillUI::PlayerSkillUI(const VECTOR& pos, const int& pad_handle, const int font_handle, const int body_color, const int edge_color)
+PlayerSkillUI::PlayerSkillUI(const VECTOR& pos, const int font_handle, const int body_color, const int edge_color,const ConfigName& name)
 	: pos_(pos)
-	, offset_input_icon_pos_(VectorAssistant::VGet2D(-50.f,18.f))
+	, offset_button_pos_(VectorAssistant::VGet2D(-50.f,18.f))
 	, cool_time_ratio_(nullptr)
 	, can_use_(nullptr)
-	, input_handle_(pad_handle)
 	, font_handle_(font_handle)
 	, body_color_(body_color)
 	, edge_color_(edge_color)
@@ -25,10 +25,12 @@ PlayerSkillUI::PlayerSkillUI(const VECTOR& pos, const int& pad_handle, const int
 	, dark_percent_(0.f)
 {
 	time_ = std::make_shared<Time>();
-	//LoadFile();
+	button_ = std::make_shared<ButtonUI>(name, VAdd(pos_, offset_button_pos_),0.07f, nullptr);
 
 	// 丸が描画された画像を作る
 	MakeCircleHandle();
+
+	
 }
 
 PlayerSkillUI::~PlayerSkillUI()
@@ -44,7 +46,7 @@ void PlayerSkillUI::Init()
 void PlayerSkillUI::Update()
 {
 	time_->Update();
-
+	button_->Update();
 	// 暗くする
 
 	// スキルが使えるとき
@@ -68,7 +70,6 @@ void PlayerSkillUI::Draw()
 	// 暗くなるものを描画
 	auto draw_icon = [this]() -> void {DrawDarkUI(); };
 	Draw2D::Dark(draw_icon, dark_percent_);
-	
 
 	auto draw_cool_time_gauge = [this]() -> void {Draw2D::CircleGauge(pos_, cool_time_ratio_(), sub_screen_->GetHandle()); };
 	Draw2D::Blend(draw_cool_time_gauge, current_alpha_value_);
@@ -118,7 +119,8 @@ void PlayerSkillUI::MakeCircleHandle()
 void PlayerSkillUI::DrawDarkUI()
 {
 	// 操作アイコンの表示
-	Draw2D::RotaGraph(VAdd(pos_, offset_input_icon_pos_), 0.07f, 0.f, input_handle_, TRUE);
+	button_->Draw();
+
 	auto draw_back_ground = [this]() -> void { Draw2D::Circle(pos_, 33.f, GetColor(101, 110, 128), TRUE); };
 	Draw2D::Blend(draw_back_ground, 100);
 	// アイコンの表示

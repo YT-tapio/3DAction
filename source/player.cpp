@@ -31,6 +31,7 @@
 #include"skill_base.h"
 #include"punch_skill.h"
 #include"avoid_skill.h"
+#include"jump_skill.h"
 #include"area_heal_skill.h"
 #include"area_heal_give_player.h"
 #include"skill_name.h"
@@ -198,7 +199,7 @@ void Player::Init()
 	test_behavior_->Init();
 	
 	time_->Init();
-
+	//rigid_body_->SetUpSpeed(10);
 	//EffectManager::GetInstance().Play(EffectID::kHandAura);
 	//EffectManager::GetInstance().Play(EffectID::kHandAura2);
 }
@@ -253,10 +254,15 @@ void Player::Update()
 		}
 		avoid_->Update();
 		rigid_body_->SetTargetVelocity(vel_);
-		//test_behavior_->Update();
-		
+		jump_->Update();
 	}
-	
+	static int i = 0;
+	if (rigid_body_->GetUseGravity())
+	{
+		//printfDx("%d\n", i);
+		i++;
+	}
+	//printfDx("fall_speed：%.2f\n", rigid_body_->GetFallSpeed());
 	animator_->Update(time_);
 	Setting();
 	// 参照の更新
@@ -427,8 +433,9 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 	}
 	file.close();
 	/*スキルを作っていくよ*/
-	
-	avoid_ = std::make_shared<AvoidSkill>(std::dynamic_pointer_cast<Player>(shared_from_this()),avoid_speed,avoid_stamina_consumption_);
+	auto mine = std::dynamic_pointer_cast<Player>(shared_from_this());
+	avoid_ = std::make_shared<AvoidSkill>(mine,avoid_speed,avoid_stamina_consumption_);
+	jump_ = std::make_shared<JumpSkill>(mine, 1.f);
 }
 
 void Player::MakeSkill(std::weak_ptr<Player> owner)
@@ -456,7 +463,7 @@ void Player::Move()
 	{
 		if (!on_damage_ && !is_death_enemy_) { can_move_ = TRUE; }
 	}
-
+	
 	VECTOR dir = VectorAssistant::VGetZero();
 	vel_ = VectorAssistant::VGetZero();
 	float speed = speed_;
@@ -636,6 +643,8 @@ void Player::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 	{
 		if (is_invincible_) { return; }
 		// 自身とオーナーのパンチがplayerにcastしてnullptrなったら処理する
+		float size = VSize(VSub(pos_, object->GetRigidBody()->GetPosition()));
+		printfDx("%.2f\n", size);
 		if (!object->GetRigidBody()->CheckSameOwner(shared_from_this()))
 		{
 			animator_->PlayRequest("knock_back");

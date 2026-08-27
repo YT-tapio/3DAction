@@ -224,17 +224,18 @@ void RigidBody::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 	if (!on_ground_)
 	{
 		is_landing_ = TRUE;
-		printfDx("’…’n\n");
+		
+		//printfDx("’…’n\n");
 	}
 	else
 	{
 		is_landing_ = FALSE;
 	}
-
-	on_ground_ = TRUE;
 	fall_speed_ = 0.f;
 	target_vel_.y = 0.f;
 	vel_.y = 0.f;
+	on_ground_ = TRUE;
+	
 }
 
 void RigidBody::UnGround()

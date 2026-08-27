@@ -85,7 +85,7 @@ Title::Title()
 			Fade::GetInstance().StartFadeIn(1.f, FadeColorType::kBlack);
 			offset_timer_->ReStart();
 		};
-	start_button_ = std::make_shared<ButtonUI>(ConfigName::play, VectorAssistant::VGet2D(700.f,650.f), start_function);
+	start_button_ = std::make_shared<ButtonUI>(ConfigName::play, VectorAssistant::VGet2D(700.f, 650.f), 0.1f, start_function);
 }
 
 Title::~Title()

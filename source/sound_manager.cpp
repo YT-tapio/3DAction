@@ -8,6 +8,7 @@
 #include<fstream>
 #include<sstream>
 #include"csv_file_assistant.h"
+#include"load_csv_file.h"
 
 void SoundManager::Load()
 {
@@ -24,8 +25,6 @@ void SoundManager::End()
 	sound_2ds_.clear();
 	sound_3ds_.clear();
 }
-
-
 
 void SoundManager::Play2DSound(const std::string& name)
 {
@@ -99,23 +98,12 @@ SoundManager::SoundManager()
 
 void SoundManager::Load2DSound()
 {
-	std::ifstream file("data/csv/sound/2D/2D_sound_datas.csv");
-	std::string line;
+	const std::string file_path = "data/csv/sound/2D/2D_sound_datas.csv";
+	auto file_data = LoadCSVFile::GetInstance().GetData(file_path,1);
 
-	if (!file)
+	for (const auto string_data : file_data.string_datas)
 	{
-		printfDx("csvファイル読み込み失敗\n");
-		return;
-	}
-
-	// 最初の行を飛ばす
-	std::getline(file, line);
-
-	while (std::getline(file, line))
-	{
-		std::stringstream ss(line);
-		std::string data;			// csvからの文字列をもらう
-		sound_2ds_.push_back(std::make_shared<Sound2D>(CSVFileAssistant::GetStringOfCSVFile(ss, data)));
+		sound_2ds_.push_back(std::make_shared<Sound2D>(string_data));
 	}
 	
 }

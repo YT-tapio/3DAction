@@ -58,6 +58,11 @@ const bool InputBase::IsAvoid() const
 	return FALSE;
 }
 
+const bool InputBase::IsJump() const
+{
+	return FALSE;
+}
+
 const bool InputBase::IsNormalSkill() const
 {
 	return FALSE;

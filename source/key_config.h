@@ -10,7 +10,7 @@ namespace KeyConfig
 	static int move_left		= KEY_INPUT_A;
 	static int dash			= KEY_INPUT_LSHIFT;		// ダッシュ
 	static int punch			= 0;
-	static int jump			= KEY_INPUT_SPACE;		// ジャンプ
+	static int jump			= KEY_INPUT_F;		// ジャンプ
 	static int avoid			= KEY_INPUT_LSHIFT;		// 回避
 
 	static int change_player1 = KEY_INPUT_1;
