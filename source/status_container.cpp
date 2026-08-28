@@ -22,10 +22,11 @@ StatusContainer::StatusContainer(const std::string owner_name,const VECTOR& hp_p
 	: base_status_{}
 	, current_status_{}
 	, can_use_stamina_(TRUE)
+	, can_heal_stamina_(TRUE)
 	, stamina_recovery_value_(0.f)
 {
 	LoadFile(owner_name);
-	stamina_recovery_timer_ = std::make_shared<ConditionTimer>(0.5f);
+	stamina_recovery_timer_ = std::make_shared<ConditionTimer>(0.8f);
 	stamina_recovery_timer_->Init();
 	stamina_recovery_value_ = 1.f;
 	stat_modifire_group_ = std::make_shared<ActiveStatModifireGroup>();
@@ -101,6 +102,16 @@ void StatusContainer::Debug()
 
 }
 
+void StatusContainer::StopHealStamina()
+{
+	can_heal_stamina_ = FALSE;
+}
+
+void StatusContainer::StartHealStamina()
+{
+	can_heal_stamina_ = TRUE;
+}
+
 void StatusContainer::StaminaDown(const float down_value)
 {
 	current_status_.stamina -= down_value;
@@ -117,6 +128,10 @@ void StatusContainer::StaminaDown(const float down_value)
 
 void StatusContainer::StaminaUp(const float up_value)
 {
+	if (!can_heal_stamina_) 
+	{ 
+		return;
+	}
 	current_status_.stamina += up_value;
 	if (current_status_.stamina > base_status_.stamina)
 	{
@@ -235,16 +250,19 @@ void StatusContainer::StaminaUpdate()
 	// タイマーが終わったら
 	if (stamina_recovery_timer_->GetIsEnd())
 	{
-		current_status_.stamina += stamina_recovery_value_ * FPS::GetInstance().GetDeltaTime();
-		// スタミナを回復する
-		StaminaRecovery();
+		if (can_heal_stamina_)
+		{
+			// スタミナを回復する
+			StaminaRecovery();
+		}
+		
 	}
 }
 
 bool StatusContainer::StaminaRecovery()
 {
 	// スタミナを回復する
-	
+	current_status_.stamina += stamina_recovery_value_ * FPS::GetInstance().GetDeltaTime();
 	if (current_status_.stamina >= base_status_.stamina)
 	{
 		current_status_.stamina = base_status_.stamina;

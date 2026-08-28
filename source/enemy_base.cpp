@@ -59,6 +59,9 @@ EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start)
 	: CharacterBase("enemy")
 	, IPhysicsEventReceiver()
 	, game_start_(game_start)
+	, hips_pos_(VectorAssistant::VGetZero())
+	, disp_attack_flat_pos_(VectorAssistant::VGetZero())
+	, flat_hips_pos_(VectorAssistant::VGetZero())
 {
 	
 }
@@ -249,11 +252,20 @@ void EnemyBase::LoadFile()
 void EnemyBase::UpdateBone()
 {
 	int hand_bone_num = 0;
+	int hips_num = 0;
 	const TCHAR* hand_bone_path = "mixamorig:RightHand";
-	hand_bone_num = MV1SearchFrame(handle_, hand_bone_path);
+	const TCHAR* hips_path = "mixamorig:Hips";
+	hips_num = MV1SearchFrame(handle_, hips_path);
 	MATRIX hand_mat = MV1GetFrameLocalWorldMatrix(handle_, hand_bone_num);
+	MATRIX hips_mat = MV1GetFrameLocalWorldMatrix(handle_, hand_bone_num);
 	VECTOR right_hand_pos = VectorAssistant::VGetPositionFromMatrix(hand_mat);
+	VECTOR hips_pos = VectorAssistant::VGetPositionFromMatrix(hips_mat);
 	right_hand_pos_ = right_hand_pos;
+	hips_pos_ = hips_pos;
+	disp_attack_flat_pos_ = target_player_pos_;
+	disp_attack_flat_pos_.y = -17.5f;
+	flat_hips_pos_ = hips_pos_;
+	flat_hips_pos_.y = pos_.y;
 }
 
 void EnemyBase::Death()

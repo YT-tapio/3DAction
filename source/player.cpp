@@ -32,6 +32,7 @@
 #include"punch_skill.h"
 #include"avoid_skill.h"
 #include"jump_skill.h"
+#include"jump_infite_attack_skill.h"
 #include"area_heal_skill.h"
 #include"area_heal_give_player.h"
 #include"skill_name.h"
@@ -70,6 +71,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	dir_		= VectorAssistant::VGetZero();
 	attack_target_pos_ = VectorAssistant::VGetZero();
 	pos_		= VectorAssistant::VGetZero();
+	hip_pos_ = VectorAssistant::VGetZero();
 	rot_ = VectorAssistant::VGetZero();
 	VECTOR head_pos = VAdd(pos_, VGet(0.f, 10.f, 0.f));
 	head_pos_ = head_pos;
@@ -101,7 +103,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	target_rot_y_ = 0;
 	speed_ = 0.f;
 	job_ = "nothing";
-	shadow_creater->CreateShadow(&pos_, radius +0.5f);
+	shadow_creater->CreateShadow(&hip_pos_, radius +0.5f);
 }
 
 Player::~Player()
@@ -196,6 +198,8 @@ void Player::Init()
 		second_skill_->Init();
 	}
 	avoid_->Init();
+	jump_->Init();
+	jump_infite_attack_->Init();
 	test_behavior_->Init();
 	
 	time_->Init();
@@ -221,7 +225,6 @@ void Player::Update()
 		}
 	}
 	
-
 	if (is_death_enemy_)
 	{
 		enemy_death_offset_timer_->Update();
@@ -236,12 +239,10 @@ void Player::Update()
 	{
 		animator_->PlayRequest("death");
 		rigid_body_->SetTargetVelocity(VectorAssistant::VGetZero());
-		//rigid_body_->SetVelocity(VectorAssistant::VGetZero());
 		rigid_body_->NotActive();
 	}
 	else
 	{
-		status_container_->Update();
 		Move();
 		if (skill_ != nullptr)
 		{
@@ -253,8 +254,10 @@ void Player::Update()
 			second_skill_->Update();
 		}
 		avoid_->Update();
+		jump_infite_attack_->Update();
 		rigid_body_->SetTargetVelocity(vel_);
 		jump_->Update();
+		status_container_->Update();
 	}
 	if (rigid_body_->GetOnGround())
 	{
@@ -264,6 +267,12 @@ void Player::Update()
 	{
 		animator_->PlayRequest("falling");
 	}
+
+	if (rigid_body_->GetIsLanding())
+	{
+		status_container_->StartHealStamina();
+	}
+
 	animator_->Update(time_);
 	Setting();
 	// 参照の更新
@@ -315,12 +324,11 @@ void Player::Debug()
 	if (FALSE) { return; }
 	if (skill_ != nullptr) { skill_->Debug(); }
 	if (second_skill_ != nullptr) { second_skill_->Debug(); }
-	
+	jump_infite_attack_->Debug();
 	status_container_->Debug();
 	if (FALSE) { return; }
 	//my_area_->Debug();
 	rigid_body_->Debug();
-	
 	
 	//skill_->Debug();
 	//test_behavior_->Debug();
@@ -440,6 +448,7 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 	timing.first = 0.17f;
 	timing.second = 1.f;
 	jump_ = std::make_shared<JumpSkill>(mine, timing,1.f);
+	jump_infite_attack_ = std::make_shared<JumpInfiteAttackSkill>(mine, SkillType::kStrong, 1.f);
 }
 
 void Player::MakeSkill(std::weak_ptr<Player> owner)
@@ -495,7 +504,6 @@ void Player::Move()
 			{
 				animator_->PlayRequest("run");
 			}
-			
 
 			// ここでスタミナを減らす
 			status_container_->StaminaDown(0.5f * time_->GetDeltaTime());
@@ -541,19 +549,25 @@ void Player::UpdateBone()
 {
 	int right_hand_bone_num				= 0;
 	int left_hand_bone_num				= 0;
+	int hips_bone_num = 0;
 	const TCHAR* right_hand_bone_path	= "mixamorig:RightHand";
 	const TCHAR* left_hand_bone_path	= "mixamorig:LeftHand";
+	const TCHAR* hips_bone_path = "mixamorig:Hips";
 	//boneのidを取得
 	right_hand_bone_num		= MV1SearchFrame(handle_, right_hand_bone_path);
 	left_hand_bone_num		= MV1SearchFrame(handle_, left_hand_bone_path);
+	hips_bone_num = MV1SearchFrame(handle_, hips_bone_path);
 	//matrixを取得
 	const MATRIX right_hand_mat	= MV1GetFrameLocalWorldMatrix(handle_, right_hand_bone_num);
 	const MATRIX left_hand_mat	= MV1GetFrameLocalWorldMatrix(handle_, left_hand_bone_num);
+	const MATRIX hips_mat = MV1GetFrameLocalWorldMatrix(handle_, hips_bone_num);
 	//posを取得
 	const VECTOR right_hand_pos	= VectorAssistant::VGetPositionFromMatrix(right_hand_mat);
 	const VECTOR left_hand_pos	= VectorAssistant::VGetPositionFromMatrix(left_hand_mat);
+	const VECTOR hips_pos = VectorAssistant::VGetPositionFromMatrix(hips_mat);
 	right_hand_pos_				= right_hand_pos;
 	left_hand_pos_				= left_hand_pos;
+	hip_pos_ = hips_pos;
 }
 
 void Player::DecideAttackTarget()
@@ -655,7 +669,7 @@ void Player::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		float size = VSize(VSub(pos_, object->GetRigidBody()->GetPosition()));
 		float my_radius = std::dynamic_pointer_cast<Capsule>(rigid_body_->GetCollider())->GetRadius();
 		float other_radius = std::dynamic_pointer_cast<Sphere>(object->GetRigidBody()->GetCollider())->GetRadius();
-		printfDx("my_radius:%.2f,other_radius:%.2f,%.2f\n", my_radius,other_radius,size);
+		//printfDx("my_radius:%.2f,other_radius:%.2f,%.2f\n", my_radius,other_radius,size);
 		if (!object->GetRigidBody()->CheckSameOwner(shared_from_this()))
 		{
 			animator_->PlayRequest("knock_back");
@@ -676,11 +690,11 @@ void Player::OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object)
 
 }
 
-
 void Player::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 	auto check_area = std::dynamic_pointer_cast<CheckMyArea>(object);
-	
+
+
 	if (check_area != nullptr) { return; }
 }
 
@@ -951,6 +965,11 @@ const VECTOR Player::GetInputDir() const
 	input_dir = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(*camera_dir_), VectorAssistant::VGetTan(input_dir));
 	input_dir = VNorm(input_dir);
 	return input_dir;
+}
+
+const VECTOR Player::GetHipPos() const
+{
+	return hip_pos_;
 }
 
 void Player::EffectUpdate()

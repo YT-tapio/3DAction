@@ -22,6 +22,16 @@ public:
 	void Debug();
 
 	/// <summary>
+	/// スタミナの回復を止める
+	/// </summary>
+	void StopHealStamina();
+
+	/// <summary>
+	/// スタミナの回復を再開する
+	/// </summary>
+	void StartHealStamina();
+
+	/// <summary>
 	/// スタミナを減らす
 	/// </summary>
 	/// <param name="down_value"></param>
@@ -97,6 +107,10 @@ private:
 	/// <returns></returns>
 	bool StaminaRecovery();
 
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="owner_name"></param>
 	void LoadFile(const std::string owner_name);
 
 private:
@@ -113,5 +127,5 @@ private:
 	float stamina_recovery_value_;
 
 	bool can_use_stamina_;
-
+	bool can_heal_stamina_;
 };

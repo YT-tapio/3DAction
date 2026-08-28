@@ -44,8 +44,11 @@ void DispAttackRange::Entry()
 				return owner->GetAnimator()->GetRatio("charge");
 			};
 	}
+
+	VECTOR disp_pos = VAdd(*pos_, VGet(0.f, 0.1f, 0.f));
+	disp_pos.y = -17.f;
 	// 当たり判定の描画をリクエスト
-	AttackRangeGroup::GetInstance().CircleDrawRequest(VAdd(*pos_,VGet(0.f,0.1f,0.f)),attack_range_scale_,time_, end_function_);
+	AttackRangeGroup::GetInstance().CircleDrawRequest(disp_pos,attack_range_scale_,time_, end_function_);
 }
 
 BehaviorStatus DispAttackRange::Update()

@@ -63,7 +63,7 @@ void AreaOfEffectAttack::Entry()
 	// このタイミングでターゲットの場所へeffectを配置(後々AOEのUI)
 	auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
 	effect_pos_ = owner->GetAttackTargetPos();
-	
+	effect_pos_.y = -17.5f;
 	// アニメーションの再生
 	owner->GetAnimator()->PlayRequest(charge_anim_);
 

@@ -55,7 +55,6 @@ BehaviorStatus Jump::Update()
 	
 	if (JumpCondition(owner))
 	{
-		
 		if (auto owner_rigid_body = std::dynamic_pointer_cast<IPhysicsEventReceiver>(owner))
 		{
 			if (owner_rigid_body->GetRigidBody()->GetOnGround()) 

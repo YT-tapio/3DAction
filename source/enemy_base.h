@@ -83,6 +83,9 @@ protected:
 	VECTOR right_hand_pos_;
 	VECTOR double_punch_coll_pos_;
 	VECTOR target_player_pos_;
+	VECTOR hips_pos_;
+	VECTOR flat_hips_pos_;
+	VECTOR disp_attack_flat_pos_;	// ínè„ìäâeÇµÇΩpos
 
 	float fall_speed_;
 

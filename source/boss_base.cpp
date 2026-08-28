@@ -76,7 +76,7 @@ BossBase::BossBase(const VECTOR& pos, bool* game_start,std::shared_ptr<IShadowCr
 	status_container_ = std::make_shared<StatusContainer>("zako", hp_pos, hp_size);
 	hit_red_body_ = std::make_shared<HitRedBody>(handle_);
 	float shadow_size = 7.f;
-	shadow_creater->CreateShadow(&pos_, shadow_size);
+	shadow_creater->CreateShadow(&flat_hips_pos_, shadow_size);
 }
 
 BossBase::~BossBase()
@@ -173,10 +173,10 @@ void BossBase::Init()
 
 	// ƒ‰ƒ“ƒ_ƒ€‚Ìnode‚É‘ã“ü
 	std::vector<std::shared_ptr<NodeBase>> attack_random_nodes;
-	//attack_random_nodes.emplace_back(stamp_node);
-	//attack_random_nodes.emplace_back(double_punch_node);
+	attack_random_nodes.emplace_back(stamp_node);
+	attack_random_nodes.emplace_back(double_punch_node);
 	attack_random_nodes.emplace_back(std::make_shared<SequenceNode>(area_of_effect_nodes));
-	//attack_random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
+	attack_random_nodes.emplace_back(std::make_shared<SequenceNode>(tackle_nodes));
 
 	// ’Ç‚¢‚©‚¯‚é‚Æ‚«‚Ìƒm[ƒh
 	std::vector<std::shared_ptr<NodeBase>> random_nodes_far;

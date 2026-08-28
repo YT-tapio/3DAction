@@ -82,14 +82,31 @@ void AvoidSkill::Debug()
 
 bool AvoidSkill::CheckIsAvoid(std::shared_ptr<Player> owner)
 {
-	if (!owner->GetCanMove())
+	auto owner_animator = owner->GetAnimator();
+	auto now_anim_name = owner_animator->GetNowAnimName();
+	if (now_anim_name == "punch") 
 	{
-		// 起き上がり中なら許す
-		if (owner->GetAnimator()->GetNowAnimName() != "stand_up")
+		if (owner_animator->GetRatio("punch") < 0.74f)
 		{
 			return FALSE;
 		}
 	}
+	if (now_anim_name == "jump_infite_attack")
+	{
+		if (owner_animator->GetRatio("jump_infite_attack") < 0.74f)
+		{
+			return FALSE;
+		}
+	}
+	if (!owner->GetCanMove())
+	{
+		// 起き上がり中なら許す
+		if (now_anim_name != "stand_up")
+		{
+			return FALSE;
+		}
+	}
+	
 	if (!owner->GetStatusContainer()->CanUseStamina()) { return FALSE; }
 	if (!owner->GetInput()->IsAvoid()) { return FALSE; }
 	if (!owner->GetOnGround())								{ return FALSE; }
@@ -100,7 +117,6 @@ bool AvoidSkill::CheckIsAvoid(std::shared_ptr<Player> owner)
 void AvoidSkill::DecideVelocity(std::shared_ptr<Player> owner)
 {
 	// オーナーの回避の速度をきめる
-
 	VECTOR input_dir = owner->GetInputDir();
 	VECTOR velocity = VScale(input_dir, speed_ * owner->GetTime()->GetFPSRate());
 	owner->ResetVelocity();

@@ -909,6 +909,9 @@
     <ClCompile Include="source\jump_infite_attack.cpp">
       <Filter>ソース ファイル\behavior</Filter>
     </ClCompile>
+    <ClCompile Include="source\jump_infite_attack_skill.cpp">
+      <Filter>ソース ファイル\skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1561,6 +1564,9 @@
     </ClInclude>
     <ClInclude Include="source\jump_infite_attack.h">
       <Filter>ソース ファイル\behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\jump_infite_attack_skill.h">
+      <Filter>ソース ファイル\skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

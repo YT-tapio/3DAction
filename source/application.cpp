@@ -19,6 +19,7 @@ Application::Application()
         return;    // エラーが起きたら直ちに終了
     }
     SetMouseDispFlag(FALSE);
+    SetMainWindowText(" シフティア -Shiftia- ");
     // 引数には画面に表示する最大パーティクル数を設定する。
     if (Effkseer_Init(1000) == -1) { DxLib_End(); }
 
@@ -47,7 +48,7 @@ Application::Application()
     SetUseBackCulling(FALSE);		// バックカリングを行う
 
     SetUseSetDrawScreenSettingReset(FALSE);
-
+    
     SceneManager::GetInstance();
 }
 

@@ -178,7 +178,7 @@ const bool PlayerInput::IsJump() const
 			}
 		}
 
-		if (pushing_time > 0.f) { return TRUE; }
+		if (pushing_time == 0.f) { return TRUE; }
 
 	}
 

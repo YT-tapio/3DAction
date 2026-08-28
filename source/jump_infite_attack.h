@@ -18,6 +18,8 @@ public:
 
 	void Exit() override;
 
+	void Debug() override;
+
 	void OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
     void OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object) override;
@@ -25,6 +27,8 @@ public:
 	void OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
 private:
+
+	VECTOR pos_;	//HŒ|”»’è‚ÌoŒ»êŠ
 
 
 };

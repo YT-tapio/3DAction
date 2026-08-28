@@ -12,6 +12,9 @@
 #include"rigid_body.h"
 #include"input_base.h"
 #include"behavior_status.h"
+#include"status.h"
+#include"status_container.h"
+
 JumpSkill::JumpSkill(std::weak_ptr<Player> owner, std::pair<float,float> timing,const float up_speed, float cool_time)
 	: SkillBase(owner,std::make_shared<Jump>(owner,"jump", timing,up_speed), SkillType::kConstant, cool_time)
 {
@@ -41,7 +44,13 @@ void JumpSkill::Update()
 			// されていたらジャンプ
 			behavior_->Entry();
 			state_ = JumpState::jump;
-			printfDx("push\n");
+			//printfDx("push\n");
+			// スタミナの減少かつスタミナを使えないように
+			if (auto owner = owner_.lock())
+			{
+				owner->GetStatusContainer()->StaminaDown(2.f);
+				owner->GetStatusContainer()->StopHealStamina();
+			}
 		}
 		break;
 
@@ -53,17 +62,17 @@ void JumpSkill::Update()
 			if (behavior_state == BehaviorStatus::kComplete)
 			{
 				state_ = JumpState::ready;
-				printfDx("おわり\n");
+				//printfDx("おわり\n");
 			}
 		}
 		break;
-
 	}
 }
 
 const bool JumpSkill::IsPush() const
 {
 	auto owner = owner_.lock();
+	if (!owner->GetStatusContainer()->CanUseStamina()) { return FALSE; }
 	if (!owner->GetCanMove()) { return FALSE; }		// 動けるか
 	if (owner->GetIsStop()) { return FALSE; }
 	if (!owner->GetRigidBody()->GetOnGround()) { return FALSE; }	// 地上にいるか

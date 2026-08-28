@@ -174,16 +174,32 @@ namespace Collision
 		VECTOR capsule2_segment = VSub(capsule2_end_pos, capsule2_start_pos);
 
 		// ‚’¼‚Ì—áŠOˆ—
+		/*
 		if (VectorAssistant::IsParallel(capsule1_segment, capsule2_segment))
 		{
 			// n“_‚©‚ç‚Ì‹——£‚ğŒ©‚Ä”»•Ê
 			float dist = VSize(VSub(capsule1_start_pos, capsule2_start_pos));
 			return (dist < all_size);
 		}
+		*/
+		
 
 		dist_size = VectorAssistant::VGetSegmentDistSize(capsule1_start_pos, capsule1_end_pos, capsule2_start_pos, capsule2_end_pos);
 		
-		return dist_size < all_size;
+		if (dist_size < all_size) 
+		{ 
+			return TRUE;
+		}
+		
+		VECTOR start_to_start_dist = VSub(capsule1_start_pos, capsule2_start_pos);
+		VECTOR end_to_end_dist = VSub(capsule1_end_pos, capsule2_end_pos);
+		VECTOR start_to_end_dist = VSub(capsule1_start_pos, capsule2_end_pos);
+		VECTOR end_to_start_dist = VSub(capsule1_end_pos, capsule2_start_pos);
+		if (VSize(start_to_start_dist) < all_size) { return TRUE; }
+		if (VSize(end_to_end_dist) < all_size) { return TRUE; }
+		if (VSize(start_to_end_dist) < all_size) { return TRUE; }
+		if (VSize(end_to_start_dist) < all_size) { return TRUE; }
+		return FALSE;
 	}
 
 	inline bool IsMoveSphereToSphere(const VECTOR& sphere1_pos, const float& sphere1_r, const VECTOR& sphere1_velocity,

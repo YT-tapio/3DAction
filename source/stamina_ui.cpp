@@ -73,7 +73,6 @@ void StaminaUI::Update()
 	{
 		// タイマーを更新
 		disp_timer_->Update();
-
 		if(disp_timer_->GetIsEnd())
 		{
 			// だんだんと表示をやめる
@@ -142,6 +141,7 @@ void StaminaUI::AvoidStaminaUpdate()
 
 	// screenを使う
 	avoid_stamina_screen_->Up();
+	/*
 	if (can_use_stamina_func_())
 	{
 		auto draw_func = [this]()
@@ -151,6 +151,8 @@ void StaminaUI::AvoidStaminaUpdate()
 			};
 		Draw2D::Blend(draw_func, 120);
 	}
+	*/
+	
 	avoid_stamina_screen_->Down();
 }
 

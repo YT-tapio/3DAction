@@ -158,6 +158,7 @@
     <ClCompile Include="source\game_start_timer.cpp" />
     <ClCompile Include="source\game_to_next_scene.cpp" />
     <ClCompile Include="source\jump_infite_attack.cpp" />
+    <ClCompile Include="source\jump_infite_attack_skill.cpp" />
     <ClCompile Include="source\jump_skill.cpp" />
     <ClCompile Include="source\just_one_node.cpp" />
     <ClCompile Include="source\load.cpp" />
@@ -342,6 +343,7 @@
     <ClInclude Include="source\game_to_next_scene.h" />
     <ClInclude Include="source\config_data.h" />
     <ClInclude Include="source\jump_infite_attack.h" />
+    <ClInclude Include="source\jump_infite_attack_skill.h" />
     <ClInclude Include="source\jump_skill.h" />
     <ClInclude Include="source\load.h" />
     <ClInclude Include="source\load_csv_file.h" />

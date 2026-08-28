@@ -110,6 +110,8 @@ public:
 
 	const VECTOR GetInputDir() const;
 
+	const VECTOR GetHipPos() const;
+
 private:
 
 	// ä÷êîåQ
@@ -139,6 +141,7 @@ private:
 	std::shared_ptr<BehaviorBase> test_behavior_;
 	std::shared_ptr<SkillBase> avoid_;
 	std::shared_ptr<SkillBase> jump_;
+	std::shared_ptr<SkillBase> jump_infite_attack_;
 	std::shared_ptr<StatusContainer> status_container_;
 	std::shared_ptr<IPlayerUIGroup> player_ui_group_;
 
@@ -148,6 +151,7 @@ private:
 	VECTOR right_hand_pos_;
 	VECTOR left_hand_pos_;
 	VECTOR head_pos_;
+	VECTOR hip_pos_;
 
 	VECTOR attack_target_pos_;
 
