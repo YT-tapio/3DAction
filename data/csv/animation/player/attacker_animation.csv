@@ -9,7 +9,7 @@ punch_conbo2,data/model/player/animation/punch_conbo_attacker/punch_conbo2.mv1,0
 punch_conbo3,data/model/player/animation/punch_conbo_attacker/punch_conbo3.mv1,0,0.8,8,0,-1,nothing
 punch_conbo4,data/model/player/animation/punch_conbo_attacker/punch_conbo4.mv1,0,0.95,9,0,-1,nothing
 jump,data/model/player/animation/jump.mv1,0,1,11,0,-1,nothing
-jump_infite_attack,data/model/player/animation/jump_infite_attack1.mv1,0,0.86,12,0,-1,nothing
+jump_infite_attack,data/model/player/animation/jump_infite_attack.mv1,0,0.92,12,0,-1,nothing
 falling,data/model/player/animation/falling.mv1,0,1,0,1,-1,nothing
 avoid,data/model/player/animation/Sprinting_Forward_Roll.mv1,0,1,100,0,-1,nothing
 knock_back,data/model/player/animation/Stunned.mv1,0,1,50,0,-1,stand_up

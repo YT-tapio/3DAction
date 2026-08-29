@@ -11,7 +11,7 @@
 #include"vector_assistant.h"
 
 JumpInfiteAttackSkill::JumpInfiteAttackSkill(std::weak_ptr<Player> owner, SkillType type, float cool_time)
-	: SkillBase(owner,std::make_shared<JumpInfiteAttack>(owner,0.38f,0.65f,3.4f), type, cool_time)
+	: SkillBase(owner,std::make_shared<JumpInfiteAttack>(owner,0.45f,0.68f,3.4f), type, cool_time)
 {
 
 }

@@ -21,7 +21,7 @@ AttackRangeCircle::AttackRangeCircle()
 	ObjectSetter::GetInstance().AddResource(handle_, &pos_, &rot_, &scale_);
 	ObjectSetter::GetInstance().AddResource(leading_up_attack_handle_, &leading_up_pos_, 
 		&leading_up_rot_, &leading_up_scale_);
-	leading_up_base_size_ = 0.01f;
+	leading_up_base_size_ = 1.f;
 }
 
 AttackRangeCircle::~AttackRangeCircle()
