@@ -39,11 +39,20 @@ public:
 	void ReSet();
 
 	/// <summary>
+	/// タイマーをmaxにする
+	/// </summary>
+	void Max();
+
+	/// <summary>
 	/// 
 	/// </summary>
 	/// <returns></returns>
 	const float GetMaxTime() const;
 
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
 	const float GetRatio() const;
 
 	/// <summary>

@@ -20,11 +20,10 @@ BehaviorStatus SequenceNode::Update()
 {
 	// 優先度の高いnodeから実行していく
 	// sucsessの場合はループする
-
+	
 	while (current_node_ < nodes_.size())
 	{
 		status_ = nodes_[current_node_]->Update();
-
 		switch (status_)
 		{
 			//実行成功(終了)

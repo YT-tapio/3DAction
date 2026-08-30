@@ -3,6 +3,7 @@
 #include"physics_interface.h"
 #include"takable_damage_player_interface.h"
 #include"status_holder_interface.h"
+#include"phase.h"
 
 enum class AttackType;
 class RigidBody;
@@ -12,6 +13,7 @@ class BehaviorTree;
 class StatusContainer;
 class HitRedBody;
 class IEnemyObserver;
+class EnemyCoolTimeController;
 
 class EnemyBase : public CharacterBase, public IPhysicsEventReceiver,public ITakableDamagePlayer,public IStatusHolder
 {
@@ -74,7 +76,7 @@ protected:
 	std::shared_ptr<RigidBody> rigid_body_;
 	std::shared_ptr<BehaviorBase> test_behavior_;
 	std::shared_ptr<BehaviorTree> behavior_tree_;
-
+	std::shared_ptr<EnemyCoolTimeController> cool_time_;
 	std::shared_ptr<StatusContainer> status_container_;
 	std::shared_ptr<HitRedBody> hit_red_body_;	// ƒqƒbƒgÔ‚­‚È‚é
 
@@ -87,10 +89,12 @@ protected:
 	VECTOR flat_hips_pos_;
 	VECTOR disp_attack_flat_pos_;	// ’nã“Š‰e‚µ‚½pos
 
+	Phase phase_;
+
 	float fall_speed_;
 
-private:
-
 	bool* game_start_;
+
+private:
 
 };

@@ -59,6 +59,12 @@ void ConditionTimer::ReSet()
 	time_ = 0.f;
 }
 
+void ConditionTimer::Max()
+{
+	time_ = max_time_;
+	is_end_ = TRUE;
+}
+
 const float ConditionTimer::GetMaxTime() const
 {
 	return max_time_;

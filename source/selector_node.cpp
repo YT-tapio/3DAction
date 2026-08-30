@@ -44,7 +44,16 @@ BehaviorStatus SelectorNode::Update()
 			// Ž¸”s‚È‚çŽŸ‚Ìƒm[ƒh‚Ö
 			nodes_[current_node_]->Exit();
 			current_node_++;
-			nodes_[current_node_]->Entry();
+			if (current_node_ < nodes_.size())
+			{
+				nodes_[current_node_]->Entry();
+			}
+			else
+			{
+				current_node_ = 0;
+				nodes_[current_node_]->Entry();
+				return BehaviorStatus::kFailure;
+			}
 			break;
 		}
 	}

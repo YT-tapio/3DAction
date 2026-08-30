@@ -54,6 +54,7 @@
 #include"brain.h"
 #include"sound_manager.h"
 #include"enemy_observer_interface.h"
+#include"enemy_cool_time_controller.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start)
 	: CharacterBase("enemy")
@@ -62,6 +63,8 @@ EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start)
 	, hips_pos_(VectorAssistant::VGetZero())
 	, disp_attack_flat_pos_(VectorAssistant::VGetZero())
 	, flat_hips_pos_(VectorAssistant::VGetZero())
+	, phase_(Phase::first)
+	, cool_time_(std::make_shared<EnemyCoolTimeController>())
 {
 	
 }
@@ -84,30 +87,6 @@ void EnemyBase::Init()
 void EnemyBase::Update()
 {
 	//printfDx("%.2f\n", rigid_body_->GetFallSpeed());
-	time_->Update();
-	if (status_container_->GetCurrentStatus().hp <= 0)
-	{
-		animator_->PlayRequest("death");
-	}
-	else
-	{
-		// 一番近いプレイヤーの位置を取得
-		target_player_pos_ = PlayerGroup::GetInstance().MostNearPlayerPos(pos_);
-		VECTOR dir = VectorAssistant::VGetZero();
-
-		double_punch_coll_pos_ = VAdd(pos_, VScale(dir_, 5.f));
-
-		rigid_body_->SetTargetVelocity(vel_);
-
-		if (*game_start_)
-		{
-			if (TRUE) { behavior_tree_->Update(); }
-		}
-	}
-	
-	animator_->Update(time_);
-	UpdateBone();
-	hit_red_body_->Update();
 	
 }
 

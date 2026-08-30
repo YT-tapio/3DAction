@@ -28,7 +28,6 @@ public:
 
 private:
 
-	VECTOR pos_;	//HŒ|”»’è‚ÌoŒ»êŠ
-
+	VECTOR pos_;	// UŒ‚”»’è‚ÌoŒ»êŠ
 
 };
