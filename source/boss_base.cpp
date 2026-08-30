@@ -236,7 +236,7 @@ auto base_status			= status_container_->GetBaseStatus();
 	switch (phase_)
 	{
 	case Phase::first:
-		if (hp_ratio < 0.7f) 
+		if (hp_ratio < 0.8f) 
 		{
 			// ƒJƒƒ‰‚ðØ‚è‘Ö‚¦‚é
 			Brain::GetInstance().ChangeCamera("boss_phase2");
@@ -247,7 +247,7 @@ auto base_status			= status_container_->GetBaseStatus();
 		break;
 	case Phase::second:
 
-		if (hp_ratio < 0.3f) { phase_ = Phase::third; }
+		if (hp_ratio < 0.5f) { phase_ = Phase::third; }
 
 		break;
 
@@ -311,7 +311,7 @@ std::shared_ptr<NodeBase> BossBase::MakeTackleNode(std::shared_ptr<EnemyBase> mi
 	std::shared_ptr<RigidBody> rigid_body = std::make_shared<RigidBody>(collider, &pos_, FALSE, TRUE, 0.1f, 1.f);
 	std::shared_ptr<BehaviorBase> tackle = std::make_shared<RoarTackle>(mine, rigid_body, "tackle", 1.f, 2.f, 1.f);
 	std::shared_ptr<NodeBase> tackle_node = std::make_shared<ActionNode>(tackle);
-	auto check_phase_node = std::make_shared<CheckPhaseNode>(Phase::second, current_phase);
+	auto check_phase_node = std::make_shared<CheckPhaseNode>(Phase::third, current_phase);
 	std::vector<std::shared_ptr<NodeBase>> tackle_nodes;
 	tackle_nodes.emplace_back(check_phase_node);
 	tackle_nodes.emplace_back(tackle_voice_node);
