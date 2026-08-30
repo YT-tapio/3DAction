@@ -7,8 +7,8 @@
 
 AttackBase::AttackBase(std::weak_ptr<ObjectBase> owner, float min_coll_ratio, float max_coll_ratio, float damage_rate)
 	: BehaviorBase(owner)
-	, coll_timing_min_(min_coll_ratio)
-	, coll_timing_max_(max_coll_ratio)
+	, min_coll_ratio_(min_coll_ratio)
+	, max_coll_ratio_(max_coll_ratio)
 	, damage_rate_(damage_rate)
 {
 

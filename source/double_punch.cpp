@@ -171,8 +171,8 @@ const bool DoublePunch::CheckCollActive() const
 {
 	auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
 	auto anim_play_ratio = owner->GetAnimator()->GetRatio(my_anim_name_);
-	if (coll_timing_min_ > anim_play_ratio) { return FALSE; }
-	if (coll_timing_max_ < anim_play_ratio) { return FALSE; }
+	if (min_coll_ratio_ > anim_play_ratio) { return FALSE; }
+	if (max_coll_ratio_ < anim_play_ratio) { return FALSE; }
 	return TRUE;
 }
 

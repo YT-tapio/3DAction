@@ -41,8 +41,8 @@ protected:
 
 	std::shared_ptr<RigidBody> rigid_body_;
 
-	float coll_timing_min_;	// 当たり判定の発動タイミング：アニメーション基準
-	float coll_timing_max_;	// 当たり判定の終了タイミング：アニメーション基準
+	float min_coll_ratio_;	// 当たり判定の発動タイミング：アニメーション基準
+	float max_coll_ratio_;	// 当たり判定の終了タイミング：アニメーション基準
 
 	// ダメージ倍率
 	float damage_rate_;

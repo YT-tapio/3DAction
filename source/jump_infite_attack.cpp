@@ -65,7 +65,7 @@ BehaviorStatus JumpInfiteAttack::Update()
 		pos_ = VAdd(owner_pos, VScale(owner_front_dir, 2.f));
 		pos_.y -= 1.f;
 
-		if (anim_ratio > coll_timing_min_ && anim_ratio < coll_timing_max_)
+		if (anim_ratio > min_coll_ratio_ && anim_ratio < max_coll_ratio_)
 		{
 			rigid_body_->Active();
 		}
