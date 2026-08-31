@@ -382,6 +382,9 @@
     <Filter Include="ソース ファイル\object\enemy\cool_time">
       <UniqueIdentifier>{18639d66-483b-4982-961f-3080b64f9719}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\behavior\approach_and_attack">
+      <UniqueIdentifier>{f8d23265-27e7-49ee-ba48-13692376fdce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -931,7 +934,7 @@
       <Filter>ソース ファイル\object\enemy\cool_time</Filter>
     </ClCompile>
     <ClCompile Include="source\approach_and_attack.cpp">
-      <Filter>ソース ファイル\behavior</Filter>
+      <Filter>ソース ファイル\behavior\approach_and_attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1605,7 +1608,7 @@
       <Filter>ソース ファイル\object\enemy\cool_time</Filter>
     </ClInclude>
     <ClInclude Include="source\approach_and_attack.h">
-      <Filter>ソース ファイル\behavior</Filter>
+      <Filter>ソース ファイル\behavior\approach_and_attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

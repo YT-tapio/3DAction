@@ -20,7 +20,7 @@ GameToNextScene::GameToNextScene()
 	timer_->Init();
 
 	// ƒ{ƒ^ƒ“‚Ìì¬
-	//retry_button_ = std::make_shared<ButtonUI>(, VectorAssistant::VGet2D(,), 0.1f, nullptr)
+	
 }
 
 GameToNextScene::~GameToNextScene()

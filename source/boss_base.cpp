@@ -48,6 +48,7 @@
 #include"chase_player.h"
 #include"roar.h"
 #include"effect_id.h"
+#include"approach_and_attack.h"
 
 #include"time.h"
 #include"vector_assistant.h"
@@ -55,6 +56,8 @@
 #include"shadow_creater_interface.h"
 #include<unordered_map>
 #include"enemy_cool_time_controller.h"
+
+#include"load_csv_file.h"
 
 #include"brain.h"
 
@@ -158,7 +161,6 @@ void BossBase::Update()
 	animator_->Update(time_);
 	UpdateBone();
 	hit_red_body_->Update();
-
 }
 
 void BossBase::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)
@@ -174,7 +176,7 @@ void BossBase::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)
 		};
 
 	// 両手パンチのノードを生成
-	auto double_punch_node = MakeDoublePunchNode(mine, current_phase);
+	auto conbo_attack_node = MakeComboAttackNode(mine, current_phase);
 	// スタンプ
 	auto stamp_node = MakeStampNode(mine, current_phase);
 	// 魔法攻撃
@@ -184,9 +186,9 @@ void BossBase::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)
 
 	// ランダムのnodeに代入
 	std::vector<std::shared_ptr<NodeBase>> attack_random_nodes;
-	attack_random_nodes.emplace_back(double_punch_node);
+	attack_random_nodes.emplace_back(conbo_attack_node);
 	attack_random_nodes.emplace_back(stamp_node);
-	attack_random_nodes.emplace_back(magic_node);
+	//attack_random_nodes.emplace_back(magic_node);
 	attack_random_nodes.emplace_back(tackle_node);
 
 	// 追いかけるときのノード
@@ -228,8 +230,7 @@ void BossBase::UpdatePhase()
 {
 
 	auto current_status		= status_container_->GetCurrentStatus();
-
-auto base_status			= status_container_->GetBaseStatus();
+	auto base_status		= status_container_->GetBaseStatus();
 
 	float hp_ratio = current_status.hp / base_status.hp;
 
@@ -375,6 +376,49 @@ std::shared_ptr<NodeBase> BossBase::MakeDoublePunchNode(std::shared_ptr<EnemyBas
 		"double_punch", 0.35f, 0.5f, &double_punch_coll_pos_, 3.0f, 6.f, 1.f);
 	std::shared_ptr<NodeBase> double_punch_node = std::make_shared<ActionNode>(double_punch);
 	node = double_punch_node;
+	return node;
+}
+
+std::shared_ptr<NodeBase> BossBase::MakeComboAttackNode(std::shared_ptr<EnemyBase> mine, std::function<Phase()> current_phase)
+{
+	std::shared_ptr<NodeBase> node = nullptr;
+
+	const std::string file_path = "data/csv/enemies/zako/behavior/combo_datas.csv";
+
+	auto datas = LoadCSVFile::GetInstance().GetData(file_path, 1);
+
+	std::vector<std::shared_ptr<BehaviorBase>> combos;
+
+	int current_index = 0;
+	for (int i = 0; i < datas.indices.size(); i++)
+	{
+		auto min_coll_ratio = stof(datas.string_datas[current_index]);
+		current_index++;
+		auto max_coll_ratio = stof(datas.string_datas[current_index]);
+		current_index++;
+		auto damage_rate = stof(datas.string_datas[current_index]);
+		current_index++;
+		auto my_anim_name = datas.string_datas[current_index];
+		current_index++;
+		auto approach_timing = stof(datas.string_datas[current_index]);
+		current_index++;
+		auto approach_speed = stof(datas.string_datas[current_index]);
+		current_index++;
+		auto collider_tag = datas.string_datas[current_index];
+		current_index++;
+		combos.emplace_back(std::make_shared<ApproachAndAttack>(mine, min_coll_ratio,
+			max_coll_ratio, damage_rate, my_anim_name, approach_timing, approach_speed, collider_tag));
+	}
+
+	std::vector<std::shared_ptr<NodeBase>> combo_attack_nodes;
+
+	for (auto& combo : combos)
+	{
+		combo_attack_nodes.emplace_back(std::make_shared<ActionNode>(combo));
+	}
+
+	node = std::make_shared<SequenceNode>(combo_attack_nodes);
+
 	return node;
 }
 

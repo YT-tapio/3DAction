@@ -14,9 +14,15 @@
 #include"vector_assistant.h"
 #include"physics.h"
 #include"physics_interface.h"
+#include"status_holder_interface.h"
+#include"status.h"
+#include"status_container.h"
+#include"takable_damage_enemy_interface.h"
+#include"takable_damage_player_interface.h"
+#include"attack_type.h"
 
 ApproachAndAttack::ApproachAndAttack(std::weak_ptr<ObjectBase> owner, const float& min_coll_ratio, const float& max_coll_ratio, const float& damage_rate, 
-	const std::string& my_anim_name, const float approach_timing, const float approach_speed)
+	const std::string& my_anim_name, const float approach_timing, const float approach_speed,const std::string& collider_tag)
 	: AttackBase(owner,min_coll_ratio,max_coll_ratio,damage_rate)
 	, pos_(VectorAssistant::VGetZero())
 	, my_anim_name_(my_anim_name)
@@ -25,9 +31,9 @@ ApproachAndAttack::ApproachAndAttack(std::weak_ptr<ObjectBase> owner, const floa
 	, is_approached_(FALSE)
 {
 	// rigid_bodyを生成する
-	auto collider = std::make_shared<Capsule>(3.f,1.f,VectorAssistant::VGetZero());
+	auto collider = std::make_shared<Capsule>(10.f,1.f,VectorAssistant::VGetZero());
 	rigid_body_ = std::make_shared<RigidBody>(collider, &pos_, FALSE, TRUE, 1.f, 1.f);
-
+	rigid_body_->SetTag(collider_tag);
 }
 
 ApproachAndAttack::~ApproachAndAttack()
@@ -37,6 +43,7 @@ ApproachAndAttack::~ApproachAndAttack()
 
 void ApproachAndAttack::Init()
 {
+	
 	rigid_body_->Init(weak_from_this());
 	Physics::GetInstance().AddBody(rigid_body_);
 }
@@ -58,9 +65,7 @@ BehaviorStatus ApproachAndAttack::Update()
 	if (owner == nullptr) { return BehaviorStatus::kFailure; }
 
 	auto anim_ratio = owner->GetAnimator()->GetRatio(my_anim_name_);
-
-	// 
-
+	//printfDx("%.2f\n", anim_ratio);
 	// アプローチをまだしていない
 	if (!is_approached_)
 	{
@@ -77,7 +82,7 @@ BehaviorStatus ApproachAndAttack::Update()
 	if (anim_ratio >= min_coll_ratio_ && anim_ratio <= max_coll_ratio_)
 	{
 		// 当たり判定の場所を更新
-
+		UpdateCollisionPos(owner);
 		rigid_body_->Active();
 	}
 	else
@@ -86,7 +91,10 @@ BehaviorStatus ApproachAndAttack::Update()
 	}
 
 	// アニメーションが終了したらおわり
-	if (owner->GetAnimator()->GetIsEnd(my_anim_name_)) { return BehaviorStatus::kComplete; }
+	if (owner->GetAnimator()->GetIsEnd(my_anim_name_)) 
+	{ 
+		return BehaviorStatus::kComplete;
+	}
 
 	return BehaviorStatus::kRunning;
 }
@@ -94,6 +102,59 @@ BehaviorStatus ApproachAndAttack::Update()
 void ApproachAndAttack::Exit()
 {
 	rigid_body_->NotActive();
+}
+
+void ApproachAndAttack::Debug()
+{
+	rigid_body_->Debug();
+}
+
+void ApproachAndAttack::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+	//ダメージを与える
+	auto owner = std::dynamic_pointer_cast<IPhysicsEventReceiver>(owner_.lock());
+	if (owner == nullptr) { return; }
+	auto owner_tag = owner->GetRigidBody()->GetTag();
+	auto object_tag = object->GetRigidBody()->GetTag();
+
+	// 対象にdamageを与える
+
+	// ownerのtagが一緒の時はreturn
+	if (owner_tag == object_tag) { return; }
+
+	// ownerがplayer
+	if (owner_tag == "player")
+	{
+		// objectがplayerからダメージを受ける対象なのか変換する
+		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
+		{
+			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
+			takable_player->OnDamageFromPlayer(owner_status_container->GetPhysicalATK() * damage_rate_, AttackType::kPhysical);
+		}
+		return;
+	}
+
+	// ownerが敵なら
+	if (owner_tag == "enemy")
+	{
+		//objectがenemyからダメージを受ける対象なのか変換する
+		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
+		{
+			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
+			takable_enemy->OnDamageFromEnemy(owner_status_container->GetPhysicalATK() * damage_rate_, AttackType::kPhysical);
+		}
+		return;
+	}
+}
+
+void ApproachAndAttack::OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+
+}
+
+void ApproachAndAttack::OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object)
+{
+
 }
 
 void ApproachAndAttack::Approach(std::shared_ptr<EnemyBase> owner)
@@ -104,9 +165,17 @@ void ApproachAndAttack::Approach(std::shared_ptr<EnemyBase> owner)
 
 	// プレイヤーまでの向き
 	auto owner_to_target_dir = VectorAssistant::VGetDir(owner_pos, target_pos);
-	auto owner_rot = VGet(0.f, VectorAssistant::VGetTan(owner_to_target_dir), 0.f);
+	auto owner_rot = VGet(0.f, VectorAssistant::VGetTan(VectorAssistant::VGetReverce(owner_to_target_dir)), 0.f);
 	auto approach_velocity = VScale(VectorAssistant::VGetFlat(owner_to_target_dir), approach_speed_);
 	owner->SetRotation(owner_rot);
 	owner->GetRigidBody()->SetTargetVelocity(approach_velocity);
 
+}
+
+void ApproachAndAttack::UpdateCollisionPos(std::shared_ptr<EnemyBase> owner)
+{
+	// 当たり判定の位置更新
+	// enemyの正面に当たり判定を出す
+	VECTOR front_dir = owner->GetFrontDir();
+	pos_ = VAdd(VScale(front_dir, 5.f), owner->GetPosition());
 }

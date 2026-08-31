@@ -92,9 +92,12 @@ void AnimatorBase::Update(std::shared_ptr<const Time> owner_time)
 
 		// トータルタイムを取得
 		now_anim_data.total_time = MV1GetAttachAnimTotalTime(handle_, now_anim_data.attach_index);
-		
-		//printfDx("total_time: %s ：%.2f\n", now_anim_name_.c_str(), now_anim_data.total_time);
-		// キャンセルを定める
+		if (now_anim_name_ == "punch_combo1")
+		{
+			printfDx("%s\n", now_anim_name_.c_str());
+
+		}
+				// キャンセルを定める
 		if (now_anim_data.cancel_time == -1)
 		{
 			now_anim_data.cancel_time = now_anim_data.total_time;
@@ -150,7 +153,7 @@ void AnimatorBase::LoadFile(const std::string& file_path)
 {
 	if (is_loaded_) { return; }
 	const auto file_data = LoadCSVFile::GetInstance().GetData(file_path, 1);
-
+	printfDx("%d\n", file_data.indices.size());
 	for (int i = 0; i < file_data.indices.size(); i++)
 	{
 		int first_vertical_index = 0;

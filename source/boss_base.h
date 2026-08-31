@@ -35,7 +35,11 @@ private:
 
 	std::shared_ptr<NodeBase> MakeDoublePunchNode(std::shared_ptr<EnemyBase> mine, std::function<Phase()> current_phase);
 
+	std::shared_ptr<NodeBase> MakeComboAttackNode(std::shared_ptr<EnemyBase> mine, std::function<Phase()> current_phase);
+
 	std::shared_ptr<NodeBase> MakeChaseNode(std::shared_ptr<EnemyBase> mine);
+
+
 
 
 };

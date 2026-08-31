@@ -34,7 +34,7 @@ inline void LoadAnimationToStringDatas(AnimationData& data, const std::vector<st
 	index++;
 	if (data.handle == -1) 
 	{ 
-		//printfDx("データ読み込み失敗\n");
+		printfDx("データ読み込み失敗\n");
 	}
 
 	data.anim_index = stoi(string_datas[index]);
