@@ -63,8 +63,8 @@
 #include"brain.h"
 #include"enemy_ui_group_interface.h"
 
-BossBase::BossBase(const VECTOR& pos, bool* game_start,std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group)
-	: EnemyBase(pos, game_start,enemy_ui_group)
+BossBase::BossBase(const VECTOR& pos, bool* game_start,std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group,std::shared_ptr<IDamageUIGroup> damage_ui_group)
+	: EnemyBase(pos, game_start,enemy_ui_group,damage_ui_group)
 {
 	vel_ = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();

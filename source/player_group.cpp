@@ -18,6 +18,8 @@
 #include"skill_type.h"
 #include"player_skill_ui_group.h"
 #include"enemy_base.h"
+#include"damage_ui_group.h"
+#include"damage_ui_group_interface.h"
 
 PlayerGroup::PlayerGroup()
 {
@@ -32,14 +34,14 @@ void PlayerGroup::AddPlayerObserver(IPlayerObserver* observer)
 	}
 }
 
-void PlayerGroup::Awake(VECTOR* camera_dir,std::shared_ptr<IPlayerUIGroup> player_ui_group,std::shared_ptr<EnemyBase> enemy, std::shared_ptr<IShadowCreater> shadow_creater)
+void PlayerGroup::Awake(VECTOR* camera_dir,std::shared_ptr<IPlayerUIGroup> player_ui_group,std::shared_ptr<EnemyBase> enemy, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IDamageUIGroup> damage_ui_group)
 {
 	current_player_head_pos_ = VectorAssistant::VGetZero();
 	camera_dir_ = camera_dir;
 	//players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer2Input(),"healer"));
 	//players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer3Input(), "defender"));
 	//players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer3Input(), "attacker2"));
-	players_.push_back(std::make_shared<Player>(camera_dir_, InputManager::GetInstance().GetPlayer1Input(), "attacker",player_ui_group,shadow_creater));
+	players_.push_back(std::make_shared<Player>(camera_dir_, InputManager::GetInstance().GetPlayer1Input(), "attacker",player_ui_group,shadow_creater,damage_ui_group));
 	
 
 	for (auto player : players_)

@@ -55,8 +55,9 @@
 #include"brain.h"
 #include"player_observer_interface.h"
 #include"shadow_creater_interface.h"
+#include"damage_ui_group_interface.h"
 
-Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name, std::shared_ptr<IPlayerUIGroup> player_ui_group,std::shared_ptr<IShadowCreater> shadow_creater)
+Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name, std::shared_ptr<IPlayerUIGroup> player_ui_group,std::shared_ptr<IShadowCreater> shadow_creater,std::shared_ptr<IDamageUIGroup> damage_ui_group)
 	: CharacterBase("player")
 	, IPhysicsEventReceiver()
 	, name_(name)
@@ -104,6 +105,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	speed_ = 0.f;
 	job_ = "nothing";
 	shadow_creater->CreateShadow(&hip_pos_, radius +0.5f);
+	damage_ui_group_ = damage_ui_group;
 }
 
 Player::~Player()
@@ -800,8 +802,8 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 	SoundManager::GetInstance().Play3DSound("palyer_on_damage");
 	// ui•`‰æ‚ðs‚¤
 	// “ª‚Ìposition‚É‚µ‚æ‚¤‚©‚È
-	DamageUIGroup::GetInstance().SpawnPlayerDamageUI(head_pos_, final_damage);
-	//damage_ui_group_->SpawnPlayerDamageUI(head_pos,final_damage);
+	//DamageUIGroup::GetInstance().SpawnPlayerDamageUI(head_pos_, final_damage);
+	damage_ui_group_->SpawnPlayerDamageUI(head_pos_,final_damage);
 }
 
 void Player::InputChange(std::shared_ptr<InputBase> input)

@@ -20,13 +20,14 @@ class IPlayerUIGroup;
 class ConditionTimer;
 class IPlayerObserver;
 class IShadowCreater;
+class IDamageUIGroup;
 
 class Player : public CharacterBase , public IPhysicsEventReceiver
 	,public ITakableHealPlayer,public ITakableDamageEnemy,public IInputChange,public IStatusHolder,public IEnemyObserver
 {
 public:
 
-	Player(VECTOR* camera_dir, std::shared_ptr<const InputBase> input,const std::string name,std::shared_ptr<IPlayerUIGroup> player_ui_group, std::shared_ptr<IShadowCreater> shadow_creater);
+	Player(VECTOR* camera_dir, std::shared_ptr<const InputBase> input,const std::string name,std::shared_ptr<IPlayerUIGroup> player_ui_group, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IDamageUIGroup> damage_ui_group);
 
 	~Player() override;
 
@@ -144,6 +145,7 @@ private:
 	std::shared_ptr<SkillBase> jump_infite_attack_;
 	std::shared_ptr<StatusContainer> status_container_;
 	std::shared_ptr<IPlayerUIGroup> player_ui_group_;
+	std::shared_ptr<IDamageUIGroup> damage_ui_group_;
 
 	std::shared_ptr<ConditionTimer> enemy_death_offset_timer_;	// ŠÔ‚ª‚½‚Á‚Ä‚©‚ç“G‚ª€‚ñ‚¾‚Æ‚«‚Ìˆ—‚ğs‚¤
 

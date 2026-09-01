@@ -1,19 +1,15 @@
 #pragma once
+#include"damage_ui_group_interface.h"
 
 class DamageUI;
 
-class DamageUIGroup
+class DamageUIGroup : public IDamageUIGroup
 {
 public:
 
-	static DamageUIGroup& GetInstance()
-	{
-		static DamageUIGroup instance;
-		return instance;
-	}
-
-	DamageUIGroup(const DamageUIGroup&) = delete;
-	DamageUIGroup& operator = (const DamageUIGroup&) = delete;
+	DamageUIGroup();
+	
+	~DamageUIGroup();
 
 	void Awake();
 
@@ -23,15 +19,9 @@ public:
 
 	const void Draw() const;
 
-	void SpawnPlayerDamageUI(const VECTOR& pos,const float& damage);
+	void SpawnPlayerDamageUI(const VECTOR& pos,const float& damage) override;
 
-	void SpawnEnemyDamageUI(const VECTOR& pos, const float& damage);
-
-	void End();
-
-private:
-
-	DamageUIGroup();
+	void SpawnEnemyDamageUI(const VECTOR& pos, const float& damage) override;
 
 private:
 

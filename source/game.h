@@ -13,6 +13,7 @@ class LoseUI;
 class GameToNextScene;
 class ShadowCircleController;
 class EnemyUIGroup;
+class DamageUIGroup;
 
 class Game : public SceneBase
 {
@@ -41,6 +42,7 @@ private:
 	std::shared_ptr<LoseUI> lose_ui_;
 	std::shared_ptr<GameToNextScene> game_to_next_scene_;
 	std::shared_ptr<GameStartTimer> game_start_timer_;
+	std::shared_ptr<DamageUIGroup> damage_ui_group_;
 
 	std::shared_ptr<ShadowCircleController> shadow_circle_controller_;
 

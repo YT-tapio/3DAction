@@ -156,6 +156,7 @@
     <ClCompile Include="source\check_count_node.cpp" />
     <ClCompile Include="source\check_phase_node.cpp" />
     <ClCompile Include="source\config_datas.cpp" />
+    <ClCompile Include="source\damage_ui_group_interface.cpp" />
     <ClCompile Include="source\enemy_cool_time_controller.cpp" />
     <ClCompile Include="source\enemy_lock_on_camera.cpp" />
     <ClCompile Include="source\enemy_observer_interface.cpp" />
@@ -347,6 +348,7 @@
     <ClInclude Include="source\config.h" />
     <ClInclude Include="source\config_datas.h" />
     <ClInclude Include="source\config_name.h" />
+    <ClInclude Include="source\damage_ui_group_interface.h" />
     <ClInclude Include="source\enemy_cool_time_controller.h" />
     <ClInclude Include="source\enemy_lock_on_camera.h" />
     <ClInclude Include="source\enemy_observer_interface.h" />

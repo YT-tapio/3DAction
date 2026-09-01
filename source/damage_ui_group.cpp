@@ -101,13 +101,13 @@ void DamageUIGroup::SpawnEnemyDamageUI(const VECTOR& pos, const float& damage)
 	}
 }
 
-void DamageUIGroup::End()
+DamageUIGroup::DamageUIGroup()
+{
+	
+}
+
+DamageUIGroup::~DamageUIGroup()
 {
 	player_damage_uis_.clear();
 	enemy_damage_uis_.clear();
-}
-
-DamageUIGroup::DamageUIGroup()
-{
-
 }

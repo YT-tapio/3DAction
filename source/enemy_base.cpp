@@ -56,8 +56,9 @@
 #include"enemy_observer_interface.h"
 #include"enemy_cool_time_controller.h"
 #include"enemy_ui_group_interface.h"
+#include"damage_ui_group_interface.h"
 
-EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start,std::shared_ptr<IEnemyUIGroup> enemy_ui_group)
+EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start,std::shared_ptr<IEnemyUIGroup> enemy_ui_group, std::shared_ptr<IDamageUIGroup> damage_ui_group)
 	: CharacterBase("enemy")
 	, IPhysicsEventReceiver()
 	, game_start_(game_start)
@@ -67,6 +68,7 @@ EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start,std::shared_ptr<IEnemyUI
 	, phase_(Phase::first)
 	, cool_time_(std::make_shared<EnemyCoolTimeController>())
 	, enemy_ui_group_(enemy_ui_group)
+	, damage_ui_group_(damage_ui_group)
 {
 	
 }
@@ -181,9 +183,7 @@ void EnemyBase::OnDamageFromPlayer(float damage,AttackType type)
 	{
 		observer->OnTakeDamage(final_damage);
 	}
-
-	DamageUIGroup::GetInstance().SpawnEnemyDamageUI(VAdd(pos_,VGet(0.f,5.f,0.f)),final_damage);
-	//damage_ui_group_->SpawnEnemyDamageUI(head_pos,final_damage);
+	damage_ui_group_->SpawnEnemyDamageUI(VAdd(pos_, VGet(0.f, 5.f, 0.f)), final_damage);
 	// ‘Ì‚ðÔ‚­‚·‚é
 	hit_red_body_->Request(ChangeMethod::kLerp, 0.2f);
 

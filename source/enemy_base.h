@@ -15,12 +15,13 @@ class HitRedBody;
 class IEnemyObserver;
 class EnemyCoolTimeController;
 class IEnemyUIGroup;
+class IDamageUIGroup;
 
 class EnemyBase : public CharacterBase, public IPhysicsEventReceiver,public ITakableDamagePlayer,public IStatusHolder
 {
 public:
 
-	EnemyBase(const VECTOR& pos,bool* game_start, std::shared_ptr<IEnemyUIGroup> enemy_ui_group);
+	EnemyBase(const VECTOR& pos,bool* game_start, std::shared_ptr<IEnemyUIGroup> enemy_ui_group,std::shared_ptr<IDamageUIGroup> damage_ui_group);
 
 	virtual ~EnemyBase() override;
 
@@ -81,6 +82,7 @@ protected:
 	std::shared_ptr<StatusContainer> status_container_;
 	std::shared_ptr<HitRedBody> hit_red_body_;	// ÉqÉbÉgéûê‘Ç≠Ç»ÇÈ
 	std::shared_ptr<IEnemyUIGroup> enemy_ui_group_;
+	std::shared_ptr<IDamageUIGroup> damage_ui_group_;
 
 	std::string my_name_;
 

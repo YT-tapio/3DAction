@@ -942,6 +942,9 @@
     <ClCompile Include="source\enemy_ui_group_interface.cpp">
       <Filter>ソース ファイル\ui\enemy_ui_group</Filter>
     </ClCompile>
+    <ClCompile Include="source\damage_ui_group_interface.cpp">
+      <Filter>ソース ファイル\ui\damage_ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1621,6 +1624,9 @@
     </ClInclude>
     <ClInclude Include="source\enemy_ui_group_interface.h">
       <Filter>ソース ファイル\ui\enemy_ui_group</Filter>
+    </ClInclude>
+    <ClInclude Include="source\damage_ui_group_interface.h">
+      <Filter>ソース ファイル\ui\damage_ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -44,6 +44,7 @@
 #include"lose_ui.h"
 #include"game_to_next_scene.h"
 #include"shadow_circle_controller.h"
+#include"damage_ui_group_interface.h"
 
 Game::Game()
 	: SceneBase()
@@ -51,14 +52,14 @@ Game::Game()
 	
 	AttackRangeGroup::GetInstance().Awake();
 	StatModifires::GetInstance().Awake();
-	DamageUIGroup::GetInstance().Awake();
+	damage_ui_group_ = std::make_shared<DamageUIGroup>();
 	StatModifireUIData::GetInstance().Load();
 	enemy_ui_group_ = std::make_shared<EnemyUIGroup>();
 	shadow_circle_controller_ = std::make_shared<ShadowCircleController>();
 	game_start_ = FALSE;
 	camera_ = std::make_shared<Camera>();
 	shadow_map_ = std::make_shared<ShadowMap>();
-	std::shared_ptr<EnemyBase> enemy = std::make_shared<BossBase>(VGet(0, 0, 0), &game_start_,shadow_circle_controller_,enemy_ui_group_);
+	std::shared_ptr<EnemyBase> enemy = std::make_shared<BossBase>(VGet(0, 0, 0), &game_start_,shadow_circle_controller_,enemy_ui_group_, damage_ui_group_);
 	get_enemy_pos_ = [enemy]()
 		{
 			return enemy->GetCenterPos();
@@ -77,7 +78,8 @@ Game::Game()
 	player_ui_group_ = std::make_shared<PlayerUIGroup>();
 	player_skill_ui_group_ = std::make_shared<PlayerSkillUIGroup>();
 
-	PlayerGroup::GetInstance().Awake(&camera_->dir_, player_ui_group_, enemy,shadow_circle_controller_);
+	//PlayerGroup::GetInstance().Awake(&camera_->dir_, player_ui_group_, enemy,shadow_circle_controller_, damage_ui_group_);
+	PlayerGroup::GetInstance().Awake(&camera_->dir_, player_ui_group_, enemy, shadow_circle_controller_, damage_ui_group_);
 	objects_.push_back(enemy);
 
 	objects_.push_back(std::make_shared<Stage>());
@@ -104,7 +106,6 @@ Game::~Game()
 	Physics::GetInstance().End();
 	//EffectManager::GetInstance().End();
 	AttackRangeGroup::GetInstance().End();
-	DamageUIGroup::GetInstance().End();
 	StatModifires::GetInstance().End();
 	StatModifireUIData::GetInstance().End();
 	SoundManager::GetInstance().AllStop();
@@ -128,7 +129,7 @@ void Game::Init()
 	}
 	player_ui_group_->Init();
 	Brain::GetInstance().CreatePlaySceneVirtualCamera(camera_->GetPos(), camera_->GetTargetPos(), get_enemy_pos_, get_enemy_dir_);
-	DamageUIGroup::GetInstance().Init();
+	damage_ui_group_->Init();
 	//damage_ui_group_->Init(head_pos, final_damage);
 	camera_->Init();
 	shadow_map_->Init();
@@ -187,7 +188,7 @@ void Game::Update()
 	won_ui_->Update();
 	lose_ui_->Update();
 	enemy_ui_group_->Update();
-	DamageUIGroup::GetInstance().Update();
+	damage_ui_group_->Update();
 	EffectManager::GetInstance().Update();
 	AttackRangeGroup::GetInstance().Update();
 	shadow_circle_controller_->Update();
@@ -245,7 +246,8 @@ void Game::Draw()
 	lose_ui_->Draw();
 	game_start_timer_->Draw();
 	enemy_ui_group_->Draw();
-	DamageUIGroup::GetInstance().Draw();
+	damage_ui_group_->Draw();
+
 	if (Debug::GetInstance().GetIsDisp())
 	{
 		camera_->Debug();
