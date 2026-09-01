@@ -37,7 +37,7 @@ BehaviorStatus BranchNode::Update()
 	{
 		is_first_update_ ? nodes_.first->Exit() : nodes_.second->Exit();
 		is_first_update_ = condition_();
-		is_first_update_ ? nodes_.first->Entry() : nodes_.second->Entry();
+		//is_first_update_ ? nodes_.first->Entry() : nodes_.second->Entry();
 	}
 	
 	status_ = is_first_update_ ? nodes_.first->Update() : nodes_.second->Update();

@@ -939,6 +939,9 @@
     <ClCompile Include="source\check_count_node.cpp">
       <Filter>ソース ファイル\behavior_tree\node\condition_node</Filter>
     </ClCompile>
+    <ClCompile Include="source\enemy_ui_group_interface.cpp">
+      <Filter>ソース ファイル\ui\enemy_ui_group</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1615,6 +1618,9 @@
     </ClInclude>
     <ClInclude Include="source\check_count_node.h">
       <Filter>ソース ファイル\behavior_tree\node\condition_node</Filter>
+    </ClInclude>
+    <ClInclude Include="source\enemy_ui_group_interface.h">
+      <Filter>ソース ファイル\ui\enemy_ui_group</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

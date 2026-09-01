@@ -159,6 +159,7 @@
     <ClCompile Include="source\enemy_cool_time_controller.cpp" />
     <ClCompile Include="source\enemy_lock_on_camera.cpp" />
     <ClCompile Include="source\enemy_observer_interface.cpp" />
+    <ClCompile Include="source\enemy_ui_group_interface.cpp" />
     <ClCompile Include="source\fade.cpp" />
     <ClCompile Include="source\game_start_timer.cpp" />
     <ClCompile Include="source\game_to_next_scene.cpp" />
@@ -349,6 +350,7 @@
     <ClInclude Include="source\enemy_cool_time_controller.h" />
     <ClInclude Include="source\enemy_lock_on_camera.h" />
     <ClInclude Include="source\enemy_observer_interface.h" />
+    <ClInclude Include="source\enemy_ui_group_interface.h" />
     <ClInclude Include="source\file_name_data.h" />
     <ClInclude Include="source\file_data.h" />
     <ClInclude Include="source\game_to_next_scene.h" />

@@ -51,14 +51,14 @@ Game::Game()
 	
 	AttackRangeGroup::GetInstance().Awake();
 	StatModifires::GetInstance().Awake();
-	EffectManager::GetInstance().Awake();
 	DamageUIGroup::GetInstance().Awake();
 	StatModifireUIData::GetInstance().Load();
+	enemy_ui_group_ = std::make_shared<EnemyUIGroup>();
 	shadow_circle_controller_ = std::make_shared<ShadowCircleController>();
 	game_start_ = FALSE;
 	camera_ = std::make_shared<Camera>();
 	shadow_map_ = std::make_shared<ShadowMap>();
-	std::shared_ptr<EnemyBase> enemy = std::make_shared<BossBase>(VGet(0, 0, 0), &game_start_,shadow_circle_controller_);
+	std::shared_ptr<EnemyBase> enemy = std::make_shared<BossBase>(VGet(0, 0, 0), &game_start_,shadow_circle_controller_,enemy_ui_group_);
 	get_enemy_pos_ = [enemy]()
 		{
 			return enemy->GetCenterPos();
@@ -88,7 +88,7 @@ Game::Game()
 	PlayerGroup::GetInstance().AddPlayerObserver(won_ui_.get());
 	PlayerGroup::GetInstance().AddPlayerObserver(lose_ui_.get());
 	PlayerGroup::GetInstance().AddPlayerObserver(game_to_next_scene_.get());
-	Init();
+	//Init();
 	is_finished_fade_ = FALSE;
 	SoundManager::GetInstance().Play2DSound("game_bgm");
 	Fade::GetInstance().StartFadeOut(3.f);
@@ -102,7 +102,7 @@ Game::~Game()
 	objects_.clear();
 	no_shadow_objects_.clear();
 	Physics::GetInstance().End();
-	EffectManager::GetInstance().End();
+	//EffectManager::GetInstance().End();
 	AttackRangeGroup::GetInstance().End();
 	DamageUIGroup::GetInstance().End();
 	StatModifires::GetInstance().End();
@@ -129,6 +129,7 @@ void Game::Init()
 	player_ui_group_->Init();
 	Brain::GetInstance().CreatePlaySceneVirtualCamera(camera_->GetPos(), camera_->GetTargetPos(), get_enemy_pos_, get_enemy_dir_);
 	DamageUIGroup::GetInstance().Init();
+	//damage_ui_group_->Init(head_pos, final_damage);
 	camera_->Init();
 	shadow_map_->Init();
 	game_start_timer_->Init();
@@ -185,7 +186,7 @@ void Game::Update()
 	player_skill_ui_group_->Update();
 	won_ui_->Update();
 	lose_ui_->Update();
-	EnemyUIGroup::GetInstance().Update();
+	enemy_ui_group_->Update();
 	DamageUIGroup::GetInstance().Update();
 	EffectManager::GetInstance().Update();
 	AttackRangeGroup::GetInstance().Update();
@@ -243,7 +244,7 @@ void Game::Draw()
 	won_ui_->Draw();
 	lose_ui_->Draw();
 	game_start_timer_->Draw();
-	EnemyUIGroup::GetInstance().Draw();
+	enemy_ui_group_->Draw();
 	DamageUIGroup::GetInstance().Draw();
 	if (Debug::GetInstance().GetIsDisp())
 	{

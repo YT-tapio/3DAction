@@ -14,6 +14,8 @@ public:
 
 	void Awake();
 
+	void End();
+
 	const int GetHandle(const std::string& name) const;
 
 private:

@@ -55,8 +55,9 @@
 #include"sound_manager.h"
 #include"enemy_observer_interface.h"
 #include"enemy_cool_time_controller.h"
+#include"enemy_ui_group_interface.h"
 
-EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start)
+EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start,std::shared_ptr<IEnemyUIGroup> enemy_ui_group)
 	: CharacterBase("enemy")
 	, IPhysicsEventReceiver()
 	, game_start_(game_start)
@@ -65,6 +66,7 @@ EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start)
 	, flat_hips_pos_(VectorAssistant::VGetZero())
 	, phase_(Phase::first)
 	, cool_time_(std::make_shared<EnemyCoolTimeController>())
+	, enemy_ui_group_(enemy_ui_group)
 {
 	
 }
@@ -181,7 +183,7 @@ void EnemyBase::OnDamageFromPlayer(float damage,AttackType type)
 	}
 
 	DamageUIGroup::GetInstance().SpawnEnemyDamageUI(VAdd(pos_,VGet(0.f,5.f,0.f)),final_damage);
-
+	//damage_ui_group_->SpawnEnemyDamageUI(head_pos,final_damage);
 	// ‘Ì‚ðÔ‚­‚·‚é
 	hit_red_body_->Request(ChangeMethod::kLerp, 0.2f);
 

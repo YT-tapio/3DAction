@@ -9,7 +9,7 @@ public:
 
 	ShadowCircleController();
 
-	~ShadowCircleController() override;
+	~ShadowCircleController();
 
 	void Init();
 

@@ -19,7 +19,7 @@
 #include"load.h"
 #include"button_ui_datas.h"
 #include"config_datas.h"
-
+#include"effect_manager.h"
 void SceneManager::Update()
 {
 	ClearDrawScreen();
@@ -33,14 +33,13 @@ void SceneManager::Update()
 	{
 		scene_->Update();
 		Fade::GetInstance().Update();
+		scene_->Draw();
+		Fade::GetInstance().Draw();
 	}
 	else
 	{
 		is_change_ = FALSE;
 	}
-	
-	scene_->Draw();
-	Fade::GetInstance().Draw();
 
 	//DrawString(100, 860, "Esc‚ğ‰Ÿ‚·‚ÆƒQ[ƒ€I—¹", GetColor(255, 0, 0));
 	ScreenFlip();
@@ -91,6 +90,7 @@ void SceneManager::End()
 
 SceneManager::SceneManager()
 {
+	EffectManager::GetInstance().Awake();
 	SoundManager::GetInstance().Load();
 	FPS::GetInstance();
 	ConfigDatas::GetInstance().Awake();

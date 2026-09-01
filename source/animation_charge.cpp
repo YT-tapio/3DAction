@@ -30,6 +30,7 @@ void AnimationCharge::Init()
 
 void AnimationCharge::Entry()
 {
+	printfDx("アニメーションチャージ\n");
 	if (auto character = std::dynamic_pointer_cast<CharacterBase>(owner_.lock()))
 	{
 		character->GetAnimator()->PlayRequest(my_anim_name_);

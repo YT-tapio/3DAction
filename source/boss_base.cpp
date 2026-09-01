@@ -61,9 +61,10 @@
 #include"load_csv_file.h"
 
 #include"brain.h"
+#include"enemy_ui_group_interface.h"
 
-BossBase::BossBase(const VECTOR& pos, bool* game_start,std::shared_ptr<IShadowCreater> shadow_creater)
-	: EnemyBase(pos, game_start)
+BossBase::BossBase(const VECTOR& pos, bool* game_start,std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group)
+	: EnemyBase(pos, game_start,enemy_ui_group)
 {
 	vel_ = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
@@ -121,7 +122,7 @@ void BossBase::Init()
 		};
 
 	// ui‚ðì¬
-	EnemyUIGroup::GetInstance().MakeStatusUI(get_base_hp, get_current_hp, "zako");
+	enemy_ui_group_->MakeStatusUI(get_base_hp, get_current_hp, "zako");
 
 	UpdateBone();
 

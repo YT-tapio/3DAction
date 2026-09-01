@@ -29,12 +29,13 @@ DispAttackRange::~DispAttackRange()
 
 void DispAttackRange::Init()
 {
-
+	
 }
 
 
 void DispAttackRange::Entry()
 {
+	printfDx("UŒ‚”»’è‚Ì•`‰æ");
 	float ratio = 0.f;
 	std::function<float()> get_ratio;
 	if (auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock()))

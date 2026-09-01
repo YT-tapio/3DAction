@@ -19,7 +19,7 @@ HitRedBody::HitRedBody(int handle)
 
 HitRedBody::~HitRedBody()
 {
-
+	MV1DeleteModel(handle_);
 }
 
 void HitRedBody::Init()

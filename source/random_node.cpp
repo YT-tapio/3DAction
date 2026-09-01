@@ -34,7 +34,7 @@ BehaviorStatus RandomNode::Update()
 		constexpr int kMin = 0;
 		int max = nodes_.size();
 		current_node_ = GetUniformRandom(kMin, max);
-		nodes_[current_node_]->Entry();
+		//nodes_[current_node_]->Entry();
 	}
 	status_ = nodes_[current_node_]->Update();
 	return status_;

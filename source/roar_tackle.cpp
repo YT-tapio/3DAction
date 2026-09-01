@@ -37,6 +37,7 @@ void RoarTackle::Init()
 
 void RoarTackle::Entry()
 {
+	printfDx("‹©‚Ñ•“Ëi\n");
 	tackle_state_ = TackleState::roar;
 	is_end_ = FALSE;
 	float max_time = 0.f;

@@ -50,6 +50,7 @@ void ApproachAndAttack::Init()
 
 void ApproachAndAttack::Entry()
 {
+	printfDx("コンボ\n");
 	// アニメーションを再生する
 	if (auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock()))
 	{

@@ -23,6 +23,7 @@ Roar::~Roar()
 
 void Roar::Entry()
 {
+	printfDx("roar\n");
 	if (!is_character_) { return; }
 	auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
 	owner->GetAnimator()->PlayRequest("roar");

@@ -7,6 +7,16 @@
 #include"string_ui.h"
 #include"character_name_ui.h"
 
+EnemyUIGroup::EnemyUIGroup()
+{
+
+}
+
+EnemyUIGroup::~EnemyUIGroup()
+{
+
+}
+
 void EnemyUIGroup::Init()
 {
 
@@ -29,7 +39,3 @@ void EnemyUIGroup::MakeStatusUI(std::function<int()> get_base_hp, std::function<
 	name_ = std::make_shared<CharacterNameUI>("data/csv/ui/enemy/" + name + "/name_data.csv","ÉCÉäÉÖÅ[Éh");
 }
 
-EnemyUIGroup::EnemyUIGroup()
-{
-
-}

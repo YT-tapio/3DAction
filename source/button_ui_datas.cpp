@@ -11,6 +11,16 @@ void ButtonUIDatas::Awake()
 	LoadFile();
 }
 
+void ButtonUIDatas::End()
+{
+	for (auto& handle : button_ui_handles_)
+	{
+		DeleteGraph(handle.second);
+		handle.second = -1;
+	}
+	button_ui_handles_.clear();
+}
+
 const int ButtonUIDatas::GetHandle(const std::string& name) const
 {
 	auto data = button_ui_handles_.find(name);
@@ -26,7 +36,6 @@ ButtonUIDatas::ButtonUIDatas()
 void ButtonUIDatas::LoadFile()
 {
 	// ボタンのデータを取得
-
 	std::ifstream file("data/csv/ui/button/button_datas.csv");
 	std::string line;
 
@@ -53,7 +62,4 @@ void ButtonUIDatas::LoadFile()
 		}
 		button_ui_handles_[name] = handle;
 	}
-	
-
-
 }

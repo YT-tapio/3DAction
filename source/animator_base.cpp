@@ -24,10 +24,12 @@ AnimatorBase::AnimatorBase(const std::string data_file_path, int handle)
 	can_cancel_		= FALSE;
 	is_loaded_ = FALSE;
 	blend_rate_ = 0.f;
+	LoadFile(kDataFilePath);
 }
 
 AnimatorBase::~AnimatorBase()
 {
+	MV1DeleteModel(handle_);
 	// animationÇè¡ãé
 	for (auto& animation : animation_datas_)
 	{
@@ -39,7 +41,6 @@ AnimatorBase::~AnimatorBase()
 
 void AnimatorBase::Init()
 {
-	LoadFile(kDataFilePath);
 	blend_rate_ = 0.f;
 }
 

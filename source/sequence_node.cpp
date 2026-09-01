@@ -16,6 +16,8 @@ SequenceNode::~SequenceNode()
 
 }
 
+
+
 BehaviorStatus SequenceNode::Update()
 {
 	// —Dæ“x‚Ì‚‚¢node‚©‚çÀs‚µ‚Ä‚¢‚­
@@ -51,7 +53,6 @@ BehaviorStatus SequenceNode::Update()
 		case BehaviorStatus::kFailure:
 			nodes_[current_node_]->Exit();
 			current_node_ = 0;
-			nodes_[current_node_]->Entry();
 			return BehaviorStatus::kFailure;
 			break;
 		}

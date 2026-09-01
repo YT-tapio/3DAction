@@ -1,20 +1,16 @@
 #pragma once
+#include"enemy_ui_group_interface.h"
 
 class HPBar;
 class StringUI;
 
-class EnemyUIGroup
+class EnemyUIGroup : public IEnemyUIGroup
 {
 public:
 
-	static EnemyUIGroup& GetInstance()
-	{
-		static EnemyUIGroup instance;
-		return instance;
-	}
+	EnemyUIGroup();
 
-	EnemyUIGroup(const EnemyUIGroup&) = delete;
-	EnemyUIGroup& operator = (const EnemyUIGroup&) = delete;
+	~EnemyUIGroup();
 
 	void Init();
 
@@ -25,11 +21,11 @@ public:
 	/// <summary>
 	/// hp‚È‚Ç‚ÌÀ”’l‚Ì•`‰æ‚ÌˆË—Š
 	/// </summary>
-	void MakeStatusUI(std::function<int()> get_base_hp, std::function<int()> get_current_hp,std::string name);
+	virtual void MakeStatusUI(std::function<int()> get_base_hp, std::function<int()> get_current_hp,std::string name);
 
 private:
 
-	EnemyUIGroup();
+	
 
 private:
 
