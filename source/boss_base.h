@@ -39,7 +39,7 @@ private:
 
 	std::shared_ptr<NodeBase> MakeChaseNode(std::shared_ptr<EnemyBase> mine);
 
-
+	std::shared_ptr<NodeBase> MakeRoarNode(std::shared_ptr<EnemyBase> mine);
 
 
 };

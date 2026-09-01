@@ -376,14 +376,14 @@
     <Filter Include="ソース ファイル\behavior_tree\node\condition_node">
       <UniqueIdentifier>{d27ff652-e908-4aa0-87bc-3d43fe1faf3d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\behavior_tree\node\check_phase">
-      <UniqueIdentifier>{7b8fc40d-f1cf-4b0c-82e2-9f5b4ace3ba4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\object\enemy\cool_time">
       <UniqueIdentifier>{18639d66-483b-4982-961f-3080b64f9719}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\behavior\approach_and_attack">
       <UniqueIdentifier>{f8d23265-27e7-49ee-ba48-13692376fdce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\behavior_tree\node\condition_node\check_phase">
+      <UniqueIdentifier>{7b8fc40d-f1cf-4b0c-82e2-9f5b4ace3ba4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -928,13 +928,16 @@
       <Filter>ソース ファイル\behavior_tree\node\condition_node</Filter>
     </ClCompile>
     <ClCompile Include="source\check_phase_node.cpp">
-      <Filter>ソース ファイル\behavior_tree\node\check_phase</Filter>
+      <Filter>ソース ファイル\behavior_tree\node\condition_node\check_phase</Filter>
     </ClCompile>
     <ClCompile Include="source\enemy_cool_time_controller.cpp">
       <Filter>ソース ファイル\object\enemy\cool_time</Filter>
     </ClCompile>
     <ClCompile Include="source\approach_and_attack.cpp">
       <Filter>ソース ファイル\behavior\approach_and_attack</Filter>
+    </ClCompile>
+    <ClCompile Include="source\check_count_node.cpp">
+      <Filter>ソース ファイル\behavior_tree\node\condition_node</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1599,7 +1602,7 @@
       <Filter>ソース ファイル\object\enemy</Filter>
     </ClInclude>
     <ClInclude Include="source\check_phase_node.h">
-      <Filter>ソース ファイル\behavior_tree\node\check_phase</Filter>
+      <Filter>ソース ファイル\behavior_tree\node\condition_node\check_phase</Filter>
     </ClInclude>
     <ClInclude Include="source\phase.h">
       <Filter>ソース ファイル\object\enemy</Filter>
@@ -1609,6 +1612,9 @@
     </ClInclude>
     <ClInclude Include="source\approach_and_attack.h">
       <Filter>ソース ファイル\behavior\approach_and_attack</Filter>
+    </ClInclude>
+    <ClInclude Include="source\check_count_node.h">
+      <Filter>ソース ファイル\behavior_tree\node\condition_node</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

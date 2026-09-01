@@ -2,8 +2,8 @@
 #include"just_one_node.h"
 #include"behavior_status.h"
 
-JustOneNode::JustOneNode(std::shared_ptr<BehaviorBase> action)
-	: ActionNode(action)
+JustOneNode::JustOneNode()
+	: NodeBase()
 	, is_finished_(false)
 {
 
@@ -16,19 +16,18 @@ JustOneNode::~JustOneNode()
 
 void JustOneNode::Entry()
 {
-	if (is_finished_) { return; }
-	ActionNode::Entry();
+	
 }
 
 BehaviorStatus JustOneNode::Update()
 {
 	// Ç∑Ç≈Ç…èIÇÌÇ¡ÇƒÇ¢ÇÈÇÃÇ»ÇÁé∏îsÇï‘Ç∑ÅB
 	if (is_finished_) { return BehaviorStatus::kFailure; }
-	auto status = ActionNode::Update();
-	if (status == BehaviorStatus::kComplete)
-	{
-		is_finished_ = true;
-	}
+	is_finished_ = true;
+	return BehaviorStatus::kComplete;
+}
 
-	return status;
+void JustOneNode::Exit()
+{
+
 }

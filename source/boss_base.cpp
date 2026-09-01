@@ -31,6 +31,7 @@
 #include"random_node.h"
 #include"just_one_node.h"
 #include"check_phase_node.h"
+#include"check_count_node.h"
 
 #include"behavior_base.h"
 #include"behavior_status.h"
@@ -199,7 +200,7 @@ void BossBase::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)
 	auto chase_node = MakeChaseNode(mine);
 	auto far_magic_node = MakeMagicNode(mine,current_phase);
 	/*-------*/
-	random_nodes_far.emplace_back(far_magic_node);
+	//random_nodes_far.emplace_back(far_magic_node);
 	random_nodes_far.emplace_back(chase_node);
 
 	std::shared_ptr<NodeBase> random_far_nodes2 = std::make_shared<RandomNode>(random_nodes_far);
@@ -214,11 +215,12 @@ void BossBase::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)
 			float dist_to_player = VSize(VSub(target_player_pos_, pos_));
 			return dist_to_player > 10.f;
 		};
-	//std::shared_ptr<NodeBase> roar_node = std::make_shared<JustOneNode>(std::make_shared<Roar>(obj_mine));
+	std::shared_ptr<NodeBase> roar_node = MakeRoarNode(mine);
 
 	std::shared_ptr<NodeBase> action_branch_node = std::make_shared<BranchNode>(nodes_,
 		condition);
 	std::vector<std::shared_ptr<NodeBase>> first_nodes;
+	first_nodes.emplace_back(roar_node);
 	first_nodes.emplace_back(action_branch_node);
 	std::shared_ptr<NodeBase> first_node = std::make_shared<SelectorNode>(first_nodes);
 
@@ -277,6 +279,8 @@ std::shared_ptr<NodeBase> BossBase::MakeMagicNode(std::shared_ptr<EnemyBase> min
 		mine, "charge", 0.f, 0.9f, VectorAssistant::VGetSame(2.f), area_of_effect_radius, EffectID::kAreaOfEffect, 2.f, 1.f);
 	std::shared_ptr<NodeBase> area_of_effect_node = std::make_shared<ActionNode>(behavior);
 
+	std::shared_ptr<NodeBase> count_node = std::make_shared<CheckCountNode>(1);
+
 	// ノード終わりじゃなく当たり判定が終わったら描画させたいよね
 	// 終了条件はこのbehaviorが終了しているとき
 	auto ui_AoE_end_function = [area_of_effect_node]() -> bool { return area_of_effect_node->GetStatus() == BehaviorStatus::kComplete; };
@@ -291,6 +295,7 @@ std::shared_ptr<NodeBase> BossBase::MakeMagicNode(std::shared_ptr<EnemyBase> min
 
 	// ui表示から先に入れる
 	area_of_effect_nodes.push_back(check_phase_node);
+	area_of_effect_nodes.push_back(count_node);
 	area_of_effect_nodes.push_back(area_of_effect_ui_node);
 	area_of_effect_nodes.push_back(area_of_effect_node);
 
@@ -428,6 +433,25 @@ std::shared_ptr<NodeBase> BossBase::MakeChaseNode(std::shared_ptr<EnemyBase> min
 
 	auto chase_player = std::make_shared<ChasePlayer>(mine,"run", &target_player_pos_, 0.5f);
 	node = std::make_shared<ActionNode>(chase_player);
+
+	return node;
+}
+
+std::shared_ptr<NodeBase> BossBase::MakeRoarNode(std::shared_ptr<EnemyBase> mine)
+{
+	std::shared_ptr<NodeBase> node = nullptr;
+	
+	std::vector<std::shared_ptr<NodeBase>> roar_nodes;
+
+	auto roar = std::make_shared<Roar>(mine);
+
+	auto roar_node = std::make_shared<ActionNode>(roar);
+	auto just_one_node = std::make_shared<JustOneNode>();
+
+	roar_nodes.emplace_back(just_one_node);
+	roar_nodes.emplace_back(roar_node);
+
+	node = std::make_shared<SequenceNode>(roar_nodes);
 
 	return node;
 }

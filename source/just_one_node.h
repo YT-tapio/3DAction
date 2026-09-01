@@ -1,17 +1,19 @@
 #pragma once
 #include"action_node.h"
 
-class JustOneNode : public ActionNode
+class JustOneNode : public NodeBase
 {
 public:
 
-	JustOneNode(std::shared_ptr<BehaviorBase> action);
+	JustOneNode();
 
 	virtual ~JustOneNode() override;
 
 	void Entry() override;
 
 	virtual BehaviorStatus Update() override;
+
+	void Exit() override;
 
 private:
 

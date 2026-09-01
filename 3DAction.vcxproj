@@ -153,6 +153,7 @@
     <ClCompile Include="source\button_ui.cpp" />
     <ClCompile Include="source\button_ui_datas.cpp" />
     <ClCompile Include="source\can_execute_node.cpp" />
+    <ClCompile Include="source\check_count_node.cpp" />
     <ClCompile Include="source\check_phase_node.cpp" />
     <ClCompile Include="source\config_datas.cpp" />
     <ClCompile Include="source\enemy_cool_time_controller.cpp" />
@@ -340,6 +341,7 @@
     <ClInclude Include="source\button_ui.h" />
     <ClInclude Include="source\button_ui_datas.h" />
     <ClInclude Include="source\can_execute_node.h" />
+    <ClInclude Include="source\check_count_node.h" />
     <ClInclude Include="source\check_phase_node.h" />
     <ClInclude Include="source\config.h" />
     <ClInclude Include="source\config_datas.h" />
