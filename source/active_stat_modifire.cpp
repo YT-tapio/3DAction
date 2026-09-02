@@ -81,7 +81,6 @@ void ActiveStatModifire::Activation(const Status& base_status, Status& current_s
 
 	// ‚±‚ÌuŠÔ‚Éui•`‰æ‚³‚¹‚½‚¢
 	player_ui_group->SpawnStatModifire(end_condition, data_.type, data_.operation);
-
 }
 
 const bool ActiveStatModifire::GetIsActive() const

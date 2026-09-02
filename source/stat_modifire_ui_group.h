@@ -3,6 +3,8 @@
 #include"stat_type.h"
 #include"modifire_operation.h"
 
+class StatModifireUIData;
+
 class StatModifireUIGroup
 {
 public:
@@ -32,6 +34,7 @@ private:
 	int handle_;
 
 	std::unordered_map<int, ActiveStatModifireUI> active_stat_modifire_uis_;
+	std::shared_ptr<StatModifireUIData> stat_modifire_ui_data_;
 
 	VECTOR base_pos_;
 

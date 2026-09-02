@@ -20,6 +20,7 @@
 #include"button_ui_datas.h"
 #include"config_datas.h"
 #include"effect_manager.h"
+
 void SceneManager::Update()
 {
 	ClearDrawScreen();
@@ -53,12 +54,14 @@ bool SceneManager::LoadScene(const std::string& next_scene)
 	bool check = FALSE;
 	if (next_scene == "title") 
 	{ 
-		scene_ = std::make_shared<Title>();
+		scene_ = std::make_shared<Load>(next_scene);
+		//scene_ = std::make_shared<Title>();
 		check = TRUE;
 	}
 	if (next_scene == "game") 
 	{ 
-		scene_ = std::make_shared<Game>();
+		scene_ = std::make_shared<Load>(next_scene);	// この処理をはさむことによってメモリの重複を防ぐ
+		//scene_ = std::make_shared<Game>();
 		check = TRUE;
 	}
 	if (next_scene == "result") 
@@ -83,10 +86,50 @@ bool SceneManager::LoadScene(const std::string& next_scene)
 	return TRUE;
 }
 
+bool SceneManager::LoadScene2(const std::string& next_scene)
+{
+	if (next_scene == scene_->GetName()) { return FALSE; }
+	bool check = FALSE;
+	if (next_scene == "title")
+	{
+		//scene_ = std::make_shared<Load>(next_scene);
+		scene_ = std::make_shared<Title>();
+		check = TRUE;
+	}
+	if (next_scene == "game")
+	{
+		//scene_ = std::make_shared<Load>(next_scene);	// この処理をはさむことによってメモリの重複を防ぐ
+		scene_ = std::make_shared<Game>();
+		check = TRUE;
+	}
+	if (next_scene == "result")
+	{
+		scene_ = std::make_shared<Result>();
+		check = TRUE;
+	}
+	if (next_scene == "load")
+	{
+		std::string next_scene_name = scene_->GetName();
+		scene_ = std::make_shared<Load>(next_scene_name);
+		check = TRUE;
+	}
+
+	if (!check)
+	{
+		printfDx("そのようなシーンは存在しません\n");
+	}
+
+	scene_->Init();
+	is_change_ = TRUE;
+	return TRUE;
+}
+
 void SceneManager::End()
 {
 	scene_ = nullptr;
 }
+
+
 
 SceneManager::SceneManager()
 {

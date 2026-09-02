@@ -86,6 +86,9 @@ Title::Title()
 			offset_timer_->ReStart();
 		};
 	start_button_ = std::make_shared<ButtonUI>(ConfigName::play, VectorAssistant::VGet2D(700.f, 650.f), 0.1f, start_function);
+
+	MV1DeleteModel(player_anim_handle);
+	MV1DeleteModel(enemy_anim_handle);
 }
 
 Title::~Title()

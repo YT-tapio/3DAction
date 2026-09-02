@@ -49,7 +49,7 @@ AreaOfEffectAttack::~AreaOfEffectAttack()
 
 void AreaOfEffectAttack::Init()
 {
-	printfDx("–‚–@‚ÌUŒ‚\n");
+	//printfDx("–‚–@‚ÌUŒ‚\n");
 	// rigid_body‚Ì“o˜^
 	rigid_body_->Init(weak_from_this());
 	rigid_body_->SetTag("effect_attack");

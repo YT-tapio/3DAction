@@ -36,7 +36,7 @@ void ChasePlayer::Init()
 
 void ChasePlayer::Entry()
 {
-	printfDx("チェイス\n");
+	//printfDx("チェイス\n");
 }
 
 BehaviorStatus ChasePlayer::Update()

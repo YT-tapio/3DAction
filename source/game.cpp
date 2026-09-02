@@ -49,11 +49,11 @@
 Game::Game()
 	: SceneBase()
 {
-	
 	AttackRangeGroup::GetInstance().Awake();
-	StatModifires::GetInstance().Awake();
+	//StatModifires::GetInstance().Awake();
 	damage_ui_group_ = std::make_shared<DamageUIGroup>();
-	StatModifireUIData::GetInstance().Load();
+	damage_ui_group_->Awake();
+	//StatModifireUIData::GetInstance().Load();
 	enemy_ui_group_ = std::make_shared<EnemyUIGroup>();
 	shadow_circle_controller_ = std::make_shared<ShadowCircleController>();
 	game_start_ = FALSE;
@@ -106,8 +106,8 @@ Game::~Game()
 	Physics::GetInstance().End();
 	//EffectManager::GetInstance().End();
 	AttackRangeGroup::GetInstance().End();
-	StatModifires::GetInstance().End();
-	StatModifireUIData::GetInstance().End();
+	//StatModifires::GetInstance().End();
+	//StatModifireUIData::GetInstance().End();
 	SoundManager::GetInstance().AllStop();
 }
 

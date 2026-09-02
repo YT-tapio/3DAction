@@ -50,7 +50,7 @@ void Stamp::Init()
 
 void Stamp::Entry()
 {
-	printfDx("スタンプ\n");
+	//printfDx("スタンプ\n");
 	rigid_body_->NotActive();
 	is_stamp_ = FALSE;
 	//printfDx("stamp_entry\n");

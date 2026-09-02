@@ -6,14 +6,9 @@ class StatModifires
 {
 public:
 
-	static StatModifires& GetInstance()
-	{
-		static StatModifires instance;
-		return instance;
-	}
+	StatModifires();
 
-	StatModifires(const StatModifires&) = delete;
-	StatModifires& operator = (const StatModifires&) = delete;
+	~StatModifires();
 
 	void Awake();
 
@@ -21,10 +16,7 @@ public:
 
 	const StatModifire GetData(const std::string& name) const;
 
-
 private:
-
-	StatModifires();
 	
 	void LoadFile();
 

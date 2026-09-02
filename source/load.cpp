@@ -17,5 +17,5 @@ Load::~Load()
 
 void Load::Update()
 {
-	SceneManager::GetInstance().LoadScene(next_scene_);
+	SceneManager::GetInstance().LoadScene2(next_scene_);
 }

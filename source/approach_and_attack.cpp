@@ -20,6 +20,7 @@
 #include"takable_damage_enemy_interface.h"
 #include"takable_damage_player_interface.h"
 #include"attack_type.h"
+#include"sound_manager.h"
 
 ApproachAndAttack::ApproachAndAttack(std::weak_ptr<ObjectBase> owner, const float& min_coll_ratio, const float& max_coll_ratio, const float& damage_rate, 
 	const std::string& my_anim_name, const float approach_timing, const float approach_speed,const std::string& collider_tag)
@@ -29,11 +30,12 @@ ApproachAndAttack::ApproachAndAttack(std::weak_ptr<ObjectBase> owner, const floa
 	, approach_timing_(approach_timing)
 	, approach_speed_(approach_speed)
 	, is_approached_(FALSE)
+	, collider_tag_(collider_tag)
 {
 	// rigid_bodyを生成する
 	auto collider = std::make_shared<Capsule>(10.f,1.f,VectorAssistant::VGetZero());
 	rigid_body_ = std::make_shared<RigidBody>(collider, &pos_, FALSE, TRUE, 1.f, 1.f);
-	rigid_body_->SetTag(collider_tag);
+	
 }
 
 ApproachAndAttack::~ApproachAndAttack()
@@ -43,14 +45,14 @@ ApproachAndAttack::~ApproachAndAttack()
 
 void ApproachAndAttack::Init()
 {
-	
 	rigid_body_->Init(weak_from_this());
+	rigid_body_->SetTag(collider_tag_);
 	Physics::GetInstance().AddBody(rigid_body_);
 }
 
 void ApproachAndAttack::Entry()
 {
-	printfDx("コンボ\n");
+	//printfDx("コンボ\n");
 	// アニメーションを再生する
 	if (auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock()))
 	{
@@ -76,6 +78,7 @@ BehaviorStatus ApproachAndAttack::Update()
 			// アプローチ
 			Approach(owner);
 			is_approached_ = TRUE;
+			SoundManager::GetInstance().Play3DSound("double_punch");
 		}
 	}
 	

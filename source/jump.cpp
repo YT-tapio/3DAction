@@ -37,7 +37,7 @@ void Jump::Init()
 
 void Jump::Entry()
 {
-	printfDx("ジャンプ\n");
+	//printfDx("ジャンプ\n");
 	played_ = FALSE;
 	// アニメーションの再生
 	if (auto owner = my_owner_.lock())

@@ -201,7 +201,7 @@ void BossBase::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)
 	auto chase_node = MakeChaseNode(mine);
 	auto far_magic_node = MakeMagicNode(mine,current_phase);
 	/*-------*/
-	//random_nodes_far.emplace_back(far_magic_node);
+	random_nodes_far.emplace_back(far_magic_node);
 	random_nodes_far.emplace_back(chase_node);
 
 	std::shared_ptr<NodeBase> random_far_nodes2 = std::make_shared<RandomNode>(random_nodes_far);
@@ -214,7 +214,7 @@ void BossBase::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)
 	std::function<bool()> condition = [this]()-> bool
 		{
 			float dist_to_player = VSize(VSub(target_player_pos_, pos_));
-			return dist_to_player > 10.f;
+			return dist_to_player > 18.f;
 		};
 	std::shared_ptr<NodeBase> roar_node = MakeRoarNode(mine);
 
@@ -243,8 +243,8 @@ void BossBase::UpdatePhase()
 		if (hp_ratio < 0.8f) 
 		{
 			// カメラを切り替える
-			Brain::GetInstance().ChangeCamera("boss_phase2");
-			printfDx("フェーズ切り替え\n");
+			//Brain::GetInstance().ChangeCamera("boss_phase2");
+			//printfDx("フェーズ切り替え\n");
 			phase_ = Phase::second;
 		}
 

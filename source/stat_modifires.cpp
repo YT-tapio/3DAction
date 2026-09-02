@@ -6,6 +6,16 @@
 #include"stat_modifires.h"
 #include"csv_file_assistant.h"
 
+StatModifires::StatModifires()
+{
+	Awake();
+}
+
+StatModifires::~StatModifires()
+{
+	End();
+}
+
 void StatModifires::Awake()
 {
 	// ƒtƒ@ƒCƒ‹‚Ì“Ç‚Ýž‚Ý
@@ -26,11 +36,6 @@ const StatModifire StatModifires::GetData(const std::string& name) const
 		return empty_data_;
 	}
 	return data->second;
-}
-
-StatModifires::StatModifires()
-{
-	
 }
 
 void StatModifires::LoadFile()

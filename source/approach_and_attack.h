@@ -45,6 +45,7 @@ private:
 	VECTOR pos_;
 
 	std::string my_anim_name_;
+	std::string collider_tag_;
 
 	float approach_timing_;
 	float approach_speed_;

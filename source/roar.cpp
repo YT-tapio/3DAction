@@ -23,12 +23,12 @@ Roar::~Roar()
 
 void Roar::Entry()
 {
-	printfDx("roar\n");
+	//printfDx("roar\n");
 	if (!is_character_) { return; }
 	auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
 	owner->GetAnimator()->PlayRequest("roar");
-	//SoundManager::GetInstance().SetPos("roar", owner->GetPosition());
-	//SoundManager::GetInstance().Play3DSound("roar");
+	SoundManager::GetInstance().SetPos("tackle_vioce", owner->GetPosition());
+	SoundManager::GetInstance().Play3DSound("tackle_voice");
 }
 
 BehaviorStatus Roar::Update()

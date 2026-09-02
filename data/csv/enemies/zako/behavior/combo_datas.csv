@@ -1,4 +1,4 @@
 ﻿min_coll_ratio,max_coll_ratio,damage_rate,anim_name,approach_timing,approach_speed,collider_tag
-0.43,0.62,1.1,punch_combo1,0.2,20,conbo_attack
-0.43,0.62,1.1,punch_combo2,0.2,20,conbo_attack
-0.35,0.5,1.4,double_punch,0.2,20,conbo_last_attack
+0.43,0.62,1.1,punch_combo1,0.2,20,combo_attack1
+0.43,0.62,1.1,punch_combo2,0.2,20,combo_attack1
+0.35,0.5,1.4,double_punch,0.2,20,combo_attack2

@@ -1,3 +1,4 @@
+#include<memory>
 #include<unordered_map>
 #include<string>
 #include"DxLib.h"
@@ -12,10 +13,20 @@ StatModifireUIGroup::StatModifireUIGroup(const std::string& file_path)
 {
 	LoadFile(file_path);
 	Init();
+	stat_modifire_ui_data_ = std::make_shared<StatModifireUIData>();
+
 }
 
 StatModifireUIGroup::~StatModifireUIGroup()
 {
+	for (auto& ui : active_stat_modifire_uis_)
+	{
+		if (ui.second.handle != -1)
+		{
+			DeleteGraph(ui.second.handle);
+			ui.second.handle = -1;
+		}
+	}
 	active_stat_modifire_uis_.clear();
 }
 
@@ -98,7 +109,7 @@ void StatModifireUIGroup::Spawn(std::function<bool()> end_condition,StatType sta
 		{
 			active_stat_modifire_uis_[i].end_condition = end_condition;
 			// ‘Î‰ž‚µ‚Ä‚¢‚é‰æ‘œ‚ðŽæ“¾‚·‚é
-			active_stat_modifire_uis_[i].handle = StatModifireUIData::GetInstance().GetHandle(stat_type,operation);
+			active_stat_modifire_uis_[i].handle = stat_modifire_ui_data_->GetHandle(stat_type, operation);
 			break;
 		}
 	}
@@ -127,7 +138,6 @@ void StatModifireUIGroup::LoadFile(const std::string& file_path)
 		size_rate_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		rot_z_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 	}
-
 }
 
 void StatModifireUIGroup::ChangeActiveStatModifireUI(int index)

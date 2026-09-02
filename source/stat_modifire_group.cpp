@@ -13,7 +13,7 @@ ActiveStatModifireGroup::ActiveStatModifireGroup()
 {
 	// 先にインスタンスを生成
 	active_stat_modifires_.reserve(kMaxStatModifire);
-
+	stat_modifires_ = std::make_shared<StatModifires>();
 	for (int i = 0; i < kMaxStatModifire; i++)
 	{
 		active_stat_modifires_.push_back(std::make_shared<ActiveStatModifire>());
@@ -50,7 +50,7 @@ void ActiveStatModifireGroup::Activation(const Status& base_status, Status& curr
 	{
 		if (!active_stat_modifire->GetIsActive())
 		{
-			active_stat_modifire->Activation(base_status, current_status, StatModifires::GetInstance().GetData(name),player_ui_group);
+			active_stat_modifire->Activation(base_status, current_status, stat_modifires_->GetData(name), player_ui_group);
 			break;
 		}
 	}

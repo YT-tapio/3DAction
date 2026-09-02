@@ -6,12 +6,10 @@ class StatModifireUIData
 {
 public:
 
-	static StatModifireUIData& GetInstance()
-	{
-		static StatModifireUIData instance;
-		return instance;
-	}
+	StatModifireUIData();
 
+	~StatModifireUIData();
+	
 	// ÉfÅ[É^ÇÃì«Ç›çûÇ›
 	void Load();
 
@@ -23,7 +21,7 @@ public:
 
 private:
 
-	StatModifireUIData();
+	
 
 private:
 

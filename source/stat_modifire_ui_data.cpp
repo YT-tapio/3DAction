@@ -7,6 +7,16 @@
 #include<functional>
 #include"csv_file_assistant.h"
 
+StatModifireUIData::StatModifireUIData()
+{
+	Load();
+}
+
+StatModifireUIData::~StatModifireUIData()
+{
+	End();
+}
+
 void StatModifireUIData::Load()
 {
 	// ƒf[ƒ^
@@ -29,12 +39,13 @@ void StatModifireUIData::Load()
 
 		std::string stat_modifire_name = CSVFileAssistant::GetStringOfCSVFile(ss, data);
 		std::string file_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
-		int handle = LoadGraph(file_path.c_str());
-		if (handle == -1)
+		handles_[stat_modifire_name] = LoadGraph(file_path.c_str());
+		if (handles_[stat_modifire_name] == -1)
 		{
 			printfDx("‰æ‘œ“Ç‚Ýž‚ÝŽ¸”s\n");
 		}
-		handles_[stat_modifire_name] = handle;
+		
+		
 	}
 
 }
@@ -104,7 +115,3 @@ const int StatModifireUIData::GetHandle(StatType type, ModifireOperation operati
 	return handle->second;
 }
 
-StatModifireUIData::StatModifireUIData()
-{
-
-}

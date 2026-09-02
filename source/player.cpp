@@ -656,7 +656,7 @@ void Player::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		return;
 	}
 
-	if (target_tag == "stamp")
+	if (target_tag == "stamp" || target_tag == "combo_attack1")
 	{
 		if (is_invincible_) { return; }
 		animator_->PlayRequest("on_damage");
@@ -664,14 +664,10 @@ void Player::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		return;
 	}
 
-	if (target_tag == "effect_attack")
+	if (target_tag == "effect_attack" || target_tag == "combo_attack2")
 	{
 		if (is_invincible_) { return; }
 		// 自身とオーナーのパンチがplayerにcastしてnullptrなったら処理する
-		float size = VSize(VSub(pos_, object->GetRigidBody()->GetPosition()));
-		float my_radius = std::dynamic_pointer_cast<Capsule>(rigid_body_->GetCollider())->GetRadius();
-		float other_radius = std::dynamic_pointer_cast<Sphere>(object->GetRigidBody()->GetCollider())->GetRadius();
-		//printfDx("my_radius:%.2f,other_radius:%.2f,%.2f\n", my_radius,other_radius,size);
 		if (!object->GetRigidBody()->CheckSameOwner(shared_from_this()))
 		{
 			animator_->PlayRequest("knock_back");

@@ -58,8 +58,7 @@ void ButtonUI::Update()
 void ButtonUI::Draw()
 {
 	auto name = ConfigDatas::GetInstance().GetConfigData(name_).pad.name;
-	int handle = ButtonUIDatas::GetInstance().GetHandle(name);
-	Draw2D::RotaGraph(pos_, current_size_, 0.f, handle, TRUE);
+	Draw2D::RotaGraph(pos_, current_size_, 0.f, ButtonUIDatas::GetInstance().GetHandle(name), TRUE);
 }
 
 bool ButtonUI::CheckMyButton()

@@ -2,6 +2,7 @@
 
 class ActiveStatModifire;
 class IPlayerUIGroup;
+class StatModifires;
 
 class ActiveStatModifireGroup
 {
@@ -26,5 +27,7 @@ private:
 
 	// vectorでデータの確保
 	std::vector<std::shared_ptr<ActiveStatModifire>> active_stat_modifires_;
+
+	std::shared_ptr<StatModifires> stat_modifires_;
 
 };

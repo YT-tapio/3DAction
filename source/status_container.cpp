@@ -162,9 +162,10 @@ float StatusContainer::TakeDamage(float atk,AttackType type)
 	}
 
 	// 最低でも1ダメージは食らう
-	if (damage <= 0.f) { damage = 1.f; }
-
-	// TODO：受けたダメージの表示する
+	if (damage < 1.f) 
+	{ 
+		damage = 1;
+	}
 
 	current_status_.hp -= damage;
 	if (current_status_.hp < 0.f) { current_status_.hp = 0.f; }
