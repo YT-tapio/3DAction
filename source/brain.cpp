@@ -10,6 +10,7 @@
 #include"lose_camera.h"
 #include"enemy_lock_on_camera.h"
 #include"shake.h"
+#include"player_group.h"
 
 void Brain::Init()
 {
@@ -17,13 +18,12 @@ void Brain::Init()
 	before_camera_ = "nothing";
 }
 
-void Brain::CreatePlaySceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos, std::function<VECTOR()> enemy_center_pos, std::function<VECTOR()> enemy_dir)
+void Brain::CreatePlaySceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos, std::function<VECTOR()> enemy_center_pos, std::function<VECTOR()> enemy_dir,std::shared_ptr<PlayerGroup> player_group)
 {
-	auto player_head_pos = PlayerGroup::GetInstance().GetCurrentPlayerHeadPos();
-	//virtual_cameras_[kTracking] = std::make_shared<TrackingCamera>(PlayerGroup::GetInstance().GetCurrentPlayerHeadPos(), camera_pos, target_pos);
+	auto player_head_pos = player_group->GetCurrentPlayerHeadPos();
 	virtual_cameras_[kSphere] = std::make_shared<SphereCamera>(player_head_pos, camera_pos, target_pos);
 	
-	virtual_cameras_["won"] = std::make_shared<WonCamera>(camera_pos, target_pos,enemy_center_pos,enemy_dir);
+	virtual_cameras_["won"] = std::make_shared<WonCamera>(camera_pos, target_pos, enemy_center_pos, enemy_dir, player_group);
 	virtual_cameras_["lose"] = std::make_shared<LoseCamera>(camera_pos, target_pos);
 	virtual_cameras_["lock_on_enemy"] = std::make_shared<EnemyLockOnCamera>(camera_pos,target_pos, player_head_pos,enemy_center_pos);
 	//virtual_cameras_[kTracking]->Init();

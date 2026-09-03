@@ -26,6 +26,11 @@ PlayerGroup::PlayerGroup()
 	
 }
 
+PlayerGroup::~PlayerGroup()
+{
+
+}
+
 void PlayerGroup::AddPlayerObserver(IPlayerObserver* observer)
 {
 	for (auto& player : players_)
@@ -43,12 +48,10 @@ void PlayerGroup::Awake(VECTOR* camera_dir,std::shared_ptr<IPlayerUIGroup> playe
 	//players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer3Input(), "attacker2"));
 	players_.push_back(std::make_shared<Player>(camera_dir_, InputManager::GetInstance().GetPlayer1Input(), "attacker",player_ui_group,shadow_creater,damage_ui_group));
 	
-
 	for (auto player : players_)
 	{
 		enemy->AddObserver(player.get());
 	}
-
 }
 
 void PlayerGroup::Init(std::shared_ptr<PlayerSkillUIGroup> skill_ui_group)

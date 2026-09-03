@@ -7,6 +7,7 @@
 
 class Player;
 class Shake;
+class PlayerGroup;
 
 class Brain
 {
@@ -23,7 +24,8 @@ public:
 
 	void Init();
 
-	void CreatePlaySceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos, std::function<VECTOR()> enemy_center_pos, std::function<VECTOR()> enemy_dir);
+	void CreatePlaySceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos, std::function<VECTOR()> enemy_center_pos, 
+		std::function<VECTOR()> enemy_dir, std::shared_ptr<PlayerGroup> player_group);
 
 	void Update();
 

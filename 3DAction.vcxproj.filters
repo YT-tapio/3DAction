@@ -945,6 +945,9 @@
     <ClCompile Include="source\damage_ui_group_interface.cpp">
       <Filter>ソース ファイル\ui\damage_ui</Filter>
     </ClCompile>
+    <ClCompile Include="source\player_group_interface.cpp">
+      <Filter>ソース ファイル\player_group</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1627,6 +1630,9 @@
     </ClInclude>
     <ClInclude Include="source\damage_ui_group_interface.h">
       <Filter>ソース ファイル\ui\damage_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\player_group_interface.h">
+      <Filter>ソース ファイル\player_group</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,13 +1,15 @@
 #pragma once
 #include"virtual_camera_base.h"
+
 class ConditionTimer;
+class PlayerGroup;
 
 class WonCamera : public VirtualCameraBase
 {
 public:
 
 	WonCamera(VECTOR* main_camera_pos, VECTOR* main_camera_target_pos, std::function<VECTOR()> enemy_center_pos, 
-		std::function<VECTOR()> enemy_dir);
+		std::function<VECTOR()> enemy_dir, std::shared_ptr<PlayerGroup> player_group);
 
 	~WonCamera();
 

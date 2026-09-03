@@ -63,8 +63,9 @@
 #include"brain.h"
 #include"enemy_ui_group_interface.h"
 
-BossBase::BossBase(const VECTOR& pos, bool* game_start,std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group,std::shared_ptr<IDamageUIGroup> damage_ui_group)
-	: EnemyBase(pos, game_start,enemy_ui_group,damage_ui_group)
+BossBase::BossBase(const VECTOR& pos, bool* game_start,std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group,
+	std::shared_ptr<IDamageUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group)
+	: EnemyBase(pos, game_start,enemy_ui_group,damage_ui_group,player_group)
 {
 	vel_ = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
@@ -103,12 +104,10 @@ void BossBase::Init()
 	Physics::GetInstance().AddBody(rigid_body_);
 	// setterへの登録
 	ObjectSetter::GetInstance().AddResource(handle_, &pos_, &rot_, &scale_);
-	target_player_pos_ = PlayerGroup::GetInstance().MostNearPlayerPos(pos_);
+	target_player_pos_ = player_group_->MostNearPlayerPos(pos_);
 	auto physics_mine = shared_from_this();
 	auto mine = std::dynamic_pointer_cast<EnemyBase>(physics_mine);
 	std::shared_ptr<ObjectBase> obj_mine = mine;
-
-	
 	
 	MakeBehaviorTree(mine);
 
@@ -147,7 +146,7 @@ void BossBase::Update()
 	else
 	{
 		// 一番近いプレイヤーの位置を取得
-		target_player_pos_ = PlayerGroup::GetInstance().MostNearPlayerPos(pos_);
+		target_player_pos_ = player_group_->MostNearPlayerPos(pos_);
 		VECTOR dir = VectorAssistant::VGetZero();
 
 		double_punch_coll_pos_ = VAdd(pos_, VScale(dir_, 5.f));
@@ -240,7 +239,7 @@ void BossBase::UpdatePhase()
 	switch (phase_)
 	{
 	case Phase::first:
-		if (hp_ratio < 0.8f) 
+		if (hp_ratio < 0.8f)
 		{
 			// カメラを切り替える
 			//Brain::GetInstance().ChangeCamera("boss_phase2");
@@ -249,6 +248,7 @@ void BossBase::UpdatePhase()
 		}
 
 		break;
+
 	case Phase::second:
 
 		if (hp_ratio < 0.5f) { phase_ = Phase::third; }

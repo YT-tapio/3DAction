@@ -1,5 +1,6 @@
 #pragma once
 #include"skill_type.h"
+#include"player_group_interface.h"
 
 class Player;
 class IPlayerUIGroup;
@@ -9,19 +10,14 @@ class IPlayerObserver;
 class IShadowCreater;
 class IDamageUIGroup;
 
-class PlayerGroup
+class PlayerGroup : public IPlayerGroup
 {
 public:
 
-	static PlayerGroup& GetInstance()
-	{
-		static PlayerGroup instance;
-		return instance;
-	}
+	PlayerGroup();
 
-	PlayerGroup(const PlayerGroup&) = delete;
-	PlayerGroup& operator = (const PlayerGroup&) = delete;
-
+	~PlayerGroup();
+	
 	void AddPlayerObserver(IPlayerObserver* observer);
 
 	void Awake(VECTOR* camera_dir, std::shared_ptr<IPlayerUIGroup> player_ui_group,std::shared_ptr<EnemyBase> enemy,std::shared_ptr<IShadowCreater> shadow_creater,std::shared_ptr<IDamageUIGroup> damage_ui_group);
@@ -40,16 +36,16 @@ public:
 
 	void Debug();
 
-	VECTOR* GetCurrentPlayerHeadPos();
+	VECTOR* GetCurrentPlayerHeadPos() override;
 
-	VECTOR* GetCurrentPlayerFrontDir();
+	VECTOR* GetCurrentPlayerFrontDir() override;
 
 	/// <summary>
 	/// ˆø”‚Éˆê”Ô‹ß‚¢player‚ÌˆÊ’u‚ğ•Ô‚·
 	/// </summary>
 	/// <param name="pos">object‚Ìpos</param>
 	/// <returns></returns>
-	VECTOR MostNearPlayerPos(const VECTOR& pos);
+	VECTOR MostNearPlayerPos(const VECTOR& pos) override;
 
 	/// <summary>
 	/// Œ»İ‚ÌSkillID‚ğæ“¾
@@ -73,8 +69,6 @@ public:
 	const bool GetCurrentPlayerSkillCanUse(SkillType type) const;
 
 private:
-
-	PlayerGroup();
 
 	void CheckCurrentPlayerInfo();
 

@@ -50,16 +50,15 @@ Game::Game()
 	: SceneBase()
 {
 	AttackRangeGroup::GetInstance().Awake();
-	//StatModifires::GetInstance().Awake();
 	damage_ui_group_ = std::make_shared<DamageUIGroup>();
 	damage_ui_group_->Awake();
-	//StatModifireUIData::GetInstance().Load();
 	enemy_ui_group_ = std::make_shared<EnemyUIGroup>();
 	shadow_circle_controller_ = std::make_shared<ShadowCircleController>();
 	game_start_ = FALSE;
 	camera_ = std::make_shared<Camera>();
 	shadow_map_ = std::make_shared<ShadowMap>();
-	std::shared_ptr<EnemyBase> enemy = std::make_shared<BossBase>(VGet(0, 0, 0), &game_start_,shadow_circle_controller_,enemy_ui_group_, damage_ui_group_);
+	player_group_ = std::make_shared<PlayerGroup>();
+	std::shared_ptr<EnemyBase> enemy = std::make_shared<BossBase>(VGet(0, 0, 0), &game_start_,shadow_circle_controller_,enemy_ui_group_, damage_ui_group_,player_group_);
 	get_enemy_pos_ = [enemy]()
 		{
 			return enemy->GetCenterPos();
@@ -78,8 +77,7 @@ Game::Game()
 	player_ui_group_ = std::make_shared<PlayerUIGroup>();
 	player_skill_ui_group_ = std::make_shared<PlayerSkillUIGroup>();
 
-	//PlayerGroup::GetInstance().Awake(&camera_->dir_, player_ui_group_, enemy,shadow_circle_controller_, damage_ui_group_);
-	PlayerGroup::GetInstance().Awake(&camera_->dir_, player_ui_group_, enemy, shadow_circle_controller_, damage_ui_group_);
+	player_group_->Awake(&camera_->dir_, player_ui_group_, enemy, shadow_circle_controller_, damage_ui_group_);
 	objects_.push_back(enemy);
 
 	objects_.push_back(std::make_shared<Stage>());
@@ -87,9 +85,10 @@ Game::Game()
 	no_shadow_objects_.push_back(std::make_shared<SkyDome>());
 	game_start_timer_ = std::make_shared<GameStartTimer>(&game_start_);
 	
-	PlayerGroup::GetInstance().AddPlayerObserver(won_ui_.get());
-	PlayerGroup::GetInstance().AddPlayerObserver(lose_ui_.get());
-	PlayerGroup::GetInstance().AddPlayerObserver(game_to_next_scene_.get());
+	player_group_->AddPlayerObserver(won_ui_.get());
+	player_group_->AddPlayerObserver(lose_ui_.get());
+	player_group_->AddPlayerObserver(game_to_next_scene_.get());
+	
 	//Init();
 	is_finished_fade_ = FALSE;
 	SoundManager::GetInstance().Play2DSound("game_bgm");
@@ -100,14 +99,10 @@ Game::Game()
 Game::~Game()
 {
 	ObjectSetter::GetInstance().DeleteResource();
-	PlayerGroup::GetInstance().End();
 	objects_.clear();
 	no_shadow_objects_.clear();
 	Physics::GetInstance().End();
-	//EffectManager::GetInstance().End();
 	AttackRangeGroup::GetInstance().End();
-	//StatModifires::GetInstance().End();
-	//StatModifireUIData::GetInstance().End();
 	SoundManager::GetInstance().AllStop();
 }
 
@@ -116,7 +111,7 @@ void Game::Init()
 	AttackRangeGroup::GetInstance().Init();
 	Physics::GetInstance().Init();
 	EffectManager::GetInstance().Init();
-	PlayerGroup::GetInstance().Init(player_skill_ui_group_);
+	player_group_->Init(player_skill_ui_group_);
 	won_ui_->Init();
 	for (auto& obj : objects_)
 	{
@@ -128,9 +123,8 @@ void Game::Init()
 		obj->Init();
 	}
 	player_ui_group_->Init();
-	Brain::GetInstance().CreatePlaySceneVirtualCamera(camera_->GetPos(), camera_->GetTargetPos(), get_enemy_pos_, get_enemy_dir_);
+	Brain::GetInstance().CreatePlaySceneVirtualCamera(camera_->GetPos(), camera_->GetTargetPos(), get_enemy_pos_, get_enemy_dir_,player_group_);
 	damage_ui_group_->Init();
-	//damage_ui_group_->Init(head_pos, final_damage);
 	camera_->Init();
 	shadow_map_->Init();
 	game_start_timer_->Init();
@@ -155,7 +149,7 @@ void Game::Update()
 		if (SceneManager::GetInstance().LoadScene("title")) { return; }
 	}
 
-	PlayerGroup::GetInstance().Update();
+	player_group_->Update();
 	for (auto& obj : objects_)
 	{
 		if (!obj->GetIsActive()) { continue; }
@@ -171,7 +165,7 @@ void Game::Update()
 	Physics::GetInstance().Update();
 	ObjectSetter::GetInstance().Update();
 
-	PlayerGroup::GetInstance().LateUpdate();
+	player_group_->LateUpdate();
 	for (auto& obj : objects_)
 	{
 		if (!obj->GetIsActive()) { continue; }
@@ -198,7 +192,7 @@ void Game::Draw()
 {
 	if (TRUE)
 	{
-		PlayerGroup::GetInstance().Draw();
+		player_group_->Draw();
 		for (const auto& obj : objects_)
 		{
 			obj->Draw();
@@ -211,7 +205,7 @@ void Game::Draw()
 		// ‰e
 
 		shadow_map_->UpDrawShadowObject();
-		PlayerGroup::GetInstance().Draw();
+		player_group_->Draw();
 		for (const auto& obj : objects_)
 		{
 			obj->Draw();
@@ -220,7 +214,7 @@ void Game::Draw()
 		shadow_map_->DownDrawShadowObject();
 
 		shadow_map_->UpDrawnShadowObject();
-		PlayerGroup::GetInstance().Draw();
+		player_group_->Update();
 		for (const auto& obj : objects_)
 		{
 			obj->Draw();
@@ -251,7 +245,7 @@ void Game::Draw()
 	if (Debug::GetInstance().GetIsDisp())
 	{
 		camera_->Debug();
-		PlayerGroup::GetInstance().Debug();
+		player_group_->Debug();
 		for (auto& obj : objects_)
 		{
 			obj->Debug();

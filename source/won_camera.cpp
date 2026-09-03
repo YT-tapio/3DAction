@@ -10,7 +10,7 @@
 #include"player_group.h"
 
 WonCamera::WonCamera(VECTOR* main_camera_pos, VECTOR* main_camera_target_pos, std::function<VECTOR()> enemy_center_pos, 
-	std::function<VECTOR()> enemy_dir)
+	std::function<VECTOR()> enemy_dir,std::shared_ptr<PlayerGroup> player_group)
 	: VirtualCameraBase(main_camera_pos, main_camera_target_pos)
 	, enemy_center_pos_(enemy_center_pos)
 	, enemy_dir_(enemy_dir)
@@ -21,8 +21,8 @@ WonCamera::WonCamera(VECTOR* main_camera_pos, VECTOR* main_camera_target_pos, st
 {
 	timer_ = std::make_shared<ConditionTimer>(3.f);
 
-	player_cneter_pos_ = PlayerGroup::GetInstance().GetCurrentPlayerHeadPos();
-	player_dir_ = PlayerGroup::GetInstance().GetCurrentPlayerFrontDir();
+	player_cneter_pos_ = player_group->GetCurrentPlayerHeadPos();
+	player_dir_ = player_group->GetCurrentPlayerFrontDir();
 }
 
 WonCamera::~WonCamera()
