@@ -64,8 +64,8 @@
 #include"enemy_ui_group_interface.h"
 
 BossBase::BossBase(const VECTOR& pos, bool* game_start,std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group,
-	std::shared_ptr<IDamageUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group)
-	: EnemyBase(pos, game_start,enemy_ui_group,damage_ui_group,player_group)
+	std::shared_ptr<IDamageUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group)
+	: EnemyBase(pos, game_start,enemy_ui_group,damage_ui_group,player_group,attack_range_group)
 {
 	vel_ = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
@@ -76,6 +76,7 @@ BossBase::BossBase(const VECTOR& pos, bool* game_start,std::shared_ptr<IShadowCr
 	scale_ = VectorAssistant::VGetSame(0.15f);
 	my_name_ = "";
 	handle_ = MV1LoadModel("data/model/enemy/zako/Demon_T_Wiezzorek.mv1");
+	// handle_ = -1;
 	if (handle_ == -1) { printfDx("読み込みエラー\n"); }
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(6.5f, 18.f, VectorAssistant::VGetZero()),
 		&pos_, TRUE, FALSE, 0.03f, 0.1f);
@@ -92,7 +93,7 @@ BossBase::BossBase(const VECTOR& pos, bool* game_start,std::shared_ptr<IShadowCr
 
 BossBase::~BossBase()
 {
-
+	std::cout << "BossBase" << std::endl;
 }
 
 void BossBase::Init()
@@ -183,7 +184,7 @@ void BossBase::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)
 	// 魔法攻撃
 	auto magic_node = MakeMagicNode(mine, current_phase);
 	// タックル
-	auto tackle_node = MakeTackleNode(mine, current_phase);
+	auto tackle_node = MakeRoarTackleNode(mine, current_phase);
 
 	// ランダムのnodeに代入
 	std::vector<std::shared_ptr<NodeBase>> attack_random_nodes;
@@ -289,7 +290,7 @@ std::shared_ptr<NodeBase> BossBase::MakeMagicNode(std::shared_ptr<EnemyBase> min
 	auto check_phase_node = std::make_shared<CheckPhaseNode>(Phase::first, current_phase);
 
 	std::shared_ptr<BehaviorBase> range = std::make_shared<DispAttackRange>(
-		mine, &target_player_pos_, VGet(area_of_effect_radius, 1.f, area_of_effect_radius), ui_AoE_end_function, 2.f);
+		mine, &target_player_pos_, VGet(area_of_effect_radius, 1.f, area_of_effect_radius), ui_AoE_end_function, 2.f, attack_range_group_);
 
 	// ui表示
 	std::shared_ptr<NodeBase> area_of_effect_ui_node = std::make_shared<ActionNode>(range);
@@ -305,7 +306,7 @@ std::shared_ptr<NodeBase> BossBase::MakeMagicNode(std::shared_ptr<EnemyBase> min
 	return node_;
 }
 
-std::shared_ptr<NodeBase> BossBase::MakeTackleNode(std::shared_ptr<EnemyBase> mine, std::function<Phase()> current_phase)
+std::shared_ptr<NodeBase> BossBase::MakeRoarTackleNode(std::shared_ptr<EnemyBase> mine, std::function<Phase()> current_phase)
 {
 	std::shared_ptr<NodeBase> node;
 
@@ -316,7 +317,7 @@ std::shared_ptr<NodeBase> BossBase::MakeTackleNode(std::shared_ptr<EnemyBase> mi
 		VectorAssistant::VGetZero());
 
 	std::shared_ptr<RigidBody> rigid_body = std::make_shared<RigidBody>(collider, &pos_, FALSE, TRUE, 0.1f, 1.f);
-	std::shared_ptr<BehaviorBase> tackle = std::make_shared<RoarTackle>(mine, rigid_body, "tackle", 1.f, 2.f, 1.f);
+	std::shared_ptr<BehaviorBase> tackle = std::make_shared<RoarTackle>(mine, rigid_body, "tackle", 1.f, 2.f, 1.f,attack_range_group_);
 	std::shared_ptr<NodeBase> tackle_node = std::make_shared<ActionNode>(tackle);
 	auto check_phase_node = std::make_shared<CheckPhaseNode>(Phase::third, current_phase);
 	std::vector<std::shared_ptr<NodeBase>> tackle_nodes;
@@ -362,7 +363,7 @@ std::shared_ptr<NodeBase> BossBase::MakeStampNode(std::shared_ptr<EnemyBase> min
 			return FALSE;
 		};
 
-	auto disp_range = std::make_shared<DispAttackRange>(mine, &pos_, VGet(stump_radius, 1.f, stump_radius), ui_stump_end_function, 3.f);
+	auto disp_range = std::make_shared<DispAttackRange>(mine, &pos_, VGet(stump_radius, 1.f, stump_radius), ui_stump_end_function, 3.f,attack_range_group_);
 	auto stamp_ui_node = std::make_shared<ActionNode>(disp_range);
 	stump_nodes.push_back(phase_node);
 	stump_nodes.push_back(stamp_ui_node);

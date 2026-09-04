@@ -44,5 +44,5 @@ private:
 
 	int num_;
 	bool is_disp_;
-
+	bool is_push_;
 };

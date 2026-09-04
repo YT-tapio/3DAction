@@ -10,21 +10,23 @@
 #include<string>
 #include"character_base.h"
 #include"animator_base.h"
-
+#include"attack_range_group_interface.h"
+#include<iostream>
 DispAttackRange::DispAttackRange(std::weak_ptr<ObjectBase> owner, VECTOR* pos, const VECTOR& attack_range_scale, 
-	std::function<bool()> end_function, const float& time)
+	std::function<bool()> end_function, const float& time, std::shared_ptr<IAttackRangeGroup> attack_range_group)
 	: BehaviorBase(owner)
 	, pos_(pos)
 	, attack_range_scale_(attack_range_scale)
 	, end_function_(end_function)
 	, time_(time)
+	, attack_range_group_(attack_range_group)
 {
 
 }
 
 DispAttackRange::~DispAttackRange()
 {
-
+	std::cout << "dispAttackRange" << std::endl;
 }
 
 void DispAttackRange::Init()
@@ -49,7 +51,8 @@ void DispAttackRange::Entry()
 	VECTOR disp_pos = VAdd(*pos_, VGet(0.f, 0.1f, 0.f));
 	disp_pos.y = -17.f;
 	// 当たり判定の描画をリクエスト
-	AttackRangeGroup::GetInstance().CircleDrawRequest(disp_pos,attack_range_scale_,time_, end_function_);
+	//AttackRangeGroup::GetInstance().CircleDrawRequest(disp_pos,attack_range_scale_,time_, end_function_);
+	attack_range_group_->CircleDrawRequest(disp_pos, attack_range_scale_, time_, end_function_);
 }
 
 BehaviorStatus DispAttackRange::Update()

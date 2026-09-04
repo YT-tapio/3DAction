@@ -65,5 +65,6 @@ void StringUI::LoadFile(const std::string& data_file_path)
 	}
 
 	font_handle_ = Font::CreateHandleOfFile(font_data_path);
+	//font_handle_ = -1;
 	pos_ = pos;
 }

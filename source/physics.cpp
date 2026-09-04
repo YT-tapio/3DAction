@@ -95,14 +95,9 @@ void Physics::End()
 {
 	// 後始末
 	rigid_body_id_ = 0;
-	
-	//printfDx("size前：%d\n", collisioned_pairs_id_.size());
-	collisioned_pairs_id_.clear();
-	//printfDx("size後：%d\n", collisioned_pairs_id_.size());
-
-	//printfDx("size前：%d\n", id_rigid_bodies_mp_.size());
-	id_rigid_bodies_mp_.clear();
-	//printfDx("size後：%d\n", id_rigid_bodies_mp_.size());
+	contact.polys.clear();
+	collisioned_pairs_id_.clear();		// 衝突したペアを記憶
+	id_rigid_bodies_mp_.clear();		// rigid_bodyの登録を解除
 }
 
 bool Physics::CheckHitGroundProj(std::shared_ptr<RigidBody>other, Contact& contact, const VECTOR& segment_start_pos, const float& ground_proj_length)
@@ -393,7 +388,7 @@ void Physics::Collision()
 		}
 
 	}
-
+	contact.polys.clear();
 	// OnCollision系の処理をする
 	// 今あたっているもの
 	for (const auto& current_collisioned_pair : current_collisioned_pairs_id)

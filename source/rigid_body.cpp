@@ -37,7 +37,7 @@ RigidBody::RigidBody(std::shared_ptr<ColliderBase> coll,VECTOR* pos,bool gravity
 
 RigidBody::~RigidBody()
 {
-	
+	printfDx("RigidBody Destroy\n");
 }
 
 void RigidBody::Init(std::weak_ptr<IPhysicsEventReceiver> object)

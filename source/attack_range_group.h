@@ -1,21 +1,17 @@
 #pragma once
+#include"attack_range_group_interface.h"
 
 class AttackRangeCircle;
 class AttackRangeRectangle;
 
 // çUåÇîÕàÕÇï`âÊÇ∑ÇÈï®ÇìùäáÇ∑ÇÈ
-class AttackRangeGroup
+class AttackRangeGroup : public IAttackRangeGroup
 {
 public:
 
-	static AttackRangeGroup& GetInstance()
-	{
-		static AttackRangeGroup instance;
-		return instance;
-	}
-
-	AttackRangeGroup(const AttackRangeGroup&) = delete;
-	AttackRangeGroup& operator = (const AttackRangeGroup&) = delete;
+	AttackRangeGroup();
+	
+	~AttackRangeGroup() override;
 
 	void Awake();
 
@@ -32,23 +28,21 @@ public:
 	/// </summary>
 	/// <param name="scale"></param>
 	/// <returns>-1à»äOÇÕê¨å˜</returns>
-	int CircleDrawRequest(const VECTOR& pos, const VECTOR& scale,const float& time, std::function<bool()>end_function);
+	int CircleDrawRequest(const VECTOR& pos, const VECTOR& scale,const float& time, std::function<bool()>end_function) override;
 
-	int RectangleDrawRequest(const VECTOR& pos, const VECTOR& scale, const VECTOR& dir, const float& time, std::function<bool()> end_function);
+	int RectangleDrawRequest(const VECTOR& pos, const VECTOR& scale, const VECTOR& dir, const float& time, std::function<bool()> end_function) override;
 
-	void CircleSetPos(const int& id,const VECTOR& pos);
+	void CircleSetPos(const int& id,const VECTOR& pos) override;
 
-	void RectangleSetPos(const int& id, const VECTOR& pos);
+	void RectangleSetPos(const int& id, const VECTOR& pos) override;
 
-	void RectangleSetDir(const int& id, const VECTOR& dir);
-
-private:
-
-	AttackRangeGroup();
+	void RectangleSetDir(const int& id, const VECTOR& dir) override;
 
 private:
 
-	static const int kMaxAttackRangeNum = 5;
+private:
+
+	const int kMaxAttackRangeNum = 5;
 
 	std::vector<std::pair<bool,std::shared_ptr<AttackRangeCircle>>> attack_ranges_ui_;
 	std::unordered_map<int,std::function<bool()>> end_functions_;

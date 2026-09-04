@@ -36,7 +36,8 @@ WonUI::WonUI()
 	
 	retry_button_ = std::make_shared<ButtonUI>(ConfigName::retry, retry_ui_pos_, 0.15f, nullptr);
 	go_title_button_ = std::make_shared<ButtonUI>(ConfigName::go_title, go_title_ui_pos_, 0.15f, nullptr);
-	go_next_scene_font_.handle = Font::CreateHandleOfFile("data/csv/font/game_to_next_scene_font_data.csv");
+	//go_next_scene_font_.handle = Font::CreateHandleOfFile("data/csv/font/game_to_next_scene_font_data.csv");
+	go_next_scene_font_.handle = -1;
 	go_next_scene_font_.body_color = GetColor(255, 255, 255);
 	go_next_scene_font_.body_color = GetColor(0, 0, 0);
 	timer_ = std::make_shared<ConditionTimer>(3.4f);
@@ -46,6 +47,9 @@ WonUI::WonUI()
 WonUI::~WonUI()
 {
 	DeleteFontToHandle(go_next_scene_font_.handle);
+	DeleteGraph(won_image_handle_);
+	DeleteGraph(avoid_collect_font_.handle);
+	DeleteGraph(most_damage_font_.handle);
 }
 
 void WonUI::Init()
@@ -146,10 +150,12 @@ void WonUI::LoadFile()
 		most_damage_font_.body_color = CSVFileAssistant::GetColorOfCSVFile(ss, data);
 		most_damage_font_.edge_color = CSVFileAssistant::GetColorOfCSVFile(ss, data);
 	}
-	won_image_handle_ = LoadGraph(won_image_file_path.c_str());
-	avoid_collect_font_.handle = Font::CreateHandleOfFile(avoid_collect_font_path);
-	most_damage_font_.handle = Font::CreateHandleOfFile(most_take_damage_font_path);
-
+	//won_image_handle_ = LoadGraph(won_image_file_path.c_str());
+	won_image_handle_ = -1;
+	//avoid_collect_font_.handle = Font::CreateHandleOfFile(avoid_collect_font_path);
+	avoid_collect_font_.handle = -1;
+	//most_damage_font_.handle = Font::CreateHandleOfFile(most_take_damage_font_path);
+	most_damage_font_.handle = -1;
 }
 
 void WonUI::DrawBackGround()

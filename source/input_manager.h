@@ -27,6 +27,8 @@ public:
 
 	void StartAllInput();
 
+	void DeleteResource();
+
 	const std::shared_ptr<const InputBase> GetPlayer1Input() const;
 
 	const std::shared_ptr<const InputBase> GetPlayer2Input() const;
@@ -47,8 +49,6 @@ private:
 
 	void ChangeInput();
 
-
-
 private:
 
 	static constexpr int kPlayer1Id = 1;
@@ -56,8 +56,8 @@ private:
 	static constexpr int kPlayer3Id = 3;
 	static constexpr int kPlayer4Id = 4;
 
-	std::unordered_map<int,std::weak_ptr<IInputChange>> input_changers_;
-	std::unordered_map<int, std::shared_ptr<InputBase>> input_id_mp_;
+	std::unordered_map<int,std::weak_ptr<IInputChange>> input_changers_;	// input‚Ì•ÏX‚ğ‚³‚ê‚é”
+	std::unordered_map<int, std::shared_ptr<InputBase>> input_id_mp_;		// input‚Ì”
 
 	int changers_num_;
 };

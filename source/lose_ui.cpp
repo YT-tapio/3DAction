@@ -25,15 +25,18 @@ LoseUI::LoseUI()
 	, is_active_(FALSE)
 {
 	LoadFile();
-	game_over_handle_ = LoadGraph("data/ui/game_over/game_over.png");
-	Abutton_image_handle_ = LoadGraph("data/ui/input/pad/button_xbox_digital_a_1.png");
-	Bbutton_image_handle_ = LoadGraph("data/ui/input/pad/button_xbox_digital_b_1.png");
+	//game_over_handle_ = LoadGraph("data/ui/game_over/game_over.png");
+	//Abutton_image_handle_ = LoadGraph("data/ui/input/pad/button_xbox_digital_a_1.png");
+	//Bbutton_image_handle_ = LoadGraph("data/ui/input/pad/button_xbox_digital_b_1.png");
+	game_over_handle_ = -1;
+	Abutton_image_handle_ = -1;
+	Bbutton_image_handle_ = -1;
 	if (game_over_handle_ == -1) { printfDx("データ読み込み失敗\n"); }
 	if (Abutton_image_handle_ == -1) { printfDx("データ読み込み失敗\n"); }
 	if (Bbutton_image_handle_ == -1) { printfDx("データ読み込み失敗\n"); }
 
-	font_handle_ = Font::CreateHandleOfFile("data/csv/font/result_font_data.csv");
-
+	//font_handle_ = Font::CreateHandleOfFile("data/csv/font/result_font_data.csv");
+	font_handle_ = -1;
 	body_color_ = GetColor(255, 255, 255);
 	edge_color_ = GetColor(0, 0, 0);
 }

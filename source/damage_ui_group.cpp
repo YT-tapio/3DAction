@@ -10,18 +10,29 @@
 #include"csv_file_assistant.h"
 #include"font.h"
 
+DamageUIGroup::DamageUIGroup()
+{
+
+}
+
+DamageUIGroup::~DamageUIGroup()
+{
+	player_damage_uis_.clear();
+	enemy_damage_uis_.clear();
+}
+
 void DamageUIGroup::Awake()
 {
 	// インスタンスを生成
 	for (int i = 0; i < kMaxDamageUI; i++)
 	{
-		player_damage_uis_.emplace_back(std::make_shared<DamageUI>("data/csv/ui/damage/player_damage_ui.csv"));
+		//player_damage_uis_.emplace_back(std::make_shared<DamageUI>("data/csv/ui/damage/player_damage_ui.csv"));
 	}
 
 	// インスタンスを生成
 	for (int i = 0; i < kMaxDamageUI; i++)
 	{
-		enemy_damage_uis_.emplace_back(std::make_shared<DamageUI>("data/csv/ui/damage/enemy_damage_ui.csv"));
+		//enemy_damage_uis_.emplace_back(std::make_shared<DamageUI>("data/csv/ui/damage/enemy_damage_ui.csv"));
 	}
 }
 
@@ -101,13 +112,3 @@ void DamageUIGroup::SpawnEnemyDamageUI(const VECTOR& pos, const float& damage)
 	}
 }
 
-DamageUIGroup::DamageUIGroup()
-{
-	
-}
-
-DamageUIGroup::~DamageUIGroup()
-{
-	player_damage_uis_.clear();
-	enemy_damage_uis_.clear();
-}

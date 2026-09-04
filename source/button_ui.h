@@ -26,8 +26,6 @@ private:
 	std::function<void()> execute_;
 	ConfigName name_;
 
-	int handle_;	// 自分の操作に対応しているボタンを画像ハンドルとして保持
-
 	float default_size_;
 	float current_size_;
 	float target_size_;

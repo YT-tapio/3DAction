@@ -1,13 +1,14 @@
 #pragma once
 
 class BehaviorBase;
+class IAttackRangeGroup;
 
 class DispAttackRange : public BehaviorBase
 {
 public:
 
 	DispAttackRange(std::weak_ptr<ObjectBase> owner,VECTOR* pos,const VECTOR& attack_range_scale, 
-		std::function<bool()> end_function,const float& time);
+		std::function<bool()> end_function,const float& time,std::shared_ptr<IAttackRangeGroup> attack_range_group);
 
 	~DispAttackRange() override;
 
@@ -24,6 +25,8 @@ public:
 	void Debug() override;
 
 private:
+
+	std::shared_ptr<IAttackRangeGroup> attack_range_group_;
 
 	std::function<bool()> end_function_;	// I—¹ğŒ
 	VECTOR *pos_;							// “–‚½‚è”»’è‚Ìpos

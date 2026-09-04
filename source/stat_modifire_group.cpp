@@ -22,7 +22,7 @@ ActiveStatModifireGroup::ActiveStatModifireGroup()
 
 ActiveStatModifireGroup::~ActiveStatModifireGroup()
 {
-
+	active_stat_modifires_.clear();
 }
 
 void ActiveStatModifireGroup::Init()

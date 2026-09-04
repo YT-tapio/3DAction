@@ -10,6 +10,7 @@ Object2D::Object2D(const ImageData data, const VECTOR& pos, float size_rate, flo
 	, size_rate_(size_rate)
 {
 	handle_ = LoadGraph(data_.path.c_str());
+	//handle_ = -1;
 	if (handle_ == -1) { printfDx("2DF“Ç‚İ‚İƒGƒ‰[\n"); }
 
 	pos_ = pos;

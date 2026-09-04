@@ -45,7 +45,6 @@ void StatModifireUIData::Load()
 			printfDx("画像読み込み失敗\n");
 		}
 		
-		
 	}
 
 }
@@ -55,7 +54,11 @@ void StatModifireUIData::End()
 	// データの開放
 	for (auto& handle : handles_)
 	{
-		DeleteGraph(handle.second);
+		if (handle.second != -1)
+		{
+			DeleteGraph(handle.second);
+			handle.second = -1;
+		}
 	}
 	handles_.clear();
 }

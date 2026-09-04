@@ -110,7 +110,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 
 Player::~Player()
 {
-	
+	observers_.clear();
 }
 
 void Player::AddObserver(IPlayerObserver* observer)
@@ -416,7 +416,9 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 
 		// モデルのパス
 		std::string path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
+		
 		handle_ = MV1LoadModel(path.c_str());
+		//handle_ = -1;
 		if(handle_ == -1){ printfDx("player : モデル読み込みエラー\n"); }
 		VECTOR init_pos = VectorAssistant::VGetZero();
 		

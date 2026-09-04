@@ -10,17 +10,18 @@
 #include<unordered_map>
 #include"animator_base.h"
 #include<functional>
-#include"attack_range_group.h"
 #include"vector_assistant.h"
+#include"attack_range_group_interface.h"
 
 RoarTackle::RoarTackle(std::weak_ptr<ObjectBase> owner, std::shared_ptr<RigidBody> rigid_body,
-	std::string anim_name, const float time, const float speed, float damage_rate)
+	std::string anim_name, const float time, const float speed, float damage_rate,std::shared_ptr<IAttackRangeGroup> attack_range_group)
 	: Tackle(owner,rigid_body,anim_name,time,speed,damage_rate)
 	, tackle_state_(TackleState::roar)
 	, roar_anim_name_("")
 	, attack_range_ui_id_(-1)
 	, attack_dir_(VectorAssistant::VGetZero())
 	, is_end_(FALSE)
+	, attack_range_group_(attack_range_group)
 {
 
 }
@@ -53,7 +54,7 @@ void RoarTackle::Entry()
 			return is_end_;
 		};
 
-	attack_range_ui_id_ = AttackRangeGroup::GetInstance().RectangleDrawRequest(owner_.lock()->GetPosition(), VGet(8.5f,1.f,57.f), attack_dir_, max_time,end_function);
+	attack_range_ui_id_ = attack_range_group_->RectangleDrawRequest(owner_.lock()->GetPosition(), VGet(8.5f,1.f,57.f), attack_dir_, max_time,end_function);
 }
 
 BehaviorStatus RoarTackle::Update()
@@ -95,9 +96,8 @@ void RoarTackle::RoarUpdate()
 		VECTOR attack_target_pos = character->GetAttackTargetPos();
 		attack_dir_ = VectorAssistant::VGetDir(character->GetPosition(), attack_target_pos);
 	}
-
-	AttackRangeGroup::GetInstance().RectangleSetDir(attack_range_ui_id_, attack_dir_);
-	AttackRangeGroup::GetInstance().RectangleSetPos(attack_range_ui_id_, owner_pos);
+	attack_range_group_->RectangleSetDir(attack_range_ui_id_, attack_dir_);
+	attack_range_group_->RectangleSetPos(attack_range_ui_id_, owner_pos);
 }
 
 BehaviorStatus RoarTackle::TackleUpdate()

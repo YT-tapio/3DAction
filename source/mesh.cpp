@@ -11,10 +11,10 @@ Mesh::Mesh(int handle)
 
 }
 
-
 Mesh::~Mesh()
 {
-
+	printfDx("Mesh Destroy\n");
+	//MV1DeleteModel(handle_);
 }
 
 bool Mesh::CheckCollision(const VECTOR& my_pos, const VECTOR& vel,const VECTOR& other_pos, const VECTOR& other_vel, std::shared_ptr<ColliderBase> other_coll,Contact& contact)

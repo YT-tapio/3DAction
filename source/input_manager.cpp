@@ -19,6 +19,7 @@ void InputManager::AddInput(std::weak_ptr<IInputChange> input)
 
 void InputManager::Init()
 {
+	changers_num_ = 0;
 	for (auto& input_id : input_id_mp_)
 	{
 		input_id.second->Update();
@@ -51,6 +52,11 @@ void InputManager::StartAllInput()
 	{
 		input_id.second->Start();  
 	}
+}
+
+void InputManager::DeleteResource()
+{
+	input_changers_.clear();
 }
 
 const std::shared_ptr<const InputBase> InputManager::GetPlayer1Input() const
@@ -123,7 +129,10 @@ void InputManager::Awake()
 
 void InputManager::ChangeInput()
 {
-
+	if (input_id_mp_.size() <= 1)
+	{
+		return;
+	}
 	for (auto& input_id : input_id_mp_)
 	{
 		auto player_input = std::dynamic_pointer_cast<PlayerInput>(input_id.second);

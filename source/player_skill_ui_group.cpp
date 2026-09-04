@@ -23,7 +23,11 @@ PlayerSkillUIGroup::PlayerSkillUIGroup()
 	normal_skill_ui_ = std::make_shared<PlayerSkillUI>(normal_skill_pos_, font_handle_, body_color_, edge_color_, ConfigName::normal_skill);
 	strong_skill_ui_ = std::make_shared<PlayerSkillUI>(strong_skill_pos_,font_handle_, body_color_, edge_color_, ConfigName::strong_skill);
 	
-	skill_ui_datas_ = std::make_unique<SkillUIDatas>();
+	//normal_skill_ui_ = nullptr;
+	//strong_skill_ui_ = nullptr;
+	
+	skill_ui_datas_ = std::make_shared<SkillUIDatas>();
+	//skill_ui_datas_ = nullptr;
 }
 
 PlayerSkillUIGroup::~PlayerSkillUIGroup()
@@ -40,25 +44,52 @@ void PlayerSkillUIGroup::Init()
 
 void PlayerSkillUIGroup::Update()
 {
-	normal_skill_ui_->Update();
-	strong_skill_ui_->Update();
+	if (normal_skill_ui_ != nullptr)
+	{
+		normal_skill_ui_->Update();
+	}
+	if (strong_skill_ui_ != nullptr)
+	{
+		strong_skill_ui_->Update();
+	}
 }
 
 void PlayerSkillUIGroup::Draw()
 {
-	normal_skill_ui_->Draw();
-	strong_skill_ui_->Draw();
+	if (normal_skill_ui_ != nullptr)
+	{
+		normal_skill_ui_->Draw();
+	}
+	if (strong_skill_ui_ != nullptr)
+	{
+		strong_skill_ui_->Draw();
+	}
 }
 
 void PlayerSkillUIGroup::ChangeSkill(const int normal_skill_id, std::function<float()> normal_skill_cool_time_ratio, std::function<bool()> normal_skill_can_use
 	, const int strong_skill_id, std::function<float()> strong_skill_cool_time_ratio, std::function<bool()> strong_skill_can_use)
 {
-	// データを取得
-	auto normal_skill_data = skill_ui_datas_->GetData(normal_skill_id);
-	auto strong_skill_data = skill_ui_datas_->GetData(strong_skill_id);
 
-	normal_skill_ui_->SetSkill(normal_skill_data,normal_skill_cool_time_ratio,normal_skill_can_use);
-	strong_skill_ui_->SetSkill(strong_skill_data,strong_skill_cool_time_ratio,strong_skill_can_use);
+	SkillUIData normal_skill_data;
+	SkillUIData strong_skill_data;
+	//SkillUIData 
+	if (skill_ui_datas_ != nullptr)
+	{
+		normal_skill_data = skill_ui_datas_->GetData(normal_skill_id);
+		strong_skill_data = skill_ui_datas_->GetData(strong_skill_id);
+	}
+
+	// データを取得
+	if (normal_skill_ui_ != nullptr)
+	{
+		normal_skill_ui_->SetSkill(normal_skill_data, normal_skill_cool_time_ratio, normal_skill_can_use);
+	}
+
+	if (strong_skill_ui_ != nullptr)
+	{
+		strong_skill_ui_->SetSkill(strong_skill_data, strong_skill_cool_time_ratio, strong_skill_can_use);
+	}
+	
 }
 
 
@@ -84,12 +115,17 @@ void PlayerSkillUIGroup::LoadFile()
 
 		normal_skill_pos_ = CSVFileAssistant::GetVector2DOfCSVFile(ss, data);
 		strong_skill_pos_ = CSVFileAssistant::GetVector2DOfCSVFile(ss, data);
-		normal_skill_input_handle_ = LoadGraph(CSVFileAssistant::GetStringOfCSVFile(ss, data).c_str());
-		strong_skill_input_handle_ = LoadGraph(CSVFileAssistant::GetStringOfCSVFile(ss, data).c_str());
-
+		auto normal_skill_input_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
+		auto strong_skill_input_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
+		normal_skill_input_handle_ = LoadGraph(normal_skill_input_path.c_str());
+		strong_skill_input_handle_ = LoadGraph(strong_skill_input_path.c_str());
+		//normal_skill_input_handle_ = -1;
+		//strong_skill_input_handle_ = -1;
 		if (normal_skill_input_handle_ == -1) { printfDx("読み込み失敗\n"); }
 		if (strong_skill_input_handle_ == -1) { printfDx("読み込み失敗\n"); }
-		font_handle_ = Font::CreateHandleOfFile(CSVFileAssistant::GetStringOfCSVFile(ss, data).c_str());
+		auto font_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
+		font_handle_ = Font::CreateHandleOfFile(font_path);
+		//font_handle_ = -1;
 		body_color_ = CSVFileAssistant::GetColorOfCSVFile(ss, data);
 		edge_color_ = CSVFileAssistant::GetColorOfCSVFile(ss, data);
 

@@ -49,7 +49,8 @@
 Game::Game()
 	: SceneBase()
 {
-	AttackRangeGroup::GetInstance().Awake();
+	InputManager::GetInstance().Init();
+	attack_range_group_ = std::make_shared<AttackRangeGroup>();
 	damage_ui_group_ = std::make_shared<DamageUIGroup>();
 	damage_ui_group_->Awake();
 	enemy_ui_group_ = std::make_shared<EnemyUIGroup>();
@@ -57,8 +58,10 @@ Game::Game()
 	game_start_ = FALSE;
 	camera_ = std::make_shared<Camera>();
 	shadow_map_ = std::make_shared<ShadowMap>();
+	objects_.push_back(std::make_shared<Stage>());
 	player_group_ = std::make_shared<PlayerGroup>();
-	std::shared_ptr<EnemyBase> enemy = std::make_shared<BossBase>(VGet(0, 0, 0), &game_start_,shadow_circle_controller_,enemy_ui_group_, damage_ui_group_,player_group_);
+	std::shared_ptr<EnemyBase> enemy = std::make_shared<BossBase>(VGet(0, 0, 0), &game_start_,shadow_circle_controller_,enemy_ui_group_,
+		damage_ui_group_,player_group_,attack_range_group_);
 	get_enemy_pos_ = [enemy]()
 		{
 			return enemy->GetCenterPos();
@@ -80,7 +83,7 @@ Game::Game()
 	player_group_->Awake(&camera_->dir_, player_ui_group_, enemy, shadow_circle_controller_, damage_ui_group_);
 	objects_.push_back(enemy);
 
-	objects_.push_back(std::make_shared<Stage>());
+	//objects_.push_back(std::make_shared<Stage>());
 	
 	no_shadow_objects_.push_back(std::make_shared<SkyDome>());
 	game_start_timer_ = std::make_shared<GameStartTimer>(&game_start_);
@@ -98,17 +101,18 @@ Game::Game()
 
 Game::~Game()
 {
+	std::cout << "Game" << std::endl;
 	ObjectSetter::GetInstance().DeleteResource();
+	InputManager::GetInstance().DeleteResource();
 	objects_.clear();
 	no_shadow_objects_.clear();
 	Physics::GetInstance().End();
-	AttackRangeGroup::GetInstance().End();
 	SoundManager::GetInstance().AllStop();
 }
 
 void Game::Init()
 {
-	AttackRangeGroup::GetInstance().Init();
+	attack_range_group_->Init();
 	Physics::GetInstance().Init();
 	EffectManager::GetInstance().Init();
 	player_group_->Init(player_skill_ui_group_);
@@ -184,7 +188,7 @@ void Game::Update()
 	enemy_ui_group_->Update();
 	damage_ui_group_->Update();
 	EffectManager::GetInstance().Update();
-	AttackRangeGroup::GetInstance().Update();
+	attack_range_group_->Update();
 	shadow_circle_controller_->Update();
 }
 
@@ -223,7 +227,7 @@ void Game::Draw()
 		shadow_map_->DownDrawnShadowObject();
 	}
 	
-	AttackRangeGroup::GetInstance().Draw();
+	attack_range_group_->Draw();
 
 	// DrawSphere3D(VGet(-500.0f, -100.0f, -500.0f), 10, 10, GetColor(255, 255, 255), GetColor(255, 255, 255), TRUE);
 	// DrawSphere3D(VGet(500.0f, 50.0f, 500.0f), 10, 10, GetColor(255, 255, 255), GetColor(255, 255, 255), TRUE);

@@ -56,18 +56,32 @@ void PlayerUIGroup::Draw()
 
 void PlayerUIGroup::MakeUI(std::function<int()> get_base_hp, std::function<int()> get_current_hp,const std::string& name)
 {
+	
 	hpbar_ = std::make_shared<HPBar>("data/csv/ui/player/hp_bar_datas.csv", get_base_hp, get_current_hp);
 	hp_actual_ = std::make_shared<HPActualValueUI>("data/csv/ui/player/hp_actual.csv", get_current_hp);
 	last_background_ = std::make_shared<PlayerLastBackGroundUI>();
 	icon_ = std::make_shared<PlayerIconUI>(name);
+	player_name_ = std::make_shared<CharacterNameUI>("data/csv/ui/player/" + name + "/" + name + "_name_data.csv", "シフティア");
 	stat_modifire_ui_group_ = std::make_shared<StatModifireUIGroup>("data/csv/ui/stat_modifire/stat_modifire.csv");
-	player_name_ = std::make_shared<CharacterNameUI>("data/csv/ui/player/" + name + "/" + name + "_name_data.csv", "シフィア");
+	
+	
+	
+	//hpbar_ = nullptr;
+	//hp_actual_ = nullptr;
+	//last_background_ = nullptr;
+	//icon_ = nullptr;
+	//player_name_ = nullptr;
+	//stat_modifire_ui_group_ = nullptr;
+	
+	
+	
 }
 
 void PlayerUIGroup::MakeStaminaUI(std::function<float()> get_base_stamina, std::function<float()> get_current_stamina,
 	std::function<bool()> can_use_stamina, std::function<float()> get_avoid_use_stamina_value)
 {
-	stamina_ui_ = std::make_shared<StaminaUI>(get_base_stamina, get_current_stamina, can_use_stamina, get_avoid_use_stamina_value);
+	//stamina_ui_ = std::make_shared<StaminaUI>(get_base_stamina, get_current_stamina, can_use_stamina, get_avoid_use_stamina_value);
+	stamina_ui_ = nullptr;
 }
 
 void PlayerUIGroup::MakeNormalSkillUI(int handle, std::function<bool()> can_use, std::function<float()> cool_time_ratio)
@@ -83,5 +97,9 @@ void PlayerUIGroup::MakeStrongSkillUI(int handle, std::function<bool()> can_use,
 void PlayerUIGroup::SpawnStatModifire(std::function<bool()> end_condition, StatType stat_type, ModifireOperation operation)
 {
 	// 
-	stat_modifire_ui_group_->Spawn(end_condition, stat_type, operation);
+	if (stat_modifire_ui_group_ != nullptr)
+	{
+		stat_modifire_ui_group_->Spawn(end_condition, stat_type, operation);
+	}
+	
 }

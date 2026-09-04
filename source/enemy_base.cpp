@@ -57,9 +57,9 @@
 #include"enemy_cool_time_controller.h"
 #include"enemy_ui_group_interface.h"
 #include"damage_ui_group_interface.h"
-
+#include<iostream>
 EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start,std::shared_ptr<IEnemyUIGroup> enemy_ui_group,
-	std::shared_ptr<IDamageUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group)
+	std::shared_ptr<IDamageUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group)
 	: CharacterBase("enemy")
 	, IPhysicsEventReceiver()
 	, game_start_(game_start)
@@ -71,13 +71,15 @@ EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start,std::shared_ptr<IEnemyUI
 	, enemy_ui_group_(enemy_ui_group)
 	, damage_ui_group_(damage_ui_group)
 	, player_group_(player_group)
+	, attack_range_group_(attack_range_group)
 {
 	
 }
 
 EnemyBase::~EnemyBase()
 {
-	
+	std::cout << "EnemyBase" << std::endl;
+	observers_.clear();
 }
 
 void EnemyBase::AddObserver(IEnemyObserver* observer)

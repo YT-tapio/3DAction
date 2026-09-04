@@ -38,7 +38,6 @@ void StatModifireUIGroup::Init()
 	{
 		active_stat_modifire_uis_[i] = empty;
 	}
-
 	// ˆê‚Â—]•ª‚Éì‚é
 	active_stat_modifire_uis_[kMaxStatModifireUINum] = empty;
 }

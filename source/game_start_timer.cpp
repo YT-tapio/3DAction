@@ -65,9 +65,6 @@ void GameStartTimer::Update()
 		*game_start_ = TRUE;
 	}
 
-
-
-
 }
 
 void GameStartTimer::Draw()

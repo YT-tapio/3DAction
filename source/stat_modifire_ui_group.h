@@ -31,8 +31,6 @@ private:
 
 	const int kMaxStatModifireUINum = 20;
 
-	int handle_;
-
 	std::unordered_map<int, ActiveStatModifireUI> active_stat_modifire_uis_;
 	std::shared_ptr<StatModifireUIData> stat_modifire_ui_data_;
 

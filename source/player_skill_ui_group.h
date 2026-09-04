@@ -38,7 +38,7 @@ private:
 	std::shared_ptr<PlayerSkillUI> normal_skill_ui_;
 	std::shared_ptr<PlayerSkillUI> strong_skill_ui_;
 
-	std::unique_ptr<SkillUIDatas> skill_ui_datas_;
+	std::shared_ptr<SkillUIDatas> skill_ui_datas_;
 
 	VECTOR normal_skill_pos_;
 	VECTOR strong_skill_pos_;

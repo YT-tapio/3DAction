@@ -948,6 +948,9 @@
     <ClCompile Include="source\player_group_interface.cpp">
       <Filter>ソース ファイル\player_group</Filter>
     </ClCompile>
+    <ClCompile Include="source\attack_range_group_interface.cpp">
+      <Filter>ソース ファイル\interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1633,6 +1636,9 @@
     </ClInclude>
     <ClInclude Include="source\player_group_interface.h">
       <Filter>ソース ファイル\player_group</Filter>
+    </ClInclude>
+    <ClInclude Include="source\attack_range_group_interface.h">
+      <Filter>ソース ファイル\interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

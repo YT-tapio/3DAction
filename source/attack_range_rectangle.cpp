@@ -93,9 +93,11 @@ void AttackRangeRectangle::LoadFile()
 		std::string name;
 		name = CSVFileAssistant::GetStringOfCSVFile(ss, data);
 		handle_ = MV1LoadModel(name.c_str());
+		//handle_ = -1;
 		if (handle_ == -1) { printfDx("ì«Ç›çûÇ›é∏îs\n"); }
 		auto leading_up_attack_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
 		leading_up_attack_handle_ = MV1LoadModel(leading_up_attack_path.c_str());
+		//	leading_up_attack_handle_ = -1;
 		if (leading_up_attack_handle_ == -1) { printfDx("ì«Ç›çûÇ›é∏îs\n"); }
 	}
 }

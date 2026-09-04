@@ -15,6 +15,7 @@ class ShadowCircleController;
 class EnemyUIGroup;
 class DamageUIGroup;
 class PlayerGroup;
+class AttackRangeGroup;
 
 class Game : public SceneBase
 {
@@ -45,7 +46,7 @@ private:
 	std::shared_ptr<GameStartTimer> game_start_timer_;
 	std::shared_ptr<DamageUIGroup> damage_ui_group_;
 	std::shared_ptr<PlayerGroup> player_group_;
-
+	std::shared_ptr<AttackRangeGroup> attack_range_group_;
 
 	std::shared_ptr<ShadowCircleController> shadow_circle_controller_;
 

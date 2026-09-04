@@ -15,7 +15,11 @@ ShadowMap::ShadowMap()
 
 ShadowMap::~ShadowMap()
 {
-	DeleteShadowMap(handle_);
+	if (handle_ != -1)
+	{
+		DeleteShadowMap(handle_);
+		handle_ = -1;
+	}
 }
 
 void ShadowMap::Init()

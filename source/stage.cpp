@@ -18,7 +18,8 @@ Stage::Stage()
 	handle_ = MV1LoadModel("data/model/stage/field.mv1");
 	// “–‚½‚è”»’è—pƒ‚ƒfƒ‹
 	coll_handle_ = MV1LoadModel("data/model/stage/stage_field_test.mv1");
-	
+	//handle_ = -1;
+	//coll_handle_ = -1;
 	if (handle_ == -1)
 	{
 		printfDx("“Ç‚İ‚İ‚Å‚«‚È‚¢\n");
@@ -29,12 +30,16 @@ Stage::Stage()
 	}
 	pos_ = VGet(0.f, -20.f, 30.f);
 	scale_ = VectorAssistant::VGetSame(0.3f);
+	
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Mesh>(coll_handle_), &pos_, FALSE, TRUE, 20.f,1.f);
 }
 
 Stage::~Stage()
 {
 	MV1DeleteModel(coll_handle_);
+	coll_handle_ = -1;
+	MV1DeleteModel(handle_);
+	handle_ = -1;
 }
 
 void Stage::Init()

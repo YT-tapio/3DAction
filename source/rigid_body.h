@@ -126,6 +126,10 @@ private:
 
 	const float kMaxSpeed = 3.f;
 
+	std::shared_ptr<ColliderBase>	coll_;				// 自分の当たり判定
+	std::weak_ptr<IPhysicsEventReceiver>				object_;	// インターフェースを継承したオブジェクト
+	std::shared_ptr<VariableTimer> stop_timer_;	// どのくらい時間を止めるかのタイマー
+
 	VECTOR* pos_;
 	VECTOR vel_;
 	VECTOR dir_;
@@ -147,8 +151,6 @@ private:
 
 	std::string tag_;		// タグ
 	bool tag_first_change_;	// タグの最初のチェンジ
-	std::shared_ptr<ColliderBase>	coll_;				// 自分の当たり判定
-	std::weak_ptr<IPhysicsEventReceiver>				object_;	// インターフェースを継承したオブジェクト
-	std::shared_ptr<VariableTimer> stop_timer_;	// どのくらい時間を止めるかのタイマー
+
 
 };

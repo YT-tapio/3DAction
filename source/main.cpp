@@ -1,4 +1,5 @@
 #include<iostream>
+#include<memory>
 #include"DxLib.h"
 #include"application.h"
 

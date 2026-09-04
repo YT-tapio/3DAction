@@ -13,7 +13,7 @@ HPActualValueUI::HPActualValueUI(const std::string& file_path,std::function<int(
 	: StringUI(file_path)
 	, get_current_hp_(get_current_hp)
 {
-	LoadFile(file_path);
+	//LoadFile(file_path);
 }
 
 HPActualValueUI::~HPActualValueUI()

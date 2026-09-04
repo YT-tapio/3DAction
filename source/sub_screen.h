@@ -9,7 +9,6 @@ public:
 
 	~SubScreen();
 
-
 	void Init();
 
 	/// <summary>

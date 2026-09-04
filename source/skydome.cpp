@@ -9,6 +9,7 @@ SkyDome::SkyDome()
 {
 	const std::string model_path	= "data/model/skydome/SkyDome.mv1";
 	handle_							= MV1LoadModel(model_path.c_str());
+	//handle_ = -1;
 	if (handle_ == -1) { printfDx("ì«Ç›çûÇ›é∏îs\n"); }
 	scale_ = VectorAssistant::VGetSame(200.f);
 	ObjectSetter::GetInstance().AddResource(handle_,&pos_, &rot_, &scale_);

@@ -172,7 +172,8 @@ void DamageUI::LoadFile(const std::string& path)
 
 		// 
 		auto font_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
-		font_handle_ = Font::CreateHandleOfFile(font_path);	// color
+		//font_handle_ = Font::CreateHandleOfFile(font_path);
+		font_handle_ = -1;
 		font_color_ = CSVFileAssistant::GetColorOfCSVFile(ss,data);
 		edge_color_ = CSVFileAssistant::GetColorOfCSVFile(ss, data);
 	}

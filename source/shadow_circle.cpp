@@ -22,8 +22,12 @@ ShadowCircle::ShadowCircle(VECTOR* owner_pos,const float& size)
 
 ShadowCircle::~ShadowCircle()
 {
-	// リソースの開放
-	MV1DeleteModel(handle_);
+	if (handle_ != -1)
+	{
+		// リソースの開放
+		MV1DeleteModel(handle_);
+		handle_ = -1;
+	}
 }
 
 void ShadowCircle::Init()
@@ -54,35 +58,5 @@ void ShadowCircle::LoadFile()
 	base_y_ = stof(datas[1]);
 	blend_rate_ = stof(datas[2]);
 	if (handle_ == -1) { printfDx("モデル読み込み失敗\n"); }
-	/*
-	std::ifstream file();
-	std::string line;
-
-	if (!file)
-	{
-		printfDx("csvファイル読み込み失敗\n");
-		return;
-	}
-
-	// 最初の行を飛ばす
-	std::getline(file, line);
-
-	while (std::getline(file, line))
-	{
-		std::stringstream ss(line);
-		std::string data;
-
-		auto path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
-		handle_ = MV1LoadModel(path.c_str());
-		base_y_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
-		blend_rate_ = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
-		if (handle_ == -1)
-		{ 
-			printfDx("読み込み失敗\n");
-			return;
-		}
-	}
-	*/
-
 	
 }

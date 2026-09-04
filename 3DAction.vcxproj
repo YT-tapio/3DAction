@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="source\approach_and_attack.cpp" />
     <ClCompile Include="source\attack_range_circle.cpp" />
+    <ClCompile Include="source\attack_range_group_interface.cpp" />
     <ClCompile Include="source\attack_range_rectangle.cpp" />
     <ClCompile Include="source\boss_base.cpp" />
     <ClCompile Include="source\button_ui.cpp" />
@@ -338,6 +339,7 @@
     <ClInclude Include="source\2d_gravity.h" />
     <ClInclude Include="source\approach_and_attack.h" />
     <ClInclude Include="source\attack_range_circle.h" />
+    <ClInclude Include="source\attack_range_group_interface.h" />
     <ClInclude Include="source\attack_range_rectangle.h" />
     <ClInclude Include="source\boss_base.h" />
     <ClInclude Include="source\boss_enemy_attack_type.h" />

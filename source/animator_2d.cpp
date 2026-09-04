@@ -22,9 +22,14 @@ Animator2D::~Animator2D()
 	{
 		for (auto& handle : data.second.handles)
 		{
-			DeleteGraph(handle);
+			if (handle != -1)
+			{
+				DeleteGraph(handle);
+				handle = -1;
+			}
 		}
 	}
+	datas_.clear();
 	request_names_.clear();
 
 }

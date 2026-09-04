@@ -28,7 +28,7 @@ PlayerGroup::PlayerGroup()
 
 PlayerGroup::~PlayerGroup()
 {
-
+	players_.clear();
 }
 
 void PlayerGroup::AddPlayerObserver(IPlayerObserver* observer)

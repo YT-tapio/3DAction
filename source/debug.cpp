@@ -11,19 +11,19 @@ void Debug::Reset()
 void Debug::Update()
 {
 	//ここでデバッグの切り替え
-	static bool is_push = FALSE;
+	is_push_ = FALSE;
 
 	if (CheckHitKey(KEY_INPUT_N))
 	{
-		if (!is_push)
+		if (!is_push_)
 		{
 			is_disp_ = !is_disp_;
 		}
-		is_push = TRUE;
+		is_push_ = TRUE;
 	}
 	else
 	{
-		is_push = FALSE;
+		is_push_ = FALSE;
 	}
 
 

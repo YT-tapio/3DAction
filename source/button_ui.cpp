@@ -26,7 +26,7 @@ ButtonUI::ButtonUI(const ConfigName& name, const VECTOR& pos,const float& defaul
 
 ButtonUI::~ButtonUI()
 {
-	DeleteGraph(handle_);
+	
 }
 
 void ButtonUI::Init()

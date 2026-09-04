@@ -22,7 +22,7 @@ HPBar::HPBar(const std::string path, std::function<int()> get_base_hp, std::func
 
 HPBar::~HPBar()
 {
-	
+	ui_.clear();
 }
 
 void HPBar::Init()

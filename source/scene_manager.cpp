@@ -34,8 +34,12 @@ void SceneManager::Update()
 	{
 		scene_->Update();
 		Fade::GetInstance().Update();
-		scene_->Draw();
-		Fade::GetInstance().Draw();
+		if (!is_change_)
+		{
+			scene_->Draw();
+			Fade::GetInstance().Draw();
+		}
+		
 	}
 	else
 	{
@@ -52,13 +56,13 @@ bool SceneManager::LoadScene(const std::string& next_scene)
 {
 	if (next_scene == scene_->GetName()) { return FALSE; }
 	bool check = FALSE;
-	if (next_scene == "title") 
+	if (next_scene == "title")
 	{ 
 		scene_ = std::make_shared<Load>(next_scene);
 		//scene_ = std::make_shared<Title>();
 		check = TRUE;
 	}
-	if (next_scene == "game") 
+	if (next_scene == "game")
 	{ 
 		scene_ = std::make_shared<Load>(next_scene);	// ‚±‚Ìˆ—‚ğ‚Í‚³‚Ş‚±‚Æ‚É‚æ‚Á‚Äƒƒ‚ƒŠ‚Ìd•¡‚ğ–h‚®
 		//scene_ = std::make_shared<Game>();

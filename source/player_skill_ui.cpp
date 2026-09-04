@@ -29,13 +29,11 @@ PlayerSkillUI::PlayerSkillUI(const VECTOR& pos, const int font_handle, const int
 
 	// ŠÛ‚ª•`‰æ‚³‚ê‚½‰æ‘œ‚ğì‚é
 	MakeCircleHandle();
-
-	
 }
 
 PlayerSkillUI::~PlayerSkillUI()
 {
-
+	DeleteFontToHandle(font_handle_);
 }
 
 void PlayerSkillUI::Init()

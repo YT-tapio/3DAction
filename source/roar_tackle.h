@@ -2,6 +2,7 @@
 
 class ObjectBase;
 class RigidBody;
+class IAttackRangeGroup;
 
 // ‹©‚ñ‚Å‚©‚ç“Ëi‚·‚é
 class RoarTackle : public Tackle
@@ -9,7 +10,7 @@ class RoarTackle : public Tackle
 public:
 
 	RoarTackle(std::weak_ptr<ObjectBase> owner, std::shared_ptr<RigidBody> rigid_body,
-		std::string anim_name, const float time, const float speed, float damage_rate);
+		std::string anim_name, const float time, const float speed, float damage_rate, std::shared_ptr<IAttackRangeGroup> attack_range_group);
 
 	~RoarTackle();
 
@@ -34,6 +35,8 @@ private:
 		roar,
 		tackle
 	};
+
+	std::shared_ptr<IAttackRangeGroup> attack_range_group_;
 
 	VECTOR attack_dir_;	// UŒ‚•ûŒü
 

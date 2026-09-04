@@ -1,3 +1,4 @@
+#include<iostream>
 #include<memory>
 #include<vector>
 #include<string>
@@ -9,6 +10,17 @@
 #include"attack_range.h"
 #include"attack_range_circle.h"
 #include"attack_range_rectangle.h"
+
+AttackRangeGroup::AttackRangeGroup()
+{
+	Awake();
+}
+
+AttackRangeGroup::~AttackRangeGroup()
+{
+	std::cout << "AttackRangeGroup" << std::endl;
+	End();
+}
 
 void AttackRangeGroup::Awake()
 {
@@ -173,7 +185,3 @@ void AttackRangeGroup::RectangleSetDir(const int& id, const VECTOR& dir)
 	}
 }
 
-AttackRangeGroup::AttackRangeGroup()
-{
-	
-}
