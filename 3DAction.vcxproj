@@ -173,6 +173,7 @@
     <ClCompile Include="source\load_csv_file.cpp" />
     <ClCompile Include="source\lose_camera.cpp" />
     <ClCompile Include="source\lose_ui.cpp" />
+    <ClCompile Include="source\minion_base.cpp" />
     <ClCompile Include="source\no_anim_jump.cpp" />
     <ClCompile Include="source\player_group_interface.cpp" />
     <ClCompile Include="source\player_observer_interface.cpp" />
@@ -367,6 +368,7 @@
     <ClInclude Include="source\load_csv_file.h" />
     <ClInclude Include="source\lose_camera.h" />
     <ClInclude Include="source\lose_ui.h" />
+    <ClInclude Include="source\minion_base.h" />
     <ClInclude Include="source\no_anim_jump.h" />
     <ClInclude Include="source\phase.h" />
     <ClInclude Include="source\player_group_interface.h" />

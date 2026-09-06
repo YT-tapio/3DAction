@@ -77,14 +77,9 @@ Title::Title()
 	int player_anim_handle = MV1LoadModel("data/model/player/animation/Idle.mv1");
 	int enemy_anim_handle = MV1LoadModel("data/model/enemy/zako/animation/Idle.mv1");
 	
-	
-	//int player_anim_handle = -1;
-	//int enemy_anim_handle = -1;
-	
 	//アニメーションのアタッチ
 	MV1AttachAnim(player_handle_, 0,player_anim_handle, FALSE);
 	MV1AttachAnim(enemy_handle_, 0, enemy_anim_handle, FALSE);
-	
 	
 	offset_timer_ = std::make_shared<VariableTimer>(2.f);
 	offset_timer_->Stop();

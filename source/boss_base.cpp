@@ -269,6 +269,11 @@ void BossBase::LoadFile()
 
 }
 
+const bool BossBase::IsBoss() const
+{
+	return TRUE;
+}
+
 std::shared_ptr<NodeBase> BossBase::MakeMagicNode(std::shared_ptr<EnemyBase> mine, std::function<Phase()> current_phase)
 {
 	std::shared_ptr<NodeBase> node_;

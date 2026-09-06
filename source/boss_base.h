@@ -29,6 +29,8 @@ protected:
 
 	virtual void LoadFile() override;
 
+	const bool IsBoss() const override;
+
 private:
 
 	std::shared_ptr<NodeBase> MakeMagicNode(std::shared_ptr<EnemyBase> mine, std::function<Phase()> current_phase);

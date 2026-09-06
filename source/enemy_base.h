@@ -74,6 +74,8 @@ protected:
 
 	virtual void Death();
 
+	virtual const bool IsBoss() const;
+
 protected:
 
 	std::vector<IEnemyObserver*> observers_;

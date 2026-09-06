@@ -951,6 +951,9 @@
     <ClCompile Include="source\attack_range_group_interface.cpp">
       <Filter>ソース ファイル\interface</Filter>
     </ClCompile>
+    <ClCompile Include="source\minion_base.cpp">
+      <Filter>ソース ファイル\object\enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1639,6 +1642,9 @@
     </ClInclude>
     <ClInclude Include="source\attack_range_group_interface.h">
       <Filter>ソース ファイル\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="source\minion_base.h">
+      <Filter>ソース ファイル\object\enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

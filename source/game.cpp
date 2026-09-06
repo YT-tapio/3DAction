@@ -17,6 +17,7 @@
 #include"input_manager.h"
 #include"brain.h"
 #include"enemy_base.h"
+#include"minion_base.h"
 #include"boss_base.h"
 #include"effect_base.h"
 #include"effect_manager.h"
@@ -81,6 +82,8 @@ Game::Game()
 	player_skill_ui_group_ = std::make_shared<PlayerSkillUIGroup>();
 
 	player_group_->Awake(&camera_->dir_, player_ui_group_, enemy, shadow_circle_controller_, damage_ui_group_);
+	objects_.push_back(std::make_shared<MinionBase>(VGet(10, 0, 0), &game_start_, shadow_circle_controller_, enemy_ui_group_,
+		damage_ui_group_, player_group_, attack_range_group_));
 	objects_.push_back(enemy);
 
 	//objects_.push_back(std::make_shared<Stage>());

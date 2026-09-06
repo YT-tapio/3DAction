@@ -255,13 +255,23 @@ void EnemyBase::UpdateBone()
 
 void EnemyBase::Death()
 {
-	Brain::GetInstance().ChangeCamera("won");
+	
 	rigid_body_->NotActive();
 	animator_->PlayRequest("death");
-	SoundManager::GetInstance().Stop("game_bgm");
-
-	for (auto observer : observers_)
+	if (IsBoss())
 	{
-		observer->OnEnemyDeath();
+		Brain::GetInstance().ChangeCamera("won");
+		SoundManager::GetInstance().Stop("game_bgm");
+
+		for (auto observer : observers_)
+		{
+			observer->OnEnemyDeath();
+		}
 	}
+	
+}
+
+const bool EnemyBase::IsBoss() const
+{
+	return FALSE;
 }
