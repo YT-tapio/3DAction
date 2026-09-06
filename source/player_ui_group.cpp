@@ -64,24 +64,19 @@ void PlayerUIGroup::MakeUI(std::function<int()> get_base_hp, std::function<int()
 	player_name_ = std::make_shared<CharacterNameUI>("data/csv/ui/player/" + name + "/" + name + "_name_data.csv", "シフティア");
 	stat_modifire_ui_group_ = std::make_shared<StatModifireUIGroup>("data/csv/ui/stat_modifire/stat_modifire.csv");
 	
-	
-	
 	//hpbar_ = nullptr;
 	//hp_actual_ = nullptr;
 	//last_background_ = nullptr;
 	//icon_ = nullptr;
 	//player_name_ = nullptr;
 	//stat_modifire_ui_group_ = nullptr;
-	
-	
-	
 }
 
 void PlayerUIGroup::MakeStaminaUI(std::function<float()> get_base_stamina, std::function<float()> get_current_stamina,
 	std::function<bool()> can_use_stamina, std::function<float()> get_avoid_use_stamina_value)
 {
-	//stamina_ui_ = std::make_shared<StaminaUI>(get_base_stamina, get_current_stamina, can_use_stamina, get_avoid_use_stamina_value);
-	stamina_ui_ = nullptr;
+	//stamina_ui_ = nullptr;
+	stamina_ui_ = std::make_shared<StaminaUI>(get_base_stamina, get_current_stamina, can_use_stamina, get_avoid_use_stamina_value);
 }
 
 void PlayerUIGroup::MakeNormalSkillUI(int handle, std::function<bool()> can_use, std::function<float()> cool_time_ratio)

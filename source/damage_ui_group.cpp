@@ -26,13 +26,13 @@ void DamageUIGroup::Awake()
 	// インスタンスを生成
 	for (int i = 0; i < kMaxDamageUI; i++)
 	{
-		//player_damage_uis_.emplace_back(std::make_shared<DamageUI>("data/csv/ui/damage/player_damage_ui.csv"));
+		player_damage_uis_.emplace_back(std::make_shared<DamageUI>("data/csv/ui/damage/player_damage_ui.csv"));
 	}
 
 	// インスタンスを生成
 	for (int i = 0; i < kMaxDamageUI; i++)
 	{
-		//enemy_damage_uis_.emplace_back(std::make_shared<DamageUI>("data/csv/ui/damage/enemy_damage_ui.csv"));
+		enemy_damage_uis_.emplace_back(std::make_shared<DamageUI>("data/csv/ui/damage/enemy_damage_ui.csv"));
 	}
 }
 

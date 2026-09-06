@@ -1,6 +1,8 @@
 #pragma once
 #include"player_observer_interface.h"
 
+class ButtonUI;
+
 class LoseUI : public IPlayerObserver
 {
 public:
@@ -28,6 +30,9 @@ private:
 	void DrawButton();
 
 private:
+
+	std::shared_ptr<ButtonUI> retry_button_;
+	std::shared_ptr<ButtonUI> go_title_button_;
 
 	VECTOR back_ground_pos_;
 	VECTOR game_over_pos_;

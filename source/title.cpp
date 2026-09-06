@@ -23,16 +23,19 @@
 Title::Title()
 	: SceneBase()
 {
-	//title_logo_handle_		= LoadGraph("data/ui/title/title_logo.png");
-	//player_handle_			= MV1LoadModel("data/model/player/attacker/Lola_B_Styperek.mv1");
-	//enemy_handle_			= MV1LoadModel("data/model/enemy/zako/Demon_T_Wiezzorek.mv1");
-	//stage_handle_			= MV1LoadModel("data/model/stage/field.mv1");
-	//sky_dome_handle_		= MV1LoadModel("data/model/skydome/SkyDome.mv1");
 
-	title_logo_handle_ = -1;
-	player_handle_ = -1;
-	enemy_handle_ = -1;
-	sky_dome_handle_ = -1;
+	//title_logo_handle_ = -1;
+	//player_handle_ = -1;
+	//enemy_handle_ = -1;
+	//sky_dome_handle_ = -1;
+
+	title_logo_handle_		= LoadGraph("data/ui/title/title_logo.png");
+	player_handle_			= MV1LoadModel("data/model/player/attacker/Lola_B_Styperek.mv1");
+	enemy_handle_			= MV1LoadModel("data/model/enemy/zako/Demon_T_Wiezzorek.mv1");
+	//stage_handle_			= MV1LoadModel("data/model/stage/field.mv1");
+	sky_dome_handle_		= MV1LoadModel("data/model/skydome/SkyDome.mv1");
+
+	
 
 	if (player_handle_ == -1)
 	{
@@ -70,18 +73,18 @@ Title::Title()
 	MV1SetScale(enemy_handle_, VectorAssistant::VGetSame(0.05f));
 	MV1SetPosition(enemy_handle_, VGet(-2.4f, -8.5f, 2.3f));
 	MV1SetRotationXYZ(enemy_handle_, VGet(0.f, RadianAssistant::TheNumRadian(-90), 0.f));
-	/*
+	
 	int player_anim_handle = MV1LoadModel("data/model/player/animation/Idle.mv1");
 	int enemy_anim_handle = MV1LoadModel("data/model/enemy/zako/animation/Idle.mv1");
-	*/
 	
-	int player_anim_handle = -1;
-	int enemy_anim_handle = -1;
-	/*
+	
+	//int player_anim_handle = -1;
+	//int enemy_anim_handle = -1;
+	
 	//アニメーションのアタッチ
 	MV1AttachAnim(player_handle_, 0,player_anim_handle, FALSE);
 	MV1AttachAnim(enemy_handle_, 0, enemy_anim_handle, FALSE);
-	*/
+	
 	
 	offset_timer_ = std::make_shared<VariableTimer>(2.f);
 	offset_timer_->Stop();
@@ -94,10 +97,9 @@ Title::Title()
 			offset_timer_->ReStart();
 		};
 	start_button_ = std::make_shared<ButtonUI>(ConfigName::play, VectorAssistant::VGet2D(700.f, 650.f), 0.1f, start_function);
-	/*
+	
 	MV1DeleteModel(player_anim_handle);
 	MV1DeleteModel(enemy_anim_handle);
-	*/
 	
 }
 

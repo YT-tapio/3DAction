@@ -11,6 +11,8 @@
 #include"FPS.h"
 #include"csv_file_assistant.h"
 #include"font.h"
+#include"button_ui.h"
+#include"config_name.h"
 
 LoseUI::LoseUI()
 	: back_ground_pos_(VectorAssistant::VGet2D(float(kScreenWidth) * 0.5f, float(kScreenHeight) * 0.5f))
@@ -25,33 +27,31 @@ LoseUI::LoseUI()
 	, is_active_(FALSE)
 {
 	LoadFile();
-	//game_over_handle_ = LoadGraph("data/ui/game_over/game_over.png");
-	//Abutton_image_handle_ = LoadGraph("data/ui/input/pad/button_xbox_digital_a_1.png");
-	//Bbutton_image_handle_ = LoadGraph("data/ui/input/pad/button_xbox_digital_b_1.png");
-	game_over_handle_ = -1;
-	Abutton_image_handle_ = -1;
-	Bbutton_image_handle_ = -1;
+	game_over_handle_ = LoadGraph("data/ui/game_over/game_over.png");
+	auto button_size = 0.15f;
+	retry_button_ = std::make_shared<ButtonUI>(ConfigName::retry, retry_ui_pos_, button_size, nullptr);
+	go_title_button_ = std::make_shared<ButtonUI>(ConfigName::go_title, go_title_ui_pos_, button_size, nullptr);
+	
 	if (game_over_handle_ == -1) { printfDx("データ読み込み失敗\n"); }
 	if (Abutton_image_handle_ == -1) { printfDx("データ読み込み失敗\n"); }
 	if (Bbutton_image_handle_ == -1) { printfDx("データ読み込み失敗\n"); }
 
-	//font_handle_ = Font::CreateHandleOfFile("data/csv/font/result_font_data.csv");
-	font_handle_ = -1;
+	font_handle_ = Font::CreateHandleOfFile("data/csv/font/result_font_data.csv");
+	
 	body_color_ = GetColor(255, 255, 255);
 	edge_color_ = GetColor(0, 0, 0);
 }
 
 LoseUI::~LoseUI()
 {
-	DeleteGraph(Abutton_image_handle_);
-	DeleteGraph(Bbutton_image_handle_);
 	DeleteGraph(game_over_handle_);
 	DeleteFontToHandle(font_handle_);
 }
 
 void LoseUI::Init()
 {
-
+	retry_button_->Init();
+	go_title_button_->Init();
 }
 
 void LoseUI::Update()
@@ -72,6 +72,9 @@ void LoseUI::Update()
 		float game_over_blend_diff = fabs(current_game_over_blend_num_ - game_over_target_blend_num);
 		game_over_pos_.y -= up_speed;
 	}
+	retry_button_->Update();
+	go_title_button_->Update();
+
 }
 
 void LoseUI::Draw()
@@ -80,6 +83,8 @@ void LoseUI::Draw()
 	DrawBackGround();
 	DrawGameOver();
 	DrawButton();
+	retry_button_->Draw();
+	go_title_button_->Draw();
 }
 
 void LoseUI::OnPlayerDeath()

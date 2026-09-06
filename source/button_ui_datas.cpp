@@ -55,8 +55,8 @@ void ButtonUIDatas::LoadFile()
 		auto name = CSVFileAssistant::GetStringOfCSVFile(ss, data);
 		auto file_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
 
-		//auto handle = LoadGraph(file_path.c_str());
-		int handle = -1;
+		auto handle = LoadGraph(file_path.c_str());
+		//int handle = -1;
 		if (handle == -1)
 		{
 			printfDx("ì«Ç›çûÇ›é∏îs\n");
