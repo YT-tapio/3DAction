@@ -79,7 +79,7 @@ EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start,std::shared_ptr<IEnemyUI
 EnemyBase::~EnemyBase()
 {
 	std::cout << "EnemyBase" << std::endl;
-	observers_.clear();
+	//observers_.clear();
 }
 
 void EnemyBase::AddObserver(IEnemyObserver* observer)

@@ -385,6 +385,9 @@
     <Filter Include="ソース ファイル\behavior_tree\node\condition_node\check_phase">
       <UniqueIdentifier>{7b8fc40d-f1cf-4b0c-82e2-9f5b4ace3ba4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\model_repository">
+      <UniqueIdentifier>{766407ad-2280-4e6b-bdf9-0d1ae8564f0e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -953,6 +956,9 @@
     </ClCompile>
     <ClCompile Include="source\minion_base.cpp">
       <Filter>ソース ファイル\object\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="source\model_repository.cpp">
+      <Filter>ソース ファイル\model_repository</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1645,6 +1651,9 @@
     </ClInclude>
     <ClInclude Include="source\minion_base.h">
       <Filter>ソース ファイル\object\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\model_repository.h">
+      <Filter>ソース ファイル\model_repository</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -32,8 +32,6 @@ public:
 
 	virtual void UnGround() override;
 
-	//virtual void OnDamageFromPlayer(float damage, AttackType type) override;
-
 protected:
 
 	const bool IsBoss() const override;

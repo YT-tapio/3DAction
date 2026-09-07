@@ -63,6 +63,8 @@
 #include"brain.h"
 #include"enemy_ui_group_interface.h"
 
+#include"model_repository.h"
+
 BossBase::BossBase(const VECTOR& pos, bool* game_start,std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group,
 	std::shared_ptr<IDamageUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group)
 	: EnemyBase(pos, game_start,enemy_ui_group,damage_ui_group,player_group,attack_range_group)
@@ -75,7 +77,8 @@ BossBase::BossBase(const VECTOR& pos, bool* game_start,std::shared_ptr<IShadowCr
 	right_hand_pos_ = VectorAssistant::VGetZero();
 	scale_ = VectorAssistant::VGetSame(0.15f);
 	my_name_ = "";
-	handle_ = MV1LoadModel("data/model/enemy/zako/Demon_T_Wiezzorek.mv1");
+	//handle_ = MV1LoadModel("data/model/enemy/zako/Demon_T_Wiezzorek.mv1");
+	handle_ = ModelRepository::GetInstance().GetHandle("zako");
 	// handle_ = -1;
 	if (handle_ == -1) { printfDx("“Ç‚Ýž‚ÝƒGƒ‰[\n"); }
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(6.5f, 18.f, VectorAssistant::VGetZero()),
@@ -93,7 +96,12 @@ BossBase::BossBase(const VECTOR& pos, bool* game_start,std::shared_ptr<IShadowCr
 
 BossBase::~BossBase()
 {
-	std::cout << "BossBase" << std::endl;
+	//std::cout << "BossBase" << std::endl;
+	if (handle_ != -1)
+	{
+		MV1DeleteModel(handle_);
+		handle_ = -1;
+	}
 }
 
 void BossBase::Init()

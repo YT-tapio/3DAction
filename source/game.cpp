@@ -84,6 +84,15 @@ Game::Game()
 	player_group_->Awake(&camera_->dir_, player_ui_group_, enemy, shadow_circle_controller_, damage_ui_group_);
 	objects_.push_back(std::make_shared<MinionBase>(VGet(10, 0, 0), &game_start_, shadow_circle_controller_, enemy_ui_group_,
 		damage_ui_group_, player_group_, attack_range_group_));
+	objects_.push_back(std::make_shared<MinionBase>(VGet(20, 0, 0), &game_start_, shadow_circle_controller_, enemy_ui_group_,
+		damage_ui_group_, player_group_, attack_range_group_));
+	objects_.push_back(std::make_shared<MinionBase>(VGet(30, 0, 0), &game_start_, shadow_circle_controller_, enemy_ui_group_,
+		damage_ui_group_, player_group_, attack_range_group_));
+	objects_.push_back(std::make_shared<MinionBase>(VGet(-10, 0, 0), &game_start_, shadow_circle_controller_, enemy_ui_group_,
+		damage_ui_group_, player_group_, attack_range_group_));
+	objects_.push_back(std::make_shared<MinionBase>(VGet(-20, 0, 0), &game_start_, shadow_circle_controller_, enemy_ui_group_,
+		damage_ui_group_, player_group_, attack_range_group_));
+	
 	objects_.push_back(enemy);
 
 	//objects_.push_back(std::make_shared<Stage>());

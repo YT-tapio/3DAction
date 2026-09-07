@@ -4,6 +4,7 @@
 #include"application.h"
 #include"scene_manager.h"
 #include"screen_size.h"
+#include"model_repository.h"
 
 Application::Application()
 {
@@ -48,7 +49,7 @@ Application::Application()
     SetUseBackCulling(FALSE);		// バックカリングを行う
 
     SetUseSetDrawScreenSettingReset(FALSE);
-    
+    ModelRepository::GetInstance().Load();
     SceneManager::GetInstance();
 }
 

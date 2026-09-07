@@ -24,6 +24,8 @@
 
 #include"object_setter.h"
 
+#include"model_repository.h"
+
 MinionBase::MinionBase(const VECTOR& pos, bool* game_start, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group, std::shared_ptr<IDamageUIGroup> damage_ui_group,
 	std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group)
 	: EnemyBase(pos,game_start,enemy_ui_group,damage_ui_group,player_group,attack_range_group)
@@ -36,7 +38,7 @@ MinionBase::MinionBase(const VECTOR& pos, bool* game_start, std::shared_ptr<ISha
 	right_hand_pos_ = VectorAssistant::VGetZero();
 	scale_ = VectorAssistant::VGetSame(0.1f);
 	my_name_ = "";
-	handle_ = MV1LoadModel("data/model/enemy/zako/Demon_T_Wiezzorek.mv1");
+	handle_ = ModelRepository::GetInstance().GetHandle("zako");
 	// handle_ = -1;
 	if (handle_ == -1) { printfDx("“Ç‚Ýž‚ÝƒGƒ‰[\n"); }
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(6.5f, 18.f, VectorAssistant::VGetZero()),
@@ -47,7 +49,7 @@ MinionBase::MinionBase(const VECTOR& pos, bool* game_start, std::shared_ptr<ISha
 	VECTOR hp_pos = VectorAssistant::VGet2D(1000.f, 100.f);
 	VECTOR hp_size = VectorAssistant::VGet2D(500.f, 50.f);
 
-	status_container_ = std::make_shared<StatusContainer>("zako", hp_pos, hp_size);
+	status_container_ = std::make_shared<StatusContainer>("zako_minion", hp_pos, hp_size);
 	hit_red_body_ = std::make_shared<HitRedBody>(handle_);
 	float shadow_size = 5.f;
 	shadow_creater->CreateShadow(&flat_hips_pos_, shadow_size);

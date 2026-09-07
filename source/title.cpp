@@ -20,6 +20,8 @@
 #include"condition_timer.h"
 #include"variable_timer.h"
 
+#include"model_repository.h"
+
 Title::Title()
 	: SceneBase()
 {
@@ -31,7 +33,7 @@ Title::Title()
 
 	title_logo_handle_		= LoadGraph("data/ui/title/title_logo.png");
 	player_handle_			= MV1LoadModel("data/model/player/attacker/Lola_B_Styperek.mv1");
-	enemy_handle_			= MV1LoadModel("data/model/enemy/zako/Demon_T_Wiezzorek.mv1");
+	enemy_handle_			= ModelRepository::GetInstance().GetHandle("zako");
 	//stage_handle_			= MV1LoadModel("data/model/stage/field.mv1");
 	sky_dome_handle_		= MV1LoadModel("data/model/skydome/SkyDome.mv1");
 
