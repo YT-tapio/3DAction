@@ -21,6 +21,7 @@ class ConditionTimer;
 class IPlayerObserver;
 class IShadowCreater;
 class IDamageUIGroup;
+class Bullet;
 
 class Player : public CharacterBase , public IPhysicsEventReceiver
 	,public ITakableHealPlayer,public ITakableDamageEnemy,public IInputChange,public IStatusHolder,public IEnemyObserver
@@ -146,7 +147,7 @@ private:
 	std::shared_ptr<StatusContainer> status_container_;
 	std::shared_ptr<IPlayerUIGroup> player_ui_group_;
 	std::shared_ptr<IDamageUIGroup> damage_ui_group_;
-
+	std::shared_ptr<Bullet> bullet_;
 	std::shared_ptr<ConditionTimer> enemy_death_offset_timer_;	// ŠÔ‚ª‚½‚Á‚Ä‚©‚ç“G‚ª€‚ñ‚¾‚Æ‚«‚Ìˆ—‚ğs‚¤
 
 	VECTOR* camera_dir_;

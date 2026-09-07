@@ -388,6 +388,12 @@
     <Filter Include="ソース ファイル\model_repository">
       <UniqueIdentifier>{766407ad-2280-4e6b-bdf9-0d1ae8564f0e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\object_pool">
+      <UniqueIdentifier>{cd6193c0-f556-464c-b782-12af9d1e0ca7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\bullet">
+      <UniqueIdentifier>{581ecf49-36fe-4bee-8050-0fc20da5b547}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -959,6 +965,15 @@
     </ClCompile>
     <ClCompile Include="source\model_repository.cpp">
       <Filter>ソース ファイル\model_repository</Filter>
+    </ClCompile>
+    <ClCompile Include="source\object_pool_base.cpp">
+      <Filter>ソース ファイル\object_pool</Filter>
+    </ClCompile>
+    <ClCompile Include="source\bullet_pool.cpp">
+      <Filter>ソース ファイル\object_pool</Filter>
+    </ClCompile>
+    <ClCompile Include="source\bullet.cpp">
+      <Filter>ソース ファイル\object\bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1654,6 +1669,15 @@
     </ClInclude>
     <ClInclude Include="source\model_repository.h">
       <Filter>ソース ファイル\model_repository</Filter>
+    </ClInclude>
+    <ClInclude Include="source\bullet_pool.h">
+      <Filter>ソース ファイル\object_pool</Filter>
+    </ClInclude>
+    <ClInclude Include="source\object_pool_base.h">
+      <Filter>ソース ファイル\object_pool</Filter>
+    </ClInclude>
+    <ClInclude Include="source\bullet.h">
+      <Filter>ソース ファイル\object\bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

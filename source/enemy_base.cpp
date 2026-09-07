@@ -94,7 +94,6 @@ void EnemyBase::Init()
 
 void EnemyBase::Update()
 {
-	//printfDx("%.2f\n", rigid_body_->GetFallSpeed());
 	
 }
 

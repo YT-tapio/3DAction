@@ -151,6 +151,8 @@
     <ClCompile Include="source\attack_range_group_interface.cpp" />
     <ClCompile Include="source\attack_range_rectangle.cpp" />
     <ClCompile Include="source\boss_base.cpp" />
+    <ClCompile Include="source\bullet.cpp" />
+    <ClCompile Include="source\bullet_pool.cpp" />
     <ClCompile Include="source\button_ui.cpp" />
     <ClCompile Include="source\button_ui_datas.cpp" />
     <ClCompile Include="source\can_execute_node.cpp" />
@@ -176,6 +178,7 @@
     <ClCompile Include="source\minion_base.cpp" />
     <ClCompile Include="source\model_repository.cpp" />
     <ClCompile Include="source\no_anim_jump.cpp" />
+    <ClCompile Include="source\object_pool_base.cpp" />
     <ClCompile Include="source\player_group_interface.cpp" />
     <ClCompile Include="source\player_observer_interface.cpp" />
     <ClCompile Include="source\play_sound.cpp" />
@@ -345,6 +348,8 @@
     <ClInclude Include="source\attack_range_rectangle.h" />
     <ClInclude Include="source\boss_base.h" />
     <ClInclude Include="source\boss_enemy_attack_type.h" />
+    <ClInclude Include="source\bullet.h" />
+    <ClInclude Include="source\bullet_pool.h" />
     <ClInclude Include="source\button_ui.h" />
     <ClInclude Include="source\button_ui_datas.h" />
     <ClInclude Include="source\can_execute_node.h" />
@@ -372,6 +377,7 @@
     <ClInclude Include="source\minion_base.h" />
     <ClInclude Include="source\model_repository.h" />
     <ClInclude Include="source\no_anim_jump.h" />
+    <ClInclude Include="source\object_pool_base.h" />
     <ClInclude Include="source\phase.h" />
     <ClInclude Include="source\player_group_interface.h" />
     <ClInclude Include="source\player_observer_interface.h" />

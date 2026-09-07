@@ -56,6 +56,7 @@
 #include"player_observer_interface.h"
 #include"shadow_creater_interface.h"
 #include"damage_ui_group_interface.h"
+#include"bullet.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name, std::shared_ptr<IPlayerUIGroup> player_ui_group,std::shared_ptr<IShadowCreater> shadow_creater,std::shared_ptr<IDamageUIGroup> damage_ui_group)
 	: CharacterBase("player")
@@ -87,6 +88,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	float radius = 1.5f;
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Capsule>(radius, 6.f, VectorAssistant::VGetZero()), 
 		&pos_, TRUE, FALSE, 0.03f, 0.1f);
+	bullet_ = std::make_shared<Bullet>();
 	enemy_death_offset_timer_ = std::make_shared<ConditionTimer>(2.8f);
 	VECTOR hp_pos = VectorAssistant::VGet2D(300.f, 800.f);
 	VECTOR hp_size = VectorAssistant::VGet2D(100.f, 30.f);
@@ -127,7 +129,7 @@ void Player::Init()
 	if (input_change == nullptr) { printfDx("Ž¸”s‚Å‚·"); }
 	// ŒŸ’m—p”ÍˆÍ
 	detection_radius_ = 25.f;
-
+	bullet_->Init();
 	LoadFile("",name_);
 	MakeSkill(mine);
 	rigid_body_->Init(weak_from_this());
@@ -214,7 +216,7 @@ void Player::Update()
 {
 	time_->Update();
 	if (CheckHitKey(KEY_INPUT_I)) { status_container_->TakeHeal(10); }
-
+	
 	if (input_->IsLockOnEnemy()) 
 	{
 		Brain::GetInstance().ChangeCamera("lock_on_enemy");
@@ -245,6 +247,14 @@ void Player::Update()
 	}
 	else
 	{
+		
+		if (!bullet_->GetIsActive())
+		{
+			bullet_->Shot(VGet(0.f,0.f,-20.f), VGet(1.f, 0.f, 0.f));
+		}
+		//bullet_->Update();
+		
+		
 		Move();
 		if (skill_ != nullptr)
 		{
@@ -318,6 +328,7 @@ void Player::SetIsStop(bool flag)
 void Player::Draw()
 {
 	MV1DrawModel(handle_);
+	bullet_->Draw();
 }
 
 void Player::Debug()
