@@ -1,6 +1,7 @@
 #pragma once
 #include"enemy_base.h"
 
+class NodeBase;
 class IShadowCreater;
 
 class MinionBase : public EnemyBase
@@ -34,9 +35,13 @@ public:
 
 protected:
 
+	virtual void MakeBehaviorTree(std::shared_ptr<EnemyBase> mine) override;
+
 	const bool IsBoss() const override;
 
 private:
+
+	std::shared_ptr<NodeBase> MakeChaseNode(std::shared_ptr<EnemyBase> mine);
 
 
 };

@@ -3,6 +3,9 @@
 #include<string>
 #include<unordered_map>
 #include"DxLib.h"
+
+#include"object_base.h"
+#include"enemy_base.h"
 #include"minion_base.h"
 #include"vector_assistant.h"
 #include"shadow_creater_interface.h"
@@ -10,11 +13,24 @@
 #include"animator_base.h"
 #include"animator_enemy.h"
 
+#include"player_group.h"
+
 #include"collider_base.h"
 #include"capsule.h"
 
 #include"physics.h"
 #include"rigid_body.h"
+
+#include"behavior_tree.h"
+
+#include"node_base.h"
+#include"composite_node.h"
+#include"sequence_node.h"
+#include"action_node.h"
+
+#include"behavior_base.h"
+#include"chase_player.h"
+#include"approach_and_attack.h"
 
 #include"change_method.h"
 #include"hit_red_body.h"
@@ -67,6 +83,9 @@ void MinionBase::Init()
 	rigid_body_->SetTag("enemy");
 	Physics::GetInstance().AddBody(rigid_body_);
 	animator_->Init();
+	std::shared_ptr<EnemyBase> mine = std::dynamic_pointer_cast<EnemyBase>(shared_from_this());
+	target_player_pos_ = player_group_->MostNearPlayerPos(pos_);
+	MakeBehaviorTree(mine);
 }
 
 void MinionBase::Update()
@@ -76,7 +95,12 @@ void MinionBase::Update()
 	{
 		animator_->PlayRequest("death");
 	}
-
+	else
+	{
+		target_player_pos_ = player_group_->MostNearPlayerPos(pos_);
+		behavior_tree_->Update();
+	}
+	
 	animator_->Update(time_);
 }
 
@@ -120,8 +144,25 @@ void MinionBase::UnGround()
 
 }
 
+void MinionBase::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)
+{
+	auto node = MakeChaseNode(mine);
+	behavior_tree_ = std::make_shared<BehaviorTree>(node);
+}
+
 const bool MinionBase::IsBoss() const
 {
 	return FALSE;
+}
+
+std::shared_ptr<NodeBase> MinionBase::MakeChaseNode(std::shared_ptr<EnemyBase> mine)
+{
+	std::shared_ptr<NodeBase> chase_node = nullptr;
+
+	auto behavior = std::make_shared<ChasePlayer>(mine, "walk", &target_player_pos_, 0.1f);
+
+	chase_node = std::make_shared<ActionNode>(behavior);
+
+	return chase_node;
 }
 

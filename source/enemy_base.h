@@ -74,6 +74,8 @@ protected:
 
 	virtual void Death();
 
+	virtual void MakeBehaviorTree(std::shared_ptr<EnemyBase> mine);
+
 	virtual const bool IsBoss() const;
 
 protected:

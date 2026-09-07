@@ -23,7 +23,7 @@ public:
 
 protected:
 
-	virtual void MakeBehaviorTree(std::shared_ptr<EnemyBase> mine);
+	virtual void MakeBehaviorTree(std::shared_ptr<EnemyBase> mine) override;
 
 	virtual void UpdatePhase();
 

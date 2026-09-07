@@ -28,5 +28,7 @@ private:
 	std::string my_anim_name_;
 
 	VECTOR* target_player_pos_;		// ターゲットしているplayerのpos
+	
 	float chase_speed_;					// スピード
+
 };
