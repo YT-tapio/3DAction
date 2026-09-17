@@ -1,19 +1,20 @@
 #pragma once
 
 class EnemyBase;
+class IShadowCreater;
+class IEnemyUIGroup;
+class IDamageUIGroup;
+class IPlayerGroup;
+class IAttackRangeGroup;
 
 class EnemyGroup
 {
 public:
 
-	static EnemyGroup& GetInstance()
-	{
-		static EnemyGroup instance;
-		return instance;
-	}
+	EnemyGroup(bool* game_start, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group,
+		std::shared_ptr<IDamageUIGroup> damage_ui_group,std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group);
 
-	EnemyGroup(const EnemyGroup&) = delete;
-	EnemyGroup& operator = (const EnemyGroup&) = delete;
+	~EnemyGroup();
 
 	void Awake();
 
@@ -27,9 +28,9 @@ public:
 
 private:
 
-	EnemyGroup();
-
 	void LoadFile();
 
-	std::vector<std::shared_ptr<EnemyBase>> enemies;
+private:
+
+	std::vector<std::shared_ptr<EnemyBase>> enemies_;
 };

@@ -140,7 +140,7 @@ private:
 	std::shared_ptr<CheckMyArea> my_area_;		// 
 	std::shared_ptr<SkillBase> skill_;					// 
 	std::shared_ptr<SkillBase> second_skill_;		// 
-	std::shared_ptr<BehaviorBase> test_behavior_;
+	std::shared_ptr<BehaviorBase> test_behavior_;//
 	std::shared_ptr<SkillBase> avoid_;
 	std::shared_ptr<SkillBase> jump_;
 	std::shared_ptr<SkillBase> jump_infite_attack_;

@@ -21,6 +21,9 @@
 #include"effect_id.h"
 #include"effect_manager.h"
 #include"sound_manager.h"
+#include<functional>
+#include"brain.h"
+
 Punch::Punch(std::weak_ptr<ObjectBase> owner, VECTOR* pos,
 	std::string my_anim_name, float min_coll_ratio, float max_coll_ratio, std::shared_ptr<RigidBody> body,float damage_rate)
 	: AttackBase(owner, min_coll_ratio, max_coll_ratio,damage_rate)
@@ -105,7 +108,9 @@ void Punch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
 			takable_player->OnDamageFromPlayer(owner_status_container->GetPhysicalATK() * damage_rate_, AttackType::kPhysical);
 			// ヒットストップ
-			owner_.lock()->GetTime()->SetTimeScale(0.f, 0.2f, TimeTransitionMethod::kMoment);
+			owner_.lock()->GetTime()->SetTimeScale(0.f, 0.3f, TimeTransitionMethod::kMoment);
+			// カメラのシェイク
+			Brain::GetInstance().ShakeCamera(0.3f * damage_rate_, 0.2f);
 			// エフェクトの描画
 			EffectManager::GetInstance().Play(EffectID::kPunchHit);
 			EffectManager::GetInstance().SetPos(EffectID::kPunchHit, *pos_);

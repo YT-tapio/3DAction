@@ -328,7 +328,7 @@ void Player::SetIsStop(bool flag)
 void Player::Draw()
 {
 	MV1DrawModel(handle_);
-	bullet_->Draw();
+	//bullet_->Draw();
 }
 
 void Player::Debug()

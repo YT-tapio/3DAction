@@ -2,6 +2,7 @@
 #include<memory>
 #include<string>
 #include<unordered_map>
+#include<functional>
 #include"DxLib.h"
 
 #include"object_base.h"
@@ -25,12 +26,17 @@
 
 #include"node_base.h"
 #include"composite_node.h"
+#include"selector_node.h"
 #include"sequence_node.h"
 #include"action_node.h"
+#include"branch_node.h"
+#include"just_one_node.h"
 
 #include"behavior_base.h"
 #include"chase_player.h"
 #include"approach_and_attack.h"
+#include"roar.h"
+#include"look_at_target.h"
 
 #include"change_method.h"
 #include"hit_red_body.h"
@@ -98,7 +104,9 @@ void MinionBase::Update()
 	else
 	{
 		target_player_pos_ = player_group_->MostNearPlayerPos(pos_);
+		rigid_body_->SetTargetVelocity(vel_);
 		behavior_tree_->Update();
+		
 	}
 	
 	animator_->Update(time_);
@@ -146,8 +154,39 @@ void MinionBase::UnGround()
 
 void MinionBase::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)
 {
-	auto node = MakeChaseNode(mine);
-	behavior_tree_ = std::make_shared<BehaviorTree>(node);
+	// 近づく
+	auto chase_node = MakeChaseNode(mine);
+	// パンチ
+	auto punch_node = MakePunchNode(mine);
+	// プレイヤーを見る
+	auto look_at_player_node = MakeLookAtPlayerNode(mine);
+
+	std::function<bool()> condition = [this]()-> bool
+		{
+			float dist_to_player = VSize(VSub(target_player_pos_, pos_));
+			return dist_to_player > 30.f;
+		};
+
+	std::vector<std::shared_ptr<NodeBase>> action_nodes;
+
+	action_nodes.emplace_back(punch_node);
+	action_nodes.emplace_back(look_at_player_node);
+	auto sequence_node = std::make_shared<SequenceNode>(action_nodes);
+	std::pair<std::shared_ptr<NodeBase>, std::shared_ptr<NodeBase>> nodes;
+	nodes.first = chase_node;
+	nodes.second = sequence_node;
+	std::shared_ptr<NodeBase> action_branch_node = std::make_shared<BranchNode>(nodes,
+		condition);
+
+	std::shared_ptr<NodeBase> roar_node = MakeRoarNode(mine);
+	
+	std::vector<std::shared_ptr<NodeBase>> first_nodes;
+	first_nodes.emplace_back(roar_node);
+	first_nodes.emplace_back(action_branch_node);
+
+	std::shared_ptr<NodeBase> first_node = std::make_shared<SelectorNode>(first_nodes);
+
+	behavior_tree_ = std::make_shared<BehaviorTree>(first_node);
 }
 
 const bool MinionBase::IsBoss() const
@@ -166,3 +205,51 @@ std::shared_ptr<NodeBase> MinionBase::MakeChaseNode(std::shared_ptr<EnemyBase> m
 	return chase_node;
 }
 
+std::shared_ptr<NodeBase> MinionBase::MakePunchNode(std::shared_ptr<EnemyBase> mine)
+{
+	std::shared_ptr<NodeBase> punch_node = nullptr;
+
+	float min_coll_ratio = 0.35f;
+	float max_coll_ratio = 0.48f;
+	float damage_rate = 1.5f;
+	std::string my_anim_name = "double_punch";
+	float approach_timing = 0.2f;
+	float approach_speed = 3.f;
+	std::string collider_tag = "double_punch";
+
+	auto behavior = std::make_shared<ApproachAndAttack>(mine, min_coll_ratio, max_coll_ratio, damage_rate, my_anim_name,
+		approach_timing, approach_speed, collider_tag);
+
+	punch_node = std::make_shared<ActionNode>(behavior);
+
+	return punch_node;
+}
+
+std::shared_ptr<NodeBase> MinionBase::MakeRoarNode(std::shared_ptr<EnemyBase> mine)
+{
+	std::shared_ptr<NodeBase> node = nullptr;
+
+	std::vector<std::shared_ptr<NodeBase>> roar_nodes;
+
+	auto roar = std::make_shared<Roar>(mine);
+
+	auto roar_node = std::make_shared<ActionNode>(roar);
+	auto just_one_node = std::make_shared<JustOneNode>();
+
+	roar_nodes.emplace_back(just_one_node);
+	roar_nodes.emplace_back(roar_node);
+
+	node = std::make_shared<SequenceNode>(roar_nodes);
+
+	return node;
+}
+
+std::shared_ptr<NodeBase> MinionBase::MakeLookAtPlayerNode(std::shared_ptr<EnemyBase> mine)
+{
+	std::shared_ptr<NodeBase> node = nullptr;
+
+	auto behavior = std::make_shared<LookAtTarget>(mine,1.f);
+	node = std::make_shared<ActionNode>(behavior);
+
+	return node;
+}

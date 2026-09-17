@@ -31,6 +31,8 @@ public:
 	
 	virtual const bool GetOnGround() const;
 
+	const VECTOR GetRotation() const;
+
 	const VECTOR GetFrontDir() const;
 
 	const VECTOR GetVelocity() const;

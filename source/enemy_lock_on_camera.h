@@ -1,13 +1,15 @@
 #pragma once
 #include"virtual_camera_base.h"
 
+class IEnemyController;
+
 class EnemyLockOnCamera : public VirtualCameraBase
 {
 public:
 
-	EnemyLockOnCamera(VECTOR* main_camera_pos, VECTOR* main_camera_target_pos, VECTOR* main_player_head_pos, std::function<VECTOR()> enemy_head_pos);
+	EnemyLockOnCamera(VECTOR* main_camera_pos, VECTOR* main_camera_target_pos, VECTOR* main_player_head_pos,std::weak_ptr<IEnemyController> enemy_controller);
 
-	~EnemyLockOnCamera();
+	~EnemyLockOnCamera() override;
 
 	virtual void Awake();
 
@@ -20,14 +22,16 @@ private:
 	/// <summary>
 	/// 敵への視点移動
 	/// </summary>
-	void GoToEnemyTargetPos();
+	void GoToEnemyTargetPos(std::shared_ptr<IEnemyController> enemy_controller);
 
 	/// <summary>
 	/// プレイヤーと敵の直線上に移動
 	/// </summary>
-	void GoToStraightLine();
+	void GoToStraightLine(std::shared_ptr<IEnemyController> enemy_controller);
 
 private:
+
+	std::weak_ptr<IEnemyController> enemy_controller_;
 
 	// 敵の参照
 	std::function<VECTOR()> enemy_pos_;

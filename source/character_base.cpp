@@ -69,6 +69,11 @@ const bool CharacterBase::GetOnGround() const
 	return is_ground_;
 }
 
+const VECTOR CharacterBase::GetRotation() const
+{
+	return rot_;
+}
+
 const VECTOR CharacterBase::GetFrontDir() const
 {
 	// ³–Ê‚ğó‚¯æ‚é

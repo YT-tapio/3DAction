@@ -3,6 +3,10 @@
 
 class NodeBase;
 class IShadowCreater;
+class IEnemyUIGroup;
+class IDamageUIGroup;
+class IPlayerGroup;
+class IAttackRangeGroup;
 
 class MinionBase : public EnemyBase
 {
@@ -43,5 +47,9 @@ private:
 
 	std::shared_ptr<NodeBase> MakeChaseNode(std::shared_ptr<EnemyBase> mine);
 
+	std::shared_ptr<NodeBase> MakePunchNode(std::shared_ptr<EnemyBase> mine);
 
+	std::shared_ptr<NodeBase> MakeRoarNode(std::shared_ptr<EnemyBase> mine);
+
+	std::shared_ptr<NodeBase> MakeLookAtPlayerNode(std::shared_ptr<EnemyBase> mine);
 };

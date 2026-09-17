@@ -394,6 +394,12 @@
     <Filter Include="ソース ファイル\object\bullet">
       <UniqueIdentifier>{581ecf49-36fe-4bee-8050-0fc20da5b547}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\object\enemy\enemy_group">
+      <UniqueIdentifier>{ae6a87a3-8363-4736-a773-dad0b4dc44cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\object\enemy\enemy_controller">
+      <UniqueIdentifier>{91e6fea8-6e53-4c7d-9840-b85be93a4f66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -599,9 +605,6 @@
     </ClCompile>
     <ClCompile Include="source\attack_correction.cpp">
       <Filter>ソース ファイル\attack_correction</Filter>
-    </ClCompile>
-    <ClCompile Include="source\enemy_group.cpp">
-      <Filter>ソース ファイル\object\enemy</Filter>
     </ClCompile>
     <ClCompile Include="source\behavior_tree.cpp">
       <Filter>ソース ファイル\behavior_tree</Filter>
@@ -975,6 +978,18 @@
     <ClCompile Include="source\bullet.cpp">
       <Filter>ソース ファイル\object\bullet</Filter>
     </ClCompile>
+    <ClCompile Include="source\look_at_target.cpp">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="source\enemy_group.cpp">
+      <Filter>ソース ファイル\object\enemy\enemy_group</Filter>
+    </ClCompile>
+    <ClCompile Include="source\enemy_controller.cpp">
+      <Filter>ソース ファイル\object\enemy\enemy_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="source\enemy_controller_interface.cpp">
+      <Filter>ソース ファイル\object\enemy\enemy_controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1234,9 +1249,6 @@
     </ClInclude>
     <ClInclude Include="source\attack_correction.h">
       <Filter>ソース ファイル\attack_correction</Filter>
-    </ClInclude>
-    <ClInclude Include="source\enemy_group.h">
-      <Filter>ソース ファイル\object\enemy</Filter>
     </ClInclude>
     <ClInclude Include="source\behavior_tree.h">
       <Filter>ソース ファイル\behavior_tree</Filter>
@@ -1678,6 +1690,18 @@
     </ClInclude>
     <ClInclude Include="source\bullet.h">
       <Filter>ソース ファイル\object\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="source\look_at_target.h">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\enemy_group.h">
+      <Filter>ソース ファイル\object\enemy\enemy_group</Filter>
+    </ClInclude>
+    <ClInclude Include="source\enemy_controller.h">
+      <Filter>ソース ファイル\object\enemy\enemy_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="source\enemy_controller_interface.h">
+      <Filter>ソース ファイル\object\enemy\enemy_controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

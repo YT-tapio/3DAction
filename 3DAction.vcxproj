@@ -160,6 +160,8 @@
     <ClCompile Include="source\check_phase_node.cpp" />
     <ClCompile Include="source\config_datas.cpp" />
     <ClCompile Include="source\damage_ui_group_interface.cpp" />
+    <ClCompile Include="source\enemy_controller.cpp" />
+    <ClCompile Include="source\enemy_controller_interface.cpp" />
     <ClCompile Include="source\enemy_cool_time_controller.cpp" />
     <ClCompile Include="source\enemy_lock_on_camera.cpp" />
     <ClCompile Include="source\enemy_observer_interface.cpp" />
@@ -173,6 +175,7 @@
     <ClCompile Include="source\just_one_node.cpp" />
     <ClCompile Include="source\load.cpp" />
     <ClCompile Include="source\load_csv_file.cpp" />
+    <ClCompile Include="source\look_at_target.cpp" />
     <ClCompile Include="source\lose_camera.cpp" />
     <ClCompile Include="source\lose_ui.cpp" />
     <ClCompile Include="source\minion_base.cpp" />
@@ -359,6 +362,8 @@
     <ClInclude Include="source\config_datas.h" />
     <ClInclude Include="source\config_name.h" />
     <ClInclude Include="source\damage_ui_group_interface.h" />
+    <ClInclude Include="source\enemy_controller.h" />
+    <ClInclude Include="source\enemy_controller_interface.h" />
     <ClInclude Include="source\enemy_cool_time_controller.h" />
     <ClInclude Include="source\enemy_lock_on_camera.h" />
     <ClInclude Include="source\enemy_observer_interface.h" />
@@ -372,6 +377,7 @@
     <ClInclude Include="source\jump_skill.h" />
     <ClInclude Include="source\load.h" />
     <ClInclude Include="source\load_csv_file.h" />
+    <ClInclude Include="source\look_at_target.h" />
     <ClInclude Include="source\lose_camera.h" />
     <ClInclude Include="source\lose_ui.h" />
     <ClInclude Include="source\minion_base.h" />

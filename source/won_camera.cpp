@@ -8,12 +8,10 @@
 #include<unordered_map>
 #include"brain.h"
 #include"player_group.h"
-
-WonCamera::WonCamera(VECTOR* main_camera_pos, VECTOR* main_camera_target_pos, std::function<VECTOR()> enemy_center_pos, 
-	std::function<VECTOR()> enemy_dir,std::shared_ptr<PlayerGroup> player_group)
+#include"enemy_controller_interface.h"
+WonCamera::WonCamera(VECTOR* main_camera_pos, VECTOR* main_camera_target_pos, std::shared_ptr<IEnemyController>enemy_controller,std::shared_ptr<PlayerGroup> player_group)
 	: VirtualCameraBase(main_camera_pos, main_camera_target_pos)
-	, enemy_center_pos_(enemy_center_pos)
-	, enemy_dir_(enemy_dir)
+	, enemy_controller_(enemy_controller)
 	, enemy_target_offset_(VGet(0.f, 10.f, 0.f))
 	, player_target_offset_(VGet(0.f,-5.f,0.f))
 	, future_pos_(VectorAssistant::VGetZero())
@@ -34,9 +32,9 @@ void WonCamera::Init()
 {
 	// “G‚Ì³–Ê‚ÖˆÚ“®
 	//printfDx("x:%.2f,y:%.2f,z:%.2f\n", future_pos_.x, future_pos_.y, future_pos_.z);
-	VECTOR enemy_dir = enemy_dir_();
+	VECTOR enemy_dir = enemy_controller_->GetBossFrontDir();
 	future_pos_ = VScale(enemy_dir, kCameraToEnemyDistSize);
-	auto enemy_center_pos = enemy_center_pos_();
+	auto enemy_center_pos = enemy_controller_->GetBossCenterPos();
 	future_pos_ = VAdd(future_pos_, enemy_center_pos);
 	//printfDx("x:%.2f,y:%.2f,z:%.2f\n", future_pos_.x, future_pos_.y, future_pos_.z);
 	future_pos_ = VAdd(future_pos_, enemy_target_offset_);
@@ -69,7 +67,7 @@ void WonCamera::Update()
 	float camera_speed = 1.3f * FPS::GetInstance().GetDeltaTime() * FPS::GetInstance().GetTargetFPS();
 	float camera_target_speed = 1.f * FPS::GetInstance().GetDeltaTime() * FPS::GetInstance().GetTargetFPS();
 	VECTOR main_camera_pos = *main_camera_pos_;
-	VECTOR enemy_center_pos = enemy_center_pos_();
+	VECTOR enemy_center_pos = enemy_controller_->GetBossCenterPos();
 	VECTOR main_camera_target_pos = *main_camera_target_pos_;
 	vel_ = VSub(Lerp::LerpV(main_camera_pos , future_pos_, camera_speed), main_camera_pos);
 	// “G‚Ì’†S“_‚ª^‚ñ’†

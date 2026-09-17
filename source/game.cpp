@@ -46,6 +46,8 @@
 #include"game_to_next_scene.h"
 #include"shadow_circle_controller.h"
 #include"damage_ui_group_interface.h"
+#include"enemy_group.h"
+#include"enemy_controller.h"
 
 Game::Game()
 	: SceneBase()
@@ -61,39 +63,44 @@ Game::Game()
 	shadow_map_ = std::make_shared<ShadowMap>();
 	objects_.push_back(std::make_shared<Stage>());
 	player_group_ = std::make_shared<PlayerGroup>();
-	std::shared_ptr<EnemyBase> enemy = std::make_shared<BossBase>(VGet(0, 0, 0), &game_start_,shadow_circle_controller_,enemy_ui_group_,
+	enemy_controller_ = std::make_shared<EnemyController>(&game_start_, shadow_circle_controller_, enemy_ui_group_,
+		damage_ui_group_, player_group_, attack_range_group_);
+	/*
+	std::shared_ptr<EnemyBase> boss_enemy = std::make_shared<BossBase>(VGet(0, 0, 0), &game_start_,shadow_circle_controller_,enemy_ui_group_,
 		damage_ui_group_,player_group_,attack_range_group_);
-	get_enemy_pos_ = [enemy]()
+	
+	get_enemy_pos_ = [boss_enemy]()
 		{
-			return enemy->GetCenterPos();
+			return boss_enemy->GetCenterPos();
 		}; 
 	
-	get_enemy_dir_ = [enemy]()
+	get_enemy_dir_ = [boss_enemy]()
 		{
-			return enemy->GetFrontDir();
+			return boss_enemy->GetFrontDir();
 		};
+	*/
+	
 	won_ui_ = std::make_shared<WonUI>();
 	lose_ui_ = std::make_shared<LoseUI>();
 	game_to_next_scene_ = std::make_shared<GameToNextScene>();
-	enemy->AddObserver(won_ui_.get());
-	enemy->AddObserver(game_to_next_scene_.get());
+	
+	enemy_controller_->AddBossObserver(won_ui_.get());
+	enemy_controller_->AddBossObserver(game_to_next_scene_.get());
+	/*
+	boss_enemy->AddObserver(won_ui_.get());
+	boss_enemy->AddObserver(game_to_next_scene_.get());
+	*/
+	
 
 	player_ui_group_ = std::make_shared<PlayerUIGroup>();
 	player_skill_ui_group_ = std::make_shared<PlayerSkillUIGroup>();
 
-	player_group_->Awake(&camera_->dir_, player_ui_group_, enemy, shadow_circle_controller_, damage_ui_group_);
-	objects_.push_back(std::make_shared<MinionBase>(VGet(10, 0, 0), &game_start_, shadow_circle_controller_, enemy_ui_group_,
-		damage_ui_group_, player_group_, attack_range_group_));
-	objects_.push_back(std::make_shared<MinionBase>(VGet(20, 0, 0), &game_start_, shadow_circle_controller_, enemy_ui_group_,
-		damage_ui_group_, player_group_, attack_range_group_));
-	objects_.push_back(std::make_shared<MinionBase>(VGet(30, 0, 0), &game_start_, shadow_circle_controller_, enemy_ui_group_,
-		damage_ui_group_, player_group_, attack_range_group_));
-	objects_.push_back(std::make_shared<MinionBase>(VGet(-10, 0, 0), &game_start_, shadow_circle_controller_, enemy_ui_group_,
-		damage_ui_group_, player_group_, attack_range_group_));
-	objects_.push_back(std::make_shared<MinionBase>(VGet(-20, 0, 0), &game_start_, shadow_circle_controller_, enemy_ui_group_,
-		damage_ui_group_, player_group_, attack_range_group_));
+	player_group_->Awake(&camera_->dir_, player_ui_group_, enemy_controller_, shadow_circle_controller_, damage_ui_group_);
+	/*
+	enemy_group_ = std::make_shared<EnemyGroup>(&game_start_, shadow_circle_controller_, enemy_ui_group_,
+		damage_ui_group_, player_group_, attack_range_group_);
+	*/
 	
-	objects_.push_back(enemy);
 
 	//objects_.push_back(std::make_shared<Stage>());
 	
@@ -128,6 +135,8 @@ void Game::Init()
 	Physics::GetInstance().Init();
 	EffectManager::GetInstance().Init();
 	player_group_->Init(player_skill_ui_group_);
+	//enemy_group_->Init();
+	enemy_controller_->Init();
 	won_ui_->Init();
 	for (auto& obj : objects_)
 	{
@@ -139,7 +148,7 @@ void Game::Init()
 		obj->Init();
 	}
 	player_ui_group_->Init();
-	Brain::GetInstance().CreatePlaySceneVirtualCamera(camera_->GetPos(), camera_->GetTargetPos(), get_enemy_pos_, get_enemy_dir_,player_group_);
+	Brain::GetInstance().CreatePlaySceneVirtualCamera(camera_->GetPos(), camera_->GetTargetPos(), enemy_controller_,player_group_);
 	damage_ui_group_->Init();
 	camera_->Init();
 	shadow_map_->Init();
@@ -166,6 +175,8 @@ void Game::Update()
 	}
 
 	player_group_->Update();
+	enemy_controller_->Update();
+	//enemy_group_->Update();
 	for (auto& obj : objects_)
 	{
 		if (!obj->GetIsActive()) { continue; }
@@ -209,6 +220,8 @@ void Game::Draw()
 	if (TRUE)
 	{
 		player_group_->Draw();
+		//enemy_group_->Draw();
+		enemy_controller_->Draw();
 		for (const auto& obj : objects_)
 		{
 			obj->Draw();

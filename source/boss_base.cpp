@@ -214,10 +214,10 @@ void BossBase::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)
 
 	std::shared_ptr<NodeBase> random_far_nodes2 = std::make_shared<RandomNode>(random_nodes_far);
 
-	std::pair<std::shared_ptr<NodeBase>, std::shared_ptr<NodeBase>> nodes_;
+	std::pair<std::shared_ptr<NodeBase>, std::shared_ptr<NodeBase>> nodes;
 	//nodes_.first = random_far_nodes2;
-	nodes_.first = random_far_nodes2;
-	nodes_.second = radom_attack_node;
+	nodes.first = random_far_nodes2;
+	nodes.second = radom_attack_node;
 
 	std::function<bool()> condition = [this]()-> bool
 		{
@@ -226,7 +226,7 @@ void BossBase::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)
 		};
 	std::shared_ptr<NodeBase> roar_node = MakeRoarNode(mine);
 
-	std::shared_ptr<NodeBase> action_branch_node = std::make_shared<BranchNode>(nodes_,
+	std::shared_ptr<NodeBase> action_branch_node = std::make_shared<BranchNode>(nodes,
 		condition);
 	std::vector<std::shared_ptr<NodeBase>> first_nodes;
 	first_nodes.emplace_back(roar_node);
