@@ -400,6 +400,12 @@
     <Filter Include="ソース ファイル\object\enemy\enemy_controller">
       <UniqueIdentifier>{91e6fea8-6e53-4c7d-9840-b85be93a4f66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\summoner">
+      <UniqueIdentifier>{8eb49099-572b-4db2-8d4f-f02bf09cd133}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\behavior\summon_enemyg_group">
+      <UniqueIdentifier>{ac8b3797-9ad4-4f89-84c1-1dad6736e1a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -989,6 +995,15 @@
     </ClCompile>
     <ClCompile Include="source\enemy_controller_interface.cpp">
       <Filter>ソース ファイル\object\enemy\enemy_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="source\summonable_interface.cpp">
+      <Filter>ソース ファイル\interface</Filter>
+    </ClCompile>
+    <ClCompile Include="source\enemy_summoner.cpp">
+      <Filter>ソース ファイル\summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="source\summon_enemy_group.cpp">
+      <Filter>ソース ファイル\behavior\summon_enemyg_group</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1702,6 +1717,15 @@
     </ClInclude>
     <ClInclude Include="source\enemy_controller_interface.h">
       <Filter>ソース ファイル\object\enemy\enemy_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="source\summonable_interface.h">
+      <Filter>ソース ファイル\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="source\enemy_summoner.h">
+      <Filter>ソース ファイル\summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="source\summon_enemy_group.h">
+      <Filter>ソース ファイル\behavior\summon_enemyg_group</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

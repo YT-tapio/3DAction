@@ -29,8 +29,6 @@ void EnemyController::Awake()
 	{
 		enemy_group->Awake();
 	}
-	
-	
 }
 
 void EnemyController::Init()
@@ -42,7 +40,6 @@ void EnemyController::Init()
 		enemy_group->Init();
 	}
 	
-	
 }
 
 void EnemyController::Update()
@@ -53,8 +50,6 @@ void EnemyController::Update()
 	{
 		enemy_group->Update();
 	}
-	
-	
 }
 
 void EnemyController::AddBossObserver(IEnemyObserver* observer)

@@ -1,5 +1,6 @@
 #pragma once
 #include"enemy_base.h"
+#include"summonable_interface.h"
 
 class NodeBase;
 class IShadowCreater;
@@ -8,7 +9,7 @@ class IDamageUIGroup;
 class IPlayerGroup;
 class IAttackRangeGroup;
 
-class MinionBase : public EnemyBase
+class MinionBase : public EnemyBase , public ISummonable
 {
 public:
 
@@ -36,6 +37,8 @@ public:
 	virtual void OnGround(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
 	virtual void UnGround() override;
+
+	virtual void Summon(const VECTOR& pos) override;
 
 protected:
 

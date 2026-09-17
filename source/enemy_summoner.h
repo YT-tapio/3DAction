@@ -1,0 +1,24 @@
+#pragma once
+
+class ISummonable;
+
+class EnemySummoner
+{
+public:
+
+	EnemySummoner();
+
+	~EnemySummoner();
+
+	/// <summary>
+	/// è¢ä´Ç≥ÇÍÇÈÇ‡ÇÃÇìoò^Ç∑ÇÈ
+	/// </summary>
+	void Registration(const std::string& name,ISummonable* summonable);
+
+	void Summon(const std::string& name,const VECTOR& pos);
+
+private:
+
+	std::unordered_map<std::string, ISummonable*> summonables_;
+
+};

@@ -89,6 +89,7 @@ void MinionBase::Init()
 	rigid_body_->SetTag("enemy");
 	Physics::GetInstance().AddBody(rigid_body_);
 	animator_->Init();
+	hit_red_body_->Init();
 	std::shared_ptr<EnemyBase> mine = std::dynamic_pointer_cast<EnemyBase>(shared_from_this());
 	target_player_pos_ = player_group_->MostNearPlayerPos(pos_);
 	MakeBehaviorTree(mine);
@@ -106,9 +107,8 @@ void MinionBase::Update()
 		target_player_pos_ = player_group_->MostNearPlayerPos(pos_);
 		rigid_body_->SetTargetVelocity(vel_);
 		behavior_tree_->Update();
-		
 	}
-	
+	hit_red_body_->Update();
 	animator_->Update(time_);
 }
 
@@ -119,6 +119,7 @@ void MinionBase::LateUpdate()
 
 void MinionBase::Draw()
 {
+	hit_red_body_->DoRedColor();
 	MV1DrawModel(handle_);
 }
 
@@ -148,6 +149,11 @@ void MinionBase::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 }
 
 void MinionBase::UnGround()
+{
+
+}
+
+void MinionBase::Summon(const VECTOR& pos)
 {
 
 }

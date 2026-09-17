@@ -165,6 +165,7 @@
     <ClCompile Include="source\enemy_cool_time_controller.cpp" />
     <ClCompile Include="source\enemy_lock_on_camera.cpp" />
     <ClCompile Include="source\enemy_observer_interface.cpp" />
+    <ClCompile Include="source\enemy_summoner.cpp" />
     <ClCompile Include="source\enemy_ui_group_interface.cpp" />
     <ClCompile Include="source\fade.cpp" />
     <ClCompile Include="source\game_start_timer.cpp" />
@@ -288,6 +289,8 @@
     <ClCompile Include="source\stat_modifire_group.cpp" />
     <ClCompile Include="source\string_ui.cpp" />
     <ClCompile Include="source\sub_screen.cpp" />
+    <ClCompile Include="source\summonable_interface.cpp" />
+    <ClCompile Include="source\summon_enemy_group.cpp" />
     <ClCompile Include="source\tackle.cpp" />
     <ClCompile Include="source\takable_damage_enemy_interface.cpp" />
     <ClCompile Include="source\takable_damage_player_interface.cpp" />
@@ -392,6 +395,9 @@
     <ClInclude Include="source\shadow_circle_controller.h" />
     <ClInclude Include="source\shadow_creater_interface.h" />
     <ClInclude Include="source\shake.h" />
+    <ClInclude Include="source\enemy_summoner.h" />
+    <ClInclude Include="source\summonable_interface.h" />
+    <ClInclude Include="source\summon_enemy_group.h" />
     <ClInclude Include="source\won_camera.h" />
     <ClInclude Include="source\fade.h" />
     <ClInclude Include="source\fade_color_type.h" />
