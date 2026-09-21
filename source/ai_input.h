@@ -1,7 +1,8 @@
 #pragma once
 #include<vector>
-#include<memory>
 #include"input_base.h"
+
+class Player;
 
 class AIInput : public InputBase
 {
@@ -21,12 +22,19 @@ public:
 
 	const bool IsAvoid() const override;
 
+	const bool IsJump() const override;
+
+	const bool IsNormalSkill() const override;
+
+	const bool IsStrongSkill() const override;
+
 	const VECTOR GetMoveDir() const override;
 
 	const VECTOR GetCameraDir() const override;
 
 private:
 
-
+	// オーナーを取得する
+	std::weak_ptr<Player> owner_;
 
 };

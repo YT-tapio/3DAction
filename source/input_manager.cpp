@@ -19,10 +19,10 @@ void InputManager::AddInput(std::weak_ptr<IInputChange> input)
 
 void InputManager::Init()
 {
-	changers_num_ = 0;
+	changers_num_ = kPlayer1Id;
 	for (auto& input_id : input_id_mp_)
 	{
-		input_id.second->Update();
+		input_id.second->Init();
 	}
 }
 
@@ -56,6 +56,7 @@ void InputManager::StartAllInput()
 
 void InputManager::DeleteResource()
 {
+	changers_num_ = kPlayer1Id;
 	input_changers_.clear();
 }
 
@@ -122,7 +123,6 @@ void InputManager::Awake()
 	player2_input_ = std::make_shared<AIInput>();
 	ai_input_2 = std::make_shared<AIInput>();
 	ai_input_3 = std::make_shared<AIInput>();
-
 	*/
 	changers_num_ = kPlayer1Id;
 }
@@ -143,21 +143,20 @@ void InputManager::ChangeInput()
 		if (change_num == 0) { return; }	// •Ï‰»‚È‚µ‚È‚çI—¹
 		int change_player_id = num + change_num;
 
-		// ¡‚Í—v‘f‚Ê‚¯‚·‚é‰Â”\«‚ª‚ ‚é‚Ì‚Å‚»‚ê‚Ì‰ü‘P‚ğ‚µ‚Ü‚µ‚å‚¤
-
+		// ¡‚Í—v‘f‚Ê‚¯‚·‚é‰Â”\«‚ª‚ ‚é‚Ì‚Å‚»‚ê‚Ì‰ü‘P
 		if (change_player_id < kPlayer1Id)
 		{
 			change_player_id = changers_num_ - 1;
 		}
 
-		if (change_player_id > changers_num_ - 1)
+		if (change_player_id > changers_num_)
 		{
 			change_player_id = kPlayer1Id;
 		}
 
-		auto changer_input = input_id_mp_.find(change_player_id)->second;			// æ‚Éî•ñ‚ğ•Û‘¶
-		input_id_mp_.find(change_player_id)->second = input_id_mp_.find(num)->second;// ‘ã“ü
-		input_id_mp_.find(num)->second = changer_input;		// •Û‘¶‚µ‚Ä‚¢‚½‚à‚Ì‚ğ“ü‚ê‚é
+		auto changer_input = input_id_mp_.find(change_player_id)->second;				// æ‚Éî•ñ‚ğ•Û‘¶
+		input_id_mp_.find(change_player_id)->second = input_id_mp_.find(num)->second;	// ‘ã“ü
+		input_id_mp_.find(num)->second = changer_input;						// •Û‘¶‚µ‚Ä‚¢‚½‚à‚Ì‚ğ“ü‚ê‚é
 
 		input_changers_[num].lock()->InputChange(input_id_mp_.find(num)->second);
 		input_changers_[change_player_id].lock()->InputChange(input_id_mp_.find(change_player_id)->second);
