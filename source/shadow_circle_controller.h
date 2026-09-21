@@ -17,7 +17,7 @@ public:
 
 	const void Draw() const;
 
-	void CreateShadow(VECTOR* owner_pos, const float& size) override;
+	void CreateShadow(VECTOR* owner_pos, bool* owner_is_active, const float& size) override;
 
 private:
 

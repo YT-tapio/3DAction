@@ -65,7 +65,6 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	, input_(input)
 	, player_ui_group_(player_ui_group)
 {
-	
 	camera_dir_ = camera_dir;
 	right_hand_pos_ = VectorAssistant::VGetZero();
 	left_hand_pos_ = VectorAssistant::VGetZero();
@@ -106,7 +105,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const s
 	target_rot_y_ = 0;
 	speed_ = 0.f;
 	job_ = "nothing";
-	shadow_creater->CreateShadow(&hip_pos_, radius +0.5f);
+	shadow_creater->CreateShadow(&hip_pos_, &is_active_,radius +0.5f);
 	damage_ui_group_ = damage_ui_group;
 }
 

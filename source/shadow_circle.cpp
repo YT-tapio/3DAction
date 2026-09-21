@@ -8,8 +8,9 @@
 #include"load_csv_file.h"
 #include"object_setter.h"
 
-ShadowCircle::ShadowCircle(VECTOR* owner_pos,const float& size)
+ShadowCircle::ShadowCircle(VECTOR* owner_pos, bool* owner_is_active,const float& size)
 	: owner_pos_(owner_pos)
+	, owner_is_active_(owner_is_active)
 	, pos_(VectorAssistant::VGetZero())
 	, rot_(VectorAssistant::VGetZero())
 	, scale_(VGet(size,1.f,size))
@@ -37,6 +38,7 @@ void ShadowCircle::Init()
 
 void ShadowCircle::Update()
 {
+	if (!*owner_is_active_) { return; }
 	// ポジションの更新
 	pos_ = *owner_pos_;
 	pos_.y = base_y_;
@@ -44,6 +46,7 @@ void ShadowCircle::Update()
 
 const void ShadowCircle::Draw() const
 {
+	if (!*owner_is_active_) { return; }
 	MV1SetOpacityRate(handle_, blend_rate_);
 	MV1DrawModel(handle_);
 }

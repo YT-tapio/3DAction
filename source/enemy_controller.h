@@ -9,6 +9,7 @@ class IDamageUIGroup;
 class IPlayerGroup;
 class IAttackRangeGroup;
 class IEnemyObserver;
+class EnemySummoner;
 
 class EnemyController : public IEnemyController
 {
@@ -37,6 +38,7 @@ private:
 
 	// 
 	std::shared_ptr<EnemyBase> boss_;
+	std::shared_ptr<EnemySummoner> summoner_;
 	std::vector<std::shared_ptr<EnemyGroup>> enemy_groups_;
 	
 };

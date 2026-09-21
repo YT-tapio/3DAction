@@ -19,7 +19,6 @@ PlayerIconUI::PlayerIconUI(const std::string& name)
 	animation_ = std::make_shared<Animator2D>("data/csv/test/test_animation.csv");
 	animation_->PlayRequest("test");
 	effect_pos_ = icon_->GetPosition();
-	
 }
 
 PlayerIconUI::~PlayerIconUI()

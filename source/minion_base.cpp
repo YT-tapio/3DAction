@@ -74,7 +74,7 @@ MinionBase::MinionBase(const VECTOR& pos, bool* game_start, std::shared_ptr<ISha
 	status_container_ = std::make_shared<StatusContainer>("zako_minion", hp_pos, hp_size);
 	hit_red_body_ = std::make_shared<HitRedBody>(handle_);
 	float shadow_size = 5.f;
-	shadow_creater->CreateShadow(&flat_hips_pos_, shadow_size);
+	shadow_creater->CreateShadow(&flat_hips_pos_, &is_active_,shadow_size);
 	ObjectSetter::GetInstance().AddResource(handle_, &pos_, &rot_, &scale_);
 }
 
@@ -93,10 +93,13 @@ void MinionBase::Init()
 	std::shared_ptr<EnemyBase> mine = std::dynamic_pointer_cast<EnemyBase>(shared_from_this());
 	target_player_pos_ = player_group_->MostNearPlayerPos(pos_);
 	MakeBehaviorTree(mine);
+	is_active_ = FALSE;
+	rigid_body_->NotActive();
 }
 
 void MinionBase::Update()
 {
+	if (!is_active_) { return; }
 	UpdateBone();
 	if (status_container_->GetCurrentStatus().hp <= 0)
 	{
@@ -155,6 +158,9 @@ void MinionBase::UnGround()
 
 void MinionBase::Summon(const VECTOR& pos)
 {
+	is_active_ = TRUE;
+	pos_ = pos;
+	rigid_body_->Active();
 
 }
 

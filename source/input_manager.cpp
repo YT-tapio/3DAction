@@ -155,7 +155,7 @@ void InputManager::ChangeInput()
 			change_player_id = kPlayer1Id;
 		}
 
-		auto changer_input = input_id_mp_.find(change_player_id)->second;			//æ‚Épî•ñ‚ð•Û‘¶
+		auto changer_input = input_id_mp_.find(change_player_id)->second;			// æ‚Éî•ñ‚ð•Û‘¶
 		input_id_mp_.find(change_player_id)->second = input_id_mp_.find(num)->second;// ‘ã“ü
 		input_id_mp_.find(num)->second = changer_input;		// •Û‘¶‚µ‚Ä‚¢‚½‚à‚Ì‚ð“ü‚ê‚é
 

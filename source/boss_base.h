@@ -3,8 +3,9 @@
 #include"enemy_base.h"
 
 class IShadowCreater;
-class NodeBase;
+class IEnemyUIGroup;
 class IDamageUIGroup;
+class IEnemyUIGroup;
 class IAttackRangeGroup;
 
 class BossBase : public EnemyBase
@@ -32,23 +33,6 @@ protected:
 	const bool IsBoss() const override;
 
 private:
-
-	std::shared_ptr<NodeBase> MakeMagicNode(std::shared_ptr<EnemyBase> mine, std::function<Phase()> current_phase);
-
-	std::shared_ptr<NodeBase> MakeRoarTackleNode(std::shared_ptr<EnemyBase> mine, std::function<Phase()> current_phase);
-
-	std::shared_ptr<NodeBase> MakeStampNode(std::shared_ptr<EnemyBase> mine, std::function<Phase()> current_phase);
-
-	std::shared_ptr<NodeBase> MakeDoublePunchNode(std::shared_ptr<EnemyBase> mine, std::function<Phase()> current_phase);
-
-	std::shared_ptr<NodeBase> MakeComboAttackNode(std::shared_ptr<EnemyBase> mine, std::function<Phase()> current_phase);
-
-	std::shared_ptr<NodeBase> MakeChaseNode(std::shared_ptr<EnemyBase> mine);
-
-	std::shared_ptr<NodeBase> MakeRoarNode(std::shared_ptr<EnemyBase> mine);
-
-private:
-
 
 
 };

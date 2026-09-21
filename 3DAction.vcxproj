@@ -151,6 +151,7 @@
     <ClCompile Include="source\attack_range_group_interface.cpp" />
     <ClCompile Include="source\attack_range_rectangle.cpp" />
     <ClCompile Include="source\boss_base.cpp" />
+    <ClCompile Include="source\boss_elude.cpp" />
     <ClCompile Include="source\bullet.cpp" />
     <ClCompile Include="source\bullet_pool.cpp" />
     <ClCompile Include="source\button_ui.cpp" />
@@ -365,6 +366,7 @@
     <ClInclude Include="source\config_datas.h" />
     <ClInclude Include="source\config_name.h" />
     <ClInclude Include="source\damage_ui_group_interface.h" />
+    <ClInclude Include="source\boss_elude.h" />
     <ClInclude Include="source\enemy_controller.h" />
     <ClInclude Include="source\enemy_controller_interface.h" />
     <ClInclude Include="source\enemy_cool_time_controller.h" />

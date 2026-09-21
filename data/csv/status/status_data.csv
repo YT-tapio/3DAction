@@ -1,7 +1,7 @@
 ﻿name,hp,physical_atk,physical_def,magic_atk,magic_def,stamina
 attacker,30,100,5,3,4,10
-healer,1,0,2,0,0,1
-defender,15,0,0,0,0,0
-attacker2,8,0,0,0,0,0
+healer,50,100,5,3,4,10
+defender,15,1,1,1,1,1
+attacker2,8,1,1,1,1,1
 zako,5000,8,55,7,5,10
 zako_minion,200,8,40,7,5,10

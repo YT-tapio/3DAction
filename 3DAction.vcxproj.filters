@@ -406,6 +406,9 @@
     <Filter Include="ソース ファイル\behavior\summon_enemyg_group">
       <UniqueIdentifier>{ac8b3797-9ad4-4f89-84c1-1dad6736e1a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\object\enemy\boss">
+      <UniqueIdentifier>{52a93334-a93b-4657-b904-53eecb511f66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -882,9 +885,6 @@
     <ClCompile Include="source\object_2D.cpp">
       <Filter>ソース ファイル\object\object_2D</Filter>
     </ClCompile>
-    <ClCompile Include="source\boss_base.cpp">
-      <Filter>ソース ファイル\object\enemy</Filter>
-    </ClCompile>
     <ClCompile Include="source\enemy_lock_on_camera.cpp">
       <Filter>ソース ファイル\camera\virtual_camera</Filter>
     </ClCompile>
@@ -1004,6 +1004,12 @@
     </ClCompile>
     <ClCompile Include="source\summon_enemy_group.cpp">
       <Filter>ソース ファイル\behavior\summon_enemyg_group</Filter>
+    </ClCompile>
+    <ClCompile Include="source\boss_base.cpp">
+      <Filter>ソース ファイル\object\enemy\boss</Filter>
+    </ClCompile>
+    <ClCompile Include="source\boss_elude.cpp">
+      <Filter>ソース ファイル\object\enemy\boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1583,9 +1589,6 @@
     <ClInclude Include="source\game_to_next_scene.h">
       <Filter>ソース ファイル\game_to_next_scene</Filter>
     </ClInclude>
-    <ClInclude Include="source\boss_base.h">
-      <Filter>ソース ファイル\object\enemy</Filter>
-    </ClInclude>
     <ClInclude Include="source\enemy_lock_on_camera.h">
       <Filter>ソース ファイル\camera\virtual_camera</Filter>
     </ClInclude>
@@ -1726,6 +1729,12 @@
     </ClInclude>
     <ClInclude Include="source\summon_enemy_group.h">
       <Filter>ソース ファイル\behavior\summon_enemyg_group</Filter>
+    </ClInclude>
+    <ClInclude Include="source\boss_base.h">
+      <Filter>ソース ファイル\object\enemy\boss</Filter>
+    </ClInclude>
+    <ClInclude Include="source\boss_elude.h">
+      <Filter>ソース ファイル\object\enemy\boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

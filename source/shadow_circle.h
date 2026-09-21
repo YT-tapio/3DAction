@@ -4,7 +4,7 @@ class ShadowCircle
 {
 public:
 
-	ShadowCircle(VECTOR* owner_pos,const float& size);
+	ShadowCircle(VECTOR* owner_pos, bool* owner_is_active,const float& size);
 
 	~ShadowCircle();
 
@@ -21,6 +21,7 @@ private:
 private:
 
 	VECTOR* owner_pos_;
+	bool* owner_is_active_;
 
 	VECTOR pos_;
 	VECTOR rot_;
@@ -28,6 +29,6 @@ private:
 
 	int handle_;	// ‰e‚Ìƒ‚ƒfƒ‹
 	float base_y_;	// ‰e‚ð“Š‰e‚·‚ébse‚Ìƒ|ƒWƒVƒ‡ƒ“
+	float blend_rate_; // ‰e‚Ì”–‚³
 
-	float blend_rate_;
 };

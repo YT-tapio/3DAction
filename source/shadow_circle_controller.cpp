@@ -35,7 +35,7 @@ const void ShadowCircleController::Draw() const
 	}
 }
 
-void ShadowCircleController::CreateShadow(VECTOR* owner_pos, const float& size)
+void ShadowCircleController::CreateShadow(VECTOR* owner_pos, bool* owner_is_active, const float& size)
 {
-	shadows_.emplace_back(std::make_shared<ShadowCircle>(owner_pos, size));
+	shadows_.emplace_back(std::make_shared<ShadowCircle>(owner_pos, owner_is_active,size));
 }

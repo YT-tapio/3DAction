@@ -13,17 +13,20 @@
 #include"damage_ui_group_interface.h"
 #include"player_group_interface.h"
 #include"attack_range_group_interface.h"
+#include"enemy_summoner.h"
+
 
 EnemyGroup::EnemyGroup(bool* game_start, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group,
-	std::shared_ptr<IDamageUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group)
+	std::shared_ptr<IDamageUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group,
+	std::shared_ptr<IAttackRangeGroup> attack_range_group,std::shared_ptr<EnemySummoner> summoner)
 	: is_active_(FALSE)
 {
 	enemies_.emplace_back(std::make_shared<MinionBase>(VGet(20, 0, 5), game_start,shadow_creater, enemy_ui_group, damage_ui_group, player_group, attack_range_group));
 	enemies_.emplace_back(std::make_shared<MinionBase>(VGet(20, 0, 15), game_start, shadow_creater, enemy_ui_group, damage_ui_group, player_group, attack_range_group));
 	enemies_.emplace_back(std::make_shared<MinionBase>(VGet(20, 0, 25), game_start, shadow_creater, enemy_ui_group, damage_ui_group, player_group, attack_range_group));
 	
-	// ƒXƒ|ƒi[‚É“o˜^
-	// summoner->Registration("name",this);
+	// ƒTƒ‚ƒi[‚É“o˜^
+	summoner->Registration("name",this);
 }
 
 EnemyGroup::~EnemyGroup()
@@ -76,7 +79,17 @@ void EnemyGroup::Summon(const VECTOR& base_pos)
 {
 	is_active_ = TRUE;
 
-	// ‚à‚Æ‚Ìpos‚©‚çŒvŽZ‚·‚é
+	// ‚à‚Æ‚Ìpos‚©‚çŒvŽZ‚µ‚Ä‚ðŠeX‚ð¶¬‚·‚é
+
+	// 
+	int i = 0;
+	for (const auto& enemy : enemies_)
+	{
+		VECTOR offset_pos = VGet(i * 10.f, 0.f, 0.f);
+		VECTOR summon_pos = VAdd(base_pos, offset_pos);
+		enemy->Summon(summon_pos);
+		i++;
+	}
 
 }
 

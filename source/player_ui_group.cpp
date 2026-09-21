@@ -56,7 +56,7 @@ void PlayerUIGroup::Draw()
 
 void PlayerUIGroup::MakeUI(std::function<int()> get_base_hp, std::function<int()> get_current_hp,const std::string& name)
 {
-	
+	if (name == "healer") { return; }
 	hpbar_ = std::make_shared<HPBar>("data/csv/ui/player/hp_bar_datas.csv", get_base_hp, get_current_hp);
 	hp_actual_ = std::make_shared<HPActualValueUI>("data/csv/ui/player/hp_actual.csv", get_current_hp);
 	last_background_ = std::make_shared<PlayerLastBackGroundUI>();
