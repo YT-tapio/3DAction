@@ -58,13 +58,15 @@
 #include"damage_ui_group_interface.h"
 #include"bullet.h"
 
-Player::Player(VECTOR* camera_dir,std::shared_ptr<const InputBase> input,const std::string name, std::shared_ptr<IPlayerUIGroup> player_ui_group,std::shared_ptr<IShadowCreater> shadow_creater,std::shared_ptr<IDamageUIGroup> damage_ui_group)
+Player::Player(VECTOR* camera_dir,std::shared_ptr<InputBase> input,const std::string name, std::shared_ptr<IPlayerUIGroup> player_ui_group,std::shared_ptr<IShadowCreater> shadow_creater,std::shared_ptr<IDamageUIGroup> damage_ui_group)
 	: CharacterBase("player")
 	, IPhysicsEventReceiver()
 	, name_(name)
-	, input_(input)
 	, player_ui_group_(player_ui_group)
 {
+	input->SetOwner(this);
+
+	input_ = input;
 	camera_dir_ = camera_dir;
 	right_hand_pos_ = VectorAssistant::VGetZero();
 	left_hand_pos_ = VectorAssistant::VGetZero();
@@ -126,6 +128,8 @@ void Player::Init()
 	auto input_change = std::dynamic_pointer_cast<IInputChange>(mine);
 	if (mine_object == nullptr) { printfDx("失敗"); }
 	if (input_change == nullptr) { printfDx("失敗です"); }
+
+
 	// 検知用範囲
 	detection_radius_ = 25.f;
 	bullet_->Init();
@@ -184,8 +188,11 @@ void Player::Init()
 	// ui表示
 	player_ui_group_->MakeUI(get_base_hp, get_current_hp, name_);
 
-	// スタミナのui表示
-	player_ui_group_->MakeStaminaUI(get_base_stamina, get_current_stamina, can_use_stamina, get_avoid_stamina);
+	if (name_ == "attacker")
+	{
+		// スタミナのui表示
+		player_ui_group_->MakeStaminaUI(get_base_stamina, get_current_stamina, can_use_stamina, get_avoid_stamina);
+	}
 
 	target_rot_y_ = rot_.y;
 	animator_ = std::make_shared<AnimatorPlayer>(handle_, name_);
@@ -507,6 +514,10 @@ void Player::Move()
 		if (input != nullptr) 
 		{
 			dir_ = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(*camera_dir_), VectorAssistant::VGetTan(dir));
+		}
+		else
+		{
+			dir_ = dir;
 		}
 		dir_ = VNorm(dir_);
 		
@@ -965,12 +976,13 @@ const VECTOR Player::GetInputDir() const
 
 	// 入力がない場合はそのまま向いている方向に行く
 	if (VSize(input_dir) == 0.f) { return dir_; }
-
+	/*
 	const auto ai_input = std::dynamic_pointer_cast<const AIInput>(input_);
 	if (ai_input != nullptr)
 	{
 		return input_dir;	// ai_inputにする
 	}
+	*/
 	// カメラの方向に補正させる
 	input_dir = VGet(input_dir.x, 0.f, input_dir.y);
 	input_dir = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(*camera_dir_), VectorAssistant::VGetTan(input_dir));

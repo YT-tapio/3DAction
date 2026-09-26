@@ -37,6 +37,17 @@ void InputBase::Start()
 	is_stop_ = FALSE;
 }
 
+void InputBase::SetOwner(Player* owner)
+{
+	owner_ = owner;
+	is_start_ = TRUE;
+}
+
+Player* InputBase::GetOwner()
+{
+	return owner_;
+}
+
 const bool InputBase::IsPush(ConfigName name) const
 {
 	return FALSE;

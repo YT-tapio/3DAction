@@ -18,6 +18,7 @@ class IEnemyUIGroup;
 class IDamageUIGroup;
 class IPlayerGroup;
 class IAttackRangeGroup;
+class AttackInfoHolder;
 
 class EnemyBase : public CharacterBase, public IPhysicsEventReceiver,public ITakableDamagePlayer,public IStatusHolder
 {
@@ -53,6 +54,8 @@ public:
 	virtual void UnGround() override;
 
 	virtual void OnDamageFromPlayer(float damage,AttackType type) override;
+
+	std::shared_ptr<AttackInfoHolder> GetAttackInfoHolder();
 
 	virtual const bool GetOnGround() const;
 
@@ -92,6 +95,8 @@ protected:
 	std::shared_ptr<IDamageUIGroup> damage_ui_group_;
 	std::shared_ptr<IPlayerGroup> player_group_;
 	std::shared_ptr<IAttackRangeGroup> attack_range_group_;
+
+	std::shared_ptr<AttackInfoHolder> attack_info_;
 
 	std::string my_name_;
 

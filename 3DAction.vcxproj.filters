@@ -160,9 +160,6 @@
     <Filter Include="ソース ファイル\attack_correction">
       <UniqueIdentifier>{1c7d9171-14b8-4f8a-a8ec-068e81b550fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\ai">
-      <UniqueIdentifier>{90bdf8a2-f958-4282-a18a-995f628e77ee}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\behavior_tree">
       <UniqueIdentifier>{85fe82ad-e9ba-443d-9007-7be026c6f025}</UniqueIdentifier>
     </Filter>
@@ -408,6 +405,12 @@
     </Filter>
     <Filter Include="ソース ファイル\object\enemy\boss">
       <UniqueIdentifier>{52a93334-a93b-4657-b904-53eecb511f66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\attack">
+      <UniqueIdentifier>{1136cd13-5a42-4c71-aba0-08b9d899bc44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\interface\attack_info_holder">
+      <UniqueIdentifier>{8675eb22-72ee-46ca-9920-f84e0c296c78}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1010,6 +1013,12 @@
     </ClCompile>
     <ClCompile Include="source\boss_elude.cpp">
       <Filter>ソース ファイル\object\enemy\boss</Filter>
+    </ClCompile>
+    <ClCompile Include="source\attack_info_holder_interface.cpp">
+      <Filter>ソース ファイル\interface\attack_info_holder</Filter>
+    </ClCompile>
+    <ClCompile Include="source\attack_info.cpp">
+      <Filter>ソース ファイル\attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1735,6 +1744,21 @@
     </ClInclude>
     <ClInclude Include="source\boss_elude.h">
       <Filter>ソース ファイル\object\enemy\boss</Filter>
+    </ClInclude>
+    <ClInclude Include="source\attack_id.h">
+      <Filter>ソース ファイル\attack</Filter>
+    </ClInclude>
+    <ClInclude Include="source\attack_info.h">
+      <Filter>ソース ファイル\attack</Filter>
+    </ClInclude>
+    <ClInclude Include="source\attack_phase.h">
+      <Filter>ソース ファイル\attack</Filter>
+    </ClInclude>
+    <ClInclude Include="source\attack_info_holder_interface.h">
+      <Filter>ソース ファイル\interface\attack_info_holder</Filter>
+    </ClInclude>
+    <ClInclude Include="source\attack_Info_holder.h">
+      <Filter>ソース ファイル\attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

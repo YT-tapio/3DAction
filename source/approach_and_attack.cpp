@@ -21,6 +21,7 @@
 #include"takable_damage_player_interface.h"
 #include"attack_type.h"
 #include"sound_manager.h"
+#include"attack_Info_holder.h"
 
 ApproachAndAttack::ApproachAndAttack(std::weak_ptr<ObjectBase> owner, const float& min_coll_ratio, const float& max_coll_ratio, const float& damage_rate, 
 	const std::string& my_anim_name, const float approach_timing, const float approach_speed,const std::string& collider_tag)
@@ -79,6 +80,21 @@ BehaviorStatus ApproachAndAttack::Update()
 			Approach(owner);
 			is_approached_ = TRUE;
 			SoundManager::GetInstance().Play3DSound("double_punch");
+			auto attack_info_holder = owner->GetAttackInfoHolder();
+			auto attack_info = attack_info_holder->GetAttackInfo();
+			attack_info.phase = AttackPhase::kActive;
+			attack_info_holder->SetAttackInfo(attack_info);
+		}
+		else
+		{
+			if (anim_ratio > (approach_timing_ - 0.04f))
+			{
+				auto attack_info_holder = owner->GetAttackInfoHolder();
+				auto attack_info = attack_info_holder->GetAttackInfo();
+				attack_info.phase = AttackPhase::kDodgeTiming;
+				attack_info_holder->SetAttackInfo(attack_info);
+			}
+			
 		}
 	}
 	
@@ -91,6 +107,13 @@ BehaviorStatus ApproachAndAttack::Update()
 	}
 	else
 	{
+		auto attack_info_holder = owner->GetAttackInfoHolder();
+		auto attack_info = attack_info_holder->GetAttackInfo();
+		if (attack_info.phase == AttackPhase::kActive)
+		{
+			attack_info.phase = AttackPhase::kRecovery;
+			attack_info_holder->SetAttackInfo(attack_info);
+		}
 		rigid_body_->NotActive();
 	}
 
@@ -166,7 +189,6 @@ void ApproachAndAttack::Approach(std::shared_ptr<EnemyBase> owner)
 	// アプローチする
 	auto owner_pos = owner->GetPosition();
 	auto target_pos = owner->GetAttackTargetPos();
-
 	// プレイヤーまでの向き
 	auto owner_to_target_dir = VectorAssistant::VGetDir(owner_pos, target_pos);
 	auto owner_rot = VGet(0.f, VectorAssistant::VGetTan(VectorAssistant::VGetReverce(owner_to_target_dir)), 0.f);

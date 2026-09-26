@@ -147,6 +147,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\approach_and_attack.cpp" />
+    <ClCompile Include="source\attack_info.cpp" />
+    <ClCompile Include="source\attack_info_holder_interface.cpp" />
     <ClCompile Include="source\attack_range_circle.cpp" />
     <ClCompile Include="source\attack_range_group_interface.cpp" />
     <ClCompile Include="source\attack_range_rectangle.cpp" />
@@ -350,6 +352,8 @@
   <ItemGroup>
     <ClInclude Include="source\2d_gravity.h" />
     <ClInclude Include="source\approach_and_attack.h" />
+    <ClInclude Include="source\attack_info_holder_interface.h" />
+    <ClInclude Include="source\attack_info.h" />
     <ClInclude Include="source\attack_range_circle.h" />
     <ClInclude Include="source\attack_range_group_interface.h" />
     <ClInclude Include="source\attack_range_rectangle.h" />
@@ -367,6 +371,9 @@
     <ClInclude Include="source\config_name.h" />
     <ClInclude Include="source\damage_ui_group_interface.h" />
     <ClInclude Include="source\boss_elude.h" />
+    <ClInclude Include="source\attack_id.h" />
+    <ClInclude Include="source\attack_Info_holder.h" />
+    <ClInclude Include="source\attack_phase.h" />
     <ClInclude Include="source\enemy_controller.h" />
     <ClInclude Include="source\enemy_controller_interface.h" />
     <ClInclude Include="source\enemy_cool_time_controller.h" />

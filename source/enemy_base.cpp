@@ -57,12 +57,14 @@
 #include"enemy_cool_time_controller.h"
 #include"enemy_ui_group_interface.h"
 #include"damage_ui_group_interface.h"
+#include"attack_Info_holder.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start,std::shared_ptr<IEnemyUIGroup> enemy_ui_group,
 	std::shared_ptr<IDamageUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group)
 	: CharacterBase("enemy")
 	, IPhysicsEventReceiver()
 	, game_start_(game_start)
+	, attack_info_(std::make_shared<AttackInfoHolder>())
 	, hips_pos_(VectorAssistant::VGetZero())
 	, disp_attack_flat_pos_(VectorAssistant::VGetZero())
 	, flat_hips_pos_(VectorAssistant::VGetZero())
@@ -194,6 +196,11 @@ void EnemyBase::OnDamageFromPlayer(float damage,AttackType type)
 		Death();
 	}
 
+}
+
+std::shared_ptr<AttackInfoHolder> EnemyBase::GetAttackInfoHolder()
+{
+	return attack_info_;
 }
 
 const bool EnemyBase::GetOnGround() const

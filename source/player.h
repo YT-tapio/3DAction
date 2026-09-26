@@ -28,7 +28,7 @@ class Player : public CharacterBase , public IPhysicsEventReceiver
 {
 public:
 
-	Player(VECTOR* camera_dir, std::shared_ptr<const InputBase> input,const std::string name,std::shared_ptr<IPlayerUIGroup> player_ui_group, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IDamageUIGroup> damage_ui_group);
+	Player(VECTOR* camera_dir, std::shared_ptr<InputBase> input,const std::string name,std::shared_ptr<IPlayerUIGroup> player_ui_group, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IDamageUIGroup> damage_ui_group);
 
 	~Player() override;
 

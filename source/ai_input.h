@@ -2,7 +2,8 @@
 #include<vector>
 #include"input_base.h"
 
-class Player;
+class PlayerGroup;
+class BehaviorTree;
 
 class AIInput : public InputBase
 {
@@ -15,6 +16,8 @@ public:
 	void Init() override;
 
 	void Update() override;
+
+	void SetPlayerGroup(std::weak_ptr<PlayerGroup> player_group) override;
 
 	const bool IsDash() const override;
 
@@ -34,7 +37,18 @@ public:
 
 private:
 
-	// オーナーを取得する
-	std::weak_ptr<Player> owner_;
+	void MakeBehaviorTree();
 
+private:
+
+	std::shared_ptr<BehaviorTree> behavior_tree_;
+	std::weak_ptr<PlayerGroup> player_group_;
+
+	VECTOR move_dir_;
+
+	bool is_push_normal_skill_;
+	bool is_push_strong_skill_;
+	bool is_push_dash_;
+	bool is_push_avoid_;
+	bool is_push_jump_;
 };

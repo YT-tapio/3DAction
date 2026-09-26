@@ -3,6 +3,7 @@
 
 class InputBase;
 class IInputChange;
+class PlayerGroup;
 
 class InputManager
 {
@@ -23,19 +24,21 @@ public:
 
 	void Update();
 
+	void SetPlayerGroup(std::weak_ptr<PlayerGroup> player_group);
+
 	void StopAllInput();
 
 	void StartAllInput();
 
 	void DeleteResource();
 
-	const std::shared_ptr<const InputBase> GetPlayer1Input() const;
+	const std::shared_ptr<InputBase> GetPlayer1Input() const;
 
-	const std::shared_ptr<const InputBase> GetPlayer2Input() const;
+	const std::shared_ptr<InputBase> GetPlayer2Input() const;
 
-	const std::shared_ptr<const InputBase> GetPlayer3Input() const;
+	const std::shared_ptr<InputBase> GetPlayer3Input() const;
 	
-	const std::shared_ptr<const InputBase> GetPlayer4Input() const;
+	const std::shared_ptr<InputBase> GetPlayer4Input() const;
 
 	const std::shared_ptr<const InputBase> GetMainPlayerInput() const;
 
@@ -48,6 +51,11 @@ private:
 	void Awake();
 
 	void ChangeInput();
+
+	/// <summary>
+	/// ‡”Ô‚ğ‚½‚¾‚·
+	/// </summary>
+	void ResetInput();
 
 private:
 

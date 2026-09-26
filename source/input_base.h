@@ -1,7 +1,9 @@
 #pragma once
 #include"config_name.h"
-class IInput;
 
+class IInput;
+class Player;
+class PlayerGroup;
 
 class InputBase
 {
@@ -18,6 +20,12 @@ public:
 	void Stop();
 
 	void Start();
+
+	void SetOwner(Player* owner);
+
+	virtual void SetPlayerGroup(std::weak_ptr<PlayerGroup> player_group) {};
+
+	Player* GetOwner();
 
 	virtual const bool IsPush(ConfigName name) const;
 
@@ -51,7 +59,11 @@ public:
 
 protected:
 
+	// オーナーを取得する
+	Player* owner_;
+
 	bool is_stop_;
+	bool is_start_;
 
 private:
 

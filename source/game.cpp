@@ -63,6 +63,7 @@ Game::Game()
 	shadow_map_ = std::make_shared<ShadowMap>();
 	objects_.push_back(std::make_shared<Stage>());
 	player_group_ = std::make_shared<PlayerGroup>();
+	InputManager::GetInstance().SetPlayerGroup(player_group_);
 	enemy_controller_ = std::make_shared<EnemyController>(&game_start_, shadow_circle_controller_, enemy_ui_group_,
 		damage_ui_group_, player_group_, attack_range_group_);
 	/*
@@ -147,6 +148,7 @@ void Game::Init()
 	{
 		obj->Init();
 	}
+
 	player_ui_group_->Init();
 	Brain::GetInstance().CreatePlaySceneVirtualCamera(camera_->GetPos(), camera_->GetTargetPos(), enemy_controller_,player_group_);
 	damage_ui_group_->Init();
