@@ -267,11 +267,11 @@ void Game::Draw()
 	// Physics::GetInstance().Debug();
 	player_ui_group_->Draw();
 	player_skill_ui_group_->Draw();
-	won_ui_->Draw();
-	lose_ui_->Draw();
 	game_start_timer_->Draw();
 	enemy_ui_group_->Draw();
 	damage_ui_group_->Draw();
+	won_ui_->Draw();
+	lose_ui_->Draw();
 
 	if (Debug::GetInstance().GetIsDisp())
 	{

@@ -87,14 +87,13 @@ BehaviorStatus ApproachAndAttack::Update()
 		}
 		else
 		{
-			if (anim_ratio > (approach_timing_ - 0.04f))
+			if (anim_ratio > (approach_timing_ - 0.02f))
 			{
 				auto attack_info_holder = owner->GetAttackInfoHolder();
 				auto attack_info = attack_info_holder->GetAttackInfo();
 				attack_info.phase = AttackPhase::kDodgeTiming;
 				attack_info_holder->SetAttackInfo(attack_info);
 			}
-			
 		}
 	}
 	

@@ -39,6 +39,10 @@ private:
 
 	void MakeBehaviorTree();
 
+	void ResetInfo();
+
+	void LoadFile();
+
 private:
 
 	std::shared_ptr<BehaviorTree> behavior_tree_;
@@ -46,6 +50,9 @@ private:
 
 	VECTOR move_dir_;
 
+	float dist_size_;
+	
+	// ‘€ìó‹µ
 	bool is_push_normal_skill_;
 	bool is_push_strong_skill_;
 	bool is_push_dash_;

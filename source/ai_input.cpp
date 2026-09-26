@@ -10,10 +10,13 @@
 #include"enemy_base.h"
 #include"attack_info_holder.h"
 
+
+#include"behavior_tree.h"
+
 AIInput::AIInput()
 	: InputBase()
 {
-	
+	owner_ = nullptr;
 }
 
 AIInput::~AIInput()
@@ -23,26 +26,18 @@ AIInput::~AIInput()
 
 void AIInput::Init()
 {
-	is_push_avoid_ = FALSE;
-	is_push_dash_ = FALSE;
-	is_push_jump_ = FALSE;
-	is_push_normal_skill_ = FALSE;
-	is_push_strong_skill_ = FALSE;
-	is_start_ = FALSE;
-	move_dir_ = VectorAssistant::VGetZero();
-
+	ResetInfo();
 	//この中でbehaviortreeを生成
 	MakeBehaviorTree();
 }
 
 void AIInput::Update()
 {
-	if (!is_start_) { return; }
+	if (owner_ == nullptr) { return; }
 	if (is_stop_) { return; }
-	move_dir_ = VectorAssistant::VGetZero();
-	is_push_dash_ = FALSE;
-	is_push_normal_skill_ = FALSE;
-	is_push_avoid_ = FALSE;
+
+	ResetInfo();
+
 	// メインのプレイヤーについていく
 	if (auto player_group = player_group_.lock())
 	{
@@ -51,8 +46,6 @@ void AIInput::Update()
 		auto owner_pos = owner_->GetPosition();
 
 		auto dist = VSub(main_player_pos, owner_pos);
-
-
 
 		// 距離によって変える
 		if (VSize(dist) > 15.f)
@@ -67,7 +60,10 @@ void AIInput::Update()
 			{
 				is_push_dash_ = TRUE;
 			}
+		}
 
+		if (VSize(dist) < 55.f)
+		{
 			auto area_object = owner_->GetMyAreaObject();
 			for (auto object : area_object)
 			{
@@ -87,8 +83,8 @@ void AIInput::Update()
 			}
 		}
 
+		
 	}
-
 }
 
 void AIInput::SetPlayerGroup(std::weak_ptr<PlayerGroup> player_group)
@@ -145,8 +141,24 @@ const VECTOR AIInput::GetCameraDir() const
 	return dir;
 }
 
+void AIInput::LoadFile()
+{
+	//データの読み取り
+
+}
 
 void AIInput::MakeBehaviorTree()
 {
 
+}
+
+void AIInput::ResetInfo()
+{
+	is_push_avoid_ = FALSE;
+	is_push_dash_ = FALSE;
+	is_push_jump_ = FALSE;
+	is_push_normal_skill_ = FALSE;
+	is_push_strong_skill_ = FALSE;
+	is_start_ = FALSE;
+	move_dir_ = VectorAssistant::VGetZero();
 }
