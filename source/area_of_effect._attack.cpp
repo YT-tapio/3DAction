@@ -3,6 +3,7 @@
 #include<unordered_map>
 #include"DxLib.h"
 #include"attack_base.h"
+#include"attack_Info_holder.h"
 #include"area_of_effect_attack.h"
 #include"area_of_effect_attack_state.h"
 #include"object_base.h"
@@ -25,12 +26,14 @@
 #include"status_container.h"
 #include"sound_manager.h"
 
+
 AreaOfEffectAttack::AreaOfEffectAttack(std::weak_ptr<ObjectBase> owner, 
 	std::string charge_anim,float min_coll_ratio, 
 	float max_coll_ratio,VECTOR effect_scale, 
-	float hit_radius, int effect_id,float activate_time,float damage_rate)
+	float hit_radius, int effect_id,float activate_time,float damage_rate, std::weak_ptr<AttackInfoHolder> owner_attack_info)
 	: AttackBase(owner,min_coll_ratio,max_coll_ratio,damage_rate)
 	, activate_timer_(std::make_shared<ConditionTimer>(activate_time))
+	, owner_attack_info_holder_(owner_attack_info)
 	, charge_anim_(charge_anim)
 	, state_(AreaOfEffectAttackState::kCharge)
 	, effect_pos_(VectorAssistant::VGetZero())
@@ -73,6 +76,12 @@ void AreaOfEffectAttack::Entry()
 	// タイマーの起動
 	activate_timer_->ReStart();
 	state_ = AreaOfEffectAttackState::kCharge();
+	if (auto info_holder = owner_attack_info_holder_.lock())
+	{
+		auto info = info_holder->GetAttackInfo();
+		//info.pos = 
+		info_holder->SetAttackInfo(info);
+	}
 }
 
 BehaviorStatus AreaOfEffectAttack::Update()
@@ -152,6 +161,11 @@ BehaviorStatus AreaOfEffectAttack::UpdateCharge()
 	// タイマーの更新
 	activate_timer_->Update();
 
+	if (activate_timer_->GetRatio() >= 0.9f)
+	{
+		ChangeAttackPhase(AttackPhase::kActive);
+	}
+
 	if (activate_timer_->GetIsEnd())
 	{
 		// 当たり判定をactive
@@ -160,6 +174,7 @@ BehaviorStatus AreaOfEffectAttack::UpdateCharge()
 		EffectManager::GetInstance().Play(effect_id_);
 		SoundManager::GetInstance().SetPos("area_of_effect", effect_pos_);
 		SoundManager::GetInstance().Play3DSound("area_of_effect");
+		ChangeAttackPhase(AttackPhase::kActive);
 		// 次のステートへ
 		state_ = AreaOfEffectAttackState::kPlay;
 	}
@@ -173,6 +188,7 @@ BehaviorStatus AreaOfEffectAttack::UpdatePlay()
 	{
 		rigid_body_->NotActive();
 		EffectManager::GetInstance().End(effect_id_, EffectEndState::kTotal);
+		ChangeAttackPhase(AttackPhase::kRecovery);
 	}
 	else
 	{
@@ -182,6 +198,16 @@ BehaviorStatus AreaOfEffectAttack::UpdatePlay()
 	
 	auto chara = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
 	//アニメーション終了時,completeを返す
-	if(chara->GetAnimator()->GetNowAnimName() != charge_anim_){ return BehaviorStatus::kComplete; }
+	if(chara->GetAnimator()->GetIsEnd(charge_anim_)){ return BehaviorStatus::kComplete; }
 	return BehaviorStatus::kRunning;
+}
+
+void AreaOfEffectAttack::ChangeAttackPhase(const AttackPhase phase)
+{
+	if (auto info_holder = owner_attack_info_holder_.lock())
+	{
+		auto info = info_holder->GetAttackInfo();
+		info.phase = phase;
+		info_holder->SetAttackInfo(info);
+	}
 }

@@ -222,10 +222,8 @@ std::shared_ptr<NodeBase> BossElude::MakeMagicNode(std::shared_ptr<EnemyBase> mi
 	// 攻撃
 
 	std::shared_ptr<BehaviorBase> behavior = std::make_shared<AreaOfEffectAttack>(
-		mine, "charge", 0.f, 0.9f, VectorAssistant::VGetSame(2.f), area_of_effect_radius, EffectID::kAreaOfEffect, 2.f, 1.f);
+		mine, "charge", 0.f, 0.9f, VectorAssistant::VGetSame(2.f), area_of_effect_radius, EffectID::kAreaOfEffect, 2.f, 1.f,attack_info_);
 	std::shared_ptr<NodeBase> area_of_effect_node = std::make_shared<ActionNode>(behavior);
-
-	std::shared_ptr<NodeBase> count_node = std::make_shared<CheckCountNode>(1);
 
 	// ノード終わりじゃなく当たり判定が終わったら描画させたいよね
 	// 終了条件はこのbehaviorが終了しているとき
@@ -241,7 +239,6 @@ std::shared_ptr<NodeBase> BossElude::MakeMagicNode(std::shared_ptr<EnemyBase> mi
 
 	// ui表示から先に入れる
 	area_of_effect_nodes.push_back(check_phase_node);
-	area_of_effect_nodes.push_back(count_node);
 	area_of_effect_nodes.push_back(area_of_effect_ui_node);
 	area_of_effect_nodes.push_back(area_of_effect_node);
 
@@ -261,7 +258,7 @@ std::shared_ptr<NodeBase> BossElude::MakeRoarTackleNode(std::shared_ptr<EnemyBas
 		VectorAssistant::VGetZero());
 
 	std::shared_ptr<RigidBody> rigid_body = std::make_shared<RigidBody>(collider, &pos_, FALSE, TRUE, 0.1f, 1.f);
-	std::shared_ptr<BehaviorBase> tackle = std::make_shared<RoarTackle>(mine, rigid_body, "tackle", 1.f, 2.f, 1.f, attack_range_group_);
+	std::shared_ptr<BehaviorBase> tackle = std::make_shared<RoarTackle>(mine, rigid_body, "tackle", 1.f, 2.f, 1.f, attack_range_group_,attack_info_);
 	std::shared_ptr<NodeBase> tackle_node = std::make_shared<ActionNode>(tackle);
 	auto check_phase_node = std::make_shared<CheckPhaseNode>(Phase::third, current_phase);
 	std::vector<std::shared_ptr<NodeBase>> tackle_nodes;
@@ -294,7 +291,7 @@ std::shared_ptr<NodeBase> BossElude::MakeStampNode(std::shared_ptr<EnemyBase> mi
 	// ジャンプノード
 	auto jump_action_node = std::make_shared<ActionNode>(jump);
 	// スタンプ
-	auto stamp = std::make_shared<Stamp>(mine, &pos_, stump_radius, "jumping_attack", 2.f);
+	auto stamp = std::make_shared<Stamp>(mine, &pos_, stump_radius, "jumping_attack", 2.f, attack_info_);
 	// スタンプノード
 	auto stamp_action_node = std::make_shared<ActionNode>(stamp);
 

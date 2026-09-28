@@ -1,27 +1,28 @@
 #pragma once
+#include"behavior_interface.h"
 
 enum class BehaviorStatus;
 class ObjectBase;
 
-class BehaviorBase
+class BehaviorBase : public IBehavior
 {
 public:
 
 	BehaviorBase(std::weak_ptr<ObjectBase> owner);
 
-	virtual ~BehaviorBase();
+	virtual ~BehaviorBase() override;
 
-	virtual void Init();
+	virtual void Init() override;
 
-	virtual void Entry();
+	virtual void Entry() override;
 
-	virtual BehaviorStatus Update();
+	virtual BehaviorStatus Update() override;
 
-	virtual void Exit();
+	virtual void Exit() override;
 
-	virtual void Draw();
+	virtual void Draw() override;
 
-	virtual void Debug();
+	virtual void Debug() override;
 
 	void Active();
 

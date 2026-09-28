@@ -3,6 +3,7 @@
 #include<unordered_map>
 #include"DxLib.h"
 #include"attack_base.h"
+#include"attack_info_holder.h"
 #include"tackle.h"
 #include"behavior_status.h"
 #include"physics.h"
@@ -23,8 +24,9 @@
 #include"sound_manager.h"
 
 Tackle::Tackle(std::weak_ptr<ObjectBase> owner, std::shared_ptr<RigidBody> rigid_body,
-	std::string anim_name,const float time, const float speed, float damage_rate)
+	std::string anim_name,const float time, const float speed, float damage_rate, std::weak_ptr<AttackInfoHolder> owner_attack_info_holder)
 	: AttackBase(owner,0.f,0.f,damage_rate)
+	, owner_attack_info_holder_(owner_attack_info_holder)
 	, activate_timer_(std::make_shared<ConditionTimer>(time))
 	, anim_name_(anim_name)
 	, vel_(VectorAssistant::VGetZero())
@@ -62,6 +64,7 @@ void Tackle::Entry()
 		vel_ = VScale(dir, speed_);
 		offset_vel_ = VScale(dir, 20.f);
 		offset_vel_.y = 22.f;
+		ChangeAttackInfo(AttackPhase::kActive, owner->GetPosition(), owner->GetFrontDir(), 10.f);
 	}
 	
 	// 当たり判定発生と発生時間のタイマーを開始
@@ -76,7 +79,6 @@ void Tackle::Entry()
 
 	SoundManager::GetInstance().SetPos("tackle",owner_.lock()->GetPosition());
 	SoundManager::GetInstance().Play3DSound("tackle");
-
 }
 
 BehaviorStatus Tackle::Update()
@@ -92,6 +94,7 @@ BehaviorStatus Tackle::Update()
 		if(auto owner = std::dynamic_pointer_cast<CharacterBase>(owner_.lock()))
 		{
 			owner->GetAnimator()->Cancel();
+			ChangeAttackInfo(AttackPhase::kRecovery, owner->GetPosition(), owner->GetFrontDir(), 10.f);
 		}
 		// 当たり判定をなくす
 		rigid_body_->NotActive();
@@ -169,4 +172,16 @@ void Tackle::OnCollisionStay(std::shared_ptr<IPhysicsEventReceiver> object)
 void Tackle::OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 
+}
+
+void Tackle::ChangeAttackInfo(const AttackPhase& phase, const VECTOR& pos, const VECTOR& dir, const float& range)
+{
+	if (auto attack_info = owner_attack_info_holder_.lock())
+	{
+		auto info = attack_info->GetAttackInfo();
+		info.phase = phase;
+		info.pos = pos;
+		info.dir = dir;
+		info.range = range;
+	}
 }

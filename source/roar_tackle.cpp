@@ -3,6 +3,7 @@
 #include"DxLib.h"
 #include"attack_base.h"
 #include"tackle.h"
+#include"attack_Info_holder.h"
 #include"roar_tackle.h"
 #include"behavior_status.h"
 #include"character_base.h"
@@ -14,9 +15,10 @@
 #include"attack_range_group_interface.h"
 
 RoarTackle::RoarTackle(std::weak_ptr<ObjectBase> owner, std::shared_ptr<RigidBody> rigid_body,
-	std::string anim_name, const float time, const float speed, float damage_rate,std::shared_ptr<IAttackRangeGroup> attack_range_group)
-	: Tackle(owner,rigid_body,anim_name,time,speed,damage_rate)
+	std::string anim_name, const float time, const float speed, float damage_rate,std::shared_ptr<IAttackRangeGroup> attack_range_group, std::weak_ptr<AttackInfoHolder> owner_attack_info_holder)
+	: Tackle(owner,rigid_body,anim_name,time,speed,damage_rate,owner_attack_info_holder)
 	, tackle_state_(TackleState::roar)
+	, owner_attack_info_holder_(owner_attack_info_holder)
 	, roar_anim_name_("")
 	, attack_range_ui_id_(-1)
 	, attack_dir_(VectorAssistant::VGetZero())
@@ -47,14 +49,16 @@ void RoarTackle::Entry()
 		owner->GetAnimator()->PlayRequest("charge_tackle");
 		VECTOR attack_target_pos = owner->GetAttackTargetPos();
 		attack_dir_ = VectorAssistant::VGetDir(owner->GetPosition(), attack_target_pos);
-		max_time = 1.96f;//owner->GetAnimator()->GetFPSTotalTime("charge_tacle");
+		max_time = 1.96f; //owner->GetAnimator()->GetFPSTotalTime("charge_tacle");
+		ChangeAttackInfo(AttackPhase::kStartUp, owner->GetPosition(), owner->GetFrontDir(), 10.f);
 	}
 	std::function<bool()> end_function = [this]()
 		{
 			return is_end_;
 		};
 
-	attack_range_ui_id_ = attack_range_group_->RectangleDrawRequest(owner_.lock()->GetPosition(), VGet(8.5f,1.f,57.f), attack_dir_, max_time,end_function);
+	auto ui_size = VGet(8.5f, 1.f, 57.f);
+	attack_range_ui_id_ = attack_range_group_->RectangleDrawRequest(owner_.lock()->GetPosition(), ui_size, attack_dir_, max_time,end_function);
 }
 
 BehaviorStatus RoarTackle::Update()
@@ -68,7 +72,10 @@ BehaviorStatus RoarTackle::Update()
 
 	case TackleState::tackle:
 		auto state = TackleUpdate();
-		if (state == BehaviorStatus::kComplete) { is_end_ = TRUE; }
+		if (state == BehaviorStatus::kComplete) 
+		{
+			is_end_ = TRUE;
+		}
 		return state;
 		break;
 	}
@@ -92,6 +99,14 @@ void RoarTackle::RoarUpdate()
 			// I—¹‚µ‚½‚çŽŸ‚Ö
 			tackle_state_ = TackleState::tackle;
 			Tackle::Entry();
+			ChangeAttackInfo(AttackPhase::kActive, character->GetPosition(), character->GetFrontDir(), 10.f);
+		}
+		else
+		{
+			if (character->GetAnimator()->GetRatio("charge_tackle") > 0.95f)
+			{
+				ChangeAttackInfo(AttackPhase::kDodgeTiming, character->GetPosition(), character->GetFrontDir(), 10.f);
+			}
 		}
 		VECTOR attack_target_pos = character->GetAttackTargetPos();
 		attack_dir_ = VectorAssistant::VGetDir(character->GetPosition(), attack_target_pos);

@@ -1,8 +1,9 @@
 #include<memory>
 #include"action_node.h"
 #include"behavior_status.h"
+#include"behavior_interface.h"
 
-ActionNode::ActionNode(std::shared_ptr<BehaviorBase> action)
+ActionNode::ActionNode(std::shared_ptr<IBehavior> action)
 	: NodeBase()
 	, action_(action)
 {

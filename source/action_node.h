@@ -1,13 +1,13 @@
 #pragma once
 #include"node_base.h"
 
-#include"behavior_base.h"
+class IBehavior;
 
 class ActionNode : public NodeBase
 {
 public:
 
-	ActionNode(std::shared_ptr<BehaviorBase> action);
+	ActionNode(std::shared_ptr<IBehavior> action);
 
 	virtual ~ActionNode() override;
 	
@@ -24,6 +24,6 @@ public:
 private:
 
 	// behavior‚ğ‚Â
-	std::shared_ptr<BehaviorBase> action_;
+	std::shared_ptr<IBehavior> action_;
 	
 };

@@ -1,13 +1,15 @@
 #pragma once
 
 class ObjectBase;
+class AttackInfoHolder;
 enum class BehaviorStatus;
+enum class AttackPhase;
 
 class Stamp :public AttackBase
 {
 public:
 
-	Stamp(std::weak_ptr<ObjectBase> owner, VECTOR* pos,float radius,std::string my_anim_name, float damage_rate);
+	Stamp(std::weak_ptr<ObjectBase> owner, VECTOR* pos,float radius,std::string my_anim_name, float damage_rate, std::weak_ptr<AttackInfoHolder> owner_attack_info_holder);
 
 	~Stamp() override;
 
@@ -31,7 +33,15 @@ public:
 
 private:
 
+	void ChangeAttackInfo(const AttackPhase& phase,const VECTOR& pos, const VECTOR& dir,const float& range);
+
+private:
+
+	std::weak_ptr<AttackInfoHolder> owner_attack_info_holder_;
+
 	std::string my_anim_name_;
+
+	float radius_;
 
 	bool is_stamp_;
 

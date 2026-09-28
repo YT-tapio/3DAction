@@ -4,6 +4,7 @@
 #include<utility>
 #include"DxLib.h"
 #include"attack_base.h"
+#include"attack_info_holder.h"
 #include"stamp.h"
 #include"object_base.h"
 #include"behavior_status.h"
@@ -26,10 +27,12 @@
 #include<functional>
 #include"brain.h"
 
-Stamp::Stamp(std::weak_ptr<ObjectBase> owner, VECTOR* pos, float radius,std::string my_anim_name, float damage_rate)
+Stamp::Stamp(std::weak_ptr<ObjectBase> owner, VECTOR* pos, float radius,std::string my_anim_name, float damage_rate,std::weak_ptr<AttackInfoHolder> owner_attack_info_holder)
 	: AttackBase(owner,0,0,damage_rate)
+	, owner_attack_info_holder_(owner_attack_info_holder)
 	, is_stamp_(FALSE)
 	, my_anim_name_(my_anim_name)
+	, radius_(radius)
 {
 	//rigid_bodyを生成
 	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Sphere>(radius, VGet(0, 0, 0)), pos, FALSE, TRUE, 1.f, 1.f);
@@ -54,17 +57,21 @@ void Stamp::Entry()
 	rigid_body_->NotActive();
 	is_stamp_ = FALSE;
 	//printfDx("stamp_entry\n");
+	if (auto owner = owner_.lock())
+	{
+		ChangeAttackInfo(AttackPhase::kStartUp, owner->GetPosition(), VGet(0.f, 1.f, 0.f), radius_);
+	}
 }
 
 BehaviorStatus Stamp::Update()
 {
-	if (is_stamp_) 
-	{ 
+	if (is_stamp_)
+	{
 		rigid_body_->NotActive();
-		//違うアニメーションになればサクセスを返す
+		// アニメーションがおわればサクセスを返す
 		if (auto character = std::dynamic_pointer_cast<CharacterBase>(owner_.lock()))
 		{
-			if(character->GetAnimator()->GetNowAnimName() != my_anim_name_)
+			if(character->GetAnimator()->GetIsEnd(my_anim_name_))
 			{
 				return BehaviorStatus::kComplete;
 			}
@@ -156,4 +163,16 @@ void Stamp::OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object)
 void Stamp::OnHit(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 	//printfDx("あたっている\n");
+}
+
+void Stamp::ChangeAttackInfo(const AttackPhase& phase, const VECTOR& pos, const VECTOR& dir, const float& range)
+{
+	if (auto attack_info = owner_attack_info_holder_.lock())
+	{
+		auto info = attack_info->GetAttackInfo();
+		info.phase = phase;
+		info.pos = pos;
+		info.dir = dir;
+		info.range = range;
+	}
 }

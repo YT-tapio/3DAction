@@ -3,8 +3,10 @@
 class ObjectBase;
 class IPhysicsEventReceiver;
 class ConditionTimer;
+class AttackInfoHolder;
 enum class BehaviorStatus;
 enum class AreaOfEffectAttackState;
+enum class AttackPhase;
 
 class AreaOfEffectAttack : public AttackBase
 {
@@ -13,7 +15,7 @@ public:
 	AreaOfEffectAttack(std::weak_ptr<ObjectBase> owner,
 		std::string stand_by_anim,float min_coll_ratio,
 		float max_coll_ratio,VECTOR effect_scale,
-		float hit_radius, int effect_id,float activate_time,float damage_rate);
+		float hit_radius, int effect_id,float activate_time,float damage_rate, std::weak_ptr<AttackInfoHolder> owner_attack_info_);
 
 	~AreaOfEffectAttack() override;
 
@@ -45,10 +47,14 @@ private:
 	/// </summary>
 	BehaviorStatus UpdatePlay();
 
+	void ChangeAttackPhase(AttackPhase phase);
+
 private:
 
 	std::shared_ptr<ConditionTimer> activate_timer_;
 	
+	std::weak_ptr<AttackInfoHolder> owner_attack_info_holder_;
+
 	std::string charge_anim_;
 
 	AreaOfEffectAttackState state_;

@@ -1,7 +1,7 @@
 #include<memory>
+#include"behavior_status.h"
 #include"behavior_base.h"
 #include"object_base.h"
-#include"behavior_status.h"
 
 BehaviorBase::BehaviorBase(std::weak_ptr<ObjectBase> owner)
 	: owner_(owner)
