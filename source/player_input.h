@@ -16,14 +16,16 @@ public:
 
 	void Init() override;
 
-	void Update() override;
+	void Update() override; 
 
 	/// <summary>
 	/// •Ï‰»—Ê‚ğ•Ô‚·
 	/// </summary>
 	/// <param name="current_player_id">¡‚»‚¤‚³‚µ‚Ä‚¢‚éplayer‚Ìid</param>
 	/// <returns></returns>
-	const int GetPlayerChangeNum(const int& current_player_id) const;
+	const int GetPlayerChangeNum(const int& current_player_id) const override;
+
+	const bool CheckIsPlayer() const;
 
 	const bool IsPush(ConfigName name) const override;
 

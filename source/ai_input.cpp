@@ -92,6 +92,11 @@ void AIInput::SetPlayerGroup(std::weak_ptr<PlayerGroup> player_group)
 	player_group_ = player_group;
 }
 
+const bool AIInput::CheckIsPlayer() const
+{
+	return FALSE;
+}
+
 const bool AIInput::IsDash() const
 {
 	return is_push_dash_;

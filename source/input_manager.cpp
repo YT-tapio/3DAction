@@ -32,7 +32,6 @@ void InputManager::Init()
 
 void InputManager::Update()
 {
-
 	ChangeInput();
 
 	for (auto& input_id : input_id_mp_)
@@ -100,11 +99,11 @@ const std::shared_ptr<const InputBase> InputManager::GetMainPlayerInput() const
 {
 	for (auto& input_id : input_id_mp_)
 	{
-		auto player_input = std::dynamic_pointer_cast<PlayerInput>(input_id.second);
-		if (player_input == nullptr) { continue; }
-		return player_input;
+		if (input_id.second->CheckIsPlayer())
+		{
+			return input_id.second;
+		}
 	}
-
 	return nullptr;
 }
 
@@ -112,9 +111,11 @@ const bool InputManager::IsPushMainInput(ConfigName name) const
 {
 	for (auto& input_id : input_id_mp_)
 	{
-		auto player_input = std::dynamic_pointer_cast<PlayerInput>(input_id.second);
-		if (player_input == nullptr) { continue; }
-		return player_input->IsPush(name);
+		if (input_id.second->CheckIsPlayer())
+		{
+			return input_id.second->IsPush(name);
+		}
+		
 	}
 	return FALSE;
 }
@@ -147,40 +148,42 @@ void InputManager::ChangeInput()
 	}
 	for (auto& input_id : input_id_mp_)
 	{
-		auto player_input = std::dynamic_pointer_cast<PlayerInput>(input_id.second);
-		if (player_input == nullptr) { continue; }
-		// 変化量
-		int num = input_id.first;
-		int change_num = player_input->GetPlayerChangeNum(num);
-		if (change_num == 0) { return; }	// 変化なしなら終了
-		int change_player_id = num + change_num;
-
-		// 今は要素ぬけする可能性があるのでそれの改善
-		if (change_player_id < kPlayer1Id)
+		if (input_id.second->CheckIsPlayer())
 		{
-			change_player_id = changers_num_ - 1;
+			auto player_input = input_id.second;
+			// 変化量
+			int num = input_id.first;
+			int change_num = player_input->GetPlayerChangeNum(num);
+			if (change_num == 0) { return; }	// 変化なしなら終了
+			int change_player_id = num + change_num;
+
+			// 今は要素ぬけする可能性があるのでそれの改善
+			if (change_player_id < kPlayer1Id)
+			{
+				change_player_id = changers_num_ - 1;
+			}
+
+			if (change_player_id > changers_num_)
+			{
+				change_player_id = kPlayer1Id;
+			}
+
+			// オーナーをチェンジ
+			auto changer_owner = input_id_mp_.find(change_player_id)->second->GetOwner();				// 先に情報を保存
+			auto current_owner = input_id_mp_.find(num)->second->GetOwner();
+			input_id_mp_.find(change_player_id)->second->SetOwner(current_owner);
+			input_id_mp_.find(num)->second->SetOwner(changer_owner);
+
+			auto changer_input = input_id_mp_.find(change_player_id)->second;				// 先に情報を保存
+			input_id_mp_.find(change_player_id)->second = input_id_mp_.find(num)->second;	// 代入
+			input_id_mp_.find(num)->second = changer_input;						// 保存していたものを入れる
+
+			input_changers_[num].lock()->InputChange(input_id_mp_.find(num)->second);
+			input_changers_[change_player_id].lock()->InputChange(input_id_mp_.find(change_player_id)->second);
+			// ここでuiのチェンジ
+
+			return;
 		}
-
-		if (change_player_id > changers_num_)
-		{
-			change_player_id = kPlayer1Id;
-		}
-
-		// オーナーをチェンジ
-		auto changer_owner = input_id_mp_.find(change_player_id)->second->GetOwner();				// 先に情報を保存
-		auto current_owner = input_id_mp_.find(num)->second->GetOwner();
-		input_id_mp_.find(change_player_id)->second->SetOwner(current_owner);
-		input_id_mp_.find(num)->second->SetOwner(changer_owner);
-
-		auto changer_input = input_id_mp_.find(change_player_id)->second;				// 先に情報を保存
-		input_id_mp_.find(change_player_id)->second = input_id_mp_.find(num)->second;	// 代入
-		input_id_mp_.find(num)->second = changer_input;						// 保存していたものを入れる
-
-		input_changers_[num].lock()->InputChange(input_id_mp_.find(num)->second);
-		input_changers_[change_player_id].lock()->InputChange(input_id_mp_.find(change_player_id)->second);
-		// ここでuiのチェンジ
-
-		return;
 	}
 }
 

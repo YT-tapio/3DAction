@@ -61,6 +61,11 @@ const int PlayerInput::GetPlayerChangeNum(const int& current_player_id) const
 	return 0;
 }
 
+const bool PlayerInput::CheckIsPlayer() const
+{
+	return TRUE;
+}
+
 const bool PlayerInput::IsPush(ConfigName name) const
 {
 	if (is_stop_) { return FALSE; }

@@ -19,6 +19,8 @@ public:
 
 	void SetPlayerGroup(std::weak_ptr<PlayerGroup> player_group) override;
 
+	const bool CheckIsPlayer() const override;
+
 	const bool IsDash() const override;
 
 	const bool IsPunch() const override;

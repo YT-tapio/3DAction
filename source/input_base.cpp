@@ -48,6 +48,16 @@ Player* InputBase::GetOwner()
 	return owner_;
 }
 
+const int InputBase::GetPlayerChangeNum(const int& current_player_id) const
+{
+	return 0;
+}
+
+const bool InputBase::CheckIsPlayer() const
+{
+	return FALSE;
+}
+
 const bool InputBase::IsPush(ConfigName name) const
 {
 	return FALSE;

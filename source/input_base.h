@@ -27,6 +27,14 @@ public:
 
 	Player* GetOwner();
 
+	virtual const int GetPlayerChangeNum(const int& current_player_id) const;
+
+	/// <summary>
+	/// ÉvÉåÉCÉÑÅ[Ç©Ç«Ç§Ç©
+	/// </summary>
+	/// <returns></returns>
+	virtual const bool CheckIsPlayer() const;
+
 	virtual const bool IsPush(ConfigName name) const;
 
 	virtual const bool IsDash() const;
