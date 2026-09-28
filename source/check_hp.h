@@ -1,11 +1,11 @@
 #pragma once
-#include"behavior_base.h"
+#include"behavior_interface.h"
 
-class CheckHp : public BehaviorBase
+class CheckHp : public IBehavior
 {
 public:
 
-	CheckHp(std::shared_ptr<ObjectBase> owner, float* hp);
+	CheckHp(float* hp);
 
 	~CheckHp() override;
 

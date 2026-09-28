@@ -2,8 +2,8 @@
 #include"check_hp.h"
 #include"behavior_status.h"
 
-CheckHp::CheckHp(std::shared_ptr<ObjectBase> owner,float* hp)
-	: BehaviorBase(owner)
+CheckHp::CheckHp(float* hp)
+	: IBehavior()
 	,hp_(hp)
 {
 

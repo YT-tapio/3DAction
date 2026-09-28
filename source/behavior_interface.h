@@ -15,7 +15,7 @@ public:
 
 	virtual void Exit() = 0;
 
-	virtual void Draw() = 0;
+	virtual void Draw() {};
 
-	virtual void Debug() = 0;
+	virtual void Debug() {};
 };

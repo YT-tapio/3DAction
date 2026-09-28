@@ -164,6 +164,7 @@
     <ClCompile Include="source\check_hp.cpp" />
     <ClCompile Include="source\check_phase_node.cpp" />
     <ClCompile Include="source\config_datas.cpp" />
+    <ClCompile Include="source\cool_time_behavior.cpp" />
     <ClCompile Include="source\damage_ui_group_interface.cpp" />
     <ClCompile Include="source\enemy_controller.cpp" />
     <ClCompile Include="source\enemy_controller_interface.cpp" />
@@ -350,6 +351,7 @@
     <ClCompile Include="source\won_camera.cpp" />
     <ClCompile Include="source\won_ui.cpp" />
     <ClCompile Include="source\zoom.cpp" />
+    <ClCompile Include="source\check_enemy_attack_id.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\2d_gravity.h" />
@@ -367,12 +369,14 @@
     <ClInclude Include="source\button_ui.h" />
     <ClInclude Include="source\button_ui_datas.h" />
     <ClInclude Include="source\can_execute_node.h" />
+    <ClInclude Include="source\check_enemy_attack_id.h" />
     <ClInclude Include="source\check_count_node.h" />
     <ClInclude Include="source\check_hp.h" />
     <ClInclude Include="source\check_phase_node.h" />
     <ClInclude Include="source\config.h" />
     <ClInclude Include="source\config_datas.h" />
     <ClInclude Include="source\config_name.h" />
+    <ClInclude Include="source\cool_time_behavior.h" />
     <ClInclude Include="source\damage_ui_group_interface.h" />
     <ClInclude Include="source\boss_elude.h" />
     <ClInclude Include="source\attack_id.h" />

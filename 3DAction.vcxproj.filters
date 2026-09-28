@@ -421,6 +421,15 @@
     <Filter Include="ソース ファイル\interface\behavior">
       <UniqueIdentifier>{647ca3c9-081a-49df-b756-51d6d74809e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\behavior\player_ai\check_hp">
+      <UniqueIdentifier>{f9dd825c-0ca1-4518-8e25-d02591f24374}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\behavior\player_ai\check_enemy_attack_id">
+      <UniqueIdentifier>{dd91674d-f166-4f53-98d4-7243d8192a15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\behavior\player_ai\NewFilter1">
+      <UniqueIdentifier>{bd768d4a-8e96-4f6f-ae14-112ca04c33da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -1026,14 +1035,20 @@
     <ClCompile Include="source\attack_info.cpp">
       <Filter>ソース ファイル\attack</Filter>
     </ClCompile>
-    <ClCompile Include="source\check_hp.cpp">
-      <Filter>ソース ファイル\behavior\player_ai</Filter>
-    </ClCompile>
     <ClCompile Include="source\minion_base.cpp">
       <Filter>ソース ファイル\object\enemy\minion</Filter>
     </ClCompile>
     <ClCompile Include="source\behavior_interface.cpp">
       <Filter>ソース ファイル\interface\behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="source\check_hp.cpp">
+      <Filter>ソース ファイル\behavior\player_ai\check_hp</Filter>
+    </ClCompile>
+    <ClCompile Include="source\cool_time_behavior.cpp">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="source\check_enemy_attack_id.cpp">
+      <Filter>ソース ファイル\behavior\player_ai\check_enemy_attack_id</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1772,14 +1787,20 @@
     <ClInclude Include="source\attack_Info_holder.h">
       <Filter>ソース ファイル\attack</Filter>
     </ClInclude>
-    <ClInclude Include="source\check_hp.h">
-      <Filter>ソース ファイル\behavior\player_ai</Filter>
-    </ClInclude>
     <ClInclude Include="source\minion_base.h">
       <Filter>ソース ファイル\object\enemy\minion</Filter>
     </ClInclude>
     <ClInclude Include="source\behavior_interface.h">
       <Filter>ソース ファイル\interface\behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\check_hp.h">
+      <Filter>ソース ファイル\behavior\player_ai\check_hp</Filter>
+    </ClInclude>
+    <ClInclude Include="source\cool_time_behavior.h">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="source\check_enemy_attack_id.h">
+      <Filter>ソース ファイル\behavior\player_ai\check_enemy_attack_id</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
