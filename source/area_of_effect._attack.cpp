@@ -162,7 +162,6 @@ BehaviorStatus AreaOfEffectAttack::UpdateCharge()
 		SoundManager::GetInstance().Play3DSound("area_of_effect");
 		// 次のステートへ
 		state_ = AreaOfEffectAttackState::kPlay;
-		
 	}
 	return BehaviorStatus::kRunning;
 }

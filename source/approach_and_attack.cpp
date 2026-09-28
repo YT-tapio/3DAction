@@ -46,6 +46,7 @@ ApproachAndAttack::~ApproachAndAttack()
 
 void ApproachAndAttack::Init()
 {
+	rigid_body_->NotActive();
 	rigid_body_->Init(weak_from_this());
 	rigid_body_->SetTag(collider_tag_);
 	Physics::GetInstance().AddBody(rigid_body_);
