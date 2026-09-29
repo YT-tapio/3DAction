@@ -604,6 +604,7 @@
     <ClInclude Include="source\sound_base.h" />
     <ClInclude Include="source\won_ui.h" />
     <ClInclude Include="source\zoom.h" />
+    <ClInclude Include="source\check_stamina.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\json\player_data.json" />

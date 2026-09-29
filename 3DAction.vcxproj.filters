@@ -427,7 +427,10 @@
     <Filter Include="ソース ファイル\behavior\player_ai\check_enemy_attack_id">
       <UniqueIdentifier>{dd91674d-f166-4f53-98d4-7243d8192a15}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\behavior\player_ai\NewFilter1">
+    <Filter Include="ソース ファイル\behavior\cool_time">
+      <UniqueIdentifier>{12ec72fd-a130-4674-be92-365157abadd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\behavior\player_ai\CheckStamina">
       <UniqueIdentifier>{bd768d4a-8e96-4f6f-ae14-112ca04c33da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -1044,11 +1047,11 @@
     <ClCompile Include="source\check_hp.cpp">
       <Filter>ソース ファイル\behavior\player_ai\check_hp</Filter>
     </ClCompile>
-    <ClCompile Include="source\cool_time_behavior.cpp">
-      <Filter>ソース ファイル\behavior</Filter>
-    </ClCompile>
     <ClCompile Include="source\check_enemy_attack_id.cpp">
       <Filter>ソース ファイル\behavior\player_ai\check_enemy_attack_id</Filter>
+    </ClCompile>
+    <ClCompile Include="source\cool_time_behavior.cpp">
+      <Filter>ソース ファイル\behavior\cool_time</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1796,11 +1799,14 @@
     <ClInclude Include="source\check_hp.h">
       <Filter>ソース ファイル\behavior\player_ai\check_hp</Filter>
     </ClInclude>
-    <ClInclude Include="source\cool_time_behavior.h">
-      <Filter>ソース ファイル\behavior</Filter>
-    </ClInclude>
     <ClInclude Include="source\check_enemy_attack_id.h">
       <Filter>ソース ファイル\behavior\player_ai\check_enemy_attack_id</Filter>
+    </ClInclude>
+    <ClInclude Include="source\cool_time_behavior.h">
+      <Filter>ソース ファイル\behavior\cool_time</Filter>
+    </ClInclude>
+    <ClInclude Include="source\check_stamina.h">
+      <Filter>ソース ファイル\behavior\player_ai\CheckStamina</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
