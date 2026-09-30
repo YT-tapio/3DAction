@@ -121,6 +121,8 @@ void AreaOfEffectAttack::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver>
 	auto owner_tag = owner->GetRigidBody()->GetTag();
 	auto object_tag = object->GetRigidBody()->GetTag();
 
+	bool is_critical = FALSE;
+
 	// オーナーが何者かを判別
 	if (owner_tag == "player")
 	{
@@ -128,7 +130,8 @@ void AreaOfEffectAttack::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver>
 		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
 		{
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
-			takable_player->OnDamageFromPlayer(owner_status_container->GetMagicATK() * damage_rate_, AttackType::kMagic);
+			auto damage = owner_status_container->GetMagicATK();
+			takable_player->OnDamageFromPlayer(damage * damage_rate_, AttackType::kMagic, is_critical);
 		}
 		return;
 	}
@@ -140,7 +143,8 @@ void AreaOfEffectAttack::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver>
 		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
 		{
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
-			takable_enemy->OnDamageFromEnemy(owner_status_container->GetMagicATK() * damage_rate_, AttackType::kMagic);
+			auto damage = owner_status_container->GetMagicATK();
+			takable_enemy->OnDamageFromEnemy(damage * damage_rate_, AttackType::kMagic, is_critical);
 		}
 		return;
 	}

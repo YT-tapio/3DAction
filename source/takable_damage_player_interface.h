@@ -10,6 +10,6 @@ class ITakableDamagePlayer
 public:
 
 	virtual ~ITakableDamagePlayer() = default;
-	virtual void OnDamageFromPlayer(float damage,AttackType type);
+	virtual void OnDamageFromPlayer(float damage,AttackType type, const bool is_critical);
 
 };

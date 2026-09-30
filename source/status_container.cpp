@@ -196,21 +196,41 @@ const Status StatusContainer::GetCurrentStatus() const
 	return current_status_;
 }
 
-const float StatusContainer::GetPhysicalATK() const
+const int StatusContainer::GetPhysicalATK(bool& is_critical) const
 {
+	const float kDamageVibration = 0.2f;
+
 	// 現在の攻撃量
 	auto current_physical_atk = current_status_.physical_atk;
 	// ばらつきのある物理ダメージ
-	float damage = GetNormalRandom(current_physical_atk, current_physical_atk * 0.3f);
+	float damage = GetNormalRandom(current_physical_atk, current_physical_atk * kDamageVibration);
 	// clampする
 	const float kMaxDamage = current_physical_atk + current_physical_atk * 0.3f;
-	const float kMinDamage = current_physical_atk - current_physical_atk * 0.3f;
+	const float kMinDamage = current_physical_atk;
 	damage = MyMath::Clamp(damage, kMinDamage, kMaxDamage);
 
-	return damage;
+	//何倍か
+	float rate = damage / current_physical_atk;
+
+	const float kRate = 1 + kDamageVibration;
+
+#ifndef DEBUG
+
+	printfDx("%.2f\n", rate);
+	printfDx("%.2f\n", current_physical_atk);
+	printfDx("%.2f\n", damage);
+	
+#endif
+
+	if (rate > kRate)
+	{
+		is_critical = TRUE;
+		printfDx("クリティカル\n");
+	}
+	return static_cast<int>(damage);
 }
 
-const float StatusContainer::GetMagicATK() const
+const int StatusContainer::GetMagicATK() const
 {
 	// 
 	float current_magic_atk = current_status_.magic_atk;

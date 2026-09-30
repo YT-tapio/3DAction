@@ -19,9 +19,9 @@ public:
 
 	const void Draw() const;
 
-	void SpawnPlayerDamageUI(const VECTOR& pos,const float& damage) override;
+	void SpawnPlayerDamageUI(const VECTOR& pos,const float& damage, const bool is_critical) override;
 
-	void SpawnEnemyDamageUI(const VECTOR& pos, const float& damage) override;
+	void SpawnEnemyDamageUI(const VECTOR& pos, const float& damage, const bool is_critical) override;
 
 private:
 

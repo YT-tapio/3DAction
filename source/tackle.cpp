@@ -138,6 +138,7 @@ void Tackle::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 	if (owner_tag == object_tag) { return; }
 
 	// タグが違う場合は相手にダメージを加える
+	bool is_critical = FALSE;
 	// ownerがpalyerだったら
 	if (owner_tag == "player")
 	{
@@ -145,7 +146,7 @@ void Tackle::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
 		{
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
-			takable_player->OnDamageFromPlayer(owner_status_container->GetPhysicalATK() * damage_rate_, AttackType::kPhysical);
+			takable_player->OnDamageFromPlayer(owner_status_container->GetPhysicalATK(is_critical) * damage_rate_, AttackType::kPhysical, is_critical);
 		}
 		return;
 	}
@@ -157,7 +158,7 @@ void Tackle::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
 		{
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
-			takable_enemy->OnDamageFromEnemy(owner_status_container->GetPhysicalATK() * damage_rate_, AttackType::kPhysical);
+			takable_enemy->OnDamageFromEnemy(owner_status_container->GetPhysicalATK(is_critical) * damage_rate_, AttackType::kPhysical, is_critical);
 		}
 		return;
 	}

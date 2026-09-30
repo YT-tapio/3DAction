@@ -97,7 +97,7 @@ void Punch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 	// タグが同じだと早期リターン
 	if (owner_tag == object_tag) { return; }
 	
-	
+	bool is_critical = FALSE;
 	// タグが違う場合は相手にダメージを加える
 	// ownerがpalyerだったら
 	if (owner_tag == "player")
@@ -106,7 +106,9 @@ void Punch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
 		{
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
-			takable_player->OnDamageFromPlayer(owner_status_container->GetPhysicalATK() * damage_rate_, AttackType::kPhysical);
+			auto damage = owner_status_container->GetPhysicalATK(is_critical);
+			
+			takable_player->OnDamageFromPlayer(damage * damage_rate_, AttackType::kPhysical, is_critical);
 			// ヒットストップ
 			owner_.lock()->GetTime()->SetTimeScale(0.f, 0.3f, TimeTransitionMethod::kMoment);
 			// カメラのシェイク
@@ -129,7 +131,9 @@ void Punch::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
 		{
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
-			takable_enemy->OnDamageFromEnemy(owner_status_container->GetPhysicalATK(), AttackType::kPhysical);
+			auto damage = owner_status_container->GetPhysicalATK(is_critical);
+
+			takable_enemy->OnDamageFromEnemy(damage, AttackType::kPhysical, is_critical);
 			// パンチの音を発生
 			SoundManager::GetInstance().SetPos("punch_hit", *pos_);
 			SoundManager::GetInstance().Play3DSound("punch_hit");

@@ -176,6 +176,7 @@
     <ClCompile Include="source\fade.cpp" />
     <ClCompile Include="source\game_start_timer.cpp" />
     <ClCompile Include="source\game_to_next_scene.cpp" />
+    <ClCompile Include="source\image_repository.cpp" />
     <ClCompile Include="source\jump_infite_attack.cpp" />
     <ClCompile Include="source\jump_infite_attack_skill.cpp" />
     <ClCompile Include="source\jump_skill.cpp" />
@@ -392,6 +393,7 @@
     <ClInclude Include="source\file_data.h" />
     <ClInclude Include="source\game_to_next_scene.h" />
     <ClInclude Include="source\config_data.h" />
+    <ClInclude Include="source\image_repository.h" />
     <ClInclude Include="source\jump_infite_attack.h" />
     <ClInclude Include="source\jump_infite_attack_skill.h" />
     <ClInclude Include="source\jump_skill.h" />

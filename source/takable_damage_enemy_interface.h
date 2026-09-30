@@ -10,6 +10,6 @@ class ITakableDamageEnemy
 public:
 
 	virtual ~ITakableDamageEnemy() = default;
-	virtual void OnDamageFromEnemy(float damage,AttackType type);
+	virtual void OnDamageFromEnemy(float damage,AttackType type, const bool is_critical);
 
 };

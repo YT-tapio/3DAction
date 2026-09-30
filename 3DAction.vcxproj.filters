@@ -382,9 +382,6 @@
     <Filter Include="ソース ファイル\behavior_tree\node\condition_node\check_phase">
       <UniqueIdentifier>{7b8fc40d-f1cf-4b0c-82e2-9f5b4ace3ba4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\model_repository">
-      <UniqueIdentifier>{766407ad-2280-4e6b-bdf9-0d1ae8564f0e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\object_pool">
       <UniqueIdentifier>{cd6193c0-f556-464c-b782-12af9d1e0ca7}</UniqueIdentifier>
     </Filter>
@@ -432,6 +429,15 @@
     </Filter>
     <Filter Include="ソース ファイル\behavior\player_ai\CheckStamina">
       <UniqueIdentifier>{bd768d4a-8e96-4f6f-ae14-112ca04c33da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\repository">
+      <UniqueIdentifier>{2e43db57-a4d8-4d50-8c80-62f2b374ba83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\repository\image_repository">
+      <UniqueIdentifier>{a3f767c6-4956-4267-9a07-e24afad32b18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\repository\model_repository">
+      <UniqueIdentifier>{766407ad-2280-4e6b-bdf9-0d1ae8564f0e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -994,7 +1000,7 @@
       <Filter>ソース ファイル\interface</Filter>
     </ClCompile>
     <ClCompile Include="source\model_repository.cpp">
-      <Filter>ソース ファイル\model_repository</Filter>
+      <Filter>ソース ファイル\repository\model_repository</Filter>
     </ClCompile>
     <ClCompile Include="source\object_pool_base.cpp">
       <Filter>ソース ファイル\object_pool</Filter>
@@ -1052,6 +1058,9 @@
     </ClCompile>
     <ClCompile Include="source\cool_time_behavior.cpp">
       <Filter>ソース ファイル\behavior\cool_time</Filter>
+    </ClCompile>
+    <ClCompile Include="source\image_repository.cpp">
+      <Filter>ソース ファイル\repository\image_repository</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1737,7 +1746,7 @@
       <Filter>ソース ファイル\interface</Filter>
     </ClInclude>
     <ClInclude Include="source\model_repository.h">
-      <Filter>ソース ファイル\model_repository</Filter>
+      <Filter>ソース ファイル\repository\model_repository</Filter>
     </ClInclude>
     <ClInclude Include="source\bullet_pool.h">
       <Filter>ソース ファイル\object_pool</Filter>
@@ -1807,6 +1816,9 @@
     </ClInclude>
     <ClInclude Include="source\check_stamina.h">
       <Filter>ソース ファイル\behavior\player_ai\CheckStamina</Filter>
+    </ClInclude>
+    <ClInclude Include="source\image_repository.h">
+      <Filter>ソース ファイル\repository\image_repository</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

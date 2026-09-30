@@ -83,13 +83,13 @@ public:
 	/// 正規分布した物理ダメージ
 	/// </summary>
 	/// <returns></returns>
-	const float GetPhysicalATK() const;
+	const int GetPhysicalATK(bool& is_critical) const;
 
 	/// <summary>
 	/// 正規分布した魔法ダメージ
 	/// </summary>
 	/// <returns></returns>
-	const float GetMagicATK() const;
+	const int GetMagicATK() const;
 
 	/// <summary>
 	/// スタミナを使えるか

@@ -53,7 +53,7 @@ public:
 
 	virtual void UnGround() override;
 
-	virtual void OnDamageFromPlayer(float damage,AttackType type) override;
+	virtual void OnDamageFromPlayer(float damage,AttackType type,const bool is_critical) override;
 
 	std::shared_ptr<AttackInfoHolder> GetAttackInfoHolder();
 

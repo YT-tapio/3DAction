@@ -122,7 +122,7 @@ void Stamp::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 	auto object_tag = object->GetRigidBody()->GetTag();
 
 	if (owner_tag == object_tag) { return; }
-
+	bool is_critical = FALSE;
 	// オーナーが何者かを判別
 	if (owner_tag == "player")
 	{
@@ -130,7 +130,8 @@ void Stamp::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		if (auto takable_player = std::dynamic_pointer_cast<ITakableDamagePlayer>(object))
 		{
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
-			takable_player->OnDamageFromPlayer(owner_status_container->GetPhysicalATK() * damage_rate_, AttackType::kPhysical);
+			auto damage = owner_status_container->GetPhysicalATK(is_critical);
+			takable_player->OnDamageFromPlayer(damage * damage_rate_, AttackType::kPhysical, is_critical);
 		}
 		return;
 	}
@@ -142,7 +143,8 @@ void Stamp::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
 		{
 			auto owner_status_container = std::dynamic_pointer_cast<IStatusHolder>(owner_.lock())->GetStatusContainer();
-			takable_enemy->OnDamageFromEnemy(owner_status_container->GetPhysicalATK() * damage_rate_, AttackType::kPhysical);
+			auto damage = owner_status_container->GetPhysicalATK(is_critical);
+			takable_enemy->OnDamageFromEnemy(damage * damage_rate_, AttackType::kPhysical, is_critical);
 		}
 		return;
 	}

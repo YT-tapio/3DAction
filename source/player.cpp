@@ -730,7 +730,7 @@ void Player::OnHealFromPlayer(float heal)
 	// printfDx("ƒq[ƒ‹\n");
 }
 
-void Player::OnDamageFromEnemy(float damage,AttackType type)
+void Player::OnDamageFromEnemy(float damage,AttackType type, const bool is_critical)
 {
 	// –³“GŽž‚Íƒ_ƒ[ƒW‚ðŽó‚¯‚È‚¢
 	if (is_invincible_)
@@ -822,7 +822,7 @@ void Player::OnDamageFromEnemy(float damage,AttackType type)
 	// ui•`‰æ‚ðs‚¤
 	// “ª‚Ìposition‚É‚µ‚æ‚¤‚©‚È
 	//DamageUIGroup::GetInstance().SpawnPlayerDamageUI(head_pos_, final_damage);
-	damage_ui_group_->SpawnPlayerDamageUI(head_pos_,final_damage);
+	damage_ui_group_->SpawnPlayerDamageUI(head_pos_,final_damage,is_critical);
 }
 
 void Player::InputChange(std::shared_ptr<InputBase> input)

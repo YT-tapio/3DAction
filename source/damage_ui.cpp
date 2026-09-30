@@ -16,6 +16,7 @@
 #include<windows.h>
 #include"csv_file_assistant.h"
 #include"font.h"
+#include"image_repository.h"
 
 DamageUI::DamageUI(const std::string& file_path)
 	: stop_timer_(std::make_shared<ConditionTimer>(2.f))
@@ -32,6 +33,7 @@ DamageUI::DamageUI(const std::string& file_path)
 	, alpha_value_(255.f)
 	, is_jump_(FALSE)
 	, is_active_(FALSE)
+	, is_critical_(FALSE)
 {
 	LoadFile(file_path);
 	damage_screen_ = std::make_shared<SubScreen>(400, 400);
@@ -97,18 +99,19 @@ const void DamageUI::Draw() const
 	// 描画する
 	auto function = [this]() -> void
 		{
-			DrawBillboard3D(pos_, 0.5f, 0.5f, 10.f, 0.f, damage_screen_->GetHandle(), TRUE);
+			DrawUI();
 		};
 
 	Draw2D::Blend(function, alpha_value_);
 
 }
 
-void DamageUI::Spawn(const VECTOR& pos, const float& damage)
+void DamageUI::Spawn(const VECTOR& pos, const float& damage,const bool is_critical)
 {
 	// 引数の座標を基準にランダムな場所にスポーンさせる
 	spawn_pos_ = RandomSpawnPos(pos);
 	pos_ = spawn_pos_;
+	is_critical_ = is_critical;
 	damage_ = damage;
 	current_up_speed_ = default_up_speed_;
 	alpha_value_ = 255.f;
@@ -149,6 +152,15 @@ void DamageUI::DrawDamage()
 	// SetFontEdgeSize(10);
 	Draw2D::FormatStringToHandle(start_pos, "%d", font_color_, font_handle_, static_cast<int>(damage_), edge_color_);
 	damage_screen_->Down();
+}
+
+const void DamageUI::DrawUI() const
+{
+	if (is_critical_)
+	{
+		DrawBillboard3D(pos_, 0.5f, 0.5f, 10.f, 0.f, ImageRepository::GetInstance().GetHandle("critical_damage"), TRUE);
+	}
+	DrawBillboard3D(pos_, 0.5f, 0.5f, 10.f, 0.f, damage_screen_->GetHandle(), TRUE);
 }
 
 void DamageUI::LoadFile(const std::string& path)

@@ -180,14 +180,14 @@ void EnemyBase::UnGround()
 	is_ground_ = FALSE;
 }
 
-void EnemyBase::OnDamageFromPlayer(float damage,AttackType type)
+void EnemyBase::OnDamageFromPlayer(float damage,AttackType type, const bool is_critical)
 {
 	auto final_damage = status_container_->TakeDamage(damage,type);
 	for (auto& observer : observers_)
 	{
 		observer->OnTakeDamage(final_damage);
 	}
-	damage_ui_group_->SpawnEnemyDamageUI(VAdd(pos_, VGet(0.f, 5.f, 0.f)), final_damage);
+	damage_ui_group_->SpawnEnemyDamageUI(VAdd(pos_, VGet(0.f, 5.f, 0.f)), final_damage,is_critical);
 	// ‘Ì‚ðÔ‚­‚·‚é
 	hit_red_body_->Request(ChangeMethod::kLerp, 0.2f);
 

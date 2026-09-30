@@ -88,25 +88,25 @@ const void DamageUIGroup::Draw() const
 	SetWriteZBuffer3D(TRUE);
 }
 
-void DamageUIGroup::SpawnPlayerDamageUI(const VECTOR& pos,const float& damage)
+void DamageUIGroup::SpawnPlayerDamageUI(const VECTOR& pos,const float& damage, const bool is_critical)
 {
 	for (auto damage_ui : player_damage_uis_)
 	{
 		if (!damage_ui->GetIsActive())
 		{
-			damage_ui->Spawn(pos, damage);
+			damage_ui->Spawn(pos, damage,is_critical);
 			break;
 		}
 	}
 }
 
-void DamageUIGroup::SpawnEnemyDamageUI(const VECTOR& pos, const float& damage)
+void DamageUIGroup::SpawnEnemyDamageUI(const VECTOR& pos, const float& damage, const bool is_critical)
 {
 	for (auto damage_ui : enemy_damage_uis_)
 	{
 		if (!damage_ui->GetIsActive())
 		{
-			damage_ui->Spawn(pos, damage);
+			damage_ui->Spawn(pos, damage,is_critical);
 			break;
 		}
 	}

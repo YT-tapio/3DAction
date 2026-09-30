@@ -23,9 +23,11 @@ public:
 	/// </summary>
 	/// <param name="pos"></param>
 	/// <param name="damage"></param>
-	void Spawn(const VECTOR& pos, const float& damage);
+	void Spawn(const VECTOR& pos, const float& damage, const bool is_critical = TRUE);
 
 	const bool GetIsActive() const;
+
+	const void DrawUI() const;
 
 private:
 
@@ -57,5 +59,5 @@ private:
 
 	bool is_jump_;
 	bool is_active_;
-
+	bool is_critical_;
 };

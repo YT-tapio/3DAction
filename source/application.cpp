@@ -5,6 +5,7 @@
 #include"scene_manager.h"
 #include"screen_size.h"
 #include"model_repository.h"
+#include"image_repository.h"
 
 Application::Application()
 {
@@ -50,6 +51,7 @@ Application::Application()
 
     SetUseSetDrawScreenSettingReset(FALSE);
     ModelRepository::GetInstance().Load();
+    ImageRepository::GetInstance().Load();
     SceneManager::GetInstance();
 }
 

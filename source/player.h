@@ -66,7 +66,7 @@ public:
 
 	void OnHealFromPlayer(float heal) override;
 
-	void OnDamageFromEnemy(float damage,AttackType type) override;
+	void OnDamageFromEnemy(float damage,AttackType type, const bool is_critical = FALSE) override;
 
 	void InputChange(std::shared_ptr<InputBase> input) override;
 
