@@ -740,7 +740,7 @@ void Player::OnDamageFromEnemy(float damage,AttackType type, const bool is_criti
 		// 許容量
 		const float kJustAvoidRatio = 0.37f;
 		// ダメージを受けない
-		// 無敵かつジャスト入力中かつアニメーションが最初のほうなら特別処理
+		// アニメーションが最初のほうなら特別処理
 		if (animator_->GetRatio("avoid") < kJustAvoidRatio)
 		{
 			// バフをかける
@@ -779,8 +779,19 @@ void Player::OnDamageFromEnemy(float damage,AttackType type, const bool is_criti
 			
 			// この時ジャスト回避
 			//printfDx("ジャスト回避\n");
-			time_->SetTimeScale(0.f, 0.15f);
-			rigid_body_->SetStop(0.15f);
+			if (FALSE)
+			{
+				time_->SetTimeScale(0.f, 0.15f);
+				rigid_body_->SetStop(0.15f);
+			}
+			else
+			{
+				time_->SetTimeScale(0.2f, 1.15f);
+				rigid_body_->SetStop(1.15f);
+				// ズームさせたい
+				// Brain::GetInstance().ZoomCamera();
+			}
+
 			SoundManager::GetInstance().SetPos("just_avoid", pos_);
 			SoundManager::GetInstance().Play3DSound("just_avoid");
 

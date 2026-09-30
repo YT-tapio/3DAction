@@ -160,9 +160,12 @@
     <ClCompile Include="source\button_ui.cpp" />
     <ClCompile Include="source\button_ui_datas.cpp" />
     <ClCompile Include="source\can_execute_node.cpp" />
+    <ClCompile Include="source\chase_main_player.cpp" />
     <ClCompile Include="source\check_count_node.cpp" />
     <ClCompile Include="source\check_hp.cpp" />
+    <ClCompile Include="source\check_inside_enemy.cpp" />
     <ClCompile Include="source\check_phase_node.cpp" />
+    <ClCompile Include="source\check_stamina.cpp" />
     <ClCompile Include="source\config_datas.cpp" />
     <ClCompile Include="source\cool_time_behavior.cpp" />
     <ClCompile Include="source\damage_ui_group_interface.cpp" />
@@ -370,6 +373,8 @@
     <ClInclude Include="source\button_ui.h" />
     <ClInclude Include="source\button_ui_datas.h" />
     <ClInclude Include="source\can_execute_node.h" />
+    <ClInclude Include="source\chase_main_player.h" />
+    <ClInclude Include="source\check_inside_enemy.h" />
     <ClInclude Include="source\check_enemy_attack_id.h" />
     <ClInclude Include="source\check_count_node.h" />
     <ClInclude Include="source\check_hp.h" />
