@@ -163,7 +163,7 @@ void InputManager::ChangeInput()
 				change_player_id = changers_num_ - 1;
 			}
 
-			if (change_player_id > changers_num_)
+			if (change_player_id >= changers_num_)
 			{
 				change_player_id = kPlayer1Id;
 			}

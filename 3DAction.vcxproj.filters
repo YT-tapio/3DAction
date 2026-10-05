@@ -241,9 +241,6 @@
     <Filter Include="ソース ファイル\ui\enemy_ui_group">
       <UniqueIdentifier>{0ad70807-ae63-43ed-a742-6001dbd0688e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\ui\player_ui_group">
-      <UniqueIdentifier>{b64a15ae-5760-47f6-a1d1-f506f0238920}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\ui\ui_group">
       <UniqueIdentifier>{1ef488d4-eed2-4640-9e91-5ae3b847d27c}</UniqueIdentifier>
     </Filter>
@@ -444,6 +441,15 @@
     </Filter>
     <Filter Include="ソース ファイル\behavior\player_ai\check_inside_enemy">
       <UniqueIdentifier>{8c43bdc9-7ab3-43b4-a732-2b1a9268559b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ui\player_ui">
+      <UniqueIdentifier>{ec8a3e14-56d0-47f2-b066-db62bfe98308}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ui\player_ui\player_ui_group">
+      <UniqueIdentifier>{b64a15ae-5760-47f6-a1d1-f506f0238920}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\interface\player_ui_controller">
+      <UniqueIdentifier>{28451a7b-6555-48f1-b8b9-552a0b03f3bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -787,7 +793,7 @@
       <Filter>ソース ファイル\animation\data</Filter>
     </ClCompile>
     <ClCompile Include="source\player_ui_group.cpp">
-      <Filter>ソース ファイル\ui\player_ui_group</Filter>
+      <Filter>ソース ファイル\ui\player_ui\player_ui_group</Filter>
     </ClCompile>
     <ClCompile Include="source\enemy_ui_group.cpp">
       <Filter>ソース ファイル\ui\enemy_ui_group</Filter>
@@ -844,7 +850,7 @@
       <Filter>ソース ファイル\ui\stat_modifire_group</Filter>
     </ClCompile>
     <ClCompile Include="source\player_ui_group_interface.cpp">
-      <Filter>ソース ファイル\ui\player_ui_group</Filter>
+      <Filter>ソース ファイル\ui\player_ui\player_ui_group</Filter>
     </ClCompile>
     <ClCompile Include="source\stat_modifire_ui_data.cpp">
       <Filter>ソース ファイル\ui\stat_modifire_group</Filter>
@@ -1076,6 +1082,12 @@
     </ClCompile>
     <ClCompile Include="source\check_inside_enemy.cpp">
       <Filter>ソース ファイル\behavior\player_ai\check_inside_enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="source\player_ui_controller.cpp">
+      <Filter>ソース ファイル\ui\player_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\player_ui_controller_interface.cpp">
+      <Filter>ソース ファイル\interface\player_ui_controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1494,7 +1506,7 @@
       <Filter>ソース ファイル\animation\data</Filter>
     </ClInclude>
     <ClInclude Include="source\player_ui_group.h">
-      <Filter>ソース ファイル\ui\player_ui_group</Filter>
+      <Filter>ソース ファイル\ui\player_ui\player_ui_group</Filter>
     </ClInclude>
     <ClInclude Include="source\enemy_ui_group.h">
       <Filter>ソース ファイル\ui\enemy_ui_group</Filter>
@@ -1572,7 +1584,7 @@
       <Filter>ソース ファイル\ui\stat_modifire_group</Filter>
     </ClInclude>
     <ClInclude Include="source\player_ui_group_interface.h">
-      <Filter>ソース ファイル\ui\player_ui_group</Filter>
+      <Filter>ソース ファイル\ui\player_ui\player_ui_group</Filter>
     </ClInclude>
     <ClInclude Include="source\stat_modifire_ui_data.h">
       <Filter>ソース ファイル\ui\stat_modifire_group</Filter>
@@ -1840,6 +1852,12 @@
     </ClInclude>
     <ClInclude Include="source\check_inside_enemy.h">
       <Filter>ソース ファイル\behavior\player_ai\check_inside_enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\player_ui_controller.h">
+      <Filter>ソース ファイル\ui\player_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\player_ui_controller_interface.h">
+      <Filter>ソース ファイル\interface\player_ui_controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

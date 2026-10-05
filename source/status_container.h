@@ -6,7 +6,7 @@ class Status;
 class ActiveStatModifireGroup;
 
 class ConditionTimer;
-class IPlayerUIGroup;
+class IPlayerUIController;
 class StatusContainer
 {
 public:
@@ -65,7 +65,7 @@ public:
 	/// 引数の効果を適応させる
 	/// </summary>
 	/// <param name="name">効果名</param>
-	void Activation(const std::string& name, std::shared_ptr<IPlayerUIGroup> player_ui_group);
+	void Activation(const std::string& name, std::shared_ptr<IPlayerUIController> player_ui_group);
 
 	/// <summary>
 	/// もともとのステータス

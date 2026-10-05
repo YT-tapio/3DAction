@@ -13,7 +13,7 @@ Mesh::Mesh(int handle)
 
 Mesh::~Mesh()
 {
-	printfDx("Mesh Destroy\n");
+	//printfDx("Mesh Destroy\n");
 	//MV1DeleteModel(handle_);
 }
 

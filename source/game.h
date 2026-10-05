@@ -5,7 +5,7 @@
 class Camera;
 class ObjectBase;
 class ShadowMap;
-class PlayerUIGroup;
+class PlayerUIController;
 class PlayerSkillUIGroup;
 class GameStartTimer;
 class WonUI;
@@ -39,7 +39,7 @@ private:
 
 	std::shared_ptr<Camera> camera_;
 	std::shared_ptr<ShadowMap> shadow_map_;
-	std::shared_ptr<PlayerUIGroup> player_ui_group_;
+	std::shared_ptr<PlayerUIController> player_ui_controller_;
 	std::shared_ptr<PlayerSkillUIGroup> player_skill_ui_group_;
 	std::shared_ptr<EnemyUIGroup> enemy_ui_group_;
 	std::shared_ptr<WonUI> won_ui_;

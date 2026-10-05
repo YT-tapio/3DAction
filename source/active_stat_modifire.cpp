@@ -1,10 +1,11 @@
 #include<memory>
+#include<string>
 #include"DxLib.h"
 #include"active_stat_modifire.h"
 #include"condition_timer.h"
 #include"variable_timer.h"
 #include"status.h"
-#include"player_ui_group_interface.h"
+#include"player_ui_controller_interface.h"
 
 ActiveStatModifire::ActiveStatModifire()
 	: timer_(std::make_shared<VariableTimer>())
@@ -39,7 +40,7 @@ void ActiveStatModifire::Update(const Status& base_status,Status& current_status
 	}
 }
 
-void ActiveStatModifire::Activation(const Status& base_status, Status& current_status, const StatModifire& stat_modifire,std::shared_ptr<IPlayerUIGroup> player_ui_group)
+void ActiveStatModifire::Activation(const Status& base_status, Status& current_status, const StatModifire& stat_modifire,std::shared_ptr<IPlayerUIController> player_ui_controller, const std::string& name)
 {
 	// ‚±‚ÌuŠÔ‚ÉŒø‰Ê‚ð”­Šö‚³‚¹‚é
 	data_ = stat_modifire;
@@ -80,7 +81,7 @@ void ActiveStatModifire::Activation(const Status& base_status, Status& current_s
 		};
 
 	// ‚±‚ÌuŠÔ‚Éui•`‰æ‚³‚¹‚½‚¢
-	player_ui_group->SpawnStatModifire(end_condition, data_.type, data_.operation);
+	player_ui_controller->SpawnStatModifire(end_condition, data_.type, data_.operation, name);
 }
 
 const bool ActiveStatModifire::GetIsActive() const

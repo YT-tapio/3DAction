@@ -27,7 +27,7 @@
 #include"random.h"
 #include"skydome.h"
 #include"collision_mesh_obj.h"
-#include"player_ui_group.h"
+#include"player_ui_controller.h"
 #include"enemy_ui_group.h"
 #include"attack_range_group.h"
 #include"shadow_map.h"
@@ -92,11 +92,10 @@ Game::Game()
 	boss_enemy->AddObserver(game_to_next_scene_.get());
 	*/
 	
-
-	player_ui_group_ = std::make_shared<PlayerUIGroup>();
+	player_ui_controller_ = std::make_shared<PlayerUIController>();
 	player_skill_ui_group_ = std::make_shared<PlayerSkillUIGroup>();
 
-	player_group_->Awake(&camera_->dir_, player_ui_group_, enemy_controller_, shadow_circle_controller_, damage_ui_group_);
+	player_group_->Awake(&camera_->dir_, player_ui_controller_, enemy_controller_, shadow_circle_controller_, damage_ui_group_);
 	/*
 	enemy_group_ = std::make_shared<EnemyGroup>(&game_start_, shadow_circle_controller_, enemy_ui_group_,
 		damage_ui_group_, player_group_, attack_range_group_);
@@ -149,7 +148,7 @@ void Game::Init()
 		obj->Init();
 	}
 
-	player_ui_group_->Init();
+	player_ui_controller_ ->Init();
 	Brain::GetInstance().CreatePlaySceneVirtualCamera(camera_->GetPos(), camera_->GetTargetPos(), enemy_controller_,player_group_);
 	damage_ui_group_->Init();
 	camera_->Init();
@@ -206,7 +205,7 @@ void Game::Update()
 		obj->LateUpdate();
 	}
 
-	player_ui_group_->Update();
+	player_ui_controller_->Update();
 	player_skill_ui_group_->Update();
 	won_ui_->Update();
 	lose_ui_->Update();
@@ -265,7 +264,7 @@ void Game::Draw()
 	}
 
 	// Physics::GetInstance().Debug();
-	player_ui_group_->Draw();
+	player_ui_controller_->Draw();
 	player_skill_ui_group_->Draw();
 	game_start_timer_->Draw();
 	enemy_ui_group_->Draw();

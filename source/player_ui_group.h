@@ -8,12 +8,13 @@ class PlayerIconUI;
 class Animator2D;
 class IUIObject;
 class StatModifireUIGroup;
+class SubScreen;
 
 class PlayerUIGroup : public IPlayerUIGroup
 {
 public:
 
-	PlayerUIGroup();
+	PlayerUIGroup(const VECTOR& offset,const bool& is_main);
 
 	~PlayerUIGroup();
 
@@ -34,11 +35,16 @@ public:
 
 	void SpawnStatModifire(std::function<bool()> end_condition, StatType stat_type, ModifireOperation operation);
 
-private:
-
-
+	void SetIsMain(const bool& is_main);
 
 private:
+
+	void UpdateSubScreen();
+
+private:
+
+	// ベースのポジションと大きさ
+	std::shared_ptr<SubScreen> screen_;
 
 	// プレイヤーに関するuiたち
 	std::shared_ptr<HPBar> hpbar_;
@@ -48,4 +54,9 @@ private:
 	std::shared_ptr<StringUI> player_name_;
 	std::shared_ptr<IUIObject> stamina_ui_;
 	std::shared_ptr<StatModifireUIGroup> stat_modifire_ui_group_;
+
+	VECTOR offset_;
+
+	bool is_main_;
+
 };

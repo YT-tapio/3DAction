@@ -24,11 +24,10 @@ void Physics::Init()
 
 void Physics::AddBody(std::shared_ptr<RigidBody> body)
 {
-	// idのカウント
-	rigid_body_id_++;
-
 	// IDも一緒に振り分ける
 	id_rigid_bodies_mp_[rigid_body_id_] = body;
+	// idのカウント
+	rigid_body_id_++;
 }
 
 void Physics::Debug()
@@ -41,7 +40,6 @@ void Physics::Debug()
 		{
 			//body->GetCollider()->Draw(body->GetPosition());
 		}
-		
 	}
 	if (TRUE) { return; }
 	

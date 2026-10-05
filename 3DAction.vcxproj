@@ -195,6 +195,8 @@
     <ClCompile Include="source\object_pool_base.cpp" />
     <ClCompile Include="source\player_group_interface.cpp" />
     <ClCompile Include="source\player_observer_interface.cpp" />
+    <ClCompile Include="source\player_ui_controller.cpp" />
+    <ClCompile Include="source\player_ui_controller_interface.cpp" />
     <ClCompile Include="source\play_sound.cpp" />
     <ClCompile Include="source\roar.cpp" />
     <ClCompile Include="source\roar_tackle.cpp" />
@@ -414,6 +416,8 @@
     <ClInclude Include="source\phase.h" />
     <ClInclude Include="source\player_group_interface.h" />
     <ClInclude Include="source\player_observer_interface.h" />
+    <ClInclude Include="source\player_ui_controller.h" />
+    <ClInclude Include="source\player_ui_controller_interface.h" />
     <ClInclude Include="source\roar_tackle.h" />
     <ClInclude Include="source\shadow_circle.h" />
     <ClInclude Include="source\shadow_circle_controller.h" />

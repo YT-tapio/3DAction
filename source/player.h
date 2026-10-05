@@ -17,6 +17,7 @@ class ObjectBase;
 class BehaviorBase;
 class StatusContainer;
 class IPlayerUIGroup;
+class IPlayerUIController;
 class ConditionTimer;
 class IPlayerObserver;
 class IShadowCreater;
@@ -28,7 +29,7 @@ class Player : public CharacterBase , public IPhysicsEventReceiver
 {
 public:
 
-	Player(VECTOR* camera_dir, std::shared_ptr<InputBase> input,const std::string name,std::shared_ptr<IPlayerUIGroup> player_ui_group, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IDamageUIGroup> damage_ui_group);
+	Player(VECTOR* camera_dir, std::shared_ptr<InputBase> input,const std::string name,std::shared_ptr<IPlayerUIController> player_ui_group, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IDamageUIGroup> damage_ui_group);
 
 	~Player() override;
 
@@ -145,7 +146,7 @@ private:
 	std::shared_ptr<SkillBase> jump_;
 	std::shared_ptr<SkillBase> jump_infite_attack_;
 	std::shared_ptr<StatusContainer> status_container_;
-	std::shared_ptr<IPlayerUIGroup> player_ui_group_;
+	std::shared_ptr<IPlayerUIController> player_ui_controller_;
 	std::shared_ptr<IDamageUIGroup> damage_ui_group_;
 	std::shared_ptr<Bullet> bullet_;
 	std::shared_ptr<ConditionTimer> enemy_death_offset_timer_;	// ŠÔ‚ª‚½‚Á‚Ä‚©‚ç“G‚ª€‚ñ‚¾‚Æ‚«‚Ìˆ—‚ğs‚¤

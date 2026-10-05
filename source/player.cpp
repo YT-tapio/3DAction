@@ -50,6 +50,7 @@
 #include"time.h"
 #include"damage_ui_group.h"
 #include"player_ui_group_interface.h"
+#include"player_ui_controller_interface.h"
 #include"sound_manager.h"
 #include"condition_timer.h"
 #include"brain.h"
@@ -58,11 +59,11 @@
 #include"damage_ui_group_interface.h"
 #include"bullet.h"
 
-Player::Player(VECTOR* camera_dir,std::shared_ptr<InputBase> input,const std::string name, std::shared_ptr<IPlayerUIGroup> player_ui_group,std::shared_ptr<IShadowCreater> shadow_creater,std::shared_ptr<IDamageUIGroup> damage_ui_group)
+Player::Player(VECTOR* camera_dir,std::shared_ptr<InputBase> input,const std::string name, std::shared_ptr<IPlayerUIController> player_ui_group,std::shared_ptr<IShadowCreater> shadow_creater,std::shared_ptr<IDamageUIGroup> damage_ui_group)
 	: CharacterBase("player")
 	, IPhysicsEventReceiver()
 	, name_(name)
-	, player_ui_group_(player_ui_group)
+	, player_ui_controller_(player_ui_group)
 {
 	input->SetOwner(this);
 
@@ -185,14 +186,12 @@ void Player::Init()
 	// 回避に使うスタミナ量
 	std::function<float()> get_avoid_stamina = [this]() {return avoid_stamina_consumption_; };
 
+	const bool kIsMain = input_->CheckIsPlayer();
 	// ui表示
-	player_ui_group_->MakeUI(get_base_hp, get_current_hp, name_);
+	player_ui_controller_->MakeUI(get_base_hp, get_current_hp, name_,kIsMain);
 
-	if (name_ == "attacker")
-	{
-		// スタミナのui表示
-		player_ui_group_->MakeStaminaUI(get_base_stamina, get_current_stamina, can_use_stamina, get_avoid_stamina);
-	}
+	// スタミナのui表示
+	player_ui_controller_->MakeStaminaUI(get_base_stamina, get_current_stamina, can_use_stamina, get_avoid_stamina, name_);
 
 	target_rot_y_ = rot_.y;
 	animator_ = std::make_shared<AnimatorPlayer>(handle_, name_);
@@ -754,7 +753,7 @@ void Player::OnDamageFromEnemy(float damage,AttackType type, const bool is_criti
 			else
 			{
 				// バフ
-				status_container_->Activation(job_ + "_avoid",player_ui_group_);
+				status_container_->Activation(job_ + "_avoid",player_ui_controller_);
 			}
 
 			int effect_id = -1;
@@ -779,7 +778,7 @@ void Player::OnDamageFromEnemy(float damage,AttackType type, const bool is_criti
 			
 			// この時ジャスト回避
 			//printfDx("ジャスト回避\n");
-			if (FALSE)
+			if (TRUE)
 			{
 				time_->SetTimeScale(0.f, 0.15f);
 				rigid_body_->SetStop(0.15f);
@@ -839,6 +838,8 @@ void Player::OnDamageFromEnemy(float damage,AttackType type, const bool is_criti
 void Player::InputChange(std::shared_ptr<InputBase> input)
 {
 	input_ = input;
+	const bool kIsMain = input->CheckIsPlayer();
+	player_ui_controller_->ChangeIsMian(kIsMain, name_);
 }
 
 void Player::OnEnemyDeath()
