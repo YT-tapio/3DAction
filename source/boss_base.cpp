@@ -120,7 +120,8 @@ void BossBase::Update()
 	else
 	{
 		// 一番近いプレイヤーの位置を取得
-		target_player_pos_ = player_group_->MostNearPlayerPos(pos_);
+		// TODO：Behaviorで操作できるように変更する
+		target_player_pos_ = player_group_->GetPlayerPos(target_player_name_);
 		VECTOR dir = VectorAssistant::VGetZero();
 
 		double_punch_coll_pos_ = VAdd(pos_, VScale(dir_, 5.f));

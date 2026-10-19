@@ -35,6 +35,8 @@ private:
 
 	std::shared_ptr<NodeBase> MakeRoarTackleNode(std::shared_ptr<EnemyBase> mine, std::function<Phase()> current_phase);
 
+	std::shared_ptr<NodeBase> MakeMultiRoarTackleNode(std::shared_ptr<EnemyBase> mine, std::function<Phase()> current_phase);
+
 	std::shared_ptr<NodeBase> MakeStampNode(std::shared_ptr<EnemyBase> mine, std::function<Phase()> current_phase);
 
 	std::shared_ptr<NodeBase> MakeDoublePunchNode(std::shared_ptr<EnemyBase> mine, std::function<Phase()> current_phase);
@@ -45,10 +47,14 @@ private:
 
 	std::shared_ptr<NodeBase> MakeRoarNode(std::shared_ptr<EnemyBase> mine);
 
+	std::shared_ptr<NodeBase> MakeDecideTargetNode(std::shared_ptr<EnemyBase> mine);
+
 	std::shared_ptr<NodeBase> MakeSummonEnemyGroup(std::shared_ptr<EnemyBase> mine, std::function<Phase()> current_phase);
 
 private:
 
 	std::shared_ptr<EnemySummoner> summoner_;
+
+	std::function<void(std::string)> decide_target_;
 
 };

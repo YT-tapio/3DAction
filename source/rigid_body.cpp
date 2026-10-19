@@ -63,7 +63,7 @@ void RigidBody::Init(std::weak_ptr<IPhysicsEventReceiver> object)
 
 void RigidBody::ResetVelocity()
 {
-	target_vel_	= VectorAssistant::VGetZero();
+	target_vel_			= VectorAssistant::VGetZero();
 	vel_				= VectorAssistant::VGetZero();
 }
 

@@ -181,9 +181,9 @@ void StatusContainer::TakeHeal(float heal)
 	if (current_status_.hp > base_status_.hp) { current_status_.hp = base_status_.hp; }
 }
 
-void StatusContainer::Activation(const std::string& name,std::shared_ptr<IPlayerUIController> player_ui_group)
+void StatusContainer::Activation(const std::string& name,std::shared_ptr<IPlayerUIController> player_ui_group,const std::string& character_name)
 {
-	stat_modifire_group_->Activation(base_status_, current_status_, name,player_ui_group);
+	stat_modifire_group_->Activation(base_status_, current_status_, name,player_ui_group,character_name);
 }
 
 const Status StatusContainer::GetBaseStatus() const

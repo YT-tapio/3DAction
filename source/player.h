@@ -115,6 +115,8 @@ public:
 
 	const VECTOR GetHipPos() const;
 
+	const std::string GetName() const;
+
 private:
 
 	// ŠÖ”ŒQ

@@ -4,6 +4,7 @@
 #include<functional>
 #include"DxLib.h"
 #include"player_ui_group.h"
+#include"player_skill_ui_group.h"
 #include"object_base.h"
 #include"image_data.h"
 #include"object_2D.h"
@@ -95,6 +96,12 @@ void PlayerUIGroup::MakeNormalSkillUI(int handle, std::function<bool()> can_use,
 }
 
 void PlayerUIGroup::MakeStrongSkillUI(int handle, std::function<bool()> can_use, std::function<float()> cool_time_ratio)
+{
+
+}
+
+void PlayerUIGroup::MakeSkillUI(int normal_skill_id, std::function<bool()> normal_can_use, std::function<float()> normal_cool_time_ratio,
+	int strong_skill_id, std::function<bool()> strong_can_use, std::function<float()> strong_cool_time_ratio)
 {
 
 }

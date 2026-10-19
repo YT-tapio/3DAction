@@ -46,7 +46,7 @@ void PlayerGroup::Awake(VECTOR* camera_dir,std::shared_ptr<IPlayerUIController> 
 	current_player_head_pos_ = VectorAssistant::VGetZero();
 	camera_dir_ = camera_dir;
 	players_.push_back(std::make_shared<Player>(camera_dir_, InputManager::GetInstance().GetPlayer1Input(), "attacker", player_ui_controller, shadow_creater, damage_ui_group));
-	players_.push_back(std::make_shared<Player>(camera_dir_, InputManager::GetInstance().GetPlayer2Input(), "healer", player_ui_controller, shadow_creater, damage_ui_group));
+	//players_.push_back(std::make_shared<Player>(camera_dir_, InputManager::GetInstance().GetPlayer2Input(), "healer", player_ui_controller, shadow_creater, damage_ui_group));
 	//players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer3Input(), "defender"));
 	//players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer3Input(), "attacker2", player_ui_group, shadow_creater, damage_ui_group));
 	
@@ -142,6 +142,22 @@ VECTOR* PlayerGroup::GetCurrentPlayerFrontDir()
 	return &current_player_front_dir_;
 }
 
+VECTOR PlayerGroup::GetPlayerPos(const std::string& name)
+{
+	VECTOR player_pos = VectorAssistant::VGetZero();
+	for (auto& player : players_)
+	{
+		if (player->GetName() == name)
+		{
+			printfDx("%s\n", name.c_str());
+			player_pos = player->GetPosition();
+			return player_pos;
+		}
+	}
+	return player_pos;
+
+}
+
 VECTOR PlayerGroup::MostNearPlayerPos(const VECTOR& pos)
 {
 	VECTOR most_near_player_pos = VectorAssistant::VGetZero();
@@ -162,6 +178,32 @@ VECTOR PlayerGroup::MostNearPlayerPos(const VECTOR& pos)
 		}
 	}
 	return most_near_player_pos;
+}
+
+std::string PlayerGroup::MostNearPlayerName(const VECTOR& pos)
+{
+	std::string most_near_player_name = "";
+	float most_near_player_dist = -1;	// -1‚Ì‚ÍÅ‰‚ÌƒvƒŒƒCƒ„[‚Ì‹——£‚ğ‘ã“ü‚·‚é
+	std::shared_ptr<Player> most_near_player = nullptr;
+	for (auto& player : players_)
+	{
+		float dist = VSize(VSub(player->GetPosition(), pos));
+		if (most_near_player_dist == -1)
+		{
+			most_near_player_dist = dist;
+			most_near_player_name = player->GetName();
+			most_near_player = player;
+			continue;
+		}
+		if (dist < most_near_player_dist)
+		{
+			most_near_player_dist = dist;
+			most_near_player_name = player->GetName();
+			most_near_player = player;
+		}
+	}
+
+	return most_near_player_name;
 }
 
 const int PlayerGroup::GetCurrentPlayerSkillID(SkillType type) const

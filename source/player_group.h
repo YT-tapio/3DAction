@@ -42,12 +42,16 @@ public:
 
 	VECTOR* GetCurrentPlayerFrontDir() override;
 
+	VECTOR GetPlayerPos(const std::string& name) override;
+
 	/// <summary>
 	/// ˆø”‚Éˆê”Ô‹ß‚¢player‚ÌˆÊ’u‚ğ•Ô‚·
 	/// </summary>
 	/// <param name="pos">object‚Ìpos</param>
 	/// <returns></returns>
 	VECTOR MostNearPlayerPos(const VECTOR& pos) override;
+
+	std::string MostNearPlayerName(const VECTOR& pos) override;
 
 	/// <summary>
 	/// Œ»İ‚ÌSkillID‚ğæ“¾

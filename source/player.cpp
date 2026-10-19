@@ -753,7 +753,7 @@ void Player::OnDamageFromEnemy(float damage,AttackType type, const bool is_criti
 			else
 			{
 				// ƒoƒt
-				status_container_->Activation(job_ + "_avoid",player_ui_controller_);
+				status_container_->Activation(job_ + "_avoid",player_ui_controller_,name_);
 			}
 
 			int effect_id = -1;
@@ -1005,6 +1005,11 @@ const VECTOR Player::GetInputDir() const
 const VECTOR Player::GetHipPos() const
 {
 	return hip_pos_;
+}
+
+const std::string Player::GetName() const
+{
+	return name_;
 }
 
 void Player::EffectUpdate()

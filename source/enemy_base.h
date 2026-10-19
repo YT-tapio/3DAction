@@ -99,6 +99,7 @@ protected:
 	std::shared_ptr<AttackInfoHolder> attack_info_;
 
 	std::string my_name_;
+	std::string target_player_name_;
 
 	VECTOR right_hand_pos_;
 	VECTOR double_punch_coll_pos_;

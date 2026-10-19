@@ -451,6 +451,9 @@
     <Filter Include="ソース ファイル\interface\player_ui_controller">
       <UniqueIdentifier>{28451a7b-6555-48f1-b8b9-552a0b03f3bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\behavior\decide_attack_target_from_player">
+      <UniqueIdentifier>{a2b23632-bf52-4f5d-b595-b33bdef32844}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -1088,6 +1091,9 @@
     </ClCompile>
     <ClCompile Include="source\player_ui_controller_interface.cpp">
       <Filter>ソース ファイル\interface\player_ui_controller</Filter>
+    </ClCompile>
+    <ClCompile Include="source\debide_attack_target_from_player.cpp">
+      <Filter>ソース ファイル\behavior\decide_attack_target_from_player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1858,6 +1864,9 @@
     </ClInclude>
     <ClInclude Include="source\player_ui_controller_interface.h">
       <Filter>ソース ファイル\interface\player_ui_controller</Filter>
+    </ClInclude>
+    <ClInclude Include="source\decide_attack_target_from_player.h">
+      <Filter>ソース ファイル\behavior\decide_attack_target_from_player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -40,7 +40,7 @@ void ActiveStatModifire::Update(const Status& base_status,Status& current_status
 	}
 }
 
-void ActiveStatModifire::Activation(const Status& base_status, Status& current_status, const StatModifire& stat_modifire,std::shared_ptr<IPlayerUIController> player_ui_controller, const std::string& name)
+void ActiveStatModifire::Activation(const Status& base_status, Status& current_status, const StatModifire& stat_modifire,std::shared_ptr<IPlayerUIController> player_ui_controller, const std::string& character_name)
 {
 	// ‚±‚ÌuŠÔ‚ÉŒø‰Ê‚ð”­Šö‚³‚¹‚é
 	data_ = stat_modifire;
@@ -81,7 +81,7 @@ void ActiveStatModifire::Activation(const Status& base_status, Status& current_s
 		};
 
 	// ‚±‚ÌuŠÔ‚Éui•`‰æ‚³‚¹‚½‚¢
-	player_ui_controller->SpawnStatModifire(end_condition, data_.type, data_.operation, name);
+	player_ui_controller->SpawnStatModifire(end_condition, data_.type, data_.operation, character_name);
 }
 
 const bool ActiveStatModifire::GetIsActive() const

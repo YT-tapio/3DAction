@@ -18,7 +18,7 @@ public:
 
 	void Update(const Status& base_status, Status& current_status);
 
-	void Activation(const Status& base_status, Status& current_status,const StatModifire& effecacy_data, std::shared_ptr<IPlayerUIController> player_ui_controller,const std::string& name);
+	void Activation(const Status& base_status, Status& current_status,const StatModifire& effecacy_data, std::shared_ptr<IPlayerUIController> player_ui_controller, const std::string& character_name);
 
 	const bool GetIsActive() const;
 

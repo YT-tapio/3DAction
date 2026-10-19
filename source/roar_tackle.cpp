@@ -13,6 +13,8 @@
 #include<functional>
 #include"vector_assistant.h"
 #include"attack_range_group_interface.h"
+#include"rigid_body.h"
+#include"physics_interface.h"
 
 RoarTackle::RoarTackle(std::weak_ptr<ObjectBase> owner, std::shared_ptr<RigidBody> rigid_body,
 	std::string anim_name, const float time, const float speed, float damage_rate,std::shared_ptr<IAttackRangeGroup> attack_range_group, std::weak_ptr<AttackInfoHolder> owner_attack_info_holder)
@@ -52,6 +54,12 @@ void RoarTackle::Entry()
 		max_time = 1.96f; //owner->GetAnimator()->GetFPSTotalTime("charge_tacle");
 		ChangeAttackInfo(AttackPhase::kStartUp, owner->GetPosition(), owner->GetFrontDir(), 10.f);
 	}
+
+	if (auto owner = std::dynamic_pointer_cast<IPhysicsEventReceiver>(owner_.lock()))
+	{
+		owner->GetRigidBody()->ResetVelocity();
+	}
+
 	std::function<bool()> end_function = [this]()
 		{
 			return is_end_;

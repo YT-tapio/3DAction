@@ -50,11 +50,17 @@ void PlayerUIController::MakeSkillUI(int normal_skill_id, std::function<bool()> 
 
 }
 
-void PlayerUIController::SpawnStatModifire(std::function<bool()> end_condition, StatType stat_type, ModifireOperation operation,const std::string& name)
+void PlayerUIController::SpawnStatModifire(std::function<bool()> end_condition, StatType stat_type, ModifireOperation operation, const std::string& character_name)
 {
-	auto player_ui_group = player_ui_groups_.find(name);
-	if (player_ui_group == player_ui_groups_.end()) { return; }
-	if (player_ui_group->second == nullptr) { return; }
+	auto player_ui_group = player_ui_groups_.find(character_name);
+	if (player_ui_group == player_ui_groups_.end()) 
+	{ 
+		return;
+	}
+	if (player_ui_group->second == nullptr) 
+	{ 
+		return;
+	}
 	player_ui_group->second->SpawnStatModifire(end_condition, stat_type, operation);
 }
 

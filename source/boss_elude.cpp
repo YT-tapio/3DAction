@@ -51,6 +51,7 @@
 #include"effect_id.h"
 #include"approach_and_attack.h"
 #include"summon_enemy_group.h"
+#include"decide_attack_target_from_player.h"
 
 #include"time.h"
 #include"vector_assistant.h"
@@ -95,6 +96,11 @@ BossElude::BossElude(const VECTOR& pos, bool* game_start, std::shared_ptr<IShado
 	float shadow_size = 7.f;
 	shadow_creater->CreateShadow(&flat_hips_pos_, &is_active_, shadow_size);
 	
+	decide_target_ = [this](std::string target_player_name)
+		{
+			target_player_name_ = target_player_name;
+		};
+
 }
 
 BossElude::~BossElude()
@@ -160,9 +166,11 @@ void BossElude::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)
 	// 魔法攻撃
 	auto magic_node = MakeMagicNode(mine, current_phase);
 	// タックル
-	auto tackle_node = MakeRoarTackleNode(mine, current_phase);
+	auto tackle_node = MakeMultiRoarTackleNode(mine, current_phase);
 
 	auto enemy_summon_node = MakeSummonEnemyGroup(mine, current_phase);
+
+	
 
 	// ランダムのnodeに代入
 	std::vector<std::shared_ptr<NodeBase>> attack_random_nodes;
@@ -174,7 +182,16 @@ void BossElude::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)
 
 	// 追いかけるときのノード
 	std::vector<std::shared_ptr<NodeBase>> random_nodes_far;
-	auto radom_attack_node = std::make_shared<RandomNode>(attack_random_nodes);
+	auto random_attack_node = std::make_shared<RandomNode>(attack_random_nodes);
+
+
+	std::vector<std::shared_ptr<NodeBase>> infite_nodes;
+
+	auto decide_target_node = MakeDecideTargetNode(mine);
+
+	infite_nodes.emplace_back(decide_target_node);
+	infite_nodes.emplace_back(random_attack_node);
+	auto infite_node = std::make_shared<SequenceNode>(infite_nodes);
 
 	// エフェクトによる攻撃
 	auto chase_node = MakeChaseNode(mine);
@@ -183,12 +200,13 @@ void BossElude::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)
 	random_nodes_far.emplace_back(far_magic_node);
 	random_nodes_far.emplace_back(chase_node);
 
+	// 遠いときのnode
 	std::shared_ptr<NodeBase> random_far_nodes2 = std::make_shared<RandomNode>(random_nodes_far);
 
 	std::pair<std::shared_ptr<NodeBase>, std::shared_ptr<NodeBase>> nodes;
 	//nodes_.first = random_far_nodes2;
 	nodes.first = random_far_nodes2;
-	nodes.second = radom_attack_node;
+	nodes.second = infite_node;
 
 	std::function<bool()> condition = [this]()-> bool
 		{
@@ -260,13 +278,32 @@ std::shared_ptr<NodeBase> BossElude::MakeRoarTackleNode(std::shared_ptr<EnemyBas
 	std::shared_ptr<RigidBody> rigid_body = std::make_shared<RigidBody>(collider, &pos_, FALSE, TRUE, 0.1f, 1.f);
 	std::shared_ptr<BehaviorBase> tackle = std::make_shared<RoarTackle>(mine, rigid_body, "tackle", 1.f, 2.f, 1.f, attack_range_group_,attack_info_);
 	std::shared_ptr<NodeBase> tackle_node = std::make_shared<ActionNode>(tackle);
-	auto check_phase_node = std::make_shared<CheckPhaseNode>(Phase::third, current_phase);
+	auto check_phase_node = std::make_shared<CheckPhaseNode>(Phase::second, current_phase);
 	std::vector<std::shared_ptr<NodeBase>> tackle_nodes;
 	tackle_nodes.emplace_back(check_phase_node);
 	tackle_nodes.emplace_back(tackle_voice_node);
 	tackle_nodes.emplace_back(tackle_node);
 
 	node = std::make_shared<SequenceNode>(tackle_nodes);
+
+	return node;
+}
+
+std::shared_ptr<NodeBase> BossElude::MakeMultiRoarTackleNode(std::shared_ptr<EnemyBase> mine, std::function<Phase()> current_phase)
+{
+	std::shared_ptr<NodeBase> node = nullptr;
+
+	auto tackle_node = MakeRoarTackleNode(mine,current_phase);
+	auto check_third_phase = std::make_shared<CheckPhaseNode>(Phase::third, current_phase);
+
+	std::vector<std::shared_ptr<NodeBase>> nodes_;
+
+	nodes_.emplace_back(tackle_node);
+	nodes_.emplace_back(check_third_phase);
+	nodes_.emplace_back(tackle_node);
+	nodes_.emplace_back(tackle_node);
+
+	node = std::make_shared<SequenceNode>(nodes_);
 
 	return node;
 }
@@ -375,8 +412,12 @@ std::shared_ptr<NodeBase> BossElude::MakeChaseNode(std::shared_ptr<EnemyBase> mi
 	std::shared_ptr<NodeBase> node = nullptr;
 
 	auto chase_player = std::make_shared<ChasePlayer>(mine, "run", &target_player_pos_, 0.5f);
-	node = std::make_shared<ActionNode>(chase_player);
-
+	auto chase_player_node = std::make_shared<ActionNode>(chase_player);
+	auto decide_target_node = MakeDecideTargetNode(mine);
+	std::vector<std::shared_ptr<NodeBase>> nodes;
+	nodes.emplace_back(decide_target_node);
+	nodes.emplace_back(chase_player_node);
+	node = std::make_shared<SequenceNode>(nodes);
 	return node;
 }
 
@@ -395,6 +436,17 @@ std::shared_ptr<NodeBase> BossElude::MakeRoarNode(std::shared_ptr<EnemyBase> min
 	roar_nodes.emplace_back(roar_node);
 
 	node = std::make_shared<SequenceNode>(roar_nodes);
+
+	return node;
+}
+
+std::shared_ptr<NodeBase> BossElude::MakeDecideTargetNode(std::shared_ptr<EnemyBase> mine)
+{
+	std::shared_ptr<NodeBase> node = nullptr;
+
+	auto decide_target = std::make_shared<DecideAttackTargetFromPlayer>(mine, player_group_, decide_target_);
+
+	node = std::make_shared<ActionNode>(decide_target);
 
 	return node;
 }
