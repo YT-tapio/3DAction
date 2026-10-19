@@ -71,9 +71,15 @@ void PlayerUIGroup::MakeUI(std::function<int()> get_base_hp, std::function<int()
 	hp_actual_ = std::make_shared<HPActualValueUI>("data/csv/ui/player/hp_actual.csv", get_current_hp);
 	last_background_ = std::make_shared<PlayerLastBackGroundUI>();
 	icon_ = std::make_shared<PlayerIconUI>(name);
-	player_name_ = std::make_shared<CharacterNameUI>("data/csv/ui/player/" + name + "/" + name + "_name_data.csv", "シフティア");
+	if (name == "attacker")
+	{
+		player_name_ = std::make_shared<CharacterNameUI>("data/csv/ui/player/" + name + "/" + name + "_name_data.csv", "シフティア");
+	}
+	else
+	{
+		player_name_ = std::make_shared<CharacterNameUI>("data/csv/ui/player/" + name + "/" + name + "_name_data.csv", "No name");
+	}
 	stat_modifire_ui_group_ = std::make_shared<StatModifireUIGroup>("data/csv/ui/stat_modifire/stat_modifire.csv");
-	
 }
 
 void PlayerUIGroup::MakeStaminaUI(std::function<float()> get_base_stamina, std::function<float()> get_current_stamina,
@@ -85,7 +91,7 @@ void PlayerUIGroup::MakeStaminaUI(std::function<float()> get_base_stamina, std::
 
 void PlayerUIGroup::MakeNormalSkillUI(int handle, std::function<bool()> can_use, std::function<float()> cool_time_ratio)
 {
-	
+	skill_ui_group_ = std::make_shared<PlayerSkillUIGroup>();
 }
 
 void PlayerUIGroup::MakeStrongSkillUI(int handle, std::function<bool()> can_use, std::function<float()> cool_time_ratio)

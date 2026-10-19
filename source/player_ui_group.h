@@ -9,6 +9,7 @@ class Animator2D;
 class IUIObject;
 class StatModifireUIGroup;
 class SubScreen;
+class PlayerSkillUIGroup;
 
 class PlayerUIGroup : public IPlayerUIGroup
 {
@@ -33,6 +34,9 @@ public:
 
 	void MakeStrongSkillUI(int skill_id, std::function<bool()> can_use, std::function<float()> cool_time_ratio) override;
 
+	void MakeSkillUI(int normal_skill_id, std::function<bool()> normal_can_use, std::function<float()> normal_cool_time_ratio,
+		int strong_skill_id, std::function<bool()> strong_can_use, std::function<float()> strong_cool_time_ratio) override;
+
 	void SpawnStatModifire(std::function<bool()> end_condition, StatType stat_type, ModifireOperation operation);
 
 	void SetIsMain(const bool& is_main);
@@ -54,6 +58,9 @@ private:
 	std::shared_ptr<StringUI> player_name_;
 	std::shared_ptr<IUIObject> stamina_ui_;
 	std::shared_ptr<StatModifireUIGroup> stat_modifire_ui_group_;
+
+	// ÉXÉLÉã
+	std::shared_ptr<PlayerSkillUIGroup> skill_ui_group_;
 
 	VECTOR offset_;
 

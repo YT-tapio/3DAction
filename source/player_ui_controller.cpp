@@ -22,7 +22,7 @@ void PlayerUIController::MakeUI(std::function<int()> get_base_hp, std::function<
 	const VECTOR kOffsetPos = VScale(kOffset, kPlayerUIGroupsSize);
 	// ui‚Ì¶¬
 	player_ui_groups_[name] = std::make_shared<PlayerUIGroup>(kOffsetPos,is_main);
-	player_ui_groups_[name]->MakeUI(get_base_hp, get_current_hp, "attacker");
+	player_ui_groups_[name]->MakeUI(get_base_hp, get_current_hp, name);
 }
 
 void PlayerUIController::MakeStaminaUI(std::function<float()> get_base_stamina, std::function<float()> get_current_stamina,
@@ -44,9 +44,18 @@ void PlayerUIController::MakeStrongSkillUI(int skill_id, std::function<bool()> c
 
 }
 
+void PlayerUIController::MakeSkillUI(int normal_skill_id, std::function<bool()> normal_can_use, std::function<float()> normal_cool_time_ratio,
+	int strong_skill_id, std::function<bool()> strong_can_use, std::function<float()> strong_cool_time_ratio, const std::string& name)
+{
+
+}
+
 void PlayerUIController::SpawnStatModifire(std::function<bool()> end_condition, StatType stat_type, ModifireOperation operation,const std::string& name)
 {
-	
+	auto player_ui_group = player_ui_groups_.find(name);
+	if (player_ui_group == player_ui_groups_.end()) { return; }
+	if (player_ui_group->second == nullptr) { return; }
+	player_ui_group->second->SpawnStatModifire(end_condition, stat_type, operation);
 }
 
 void PlayerUIController::Init()

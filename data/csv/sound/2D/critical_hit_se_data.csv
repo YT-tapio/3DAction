@@ -1,0 +1,2 @@
+﻿name,data_file_path,"volume(persent,0 ～ 100)",loop
+critical_hit,data/sound/2D/critical_hit/critical_hit.mp3,140,0

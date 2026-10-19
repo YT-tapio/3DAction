@@ -17,6 +17,7 @@
 #include"csv_file_assistant.h"
 #include"font.h"
 #include"image_repository.h"
+#include"sound_manager.h"
 
 DamageUI::DamageUI(const std::string& file_path)
 	: stop_timer_(std::make_shared<ConditionTimer>(2.f))
@@ -118,7 +119,11 @@ void DamageUI::Spawn(const VECTOR& pos, const float& damage,const bool is_critic
 	is_jump_ = TRUE;
 	is_active_ = TRUE;
 	stop_timer_->ReStart();
-
+	if (is_critical_)
+	{
+		const std::string kCriticalHitSEName = "critical_hit";
+		SoundManager::GetInstance().Play2DSound(kCriticalHitSEName);
+	}
 	// ‚±‚ÌÛ‚É•`‰æ‚µ‚Ä‰æ‘œ‚ğì‚é
 	DrawDamage();
 }
