@@ -7,6 +7,7 @@
 
 class Player;
 class Shake;
+class Zoom;
 class PlayerGroup;
 class IEnemyController;
 
@@ -33,11 +34,31 @@ public:
 
 	void ChangeCamera(const std::string& request_name);
 
+	/// <summary>
+	/// U“®
+	/// </summary>
+	/// <param name="power">‚Â‚æ‚³</param>
+	/// <param name="time">‚¶‚©‚ñ</param>
 	void ShakeCamera(const float& power, const float& time);
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="target_fov">–Ú•W‚Ì‹–ìŠp</param>
+	/// <param name="time">ŠÔ</param>
+	void ZoomCamera(const float& target_fov, const float& time, const float& active_time);
 
 	void CollisionNotActive();
 
 	void CollisionActive();
+
+	void SetCurrentFov(const float& current_fov);
+
+	/// <summary>
+	/// fov‚Ì•Ï‰»—Ê
+	/// </summary>
+	/// <returns></returns>
+	const float GetZoomValue() const;
 
 	const std::string GetCurrentCameraName() const;
 
@@ -56,6 +77,7 @@ private:
 
 	std::vector<std::string> camera_names_;
 	std::shared_ptr<Shake> shake_;
+	std::shared_ptr<Zoom> zoom_;
 	std::string current_camera_;
 	std::string before_camera_;
 

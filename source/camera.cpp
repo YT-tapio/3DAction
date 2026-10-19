@@ -18,7 +18,7 @@ Camera::Camera()
 	const float kRad		= 75.f;
 	near_					= 0.1f;
 	far_					= 1000.f;
-	fov_					= RadianAssistant::TheNumRadian(kRad);
+	fov_					= kRad;
 	pos_					= VectorAssistant::VGetZero();
 	//pos_ = VGet(6,-1.f,-8.5f);
 	vel_					= VectorAssistant::VGetZero();
@@ -46,38 +46,15 @@ void Camera::Update()
 {
 	VECTOR dir	= VectorAssistant::VGetZero();
 	VECTOR target_dir = VectorAssistant::VGetZero();
-	
-	if (FALSE)
-	{
-		if (CheckHitKey(KEY_INPUT_UP)) { dir = VAdd(dir, VGet(0, 1, 0)); target_dir = VAdd(target_dir, VGet(0, 0, 1)); }
-		if (CheckHitKey(KEY_INPUT_DOWN)) { dir = VAdd(dir, VGet(0, -1, 0)); target_dir = VAdd(target_dir, VGet(0, 0, -1)); }
-		if (CheckHitKey(KEY_INPUT_RIGHT)) { dir = VAdd(dir, VGet(1, 0, 0)); target_dir = VAdd(target_dir, VGet(1, 0, 0)); }
-		if (CheckHitKey(KEY_INPUT_LEFT)) {
-			dir = VAdd(dir, VGet(-1, 0, 0)); target_dir = VAdd(target_dir, VGet(-1, 0, 0));
-		}
-
-		if (VSize(dir) > 0)
-		{
-
-		}
-		if (CheckHitKey(KEY_INPUT_LSHIFT))
-		{
-			target_pos_ = VAdd(target_pos_, target_dir);
-			pos_ = VAdd(pos_, target_dir);
-		}
-		else
-		{
-			pos_ = VAdd(pos_, dir);
-		}
-	}
 
 	// brainからの移動値を受け取る
 	vel_				= Brain::GetInstance().GetVelocity();
 	target_vel_	= Brain::GetInstance().GetTargetVelocity();
-
+	auto zoom_value = Brain::GetInstance().GetZoomValue();
+	fov_ = fov_ + zoom_value;
 	rigid_body_->SetTargetVelocity(vel_);
 	Setting();
-	
+	Brain::GetInstance().SetCurrentFov(fov_);
 	// リスナーの設定
 	Set3DSoundListenerPosAndFrontPos_UpVecY(pos_, target_pos_);
 }
@@ -108,7 +85,9 @@ void Camera::Setting()
 	target_pos_ = VAdd(target_pos_, target_vel_);
 
 	SetCameraNearFar(near_, far_);
-	SetupCamera_Perspective(fov_);
+	auto fov = RadianAssistant::TheNumRadian(fov_);
+	SetupCamera_Perspective(fov);
+	printfDx("fov:%.2f\n",fov_);
 	SetCameraPositionAndTarget_UpVecY(pos_, target_pos_);
 	Effekseer_Sync3DSetting();
 	dir_ = VectorAssistant::VGetDir(pos_, target_pos_);

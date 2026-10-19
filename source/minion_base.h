@@ -54,5 +54,7 @@ private:
 
 	std::shared_ptr<NodeBase> MakeRoarNode(std::shared_ptr<EnemyBase> mine);
 
+	std::shared_ptr<NodeBase> MakeDecideTargetNode(std::shared_ptr<EnemyBase> mine);
+
 	std::shared_ptr<NodeBase> MakeLookAtPlayerNode(std::shared_ptr<EnemyBase> mine);
 };

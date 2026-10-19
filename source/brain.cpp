@@ -10,7 +10,7 @@
 #include"lose_camera.h"
 #include"enemy_lock_on_camera.h"
 #include"shake.h"
-#include"player_group.h"
+#include"zoom.h"
 
 void Brain::Init()
 {
@@ -57,7 +57,17 @@ void Brain::Update()
 		vel_ = virtual_cameras_[current_camera_]->GetVelocity();
 		target_vel_ = virtual_cameras_[current_camera_]->GetTargetVelocity();
 	}
-	shake_->Update();
+
+	if (shake_ != nullptr)
+	{
+		shake_->Update();
+	}
+	
+	if (zoom_ != nullptr)
+	{
+		zoom_->Update();
+	}
+	
 	before_camera_ = current_camera_;
 }
 
@@ -85,6 +95,11 @@ void Brain::ShakeCamera(const float& power,const float& time)
 	shake_->Active(power, time);
 }
 
+void Brain::ZoomCamera(const float& target_fov, const float& time,const float& active_time)
+{
+	zoom_->Activate(target_fov, time,active_time);
+}
+
 void Brain::CollisionNotActive()
 {
 
@@ -93,6 +108,24 @@ void Brain::CollisionNotActive()
 void Brain::CollisionActive()
 {
 
+}
+
+void Brain::SetCurrentFov(const float& current_fov)
+{
+	if (zoom_ != nullptr)
+	{
+		zoom_->SetCurrentFov(current_fov);
+	}
+	
+}
+
+const float Brain::GetZoomValue() const
+{
+	if (zoom_ != nullptr)
+	{
+		return zoom_->GetZoomValue();
+	}
+	return 0.f;
 }
 
 const std::string Brain::GetCurrentCameraName() const
@@ -115,6 +148,8 @@ Brain::Brain()
 	, target_vel_(VectorAssistant::VGetZero())
 	, can_hit_(TRUE)
 	, shake_(std::make_shared<Shake>())
+	, zoom_(std::make_shared<Zoom>())
 {
-
+	shake_->Init();
+	zoom_->Init();
 }

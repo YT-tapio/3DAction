@@ -96,10 +96,7 @@ BossElude::BossElude(const VECTOR& pos, bool* game_start, std::shared_ptr<IShado
 	float shadow_size = 7.f;
 	shadow_creater->CreateShadow(&flat_hips_pos_, &is_active_, shadow_size);
 	
-	decide_target_ = [this](std::string target_player_name)
-		{
-			target_player_name_ = target_player_name;
-		};
+	
 
 }
 

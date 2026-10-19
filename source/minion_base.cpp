@@ -37,6 +37,7 @@
 #include"approach_and_attack.h"
 #include"roar.h"
 #include"look_at_target.h"
+#include"decide_attack_target_from_player.h"
 
 #include"change_method.h"
 #include"hit_red_body.h"
@@ -107,7 +108,7 @@ void MinionBase::Update()
 	}
 	else
 	{
-		target_player_pos_ = player_group_->MostNearPlayerPos(pos_);
+		target_player_pos_ = player_group_->GetPlayerPos(target_player_name_);
 		rigid_body_->SetTargetVelocity(vel_);
 		behavior_tree_->Update();
 	}
@@ -173,14 +174,16 @@ void MinionBase::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)
 	// ÉvÉåÉCÉÑÅ[Çå©ÇÈ
 	auto look_at_player_node = MakeLookAtPlayerNode(mine);
 
+	auto decide_target = MakeDecideTargetNode(mine);
+
 	std::function<bool()> condition = [this]()-> bool
 		{
 			float dist_to_player = VSize(VSub(target_player_pos_, pos_));
-			return dist_to_player > 30.f;
+			return dist_to_player > 28.f;
 		};
 
 	std::vector<std::shared_ptr<NodeBase>> action_nodes;
-
+	action_nodes.emplace_back(decide_target);
 	action_nodes.emplace_back(punch_node);
 	action_nodes.emplace_back(look_at_player_node);
 	auto sequence_node = std::make_shared<SequenceNode>(action_nodes);
@@ -208,13 +211,21 @@ const bool MinionBase::IsBoss() const
 
 std::shared_ptr<NodeBase> MinionBase::MakeChaseNode(std::shared_ptr<EnemyBase> mine)
 {
-	std::shared_ptr<NodeBase> chase_node = nullptr;
+	std::shared_ptr<NodeBase> node = nullptr;
 
 	auto behavior = std::make_shared<ChasePlayer>(mine, "walk", &target_player_pos_, 0.1f);
+	auto decide_target = std::make_shared<DecideAttackTargetFromPlayer>(mine, player_group_, decide_target_);
+	auto decide_target_node = std::make_shared<ActionNode>(decide_target);
+	auto chase_node = std::make_shared<ActionNode>(behavior);
 
-	chase_node = std::make_shared<ActionNode>(behavior);
+	std::vector<std::shared_ptr<NodeBase>> chase_nodes;
 
-	return chase_node;
+	chase_nodes.emplace_back(decide_target_node);
+	chase_nodes.emplace_back(chase_node);
+
+	node = std::make_shared<SequenceNode>(chase_nodes);
+
+	return node;
 }
 
 std::shared_ptr<NodeBase> MinionBase::MakePunchNode(std::shared_ptr<EnemyBase> mine)
@@ -252,6 +263,17 @@ std::shared_ptr<NodeBase> MinionBase::MakeRoarNode(std::shared_ptr<EnemyBase> mi
 	roar_nodes.emplace_back(roar_node);
 
 	node = std::make_shared<SequenceNode>(roar_nodes);
+
+	return node;
+}
+
+std::shared_ptr<NodeBase> MinionBase::MakeDecideTargetNode(std::shared_ptr<EnemyBase> mine)
+{
+	std::shared_ptr<NodeBase> node = nullptr;
+
+	auto decide_target = std::make_shared<DecideAttackTargetFromPlayer>(mine, player_group_, decide_target_);
+
+	node = std::make_shared<ActionNode>(decide_target);
 
 	return node;
 }

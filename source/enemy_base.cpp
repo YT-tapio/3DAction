@@ -75,7 +75,10 @@ EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start,std::shared_ptr<IEnemyUI
 	, player_group_(player_group)
 	, attack_range_group_(attack_range_group)
 {
-	
+	decide_target_ = [this](std::string target_player_name)
+		{
+			target_player_name_ = target_player_name;
+		};
 }
 
 EnemyBase::~EnemyBase()

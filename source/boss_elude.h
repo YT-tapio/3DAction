@@ -54,7 +54,6 @@ private:
 private:
 
 	std::shared_ptr<EnemySummoner> summoner_;
-
-	std::function<void(std::string)> decide_target_;
+	
 
 };

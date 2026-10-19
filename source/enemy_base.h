@@ -1,4 +1,5 @@
 #pragma once
+#include<functional>
 #include"character_base.h"
 #include"physics_interface.h"
 #include"takable_damage_player_interface.h"
@@ -101,6 +102,8 @@ protected:
 	std::string my_name_;
 	std::string target_player_name_;
 
+	std::function<void(std::string)> decide_target_;
+	
 	VECTOR right_hand_pos_;
 	VECTOR double_punch_coll_pos_;
 	VECTOR target_player_pos_;
@@ -115,5 +118,6 @@ protected:
 	bool* game_start_;
 
 private:
+
 
 };

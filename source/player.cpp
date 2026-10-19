@@ -775,20 +775,17 @@ void Player::OnDamageFromEnemy(float damage,AttackType type, const bool is_criti
 			EffectManager::GetInstance().SetPos(effect_id, pos_);
 			EffectManager::GetInstance().End(effect_id, EffectEndState::kTotal);
 			
-			
 			// この時ジャスト回避
-			//printfDx("ジャスト回避\n");
-			if (TRUE)
+			const float kTime = 1.15f;
+			const float kSlow = 0.2f;
+			time_->SetTimeScale(kSlow, kTime);
+			rigid_body_->SetStop(kTime);
+			if (input_->CheckIsPlayer())
 			{
-				time_->SetTimeScale(0.f, 0.15f);
-				rigid_body_->SetStop(0.15f);
-			}
-			else
-			{
-				time_->SetTimeScale(0.2f, 1.15f);
-				rigid_body_->SetStop(1.15f);
-				// ズームさせたい
-				// Brain::GetInstance().ZoomCamera();
+				const float kTargetFov = 60.f;
+				const float kZoomInTime = 0.3f;
+				const float kZoomTime = 1.1f;
+				Brain::GetInstance().ZoomCamera(kTargetFov, kZoomInTime, kZoomTime);
 			}
 
 			SoundManager::GetInstance().SetPos("just_avoid", pos_);
