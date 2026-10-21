@@ -11,6 +11,8 @@
 #include"vector_assistant.h"
 #include"enemy_observer_interface.h"
 #include"enemy_summoner.h"
+#include"status.h"
+#include"status_container.h"
 
 EnemyController::EnemyController(bool* game_start, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group, std::shared_ptr<IDamageUIGroup> damage_ui_group,
 	std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group)
@@ -49,10 +51,21 @@ void EnemyController::Update()
 {
 	boss_->Update();
 	
+	if (boss_->GetStatusContainer()->GetCurrentStatus().hp <= 0)
+	{
+		for (auto& enemy_group : enemy_groups_)
+		{
+			enemy_group->BossDeath();
+		}
+	}
+
 	for (auto& enemy_group : enemy_groups_)
 	{
 		enemy_group->Update();
 	}
+
+	
+
 }
 
 void EnemyController::AddBossObserver(IEnemyObserver* observer)

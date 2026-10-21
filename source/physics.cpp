@@ -309,7 +309,8 @@ void Physics::Gravity()
 void Physics::Collision()
 {
 	std::vector<std::pair<int, int>> current_collisioned_pairs_id;
-
+	
+	//押し戻し
 	for (int i = 0; i < kLoopCollision; i++)
 	{
 		// 押し戻しされたか
@@ -386,16 +387,19 @@ void Physics::Collision()
 		}
 
 	}
+	
 	contact.polys.clear();
-	// OnCollision系の処理をする
-	// 今あたっているもの
+	
+	// OnCollision系の処理
+	// 今衝突しているもの
 	for (const auto& current_collisioned_pair : current_collisioned_pairs_id)
 	{
 		// 範囲内
 		bool is_in_pair = FALSE;
-		// 1フレーム前あたっていたもの
+		// 1フレーム前衝突したもの
 		for (const auto& collisioned_pair : collisioned_pairs_id_)
 		{
+			// 現在と1フレーム前を確認
 			if (IsSamePair(collisioned_pair, current_collisioned_pair))
 			{
 				// 中にあるんだったらstay
@@ -424,7 +428,7 @@ void Physics::Collision()
 	for (auto it = collisioned_pairs_id_.begin();it != collisioned_pairs_id_.end();)
 	{
 		bool now_hit = FALSE;
-		// 今あたっているもの
+		// 今衝突している
 		for (const auto& current_collisioned_pair : current_collisioned_pairs_id)
 		{
 			// 同じのがある場合

@@ -31,6 +31,8 @@ public:
 
 	void Summon(const VECTOR& pos) override;
 
+	void BossDeath();
+
 	const bool GetIsActive() const;
 
 private:

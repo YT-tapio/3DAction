@@ -14,7 +14,9 @@
 #include"player_group_interface.h"
 #include"attack_range_group_interface.h"
 #include"enemy_summoner.h"
-
+#include"attack_type.h"
+#include"status.h"
+#include"status_container.h"
 
 EnemyGroup::EnemyGroup(bool* game_start, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group,
 	std::shared_ptr<IDamageUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group,
@@ -93,10 +95,26 @@ void EnemyGroup::Summon(const VECTOR& base_pos)
 
 }
 
+void EnemyGroup::BossDeath()
+{
+	//‚·‚×‚Ä‚ÌEnemy‚ÌHp‚ð0‚É
+
+	for (auto enemy : enemies_)
+	{
+		auto hp = enemy->GetStatusContainer()->GetCurrentStatus().hp;
+		if (hp > 0)
+		{
+			enemy->OnDamageFromPlayer(9999, AttackType::kPhysical, TRUE);
+		}
+	}
+
+}
+
 const bool EnemyGroup::GetIsActive() const
 {
 	return is_active_;
 }
+
 
 void EnemyGroup::LoadFile()
 {

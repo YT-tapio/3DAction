@@ -223,15 +223,19 @@ void Player::Update()
 	time_->Update();
 	if (CheckHitKey(KEY_INPUT_I)) { status_container_->TakeHeal(10); }
 	
-	if (input_->IsLockOnEnemy()) 
+	//TODOF•ÊƒNƒ‰ƒX‚Å‚ÌŽÀ‘•
+	if (input_->CheckIsPlayer())
 	{
-		Brain::GetInstance().ChangeCamera("lock_on_enemy");
-	}
-	else
-	{
-		if (Brain::GetInstance().GetCurrentCameraName() == "lock_on_enemy")
+		if (input_->IsLockOnEnemy())
 		{
-			Brain::GetInstance().ChangeCamera("sphere");
+			Brain::GetInstance().ChangeCamera("lock_on_enemy");
+		}
+		else
+		{
+			if (Brain::GetInstance().GetCurrentCameraName() == "lock_on_enemy")
+			{
+				Brain::GetInstance().ChangeCamera("sphere");
+			}
 		}
 	}
 	

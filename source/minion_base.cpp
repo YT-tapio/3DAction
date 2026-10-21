@@ -105,6 +105,7 @@ void MinionBase::Update()
 	if (status_container_->GetCurrentStatus().hp <= 0)
 	{
 		animator_->PlayRequest("death");
+		rigid_body_->ResetVelocity();
 	}
 	else
 	{
