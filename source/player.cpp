@@ -80,8 +80,8 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<InputBase> input,const std::st
 	VECTOR head_pos = VAdd(pos_, VGet(0.f, 10.f, 0.f));
 	head_pos_ = head_pos;
 
-	skill1_id_ = SkillName::kNothing;
-	skill2_id_ = SkillName::kNothing;
+	normal_skill_id_ = SkillName::kNothing;
+	strong_skill_id_ = SkillName::kNothing;
 
 	scale_ = VectorAssistant::VGetSame(0.05f);
 	handle_ = -1;
@@ -212,6 +212,7 @@ void Player::Init()
 	test_behavior_->Init();
 	
 	time_->Init();
+	MakeSkillUI();
 	//rigid_body_->SetUpSpeed(10);
 	//EffectManager::GetInstance().Play(EffectID::kHandAura);
 	//EffectManager::GetInstance().Play(EffectID::kHandAura2);
@@ -450,8 +451,8 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 		}
 		
 		// skill
-		skill1_id_ = CSVFileAssistant::GetIntOfCSVFile(ss, data);
-		skill2_id_ = CSVFileAssistant::GetIntOfCSVFile(ss, data);
+		normal_skill_id_ = CSVFileAssistant::GetIntOfCSVFile(ss, data);
+		strong_skill_id_ = CSVFileAssistant::GetIntOfCSVFile(ss, data);
 		
 		speed_		= CSVFileAssistant::GetFloatOfCSVFile(ss, data);
 		avoid_speed = CSVFileAssistant::GetFloatOfCSVFile(ss, data);
@@ -473,8 +474,8 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 
 void Player::MakeSkill(std::weak_ptr<Player> owner)
 {
-	auto skill = SkillLoader::SkillLoad(skill1_id_, name_, owner,SkillType::kNormal);
-	auto second_skill = SkillLoader::SkillLoad(skill2_id_, name_, owner,SkillType::kStrong);
+	auto skill = SkillLoader::SkillLoad(normal_skill_id_, name_, owner,SkillType::kNormal);
+	auto second_skill = SkillLoader::SkillLoad(strong_skill_id_, name_, owner,SkillType::kStrong);
 
 	skill_ = skill;
 	second_skill_ = second_skill;
@@ -646,15 +647,18 @@ void Player::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 	{
 		// 自身とオーナーが一緒かを確認
 		if (is_invincible_) { return; }
+		/*
 		if (auto punch = std::dynamic_pointer_cast<Punch>(object))
 		{
+			// オーナーが同じのものは受け付けない
 			if (!punch->CheckSameOwner(std::dynamic_pointer_cast<ObjectBase>(shared_from_this())))
 			{
-				animator_->PlayRequest("on_damage");
 				
+				animator_->PlayRequest("on_damage");
 				can_move_ = FALSE;
 			}
 		}
+		*/
 		return;
 	}
 
@@ -744,7 +748,6 @@ void Player::OnDamageFromEnemy(float damage,AttackType type, const bool is_criti
 		{
 			// バフをかける
 			status_container_->StaminaUpMax();
-
 			if (job_ == "healer")
 			{
 				// hpの回復
@@ -814,16 +817,6 @@ void Player::OnDamageFromEnemy(float damage,AttackType type, const bool is_criti
 	on_damage_ = TRUE;
 	// ダメージ量をもらう
 	auto final_damage = status_container_->TakeDamage(damage,type);
-
-	if (status_container_->GetCurrentStatus().hp <= 0)
-	{
-		Brain::GetInstance().ChangeCamera("lose");
-
-		for (auto& observer : observers_)
-		{
-			observer->OnPlayerDeath();
-		}
-	}
 	// サウンドを再生
 	SoundManager::GetInstance().Play3DSound("palyer_on_damage");
 	// ui描画を行う
@@ -985,13 +978,7 @@ const VECTOR Player::GetInputDir() const
 
 	// 入力がない場合はそのまま向いている方向に行く
 	if (VSize(input_dir) == 0.f) { return dir_; }
-	/*
-	const auto ai_input = std::dynamic_pointer_cast<const AIInput>(input_);
-	if (ai_input != nullptr)
-	{
-		return input_dir;	// ai_inputにする
-	}
-	*/
+	
 	// カメラの方向に補正させる
 	input_dir = VGet(input_dir.x, 0.f, input_dir.y);
 	input_dir = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(*camera_dir_), VectorAssistant::VGetTan(input_dir));
@@ -1016,4 +1003,31 @@ void Player::EffectUpdate()
 
 	//EffectManager::GetInstance().SetPos(EffectID::kHandAura,effect_right_hand_pos);
 	//EffectManager::GetInstance().SetPos(EffectID::kHandAura2,effect_left_hand_pos);
+}
+
+void Player::MakeSkillUI()
+{
+	// スキルが使えるのか
+	auto normal_skill_can_use = [this]() -> bool
+		{
+			return GetSkillCanUse(SkillType::kNormal);
+		};
+
+	auto normal_skill_cool_time = [this]() -> float
+		{
+			return GetSkillCoolTime(SkillType::kNormal);
+		};
+
+	auto strong_skill_can_use = [this]() -> bool
+		{
+			return GetSkillCanUse(SkillType::kStrong);
+		};
+
+	auto strong_skill_cool_time = [this]() -> float
+		{
+			return GetSkillCoolTime(SkillType::kStrong);
+		};
+
+	player_ui_controller_->MakeSkillUI(normal_skill_id_, normal_skill_can_use, normal_skill_cool_time,
+		strong_skill_id_, strong_skill_can_use, strong_skill_cool_time, name_);
 }

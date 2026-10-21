@@ -2,6 +2,7 @@
 #include<string>
 #include<fstream>
 #include<sstream>
+#include<functional>
 #include"object_base.h"
 #include"image_data.h"
 #include"object_2D.h"
@@ -10,10 +11,11 @@
 #include<unordered_map>
 #include<list>
 #include"animator_2d.h"
-#include<functional>
 #include"draw_2D.h"
 
-PlayerIconUI::PlayerIconUI(const std::string& name)
+PlayerIconUI::PlayerIconUI(const std::string& name,std::function<int()> get_current_hp)
+	: get_current_hp_(get_current_hp)
+	, dark_percent_(0.f)
 {
 	LoadFile(name);
 	animation_ = std::make_shared<Animator2D>("data/csv/test/test_animation.csv");
@@ -29,12 +31,31 @@ PlayerIconUI::~PlayerIconUI()
 void PlayerIconUI::Update()
 {
 	animation_->Update();
+	if (get_current_hp_() > 0)
+	{
+		dark_percent_ = 0.f;
+	}
+	else
+	{
+		dark_percent_ = kDefaultDarkPercent;
+	}
 }
 
 const void PlayerIconUI::Draw() const
 {
-	Draw2D::RotaGraph(VAdd(effect_pos_,VGet(0.f,-10.f,0.f)), 5.f, 0.f, animation_->GetNowHandle(), TRUE);
-	icon_->Draw();
+	if (get_current_hp_ != nullptr)
+	{
+		if (get_current_hp_() > 0)
+		{
+			Draw2D::RotaGraph(VAdd(effect_pos_, VGet(0.f, -10.f, 0.f)), 5.f, 0.f, animation_->GetNowHandle(), TRUE);	
+		}
+	}
+	auto draw = [this]() -> void
+		{
+			icon_->Draw();
+		};
+	Draw2D::Dark(draw, dark_percent_);
+	
 }
 
 void PlayerIconUI::LoadFile(const std::string& name)

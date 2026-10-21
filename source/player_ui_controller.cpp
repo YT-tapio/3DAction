@@ -47,7 +47,11 @@ void PlayerUIController::MakeStrongSkillUI(int skill_id, std::function<bool()> c
 void PlayerUIController::MakeSkillUI(int normal_skill_id, std::function<bool()> normal_can_use, std::function<float()> normal_cool_time_ratio,
 	int strong_skill_id, std::function<bool()> strong_can_use, std::function<float()> strong_cool_time_ratio, const std::string& name)
 {
-
+	auto player_ui_group = player_ui_groups_.find(name);
+	if (player_ui_group == player_ui_groups_.end()) { return; }
+	if (player_ui_group->second == nullptr) { return; }
+	player_ui_group->second->MakeSkillUI(normal_skill_id, normal_can_use, 
+		normal_cool_time_ratio, strong_skill_id, strong_can_use, strong_cool_time_ratio);
 }
 
 void PlayerUIController::SpawnStatModifire(std::function<bool()> end_condition, StatType stat_type, ModifireOperation operation, const std::string& character_name)

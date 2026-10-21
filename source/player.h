@@ -119,7 +119,6 @@ public:
 
 private:
 
-	// ŠÖ”ŒQ
 	void LoadFile(const char* file_path, const std::string my_name);
 
 	void MakeSkill(std::weak_ptr<Player> owner);
@@ -133,6 +132,8 @@ private:
 	void DecideAttackTarget();
 
 	void EffectUpdate();
+
+	void MakeSkillUI();
 
 private:
 	
@@ -163,8 +164,8 @@ private:
 
 	std::string name_;
 	std::string job_;
-	int skill1_id_;
-	int skill2_id_;
+	int normal_skill_id_;
+	int strong_skill_id_;
 
 	float speed_;
 	float target_rot_y_;

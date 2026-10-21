@@ -66,20 +66,7 @@ Game::Game()
 	InputManager::GetInstance().SetPlayerGroup(player_group_);
 	enemy_controller_ = std::make_shared<EnemyController>(&game_start_, shadow_circle_controller_, enemy_ui_group_,
 		damage_ui_group_, player_group_, attack_range_group_);
-	/*
-	std::shared_ptr<EnemyBase> boss_enemy = std::make_shared<BossBase>(VGet(0, 0, 0), &game_start_,shadow_circle_controller_,enemy_ui_group_,
-		damage_ui_group_,player_group_,attack_range_group_);
-	
-	get_enemy_pos_ = [boss_enemy]()
-		{
-			return boss_enemy->GetCenterPos();
-		}; 
-	
-	get_enemy_dir_ = [boss_enemy]()
-		{
-			return boss_enemy->GetFrontDir();
-		};
-	*/
+
 	
 	won_ui_ = std::make_shared<WonUI>();
 	lose_ui_ = std::make_shared<LoseUI>();
@@ -87,23 +74,13 @@ Game::Game()
 	
 	enemy_controller_->AddBossObserver(won_ui_.get());
 	enemy_controller_->AddBossObserver(game_to_next_scene_.get());
-	/*
-	boss_enemy->AddObserver(won_ui_.get());
-	boss_enemy->AddObserver(game_to_next_scene_.get());
-	*/
+
 	
 	player_ui_controller_ = std::make_shared<PlayerUIController>();
-	player_skill_ui_group_ = std::make_shared<PlayerSkillUIGroup>();
+	//player_skill_ui_group_ = std::make_shared<PlayerSkillUIGroup>();
 
 	player_group_->Awake(&camera_->dir_, player_ui_controller_, enemy_controller_, shadow_circle_controller_, damage_ui_group_);
-	/*
-	enemy_group_ = std::make_shared<EnemyGroup>(&game_start_, shadow_circle_controller_, enemy_ui_group_,
-		damage_ui_group_, player_group_, attack_range_group_);
-	*/
-	
 
-	//objects_.push_back(std::make_shared<Stage>());
-	
 	no_shadow_objects_.push_back(std::make_shared<SkyDome>());
 	game_start_timer_ = std::make_shared<GameStartTimer>(&game_start_);
 	
@@ -206,7 +183,7 @@ void Game::Update()
 	}
 
 	player_ui_controller_->Update();
-	player_skill_ui_group_->Update();
+	//player_skill_ui_group_->Update();
 	won_ui_->Update();
 	lose_ui_->Update();
 	enemy_ui_group_->Update();
@@ -265,7 +242,7 @@ void Game::Draw()
 
 	// Physics::GetInstance().Debug();
 	player_ui_controller_->Draw();
-	player_skill_ui_group_->Draw();
+	//player_skill_ui_group_->Draw();
 	game_start_timer_->Draw();
 	enemy_ui_group_->Draw();
 	damage_ui_group_->Draw();

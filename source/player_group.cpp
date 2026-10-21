@@ -21,15 +21,20 @@
 #include"damage_ui_group.h"
 #include"damage_ui_group_interface.h"
 #include"enemy_controller.h"
-
+#include"status.h"
+#include"status_container.h"
+#include"player_observer_interface.h"
+#include"brain.h"
 
 PlayerGroup::PlayerGroup()
+	: is_death_all_player_(FALSE)
 {
 	
 }
 
 PlayerGroup::~PlayerGroup()
 {
+	player_observers_.clear();
 	players_.clear();
 }
 
@@ -39,6 +44,7 @@ void PlayerGroup::AddPlayerObserver(IPlayerObserver* observer)
 	{
 		player->AddObserver(observer);
 	}
+	player_observers_.emplace_back(observer);
 }
 
 void PlayerGroup::Awake(VECTOR* camera_dir,std::shared_ptr<IPlayerUIController> player_ui_controller, std::shared_ptr<IEnemyController> enemy_controller, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IDamageUIGroup> damage_ui_group)
@@ -46,13 +52,9 @@ void PlayerGroup::Awake(VECTOR* camera_dir,std::shared_ptr<IPlayerUIController> 
 	current_player_head_pos_ = VectorAssistant::VGetZero();
 	camera_dir_ = camera_dir;
 	players_.push_back(std::make_shared<Player>(camera_dir_, InputManager::GetInstance().GetPlayer1Input(), "attacker", player_ui_controller, shadow_creater, damage_ui_group));
-	//players_.push_back(std::make_shared<Player>(camera_dir_, InputManager::GetInstance().GetPlayer2Input(), "healer", player_ui_controller, shadow_creater, damage_ui_group));
-	//players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer3Input(), "defender"));
-	//players_.push_back(std::make_shared<Player>(&(*camera_dir_), InputManager::GetInstance().GetPlayer3Input(), "attacker2", player_ui_group, shadow_creater, damage_ui_group));
+	players_.push_back(std::make_shared<Player>(camera_dir_, InputManager::GetInstance().GetPlayer2Input(), "healer", player_ui_controller, shadow_creater, damage_ui_group));
 	
 	// スタミナを生成
-	//player_ui_group->MakeStaminaUI();
-
 	for (auto player : players_)
 	{
 		enemy_controller->AddBossObserver(player.get());
@@ -65,6 +67,7 @@ void PlayerGroup::Init(std::shared_ptr<PlayerSkillUIGroup> skill_ui_group)
 	{
 		player->Init();
 	}
+	/*
 	// メインキャラ(操作しているキャラ)のスキルのクールタイムや使えるか取得
 	for (auto player : players_)
 	{
@@ -82,17 +85,41 @@ void PlayerGroup::Init(std::shared_ptr<PlayerSkillUIGroup> skill_ui_group)
 			break;
 		}
 	}
+	*/
+	
 
 }
 
 void PlayerGroup::Update()
 {
+	bool is_death_all_player = TRUE;
 	CheckCurrentPlayerInfo();
-	
+
 	for (auto& player : players_)
 	{
 		player->Update();
+
+		if (is_death_all_player)
+		{
+			// プレイヤーがHpが0かをチェック
+			is_death_all_player = CheckDeathPlayer(player);
+		}
 	}
+
+	if (is_death_all_player)
+	{
+		if (!is_death_all_player_)
+		{
+			for (auto observer : player_observers_)
+			{
+				observer->OnPlayerDeath();
+			}
+			Brain::GetInstance().ChangeCamera("lose");
+			is_death_all_player_ = TRUE;
+		}
+		
+	}
+
 }
 
 void PlayerGroup::End()
@@ -164,6 +191,9 @@ VECTOR PlayerGroup::MostNearPlayerPos(const VECTOR& pos)
 	float most_near_player_dist = -1;	// -1の時は最初のプレイヤーの距離を代入する
 	for (auto& player : players_)
 	{
+		// プレイヤーが生きていないのなら回さない
+		if (CheckDeathPlayer(player)) { continue; }
+
 		float dist = VSize(VSub(player->GetPosition(), pos));
 		if (most_near_player_dist == -1)
 		{
@@ -182,11 +212,13 @@ VECTOR PlayerGroup::MostNearPlayerPos(const VECTOR& pos)
 
 std::string PlayerGroup::MostNearPlayerName(const VECTOR& pos)
 {
-	std::string most_near_player_name = "";
+	std::string most_near_player_name = "none";
 	float most_near_player_dist = -1;	// -1の時は最初のプレイヤーの距離を代入する
 	std::shared_ptr<Player> most_near_player = nullptr;
 	for (auto& player : players_)
 	{
+		if (CheckDeathPlayer(player)) { continue; }
+
 		float dist = VSize(VSub(player->GetPosition(), pos));
 		if (most_near_player_dist == -1)
 		{
@@ -232,4 +264,10 @@ void PlayerGroup::CheckCurrentPlayerInfo()
 		current_player_front_dir_ = player->GetFrontDir();
 		break;
 	}
+}
+
+bool PlayerGroup::CheckDeathPlayer(std::shared_ptr<Player> player)
+{
+	auto status = player->GetStatusContainer()->GetCurrentStatus();
+	return status.hp == 0.f;
 }

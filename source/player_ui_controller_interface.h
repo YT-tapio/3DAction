@@ -21,6 +21,9 @@ public:
 
 	virtual void MakeStrongSkillUI(int skill_id, std::function<bool()> can_use, std::function<float()> cool_time_ratio, const std::string& name) = 0;
 
+	virtual void MakeSkillUI(int normal_skill_id, std::function<bool()> normal_can_use, std::function<float()> normal_cool_time_ratio,
+		int strong_skill_id, std::function<bool()> strong_can_use, std::function<float()> strong_cool_time_ratio, const std::string& name) = 0;
+
 	virtual void ChangeIsMian(const bool& is_main, const std::string& name) = 0;
 
 };

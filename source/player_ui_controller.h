@@ -23,7 +23,7 @@ public:
 	void MakeStrongSkillUI(int skill_id, std::function<bool()> can_use, std::function<float()> cool_time_ratio, const std::string& name) override;
 
 	void MakeSkillUI(int normal_skill_id, std::function<bool()> normal_can_use, std::function<float()> normal_cool_time_ratio,
-		int strong_skill_id, std::function<bool()> strong_can_use, std::function<float()> strong_cool_time_ratio,const std::string& name);
+		int strong_skill_id, std::function<bool()> strong_can_use, std::function<float()> strong_cool_time_ratio,const std::string& name) override;
 
 	void SpawnStatModifire(std::function<bool()> end_condition, StatType stat_type, ModifireOperation operation, const std::string& character_name) override;
 

@@ -78,9 +78,12 @@ private:
 
 	void CheckCurrentPlayerInfo();
 
+	bool CheckDeathPlayer(std::shared_ptr<Player> player);
+
 private:
 
 	std::vector<std::shared_ptr<Player>> players_;
+	std::vector<IPlayerObserver*> player_observers_;
 
 	VECTOR current_player_head_pos_;
 	VECTOR current_player_front_dir_;
@@ -89,4 +92,5 @@ private:
 	int current_player_skill_id_;
 	float current_player_skill_cool_time_;
 	bool current_player_skill_can_use_;
+	bool is_death_all_player_;
 };

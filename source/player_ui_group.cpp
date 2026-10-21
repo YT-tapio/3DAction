@@ -47,7 +47,7 @@ void PlayerUIGroup::Update()
 	if (icon_ != nullptr) { icon_->Update(); }
 	if (stamina_ui_ != nullptr) { stamina_ui_->Update(); }
 	if (stat_modifire_ui_group_ != nullptr) { stat_modifire_ui_group_->Update(); }
-
+	if (skill_ui_group_ != nullptr) { skill_ui_group_->Update(); }
 	// SubScreenに描画する
 	UpdateSubScreen();
 }
@@ -63,6 +63,7 @@ void PlayerUIGroup::Draw()
 	if (is_main_)
 	{
 		if (stamina_ui_ != nullptr) { stamina_ui_->Draw(); }
+		if (skill_ui_group_ != nullptr) { skill_ui_group_->Draw(); }
 	}
 }
 
@@ -71,7 +72,8 @@ void PlayerUIGroup::MakeUI(std::function<int()> get_base_hp, std::function<int()
 	hpbar_ = std::make_shared<HPBar>("data/csv/ui/player/hp_bar_datas.csv", get_base_hp, get_current_hp);
 	hp_actual_ = std::make_shared<HPActualValueUI>("data/csv/ui/player/hp_actual.csv", get_current_hp);
 	last_background_ = std::make_shared<PlayerLastBackGroundUI>();
-	icon_ = std::make_shared<PlayerIconUI>(name);
+	icon_ = std::make_shared<PlayerIconUI>(name,get_current_hp);
+	// TODO：CSVから読み取れるように変更
 	if (name == "attacker")
 	{
 		player_name_ = std::make_shared<CharacterNameUI>("data/csv/ui/player/" + name + "/" + name + "_name_data.csv", "シフティア");
@@ -103,7 +105,9 @@ void PlayerUIGroup::MakeStrongSkillUI(int handle, std::function<bool()> can_use,
 void PlayerUIGroup::MakeSkillUI(int normal_skill_id, std::function<bool()> normal_can_use, std::function<float()> normal_cool_time_ratio,
 	int strong_skill_id, std::function<bool()> strong_can_use, std::function<float()> strong_cool_time_ratio)
 {
-
+	skill_ui_group_ = std::make_shared<PlayerSkillUIGroup>();
+	skill_ui_group_->ChangeSkill(normal_skill_id, normal_cool_time_ratio, normal_can_use,
+		strong_skill_id, strong_cool_time_ratio, strong_can_use);
 }
 
 void PlayerUIGroup::SpawnStatModifire(std::function<bool()> end_condition, StatType stat_type, ModifireOperation operation)
