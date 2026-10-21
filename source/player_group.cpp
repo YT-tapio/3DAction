@@ -61,33 +61,12 @@ void PlayerGroup::Awake(VECTOR* camera_dir,std::shared_ptr<IPlayerUIController> 
 	}
 }
 
-void PlayerGroup::Init(std::shared_ptr<PlayerSkillUIGroup> skill_ui_group)
+void PlayerGroup::Init()
 {
 	for (auto& player : players_)
 	{
 		player->Init();
 	}
-	/*
-	// メインキャラ(操作しているキャラ)のスキルのクールタイムや使えるか取得
-	for (auto player : players_)
-	{
-		if (std::dynamic_pointer_cast<const PlayerInput>(player->GetInput()))
-		{
-			auto normal_skill_id = player->GetSkillID(SkillType::kNormal);
-			auto normal_skill_cool_time = [player]() ->float {return player->GetSkillCoolTime(SkillType::kNormal); };
-			auto normal_skill_can_use = [player]() ->bool {return player->GetSkillCanUse(SkillType::kNormal); };
-			auto strong_skill_id = player->GetSkillID(SkillType::kStrong);
-			auto strong_skill_cool_time = [player]() ->float {return player->GetSkillCoolTime(SkillType::kStrong); };
-			auto strong_skill_can_use = [player]() ->bool {return player->GetSkillCanUse(SkillType::kStrong); };
-
-			skill_ui_group->ChangeSkill(normal_skill_id, normal_skill_cool_time, normal_skill_can_use,
-				strong_skill_id, strong_skill_cool_time, strong_skill_can_use);
-			break;
-		}
-	}
-	*/
-	
-
 }
 
 void PlayerGroup::Update()
@@ -176,7 +155,7 @@ VECTOR PlayerGroup::GetPlayerPos(const std::string& name)
 	{
 		if (player->GetName() == name)
 		{
-			printfDx("%s\n", name.c_str());
+			//printfDx("%s\n", name.c_str());
 			player_pos = player->GetPosition();
 			return player_pos;
 		}

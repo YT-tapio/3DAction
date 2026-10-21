@@ -77,7 +77,6 @@ Game::Game()
 
 	
 	player_ui_controller_ = std::make_shared<PlayerUIController>();
-	//player_skill_ui_group_ = std::make_shared<PlayerSkillUIGroup>();
 
 	player_group_->Awake(&camera_->dir_, player_ui_controller_, enemy_controller_, shadow_circle_controller_, damage_ui_group_);
 
@@ -111,7 +110,7 @@ void Game::Init()
 	attack_range_group_->Init();
 	Physics::GetInstance().Init();
 	EffectManager::GetInstance().Init();
-	player_group_->Init(player_skill_ui_group_);
+	player_group_->Init();
 	//enemy_group_->Init();
 	enemy_controller_->Init();
 	won_ui_->Init();
@@ -183,7 +182,6 @@ void Game::Update()
 	}
 
 	player_ui_controller_->Update();
-	//player_skill_ui_group_->Update();
 	won_ui_->Update();
 	lose_ui_->Update();
 	enemy_ui_group_->Update();
@@ -242,7 +240,6 @@ void Game::Draw()
 
 	// Physics::GetInstance().Debug();
 	player_ui_controller_->Draw();
-	//player_skill_ui_group_->Draw();
 	game_start_timer_->Draw();
 	enemy_ui_group_->Draw();
 	damage_ui_group_->Draw();

@@ -24,7 +24,7 @@ public:
 
 	void Awake(VECTOR* camera_dir, std::shared_ptr<IPlayerUIController> player_ui_controller,std::shared_ptr<IEnemyController> enemy_controller,std::shared_ptr<IShadowCreater> shadow_creater,std::shared_ptr<IDamageUIGroup> damage_ui_group);
 
-	void Init(std::shared_ptr<PlayerSkillUIGroup> skill_ui_group);
+	void Init();
 
 	void Update();
 

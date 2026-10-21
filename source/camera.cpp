@@ -87,7 +87,7 @@ void Camera::Setting()
 	SetCameraNearFar(near_, far_);
 	auto fov = RadianAssistant::TheNumRadian(fov_);
 	SetupCamera_Perspective(fov);
-	printfDx("fov:%.2f\n",fov_);
+	//printfDx("fov:%.2f\n",fov_);
 	SetCameraPositionAndTarget_UpVecY(pos_, target_pos_);
 	Effekseer_Sync3DSetting();
 	dir_ = VectorAssistant::VGetDir(pos_, target_pos_);
