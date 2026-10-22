@@ -11,11 +11,24 @@
 #include"enemy_lock_on_camera.h"
 #include"shake.h"
 #include"zoom.h"
+#include"debug_camera.h"
 
 void Brain::Init()
 {
 	current_camera_ = "nothing";
 	before_camera_ = "nothing";
+}
+
+void Brain::CreateTitleSceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos)
+{
+	virtual_cameras_["debug_camera"] = std::make_shared<DebugCamera>(camera_pos,target_pos);
+	for (auto& virtual_camera : virtual_cameras_)
+	{
+		camera_names_.push_back(virtual_camera.first);
+		virtual_camera.second->Awake();
+	}
+	current_camera_ = "debug_camera";
+	before_camera_ = current_camera_;
 }
 
 void Brain::CreatePlaySceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos,std::shared_ptr<IEnemyController> enemy_controller,std::shared_ptr<PlayerGroup> player_group)

@@ -13,19 +13,24 @@
 #include"sphere.h"
 #include"physics.h"
 
-Camera::Camera()
+Camera::Camera(const VECTOR& pos,const VECTOR& target_pos,const bool& is_physics)
+	: rigid_body_(nullptr)
 {
 	const float kRad		= 75.f;
 	near_					= 0.1f;
 	far_					= 1000.f;
 	fov_					= kRad;
-	pos_					= VectorAssistant::VGetZero();
+	pos_					= pos;
 	//pos_ = VGet(6,-1.f,-8.5f);
 	vel_					= VectorAssistant::VGetZero();
 	target_vel_		= VectorAssistant::VGetZero();
-	target_pos_		= VGet(0.f, 0.f, 25.f);
-
-	rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Sphere>(1.f, VectorAssistant::VGetZero()), &pos_, FALSE, FALSE, 0.1f,1.f);
+	target_pos_		= target_pos;
+	is_physics_ = is_physics;
+	if (is_physics_)
+	{
+		rigid_body_ = std::make_shared<RigidBody>(std::make_shared<Sphere>(1.f, VectorAssistant::VGetZero()), &pos_, FALSE, FALSE, 0.1f, 1.f);
+	}
+	
 	Setting();
 }
 
@@ -37,9 +42,12 @@ Camera::~Camera()
 void Camera::Init()
 {
 	// pysicsÇ÷ÇÃìoò^
-	rigid_body_->Init(weak_from_this());
-	rigid_body_->SetTag("camera");
-	Physics::GetInstance().AddBody(rigid_body_);
+	if (rigid_body_ != nullptr)
+	{
+		rigid_body_->Init(weak_from_this());
+		rigid_body_->SetTag("camera");
+		Physics::GetInstance().AddBody(rigid_body_);
+	}
 }
 
 void Camera::Update()
@@ -52,7 +60,10 @@ void Camera::Update()
 	target_vel_	= Brain::GetInstance().GetTargetVelocity();
 	auto zoom_value = Brain::GetInstance().GetZoomValue();
 	fov_ = fov_ + zoom_value;
-	rigid_body_->SetTargetVelocity(vel_);
+	if (rigid_body_ != nullptr)
+	{
+		rigid_body_->SetTargetVelocity(vel_);
+	}
 	Setting();
 	Brain::GetInstance().SetCurrentFov(fov_);
 	// ÉäÉXÉiÅ[ÇÃê›íË
@@ -82,6 +93,10 @@ void Camera::Debug()
 
 void Camera::Setting()
 {
+	if (!is_physics_)
+	{
+		pos_ = VAdd(pos_, vel_);
+	}
 	target_pos_ = VAdd(target_pos_, target_vel_);
 
 	SetCameraNearFar(near_, far_);

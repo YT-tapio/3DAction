@@ -7,7 +7,7 @@ class Camera : public IPhysicsEventReceiver
 {
 public:
 
-	Camera();
+	Camera(const VECTOR& pos, const VECTOR& target_pos, const bool& is_physics);
 
 	~Camera() override;
 
@@ -46,5 +46,7 @@ private:
 	float far_;
 
 	float fov_;	
+
+	bool is_physics_;
 
 };

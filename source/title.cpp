@@ -21,23 +21,18 @@
 #include"variable_timer.h"
 
 #include"model_repository.h"
+#include"brain.h"
+#include"camera.h"
 
 Title::Title()
 	: SceneBase()
 {
-
-	//title_logo_handle_ = -1;
-	//player_handle_ = -1;
-	//enemy_handle_ = -1;
-	//sky_dome_handle_ = -1;
-
+	camera_ = std::make_shared<Camera>(VGet(0.f,0.f,0.f), VGet(0.f, 0.f, 10.f),FALSE);
 	title_logo_handle_		= LoadGraph("data/ui/title/title_logo.png");
 	player_handle_			= MV1LoadModel("data/model/player/attacker/Lola_B_Styperek.mv1");
 	enemy_handle_			= ModelRepository::GetInstance().GetHandle("zako");
-	//stage_handle_			= MV1LoadModel("data/model/stage/field.mv1");
+	stage_handle_			= MV1LoadModel("data/model/stage/field.mv1");
 	sky_dome_handle_		= MV1LoadModel("data/model/skydome/SkyDome.mv1");
-
-	
 
 	if (player_handle_ == -1)
 	{
@@ -51,17 +46,7 @@ Title::Title()
 	{
 		printfDx("ƒ‚ƒfƒ‹“Ç‚Ýž‚ÝƒGƒ‰[\n");
 	}
-
-	float near_feat = 0.1f;
-	float far_feat = 500.f;
-
-	float fov = RadianAssistant::TheNumRadian(75.f);
-	VECTOR pos = VGet(0, 0, 0);
-	VECTOR target_pos = VGet(0, 0, 10);
-	SetCameraNearFar(near_feat, far_feat);
-	SetupCamera_Perspective(fov);
-	SetCameraPositionAndTarget_UpVecY(pos, target_pos);
-
+	
 	//MV1SetScale(stage_handle_, VectorAssistant::VGetSame(0.3f));
 	//MV1SetPosition(stage_handle_, VGet(0,0,0));
 
@@ -97,13 +82,13 @@ Title::Title()
 	
 	MV1DeleteModel(player_anim_handle);
 	MV1DeleteModel(enemy_anim_handle);
-	
+	Brain::GetInstance().CreateTitleSceneVirtualCamera(camera_->GetPos(),camera_->GetTargetPos());
 }
 
 Title::~Title()
 {
 	SoundManager::GetInstance().Stop("title_bgm");
-
+	Brain::GetInstance().DeleteVirtualCamera();
 	DeleteGraph(title_logo_handle_);
 	MV1DeleteModel(player_handle_);
 	MV1DeleteModel(enemy_handle_);
@@ -118,6 +103,8 @@ void Title::Init()
 
 void Title::Update()
 {
+	Brain::GetInstance().Update();
+	camera_->Update();
 	start_button_->Update();
 	offset_timer_->Update();
 	

@@ -1095,6 +1095,9 @@
     <ClCompile Include="source\debide_attack_target_from_player.cpp">
       <Filter>ソース ファイル\behavior\decide_attack_target_from_player</Filter>
     </ClCompile>
+    <ClCompile Include="source\debug_camera.cpp">
+      <Filter>ソース ファイル\camera\virtual_camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1867,6 +1870,9 @@
     </ClInclude>
     <ClInclude Include="source\decide_attack_target_from_player.h">
       <Filter>ソース ファイル\behavior\decide_attack_target_from_player</Filter>
+    </ClInclude>
+    <ClInclude Include="source\debug_camera.h">
+      <Filter>ソース ファイル\camera\virtual_camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

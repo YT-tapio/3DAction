@@ -59,7 +59,7 @@ Game::Game()
 	enemy_ui_group_ = std::make_shared<EnemyUIGroup>();
 	shadow_circle_controller_ = std::make_shared<ShadowCircleController>();
 	game_start_ = FALSE;
-	camera_ = std::make_shared<Camera>();
+	camera_ = std::make_shared<Camera>(VGet(0.f, 0.f, 0.f), VGet(0.f, 0.f, 15.f),TRUE);
 	shadow_map_ = std::make_shared<ShadowMap>();
 	objects_.push_back(std::make_shared<Stage>());
 	player_group_ = std::make_shared<PlayerGroup>();

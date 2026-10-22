@@ -170,6 +170,7 @@
     <ClCompile Include="source\cool_time_behavior.cpp" />
     <ClCompile Include="source\damage_ui_group_interface.cpp" />
     <ClCompile Include="source\debide_attack_target_from_player.cpp" />
+    <ClCompile Include="source\debug_camera.cpp" />
     <ClCompile Include="source\enemy_controller.cpp" />
     <ClCompile Include="source\enemy_controller_interface.cpp" />
     <ClCompile Include="source\enemy_cool_time_controller.cpp" />
@@ -391,6 +392,7 @@
     <ClInclude Include="source\attack_id.h" />
     <ClInclude Include="source\attack_Info_holder.h" />
     <ClInclude Include="source\attack_phase.h" />
+    <ClInclude Include="source\debug_camera.h" />
     <ClInclude Include="source\decide_attack_target_from_player.h" />
     <ClInclude Include="source\enemy_controller.h" />
     <ClInclude Include="source\enemy_controller_interface.h" />
