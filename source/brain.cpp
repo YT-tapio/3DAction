@@ -12,6 +12,8 @@
 #include"shake.h"
 #include"zoom.h"
 #include"debug_camera.h"
+#include"title_camera.h"
+#include"title_player_controller.h"
 
 void Brain::Init()
 {
@@ -19,9 +21,16 @@ void Brain::Init()
 	before_camera_ = "nothing";
 }
 
-void Brain::CreateTitleSceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos)
+void Brain::CreateTitleSceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos,std::shared_ptr<TitlePlayerController> player_controller)
 {
+
+	auto get_head_pos = [player_controller]() -> VECTOR
+		{
+			return player_controller->GetHeadPos();
+		};
+
 	virtual_cameras_["debug_camera"] = std::make_shared<DebugCamera>(camera_pos,target_pos);
+	virtual_cameras_["title_camera"] = std::make_shared<TitleCamera>(camera_pos,target_pos,get_head_pos);
 	for (auto& virtual_camera : virtual_cameras_)
 	{
 		camera_names_.push_back(virtual_camera.first);

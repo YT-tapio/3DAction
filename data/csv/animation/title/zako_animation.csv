@@ -1,0 +1,2 @@
+﻿name,file_path,anim_index,play_speed,priority,loop,cancel_time,next_anim_name
+tackle,data/model/enemy/zako/animation/tackle.mv1,0,1,1,1,0,nothing

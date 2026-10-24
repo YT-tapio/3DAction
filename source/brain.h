@@ -10,6 +10,7 @@ class Shake;
 class Zoom;
 class PlayerGroup;
 class IEnemyController;
+class TitlePlayerController;
 
 class Brain
 {
@@ -26,7 +27,7 @@ public:
 
 	void Init();
 
-	void CreateTitleSceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos);
+	void CreateTitleSceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos, std::shared_ptr<TitlePlayerController> player_controller);
 
 	void CreatePlaySceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos, std::shared_ptr<IEnemyController> enemy_controller,std::shared_ptr<PlayerGroup> player_group);
 

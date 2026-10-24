@@ -26,25 +26,16 @@
 
 #include"debug.h"
 #include"title_player_controller.h"
+#include"title_enemy_controller.h"
 
 Title::Title()
 	: SceneBase()
 {
-	camera_ = std::make_shared<Camera>(VGet(0.f,0.f,0.f), VGet(0.f, 0.f, 10.f),FALSE);
+	camera_ = std::make_shared<Camera>(VGet(-5.f,0.f,0.f), VGet(0.f, 0.f, 10.f),FALSE);
 	title_logo_handle_		= LoadGraph("data/ui/title/title_logo.png");
-	player_handle_			= ModelRepository::GetInstance().GetHandle("player_attacker");
-	enemy_handle_			= ModelRepository::GetInstance().GetHandle("zako");
 	stage_handle_			= MV1LoadModel("data/model/stage/field.mv1");
 	sky_dome_handle_		= MV1LoadModel("data/model/skydome/SkyDome.mv1");
 
-	if (player_handle_ == -1)
-	{
-		printfDx("モデル読み込みエラー\n");
-	}
-	if (enemy_handle_ == -1)
-	{
-		printfDx("モデル読み込みエラー\n");
-	}
 	if (sky_dome_handle_ == -1)
 	{
 		printfDx("モデル読み込みエラー\n");
@@ -57,15 +48,6 @@ Title::Title()
 	MV1SetPosition(sky_dome_handle_, VGet(0, 0, 0));
 
 	
-	MV1SetScale(enemy_handle_, VectorAssistant::VGetSame(0.05f));
-	MV1SetPosition(enemy_handle_, VGet(-2.4f, -8.5f, 2.3f));
-	MV1SetRotationXYZ(enemy_handle_, VGet(0.f, RadianAssistant::TheNumRadian(-90), 0.f));
-	
-	int enemy_anim_handle = MV1LoadModel("data/model/enemy/zako/animation/Idle.mv1");
-	
-	//アニメーションのアタッチ
-	MV1AttachAnim(enemy_handle_, 0, enemy_anim_handle, FALSE);
-	
 	offset_timer_ = std::make_shared<VariableTimer>(2.f);
 	offset_timer_->Stop();
 	SoundManager::GetInstance().Play2DSound("title_bgm");
@@ -76,12 +58,12 @@ Title::Title()
 			Fade::GetInstance().StartFadeIn(1.f, FadeColorType::kBlack);
 			offset_timer_->ReStart();
 		};
+
 	start_button_ = std::make_shared<ButtonUI>(ConfigName::play, VectorAssistant::VGet2D(700.f, 650.f), 0.1f, start_function);
 	
 	player_controller_ = std::make_shared<TitlePlayerController>();
-
-	MV1DeleteModel(enemy_anim_handle);
-	Brain::GetInstance().CreateTitleSceneVirtualCamera(camera_->GetPos(),camera_->GetTargetPos());
+	enemy_controller_ = std::make_shared<TitleEnemyController>();
+	Brain::GetInstance().CreateTitleSceneVirtualCamera(camera_->GetPos(),camera_->GetTargetPos(),player_controller_);
 }
 
 Title::~Title()
@@ -89,8 +71,6 @@ Title::~Title()
 	SoundManager::GetInstance().Stop("title_bgm");
 	Brain::GetInstance().DeleteVirtualCamera();
 	DeleteGraph(title_logo_handle_);
-	MV1DeleteModel(player_handle_);
-	MV1DeleteModel(enemy_handle_);
 	//MV1DeleteModel(stage_handle_);
 	MV1DeleteModel(sky_dome_handle_);
 }
@@ -98,6 +78,7 @@ Title::~Title()
 void Title::Init()
 {
 	player_controller_->Init();
+	enemy_controller_->Init();
 }
 
 void Title::Update()
@@ -108,7 +89,7 @@ void Title::Update()
 	offset_timer_->Update();
 	
 	player_controller_->Update();
-
+	enemy_controller_->Update();
 	if (offset_timer_->GetIsEnd())
 	{
 		SceneManager::GetInstance().LoadScene("game");
@@ -118,6 +99,7 @@ void Title::Update()
 void Title::Draw()
 {
 	player_controller_->Draw();
+	enemy_controller_->Draw();
 	MV1DrawModel(enemy_handle_);
 	MV1DrawModel(sky_dome_handle_);
 	Draw2D::RotaGraph(VectorAssistant::VGet2D(static_cast<float>(kScreenWidth * 0.5f), 750.f), 0.7f, 0.f, title_logo_handle_, TRUE);
@@ -128,6 +110,7 @@ void Title::Draw()
 	if (Debug::GetInstance().GetIsDisp())
 	{
 		camera_->Debug();
+		player_controller_->Debug();
 	}
 
 }

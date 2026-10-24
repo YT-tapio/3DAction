@@ -2,6 +2,7 @@
 #include<sstream>
 #include<string>
 #include<unordered_map>
+#include<map>
 #include"DxLib.h"
 #include"animator_base.h"
 #include"animation_data.h"
@@ -46,6 +47,7 @@ void AnimatorBase::Init()
 
 void AnimatorBase::Update(std::shared_ptr<const Time> owner_time)
 {
+
 	// printfDx("%d\n", animation_datas_.size());
 	// もし次に続くアニメーションがあるなら
 	if (CheckNextAnimation())
@@ -134,7 +136,18 @@ void AnimatorBase::Update(std::shared_ptr<const Time> owner_time)
 
 void AnimatorBase::ChangeAnimation()
 {
+	std::map<int, std::string, std::greater<int>> request_name_priority_mp;
+	if (!request_names_.empty())
+	{
+		for (auto& request_name : request_names_)
+		{
+			int priority = animation_datas_[request_name].priority;
+			request_name_priority_mp[priority] = request_name;
+		}
+	}
 
+	// requestの中でもpriorityのたかいものを取る。
+	if (!request_name_priority_mp.empty()) { next_anim_name_ = request_name_priority_mp.begin()->second; }
 }
 
 void AnimatorBase::PlayRequest(std::string name)
@@ -143,7 +156,7 @@ void AnimatorBase::PlayRequest(std::string name)
 	for (auto& request_name : request_names_)
 	{
 		if (name == request_name) 
-		{ 
+		{
 			return;
 		}
 	}

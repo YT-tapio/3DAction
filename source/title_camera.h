@@ -5,7 +5,7 @@ class TitleCamera : public VirtualCameraBase
 {
 public:
 
-	TitleCamera(VECTOR* pos, VECTOR* target_pos);
+	TitleCamera(VECTOR* pos, VECTOR* target_pos, std::function<VECTOR()> get_head_pos);
 
 	~TitleCamera() override;
 
@@ -17,11 +17,11 @@ public:
 
 private:
 
-	void FirstUpdate();
+	void FirstPhaseUpdate();
 
-	void SecondUpdate();
+	void SecondPhaseUpdate();
 
-	void ThirdUpdate();
+	void ThirdPhaseUpdate();
 
 private:
 
@@ -32,7 +32,7 @@ private:
 		third
 	};
 
-
 	Phase phase_;
 
+	std::function<VECTOR()> get_head_pos_; // プレイヤーモデルの頭部座標
 };
