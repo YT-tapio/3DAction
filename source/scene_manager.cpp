@@ -147,5 +147,6 @@ SceneManager::SceneManager()
 	ButtonUIDatas::GetInstance().Awake();
 	//Fade::GetInstance().StartFadeOut(1.f);
 	scene_ = std::make_shared<Title>();
+	scene_->Init();
 	is_change_ = FALSE;
 }

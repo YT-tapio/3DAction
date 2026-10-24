@@ -5,7 +5,7 @@ class SkyDome;
 class ButtonUI;
 class VariableTimer;
 class Camera;
-
+class TitlePlayerController;
 
 class Title : public SceneBase
 {
@@ -28,6 +28,8 @@ private:
 	std::shared_ptr<Camera> camera_;
 	std::shared_ptr<ButtonUI> start_button_;
 	std::shared_ptr<VariableTimer> offset_timer_;
+
+	std::shared_ptr<TitlePlayerController> player_controller_;
 
 	int title_logo_handle_;
 	int player_handle_;

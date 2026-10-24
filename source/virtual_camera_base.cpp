@@ -52,3 +52,22 @@ VECTOR VirtualCameraBase::GetTargetVelocity()
 {
 	return target_vel_;
 }
+
+VECTOR VirtualCameraBase::GetPosFromYawPitch(const VECTOR& center_pos,const float& target_to_camera_dist_size, const float& yaw, const float& pitch)
+{
+	VECTOR target_to_camera_dist = VectorAssistant::VGetZero();
+	VECTOR future_pos = VectorAssistant::VGetZero();
+
+	// yawÇ∆pitchÇÃà íuÇèoÇµÇƒÇ›ÇÈ
+	float pitch_size = 0.f;
+
+	target_to_camera_dist.y = (cosf(yaw) * target_to_camera_dist_size);
+	pitch_size = (sinf(yaw) * target_to_camera_dist_size);
+
+	target_to_camera_dist.x = (cosf(pitch) * pitch_size);
+	target_to_camera_dist.z = (sinf(pitch) * pitch_size);
+
+	future_pos = VAdd(center_pos, target_to_camera_dist);
+
+	return future_pos;
+}

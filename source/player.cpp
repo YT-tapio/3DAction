@@ -58,6 +58,7 @@
 #include"shadow_creater_interface.h"
 #include"damage_ui_group_interface.h"
 #include"bullet.h"
+#include"model_repository.h"
 
 Player::Player(VECTOR* camera_dir,std::shared_ptr<InputBase> input,const std::string name, std::shared_ptr<IPlayerUIController> player_ui_group,std::shared_ptr<IShadowCreater> shadow_creater,std::shared_ptr<IDamageUIGroup> damage_ui_group)
 	: CharacterBase("player")
@@ -438,7 +439,7 @@ void Player::LoadFile(const char* file_path,const std::string my_name)
 		// モデルのパス
 		std::string path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
 		
-		handle_ = MV1LoadModel(path.c_str());
+		handle_ = ModelRepository::GetInstance().GetHandle(path.c_str());
 		//handle_ = -1;
 		if(handle_ == -1){ printfDx("player : モデル読み込みエラー\n"); }
 		VECTOR init_pos = VectorAssistant::VGetZero();

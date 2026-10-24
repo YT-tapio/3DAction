@@ -11,7 +11,6 @@ void Debug::Reset()
 void Debug::Update()
 {
 	//ここでデバッグの切り替え
-	is_push_ = FALSE;
 
 	if (CheckHitKey(KEY_INPUT_N))
 	{

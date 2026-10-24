@@ -29,8 +29,8 @@ private:
 
 private:
 
-	const float kYawRadMin = 0.f;
-	const float kYawRadMax = 80.f;
+	const float kYawRadMin = 20.f;
+	const float kYawRadMax = 170.f;
 
 	std::shared_ptr<const InputBase> input_;
 

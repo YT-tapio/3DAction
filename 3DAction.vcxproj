@@ -314,6 +314,8 @@
     <ClCompile Include="source\time.cpp" />
     <ClCompile Include="source\time_transition_method.cpp" />
     <ClCompile Include="source\title.cpp" />
+    <ClCompile Include="source\title_camera.cpp" />
+    <ClCompile Include="source\title_player_controller.cpp" />
     <ClCompile Include="source\tracking_camera.cpp" />
     <ClCompile Include="source\transform.cpp" />
     <ClCompile Include="source\image_data.cpp" />
@@ -430,6 +432,8 @@
     <ClInclude Include="source\enemy_summoner.h" />
     <ClInclude Include="source\summonable_interface.h" />
     <ClInclude Include="source\summon_enemy_group.h" />
+    <ClInclude Include="source\title_camera.h" />
+    <ClInclude Include="source\title_player_controller.h" />
     <ClInclude Include="source\won_camera.h" />
     <ClInclude Include="source\fade.h" />
     <ClInclude Include="source\fade_color_type.h" />

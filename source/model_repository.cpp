@@ -5,9 +5,10 @@
 
 void ModelRepository::Load()
 {
+	models_["player_attacker"] = MV1LoadModel("data/model/player/attacker/Lola_B_Styperek.mv1");
+	models_["player_healer"] = MV1LoadModel("data/model/player/healer/PeasantGirl2.mv1");
 	models_["zako"] = MV1LoadModel("data/model/enemy/zako/Demon_T_Wiezzorek.mv1");
 	models_["ball"] = MV1LoadModel("data/model/ball/ball.mv1");
-	
 	
 	for (const auto model : models_)
 	{

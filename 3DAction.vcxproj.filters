@@ -454,6 +454,9 @@
     <Filter Include="ソース ファイル\behavior\decide_attack_target_from_player">
       <UniqueIdentifier>{a2b23632-bf52-4f5d-b595-b33bdef32844}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\title_player_controller">
+      <UniqueIdentifier>{7609e576-4064-4818-9c69-9dccdba509c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -1097,6 +1100,12 @@
     </ClCompile>
     <ClCompile Include="source\debug_camera.cpp">
       <Filter>ソース ファイル\camera\virtual_camera</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title_camera.cpp">
+      <Filter>ソース ファイル\camera\virtual_camera</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title_player_controller.cpp">
+      <Filter>ソース ファイル\title_player_controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1873,6 +1882,12 @@
     </ClInclude>
     <ClInclude Include="source\debug_camera.h">
       <Filter>ソース ファイル\camera\virtual_camera</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title_camera.h">
+      <Filter>ソース ファイル\camera\virtual_camera</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title_player_controller.h">
+      <Filter>ソース ファイル\title_player_controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

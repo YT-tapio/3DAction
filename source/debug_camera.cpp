@@ -61,7 +61,7 @@ void DebugCamera::MoveTargetPos()
 	float yaw_value = ((RadianAssistant::kOneRad * input_value.y) * 2.5f);
 	
 	pitch_ += (pitch_value * FPS::GetInstance().GetDeltaTime());
-	yaw_ += (yaw_value * FPS::GetInstance().GetDeltaTime());
+	yaw_ -= (yaw_value * FPS::GetInstance().GetDeltaTime());
 
 	// yawÇÃêßå¿ÇÇ∑ÇÈ
 	yaw_ = MyMath::Clampf(yaw_, RadianAssistant::kOneRad * kYawRadMin, RadianAssistant::kOneRad * kYawRadMax);
@@ -76,10 +76,8 @@ void DebugCamera::MoveTargetPos()
 	target_to_camera_dist.z = (sinf(pitch_) * pitch_size);
 
 	future_pos_ = VAdd(*main_camera_pos_, target_to_camera_dist);
-	//future_pos_ = VectorAssistant::VGetZero();
-	next_pos = Lerp::DampV(*main_camera_pos_, future_pos_, 0.2f * FPS::GetInstance().GetDeltaTime() * FPS::GetInstance().GetTargetFPS());
 
-	target_vel_ = VAdd(target_vel_, VSub(next_pos, *main_camera_pos_));
+	target_vel_ = VAdd(target_vel_, VSub(future_pos_, *main_camera_target_pos_));
 }
 
 void DebugCamera::MoveCamera(const VECTOR& dir)
@@ -107,12 +105,18 @@ void DebugCamera::MoveCamera(const VECTOR& dir)
 		move_dir = dir;
 	}
 
-	if (CheckHitKey(KEY_INPUT_S)) 
+	if (CheckHitKey(KEY_INPUT_S))
 	{ 
 		move_dir = VectorAssistant::VGetReverce(dir);
 	}
 	
-	auto vel = VScale(move_dir, 0.3f * FPS::GetInstance().GetDeltaTime()* FPS::GetInstance().GetTargetFPS());
+	float speed = 0.1f;
+	if (CheckHitKey(KEY_INPUT_LSHIFT))
+	{
+		speed = 0.3f;
+	}
+
+	auto vel = VScale(move_dir, speed * FPS::GetInstance().GetDeltaTime()* FPS::GetInstance().GetTargetFPS());
 	target_vel_ = VAdd(target_vel_, vel);
 	vel_ = VAdd(vel_,vel);
 

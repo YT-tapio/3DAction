@@ -29,6 +29,13 @@ public:
 
 protected:
 
+	/// <summary>
+	/// center_pos‚©‚çyaw‚Æpitch‚©‚çÀ•W‚ğ’è‚ß‚é
+	/// </summary>
+	VECTOR GetPosFromYawPitch(const VECTOR& center_pos, const float& target_to_camera_dist_size, const float& yaw,const float& pitch);
+
+protected:
+
 	VECTOR* main_camera_pos_;							// ©•ª‚ÌˆÊ’u
 	VECTOR* main_camera_target_pos_;				// Œ©‚éˆÊ’u
 	VECTOR vel_;						// ©•ª‚ÌˆÚ“®—Ê
