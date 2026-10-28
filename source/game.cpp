@@ -112,7 +112,6 @@ void Game::Init()
 	Physics::GetInstance().Init();
 	EffectManager::GetInstance().Init();
 	player_group_->Init();
-	//enemy_group_->Init();
 	enemy_controller_->Init();
 	won_ui_->Init();
 	for (auto& obj : objects_)
