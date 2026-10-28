@@ -11,7 +11,7 @@ SceneBase::SceneBase()
 
 SceneBase::~SceneBase()
 {
-	Brain::GetInstance().DeleteVirtualCamera();
+	
 }
 
 void SceneBase::Init()

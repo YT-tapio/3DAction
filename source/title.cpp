@@ -44,13 +44,9 @@ Title::Title()
 		printfDx("ƒ‚ƒfƒ‹“Ç‚İ‚İƒGƒ‰[\n");
 	}
 	
-	//MV1SetScale(stage_handle_, VectorAssistant::VGetSame(0.3f));
-	//MV1SetPosition(stage_handle_, VGet(0,0,0));
-
 	MV1SetScale(sky_dome_handle_, VectorAssistant::VGetSame(200.f));
 	MV1SetPosition(sky_dome_handle_, VGet(0, 0, 0));
 
-	
 	offset_timer_ = std::make_shared<VariableTimer>(2.f);
 	offset_timer_->Stop();
 	SoundManager::GetInstance().Play2DSound("title_bgm");
@@ -68,9 +64,9 @@ Title::Title()
 	player_controller_->Awake();
 	enemy_controller_ = std::make_shared<TitleEnemyController>();
 	enemy_controller_->Awake();
+	//Brain::GetInstance().Init();
 	Brain::GetInstance().CreateTitleSceneVirtualCamera(camera_->GetPos(),camera_->GetTargetPos(),player_controller_);
 	is_stop_ = FALSE;
-
 }
 
 Title::~Title()

@@ -28,7 +28,6 @@ void Brain::Init()
 
 void Brain::CreateTitleSceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos,std::shared_ptr<TitlePlayerController> player_controller)
 {
-
 	auto get_head_pos = [player_controller]() -> VECTOR
 		{
 			return player_controller->GetHeadPos();
@@ -49,7 +48,7 @@ void Brain::CreateTitleSceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos
 	}
 
 	current_camera_ = "title_first_camera";
-	before_camera_ = current_camera_;
+	before_camera_ = "title_first_camera";
 }
 
 void Brain::CreatePlaySceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos,std::shared_ptr<IEnemyController> enemy_controller,std::shared_ptr<PlayerGroup> player_group)
@@ -82,14 +81,14 @@ void Brain::Update()
 	}
 	else
 	{
-		// カメラのupdateと切り替え
-		// 切り替え
-		// 現在のシーンを見て切り替えのチェンジ
-		// VirtualCameraのupdate
-		virtual_cameras_[current_camera_]->Update();
+		if (current_camera_ != "nothing")
+		{
+			// VirtualCameraのupdate
+			virtual_cameras_[current_camera_]->Update();
 
-		vel_ = virtual_cameras_[current_camera_]->GetVelocity();
-		target_vel_ = virtual_cameras_[current_camera_]->GetTargetVelocity();
+			vel_ = virtual_cameras_[current_camera_]->GetVelocity();
+			target_vel_ = virtual_cameras_[current_camera_]->GetTargetVelocity();
+		}
 	}
 
 
@@ -111,6 +110,8 @@ void Brain::DeleteVirtualCamera()
 {
 	virtual_cameras_.clear();
 	camera_names_.clear();
+	//current_camera_ = "nothing";
+	//before_camera_ = "nothing";
 }
 
 void Brain::ChangeCamera(const std::string& request_name)

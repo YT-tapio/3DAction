@@ -103,6 +103,7 @@ Game::~Game()
 	no_shadow_objects_.clear();
 	Physics::GetInstance().End();
 	SoundManager::GetInstance().AllStop();
+	Brain::GetInstance().DeleteVirtualCamera();
 }
 
 void Game::Init()
@@ -125,6 +126,7 @@ void Game::Init()
 	}
 
 	player_ui_controller_ ->Init();
+	//Brain::GetInstance().Init();
 	Brain::GetInstance().CreatePlaySceneVirtualCamera(camera_->GetPos(), camera_->GetTargetPos(), enemy_controller_,player_group_);
 	damage_ui_group_->Init();
 	camera_->Init();

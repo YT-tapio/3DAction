@@ -22,6 +22,8 @@
 #include"attack_type.h"
 #include"sound_manager.h"
 #include"attack_Info_holder.h"
+#include"effect_id.h"
+#include"effect_manager.h"
 
 ApproachAndAttack::ApproachAndAttack(std::weak_ptr<ObjectBase> owner, const float& min_coll_ratio, const float& max_coll_ratio, const float& damage_rate, 
 	const std::string& my_anim_name, const float approach_timing, const float approach_speed,const std::string& collider_tag)
@@ -94,7 +96,19 @@ BehaviorStatus ApproachAndAttack::Update()
 				auto attack_info = attack_info_holder->GetAttackInfo();
 				attack_info.phase = AttackPhase::kDodgeTiming;
 				attack_info_holder->SetAttackInfo(attack_info);
+				// エフェクトを発生
+				EffectManager::GetInstance().Play(EffectID::kAttackTiming);
+				auto effect_pos = VAdd(owner->GetPosition(), VGet(0.f, 10.f, 0.f));
+
+				EffectManager::GetInstance().SetPos(EffectID::kAttackTiming, effect_pos);
 			}
+
+			if (anim_ratio > (approach_timing_ - 0.1f))
+			{
+				
+			}
+
+
 		}
 	}
 	
