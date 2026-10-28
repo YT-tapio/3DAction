@@ -78,7 +78,7 @@ void Camera::Debug()
 	
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "-----pos-----", Color::kWhite);
 	Debug::GetInstance().Add();
-	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "x : %.2f,y : %.2f,z : %.2f", pos_.x, pos_.y, pos_.z);
+	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kRed, "x : %.2f,y : %.2f,z : %.2f", pos_.x, pos_.y, pos_.z);
 	Debug::GetInstance().Add();
 
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "-----target_pos-----", Color::kWhite);
@@ -87,7 +87,12 @@ void Camera::Debug()
 
 	DrawString(0, Debug::GetInstance().GetNowLineSize(), "-----dir-----", Color::kWhite);
 	Debug::GetInstance().Add();
-	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kWhite, "x : %.2f,y : %.2f,z : %.2f", dir_.x, dir_.y, dir_.z);
+	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kRed, "x : %.2f,y : %.2f,z : %.2f", dir_.x, dir_.y, dir_.z);
+	Debug::GetInstance().Add();
+
+	DrawString(0, Debug::GetInstance().GetNowLineSize(), "-----fov-----", Color::kWhite);
+	Debug::GetInstance().Add();
+	DrawFormatString(0, Debug::GetInstance().GetNowLineSize(), Color::kRed, "fov : %.2f", fov_);
 	Debug::GetInstance().Add();
 }
 
@@ -97,13 +102,16 @@ void Camera::Setting()
 	{
 		pos_ = VAdd(pos_, vel_);
 	}
+	auto offset_vel = Brain::GetInstance().GetOffsetVelocity();
 	target_pos_ = VAdd(target_pos_, target_vel_);
-
+	
 	SetCameraNearFar(near_, far_);
 	auto fov = RadianAssistant::TheNumRadian(fov_);
 	SetupCamera_Perspective(fov);
 	//printfDx("fov:%.2f\n",fov_);
-	SetCameraPositionAndTarget_UpVecY(pos_, target_pos_);
+	auto offset_pos = VAdd(pos_, offset_vel);
+	auto offset_target_pos = VAdd(target_pos_, offset_vel);
+	SetCameraPositionAndTarget_UpVecY(offset_pos, offset_target_pos);
 	Effekseer_Sync3DSetting();
 	dir_ = VectorAssistant::VGetDir(pos_, target_pos_);
 }

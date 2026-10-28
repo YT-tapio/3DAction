@@ -7,9 +7,9 @@
 ConditionTimer::ConditionTimer(float max_time)
 	: is_stop_(FALSE)
 	, is_end_(FALSE)
+	, is_end_current_frame_(FALSE)
 	, max_time_(max_time)
 	, time_(0.f)
-
 {
 
 }
@@ -28,10 +28,16 @@ void ConditionTimer::Init()
 
 void ConditionTimer::Update()
 {
+	is_end_current_frame_ = FALSE;
 	if (is_stop_)	{ return; }
 	if (is_end_)	{ return; }
 	time_ += FPS::GetInstance().GetDeltaTime();
-	if (time_ > max_time_) { time_ = max_time_; is_end_ = TRUE; }
+	if (time_ > max_time_)
+	{ 
+		time_ = max_time_; 
+		is_end_ = TRUE;
+		is_end_current_frame_ = TRUE;
+	}
 }
 
 void ConditionTimer::Stop()
@@ -49,6 +55,7 @@ void ConditionTimer::ReStart()
 {
 	is_stop_ = FALSE;
 	is_end_  = FALSE;
+	is_end_current_frame_ = FALSE;
 	time_	 = 0.f;
 }
 
@@ -83,5 +90,10 @@ const bool ConditionTimer::GetIsStop() const
 const bool ConditionTimer::GetIsEnd() const
 {
 	return is_end_;
+}
+
+const bool ConditionTimer::GetIsEndCurrentFrame() const
+{
+	return is_end_current_frame_;
 }
 

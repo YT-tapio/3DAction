@@ -555,7 +555,6 @@ void Player::Move()
 		is_dash_ = FALSE;
 	}
 	
-	
 	vel_ = VScale(vel_, time_->GetFPSRate());
 	vel_ = VAdd(vel_, VGet(0.f, -fall_speed_, 0.f));
 	

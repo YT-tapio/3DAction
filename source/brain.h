@@ -45,10 +45,11 @@ public:
 	void ShakeCamera(const float& power, const float& time);
 
 	/// <summary>
-	/// 
+	/// ズームする
 	/// </summary>
 	/// <param name="target_fov">目標の視野角</param>
-	/// <param name="time">時間</param>
+	/// <param name="time">ズームに移る際の時間</param>
+	/// <param name="active_time">ズームの時間</param>
 	void ZoomCamera(const float& target_fov, const float& time, const float& active_time);
 
 	void CollisionNotActive();
@@ -66,6 +67,8 @@ public:
 	const std::string GetCurrentCameraName() const;
 
 	const VECTOR GetVelocity() const;
+
+	const VECTOR GetOffsetVelocity() const;
 
 	const VECTOR GetTargetVelocity() const;
 

@@ -28,6 +28,9 @@
 #include"title_player_controller.h"
 #include"title_enemy_controller.h"
 
+#include<unordered_map>
+#include"physics.h"
+
 Title::Title()
 	: SceneBase()
 {
@@ -62,12 +65,17 @@ Title::Title()
 	start_button_ = std::make_shared<ButtonUI>(ConfigName::play, VectorAssistant::VGet2D(700.f, 650.f), 0.1f, start_function);
 	
 	player_controller_ = std::make_shared<TitlePlayerController>();
+	player_controller_->Awake();
 	enemy_controller_ = std::make_shared<TitleEnemyController>();
+	enemy_controller_->Awake();
 	Brain::GetInstance().CreateTitleSceneVirtualCamera(camera_->GetPos(),camera_->GetTargetPos(),player_controller_);
+	is_stop_ = FALSE;
+
 }
 
 Title::~Title()
 {
+	Physics::GetInstance().End();
 	SoundManager::GetInstance().Stop("title_bgm");
 	Brain::GetInstance().DeleteVirtualCamera();
 	DeleteGraph(title_logo_handle_);
@@ -77,19 +85,46 @@ Title::~Title()
 
 void Title::Init()
 {
+	Physics::GetInstance().Init();
 	player_controller_->Init();
 	enemy_controller_->Init();
 }
 
 void Title::Update()
 {
+	if (CheckHitKey(KEY_INPUT_8))
+	{
+		ReStart();
+		is_stop_ = FALSE;
+	}
+
+	if (CheckHitKey(KEY_INPUT_9))
+	{
+		Brain::GetInstance().ChangeCamera("title_camera");
+		is_stop_ = FALSE;
+	}
+
+	if (CheckHitKey(KEY_INPUT_0))
+	{
+		Brain::GetInstance().ChangeCamera("debug_camera");
+		is_stop_ = TRUE;
+	}
+
 	Brain::GetInstance().Update();
 	camera_->Update();
 	start_button_->Update();
 	offset_timer_->Update();
+	if (!is_stop_)
+	{
+		player_controller_->Update();
+		enemy_controller_->Update();
+
+		Physics::GetInstance().Update();
+
+		player_controller_->LateUpdate();
+		enemy_controller_->LateUpdate();
+	}
 	
-	player_controller_->Update();
-	enemy_controller_->Update();
 	if (offset_timer_->GetIsEnd())
 	{
 		SceneManager::GetInstance().LoadScene("game");
@@ -111,6 +146,7 @@ void Title::Draw()
 	{
 		camera_->Debug();
 		player_controller_->Debug();
+		enemy_controller_->Debug();
 	}
 
 }
@@ -118,4 +154,10 @@ void Title::Draw()
 const std::string Title::GetName() const
 {
 	return "title";
+}
+
+void Title::ReStart()
+{
+	player_controller_->Init();
+	enemy_controller_->Init();
 }

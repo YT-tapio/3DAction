@@ -52,7 +52,7 @@ void Shake::Active(const float& power, const float& time)
 
 const VECTOR Shake::GetShakeVel() const
 {
-	return shake_vel_;
+	return is_active_ ? shake_vel_ : VectorAssistant::VGetZero();
 }
 
 const VECTOR Shake::GetRandomShakeVel() const

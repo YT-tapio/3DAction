@@ -67,6 +67,8 @@ public:
 	/// <returns>タイマーがマックスまで達しているか</returns>
 	const bool GetIsEnd() const;
 
+	const bool GetIsEndCurrentFrame() const;
+
 protected:
 
 	float max_time_;
@@ -74,6 +76,7 @@ protected:
 
 	bool is_stop_;
 	bool is_end_;
+	bool is_end_current_frame_;
 
 private:
 

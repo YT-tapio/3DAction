@@ -36,7 +36,7 @@ void Debug::Add()
 void Debug::DrawVector(const VECTOR& vec)
 {
 	int now_line_num = num_ * kLineSize;
-	DrawFormatString(0, now_line_num, Color::kWhite, "x : %.2f, y : %.2f, z : %.2f", vec.x, vec.y, vec.z);
+	DrawFormatString(0, now_line_num, Color::kRed, "x : %.2f, y : %.2f, z : %.2f", vec.x, vec.y, vec.z);
 	Add();
 }
 

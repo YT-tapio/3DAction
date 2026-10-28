@@ -1,2 +1,6 @@
 ﻿name,file_path,anim_index,play_speed,priority,loop,cancel_time,next_anim_name
 tackle,data/model/enemy/zako/animation/tackle.mv1,0,1,1,1,0,nothing
+idle,data/model/enemy/zako/animation/title/idle.mv1,0,0.5,2,1,0,nothing
+turn,data/model/enemy/zako/animation/title/left_turn.mv1,0,0.5,3,0,0,nothing
+taunt,data/model/enemy/zako/animation/title/taunt.mv1,0,0.3,4,0,0,nothing
+punch,data/model/enemy/zako/animation/title/uppercut.mv1,0,0.4,5,0,0,nothing

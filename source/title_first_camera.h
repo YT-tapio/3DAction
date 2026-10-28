@@ -1,13 +1,13 @@
 #pragma once
 #include"virtual_camera_base.h"
 
-class TitleCamera : public VirtualCameraBase
+class TitleFirstCamera : public VirtualCameraBase
 {
 public:
 
-	TitleCamera(VECTOR* pos, VECTOR* target_pos, std::function<VECTOR()> get_head_pos);
+	TitleFirstCamera(VECTOR* pos, VECTOR* target_pos, std::function<VECTOR()> get_head_pos);
 
-	~TitleCamera() override;
+	~TitleFirstCamera() override;
 
 	void Awake() override;
 
@@ -16,12 +16,6 @@ public:
 	void Update() override;
 
 private:
-
-	void FirstPhaseUpdate();
-
-	void SecondPhaseUpdate();
-
-	void ThirdPhaseUpdate();
 
 private:
 

@@ -11,8 +11,13 @@
 #include"enemy_lock_on_camera.h"
 #include"shake.h"
 #include"zoom.h"
+
 #include"debug_camera.h"
-#include"title_camera.h"
+#include"title_first_camera.h"
+#include"title_second_camera.h"
+#include"fixed_camera.h"
+#include"title_six_camera.h"
+
 #include"title_player_controller.h"
 
 void Brain::Init()
@@ -30,13 +35,20 @@ void Brain::CreateTitleSceneVirtualCamera(VECTOR* camera_pos, VECTOR* target_pos
 		};
 
 	virtual_cameras_["debug_camera"] = std::make_shared<DebugCamera>(camera_pos,target_pos);
-	virtual_cameras_["title_camera"] = std::make_shared<TitleCamera>(camera_pos,target_pos,get_head_pos);
+	virtual_cameras_["title_first_camera"] = std::make_shared<TitleFirstCamera>(camera_pos,target_pos,get_head_pos);
+	virtual_cameras_["title_second_camera"] = std::make_shared<TitleSecondCamera>(camera_pos, target_pos);
+	virtual_cameras_["title_third_camera"] = std::make_shared<FixedCamera>(camera_pos, target_pos, VGet(-10.36f, 2.3f, 7.3f), VGet(-22.6f, 0.43f, -1.7f),MoveTransitionMethod::kMoment);
+	const float kTime = 1.5f;
+	virtual_cameras_["title_fourth_camera"] = std::make_shared<FixedCamera>(camera_pos, target_pos, VGet(-27.1f, -1.31f, -31.6f), VGet(-27.5f, -0.7f, -55.2f), MoveTransitionMethod::kTimeLerp,kTime);
+	virtual_cameras_["title_fifth_camera"] = std::make_shared<FixedCamera>(camera_pos, target_pos, VGet(-27.1f, -2.f, -10.1f), VGet(-26.5f, -0.25f, 2.8f), MoveTransitionMethod::kTimeLerp, kTime);
+	virtual_cameras_["title_six_camera"] = std::make_shared<TitleSixCamera>(camera_pos, target_pos);
 	for (auto& virtual_camera : virtual_cameras_)
 	{
 		camera_names_.push_back(virtual_camera.first);
 		virtual_camera.second->Awake();
 	}
-	current_camera_ = "debug_camera";
+
+	current_camera_ = "title_first_camera";
 	before_camera_ = current_camera_;
 }
 
@@ -79,6 +91,7 @@ void Brain::Update()
 		vel_ = virtual_cameras_[current_camera_]->GetVelocity();
 		target_vel_ = virtual_cameras_[current_camera_]->GetTargetVelocity();
 	}
+
 
 	if (shake_ != nullptr)
 	{
@@ -157,12 +170,17 @@ const std::string Brain::GetCurrentCameraName() const
 
 const VECTOR Brain::GetVelocity() const
 {
-	return VAdd(vel_,shake_->GetShakeVel());
+	return vel_;
+}
+
+const VECTOR Brain::GetOffsetVelocity() const
+{
+	return shake_->GetShakeVel();
 }
 
 const VECTOR Brain::GetTargetVelocity() const
 {
-	return VAdd(target_vel_, shake_->GetShakeVel());
+	return target_vel_;
 }
 
 Brain::Brain()

@@ -26,6 +26,10 @@ public:
 
 private:
 
+	void ReStart();
+
+private:
+
 	std::shared_ptr<Camera> camera_;
 	std::shared_ptr<ButtonUI> start_button_;
 	std::shared_ptr<VariableTimer> offset_timer_;
@@ -40,4 +44,5 @@ private:
 	int sky_dome_handle_;
 
 	bool is_push_;
+	bool is_stop_;
 };

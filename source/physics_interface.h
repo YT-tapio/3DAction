@@ -43,7 +43,7 @@ public:
 	virtual std::shared_ptr<RigidBody> GetRigidBody();
 
 	/// <summary>
-	/// プレイヤーのdelta_timeを取得する
+	/// オブジェクトのdelta_timeを取得する
 	/// </summary>
 	virtual const float GetDeltaTime() const;
 };
