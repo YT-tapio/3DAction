@@ -1,5 +1,7 @@
 #pragma once
 
+class ConditionTimer;
+
 class LogoController
 {
 public:
@@ -7,6 +9,8 @@ public:
 	LogoController();
 
 	~LogoController();
+
+	void Awake();
 
 	void Init();
 
@@ -18,8 +22,17 @@ public:
 
 private:
 
-	int handle_;
+	const float kTargetSize = 0.7f;
 
+	std::shared_ptr<ConditionTimer> size_up_timer_;
+
+	VECTOR pos_;
+
+
+	int handle_;
+	float size_;
+
+	bool is_active_;
 
 
 };

@@ -7,6 +7,7 @@ class VariableTimer;
 class Camera;
 class TitlePlayerController;
 class TitleEnemyController;
+class LogoController;
 
 class Title : public SceneBase
 {
@@ -36,6 +37,8 @@ private:
 
 	std::shared_ptr<TitlePlayerController> player_controller_;
 	std::shared_ptr<TitleEnemyController> enemy_controller_;
+	std::shared_ptr<LogoController> logo_controller_;
+
 
 	int title_logo_handle_;
 	int player_handle_;

@@ -3,6 +3,7 @@
 #include"DxLib.h"
 #include"title.h"
 #include"scene_manager.h"
+#include<unordered_map>
 #include"physics.h"
 #include"input_manager.h"
 #include"input_base.h"
@@ -27,9 +28,8 @@
 #include"debug.h"
 #include"title_player_controller.h"
 #include"title_enemy_controller.h"
+#include"logo_controller.h"
 
-#include<unordered_map>
-#include"physics.h"
 
 Title::Title()
 	: SceneBase()
@@ -43,6 +43,10 @@ Title::Title()
 	{
 		printfDx("モデル読み込みエラー\n");
 	}
+	
+	MV1SetScale(stage_handle_, VectorAssistant::VGetSame(0.3f));
+	auto stage_pos = VGet(0.f, -12.f, 0.f);
+	MV1SetPosition(stage_handle_, stage_pos);
 	
 	MV1SetScale(sky_dome_handle_, VectorAssistant::VGetSame(200.f));
 	MV1SetPosition(sky_dome_handle_, VGet(0, 0, 0));
@@ -64,7 +68,8 @@ Title::Title()
 	player_controller_->Awake();
 	enemy_controller_ = std::make_shared<TitleEnemyController>();
 	enemy_controller_->Awake();
-	//Brain::GetInstance().Init();
+	logo_controller_ = std::make_shared<LogoController>();
+	logo_controller_->Awake();
 	Brain::GetInstance().CreateTitleSceneVirtualCamera(camera_->GetPos(),camera_->GetTargetPos(),player_controller_);
 	is_stop_ = FALSE;
 }
@@ -75,7 +80,7 @@ Title::~Title()
 	SoundManager::GetInstance().Stop("title_bgm");
 	Brain::GetInstance().DeleteVirtualCamera();
 	DeleteGraph(title_logo_handle_);
-	//MV1DeleteModel(stage_handle_);
+	MV1DeleteModel(stage_handle_);
 	MV1DeleteModel(sky_dome_handle_);
 }
 
@@ -114,6 +119,7 @@ void Title::Update()
 	{
 		player_controller_->Update();
 		enemy_controller_->Update();
+		logo_controller_->Update();
 
 		Physics::GetInstance().Update();
 
@@ -132,12 +138,14 @@ void Title::Draw()
 	player_controller_->Draw();
 	enemy_controller_->Draw();
 	MV1DrawModel(enemy_handle_);
+	SetUseLighting(FALSE);
+	MV1DrawModel(stage_handle_);
 	MV1DrawModel(sky_dome_handle_);
-	Draw2D::RotaGraph(VectorAssistant::VGet2D(static_cast<float>(kScreenWidth * 0.5f), 750.f), 0.7f, 0.f, title_logo_handle_, TRUE);
+	SetUseLighting(TRUE);
 	
-	DrawString(700, 400, "Aボタン、スペースを押してゲームスタート", GetColor(255, 0, 0));
-	start_button_->Draw();
-
+	//logo_controller_->Draw();
+	//Draw2D::RotaGraph(VectorAssistant::VGet2D(static_cast<float>(kScreenWidth * 0.5f), 750.f), 0.7f, 0.f, title_logo_handle_, TRUE);
+	
 	if (Debug::GetInstance().GetIsDisp())
 	{
 		camera_->Debug();
