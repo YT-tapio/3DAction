@@ -80,7 +80,7 @@ void PlayerUIGroup::MakeUI(std::function<int()> get_base_hp, std::function<int()
 	}
 	else
 	{
-		player_name_ = std::make_shared<CharacterNameUI>("data/csv/ui/player/" + name + "/" + name + "_name_data.csv", "No name");
+		player_name_ = std::make_shared<CharacterNameUI>("data/csv/ui/player/" + name + "/" + name + "_name_data.csv", "ƒWƒŠƒX");
 	}
 	stat_modifire_ui_group_ = std::make_shared<StatModifireUIGroup>("data/csv/ui/stat_modifire/stat_modifire.csv");
 }

@@ -163,7 +163,6 @@ void MinionBase::Summon(const VECTOR& pos)
 	is_active_ = TRUE;
 	pos_ = pos;
 	rigid_body_->Active();
-
 }
 
 void MinionBase::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)

@@ -18,6 +18,8 @@
 
 #include"condition_timer.h"
 #include"variable_timer.h"
+#include"effect_id.h"
+#include"effect_manager.h"
 
 TitlePlayerController::TitlePlayerController()
 	: pos_(VGet(0.f, -8.5f, 0.f))
@@ -31,6 +33,7 @@ TitlePlayerController::TitlePlayerController()
 	animator_ = std::make_shared<AnimatorBase>("title/player", model_handle_);
 	time_ = std::make_shared<Time>();
 	offset_timer_ = std::make_shared<VariableTimer>(0.3f);
+	is_play_effect_ = FALSE;
 	Setting();
 }
 
@@ -59,6 +62,7 @@ void TitlePlayerController::Init()
 	animator_->PlayRequest("walking");
 	offset_timer_->Init();
 	offset_timer_->ChangeMaxTime(0.3f);
+	is_play_effect_ = FALSE;
 }
 
 void TitlePlayerController::Update()
@@ -242,6 +246,10 @@ void TitlePlayerController::SixPhaseUpdate()
 	if (animator_->GetRatio("flying_punch") > 0.48f)
 	{
 		animator_->Stop();
+		if (!is_play_effect_)
+		{
+			is_play_effect_ = TRUE;
+		}
 	}
 }
 

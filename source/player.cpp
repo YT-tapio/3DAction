@@ -689,6 +689,15 @@ void Player::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 	if (target_tag == "stamp" || target_tag == "combo_attack1")
 	{
 		if (is_invincible_) { return; }
+
+		if (target_tag == "stamp")
+		{
+			if (!rigid_body_->GetOnGround())
+			{
+				return;
+			}
+		}
+
 		animator_->PlayRequest("on_damage");
 		can_move_ = FALSE;
 		return;

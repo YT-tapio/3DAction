@@ -139,6 +139,7 @@ void Stamp::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 	// オーナーが何者かを判別
 	if (owner_tag == "enemy")
 	{
+		if (!object->GetRigidBody()->GetOnGround()) { return; }
 		//playerからダメージを受ける対象に変換
 		if (auto takable_enemy = std::dynamic_pointer_cast<ITakableDamageEnemy>(object))
 		{

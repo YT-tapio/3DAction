@@ -48,6 +48,7 @@
 #include"damage_ui_group_interface.h"
 #include"enemy_group.h"
 #include"enemy_controller.h"
+#include"input_control_ui.h"
 
 Game::Game()
 	: SceneBase()
@@ -66,8 +67,8 @@ Game::Game()
 	InputManager::GetInstance().SetPlayerGroup(player_group_);
 	enemy_controller_ = std::make_shared<EnemyController>(&game_start_, shadow_circle_controller_, enemy_ui_group_,
 		damage_ui_group_, player_group_, attack_range_group_);
-
-	
+	input_control_ui_ = std::make_shared<InputControlUI>();
+	input_control_ui_->Awake();
 	won_ui_ = std::make_shared<WonUI>();
 	lose_ui_ = std::make_shared<LoseUI>();
 	game_to_next_scene_ = std::make_shared<GameToNextScene>();
@@ -128,6 +129,7 @@ void Game::Init()
 	//Brain::GetInstance().Init();
 	Brain::GetInstance().CreatePlaySceneVirtualCamera(camera_->GetPos(), camera_->GetTargetPos(), enemy_controller_,player_group_);
 	damage_ui_group_->Init();
+	input_control_ui_->Init();
 	camera_->Init();
 	shadow_map_->Init();
 	game_start_timer_->Init();
@@ -149,7 +151,7 @@ void Game::Update()
 
 	if (InputManager::GetInstance().GetMainPlayerInput()->GoResult())
 	{
-		if (SceneManager::GetInstance().LoadScene("title")) { return; }
+		//if (SceneManager::GetInstance().LoadScene("title")) { return; }
 	}
 
 	player_group_->Update();
@@ -187,6 +189,7 @@ void Game::Update()
 	lose_ui_->Update();
 	enemy_ui_group_->Update();
 	damage_ui_group_->Update();
+	input_control_ui_->Update();
 	EffectManager::GetInstance().Update();
 	attack_range_group_->Update();
 	shadow_circle_controller_->Update();
@@ -246,6 +249,7 @@ void Game::Draw()
 	damage_ui_group_->Draw();
 	won_ui_->Draw();
 	lose_ui_->Draw();
+	input_control_ui_->Draw();
 
 	if (Debug::GetInstance().GetIsDisp())
 	{

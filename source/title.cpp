@@ -29,7 +29,7 @@
 #include"title_player_controller.h"
 #include"title_enemy_controller.h"
 #include"logo_controller.h"
-
+#include"start_guide.h"
 
 Title::Title()
 	: SceneBase()
@@ -70,6 +70,8 @@ Title::Title()
 	enemy_controller_->Awake();
 	logo_controller_ = std::make_shared<LogoController>();
 	logo_controller_->Awake();
+	start_ui_ = std::make_shared<StartGuide>();
+	start_ui_->Awake();
 	Brain::GetInstance().CreateTitleSceneVirtualCamera(camera_->GetPos(),camera_->GetTargetPos(),player_controller_);
 	is_stop_ = FALSE;
 }
@@ -110,11 +112,12 @@ void Title::Update()
 		Brain::GetInstance().ChangeCamera("debug_camera");
 		is_stop_ = TRUE;
 	}
-
+	
 	Brain::GetInstance().Update();
 	camera_->Update();
 	start_button_->Update();
 	offset_timer_->Update();
+	start_ui_->Update();
 	if (!is_stop_)
 	{
 		player_controller_->Update();
@@ -143,7 +146,8 @@ void Title::Draw()
 	MV1DrawModel(sky_dome_handle_);
 	SetUseLighting(TRUE);
 	
-	//logo_controller_->Draw();
+	logo_controller_->Draw();
+	start_ui_->Draw();
 	//Draw2D::RotaGraph(VectorAssistant::VGet2D(static_cast<float>(kScreenWidth * 0.5f), 750.f), 0.7f, 0.f, title_logo_handle_, TRUE);
 	
 	if (Debug::GetInstance().GetIsDisp())

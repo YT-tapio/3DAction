@@ -82,4 +82,6 @@ private:
 
 	int model_handle_;
 
+	bool is_play_effect_;
+
 };

@@ -3,3 +3,5 @@ a_button,data/ui/input/pad/button_xbox_digital_a_1.png
 b_button,data/ui/input/pad/button_xbox_digital_b_1.png
 x_button,data/ui/input/pad/button_xbox_digital_x_1.png
 y_button,data/ui/input/pad/button_xbox_digital_y_1.png
+right_button,data/ui/input/pad/button_xbox_digital_bumper_light_2.png
+left_button,data/ui/input/pad/button_xbox_digital_bumper_light_1.png

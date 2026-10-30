@@ -185,6 +185,8 @@ void EnemyBase::UnGround()
 
 void EnemyBase::OnDamageFromPlayer(float damage,AttackType type, const bool is_critical)
 {
+	if (!is_active_) { return; }
+
 	auto final_damage = status_container_->TakeDamage(damage,type);
 	for (auto& observer : observers_)
 	{

@@ -184,7 +184,7 @@ void WonUI::DrawMostTakeDamageEnemy()
 	Draw2D::StringToHandle(VAdd(base_pos_, most_damage_pos_), "最大ダメージ", most_damage_font_.body_color, most_damage_font_.handle, most_damage_font_.edge_color);
 	//Draw2D::StringToHandle(VAdd(VAdd(base_pos_, most_damage_pos_), offset_), "最大ダメージ", most_damage_font_.body_color, most_damage_font_.handle, most_damage_font_.edge_color);
 	
-	auto offset_num_pos = VAdd(VAdd(base_pos_, most_damage_pos_), offset_);
+	auto offset_num_pos = VAdd(VAdd(base_pos_, most_damage_pos_), VAdd(offset_,VGet(-80.f,0.f,0.f)));
 
 	Draw2D::ExtendFormatStringToHandleEdge(offset_num_pos, 3.f, 3.f, "%d", most_damage_font_.body_color, most_damage_font_.edge_color, most_damage_font_.handle, static_cast<int>(enemy_take_most_damage_));
 	//Draw2D::FormatStringToHandle(VAdd(VAdd(base_pos_, most_damage_pos_), offset_), "%d", most_damage_font_.body_color, most_damage_font_.handle, static_cast<int>(enemy_take_most_damage_), most_damage_font_.edge_color);

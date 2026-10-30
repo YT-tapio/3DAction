@@ -16,4 +16,8 @@ namespace EffectID
 	static const int kHealerJastAvoid = kAttackerJastAvoid + 1;
 	static const int kDefenderJastAvoid = kAttackerJastAvoid + 2;
 	static const int kAttackTiming = 13;
+	static const int kTitleEffect = 14;
+	static const int kTitleEffect2 = 15;
+	static const int kTitleEffect3 = 16;
+	static const int kTitleEffect4 = 17;
 }
