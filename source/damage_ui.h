@@ -27,9 +27,10 @@ public:
 
 	const bool GetIsActive() const;
 
-	const void DrawUI() const;
-
 private:
+
+
+	const void DrawUI() const;
 
 	VECTOR RandomSpawnPos(const VECTOR& pos);
 

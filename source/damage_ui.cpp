@@ -139,7 +139,6 @@ VECTOR DamageUI::RandomSpawnPos(const VECTOR& pos)
 	int random_width = GetUniformRandom(-10, 10);
 	int random_height = -GetUniformRandom(-3, 0);
 	random_pos = VAdd(pos, VectorAssistant::VGet2D(random_width, random_height));
-	// printfDx("xÅF%.2f,yÅF%.2f\n", random_pos.x, random_pos.y);
 	return random_pos;
 }
 

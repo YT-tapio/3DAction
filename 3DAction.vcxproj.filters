@@ -505,6 +505,9 @@
     <Filter Include="ソース ファイル\ui\string_ui\start">
       <UniqueIdentifier>{808e2574-4644-4e36-a197-9ca4e89f88bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ui\popup_ui">
+      <UniqueIdentifier>{091c4e80-6866-45a0-a151-5bd0feb187c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -1196,6 +1199,12 @@
     </ClCompile>
     <ClCompile Include="source\start_string_ui.cpp">
       <Filter>ソース ファイル\ui\string_ui\start</Filter>
+    </ClCompile>
+    <ClCompile Include="source\popup_ui.cpp">
+      <Filter>ソース ファイル\ui\popup_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\number_popup_ui.cpp">
+      <Filter>ソース ファイル\ui\popup_ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2023,6 +2032,12 @@
     </ClInclude>
     <ClInclude Include="source\start_string_ui.h">
       <Filter>ソース ファイル\ui\string_ui\start</Filter>
+    </ClInclude>
+    <ClInclude Include="source\popup_ui.h">
+      <Filter>ソース ファイル\ui\popup_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\number_popup_ui.h">
+      <Filter>ソース ファイル\ui\popup_ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
