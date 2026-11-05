@@ -11,13 +11,14 @@
 #include"lerp.h"
 #include"time.h"
 #include"button_ui.h"
+#include"font_data.h"
 
-PlayerSkillUI::PlayerSkillUI(const VECTOR& pos, const int font_handle, const int body_color, const int edge_color,const ConfigName& name)
+PlayerSkillUI::PlayerSkillUI(const VECTOR& pos, const std::string& font_name, const int body_color, const int edge_color,const ConfigName& name)
 	: pos_(pos)
 	, offset_button_pos_(VectorAssistant::VGet2D(-50.f,18.f))
 	, cool_time_ratio_(nullptr)
 	, can_use_(nullptr)
-	, font_handle_(font_handle)
+	, font_name_(font_name)
 	, body_color_(body_color)
 	, edge_color_(edge_color)
 	, current_alpha_value_(0.f)
@@ -33,7 +34,7 @@ PlayerSkillUI::PlayerSkillUI(const VECTOR& pos, const int font_handle, const int
 
 PlayerSkillUI::~PlayerSkillUI()
 {
-	DeleteFontToHandle(font_handle_);
+
 }
 
 void PlayerSkillUI::Init()
@@ -129,5 +130,6 @@ void PlayerSkillUI::DrawDarkUI()
 	GetGraphSize(data_.icon_handle, &icon_width, &icon_height);
 	VECTOR name_pos = VAdd(pos_, VGet(icon_width, 0.f, 0.f));
 	// ƒXƒLƒ‹–¼•`‰æ
-	Draw2D::FormatStringToHandle(name_pos, "%s", body_color_, font_handle_, data_.name.c_str(), edge_color_);
+	int handle = FontData::GetInstance().GetHandle(font_name_);
+	Draw2D::FormatStringToHandle(name_pos, "%s", body_color_, handle, data_.name.c_str(), edge_color_);
 }

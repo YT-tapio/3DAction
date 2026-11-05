@@ -31,7 +31,14 @@ void FPS::Init()
 void FPS::Update()
 {
 	now_time_ = GetNowHiPerformanceCount();
+	const float kMaxDeltaTime = 0.03333f;
 	delta_time_ = (now_time_ - prev_time_) * kUS;
+
+	if (delta_time_ > kMaxDeltaTime)
+	{
+		delta_time_ = kMaxDeltaTime;
+	}
+
 	prev_time_ = now_time_;
 
 	if (count_ == kTargetFps)
@@ -74,9 +81,17 @@ void FPS::Wait()
 		wait_time_ = wait_time_ms;
 		sleep_time_ = (after - before) * kUS * 1000.f;
 	}
-	
 
+}
 
+const float FPS::GetDeltaTime() const
+{
+	return delta_time_;
+}
+
+const float FPS::GetTargetFPS() const
+{
+	return kTargetFps;
 }
 
 void FPS::Debug()

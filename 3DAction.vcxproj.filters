@@ -211,9 +211,6 @@
     <Filter Include="ソース ファイル\scene\test">
       <UniqueIdentifier>{a7c6f714-8664-43d1-b241-b57d2de124d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Singleton">
-      <UniqueIdentifier>{04387e73-e934-4543-bf95-b5ed7674962b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\object\skydome">
       <UniqueIdentifier>{8a4bcf6c-0e28-4b3d-851e-940d412581ae}</UniqueIdentifier>
     </Filter>
@@ -508,6 +505,12 @@
     <Filter Include="ソース ファイル\ui\popup_ui">
       <UniqueIdentifier>{091c4e80-6866-45a0-a151-5bd0feb187c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\debug">
+      <UniqueIdentifier>{d6e5e706-0aa2-41a4-ae13-04cb0d2b941d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\FPS">
+      <UniqueIdentifier>{0014bcd5-2767-4cfd-8758-ab135d5b8b1a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -537,9 +540,6 @@
     <ClCompile Include="source\scene_manager.cpp">
       <Filter>ソース ファイル\scene\manager</Filter>
     </ClCompile>
-    <ClCompile Include="source\FPS.cpp">
-      <Filter>ソース ファイル\Singleton</Filter>
-    </ClCompile>
     <ClCompile Include="source\mesh.cpp">
       <Filter>ソース ファイル\collider\mesh</Filter>
     </ClCompile>
@@ -557,9 +557,6 @@
     </ClCompile>
     <ClCompile Include="source\player.cpp">
       <Filter>ソース ファイル\object\player</Filter>
-    </ClCompile>
-    <ClCompile Include="source\debug.cpp">
-      <Filter>ソース ファイル\Singleton</Filter>
     </ClCompile>
     <ClCompile Include="source\physics.cpp">
       <Filter>ソース ファイル\physics</Filter>
@@ -1206,6 +1203,15 @@
     <ClCompile Include="source\number_popup_ui.cpp">
       <Filter>ソース ファイル\ui\popup_ui</Filter>
     </ClCompile>
+    <ClCompile Include="source\font_data.cpp">
+      <Filter>ソース ファイル\font</Filter>
+    </ClCompile>
+    <ClCompile Include="source\debug.cpp">
+      <Filter>ソース ファイル\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FPS.cpp">
+      <Filter>ソース ファイル\FPS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -1238,9 +1244,6 @@
     <ClInclude Include="source\scene_manager.h">
       <Filter>ソース ファイル\scene\manager</Filter>
     </ClInclude>
-    <ClInclude Include="source\FPS.h">
-      <Filter>ソース ファイル\Singleton</Filter>
-    </ClInclude>
     <ClInclude Include="source\mesh.h">
       <Filter>ソース ファイル\collider\mesh</Filter>
     </ClInclude>
@@ -1258,9 +1261,6 @@
     </ClInclude>
     <ClInclude Include="source\player.h">
       <Filter>ソース ファイル\object\player</Filter>
-    </ClInclude>
-    <ClInclude Include="source\debug.h">
-      <Filter>ソース ファイル\Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\hit_interface.h">
       <Filter>ソース ファイル\interface</Filter>
@@ -2038,6 +2038,15 @@
     </ClInclude>
     <ClInclude Include="source\number_popup_ui.h">
       <Filter>ソース ファイル\ui\popup_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\font_data.h">
+      <Filter>ソース ファイル\font</Filter>
+    </ClInclude>
+    <ClInclude Include="source\debug.h">
+      <Filter>ソース ファイル\debug</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FPS.h">
+      <Filter>ソース ファイル\FPS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

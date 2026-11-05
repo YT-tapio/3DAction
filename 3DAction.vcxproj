@@ -168,6 +168,7 @@
     <ClCompile Include="source\check_phase_node.cpp" />
     <ClCompile Include="source\check_stamina.cpp" />
     <ClCompile Include="source\config_datas.cpp" />
+    <ClCompile Include="source\font_data.cpp" />
     <ClCompile Include="source\number_popup_ui.cpp" />
     <ClCompile Include="source\dash_string_ui.cpp" />
     <ClCompile Include="source\input_control_ui.cpp" />
@@ -380,6 +381,7 @@
     <ClCompile Include="source\check_enemy_attack_id.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\font_data.h" />
     <ClInclude Include="source\number_popup_ui.h" />
     <ClInclude Include="source\jump_string_ui.h" />
     <ClInclude Include="source\move_camera_string_ui.h" />

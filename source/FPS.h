@@ -29,15 +29,17 @@ public:
 	}
 
 
-	const float GetDeltaTime() const { return delta_time_; }
+	const float GetDeltaTime() const;
 
-	const float GetTargetFPS() const { return kTargetFps; }
+	const float GetTargetFPS() const;
 
 	void Debug();
 	
 private:
 
 	// É}ÉCÉNÉçïbêî
+
+
 	static constexpr float kUS = 0.000001f;
 
 	static constexpr float  kTargetFps = 60.0f;
@@ -46,6 +48,7 @@ private:
 	LONGLONG prev_time_;
 	LONGLONG now_time_;
 	LONGLONG first_time_;
+
 	float took_time_ = 0.f;
 	float sleep_time_ = 0.f;
 	float wait_time_ = 0.f;

@@ -44,9 +44,11 @@ private:
 	std::shared_ptr<ConditionTimer> stop_timer_;
 	std::shared_ptr<Time> time_;
 	std::shared_ptr<SubScreen> damage_screen_;	// É_ÉÅÅ[ÉWï`âÊÇÃscreen
+	
+	std::string font_name_;
 
 	VECTOR spawn_pos_;
-	VECTOR pos_;
+	VECTOR pos_;	
 
 	int font_handle_;
 	int font_color_;

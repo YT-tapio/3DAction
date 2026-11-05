@@ -60,6 +60,7 @@ void Tackle::Entry()
 	{
 		owner->GetAnimator()->PlayRequest(anim_name_);
 		dir = VectorAssistant::VGetDir(owner->GetPosition(), owner->GetAttackTargetPos());
+		dir.y = 0.f;
 		owner->SetRotation(VGet(0.f, VectorAssistant::VGetTan(VectorAssistant::VGetReverce(dir)), 0.f));
 		vel_ = VScale(dir, speed_);
 		offset_vel_ = VScale(dir, 20.f);

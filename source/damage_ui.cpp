@@ -18,6 +18,7 @@
 #include"font.h"
 #include"image_repository.h"
 #include"sound_manager.h"
+#include"font_data.h"
 
 DamageUI::DamageUI(const std::string& file_path)
 	: stop_timer_(std::make_shared<ConditionTimer>(2.f))
@@ -146,15 +147,16 @@ void DamageUI::DrawDamage()
 {
 	VECTOR center_pos = damage_screen_->GetCenterPos();
 	
+	int font_handle = FontData::GetInstance().GetHandle(font_name_);
+
 	// font‚Ì‘å‚«‚³‚Æfont‚ÌƒTƒCƒY
 	int width = -1;
 	int height = -1;
-	GetDrawFormatStringSizeToHandle(&width, &height, NULL, font_handle_, "%d", static_cast<int>(damage_));
+	GetDrawFormatStringSizeToHandle(&width, &height, NULL, font_handle, "%d", static_cast<int>(damage_));
 	VECTOR start_pos = VSub(center_pos, VectorAssistant::VGet2D(width * 0.5f, height * 0.5f));
 	// •`‰æ
 	damage_screen_->Up();
-	// SetFontEdgeSize(10);
-	Draw2D::FormatStringToHandle(start_pos, "%d", font_color_, font_handle_, static_cast<int>(damage_), edge_color_);
+	Draw2D::FormatStringToHandle(start_pos, "%d", font_color_, font_handle, static_cast<int>(damage_), edge_color_);
 	damage_screen_->Down();
 }
 
@@ -187,9 +189,7 @@ void DamageUI::LoadFile(const std::string& path)
 		std::string data;			// csv‚©‚ç‚Ì•¶Žš—ñ‚ð‚à‚ç‚¤
 
 		// 
-		auto font_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
-		font_handle_ = Font::CreateHandleOfFile(font_path);
-		//font_handle_ = -1;
+		font_name_ = CSVFileAssistant::GetStringOfCSVFile(ss, data);
 		font_color_ = CSVFileAssistant::GetColorOfCSVFile(ss,data);
 		edge_color_ = CSVFileAssistant::GetColorOfCSVFile(ss, data);
 	}

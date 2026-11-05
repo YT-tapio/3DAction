@@ -89,8 +89,6 @@ void ComboSkill::Update()
 		if (combo_action->CheckChangeCombo())
 		{
 			// ‚±‚±‚Å•â³‚ª”­¶‚·‚é
-			//printfDx("change\n");
-			VECTOR vel = VectorAssistant::VGetZero();
 			Correction(combo_action);
 			SoundManager::GetInstance().SetPos("approach_enemy", owner_.lock()->GetPosition());
 			SoundManager::GetInstance().Play3DSound("approach_enemy");

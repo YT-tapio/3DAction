@@ -107,8 +107,8 @@ bool AvoidSkill::CheckIsAvoid(std::shared_ptr<Player> owner)
 		}
 	}
 	
-	if (!owner->GetStatusContainer()->CanUseStamina()) { return FALSE; }
-	if (!owner->GetInput()->IsAvoid()) { return FALSE; }
+	if (!owner->GetStatusContainer()->CanUseStamina())	{ return FALSE; }
+	if (!owner->GetInput()->IsAvoid())					{ return FALSE; }
 	if (!owner->GetOnGround())								{ return FALSE; }
 	if (owner->GetAnimator()->GetNowAnimName() == "avoid")	{ return FALSE; }
 	return TRUE;
@@ -118,7 +118,7 @@ void AvoidSkill::DecideVelocity(std::shared_ptr<Player> owner)
 {
 	// オーナーの回避の速度をきめる
 	VECTOR input_dir = owner->GetInputDir();
-	VECTOR velocity = VScale(input_dir, speed_ * owner->GetTime()->GetFPSRate());
+	VECTOR velocity = VScale(input_dir, speed_);
 	owner->ResetVelocity();
 	owner->SetVelocity(velocity);
 	owner->SetRotation(VGet(0.f, VectorAssistant::VGetTan(VectorAssistant::VGetReverce(input_dir)), 0.f));

@@ -5,9 +5,7 @@
 
 struct FileData
 {
-	FileNameData name_data;
-	std::vector<std::string> string_datas;
-
-	// 1行単位の要素数
-	std::vector<int> indices;
+	FileNameData name_data;					// ファイルの名前
+	std::vector<std::string> string_datas;	// 文字
+	std::vector<int> indices;				// 1行単位の要素数
 };

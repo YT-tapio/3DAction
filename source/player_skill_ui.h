@@ -10,7 +10,7 @@ class PlayerSkillUI
 {
 public:
 
-	PlayerSkillUI(const VECTOR& base_pos, const int font_handle, const int body_color, const int edge_color, const ConfigName& name);
+	PlayerSkillUI(const VECTOR& base_pos, const std::string& font_name, const int body_color, const int edge_color, const ConfigName& name);
 
 	~PlayerSkillUI();
 
@@ -40,9 +40,6 @@ private:
 
 	const float kBlendSpeed = 0.3f;
 
-	VECTOR pos_;
-	VECTOR offset_button_pos_;
-
 	std::shared_ptr<SubScreen> sub_screen_;
 	std::shared_ptr<Time> time_;
 
@@ -51,11 +48,15 @@ private:
 
 	std::shared_ptr<ButtonUI> button_;
 
+	std::string font_name_;
+
+	VECTOR pos_;
+	VECTOR offset_button_pos_;
+
 	SkillUIData data_;
 	
 	int input_handle_;
 
-	int font_handle_;
 	int body_color_;
 	int edge_color_;
 

@@ -10,7 +10,7 @@ class NumberPopupUI
 {
 public:
 
-	NumberPopupUI();
+	NumberPopupUI(const int& color, const int& dedge_color);
 
 	~NumberPopupUI();
 
@@ -30,9 +30,6 @@ private:
 
 	std::shared_ptr<SubScreen> sub_screen_;
 	std::shared_ptr<PopupUI> popup_ui_;
-
-
-	int font_handle_;
 
 	int color_;
 	int edge_color_;

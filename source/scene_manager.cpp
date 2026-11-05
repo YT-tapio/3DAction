@@ -20,6 +20,7 @@
 #include"button_ui_datas.h"
 #include"config_datas.h"
 #include"effect_manager.h"
+#include"font_data.h"
 
 void SceneManager::Update()
 {
@@ -145,6 +146,7 @@ SceneManager::SceneManager()
 	Brain::GetInstance();
 	Fade::GetInstance().Awake();
 	ButtonUIDatas::GetInstance().Awake();
+	FontData::GetInstance().Awake();
 	//Fade::GetInstance().StartFadeOut(1.f);
 	scene_ = std::make_shared<Title>();
 	scene_->Init();

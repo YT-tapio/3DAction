@@ -14,25 +14,19 @@
 PlayerSkillUIGroup::PlayerSkillUIGroup()
 	: normal_skill_pos_(VectorAssistant::VGetZero())
 	, strong_skill_pos_(VectorAssistant::VGetZero())
-	, font_handle_(-1)
 	, body_color_(-1)
 	, edge_color_(-1)
 {
 	// fontをダウンロード
 	LoadFile();
-	normal_skill_ui_ = std::make_shared<PlayerSkillUI>(normal_skill_pos_, font_handle_, body_color_, edge_color_, ConfigName::normal_skill);
-	strong_skill_ui_ = std::make_shared<PlayerSkillUI>(strong_skill_pos_,font_handle_, body_color_, edge_color_, ConfigName::strong_skill);
-	
-	//normal_skill_ui_ = nullptr;
-	//strong_skill_ui_ = nullptr;
+	normal_skill_ui_ = std::make_shared<PlayerSkillUI>(normal_skill_pos_, font_name_, body_color_, edge_color_, ConfigName::normal_skill);
+	strong_skill_ui_ = std::make_shared<PlayerSkillUI>(strong_skill_pos_, font_name_, body_color_, edge_color_, ConfigName::strong_skill);
 	
 	skill_ui_datas_ = std::make_shared<SkillUIDatas>();
-	//skill_ui_datas_ = nullptr;
 }
 
 PlayerSkillUIGroup::~PlayerSkillUIGroup()
 {
-	DeleteFontToHandle(font_handle_);
 	DeleteGraph(normal_skill_input_handle_);
 	DeleteGraph(strong_skill_input_handle_);
 }
@@ -119,13 +113,9 @@ void PlayerSkillUIGroup::LoadFile()
 		auto strong_skill_input_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
 		normal_skill_input_handle_ = LoadGraph(normal_skill_input_path.c_str());
 		strong_skill_input_handle_ = LoadGraph(strong_skill_input_path.c_str());
-		//normal_skill_input_handle_ = -1;
-		//strong_skill_input_handle_ = -1;
 		if (normal_skill_input_handle_ == -1) { printfDx("読み込み失敗\n"); }
 		if (strong_skill_input_handle_ == -1) { printfDx("読み込み失敗\n"); }
-		auto font_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
-		font_handle_ = Font::CreateHandleOfFile(font_path);
-		//font_handle_ = -1;
+		font_name_ = CSVFileAssistant::GetStringOfCSVFile(ss, data);
 		body_color_ = CSVFileAssistant::GetColorOfCSVFile(ss, data);
 		edge_color_ = CSVFileAssistant::GetColorOfCSVFile(ss, data);
 

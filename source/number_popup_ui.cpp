@@ -8,7 +8,9 @@
 #include<functional>
 #include"draw_2D.h"
 
-NumberPopupUI::NumberPopupUI()
+NumberPopupUI::NumberPopupUI(const int& color, const int& edge_color)
+	: color_(color)
+	, edge_color_(edge_color)
 {
 	popup_ui_ = std::make_shared<PopupUI>();
 	sub_screen_ = std::make_shared<SubScreen>();
@@ -51,8 +53,8 @@ void NumberPopupUI::MakeHandle(const int& damage)
 	// font‚Ì‘å‚«‚³‚Æfont‚ÌƒTƒCƒY
 	int width = -1;
 	int height = -1;
-	GetDrawFormatStringSizeToHandle(&width, &height, NULL, font_handle_, "%d", static_cast<int>(damage));
+	//GetDrawFormatStringSizeToHandle(&width, &height, NULL, font_handle_, "%d", static_cast<int>(damage));
 	VECTOR start_pos = VSub(center_pos, VectorAssistant::VGet2D(width * 0.5f, height * 0.5f));
-	Draw2D::FormatStringToHandle(start_pos, "%d", color_, font_handle_, static_cast<int>(damage), edge_color_);
+	//Draw2D::FormatStringToHandle(start_pos, "%d", color_, font_handle_, static_cast<int>(damage), edge_color_);
 	sub_screen_->Down();
 }
