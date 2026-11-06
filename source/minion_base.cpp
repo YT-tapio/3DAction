@@ -48,6 +48,7 @@
 #include"object_setter.h"
 
 #include"model_repository.h"
+#include"time.h"
 
 MinionBase::MinionBase(const VECTOR& pos, bool* game_start, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group, std::shared_ptr<IDamageUIGroup> damage_ui_group,
 	std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group)
@@ -91,6 +92,7 @@ void MinionBase::Init()
 	Physics::GetInstance().AddBody(rigid_body_);
 	animator_->Init();
 	hit_red_body_->Init();
+	time_->Init();
 	std::shared_ptr<EnemyBase> mine = std::dynamic_pointer_cast<EnemyBase>(shared_from_this());
 	target_player_pos_ = player_group_->MostNearPlayerPos(pos_);
 	MakeBehaviorTree(mine);
@@ -102,6 +104,7 @@ void MinionBase::Update()
 {
 	if (!is_active_) { return; }
 	UpdateBone();
+	time_->Update();
 	if (status_container_->GetCurrentStatus().hp <= 0)
 	{
 		animator_->PlayRequest("death");

@@ -49,7 +49,6 @@ void NumberPopupUI::MakeHandle(const int& damage)
 	sub_screen_->Up();
 	// 文字の描画を行う
 	VECTOR center_pos = sub_screen_->GetCenterPos();
-
 	// fontの大きさとfontのサイズ
 	int width = -1;
 	int height = -1;
