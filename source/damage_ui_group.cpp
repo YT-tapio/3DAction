@@ -47,6 +47,10 @@ void DamageUIGroup::Init()
 	{
 		damage_ui->Init();
 	}
+	for (auto damage_ui : enemy_damage_uis_)
+	{
+		damage_ui->Init();
+	}
 }
 
 void DamageUIGroup::Update()
@@ -100,6 +104,7 @@ void DamageUIGroup::SpawnPlayerDamageUI(const VECTOR& pos,const float& damage, c
 		if (!damage_ui->GetIsActive())
 		{
 			damage_ui->Spawn(pos, damage,is_critical);
+			auto test = damage_ui->GetIsActive();
 			break;
 		}
 	}
@@ -112,6 +117,7 @@ void DamageUIGroup::SpawnEnemyDamageUI(const VECTOR& pos, const float& damage, c
 		if (!damage_ui->GetIsActive())
 		{
 			damage_ui->Spawn(pos, damage,is_critical);
+			auto test = damage_ui->GetIsActive();
 			break;
 		}
 	}

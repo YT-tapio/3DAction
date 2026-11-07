@@ -29,7 +29,7 @@ const void PopupUIHolderBase::Draw() const
 	popup_ui_->Draw();
 }
 
-const int PopupUIHolderBase::GetIsActive() const
+const bool PopupUIHolderBase::GetIsActive() const
 {
 	return popup_ui_->GetIsActive();
 }

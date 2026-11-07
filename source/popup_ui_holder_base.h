@@ -16,7 +16,7 @@ public:
 
 	virtual const void Draw() const;
 
-	const int GetIsActive() const;
+	const bool GetIsActive() const;
 
 protected:
 
