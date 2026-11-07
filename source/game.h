@@ -13,7 +13,7 @@ class LoseUI;
 class GameToNextScene;
 class ShadowCircleController;
 class EnemyUIGroup;
-class DamageUIGroup;
+class PopupUIGroup;
 class PlayerGroup;
 class AttackRangeGroup;
 class EnemyGroup;
@@ -47,7 +47,7 @@ private:
 	std::shared_ptr<LoseUI> lose_ui_;
 	std::shared_ptr<GameToNextScene> game_to_next_scene_;
 	std::shared_ptr<GameStartTimer> game_start_timer_;
-	std::shared_ptr<DamageUIGroup> damage_ui_group_;
+	std::shared_ptr<PopupUIGroup> damage_ui_group_;
 	std::shared_ptr<InputControlUI> input_control_ui_;
 	std::shared_ptr<PlayerGroup> player_group_;
 	std::shared_ptr<AttackRangeGroup> attack_range_group_;

@@ -14,7 +14,7 @@
 #include"status.h"
 #include"status_container.h"
 
-EnemyController::EnemyController(bool* game_start, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group, std::shared_ptr<IDamageUIGroup> damage_ui_group,
+EnemyController::EnemyController(bool* game_start, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group, std::shared_ptr<IPopupUIGroup> damage_ui_group,
 	std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group)
 {
 	summoner_ = std::make_shared<EnemySummoner>();

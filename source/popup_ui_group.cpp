@@ -1,7 +1,7 @@
 #include<vector>
 #include<memory>
 #include"DxLib.h"
-#include"damage_ui_group.h"
+#include"popup_ui_group.h"
 #include<string>
 #include"damage_ui.h"
 #include<sstream>
@@ -11,18 +11,18 @@
 #include"font.h"
 #include"number_popup_ui.h"
 
-DamageUIGroup::DamageUIGroup()
+PopupUIGroup::PopupUIGroup()
 {
 
 }
 
-DamageUIGroup::~DamageUIGroup()
+PopupUIGroup::~PopupUIGroup()
 {
 	player_damage_uis_.clear();
 	enemy_damage_uis_.clear();
 }
 
-void DamageUIGroup::Awake()
+void PopupUIGroup::Awake()
 {
 	int player_font_color = GetColor(0, 255, 255);
 	int enemy_font_color = GetColor(255, 0, 0);
@@ -41,7 +41,7 @@ void DamageUIGroup::Awake()
 	}
 }
 
-void DamageUIGroup::Init()
+void PopupUIGroup::Init()
 {
 	for (auto damage_ui : player_damage_uis_)
 	{
@@ -53,7 +53,7 @@ void DamageUIGroup::Init()
 	}
 }
 
-void DamageUIGroup::Update()
+void PopupUIGroup::Update()
 {
 	for (auto damage_ui : player_damage_uis_)
 	{
@@ -72,7 +72,7 @@ void DamageUIGroup::Update()
 	}
 }
 
-const void DamageUIGroup::Draw() const
+const void PopupUIGroup::Draw() const
 {
 	SetUseZBuffer3D(FALSE);
 	SetWriteZBuffer3D(FALSE);
@@ -97,7 +97,7 @@ const void DamageUIGroup::Draw() const
 	SetWriteZBuffer3D(TRUE);
 }
 
-void DamageUIGroup::SpawnPlayerDamageUI(const VECTOR& pos,const float& damage, const bool is_critical)
+void PopupUIGroup::SpawnPlayerDamageUI(const VECTOR& pos,const float& damage, const bool is_critical)
 {
 	for (auto damage_ui : player_damage_uis_)
 	{
@@ -110,7 +110,7 @@ void DamageUIGroup::SpawnPlayerDamageUI(const VECTOR& pos,const float& damage, c
 	}
 }
 
-void DamageUIGroup::SpawnEnemyDamageUI(const VECTOR& pos, const float& damage, const bool is_critical)
+void PopupUIGroup::SpawnEnemyDamageUI(const VECTOR& pos, const float& damage, const bool is_critical)
 {
 	for (auto damage_ui : enemy_damage_uis_)
 	{

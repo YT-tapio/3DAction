@@ -36,6 +36,7 @@ void NumberPopupUI::Spawn(const VECTOR& base_pos,const int& damage, const bool& 
 	// ‰æ‘œ‚ð—pˆÓ
 	MakeHandle(damage,is_critical);
 	popup_ui_->Spawn(base_pos, sub_screen_->GetHandle(),kSize);
+	auto is_active = popup_ui_->GetIsActive();
 }
 
 void NumberPopupUI::MakeHandle(const int& damage, const bool& is_critical)

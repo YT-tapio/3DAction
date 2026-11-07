@@ -26,7 +26,6 @@ private:
 private:
 
 	std::shared_ptr<SubScreen> sub_screen_;
-	std::shared_ptr<PopupUI> popup_ui_;
 
 	int color_;
 	int edge_color_;

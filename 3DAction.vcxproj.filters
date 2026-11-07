@@ -900,9 +900,6 @@
     <ClCompile Include="source\damage_ui.cpp">
       <Filter>ソース ファイル\ui\damage_ui</Filter>
     </ClCompile>
-    <ClCompile Include="source\damage_ui_group.cpp">
-      <Filter>ソース ファイル\ui\damage_ui</Filter>
-    </ClCompile>
     <ClCompile Include="source\stat_modifire_ui_group.cpp">
       <Filter>ソース ファイル\ui\stat_modifire_group</Filter>
     </ClCompile>
@@ -1058,9 +1055,6 @@
     </ClCompile>
     <ClCompile Include="source\enemy_ui_group_interface.cpp">
       <Filter>ソース ファイル\ui\enemy_ui_group</Filter>
-    </ClCompile>
-    <ClCompile Include="source\damage_ui_group_interface.cpp">
-      <Filter>ソース ファイル\ui\damage_ui</Filter>
     </ClCompile>
     <ClCompile Include="source\player_group_interface.cpp">
       <Filter>ソース ファイル\player_group</Filter>
@@ -1223,6 +1217,12 @@
     </ClCompile>
     <ClCompile Include="source\image_popup_ui.cpp">
       <Filter>ソース ファイル\ui\popup_ui\image</Filter>
+    </ClCompile>
+    <ClCompile Include="source\popup_ui_group.cpp">
+      <Filter>ソース ファイル\ui\popup_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\popup_ui_group_interface.cpp">
+      <Filter>ソース ファイル\ui\popup_ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1700,9 +1700,6 @@
     <ClInclude Include="source\2d_gravity.h">
       <Filter>ソース ファイル\2d_gravity</Filter>
     </ClInclude>
-    <ClInclude Include="source\damage_ui_group.h">
-      <Filter>ソース ファイル\ui\damage_ui</Filter>
-    </ClInclude>
     <ClInclude Include="source\active_stat_modifire_ui.h">
       <Filter>ソース ファイル\ui\stat_modifire_group</Filter>
     </ClInclude>
@@ -1889,9 +1886,6 @@
     <ClInclude Include="source\enemy_ui_group_interface.h">
       <Filter>ソース ファイル\ui\enemy_ui_group</Filter>
     </ClInclude>
-    <ClInclude Include="source\damage_ui_group_interface.h">
-      <Filter>ソース ファイル\ui\damage_ui</Filter>
-    </ClInclude>
     <ClInclude Include="source\player_group_interface.h">
       <Filter>ソース ファイル\player_group</Filter>
     </ClInclude>
@@ -2065,6 +2059,12 @@
     </ClInclude>
     <ClInclude Include="source\number_popup_ui.h">
       <Filter>ソース ファイル\ui\popup_ui\number</Filter>
+    </ClInclude>
+    <ClInclude Include="source\popup_ui_group.h">
+      <Filter>ソース ファイル\ui\popup_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\popup_ui_group_interface.h">
+      <Filter>ソース ファイル\ui\popup_ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

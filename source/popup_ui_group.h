@@ -1,16 +1,16 @@
 #pragma once
-#include"damage_ui_group_interface.h"
+#include"popup_ui_group_interface.h"
 
 class DamageUI;
 class NumberPopupUI;
 
-class DamageUIGroup : public IDamageUIGroup
+class PopupUIGroup : public IPopupUIGroup
 {
 public:
 
-	DamageUIGroup();
+	PopupUIGroup();
 	
-	~DamageUIGroup();
+	~PopupUIGroup();
 
 	void Awake();
 

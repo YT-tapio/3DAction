@@ -1,6 +1,6 @@
 #pragma once
 
-class IDamageUIGroup
+class IPopupUIGroup
 {
 public:
 

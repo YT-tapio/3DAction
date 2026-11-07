@@ -33,7 +33,7 @@
 #include"shadow_map.h"
 #include"stat_modifire.h"
 #include"stat_modifires.h"
-#include"damage_ui_group.h"
+#include"popup_ui_group.h"
 #include"stat_modifire_ui_data.h"
 #include"player_skill_ui_group.h"
 #include"scene_manager.h"
@@ -45,7 +45,7 @@
 #include"lose_ui.h"
 #include"game_to_next_scene.h"
 #include"shadow_circle_controller.h"
-#include"damage_ui_group_interface.h"
+#include"popup_ui_group_interface.h"
 #include"enemy_group.h"
 #include"enemy_controller.h"
 #include"input_control_ui.h"
@@ -55,7 +55,7 @@ Game::Game()
 {
 	InputManager::GetInstance().Init();
 	attack_range_group_ = std::make_shared<AttackRangeGroup>();
-	damage_ui_group_ = std::make_shared<DamageUIGroup>();
+	damage_ui_group_ = std::make_shared<PopupUIGroup>();
 	damage_ui_group_->Awake();
 	enemy_ui_group_ = std::make_shared<EnemyUIGroup>();
 	shadow_circle_controller_ = std::make_shared<ShadowCircleController>();

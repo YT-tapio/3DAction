@@ -18,8 +18,8 @@
 #include"skill_type.h"
 #include"player_skill_ui_group.h"
 #include"enemy_base.h"
-#include"damage_ui_group.h"
-#include"damage_ui_group_interface.h"
+#include"popup_ui_group.h"
+#include"popup_ui_group_interface.h"
 #include"enemy_controller.h"
 #include"status.h"
 #include"status_container.h"
@@ -47,7 +47,7 @@ void PlayerGroup::AddPlayerObserver(IPlayerObserver* observer)
 	player_observers_.emplace_back(observer);
 }
 
-void PlayerGroup::Awake(VECTOR* camera_dir,std::shared_ptr<IPlayerUIController> player_ui_controller, std::shared_ptr<IEnemyController> enemy_controller, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IDamageUIGroup> damage_ui_group)
+void PlayerGroup::Awake(VECTOR* camera_dir,std::shared_ptr<IPlayerUIController> player_ui_controller, std::shared_ptr<IEnemyController> enemy_controller, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IPopupUIGroup> damage_ui_group)
 {
 	current_player_head_pos_ = VectorAssistant::VGetZero();
 	camera_dir_ = camera_dir;

@@ -48,7 +48,7 @@
 #include"effect_id.h"
 #include"effect_end_state.h"
 #include"time.h"
-#include"damage_ui_group.h"
+#include"popup_ui_group.h"
 #include"player_ui_group_interface.h"
 #include"player_ui_controller_interface.h"
 #include"sound_manager.h"
@@ -56,11 +56,11 @@
 #include"brain.h"
 #include"player_observer_interface.h"
 #include"shadow_creater_interface.h"
-#include"damage_ui_group_interface.h"
+#include"popup_ui_group_interface.h"
 #include"bullet.h"
 #include"model_repository.h"
 
-Player::Player(VECTOR* camera_dir,std::shared_ptr<InputBase> input,const std::string name, std::shared_ptr<IPlayerUIController> player_ui_group,std::shared_ptr<IShadowCreater> shadow_creater,std::shared_ptr<IDamageUIGroup> damage_ui_group)
+Player::Player(VECTOR* camera_dir,std::shared_ptr<InputBase> input,const std::string name, std::shared_ptr<IPlayerUIController> player_ui_group,std::shared_ptr<IShadowCreater> shadow_creater,std::shared_ptr<IPopupUIGroup> damage_ui_group)
 	: CharacterBase("player")
 	, IPhysicsEventReceiver()
 	, name_(name)

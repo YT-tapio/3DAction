@@ -174,7 +174,7 @@
     <ClCompile Include="source\dash_string_ui.cpp" />
     <ClCompile Include="source\input_control_ui.cpp" />
     <ClCompile Include="source\cool_time_behavior.cpp" />
-    <ClCompile Include="source\damage_ui_group_interface.cpp" />
+    <ClCompile Include="source\popup_ui_group_interface.cpp" />
     <ClCompile Include="source\debide_attack_target_from_player.cpp" />
     <ClCompile Include="source\debug_camera.cpp" />
     <ClCompile Include="source\enemy_controller.cpp" />
@@ -227,7 +227,7 @@
     <ClCompile Include="source\attack_range_group.cpp" />
     <ClCompile Include="source\character_name_ui.cpp" />
     <ClCompile Include="source\damage_ui.cpp" />
-    <ClCompile Include="source\damage_ui_group.cpp" />
+    <ClCompile Include="source\popup_ui_group.cpp" />
     <ClCompile Include="source\disp_attack_range.cpp" />
     <ClCompile Include="source\active_stat_modifire.cpp" />
     <ClCompile Include="source\player_skill_ui.cpp" />
@@ -415,7 +415,7 @@
     <ClInclude Include="source\config_datas.h" />
     <ClInclude Include="source\config_name.h" />
     <ClInclude Include="source\cool_time_behavior.h" />
-    <ClInclude Include="source\damage_ui_group_interface.h" />
+    <ClInclude Include="source\popup_ui_group_interface.h" />
     <ClInclude Include="source\boss_elude.h" />
     <ClInclude Include="source\attack_id.h" />
     <ClInclude Include="source\attack_Info_holder.h" />
@@ -489,7 +489,7 @@
     <ClInclude Include="source\change_method.h" />
     <ClInclude Include="source\character_name_ui.h" />
     <ClInclude Include="source\damage_ui.h" />
-    <ClInclude Include="source\damage_ui_group.h" />
+    <ClInclude Include="source\popup_ui_group.h" />
     <ClInclude Include="source\disp_attack_range.h" />
     <ClInclude Include="source\active_stat_modifire.h" />
     <ClInclude Include="source\active_stat_modifire_ui.h" />
