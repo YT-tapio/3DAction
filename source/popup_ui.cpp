@@ -90,6 +90,8 @@ void PopupUI::Spawn(const VECTOR pos,int handle,const int& size)
 {
 	size_ = size;
 	handle_ = handle;
+	// •\¦êŠ‚ğƒ‰ƒ“ƒ_ƒ€‚Éİ’è‚·‚é
+	spawn_pos_ = RandomSpawnPos(pos);
 	pos_ = spawn_pos_;
 	current_up_speed_ = default_up_speed_;
 	alpha_value_ = 255.f;

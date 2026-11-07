@@ -1,30 +1,28 @@
 #pragma once
 
+#include"popup_ui_holder_base.h"
+
 class PopupUI;
 class SubScreen;
 
 /// <summary>
 /// êîílÇï\é¶Ç∑ÇÈUI
 /// </summary>
-class NumberPopupUI
+class NumberPopupUI : public PopupUIHolderBase
 {
 public:
 
 	NumberPopupUI(const int& color, const int& dedge_color);
 
-	~NumberPopupUI();
+	~NumberPopupUI() override;
 
-	void Init();
+	void Init() override;
 
-	void Update();
-
-	void Draw();
-
-	void Spawn(const VECTOR& base_pos,const int& damage);
+	void Spawn(const VECTOR& base_pos,const int& damage,const bool& is_critical = FALSE);
 
 private:
 
-	void MakeHandle(const int& damage);
+	void MakeHandle(const int& damage, const bool& is_critical);
 
 private:
 

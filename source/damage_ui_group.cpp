@@ -9,6 +9,7 @@
 #include<windows.h>
 #include"csv_file_assistant.h"
 #include"font.h"
+#include"number_popup_ui.h"
 
 DamageUIGroup::DamageUIGroup()
 {
@@ -23,16 +24,20 @@ DamageUIGroup::~DamageUIGroup()
 
 void DamageUIGroup::Awake()
 {
+	int player_font_color = GetColor(0, 255, 255);
+	int enemy_font_color = GetColor(255, 0, 0);
+	int edge_color = GetColor(0, 0, 0);
+
 	// インスタンスを生成
 	for (int i = 0; i < kMaxDamageUI; i++)
 	{
-		player_damage_uis_.emplace_back(std::make_shared<DamageUI>("data/csv/ui/damage/player_damage_ui.csv"));
+		player_damage_uis_.emplace_back(std::make_shared<NumberPopupUI>(player_font_color, edge_color));
 	}
 
 	// インスタンスを生成
 	for (int i = 0; i < kMaxDamageUI; i++)
 	{
-		enemy_damage_uis_.emplace_back(std::make_shared<DamageUI>("data/csv/ui/damage/enemy_damage_ui.csv"));
+		enemy_damage_uis_.emplace_back(std::make_shared<NumberPopupUI>(enemy_font_color, edge_color));
 	}
 }
 
@@ -48,7 +53,7 @@ void DamageUIGroup::Update()
 {
 	for (auto damage_ui : player_damage_uis_)
 	{
-		if (damage_ui->GetIsActive()) 
+		if (damage_ui->GetIsActive())
 		{
 			damage_ui->Update();
 		}

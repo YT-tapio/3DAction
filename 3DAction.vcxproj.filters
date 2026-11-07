@@ -511,6 +511,12 @@
     <Filter Include="ソース ファイル\FPS">
       <UniqueIdentifier>{0014bcd5-2767-4cfd-8758-ab135d5b8b1a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ui\popup_ui\image">
+      <UniqueIdentifier>{349775ca-0c94-4677-96ce-5ade3e5757ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ui\popup_ui\number">
+      <UniqueIdentifier>{d6714d93-440f-4e4a-9078-64ffbe4ebb33}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -1200,9 +1206,6 @@
     <ClCompile Include="source\popup_ui.cpp">
       <Filter>ソース ファイル\ui\popup_ui</Filter>
     </ClCompile>
-    <ClCompile Include="source\number_popup_ui.cpp">
-      <Filter>ソース ファイル\ui\popup_ui</Filter>
-    </ClCompile>
     <ClCompile Include="source\font_data.cpp">
       <Filter>ソース ファイル\font</Filter>
     </ClCompile>
@@ -1211,6 +1214,15 @@
     </ClCompile>
     <ClCompile Include="source\FPS.cpp">
       <Filter>ソース ファイル\FPS</Filter>
+    </ClCompile>
+    <ClCompile Include="source\popup_ui_holder_base.cpp">
+      <Filter>ソース ファイル\ui\popup_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\number_popup_ui.cpp">
+      <Filter>ソース ファイル\ui\popup_ui\number</Filter>
+    </ClCompile>
+    <ClCompile Include="source\image_popup_ui.cpp">
+      <Filter>ソース ファイル\ui\popup_ui\image</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2036,9 +2048,6 @@
     <ClInclude Include="source\popup_ui.h">
       <Filter>ソース ファイル\ui\popup_ui</Filter>
     </ClInclude>
-    <ClInclude Include="source\number_popup_ui.h">
-      <Filter>ソース ファイル\ui\popup_ui</Filter>
-    </ClInclude>
     <ClInclude Include="source\font_data.h">
       <Filter>ソース ファイル\font</Filter>
     </ClInclude>
@@ -2047,6 +2056,15 @@
     </ClInclude>
     <ClInclude Include="source\FPS.h">
       <Filter>ソース ファイル\FPS</Filter>
+    </ClInclude>
+    <ClInclude Include="source\popup_ui_holder_base.h">
+      <Filter>ソース ファイル\ui\popup_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\image_popup_ui.h">
+      <Filter>ソース ファイル\ui\popup_ui\image</Filter>
+    </ClInclude>
+    <ClInclude Include="source\number_popup_ui.h">
+      <Filter>ソース ファイル\ui\popup_ui\number</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
