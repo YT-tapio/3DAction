@@ -110,7 +110,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<InputBase> input,const std::st
 	speed_ = 0.f;
 	job_ = "nothing";
 	shadow_creater->CreateShadow(&hip_pos_, &is_active_,radius +0.5f);
-	damage_ui_group_ = damage_ui_group;
+	popup_ui_group_ = damage_ui_group;
 }
 
 Player::~Player()
@@ -743,7 +743,9 @@ void Player::UnGround()
 
 void Player::OnHealFromPlayer(float heal)
 {
-	// printfDx("ƒq[ƒ‹\n");
+	// hp‚Ì‰ñ•œ
+	status_container_->TakeHeal(heal);
+	popup_ui_group_->SpawnPlayerHealUI(head_pos_,heal);
 }
 
 void Player::OnDamageFromEnemy(float damage,AttackType type, const bool is_critical)
@@ -763,8 +765,7 @@ void Player::OnDamageFromEnemy(float damage,AttackType type, const bool is_criti
 			status_container_->StaminaUpMax();
 			if (job_ == "healer")
 			{
-				// hp‚Ì‰ñ•œ
-				status_container_->TakeHeal(status_container_->GetCurrentStatus().magic_atk);
+				OnHealFromPlayer(status_container_->GetCurrentStatus().magic_atk);
 			}
 			else
 			{
@@ -835,7 +836,7 @@ void Player::OnDamageFromEnemy(float damage,AttackType type, const bool is_criti
 	// ui•`‰æ‚ðs‚¤
 	// “ª‚Ìposition‚É‚µ‚æ‚¤‚©‚È
 	//DamageUIGroup::GetInstance().SpawnPlayerDamageUI(head_pos_, final_damage);
-	damage_ui_group_->SpawnPlayerDamageUI(head_pos_,final_damage,is_critical);
+	popup_ui_group_->SpawnPlayerDamageUI(head_pos_,final_damage,is_critical);
 }
 
 void Player::InputChange(std::shared_ptr<InputBase> input)

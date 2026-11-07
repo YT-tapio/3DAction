@@ -150,7 +150,7 @@ private:
 	std::shared_ptr<SkillBase> jump_infite_attack_;
 	std::shared_ptr<StatusContainer> status_container_;
 	std::shared_ptr<IPlayerUIController> player_ui_controller_;
-	std::shared_ptr<IPopupUIGroup> damage_ui_group_;
+	std::shared_ptr<IPopupUIGroup> popup_ui_group_;
 	std::shared_ptr<Bullet> bullet_;
 	std::shared_ptr<ConditionTimer> enemy_death_offset_timer_;	// ŠÔ‚ª‚½‚Á‚Ä‚©‚ç“G‚ª€‚ñ‚¾‚Æ‚«‚Ìˆ—‚ğs‚¤
 

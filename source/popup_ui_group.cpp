@@ -24,20 +24,26 @@ PopupUIGroup::~PopupUIGroup()
 
 void PopupUIGroup::Awake()
 {
-	int player_font_color = GetColor(0, 255, 255);
-	int enemy_font_color = GetColor(255, 0, 0);
+	int player_font_color = GetColor(255, 0, 0);
+	int enemy_font_color = GetColor(0, 255, 255);
+	int heal_color = GetColor(0, 255, 0);
 	int edge_color = GetColor(0, 0, 0);
 
-	// インスタンスを生成
+	// プレイヤーのインスタンスを生成
 	for (int i = 0; i < kMaxDamageUI; i++)
 	{
 		player_damage_uis_.emplace_back(std::make_shared<NumberPopupUI>(player_font_color, edge_color));
 	}
-
-	// インスタンスを生成
+	// 敵のインスタンスを生成
 	for (int i = 0; i < kMaxDamageUI; i++)
 	{
 		enemy_damage_uis_.emplace_back(std::make_shared<NumberPopupUI>(enemy_font_color, edge_color));
+	}
+	// 敵のインスタンスを生成
+	for (int i = 0; i < kMaxHealUI; i++)
+	{
+		enemy_heal_uis_.emplace_back(std::make_shared<NumberPopupUI>(heal_color, edge_color));
+		player_heal_uis_.emplace_back(std::make_shared<NumberPopupUI>(heal_color, edge_color));
 	}
 }
 
@@ -55,21 +61,10 @@ void PopupUIGroup::Init()
 
 void PopupUIGroup::Update()
 {
-	for (auto damage_ui : player_damage_uis_)
-	{
-		if (damage_ui->GetIsActive())
-		{
-			damage_ui->Update();
-		}
-	}
-	// 敵が攻撃を受けた時描画
-	for (auto damage_ui : enemy_damage_uis_)
-	{
-		if (damage_ui->GetIsActive())
-		{
-			damage_ui->Update();
-		}
-	}
+	UpdateUI(player_damage_uis_);
+	UpdateUI(enemy_damage_uis_);
+	UpdateUI(player_heal_uis_);
+	UpdateUI(enemy_heal_uis_);
 }
 
 const void PopupUIGroup::Draw() const
@@ -77,20 +72,10 @@ const void PopupUIGroup::Draw() const
 	SetUseZBuffer3D(FALSE);
 	SetWriteZBuffer3D(FALSE);
 
-	for (const auto damage_ui : player_damage_uis_)
-	{
-		if (damage_ui->GetIsActive())
-		{
-			damage_ui->Draw();
-		}
-	}
-	for (const auto damage_ui : enemy_damage_uis_)
-	{
-		if (damage_ui->GetIsActive())
-		{
-			damage_ui->Draw();
-		}
-	}
+	DrawUI(player_damage_uis_);
+	DrawUI(enemy_damage_uis_);
+	DrawUI(player_heal_uis_);
+	DrawUI(enemy_heal_uis_);
 
 	// 元に戻す
 	SetUseZBuffer3D(TRUE);
@@ -99,25 +84,54 @@ const void PopupUIGroup::Draw() const
 
 void PopupUIGroup::SpawnPlayerDamageUI(const VECTOR& pos,const float& damage, const bool is_critical)
 {
-	for (auto damage_ui : player_damage_uis_)
-	{
-		if (!damage_ui->GetIsActive())
-		{
-			damage_ui->Spawn(pos, damage,is_critical);
-			auto test = damage_ui->GetIsActive();
-			break;
-		}
-	}
+	SpawnUI(player_damage_uis_, pos, damage, is_critical);
+}
+
+void PopupUIGroup::SpawnPlayerHealUI(const VECTOR& pos, const float& heal)
+{
+	SpawnUI(player_heal_uis_, pos, heal);
 }
 
 void PopupUIGroup::SpawnEnemyDamageUI(const VECTOR& pos, const float& damage, const bool is_critical)
 {
-	for (auto damage_ui : enemy_damage_uis_)
+	SpawnUI(enemy_damage_uis_, pos, damage, is_critical);
+}
+
+void PopupUIGroup::SpawnEnemyHealUI(const VECTOR& pos, const float& heal)
+{
+	SpawnUI(enemy_heal_uis_, pos, heal);
+}
+
+void PopupUIGroup::UpdateUI(std::vector<std::shared_ptr<NumberPopupUI>> popup_uis)
+{
+	for (auto popup_ui : popup_uis)
 	{
-		if (!damage_ui->GetIsActive())
+		if (popup_ui->GetIsActive())
 		{
-			damage_ui->Spawn(pos, damage,is_critical);
-			auto test = damage_ui->GetIsActive();
+			popup_ui->Update();
+		}
+	}
+}
+
+const void PopupUIGroup::DrawUI(std::vector<std::shared_ptr<NumberPopupUI>> popup_uis) const
+{
+	for (const auto popup_ui : popup_uis)
+	{
+		if (popup_ui->GetIsActive())
+		{
+			popup_ui->Draw();
+		}
+	}
+}
+
+void PopupUIGroup::SpawnUI(std::vector<std::shared_ptr<NumberPopupUI>> popup_uis, const VECTOR& pos, const float& damage, const bool is_critical)
+{
+	for (auto popup_ui : popup_uis)
+	{
+		if (!popup_ui->GetIsActive())
+		{
+			popup_ui->Spawn(pos, damage, is_critical);
+			auto test = popup_ui->GetIsActive();
 			break;
 		}
 	}
