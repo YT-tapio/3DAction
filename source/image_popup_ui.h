@@ -5,17 +5,12 @@ class ImagePopupUI : public PopupUIHolderBase
 {
 public:
 
-	ImagePopupUI(const std::string& image_name);
+	ImagePopupUI();
 
 	~ImagePopupUI() override;
 	
-	void Spawn(const VECTOR& base_pos, const int& size);
-
-
+	void Spawn(const VECTOR& base_pos, const std::string& image_name, const float& size);
 
 private:
-
-	std::string image_name_;
-
 
 };

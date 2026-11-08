@@ -136,26 +136,24 @@ const bool PlayerInput::IsAvoid() const
 	for (auto& input : inputs_)
 	{
 		auto pad = std::dynamic_pointer_cast<Pad>(input);
-		float pushing_time = 10.f;
+		float pushing_time = -1.f;
 		if (pad != nullptr)
 		{
-			if (pad->GetReleaseTimeButton(PadConfig::avoid) == 0.f)
-			{
-				pushing_time = pad->GetBeforePushingTimeButton(config_data.pad.config);
-			}
+			pushing_time = pad->GetPushingTimeButton(config_data.pad.config);
 		}
 		else
 		{
 			auto pc = std::dynamic_pointer_cast<PC>(input);
 			if (pc != nullptr)
 			{
-				if (pc->GetReleaseTimeKey(KeyConfig::avoid) == 0.f)
-				{
-					pushing_time = pc->GetBeforePushingTimeKey(config_data.pc.config);
-				}
+				pushing_time = pc->GetPushingTimeKey(config_data.pc.config);
 			}
 		}
-		if (pushing_time <= kDashTiming) { return TRUE; }
+		if (pushing_time == 0.f) 
+		{ 
+			return TRUE;
+		}
+
 	}
 	return FALSE;
 }

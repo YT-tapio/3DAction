@@ -515,8 +515,8 @@ void Player::Move()
 	
 	if (VSize(dir) > 0 && !is_stop_ && can_move_)
 	{
-		auto input = std::dynamic_pointer_cast<const PlayerInput>(input_);
-		if (input != nullptr) 
+		auto is_player = input_->CheckIsPlayer();
+		if (is_player) 
 		{
 			dir_ = VectorAssistant::VGetRotPiY(VectorAssistant::VGetFlat(*camera_dir_), VectorAssistant::VGetTan(dir));
 		}
@@ -525,26 +525,25 @@ void Player::Move()
 			dir_ = dir;
 		}
 		dir_ = VNorm(dir_);
-		
-		if (input_->IsDash() && status_container_->CanUseStamina())
+		// スタミナがある場合
+		if (status_container_->CanUseStamina())
 		{
-			speed *= 2.5f;
-			is_dash_ = TRUE;
-			if(rigid_body_->GetOnGround())
+			
+			if (rigid_body_->GetOnGround())
 			{
 				animator_->PlayRequest("run");
 			}
-
-			// ここでスタミナを減らす
-			status_container_->StaminaDown(0.5f * time_->GetDeltaTime());
+			speed *= 2.5f;
+			is_dash_ = TRUE;
 		}
 		else
 		{
-			is_dash_ = FALSE;
+			
 			if (rigid_body_->GetOnGround())
 			{
 				animator_->PlayRequest("jogging");
 			}
+			is_dash_ = FALSE;
 		}
 		is_move_ = TRUE;
 		vel_ = VScale(dir_, speed);
@@ -771,6 +770,8 @@ void Player::OnDamageFromEnemy(float damage,AttackType type, const bool is_criti
 			{
 				// バフ
 				status_container_->Activation(job_ + "_avoid",player_ui_controller_,name_);
+				const float kSize = 5.3f;
+				popup_ui_group_->SpawnAvoidBuffUI(head_pos_, job_ + "_avoid", kSize);
 			}
 
 			int effect_id = -1;

@@ -11,4 +11,6 @@ public:
 	virtual void SpawnEnemyDamageUI(const VECTOR& pos, const float& damage, const bool is_critical) {}
 
 	virtual void SpawnEnemyHealUI(const VECTOR& pos, const float& heal) {}
+
+	virtual void SpawnAvoidBuffUI(const VECTOR& pos, const std::string& name,const float& size) {}
 };

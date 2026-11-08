@@ -241,8 +241,8 @@ void Game::Draw()
 	{
 		obj->Draw();
 	}
-
-	// Physics::GetInstance().Debug();
+	EffectManager::GetInstance().Draw();
+	
 	player_ui_controller_->Draw();
 	game_start_timer_->Draw();
 	enemy_ui_group_->Draw();
@@ -261,8 +261,6 @@ void Game::Draw()
 		}
 		
 	}
-	
-	EffectManager::GetInstance().Draw();
 	// DrawString(1200, 860, "十字 右ボタン、Enterを押してリザルトへ", GetColor(0, 0, 0));
 }
 

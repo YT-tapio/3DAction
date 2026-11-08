@@ -1,15 +1,17 @@
 #include<vector>
 #include<memory>
+#include<string>
 #include"DxLib.h"
 #include"popup_ui_group.h"
-#include<string>
 #include"damage_ui.h"
 #include<sstream>
 #include<fstream>
 #include<windows.h>
 #include"csv_file_assistant.h"
 #include"font.h"
+#include"popup_ui_holder_base.h"
 #include"number_popup_ui.h"
+#include"image_popup_ui.h"
 
 PopupUIGroup::PopupUIGroup()
 {
@@ -19,7 +21,10 @@ PopupUIGroup::PopupUIGroup()
 PopupUIGroup::~PopupUIGroup()
 {
 	player_damage_uis_.clear();
+	player_heal_uis_.clear();
 	enemy_damage_uis_.clear();
+	enemy_heal_uis_.clear();
+	avoid_buff_uis_.clear();
 }
 
 void PopupUIGroup::Awake()
@@ -39,11 +44,16 @@ void PopupUIGroup::Awake()
 	{
 		enemy_damage_uis_.emplace_back(std::make_shared<NumberPopupUI>(enemy_font_color, edge_color));
 	}
-	// 敵のインスタンスを生成
+	// 回復時のインスタンスを生成
 	for (int i = 0; i < kMaxHealUI; i++)
 	{
 		enemy_heal_uis_.emplace_back(std::make_shared<NumberPopupUI>(heal_color, edge_color));
 		player_heal_uis_.emplace_back(std::make_shared<NumberPopupUI>(heal_color, edge_color));
+	}
+	// 回避時のインスタンスを生成
+	for (int i = 0; i < kMaxBuffUI; i++)
+	{
+		avoid_buff_uis_.emplace_back(std::make_shared<ImagePopupUI>());
 	}
 }
 
@@ -61,10 +71,11 @@ void PopupUIGroup::Init()
 
 void PopupUIGroup::Update()
 {
-	UpdateUI(player_damage_uis_);
-	UpdateUI(enemy_damage_uis_);
-	UpdateUI(player_heal_uis_);
-	UpdateUI(enemy_heal_uis_);
+	UpdateNumberPopupUI(player_damage_uis_);
+	UpdateNumberPopupUI(enemy_damage_uis_);
+	UpdateNumberPopupUI(player_heal_uis_);
+	UpdateNumberPopupUI(enemy_heal_uis_);
+	UpdateImagePopupUI(avoid_buff_uis_);
 }
 
 const void PopupUIGroup::Draw() const
@@ -72,11 +83,11 @@ const void PopupUIGroup::Draw() const
 	SetUseZBuffer3D(FALSE);
 	SetWriteZBuffer3D(FALSE);
 
-	DrawUI(player_damage_uis_);
-	DrawUI(enemy_damage_uis_);
-	DrawUI(player_heal_uis_);
-	DrawUI(enemy_heal_uis_);
-
+	DrawNumberPopupUI(player_damage_uis_);
+	DrawNumberPopupUI(enemy_damage_uis_);
+	DrawNumberPopupUI(player_heal_uis_);
+	DrawNumberPopupUI(enemy_heal_uis_);
+	DrawImagePopupUI(avoid_buff_uis_);
 	// 元に戻す
 	SetUseZBuffer3D(TRUE);
 	SetWriteZBuffer3D(TRUE);
@@ -102,7 +113,12 @@ void PopupUIGroup::SpawnEnemyHealUI(const VECTOR& pos, const float& heal)
 	SpawnUI(enemy_heal_uis_, pos, heal);
 }
 
-void PopupUIGroup::UpdateUI(std::vector<std::shared_ptr<NumberPopupUI>> popup_uis)
+void PopupUIGroup::SpawnAvoidBuffUI(const VECTOR& pos, const std::string& image_name,const float& size)
+{
+	SpawnImagePopupUI(avoid_buff_uis_, pos, image_name, size);
+}
+
+void PopupUIGroup::UpdateNumberPopupUI(std::vector<std::shared_ptr<NumberPopupUI>> popup_uis)
 {
 	for (auto popup_ui : popup_uis)
 	{
@@ -113,7 +129,29 @@ void PopupUIGroup::UpdateUI(std::vector<std::shared_ptr<NumberPopupUI>> popup_ui
 	}
 }
 
-const void PopupUIGroup::DrawUI(std::vector<std::shared_ptr<NumberPopupUI>> popup_uis) const
+void PopupUIGroup::UpdateImagePopupUI(std::vector<std::shared_ptr<ImagePopupUI>> popup_uis)
+{
+	for (auto popup_ui : popup_uis)
+	{
+		if (popup_ui->GetIsActive())
+		{
+			popup_ui->Update();
+		}
+	}
+}
+
+const void PopupUIGroup::DrawNumberPopupUI(std::vector<std::shared_ptr<NumberPopupUI>> popup_uis) const
+{
+	for (const auto popup_ui : popup_uis)
+	{
+		if (popup_ui->GetIsActive())
+		{
+			popup_ui->Draw();
+		}
+	}
+}
+
+const void PopupUIGroup::DrawImagePopupUI(std::vector<std::shared_ptr<ImagePopupUI>> popup_uis) const
 {
 	for (const auto popup_ui : popup_uis)
 	{
@@ -137,3 +175,15 @@ void PopupUIGroup::SpawnUI(std::vector<std::shared_ptr<NumberPopupUI>> popup_uis
 	}
 }
 
+void PopupUIGroup::SpawnImagePopupUI(std::vector<std::shared_ptr<ImagePopupUI>> popup_uis, const VECTOR& pos, const std::string& image_name,const float& size)
+{
+	for (auto popup_ui : popup_uis)
+	{
+		if (!popup_ui->GetIsActive())
+		{
+			popup_ui->Spawn(pos,image_name,size);
+			auto test = popup_ui->GetIsActive();
+			break;
+		}
+	}
+}

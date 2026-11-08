@@ -86,7 +86,7 @@ const void PopupUI::Draw() const
 	Draw2D::Blend(draw_function, alpha_value_);
 }
 
-void PopupUI::Spawn(const VECTOR pos,int handle,const int& size)
+void PopupUI::Spawn(const VECTOR pos,int handle,const float& size)
 {
 	size_ = size;
 	handle_ = handle;

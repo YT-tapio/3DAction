@@ -21,7 +21,7 @@ public:
 	/// •\Ž¦ŠJŽn
 	/// </summary>
 	/// <param name="handle">‰æ‘œ</param>
-	void Spawn(const VECTOR pos,int handle, const int& size = 1.f);
+	void Spawn(const VECTOR pos,int handle, const float& size = 1.f);
 
 	const bool GetIsActive() const;
 

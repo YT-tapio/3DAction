@@ -6,9 +6,8 @@
 #include"image_repository.h"
 #include"popup_ui.h"
 
-ImagePopupUI::ImagePopupUI(const std::string& image_name)
+ImagePopupUI::ImagePopupUI()
 	: PopupUIHolderBase()
-	, image_name_(image_name)
 {
 	
 }
@@ -18,7 +17,7 @@ ImagePopupUI::~ImagePopupUI()
 	
 }
 
-void ImagePopupUI::Spawn(const VECTOR& base_pos, const int& size)
+void ImagePopupUI::Spawn(const VECTOR& base_pos,const std::string& image_name,const float& size)
 {
-	popup_ui_->Spawn(base_pos, ImageRepository::GetInstance().GetHandle(image_name_), size);
+	popup_ui_->Spawn(base_pos, ImageRepository::GetInstance().GetHandle(image_name), size);
 }
