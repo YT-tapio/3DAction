@@ -45,8 +45,14 @@ public:
 	/// <param name="vel"></param>
 	void UpdateVelocity(const VECTOR& vel);
 
+	/// <summary>
+	/// 外部からの力
+	/// </summary>
+	/// <param name="vel"></param>
+	void AddForce(const VECTOR& force);
+
 	// 重力処理
-	void AddForce();
+	void Gravity();
 
 	void SetPos();
 
@@ -136,6 +142,8 @@ private:
 
 	VECTOR target_vel_;
 
+	VECTOR add_vel_;	// 外部からの力
+
 	bool is_stop_;
 
 	bool use_gravity_;		// 重力
@@ -144,6 +152,7 @@ private:
 	bool is_landing_;		// 着地した瞬間
 	bool is_object_;		// 自分はobjectなのか
 	bool is_active_;
+	
 	float mass_;			// 重さ
 	float friction_;		// 摩擦(0～1の間)0に近づくほど摩擦が強くなる
 

@@ -138,6 +138,8 @@ void Tackle::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 
 	if (owner_tag == object_tag) { return; }
 
+	object->GetRigidBody()->SetUpSpeed(10.f);
+
 	// タグが違う場合は相手にダメージを加える
 	bool is_critical = FALSE;
 	// ownerがpalyerだったら

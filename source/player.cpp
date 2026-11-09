@@ -565,7 +565,7 @@ void Player::Move()
 void Player::Gravity()
 {
 	if (is_ground_) { return; }
-	rigid_body_->AddForce();
+	rigid_body_->Gravity();
 }
 
 void Player::UpdateBone()

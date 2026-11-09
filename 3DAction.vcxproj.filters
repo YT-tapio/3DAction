@@ -517,6 +517,9 @@
     <Filter Include="ソース ファイル\ui\popup_ui\number">
       <UniqueIdentifier>{d6714d93-440f-4e4a-9078-64ffbe4ebb33}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\behavior\tackle">
+      <UniqueIdentifier>{ee404804-2942-4a74-9209-d56536a1b3cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -771,9 +774,6 @@
     <ClCompile Include="source\transform.cpp">
       <Filter>ソース ファイル\transform</Filter>
     </ClCompile>
-    <ClCompile Include="source\tackle.cpp">
-      <Filter>ソース ファイル\behavior</Filter>
-    </ClCompile>
     <ClCompile Include="source\animation_charge.cpp">
       <Filter>ソース ファイル\behavior</Filter>
     </ClCompile>
@@ -995,9 +995,6 @@
     </ClCompile>
     <ClCompile Include="source\zoom.cpp">
       <Filter>ソース ファイル\camera\zoom</Filter>
-    </ClCompile>
-    <ClCompile Include="source\roar_tackle.cpp">
-      <Filter>ソース ファイル\behavior</Filter>
     </ClCompile>
     <ClCompile Include="source\shadow_circle.cpp">
       <Filter>ソース ファイル\shadow_map\shadow_circle</Filter>
@@ -1223,6 +1220,12 @@
     </ClCompile>
     <ClCompile Include="source\popup_ui_group_interface.cpp">
       <Filter>ソース ファイル\ui\popup_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\roar_tackle.cpp">
+      <Filter>ソース ファイル\behavior\tackle</Filter>
+    </ClCompile>
+    <ClCompile Include="source\tackle.cpp">
+      <Filter>ソース ファイル\behavior\tackle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1541,9 +1544,6 @@
     <ClInclude Include="source\transform.h">
       <Filter>ソース ファイル\transform</Filter>
     </ClInclude>
-    <ClInclude Include="source\tackle.h">
-      <Filter>ソース ファイル\behavior</Filter>
-    </ClInclude>
     <ClInclude Include="source\animation_charge.h">
       <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
@@ -1805,9 +1805,6 @@
     <ClInclude Include="source\zoom.h">
       <Filter>ソース ファイル\camera\zoom</Filter>
     </ClInclude>
-    <ClInclude Include="source\roar_tackle.h">
-      <Filter>ソース ファイル\behavior</Filter>
-    </ClInclude>
     <ClInclude Include="source\shadow_circle.h">
       <Filter>ソース ファイル\shadow_map\shadow_circle</Filter>
     </ClInclude>
@@ -2065,6 +2062,12 @@
     </ClInclude>
     <ClInclude Include="source\popup_ui_group_interface.h">
       <Filter>ソース ファイル\ui\popup_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\roar_tackle.h">
+      <Filter>ソース ファイル\behavior\tackle</Filter>
+    </ClInclude>
+    <ClInclude Include="source\tackle.h">
+      <Filter>ソース ファイル\behavior\tackle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

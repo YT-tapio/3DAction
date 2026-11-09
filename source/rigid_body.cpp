@@ -118,7 +118,13 @@ void RigidBody::UpdateVelocity(const VECTOR& vel)
 	dir_ = VNorm(vel);
 }
 
-void RigidBody::AddForce()
+void RigidBody::AddForce(const VECTOR& force)
+{
+	// åªç›ÇÃvelocityÇ…í«â¡Ç∑ÇÈ
+	vel_ = VAdd(vel_, force);
+}
+
+void RigidBody::Gravity()
 {
 	if (!use_gravity_) { return; }
 	if (is_stop_) { return; }
@@ -130,7 +136,6 @@ void RigidBody::AddForce()
 		target_vel_ = VAdd(target_vel_, VGet(0.f, fall_speed_, 0.f));
 	}
 }
-
 
 void RigidBody::SetPos()
 {

@@ -301,7 +301,7 @@ void Physics::Gravity()
 	{
 		if (!main_body.second.lock()->IsStop() && main_body.second.lock()->GetIsActive())
 		{
-			main_body.second.lock()->AddForce();
+			main_body.second.lock()->Gravity();
 		}
 	}
 }
