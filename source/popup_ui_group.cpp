@@ -12,6 +12,7 @@
 #include"popup_ui_holder_base.h"
 #include"number_popup_ui.h"
 #include"image_popup_ui.h"
+#include"sound_manager.h"
 
 PopupUIGroup::PopupUIGroup()
 {
@@ -169,6 +170,11 @@ void PopupUIGroup::SpawnUI(std::vector<std::shared_ptr<NumberPopupUI>> popup_uis
 		if (!popup_ui->GetIsActive())
 		{
 			popup_ui->Spawn(pos, damage, is_critical);
+			if (is_critical)
+			{
+				const std::string kCriticalHitSEName = "critical_hit";
+				SoundManager::GetInstance().Play2DSound(kCriticalHitSEName);
+			}
 			auto test = popup_ui->GetIsActive();
 			break;
 		}

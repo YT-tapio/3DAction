@@ -835,7 +835,6 @@ void Player::OnDamageFromEnemy(float damage,AttackType type, const bool is_criti
 	SoundManager::GetInstance().Play3DSound("palyer_on_damage");
 	// ui•`‰æ‚ðs‚¤
 	// “ª‚Ìposition‚É‚µ‚æ‚¤‚©‚È
-	//DamageUIGroup::GetInstance().SpawnPlayerDamageUI(head_pos_, final_damage);
 	popup_ui_group_->SpawnPlayerDamageUI(head_pos_,final_damage,is_critical);
 }
 
