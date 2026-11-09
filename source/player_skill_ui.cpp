@@ -48,6 +48,8 @@ void PlayerSkillUI::Update()
 	button_->Update();
 	// 暗くする
 
+	if (can_use_ == nullptr) { return; }
+	if (cool_time_ratio_ == nullptr) { return; }
 	// スキルが使えるとき
 	if (can_use_())
 	{
@@ -128,7 +130,7 @@ void PlayerSkillUI::DrawDarkUI()
 	int icon_width = -1;
 	int icon_height = -1;
 	GetGraphSize(data_.icon_handle, &icon_width, &icon_height);
-	VECTOR name_pos = VAdd(pos_, VGet(icon_width, 0.f, 0.f));
+	VECTOR name_pos = VAdd(pos_, VGet(icon_width - 20.f, -20.f, 0.f));
 	// スキル名描画
 	int handle = FontData::GetInstance().GetHandle(font_name_);
 	Draw2D::FormatStringToHandle(name_pos, "%s", body_color_, handle, data_.name.c_str(), edge_color_);

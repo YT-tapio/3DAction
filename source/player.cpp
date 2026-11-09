@@ -291,11 +291,6 @@ void Player::Update()
 		animator_->PlayRequest("falling");
 	}
 
-	if (rigid_body_->GetIsLanding())
-	{
-		status_container_->StartHealStamina();
-	}
-
 	animator_->Update(time_);
 	Setting();
 	// QÆ‚ÌXV
@@ -729,13 +724,17 @@ void Player::OnCollisionExit(std::shared_ptr<IPhysicsEventReceiver> object)
 void Player::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 {
 	auto check_area = std::dynamic_pointer_cast<CheckMyArea>(object);
-
+	if (rigid_body_->GetIsLanding())
+	{
+		status_container_->StartHealStamina();
+	}
 
 	if (check_area != nullptr) { return; }
 }
 
 void Player::UnGround()
 {
+	status_container_->StopHealStamina();
 	is_ground_ = FALSE;
 	// printfDx("1\n");
 }
@@ -908,6 +907,12 @@ const int Player::GetSkillID(SkillType type) const
 	case SkillType::kStrong:
 		return second_skill_->GetID();
 		break;
+	case SkillType::kAvoid:
+		return avoid_->GetID();
+		break;
+	case SkillType::kJump:
+		return jump_->GetID();
+		break;
 	case SkillType::kConstant:
 	default:
 		return -1;
@@ -925,6 +930,13 @@ const float Player::GetSkillCoolTime(SkillType type) const
 		break;
 	case SkillType::kStrong:
 		return second_skill_->GetCoolTiemRatio();
+		break;
+	case SkillType::kAvoid:
+		return avoid_->GetCoolTiemRatio();
+		break;
+
+	case SkillType::kJump:
+		return jump_->GetCoolTiemRatio();
 		break;
 	case SkillType::kConstant:
 	default:
@@ -944,6 +956,15 @@ const bool Player::GetSkillCanUse(SkillType type) const
 	case SkillType::kStrong:
 		return second_skill_->CanUseSkill();
 		break;
+
+	case SkillType::kAvoid:
+		return avoid_->CanUseSkill();
+		break;
+
+	case SkillType::kJump:
+		return jump_->CanUseSkill();
+		break;
+
 	case SkillType::kConstant:
 	default:
 		return FALSE;
@@ -955,6 +976,11 @@ const bool Player::GetSkillCanUse(SkillType type) const
 const float Player::GetDetectionRadius() const
 {
 	return detection_radius_;
+}
+
+const bool Player::GetOnDamage() const
+{
+	return on_damage_;
 }
 
 const bool Player::GetIsMove() const
@@ -1045,4 +1071,29 @@ void Player::MakeSkillUI()
 
 	player_ui_controller_->MakeSkillUI(normal_skill_id_, normal_skill_can_use, normal_skill_cool_time,
 		strong_skill_id_, strong_skill_can_use, strong_skill_cool_time, name_);
+
+	auto jump_skill_can_use = [this]() -> bool
+		{
+			return GetSkillCanUse(SkillType::kJump);
+		};
+
+	auto jump_skill_cool_time = [this]() -> float
+		{
+			return GetSkillCoolTime(SkillType::kJump);
+		};
+
+	player_ui_controller_->MakeJumpUI(jump_skill_can_use, jump_skill_cool_time,name_);
+
+	auto avoid_skill_can_use = [this]() -> bool
+		{
+			return GetSkillCanUse(SkillType::kAvoid);
+		};
+
+	auto avoid_skill_cool_time = [this]() -> float
+		{
+			return GetSkillCoolTime(SkillType::kAvoid);
+		};
+
+	player_ui_controller_->MakeAvoidUI(avoid_skill_can_use,avoid_skill_cool_time,name_);
+
 }

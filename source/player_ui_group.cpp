@@ -110,6 +110,16 @@ void PlayerUIGroup::MakeSkillUI(int normal_skill_id, std::function<bool()> norma
 		strong_skill_id, strong_cool_time_ratio, strong_can_use);
 }
 
+void PlayerUIGroup::MakeJumpUI(std::function<bool()> can_use, std::function<float()> cool_time_ratio)
+{
+	skill_ui_group_->MakeJumpSkillUI(can_use, cool_time_ratio);
+}
+
+void PlayerUIGroup::MakeAvoidUI(std::function<bool()> can_use, std::function<float()> cool_time_ratio)
+{
+	skill_ui_group_->MakeAvoidSkillUI(can_use, cool_time_ratio);
+}
+
 void PlayerUIGroup::SpawnStatModifire(std::function<bool()> end_condition, StatType stat_type, ModifireOperation operation)
 {
 	// 

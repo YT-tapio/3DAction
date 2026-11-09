@@ -26,5 +26,5 @@ private:
 	};
 
 	JumpState state_;
-
+	bool is_complete_;
 };

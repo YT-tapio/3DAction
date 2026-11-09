@@ -48,12 +48,12 @@ void NumberPopupUI::MakeHandle(const int& damage, const bool& is_critical)
 	int width = -1;
 	int height = -1;
 	int font_handle = FontData::GetInstance().GetHandle("popup_font");
+	if (is_critical)
+	{
+		Draw2D::RotaGraph(center_pos, 0.5f, 0.f, ImageRepository::GetInstance().GetHandle("critical_damage"), TRUE);
+	}
 	GetDrawFormatStringSizeToHandle(&width, &height, NULL, font_handle, "%d", static_cast<int>(damage));
 	VECTOR start_pos = VSub(center_pos, VectorAssistant::VGet2D(width * 0.5f, height * 0.5f));
 	Draw2D::FormatStringToHandle(start_pos, "%d", color_, font_handle, static_cast<int>(damage), edge_color_);
-	if (is_critical)
-	{
-		DrawBillboard3D(start_pos, 0.5f, 0.5f, 10.f, 0.f, ImageRepository::GetInstance().GetHandle("critical_damage"), TRUE);
-	}
 	sub_screen_->Down();
 }

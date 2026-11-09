@@ -49,7 +49,7 @@ BehaviorStatus Avoid::Update()
 
 	// animation‚ÌŽžŠÔ‚É‚æ‚Á‚Ä–³“G‚É‚·‚é‚©‚Ç‚¤‚©‚ð”»’f
 	
-	if (now_play_time_ > 0 && now_play_time_ < chara->GetAnimator()->GetTotalTime("avoid"))
+	if (now_play_time_ >= 0.f && now_play_time_ < chara->GetAnimator()->GetTotalTime("avoid"))
 	{ 
 		chara->SetInvincible(TRUE);
 		return BehaviorStatus::kRunning;

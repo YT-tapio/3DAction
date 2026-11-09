@@ -14,6 +14,7 @@
 PlayerSkillUIGroup::PlayerSkillUIGroup()
 	: normal_skill_pos_(VectorAssistant::VGetZero())
 	, strong_skill_pos_(VectorAssistant::VGetZero())
+	, base_pos_(VectorAssistant::VGetZero())
 	, jump_skill_pos_(VectorAssistant::VGetZero())
 	, avoid_skill_pos_(VectorAssistant::VGetZero())
 	, body_color_(-1)
@@ -32,8 +33,7 @@ PlayerSkillUIGroup::PlayerSkillUIGroup()
 
 PlayerSkillUIGroup::~PlayerSkillUIGroup()
 {
-	DeleteGraph(normal_skill_input_handle_);
-	DeleteGraph(strong_skill_input_handle_);
+	
 }
 
 void PlayerSkillUIGroup::Init()
@@ -106,7 +106,7 @@ void PlayerSkillUIGroup::ChangeSkill(const int normal_skill_id, std::function<fl
 	}	
 }
 
-void PlayerSkillUIGroup::MakeAvoidSkillUI(std::function<float()> cool_time_ratio, std::function<bool()> can_use)
+void PlayerSkillUIGroup::MakeAvoidSkillUI(std::function<bool()> can_use, std::function<float()> cool_time_ratio)
 {
 	const int kSkillID = 4;
 	SkillUIData skill_data;
@@ -121,7 +121,7 @@ void PlayerSkillUIGroup::MakeAvoidSkillUI(std::function<float()> cool_time_ratio
 	}
 }
 
-void PlayerSkillUIGroup::MakeJumpSkillUI(std::function<float()> cool_time_ratio, std::function<bool()> can_use)
+void PlayerSkillUIGroup::MakeJumpSkillUI(std::function<bool()> can_use, std::function<float()> cool_time_ratio)
 {
 	const int kSkillID = 5;
 	SkillUIData skill_data;
@@ -156,28 +156,19 @@ void PlayerSkillUIGroup::LoadFile()
 		std::stringstream ss(line);
 		std::string data;
 
-		normal_skill_pos_ = CSVFileAssistant::GetVector2DOfCSVFile(ss, data);
-		strong_skill_pos_ = CSVFileAssistant::GetVector2DOfCSVFile(ss, data);
-		auto normal_skill_input_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
-		auto strong_skill_input_path = CSVFileAssistant::GetStringOfCSVFile(ss, data);
-		normal_skill_input_handle_ = LoadGraph(normal_skill_input_path.c_str());
-		strong_skill_input_handle_ = LoadGraph(strong_skill_input_path.c_str());
-		if (normal_skill_input_handle_ == -1) { printfDx("読み込み失敗\n"); }
-		if (strong_skill_input_handle_ == -1) { printfDx("読み込み失敗\n"); }
+		base_pos_ = CSVFileAssistant::GetVector2DOfCSVFile(ss, data);
 		font_name_ = CSVFileAssistant::GetStringOfCSVFile(ss, data);
 		body_color_ = CSVFileAssistant::GetColorOfCSVFile(ss, data);
 		edge_color_ = CSVFileAssistant::GetColorOfCSVFile(ss, data);
-
-
 	}
 }
 
 void PlayerSkillUIGroup::MakePosition()
 {
 	// ベースのポジションから十字に分ける
-	float vertical_dist = 100.f;
-	float side_dist = 200.f;
-
+	float vertical_dist = 125.f;
+	float side_dist = 125.f;
+	
 	normal_skill_pos_ = VAdd(base_pos_, VGet(-side_dist, 0.f, 0.f));
 	strong_skill_pos_ = VAdd(base_pos_, VGet(0.f, -vertical_dist, 0.f));
 	jump_skill_pos_ = VAdd(base_pos_, VGet(side_dist, 0.f, 0.f));

@@ -29,9 +29,9 @@ public:
 	void ChangeSkill(const int normal_skill_id,std::function<float()> normal_skill_cool_time_ratio,std::function<bool()> normal_skill_can_use
 		,const int strong_skill_id, std::function<float()> strong_cool_time_ratio, std::function<bool()> strong_skill_can_use);
 
-	void MakeAvoidSkillUI(std::function<float()> cool_time_ratio, std::function<bool()> can_use);
+	void MakeAvoidSkillUI(std::function<bool()> can_use, std::function<float()> cool_time_ratio);
 
-	void MakeJumpSkillUI(std::function<float()> cool_time_ratio, std::function<bool()> can_use);
+	void MakeJumpSkillUI(std::function<bool()> can_use, std::function<float()> cool_time_ratio);
 
 private:
 

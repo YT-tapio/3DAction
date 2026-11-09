@@ -151,6 +151,7 @@ void RigidBody::SetUpSpeed(float speed)
 {
 	fall_speed_ = speed;
 	target_vel_.y = fall_speed_;
+	on_ground_ = FALSE;
 }
 
 void RigidBody::CanMove()
@@ -235,7 +236,6 @@ void RigidBody::OnGround(std::shared_ptr<IPhysicsEventReceiver> object)
 	target_vel_.y = 0.f;
 	vel_.y = 0.f;
 	on_ground_ = TRUE;
-	
 }
 
 void RigidBody::UnGround()

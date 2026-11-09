@@ -40,7 +40,6 @@ void AvoidSkill::Update()
 {
 	if (!CheckMyOwner()) { return; }
 	auto owner = owner_.lock();
-
 	// playerに変換できるか
 	if (owner == nullptr)
 	{
@@ -50,21 +49,25 @@ void AvoidSkill::Update()
 	
 	if (is_active_)
 	{
-		if (owner->GetAnimator()->GetNowAnimName() != "avoid")
+		if (owner->GetAnimator()->GetIsEnd("avoid"))
 		{
 			is_active_ = FALSE;
+			can_use_ = owner->GetStatusContainer()->CanUseStamina();
 			owner->SetIsStop(FALSE);
 		}
 	}
 	else
 	{
+		can_use_ = owner->GetStatusContainer()->CanUseStamina();
 		if (CheckIsAvoid(owner))
 		{
+			owner->SetInvincible(TRUE);
 			// スタミナを減らす
 			owner->GetStatusContainer()->StaminaDown(stamina_consumption_);
 			SoundManager::GetInstance().SetPos("avoid", owner->GetPosition());
 			SoundManager::GetInstance().Play3DSound("avoid");
 			is_active_ = TRUE;
+			can_use_ = FALSE;
 			owner->GetAnimator()->PlayRequest("avoid");
 			owner->SetIsStop(TRUE);
 			DecideVelocity(owner);
@@ -98,6 +101,7 @@ bool AvoidSkill::CheckIsAvoid(std::shared_ptr<Player> owner)
 			return FALSE;
 		}
 	}
+	if (owner->GetOnDamage()) { return FALSE; }
 	if (!owner->GetCanMove())
 	{
 		// 起き上がり中なら許す

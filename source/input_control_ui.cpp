@@ -60,6 +60,7 @@ void InputControlUI::Init()
 
 void InputControlUI::Update()
 {
+	return;
 	for (auto button_ui : button_uis_)
 	{
 		button_ui->Update();
@@ -69,6 +70,7 @@ void InputControlUI::Update()
 
 void InputControlUI::Draw()
 {
+	return;
 	Draw2D::RotaGraph(screen_pos_, 1.f, 0.f, screen_->GetHandle(), TRUE);
 }
 

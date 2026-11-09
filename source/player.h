@@ -99,6 +99,8 @@ public:
 	
 	const float GetDetectionRadius() const;
 
+	const bool GetOnDamage() const;
+
 	const bool GetIsMove() const;
 
 	const bool GetOnGround() const override;
