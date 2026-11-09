@@ -14,14 +14,19 @@
 PlayerSkillUIGroup::PlayerSkillUIGroup()
 	: normal_skill_pos_(VectorAssistant::VGetZero())
 	, strong_skill_pos_(VectorAssistant::VGetZero())
+	, jump_skill_pos_(VectorAssistant::VGetZero())
+	, avoid_skill_pos_(VectorAssistant::VGetZero())
 	, body_color_(-1)
 	, edge_color_(-1)
 {
 	// fontをダウンロード
 	LoadFile();
+	// ベースのポジションを決める
+	MakePosition();
 	normal_skill_ui_ = std::make_shared<PlayerSkillUI>(normal_skill_pos_, font_name_, body_color_, edge_color_, ConfigName::normal_skill);
 	strong_skill_ui_ = std::make_shared<PlayerSkillUI>(strong_skill_pos_, font_name_, body_color_, edge_color_, ConfigName::strong_skill);
-	
+	jump_skill_ui_ = std::make_shared<PlayerSkillUI>(jump_skill_pos_, font_name_, body_color_, edge_color_, ConfigName::jump);
+	avoid_skill_ui_ = std::make_shared<PlayerSkillUI>(avoid_skill_pos_, font_name_, body_color_, edge_color_, ConfigName::avoid);
 	skill_ui_datas_ = std::make_shared<SkillUIDatas>();
 }
 
@@ -46,6 +51,15 @@ void PlayerSkillUIGroup::Update()
 	{
 		strong_skill_ui_->Update();
 	}
+	if (jump_skill_ui_ != nullptr)
+	{
+		jump_skill_ui_->Update();
+	}
+	if (avoid_skill_ui_ != nullptr)
+	{
+		avoid_skill_ui_->Update();
+	}
+
 }
 
 void PlayerSkillUIGroup::Draw()
@@ -58,12 +72,19 @@ void PlayerSkillUIGroup::Draw()
 	{
 		strong_skill_ui_->Draw();
 	}
+	if (jump_skill_ui_ != nullptr)
+	{
+		jump_skill_ui_->Draw();
+	}
+	if (avoid_skill_ui_ != nullptr)
+	{
+		avoid_skill_ui_->Draw();
+	}
 }
 
 void PlayerSkillUIGroup::ChangeSkill(const int normal_skill_id, std::function<float()> normal_skill_cool_time_ratio, std::function<bool()> normal_skill_can_use
 	, const int strong_skill_id, std::function<float()> strong_skill_cool_time_ratio, std::function<bool()> strong_skill_can_use)
 {
-
 	SkillUIData normal_skill_data;
 	SkillUIData strong_skill_data;
 	//SkillUIData 
@@ -82,10 +103,38 @@ void PlayerSkillUIGroup::ChangeSkill(const int normal_skill_id, std::function<fl
 	if (strong_skill_ui_ != nullptr)
 	{
 		strong_skill_ui_->SetSkill(strong_skill_data, strong_skill_cool_time_ratio, strong_skill_can_use);
-	}
-	
+	}	
 }
 
+void PlayerSkillUIGroup::MakeAvoidSkillUI(std::function<float()> cool_time_ratio, std::function<bool()> can_use)
+{
+	const int kSkillID = 4;
+	SkillUIData skill_data;
+	if (skill_ui_datas_ != nullptr)
+	{
+		skill_data = skill_ui_datas_->GetData(kSkillID);
+	}
+
+	if (avoid_skill_ui_ != nullptr)
+	{
+		avoid_skill_ui_->SetSkill(skill_data, cool_time_ratio, can_use);
+	}
+}
+
+void PlayerSkillUIGroup::MakeJumpSkillUI(std::function<float()> cool_time_ratio, std::function<bool()> can_use)
+{
+	const int kSkillID = 5;
+	SkillUIData skill_data;
+	if (skill_ui_datas_ != nullptr)
+	{
+		skill_data = skill_ui_datas_->GetData(kSkillID);
+	}
+
+	if (jump_skill_ui_ != nullptr)
+	{
+		jump_skill_ui_->SetSkill(skill_data, cool_time_ratio, can_use);
+	}
+}
 
 void PlayerSkillUIGroup::LoadFile()
 {
@@ -121,4 +170,16 @@ void PlayerSkillUIGroup::LoadFile()
 
 
 	}
+}
+
+void PlayerSkillUIGroup::MakePosition()
+{
+	// ベースのポジションから十字に分ける
+	float vertical_dist = 100.f;
+	float side_dist = 200.f;
+
+	normal_skill_pos_ = VAdd(base_pos_, VGet(-side_dist, 0.f, 0.f));
+	strong_skill_pos_ = VAdd(base_pos_, VGet(0.f, -vertical_dist, 0.f));
+	jump_skill_pos_ = VAdd(base_pos_, VGet(side_dist, 0.f, 0.f));
+	avoid_skill_pos_ = VAdd(base_pos_, VGet(0.f, vertical_dist, 0.f));
 }

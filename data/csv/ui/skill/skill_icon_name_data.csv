@@ -1,3 +1,5 @@
 id,icon_handle_path,name
 0,data/ui/skill/icon/punch.png,パンチ
 3,data/ui/skill/icon/combo.png,コンボ
+4,data/ui/skill/icon/avoid.png,回避
+5,data/ui/skill/icon/jump.png,ジャンプ
