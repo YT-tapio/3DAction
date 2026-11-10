@@ -421,9 +421,6 @@
     <Filter Include="ソース ファイル\behavior\cool_time">
       <UniqueIdentifier>{12ec72fd-a130-4674-be92-365157abadd5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\behavior\player_ai\CheckStamina">
-      <UniqueIdentifier>{bd768d4a-8e96-4f6f-ae14-112ca04c33da}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\repository">
       <UniqueIdentifier>{2e43db57-a4d8-4d50-8c80-62f2b374ba83}</UniqueIdentifier>
     </Filter>
@@ -519,6 +516,12 @@
     </Filter>
     <Filter Include="ソース ファイル\behavior\tackle">
       <UniqueIdentifier>{ee404804-2942-4a74-9209-d56536a1b3cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\behavior\player_ai\check_skill">
+      <UniqueIdentifier>{7f71c121-3982-4eec-ba22-5698e5fbb559}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\behavior\player_ai\check_stamina">
+      <UniqueIdentifier>{bd768d4a-8e96-4f6f-ae14-112ca04c33da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1123,7 +1126,7 @@
       <Filter>ソース ファイル\repository\image_repository</Filter>
     </ClCompile>
     <ClCompile Include="source\check_stamina.cpp">
-      <Filter>ソース ファイル\behavior\player_ai\CheckStamina</Filter>
+      <Filter>ソース ファイル\behavior\player_ai\check_stamina</Filter>
     </ClCompile>
     <ClCompile Include="source\chase_main_player.cpp">
       <Filter>ソース ファイル\behavior\player_ai\chase_main_player</Filter>
@@ -1959,7 +1962,7 @@
       <Filter>ソース ファイル\behavior\cool_time</Filter>
     </ClInclude>
     <ClInclude Include="source\check_stamina.h">
-      <Filter>ソース ファイル\behavior\player_ai\CheckStamina</Filter>
+      <Filter>ソース ファイル\behavior\player_ai\check_stamina</Filter>
     </ClInclude>
     <ClInclude Include="source\image_repository.h">
       <Filter>ソース ファイル\repository\image_repository</Filter>

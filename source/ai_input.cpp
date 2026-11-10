@@ -10,8 +10,16 @@
 #include"enemy_base.h"
 #include"attack_info_holder.h"
 
+#include"behavior_interface.h"
 
 #include"behavior_tree.h"
+#include"node_base.h"
+#include"composite_node.h"
+#include"selector_node.h"
+#include"sequence_node.h"
+#include"action_node.h"
+
+
 
 AIInput::AIInput()
 	: InputBase()
@@ -37,6 +45,11 @@ void AIInput::Update()
 	if (is_stop_) { return; }
 
 	ResetInfo();
+
+	if (behavior_tree_ != nullptr) 
+	{
+		behavior_tree_->Update();
+	}
 
 	// メインのプレイヤーについていく
 	if (auto player_group = player_group_.lock())
@@ -153,7 +166,9 @@ void AIInput::LoadFile()
 }
 
 void AIInput::MakeBehaviorTree()
-{
+{	
+
+
 
 }
 

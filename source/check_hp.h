@@ -5,7 +5,7 @@ class CheckHp : public IBehavior
 {
 public:
 
-	CheckHp(float* hp);
+	CheckHp(float* hp,const float target_hp);
 
 	~CheckHp() override;
 
@@ -13,6 +13,7 @@ public:
 
 private:
 
+	float target_hp_;
 	float* hp_;
 
 

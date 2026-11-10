@@ -3,3 +3,4 @@ id,icon_handle_path,name
 3,data/ui/skill/icon/combo.png,コンボ
 4,data/ui/skill/icon/avoid.png,回避
 5,data/ui/skill/icon/jump.png,ジャンプ
+6,data/ui/skill/icon/heal.png,ヒール
