@@ -38,6 +38,8 @@ public:
 
 	void Debug();
 
+	VECTOR GetCurrentPlayerPos();
+
 	VECTOR* GetCurrentPlayerHeadPos() override;
 
 	VECTOR* GetCurrentPlayerFrontDir() override;

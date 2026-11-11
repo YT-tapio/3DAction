@@ -138,6 +138,20 @@ void PlayerGroup::Debug()
 	}
 }
 
+VECTOR PlayerGroup::GetCurrentPlayerPos()
+{
+	VECTOR player_pos = VectorAssistant::VGetZero();
+	for (auto& player : players_)
+	{
+		if (player->GetInput()->CheckIsPlayer())
+		{
+			player_pos = player->GetPosition();
+			return player_pos;
+		}
+	}
+	return player_pos;
+}
+
 VECTOR* PlayerGroup::GetCurrentPlayerHeadPos()
 {
 	return &current_player_head_pos_;

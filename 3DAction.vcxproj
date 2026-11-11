@@ -166,8 +166,11 @@
     <ClCompile Include="source\check_hp.cpp" />
     <ClCompile Include="source\check_inside_enemy.cpp" />
     <ClCompile Include="source\check_phase_node.cpp" />
+    <ClCompile Include="source\check_skill.cpp" />
+    <ClCompile Include="source\check_skill_can_use.cpp" />
     <ClCompile Include="source\check_stamina.cpp" />
     <ClCompile Include="source\config_datas.cpp" />
+    <ClCompile Include="source\execute_skill.cpp" />
     <ClCompile Include="source\font_data.cpp" />
     <ClCompile Include="source\image_popup_ui.cpp" />
     <ClCompile Include="source\number_popup_ui.cpp" />
@@ -383,6 +386,10 @@
     <ClCompile Include="source\check_enemy_attack_id.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\check_skill_can_use.h" />
+    <ClInclude Include="source\check_near_enemy.h" />
+    <ClInclude Include="source\check_skill.h" />
+    <ClInclude Include="source\execute_skill.h" />
     <ClInclude Include="source\font_data.h" />
     <ClInclude Include="source\image_popup_ui.h" />
     <ClInclude Include="source\number_popup_ui.h" />

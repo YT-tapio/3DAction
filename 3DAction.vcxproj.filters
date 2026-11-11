@@ -523,6 +523,9 @@
     <Filter Include="ソース ファイル\behavior\player_ai\check_stamina">
       <UniqueIdentifier>{bd768d4a-8e96-4f6f-ae14-112ca04c33da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\behavior\player_ai\check_near_enemy">
+      <UniqueIdentifier>{d79a2399-c22a-457c-9ac0-6c311acd9465}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -1229,6 +1232,15 @@
     </ClCompile>
     <ClCompile Include="source\tackle.cpp">
       <Filter>ソース ファイル\behavior\tackle</Filter>
+    </ClCompile>
+    <ClCompile Include="source\check_skill.cpp">
+      <Filter>ソース ファイル\behavior\player_ai\check_skill</Filter>
+    </ClCompile>
+    <ClCompile Include="source\execute_skill.cpp">
+      <Filter>ソース ファイル\behavior\player_ai</Filter>
+    </ClCompile>
+    <ClCompile Include="source\check_skill_can_use.cpp">
+      <Filter>ソース ファイル\behavior\player_ai</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2071,6 +2083,18 @@
     </ClInclude>
     <ClInclude Include="source\tackle.h">
       <Filter>ソース ファイル\behavior\tackle</Filter>
+    </ClInclude>
+    <ClInclude Include="source\check_skill.h">
+      <Filter>ソース ファイル\behavior\player_ai\check_skill</Filter>
+    </ClInclude>
+    <ClInclude Include="source\check_near_enemy.h">
+      <Filter>ソース ファイル\behavior\player_ai\check_near_enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\execute_skill.h">
+      <Filter>ソース ファイル\behavior\player_ai</Filter>
+    </ClInclude>
+    <ClInclude Include="source\check_skill_can_use.h">
+      <Filter>ソース ファイル\behavior\player_ai</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

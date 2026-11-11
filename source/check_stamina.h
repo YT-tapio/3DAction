@@ -8,7 +8,7 @@ class CheckStamina : public IBehavior
 {
 public:
 
-	CheckStamina(float* current_stamina,const float target_stamina);
+	CheckStamina(std::function<float()> get_current_stamina, const float target_stamina);
 
 	~CheckStamina() override;
 
@@ -16,6 +16,6 @@ public:
 
 private:
 
+	std::function<float()> get_current_stamina_;
 	float target_stamina_;
-	float current_stamina_;
 };

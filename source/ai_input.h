@@ -1,9 +1,11 @@
 #pragma once
 #include<vector>
 #include"input_base.h"
+#include"skill_type.h"
 
 class PlayerGroup;
 class BehaviorTree;
+class NodeBase;
 
 class AIInput : public InputBase
 {
@@ -19,6 +21,10 @@ public:
 
 	void SetPlayerGroup(std::weak_ptr<PlayerGroup> player_group) override;
 
+	void SetStickDir(const VECTOR& dir);
+
+	void PushSkill(const SkillType& type);
+
 	const bool CheckIsPlayer() const override;
 
 	const bool IsDash() const override;
@@ -28,7 +34,7 @@ public:
 	const bool IsAvoid() const override;
 
 	const bool IsJump() const override;
-
+	
 	const bool IsNormalSkill() const override;
 
 	const bool IsStrongSkill() const override;
@@ -44,6 +50,12 @@ private:
 	void ResetInfo();
 
 	void LoadFile();
+
+	std::shared_ptr<NodeBase> MakeExecuteSkillNode(const SkillType& type);
+
+	std::shared_ptr<NodeBase> MakeChaseMainPlayerNode();
+
+	VECTOR GetMainPlayerPos();
 
 private:
 
