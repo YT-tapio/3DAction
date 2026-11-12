@@ -32,6 +32,10 @@ public:
 
 	void DeleteResource();
 
+	void CreateAIInput();
+
+	void DeleteAIInput();
+
 	const std::shared_ptr<InputBase> GetPlayer1Input() const;
 
 	const std::shared_ptr<InputBase> GetPlayer2Input() const;

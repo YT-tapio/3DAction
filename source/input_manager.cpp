@@ -36,6 +36,7 @@ void InputManager::Update()
 
 	for (auto& input_id : input_id_mp_)
 	{
+		if (input_id.second == nullptr) { continue; }
 		input_id.second->Update();
 	}
 	
@@ -69,6 +70,26 @@ void InputManager::DeleteResource()
 {
 	changers_num_ = kPlayer1Id;
 	input_changers_.clear();
+}
+
+void InputManager::CreateAIInput()
+{
+	// ‡”Ô‚ğ‚½‚¾‚µ‚Ä‚©‚ç‚ğ¶¬‚·‚é,—‚ê‚Ä‚¢‚é‰Â”\«‚ª‚ ‚é‚½‚ß
+	ResetInput();
+
+	input_id_mp_[kPlayer2Id] = std::make_shared<AIInput>();
+	input_id_mp_[kPlayer3Id] = std::make_shared<AIInput>();
+	input_id_mp_[kPlayer4Id] = std::make_shared<AIInput>();
+}
+
+void InputManager::DeleteAIInput()
+{
+	// ‡”Ô‚ğ‚½‚¾‚µ‚Ä‚©‚ç‚ğ‚¯‚·,—‚ê‚Ä‚¢‚é‰Â”\«‚ª‚ ‚é‚½‚ß
+	ResetInput();
+
+	input_id_mp_[kPlayer2Id] = nullptr;
+	input_id_mp_[kPlayer3Id] = nullptr;
+	input_id_mp_[kPlayer4Id] = nullptr;
 }
 
 const std::shared_ptr<InputBase> InputManager::GetPlayer1Input() const
@@ -128,15 +149,7 @@ InputManager::InputManager()
 void InputManager::Awake()
 {
 	input_id_mp_[kPlayer1Id] = std::make_shared<PlayerInput>();
-	input_id_mp_[kPlayer2Id] = std::make_shared<AIInput>();
-	input_id_mp_[kPlayer3Id] = std::make_shared<AIInput>();
-	input_id_mp_[kPlayer4Id] = std::make_shared<AIInput>();
-	/*
-	player_input_ = std::make_shared<PlayerInput>();
-	player2_input_ = std::make_shared<AIInput>();
-	ai_input_2 = std::make_shared<AIInput>();
-	ai_input_3 = std::make_shared<AIInput>();
-	*/
+
 	changers_num_ = kPlayer1Id;
 }
 

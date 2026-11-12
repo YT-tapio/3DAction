@@ -54,6 +54,7 @@
 Game::Game()
 	: SceneBase()
 {
+	InputManager::GetInstance().CreateAIInput();
 	InputManager::GetInstance().Init();
 	attack_range_group_ = std::make_shared<AttackRangeGroup>();
 	damage_ui_group_ = std::make_shared<PopupUIGroup>();
@@ -101,6 +102,7 @@ Game::~Game()
 {
 	std::cout << "Game" << std::endl;
 	ObjectSetter::GetInstance().DeleteResource();
+	InputManager::GetInstance().DeleteAIInput();
 	InputManager::GetInstance().DeleteResource();
 	objects_.clear();
 	no_shadow_objects_.clear();
