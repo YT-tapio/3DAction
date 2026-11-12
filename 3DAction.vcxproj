@@ -166,6 +166,7 @@
     <ClCompile Include="source\check_count_node.cpp" />
     <ClCompile Include="source\check_hp.cpp" />
     <ClCompile Include="source\check_inside_enemy.cpp" />
+    <ClCompile Include="source\check_near_target.cpp" />
     <ClCompile Include="source\check_phase_node.cpp" />
     <ClCompile Include="source\check_skill.cpp" />
     <ClCompile Include="source\check_skill_can_use.cpp" />
@@ -392,7 +393,7 @@
     <ClInclude Include="source\attack_target_interface.h" />
     <ClInclude Include="source\attack_target_repository.h" />
     <ClInclude Include="source\check_skill_can_use.h" />
-    <ClInclude Include="source\check_near_enemy.h" />
+    <ClInclude Include="source\check_near_target.h" />
     <ClInclude Include="source\check_skill.h" />
     <ClInclude Include="source\execute_skill.h" />
     <ClInclude Include="source\font_data.h" />

@@ -22,6 +22,7 @@
 #include"execute_skill.h"
 #include"check_skill_can_use.h"
 #include"chase_main_player.h"
+#include"check_near_target.h"
 
 AIInput::AIInput()
 	: InputBase()
@@ -50,9 +51,9 @@ void AIInput::Update()
 
 	if (behavior_tree_ != nullptr) 
 	{
-		behavior_tree_->Update();
+		//behavior_tree_->Update();
 	}
-	return;
+	//return;
 	//
 	
 	// メインのプレイヤーについていく
@@ -63,7 +64,7 @@ void AIInput::Update()
 		auto owner_pos = owner_->GetPosition();
 
 		auto dist = VSub(main_player_pos, owner_pos);
-
+		
 		// 距離によって変える
 		if (VSize(dist) > 15.f)
 		{
@@ -100,7 +101,7 @@ void AIInput::Update()
 			}
 		}
 
-		
+
 	}
 }
 
@@ -166,7 +167,6 @@ const bool AIInput::IsStrongSkill() const
 
 const VECTOR AIInput::GetMoveDir() const
 {
-
 	VECTOR dir = VectorAssistant::VGetZero();
 	if (is_stop_) { return dir; }
 	dir = move_dir_;
@@ -198,8 +198,8 @@ void AIInput::MakeBehaviorTree()
 
 	std::vector<std::shared_ptr<NodeBase>> nodes;
 	//nodes.emplace_back(use_strong_skill_node);
-	//nodes.emplace_back(use_normal_skill_node);
 	nodes.emplace_back(chase_main_player_node);
+	nodes.emplace_back(use_normal_skill_node);
 	auto first_node = std::make_shared<SequenceNode>(nodes);
 	behavior_tree_ = std::make_shared<BehaviorTree>(first_node);
 	behavior_tree_->Init();
@@ -254,17 +254,39 @@ std::shared_ptr<NodeBase> AIInput::MakeChaseMainPlayerNode()
 			return GetMainPlayerPos();
 		};
 
+	auto check_near_node = MakeCheckNearTargetNode();
+
 	auto chase_behavior = std::make_shared<ChaseMainPlayer>(this, get_owner_pos, get_main_player_pos);
 	auto chase_node = std::make_shared<ActionNode>(chase_behavior);
 
+	chase_nodes.emplace_back(check_near_node);
 	chase_nodes.emplace_back(chase_node);
 
 	//ノードを作成
-	node = std::make_shared<SequenceNode>(chase_nodes);
+	node = std::make_shared<SelectorNode>(chase_nodes);
 
 	return chase_node;
 }
 
+std::shared_ptr<NodeBase> AIInput::MakeCheckNearTargetNode()
+{
+	std::shared_ptr<NodeBase> node = nullptr;
+	auto test_pos = VGet(0, 0, 0);
+	auto get_target_pos = [this,test_pos]() -> VECTOR
+		{
+			return test_pos;
+		};
+
+	auto get_owner_pos = [this]() -> VECTOR
+		{
+			return owner_->GetPosition();
+		};
+
+	auto check_near = std::make_shared<CheckNearTarget>(get_target_pos, get_owner_pos, 30.f);
+	node = std::make_shared<ActionNode>(check_near);
+
+	return node;
+}
 
 VECTOR AIInput::GetMainPlayerPos()
 {

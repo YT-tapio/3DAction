@@ -6,6 +6,7 @@
 class PlayerGroup;
 class BehaviorTree;
 class NodeBase;
+class AttackTargetRepository;
 
 class AIInput : public InputBase
 {
@@ -55,13 +56,15 @@ private:
 
 	std::shared_ptr<NodeBase> MakeChaseMainPlayerNode();
 
+	std::shared_ptr<NodeBase> MakeCheckNearTargetNode();
+
 	VECTOR GetMainPlayerPos();
 
 private:
 
 	std::shared_ptr<BehaviorTree> behavior_tree_;
 	std::weak_ptr<PlayerGroup> player_group_;
-
+	
 	VECTOR move_dir_;
 
 	float dist_size_;

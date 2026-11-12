@@ -139,7 +139,7 @@ void Tackle::OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object)
 	if (owner_tag == object_tag) { return; }
 	if (object->GetRigidBody()->GetIsKinematic()) { return; }
 	auto force = VGet(1.f, 2.f, 0.f);
-	object->GetRigidBody()->AddForce(force);
+	//object->GetRigidBody()->AddForce(force);
 
 	// タグが違う場合は相手にダメージを加える
 	bool is_critical = FALSE;

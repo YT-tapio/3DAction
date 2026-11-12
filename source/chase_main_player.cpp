@@ -38,7 +38,11 @@ BehaviorStatus ChaseMainPlayer::Update()
 	auto owner_pos = get_owner_pos_();
 	auto main_player_pos = get_main_player_pos_();
 
-	auto dir = VNorm(VSub(main_player_pos, owner_pos));
+	auto dist = VSub(main_player_pos, owner_pos);
+	// input‚É‡‚í‚¹‚é
+	dist.y = dist.z;
+	dist.z = 0.f;
+	auto dir = VNorm(dist);
 
 	input_->SetStickDir(dir);
 

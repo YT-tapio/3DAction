@@ -523,9 +523,6 @@
     <Filter Include="ソース ファイル\behavior\player_ai\check_stamina">
       <UniqueIdentifier>{bd768d4a-8e96-4f6f-ae14-112ca04c33da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\behavior\player_ai\check_near_enemy">
-      <UniqueIdentifier>{d79a2399-c22a-457c-9ac0-6c311acd9465}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\target_selector">
       <UniqueIdentifier>{205ba57f-5f98-487d-aa95-a33927e2a4e9}</UniqueIdentifier>
     </Filter>
@@ -540,6 +537,9 @@
     </Filter>
     <Filter Include="ソース ファイル\attack_target\faction">
       <UniqueIdentifier>{271a2ab9-62a7-4cd6-a80b-5c00b48b45d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\behavior\player_ai\check_near_target">
+      <UniqueIdentifier>{d79a2399-c22a-457c-9ac0-6c311acd9465}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1262,6 +1262,9 @@
     </ClCompile>
     <ClCompile Include="source\attack_target_repository.cpp">
       <Filter>ソース ファイル\attack_target</Filter>
+    </ClCompile>
+    <ClCompile Include="source\check_near_target.cpp">
+      <Filter>ソース ファイル\behavior\player_ai\check_near_target</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2108,8 +2111,8 @@
     <ClInclude Include="source\check_skill.h">
       <Filter>ソース ファイル\behavior\player_ai\check_skill</Filter>
     </ClInclude>
-    <ClInclude Include="source\check_near_enemy.h">
-      <Filter>ソース ファイル\behavior\player_ai\check_near_enemy</Filter>
+    <ClInclude Include="source\check_near_target.h">
+      <Filter>ソース ファイル\behavior\player_ai\check_near_target</Filter>
     </ClInclude>
     <ClInclude Include="source\execute_skill.h">
       <Filter>ソース ファイル\behavior\player_ai</Filter>
