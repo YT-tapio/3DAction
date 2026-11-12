@@ -19,6 +19,7 @@ class AttackRangeGroup;
 class EnemyGroup;
 class EnemyController;
 class InputControlUI;
+class AttackTargetRepository;
 
 class Game : public SceneBase
 {
@@ -52,6 +53,7 @@ private:
 	std::shared_ptr<PlayerGroup> player_group_;
 	std::shared_ptr<AttackRangeGroup> attack_range_group_;
 	std::shared_ptr<EnemyController> enemy_controller_;
+	std::shared_ptr<AttackTargetRepository> attack_target_repository_;
 
 	std::shared_ptr<ShadowCircleController> shadow_circle_controller_;
 

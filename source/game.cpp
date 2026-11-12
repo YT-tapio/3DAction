@@ -49,6 +49,7 @@
 #include"enemy_group.h"
 #include"enemy_controller.h"
 #include"input_control_ui.h"
+#include"attack_target_repository.h"
 
 Game::Game()
 	: SceneBase()
@@ -59,6 +60,7 @@ Game::Game()
 	damage_ui_group_->Awake();
 	enemy_ui_group_ = std::make_shared<EnemyUIGroup>();
 	shadow_circle_controller_ = std::make_shared<ShadowCircleController>();
+	attack_target_repository_ = std::make_shared<AttackTargetRepository>();
 	game_start_ = FALSE;
 	camera_ = std::make_shared<Camera>(VGet(0.f, 0.f, 0.f), VGet(0.f, 0.f, 15.f),TRUE);
 	shadow_map_ = std::make_shared<ShadowMap>();
@@ -66,7 +68,7 @@ Game::Game()
 	player_group_ = std::make_shared<PlayerGroup>();
 	InputManager::GetInstance().SetPlayerGroup(player_group_);
 	enemy_controller_ = std::make_shared<EnemyController>(&game_start_, shadow_circle_controller_, enemy_ui_group_,
-		damage_ui_group_, player_group_, attack_range_group_);
+		damage_ui_group_, player_group_, attack_range_group_, attack_target_repository_);
 	input_control_ui_ = std::make_shared<InputControlUI>();
 	input_control_ui_->Awake();
 	won_ui_ = std::make_shared<WonUI>();
@@ -79,7 +81,7 @@ Game::Game()
 	
 	player_ui_controller_ = std::make_shared<PlayerUIController>();
 
-	player_group_->Awake(&camera_->dir_, player_ui_controller_, enemy_controller_, shadow_circle_controller_, damage_ui_group_);
+	player_group_->Awake(&camera_->dir_, player_ui_controller_, enemy_controller_, shadow_circle_controller_, damage_ui_group_,attack_target_repository_);
 
 	no_shadow_objects_.push_back(std::make_shared<SkyDome>());
 	game_start_timer_ = std::make_shared<GameStartTimer>(&game_start_);

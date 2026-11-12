@@ -47,12 +47,13 @@ void PlayerGroup::AddPlayerObserver(IPlayerObserver* observer)
 	player_observers_.emplace_back(observer);
 }
 
-void PlayerGroup::Awake(VECTOR* camera_dir,std::shared_ptr<IPlayerUIController> player_ui_controller, std::shared_ptr<IEnemyController> enemy_controller, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IPopupUIGroup> damage_ui_group)
+void PlayerGroup::Awake(VECTOR* camera_dir,std::shared_ptr<IPlayerUIController> player_ui_controller, std::shared_ptr<IEnemyController> enemy_controller,
+	std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IPopupUIGroup> damage_ui_group, std::shared_ptr<AttackTargetRepository> attack_target_repository)
 {
 	current_player_head_pos_ = VectorAssistant::VGetZero();
 	camera_dir_ = camera_dir;
-	players_.push_back(std::make_shared<Player>(camera_dir_, InputManager::GetInstance().GetPlayer1Input(), "attacker", player_ui_controller, shadow_creater, damage_ui_group));
-	players_.push_back(std::make_shared<Player>(camera_dir_, InputManager::GetInstance().GetPlayer2Input(), "healer", player_ui_controller, shadow_creater, damage_ui_group));
+	players_.push_back(std::make_shared<Player>(camera_dir_, InputManager::GetInstance().GetPlayer1Input(), "attacker", player_ui_controller, shadow_creater, damage_ui_group,attack_target_repository));
+	players_.push_back(std::make_shared<Player>(camera_dir_, InputManager::GetInstance().GetPlayer2Input(), "healer", player_ui_controller, shadow_creater, damage_ui_group, attack_target_repository));
 	
 	// スタミナを生成
 	for (auto player : players_)

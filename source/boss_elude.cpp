@@ -69,8 +69,8 @@
 #include"enemy_summoner.h"
 
 BossElude::BossElude(const VECTOR& pos, bool* game_start, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group,
-	std::shared_ptr<IPopupUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group, std::shared_ptr<EnemySummoner> summoner)
-	: BossBase(pos, game_start, shadow_creater,enemy_ui_group, damage_ui_group, player_group, attack_range_group)
+	std::shared_ptr<IPopupUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group, std::shared_ptr<EnemySummoner> summoner, std::shared_ptr<AttackTargetRepository> attack_target_repository)
+	: BossBase(pos, game_start, shadow_creater,enemy_ui_group, damage_ui_group, player_group, attack_range_group,attack_target_repository)
 {
 	vel_ = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();

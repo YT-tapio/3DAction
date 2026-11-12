@@ -66,8 +66,8 @@
 #include"model_repository.h"
 
 BossBase::BossBase(const VECTOR& pos, bool* game_start,std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group,
-	std::shared_ptr<IPopupUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group)
-	: EnemyBase(pos, game_start,enemy_ui_group,damage_ui_group,player_group,attack_range_group)
+	std::shared_ptr<IPopupUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group, std::shared_ptr<AttackTargetRepository> attack_target_repository)
+	: EnemyBase(pos, game_start,enemy_ui_group,damage_ui_group,player_group,attack_range_group,attack_target_repository)
 {
 	vel_ = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
@@ -137,6 +137,7 @@ void BossBase::Update()
 	animator_->Update(time_);
 	UpdateBone();
 	hit_red_body_->Update();
+	UpdateAttackTargetInfo();
 }
 
 void BossBase::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)

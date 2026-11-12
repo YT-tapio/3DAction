@@ -5,6 +5,7 @@
 #include"takable_damage_player_interface.h"
 #include"status_holder_interface.h"
 #include"phase.h"
+#include"attack_target_interface.h"
 
 enum class AttackType;
 class RigidBody;
@@ -20,13 +21,14 @@ class IPopupUIGroup;
 class IPlayerGroup;
 class IAttackRangeGroup;
 class AttackInfoHolder;
+class AttackTargetRepository;
 
-class EnemyBase : public CharacterBase, public IPhysicsEventReceiver,public ITakableDamagePlayer,public IStatusHolder
+class EnemyBase : public CharacterBase, public IPhysicsEventReceiver,public ITakableDamagePlayer,public IStatusHolder,public IAttackTarget
 {
 public:
 
 	EnemyBase(const VECTOR& pos,bool* game_start, std::shared_ptr<IEnemyUIGroup> enemy_ui_group,std::shared_ptr<IPopupUIGroup> damage_ui_group,
-		std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group);
+		std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group, std::shared_ptr<AttackTargetRepository> attack_target_repository);
 
 	virtual ~EnemyBase() override;
 
@@ -70,6 +72,8 @@ public:
 
 	const VECTOR GetCenterPos() const override;
 
+	const AttackTargetInfo GetAttackTargetInfo() const override;
+
 protected:
 
 	virtual void LoadFile();
@@ -79,6 +83,8 @@ protected:
 	virtual void Death();
 
 	virtual void MakeBehaviorTree(std::shared_ptr<EnemyBase> mine);
+
+	void UpdateAttackTargetInfo();
 
 	virtual const bool IsBoss() const;
 
@@ -104,6 +110,8 @@ protected:
 
 	std::function<void(std::string)> decide_target_;
 	
+	AttackTargetInfo attack_target_info_;
+
 	VECTOR right_hand_pos_;
 	VECTOR double_punch_coll_pos_;
 	VECTOR target_player_pos_;

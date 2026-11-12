@@ -11,6 +11,7 @@ class IPlayerObserver;
 class IShadowCreater;
 class IPopupUIGroup;
 class IEnemyController;
+class AttackTargetRepository;
 
 class PlayerGroup : public IPlayerGroup
 {
@@ -22,7 +23,8 @@ public:
 	
 	void AddPlayerObserver(IPlayerObserver* observer);
 
-	void Awake(VECTOR* camera_dir, std::shared_ptr<IPlayerUIController> player_ui_controller,std::shared_ptr<IEnemyController> enemy_controller,std::shared_ptr<IShadowCreater> shadow_creater,std::shared_ptr<IPopupUIGroup> damage_ui_group);
+	void Awake(VECTOR* camera_dir, std::shared_ptr<IPlayerUIController> player_ui_controller,std::shared_ptr<IEnemyController> enemy_controller,
+		std::shared_ptr<IShadowCreater> shadow_creater,std::shared_ptr<IPopupUIGroup> damage_ui_group, std::shared_ptr<AttackTargetRepository> attack_target_repository);
 
 	void Init();
 

@@ -20,12 +20,12 @@
 
 EnemyGroup::EnemyGroup(bool* game_start, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group,
 	std::shared_ptr<IPopupUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group,
-	std::shared_ptr<IAttackRangeGroup> attack_range_group,std::shared_ptr<EnemySummoner> summoner)
+	std::shared_ptr<IAttackRangeGroup> attack_range_group,std::shared_ptr<EnemySummoner> summoner, std::shared_ptr<AttackTargetRepository> attack_target_repository)
 	: is_active_(FALSE)
 {
-	enemies_.emplace_back(std::make_shared<MinionBase>(VGet(20, 0, 5), game_start,shadow_creater, enemy_ui_group, damage_ui_group, player_group, attack_range_group));
-	enemies_.emplace_back(std::make_shared<MinionBase>(VGet(20, 0, 15), game_start, shadow_creater, enemy_ui_group, damage_ui_group, player_group, attack_range_group));
-	enemies_.emplace_back(std::make_shared<MinionBase>(VGet(20, 0, 25), game_start, shadow_creater, enemy_ui_group, damage_ui_group, player_group, attack_range_group));
+	enemies_.emplace_back(std::make_shared<MinionBase>(VGet(20, 0, 5), game_start,shadow_creater, enemy_ui_group, damage_ui_group, player_group, attack_range_group,attack_target_repository));
+	enemies_.emplace_back(std::make_shared<MinionBase>(VGet(20, 0, 15), game_start, shadow_creater, enemy_ui_group, damage_ui_group, player_group, attack_range_group, attack_target_repository));
+	enemies_.emplace_back(std::make_shared<MinionBase>(VGet(20, 0, 25), game_start, shadow_creater, enemy_ui_group, damage_ui_group, player_group, attack_range_group, attack_target_repository));
 	
 	// ƒTƒ‚ƒi[‚É“o˜^
 	summoner->Registration("name",this);

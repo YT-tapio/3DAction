@@ -152,6 +152,7 @@
     <ClCompile Include="source\attack_range_circle.cpp" />
     <ClCompile Include="source\attack_range_group_interface.cpp" />
     <ClCompile Include="source\attack_range_rectangle.cpp" />
+    <ClCompile Include="source\attack_target_interface.cpp" />
     <ClCompile Include="source\avoid_string_ui.cpp" />
     <ClCompile Include="source\behavior_interface.cpp" />
     <ClCompile Include="source\boss_base.cpp" />
@@ -384,8 +385,12 @@
     <ClCompile Include="source\won_ui.cpp" />
     <ClCompile Include="source\zoom.cpp" />
     <ClCompile Include="source\check_enemy_attack_id.cpp" />
+    <ClCompile Include="source\attack_target_repository.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\attack_target_info.h" />
+    <ClInclude Include="source\attack_target_interface.h" />
+    <ClInclude Include="source\attack_target_repository.h" />
     <ClInclude Include="source\check_skill_can_use.h" />
     <ClInclude Include="source\check_near_enemy.h" />
     <ClInclude Include="source\check_skill.h" />
@@ -670,6 +675,7 @@
     <ClInclude Include="source\won_ui.h" />
     <ClInclude Include="source\zoom.h" />
     <ClInclude Include="source\check_stamina.h" />
+    <ClInclude Include="source\faction.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\json\player_data.json" />

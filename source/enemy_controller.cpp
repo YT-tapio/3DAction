@@ -15,11 +15,11 @@
 #include"status_container.h"
 
 EnemyController::EnemyController(bool* game_start, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group, std::shared_ptr<IPopupUIGroup> damage_ui_group,
-	std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group)
+	std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group, std::shared_ptr<AttackTargetRepository> attack_target_repository)
 {
 	summoner_ = std::make_shared<EnemySummoner>();
-	boss_ = std::make_shared<BossElude>(VectorAssistant::VGetZero(), game_start, shadow_creater, enemy_ui_group, damage_ui_group, player_group, attack_range_group, summoner_);
-	enemy_groups_.push_back(std::make_shared<EnemyGroup>(game_start, shadow_creater, enemy_ui_group, damage_ui_group, player_group, attack_range_group,summoner_));
+	boss_ = std::make_shared<BossElude>(VectorAssistant::VGetZero(), game_start, shadow_creater, enemy_ui_group, damage_ui_group, player_group, attack_range_group, summoner_,attack_target_repository);
+	enemy_groups_.push_back(std::make_shared<EnemyGroup>(game_start, shadow_creater, enemy_ui_group, damage_ui_group, player_group, attack_range_group,summoner_,attack_target_repository));
 }
 
 EnemyController::~EnemyController()

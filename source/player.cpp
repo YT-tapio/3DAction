@@ -59,8 +59,9 @@
 #include"popup_ui_group_interface.h"
 #include"bullet.h"
 #include"model_repository.h"
+#include"attack_target_repository.h"
 
-Player::Player(VECTOR* camera_dir,std::shared_ptr<InputBase> input,const std::string name, std::shared_ptr<IPlayerUIController> player_ui_group,std::shared_ptr<IShadowCreater> shadow_creater,std::shared_ptr<IPopupUIGroup> damage_ui_group)
+Player::Player(VECTOR* camera_dir,std::shared_ptr<InputBase> input,const std::string name, std::shared_ptr<IPlayerUIController> player_ui_group,std::shared_ptr<IShadowCreater> shadow_creater,std::shared_ptr<IPopupUIGroup> damage_ui_group,std::shared_ptr<AttackTargetRepository> attack_target_repository)
 	: CharacterBase("player")
 	, IPhysicsEventReceiver()
 	, name_(name)
@@ -111,6 +112,7 @@ Player::Player(VECTOR* camera_dir,std::shared_ptr<InputBase> input,const std::st
 	job_ = "nothing";
 	shadow_creater->CreateShadow(&hip_pos_, &is_active_,radius +0.5f);
 	popup_ui_group_ = damage_ui_group;
+	attack_target_repository->AddTarget(Faction::player,this);
 }
 
 Player::~Player()
@@ -297,6 +299,8 @@ void Player::Update()
 	UpdateBone();
 	// エフェクトを発生
 	EffectUpdate();
+	// 攻撃対象の情報をUpdate
+	AttackTargetInfoUpdate();
 	on_damage_ = FALSE;
 }
 
@@ -896,6 +900,11 @@ const std::shared_ptr<const InputBase> Player::GetInput() const
 	return input_;
 }
 
+const AttackTargetInfo Player::GetAttackTargetInfo() const
+{
+	return attack_target_info_;
+}
+
 const int Player::GetSkillID(SkillType type) const
 {
 	switch (type)
@@ -1043,6 +1052,12 @@ void Player::EffectUpdate()
 
 	//EffectManager::GetInstance().SetPos(EffectID::kHandAura,effect_right_hand_pos);
 	//EffectManager::GetInstance().SetPos(EffectID::kHandAura2,effect_left_hand_pos);
+}
+
+void Player::AttackTargetInfoUpdate()
+{
+	attack_target_info_.pos = pos_;
+	attack_target_info_.status = status_container_->GetCurrentStatus();
 }
 
 void Player::MakeSkillUI()

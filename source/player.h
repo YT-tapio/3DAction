@@ -7,6 +7,7 @@
 #include"status_holder_interface.h"
 #include"skill_type.h"
 #include"enemy_observer_interface.h"
+#include"attack_target_interface.h"
 
 enum class AttackType;
 class RigidBody;
@@ -23,13 +24,15 @@ class IPlayerObserver;
 class IShadowCreater;
 class IPopupUIGroup;
 class Bullet;
+class AttackTargetRepository;
 
 class Player : public CharacterBase , public IPhysicsEventReceiver
-	,public ITakableHealPlayer,public ITakableDamageEnemy,public IInputChange,public IStatusHolder,public IEnemyObserver
+	,public ITakableHealPlayer,public ITakableDamageEnemy,public IInputChange,public IStatusHolder,public IEnemyObserver,public IAttackTarget
 {
 public:
 
-	Player(VECTOR* camera_dir, std::shared_ptr<InputBase> input,const std::string name,std::shared_ptr<IPlayerUIController> player_ui_group, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IPopupUIGroup> damage_ui_group);
+	Player(VECTOR* camera_dir, std::shared_ptr<InputBase> input,const std::string name,std::shared_ptr<IPlayerUIController> player_ui_group,
+		std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IPopupUIGroup> damage_ui_group, std::shared_ptr<AttackTargetRepository> attack_target_repository);
 
 	~Player() override;
 
@@ -85,19 +88,21 @@ public:
 
 	std::shared_ptr<RigidBody> GetRigidBody() override;
 
-	const float GetDeltaTime() const override;
-
 	std::shared_ptr<StatusContainer> GetStatusContainer() override;
 
 	const std::shared_ptr<const InputBase> GetInput() const;
+
+	const AttackTargetInfo GetAttackTargetInfo() const;
 
 	const int GetSkillID(SkillType type) const;
 
 	const float GetSkillCoolTime(SkillType type) const;
 	
-	const bool GetSkillCanUse(SkillType type) const;
+	const float GetDeltaTime() const override;
 	
 	const float GetDetectionRadius() const;
+
+	const bool GetSkillCanUse(SkillType type) const;
 
 	const bool GetOnDamage() const;
 
@@ -135,6 +140,8 @@ private:
 
 	void EffectUpdate();
 
+	void AttackTargetInfoUpdate();
+
 	void MakeSkillUI();
 
 private:
@@ -155,6 +162,8 @@ private:
 	std::shared_ptr<IPopupUIGroup> popup_ui_group_;
 	std::shared_ptr<Bullet> bullet_;
 	std::shared_ptr<ConditionTimer> enemy_death_offset_timer_;	// ŠÔ‚ª‚½‚Á‚Ä‚©‚ç“G‚ª€‚ñ‚¾‚Æ‚«‚Ìˆ—‚ğs‚¤
+
+	AttackTargetInfo attack_target_info_;
 
 	VECTOR* camera_dir_;
 	VECTOR right_hand_pos_;

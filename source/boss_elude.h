@@ -8,6 +8,7 @@ class IEnemyUIGroup;
 class IAttackRangeGroup;
 class NodeBase;
 class EnemySummoner;
+class AttackTargetRepository;
 
 class BossElude : public BossBase
 {
@@ -15,7 +16,8 @@ public:
 
 	BossElude(const VECTOR& pos, bool* game_start, std::shared_ptr<IShadowCreater> shadow_creater,
 		std::shared_ptr<IEnemyUIGroup> enemy_ui_group, std::shared_ptr<IPopupUIGroup> damage_ui_group,
-		std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group,std::shared_ptr<EnemySummoner> summoner);
+		std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group,
+		std::shared_ptr<EnemySummoner> summoner, std::shared_ptr<AttackTargetRepository> attack_target_repository);
 
 	~BossElude() override;
 

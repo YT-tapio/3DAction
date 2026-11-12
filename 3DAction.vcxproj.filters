@@ -526,6 +526,21 @@
     <Filter Include="ソース ファイル\behavior\player_ai\check_near_enemy">
       <UniqueIdentifier>{d79a2399-c22a-457c-9ac0-6c311acd9465}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\target_selector">
+      <UniqueIdentifier>{205ba57f-5f98-487d-aa95-a33927e2a4e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\interface\attack_target">
+      <UniqueIdentifier>{61aa7825-d2a3-4e91-ac7c-e5afe1deb9ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\attack_target">
+      <UniqueIdentifier>{97b1f3df-7a21-4aa5-a158-791f0eb82bbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\attack_target\info">
+      <UniqueIdentifier>{927fa647-a3a4-4016-ab6d-e20d090f5c05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\attack_target\faction">
+      <UniqueIdentifier>{271a2ab9-62a7-4cd6-a80b-5c00b48b45d0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -1241,6 +1256,12 @@
     </ClCompile>
     <ClCompile Include="source\check_skill_can_use.cpp">
       <Filter>ソース ファイル\behavior\player_ai</Filter>
+    </ClCompile>
+    <ClCompile Include="source\attack_target_interface.cpp">
+      <Filter>ソース ファイル\interface\attack_target</Filter>
+    </ClCompile>
+    <ClCompile Include="source\attack_target_repository.cpp">
+      <Filter>ソース ファイル\attack_target</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2095,6 +2116,18 @@
     </ClInclude>
     <ClInclude Include="source\check_skill_can_use.h">
       <Filter>ソース ファイル\behavior\player_ai</Filter>
+    </ClInclude>
+    <ClInclude Include="source\attack_target_interface.h">
+      <Filter>ソース ファイル\interface\attack_target</Filter>
+    </ClInclude>
+    <ClInclude Include="source\attack_target_info.h">
+      <Filter>ソース ファイル\attack_target\info</Filter>
+    </ClInclude>
+    <ClInclude Include="source\attack_target_repository.h">
+      <Filter>ソース ファイル\attack_target</Filter>
+    </ClInclude>
+    <ClInclude Include="source\faction.h">
+      <Filter>ソース ファイル\attack_target\faction</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

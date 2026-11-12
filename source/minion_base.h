@@ -8,13 +8,14 @@ class IEnemyUIGroup;
 class IPopupUIGroup;
 class IPlayerGroup;
 class IAttackRangeGroup;
+class AttackTargetRepository;
 
 class MinionBase : public EnemyBase , public ISummonable
 {
 public:
 
 	MinionBase(const VECTOR& pos, bool* game_start, std::shared_ptr<IShadowCreater> shadow_creater,std::shared_ptr<IEnemyUIGroup> enemy_ui_group, std::shared_ptr<IPopupUIGroup> damage_ui_group,
-		std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group);
+		std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group, std::shared_ptr<AttackTargetRepository> attack_target_repository);
 
 	virtual ~MinionBase() override;
 

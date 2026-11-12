@@ -58,9 +58,11 @@
 #include"enemy_ui_group_interface.h"
 #include"popup_ui_group_interface.h"
 #include"attack_Info_holder.h"
+#include"attack_target_repository.h"
 
 EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start,std::shared_ptr<IEnemyUIGroup> enemy_ui_group,
-	std::shared_ptr<IPopupUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group)
+	std::shared_ptr<IPopupUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group,
+	std::shared_ptr<IAttackRangeGroup> attack_range_group, std::shared_ptr<AttackTargetRepository> attack_target_repository)
 	: CharacterBase("enemy")
 	, IPhysicsEventReceiver()
 	, game_start_(game_start)
@@ -79,6 +81,9 @@ EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start,std::shared_ptr<IEnemyUI
 		{
 			target_player_name_ = target_player_name;
 		};
+
+	// Ž©g‚ðAttackTargetRepository‚É“o˜^
+	attack_target_repository->AddTarget(Faction::enemy, this);
 }
 
 EnemyBase::~EnemyBase()
@@ -239,6 +244,11 @@ const VECTOR EnemyBase::GetCenterPos() const
 	return center_pos;
 }
 
+const AttackTargetInfo EnemyBase::GetAttackTargetInfo() const
+{
+	return attack_target_info_;
+}
+
 void EnemyBase::LoadFile()
 {
 
@@ -284,6 +294,12 @@ void EnemyBase::Death()
 void EnemyBase::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)
 {
 
+}
+
+void EnemyBase::UpdateAttackTargetInfo()
+{
+	attack_target_info_.pos = pos_;
+	attack_target_info_.status = status_container_->GetCurrentStatus();
 }
 
 const bool EnemyBase::IsBoss() const
