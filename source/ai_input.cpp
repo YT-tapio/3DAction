@@ -51,9 +51,9 @@ void AIInput::Update()
 
 	if (behavior_tree_ != nullptr) 
 	{
-		//behavior_tree_->Update();
+		behavior_tree_->Update();
 	}
-	//return;
+	return;
 	//
 	
 	// メインのプレイヤーについていく

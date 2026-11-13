@@ -9,6 +9,7 @@
 #include"character_base.h"
 #include"animator_base.h"
 #include"behavior_status.h"
+
 Avoid::Avoid(std::weak_ptr<ObjectBase> owner)
 	: BehaviorBase(owner)
 {
@@ -38,7 +39,6 @@ BehaviorStatus Avoid::Update()
 	}
 
 	//自分の行動を起こせるanimationかをチェック
-	
 	if (chara->GetAnimator()->GetNowAnimName() != my_anim_name_) 
 	{
 		chara->SetInvincible(FALSE);
