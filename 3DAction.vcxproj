@@ -330,6 +330,7 @@
     <ClCompile Include="source\takable_damage_player_interface.cpp" />
     <ClCompile Include="source\takable_heal_enemy_interface.cpp" />
     <ClCompile Include="source\takable_heal_player_interface.cpp" />
+    <ClCompile Include="source\target_selector.cpp" />
     <ClCompile Include="source\target_string_ui.cpp" />
     <ClCompile Include="source\test_scene.cpp" />
     <ClCompile Include="source\time.cpp" />
@@ -480,6 +481,7 @@
     <ClInclude Include="source\start_string_ui.h" />
     <ClInclude Include="source\summonable_interface.h" />
     <ClInclude Include="source\summon_enemy_group.h" />
+    <ClInclude Include="source\target_selector.h" />
     <ClInclude Include="source\target_string_ui.h" />
     <ClInclude Include="source\title_first_camera.h" />
     <ClInclude Include="source\title_enemy_controller.h" />

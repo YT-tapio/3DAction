@@ -1266,6 +1266,9 @@
     <ClCompile Include="source\check_near_target.cpp">
       <Filter>ソース ファイル\behavior\player_ai\check_near_target</Filter>
     </ClCompile>
+    <ClCompile Include="source\target_selector.cpp">
+      <Filter>ソース ファイル\target_selector</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -2131,6 +2134,9 @@
     </ClInclude>
     <ClInclude Include="source\faction.h">
       <Filter>ソース ファイル\attack_target\faction</Filter>
+    </ClInclude>
+    <ClInclude Include="source\target_selector.h">
+      <Filter>ソース ファイル\target_selector</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
