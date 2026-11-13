@@ -28,7 +28,6 @@ void Avoid::Init()
 BehaviorStatus Avoid::Update()
 {
 	// animationの時間によってcharacterを無敵にする
-
 	std::shared_ptr<CharacterBase> chara = std::dynamic_pointer_cast<CharacterBase>(owner_.lock());
 
 	// 変換できない場合は早期リターン
@@ -39,6 +38,7 @@ BehaviorStatus Avoid::Update()
 	}
 
 	//自分の行動を起こせるanimationかをチェック
+	
 	if (chara->GetAnimator()->GetNowAnimName() != my_anim_name_) 
 	{
 		chara->SetInvincible(FALSE);
@@ -48,9 +48,8 @@ BehaviorStatus Avoid::Update()
 	float now_play_time_ = chara->GetAnimator()->GetPlayTime(my_anim_name_);
 
 	// animationの時間によって無敵にするかどうかを判断
-	
-	if (now_play_time_ >= 0.f && now_play_time_ < chara->GetAnimator()->GetTotalTime("avoid"))
-	{ 
+	if (now_play_time_ >= 0.f && now_play_time_ <= chara->GetAnimator()->GetTotalTime("avoid"))
+	{
 		chara->SetInvincible(TRUE);
 		return BehaviorStatus::kRunning;
 	}
