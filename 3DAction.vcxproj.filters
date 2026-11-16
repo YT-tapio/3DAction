@@ -430,12 +430,6 @@
     <Filter Include="ソース ファイル\repository\model_repository">
       <UniqueIdentifier>{766407ad-2280-4e6b-bdf9-0d1ae8564f0e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\behavior\player_ai\chase_main_player">
-      <UniqueIdentifier>{93447a4b-ef92-4445-9eb7-59a0101181c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\behavior\player_ai\check_inside_enemy">
-      <UniqueIdentifier>{8c43bdc9-7ab3-43b4-a732-2b1a9268559b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\ui\player_ui">
       <UniqueIdentifier>{ec8a3e14-56d0-47f2-b066-db62bfe98308}</UniqueIdentifier>
     </Filter>
@@ -540,6 +534,15 @@
     </Filter>
     <Filter Include="ソース ファイル\behavior\player_ai\check_near_target">
       <UniqueIdentifier>{d79a2399-c22a-457c-9ac0-6c311acd9465}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\behavior\player_ai\check_inside_target">
+      <UniqueIdentifier>{8c43bdc9-7ab3-43b4-a732-2b1a9268559b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\behavior\player_ai\chase">
+      <UniqueIdentifier>{93447a4b-ef92-4445-9eb7-59a0101181c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\behavior\player_ai\avoid_condition">
+      <UniqueIdentifier>{110417ec-7868-463a-a1b7-1c89d5782ea6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1146,11 +1149,11 @@
     <ClCompile Include="source\check_stamina.cpp">
       <Filter>ソース ファイル\behavior\player_ai\check_stamina</Filter>
     </ClCompile>
-    <ClCompile Include="source\chase_main_player.cpp">
-      <Filter>ソース ファイル\behavior\player_ai\chase_main_player</Filter>
+    <ClCompile Include="source\chase.cpp">
+      <Filter>ソース ファイル\behavior\player_ai\chase</Filter>
     </ClCompile>
-    <ClCompile Include="source\check_inside_enemy.cpp">
-      <Filter>ソース ファイル\behavior\player_ai\check_inside_enemy</Filter>
+    <ClCompile Include="source\check_inside_target.cpp">
+      <Filter>ソース ファイル\behavior\player_ai\check_inside_target</Filter>
     </ClCompile>
     <ClCompile Include="source\player_ui_controller.cpp">
       <Filter>ソース ファイル\ui\player_ui</Filter>
@@ -2006,11 +2009,11 @@
     <ClInclude Include="source\image_repository.h">
       <Filter>ソース ファイル\repository\image_repository</Filter>
     </ClInclude>
-    <ClInclude Include="source\chase_main_player.h">
-      <Filter>ソース ファイル\behavior\player_ai\chase_main_player</Filter>
+    <ClInclude Include="source\chase.h">
+      <Filter>ソース ファイル\behavior\player_ai\chase</Filter>
     </ClInclude>
-    <ClInclude Include="source\check_inside_enemy.h">
-      <Filter>ソース ファイル\behavior\player_ai\check_inside_enemy</Filter>
+    <ClInclude Include="source\check_inside_target.h">
+      <Filter>ソース ファイル\behavior\player_ai\check_inside_target</Filter>
     </ClInclude>
     <ClInclude Include="source\player_ui_controller.h">
       <Filter>ソース ファイル\ui\player_ui</Filter>

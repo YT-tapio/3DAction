@@ -15,6 +15,16 @@ CheckStamina::~CheckStamina()
 
 }
 
+void CheckStamina::Init()
+{
+
+}
+
+void CheckStamina::Entry()
+{
+
+}
+
 BehaviorStatus CheckStamina::Update()
 {
 	if (get_current_stamina_ == nullptr) { return BehaviorStatus::kFailure; }
@@ -22,4 +32,9 @@ BehaviorStatus CheckStamina::Update()
 	auto current_stamina = get_current_stamina_();
 
 	return target_stamina_ <= current_stamina ? BehaviorStatus::kComplete : BehaviorStatus::kFailure;
+}
+
+void CheckStamina::Exit()
+{
+
 }
