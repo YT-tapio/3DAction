@@ -23,11 +23,14 @@
 #include"check_skill_can_use.h"
 #include"chase_main_player.h"
 #include"check_near_target.h"
+#include"attack_target_repository.h"
+#include"target_selector.h"
 
-AIInput::AIInput()
+AIInput::AIInput(std::weak_ptr<AttackTargetRepository> attack_target_repository)
 	: InputBase()
 {
 	owner_ = nullptr;
+	target_selector_ = std::make_shared<TargetSelector>(attack_target_repository, Faction::enemy);
 }
 
 AIInput::~AIInput()
@@ -40,6 +43,7 @@ void AIInput::Init()
 	ResetInfo();
 	//‚±‚Ì’†‚Åbehaviortree‚ð¶¬
 	MakeBehaviorTree();
+	target_selector_->Init();
 }
 
 void AIInput::Update()
@@ -48,7 +52,7 @@ void AIInput::Update()
 	if (is_stop_) { return; }
 
 	ResetInfo();
-
+	target_selector_->Update();
 	if (behavior_tree_ != nullptr) 
 	{
 		behavior_tree_->Update();

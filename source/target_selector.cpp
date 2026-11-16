@@ -37,7 +37,8 @@ void TargetSelector::Update()
 	{
 		if (attack_target == nullptr) { continue; }
 		auto info = attack_target->GetAttackTargetInfo();
-		if (is_first) 
+		if (!info.is_alive) { return; }
+		if (is_first)
 		{
 			is_first = FALSE;
 			target_ = attack_target;

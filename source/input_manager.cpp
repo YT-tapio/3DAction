@@ -72,14 +72,14 @@ void InputManager::DeleteResource()
 	input_changers_.clear();
 }
 
-void InputManager::CreateAIInput()
+void InputManager::CreateAIInput(std::weak_ptr<AttackTargetRepository> attack_target_repository)
 {
 	// ‡”Ô‚ğ‚½‚¾‚µ‚Ä‚©‚ç‚ğ¶¬‚·‚é,—‚ê‚Ä‚¢‚é‰Â”\«‚ª‚ ‚é‚½‚ß
 	ResetInput();
 
-	input_id_mp_[kPlayer2Id] = std::make_shared<AIInput>();
-	input_id_mp_[kPlayer3Id] = std::make_shared<AIInput>();
-	input_id_mp_[kPlayer4Id] = std::make_shared<AIInput>();
+	input_id_mp_[kPlayer2Id] = std::make_shared<AIInput>(attack_target_repository);
+	input_id_mp_[kPlayer3Id] = std::make_shared<AIInput>(attack_target_repository);
+	input_id_mp_[kPlayer4Id] = std::make_shared<AIInput>(attack_target_repository);
 }
 
 void InputManager::DeleteAIInput()

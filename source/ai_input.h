@@ -6,13 +6,14 @@
 class PlayerGroup;
 class BehaviorTree;
 class NodeBase;
+class TargetSelector;
 class AttackTargetRepository;
 
 class AIInput : public InputBase
 {
 public:
 
-	AIInput();
+	AIInput(std::weak_ptr<AttackTargetRepository> attack_target_repository);
 
 	~AIInput();
 
@@ -62,6 +63,7 @@ private:
 
 private:
 
+	std::shared_ptr<TargetSelector> target_selector_;
 	std::shared_ptr<BehaviorTree> behavior_tree_;
 	std::weak_ptr<PlayerGroup> player_group_;
 	
