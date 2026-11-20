@@ -6,4 +6,5 @@ struct AttackTargetInfo
 {
 	VECTOR pos = VGet(0, 0, 0);
 	Status status;
+	bool is_alive = FALSE;
 };

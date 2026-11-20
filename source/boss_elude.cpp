@@ -142,6 +142,7 @@ void BossElude::Init()
 	hit_red_body_->Init();
 	behavior_tree_->Init();
 	dir_ = VectorAssistant::VGetDirFromRotY(rot_);
+	attack_target_info_.is_alive = TRUE;
 }
 
 void BossElude::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)

@@ -98,6 +98,7 @@ void MinionBase::Init()
 	MakeBehaviorTree(mine);
 	is_active_ = FALSE;
 	rigid_body_->NotActive();
+	attack_target_info_.is_alive = TRUE;
 }
 
 void MinionBase::Update()
@@ -165,6 +166,7 @@ void MinionBase::UnGround()
 void MinionBase::Summon(const VECTOR& pos)
 {
 	is_active_ = TRUE;
+	attack_target_info_.is_alive = TRUE;
 	pos_ = pos;
 	rigid_body_->Active();
 }

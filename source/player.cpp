@@ -215,6 +215,7 @@ void Player::Init()
 	test_behavior_->Init();
 	
 	time_->Init();
+	attack_target_info_.is_alive = TRUE;
 	MakeSkillUI();
 	//rigid_body_->SetUpSpeed(10);
 	//EffectManager::GetInstance().Play(EffectID::kHandAura);
@@ -257,6 +258,7 @@ void Player::Update()
 		animator_->PlayRequest("death");
 		rigid_body_->SetTargetVelocity(VectorAssistant::VGetZero());
 		rigid_body_->NotActive();
+		
 	}
 	else
 	{
@@ -833,8 +835,13 @@ void Player::OnDamageFromEnemy(float damage,AttackType type, const bool is_criti
 		return;
 	}
 	on_damage_ = TRUE;
+	
 	// ダメージ量をもらう
 	auto final_damage = status_container_->TakeDamage(damage,type);
+	if (status_container_->GetCurrentStatus().hp == 0)
+	{
+		attack_target_info_.is_alive = FALSE;
+	}
 	// サウンドを再生
 	SoundManager::GetInstance().Play3DSound("palyer_on_damage");
 	// ui描画を行う
