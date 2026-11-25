@@ -54,14 +54,14 @@
 Game::Game()
 	: SceneBase()
 {
-	InputManager::GetInstance().CreateAIInput();
-	InputManager::GetInstance().Init();
 	attack_range_group_ = std::make_shared<AttackRangeGroup>();
 	damage_ui_group_ = std::make_shared<PopupUIGroup>();
 	damage_ui_group_->Awake();
 	enemy_ui_group_ = std::make_shared<EnemyUIGroup>();
 	shadow_circle_controller_ = std::make_shared<ShadowCircleController>();
 	attack_target_repository_ = std::make_shared<AttackTargetRepository>();
+	InputManager::GetInstance().CreateAIInput(attack_target_repository_);
+	InputManager::GetInstance().Init();
 	game_start_ = FALSE;
 	camera_ = std::make_shared<Camera>(VGet(0.f, 0.f, 0.f), VGet(0.f, 0.f, 15.f),TRUE);
 	shadow_map_ = std::make_shared<ShadowMap>();

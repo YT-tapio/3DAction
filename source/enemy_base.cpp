@@ -203,6 +203,7 @@ void EnemyBase::OnDamageFromPlayer(float damage,AttackType type, const bool is_c
 
 	if (status_container_->GetCurrentStatus().hp <= 0)
 	{
+		attack_target_info_.is_alive = FALSE;
 		Death();
 	}
 

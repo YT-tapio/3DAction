@@ -1,18 +1,20 @@
 #pragma once
 #include<vector>
+#include<functional>
 #include"input_base.h"
 #include"skill_type.h"
 
 class PlayerGroup;
 class BehaviorTree;
 class NodeBase;
+class TargetSelector;
 class AttackTargetRepository;
 
 class AIInput : public InputBase
 {
 public:
 
-	AIInput();
+	AIInput(std::weak_ptr<AttackTargetRepository> attack_target_repository);
 
 	~AIInput();
 
@@ -54,17 +56,25 @@ private:
 
 	std::shared_ptr<NodeBase> MakeExecuteSkillNode(const SkillType& type);
 
-	std::shared_ptr<NodeBase> MakeChaseMainPlayerNode();
+	std::shared_ptr<NodeBase> MakeChaseNode(std::function<VECTOR()> get_target_pos);
 
 	std::shared_ptr<NodeBase> MakeCheckNearTargetNode();
+
+	std::shared_ptr<NodeBase> MakeCheckInsideTarget();
+
+	std::shared_ptr<NodeBase> MakeAvoidSkillNode();
 
 	VECTOR GetMainPlayerPos();
 
 private:
 
+	std::shared_ptr<TargetSelector> target_selector_;
 	std::shared_ptr<BehaviorTree> behavior_tree_;
 	std::weak_ptr<PlayerGroup> player_group_;
 	
+	std::function<VECTOR()> get_owner_pos_;
+	std::function<VECTOR()> get_attack_target_pos_;
+
 	VECTOR move_dir_;
 
 	float dist_size_;

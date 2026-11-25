@@ -4,13 +4,13 @@
 
 class AIInput;
 
-class ChaseMainPlayer : public IBehavior
+class Chase : public IBehavior
 {
 public:
 
-	ChaseMainPlayer(AIInput* input,std::function<VECTOR()> get_onwer_pos, std::function<VECTOR()> get_main_player_pos);
+	Chase(AIInput* input,std::function<VECTOR()> get_onwer_pos, std::function<VECTOR()> get_target_pos);
 
-	~ChaseMainPlayer() override;
+	~Chase() override;
 
 	void Init() override;
 
@@ -23,7 +23,7 @@ public:
 private:
 
 	std::function<VECTOR()> get_owner_pos_;
-	std::function<VECTOR()> get_main_player_pos_;
+	std::function<VECTOR()> get_target_pos_;
 
 	AIInput* input_;
 

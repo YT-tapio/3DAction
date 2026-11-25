@@ -1,11 +1,13 @@
 #pragma once
 #include"behavior_interface.h"
 
+class TargetSelector;
+
 class CheckNearTarget : public IBehavior
 {
 public:
 
-	CheckNearTarget(std::function<VECTOR()> get_owner_pos, std::function<VECTOR()> get_target_pos, const float& near_dist);
+	CheckNearTarget(std::weak_ptr<TargetSelector> target_selector, std::function<VECTOR()> get_owner_pos, const float& near_dist);
 
 	~CheckNearTarget() override;
 
@@ -19,8 +21,8 @@ public:
 
 private:
 
+	std::weak_ptr<TargetSelector> target_selector_;
 	std::function<VECTOR()> get_owner_pos_;
-	std::function<VECTOR()> get_target_pos_;
 
 	float near_dist_;
 };

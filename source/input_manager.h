@@ -4,6 +4,7 @@
 class InputBase;
 class IInputChange;
 class PlayerGroup;
+class AttackTargetRepository;
 
 class InputManager
 {
@@ -32,7 +33,7 @@ public:
 
 	void DeleteResource();
 
-	void CreateAIInput();
+	void CreateAIInput(std::weak_ptr<AttackTargetRepository> attack_target_repository);
 
 	void DeleteAIInput();
 
