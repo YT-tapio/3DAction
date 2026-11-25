@@ -332,6 +332,7 @@
     <ClCompile Include="source\takable_heal_player_interface.cpp" />
     <ClCompile Include="source\target_selector.cpp" />
     <ClCompile Include="source\target_string_ui.cpp" />
+    <ClCompile Include="source\grab_player.cpp" />
     <ClCompile Include="source\test_scene.cpp" />
     <ClCompile Include="source\time.cpp" />
     <ClCompile Include="source\time_transition_method.cpp" />
@@ -398,6 +399,7 @@
     <ClInclude Include="source\check_skill.h" />
     <ClInclude Include="source\execute_skill.h" />
     <ClInclude Include="source\font_data.h" />
+    <ClInclude Include="source\grab_player.h" />
     <ClInclude Include="source\image_popup_ui.h" />
     <ClInclude Include="source\number_popup_ui.h" />
     <ClInclude Include="source\jump_string_ui.h" />

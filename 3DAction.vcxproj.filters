@@ -1272,6 +1272,9 @@
     <ClCompile Include="source\target_selector.cpp">
       <Filter>ソース ファイル\target_selector</Filter>
     </ClCompile>
+    <ClCompile Include="source\grab_player.cpp">
+      <Filter>ソース ファイル\behavior</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -2140,6 +2143,9 @@
     </ClInclude>
     <ClInclude Include="source\target_selector.h">
       <Filter>ソース ファイル\target_selector</Filter>
+    </ClInclude>
+    <ClInclude Include="source\grab_player.h">
+      <Filter>ソース ファイル\behavior</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
