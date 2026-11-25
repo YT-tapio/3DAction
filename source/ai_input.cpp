@@ -47,7 +47,7 @@ AIInput::~AIInput()
 void AIInput::Init()
 {
 	ResetInfo();
-	//‚±‚Ì’†‚Åbehaviortree‚ğ¶¬
+	//ã“ã®ä¸­ã§behaviortreeã‚’ç”Ÿæˆ
 	MakeBehaviorTree();
 	target_selector_->Init();
 }
@@ -61,20 +61,21 @@ void AIInput::Update()
 	target_selector_->Update();
 	if (behavior_tree_ != nullptr) 
 	{
-		behavior_tree_->Update();
+		//behavior_tree_->Update();
 	}
-	return;
+	//return;
+	//
 	
-	// ƒƒCƒ“‚ÌƒvƒŒƒCƒ„[‚É‚Â‚¢‚Ä‚¢‚­
+	// ãƒ¡ã‚¤ãƒ³ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ã¤ã„ã¦ã„ã
 	if (auto player_group = player_group_.lock())
 	{
-		// Œ»İ‚ÌƒvƒŒƒCƒ„[‚Ìî•ñ‚ğæ“¾
+		// ç¾åœ¨ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æƒ…å ±ã‚’å–å¾—
 		auto main_player_pos = *player_group->GetCurrentPlayerHeadPos();
 		auto owner_pos = owner_->GetPosition();
 
 		auto dist = VSub(main_player_pos, owner_pos);
 		
-		// ‹——£‚É‚æ‚Á‚Ä•Ï‚¦‚é
+		// è·é›¢ã«ã‚ˆã£ã¦å¤‰ãˆã‚‹
 		if (VSize(dist) > 15.f)
 		{
 			move_dir_ = VNorm(dist);
@@ -202,7 +203,7 @@ const VECTOR AIInput::GetCameraDir() const
 
 void AIInput::LoadFile()
 {
-	//ƒf[ƒ^‚Ì“Ç‚İæ‚è
+	//ãƒ‡ãƒ¼ã‚¿ã®èª­ã¿å–ã‚Š
 
 }
 
@@ -290,7 +291,7 @@ std::shared_ptr<NodeBase> AIInput::MakeChaseNode(std::function<VECTOR()> get_tar
 	
 	chase_nodes.emplace_back(chase_node);
 
-	//ƒm[ƒh‚ğì¬
+	//ãƒãƒ¼ãƒ‰ã‚’ä½œæˆ
 	node = std::make_shared<SelectorNode>(chase_nodes);
 
 	return node;
@@ -331,7 +332,7 @@ std::shared_ptr<NodeBase> AIInput::MakeAvoidSkillNode()
 
 	const float kUseStamina = 2.f;
 
-	// ‰ñ”ğ‚ğ‚·‚éÛ‚ÌğŒ
+	// å›é¿ã‚’ã™ã‚‹éš›ã®æ¡ä»¶
 	auto check_stamina_info = std::make_shared<CheckStamina>(get_current_stamina, kUseStamina);
 	auto check_stamina_info_node = std::make_shared<ActionNode>(check_stamina_info);
 	auto avoid_skill_node = MakeExecuteSkillNode(SkillType::kAvoid);
