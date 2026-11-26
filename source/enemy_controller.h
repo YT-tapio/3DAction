@@ -31,6 +31,8 @@ public:
 
 	const void Draw() const;
 
+	const void Debug() const;
+
 	const VECTOR GetBossCenterPos() const override;
 
 	const VECTOR GetBossFrontDir() const override;

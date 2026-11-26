@@ -8,7 +8,7 @@ class Roar : public BehaviorBase
 {
 public:
 
-	Roar(std::shared_ptr<ObjectBase> owner);
+	Roar(std::shared_ptr<ObjectBase> owner,const std::string& anim_name);
 
 	~Roar();
 
@@ -20,6 +20,7 @@ public:
 
 private:
 
+	std::string anim_name_;
 	bool is_character_;
 
 };

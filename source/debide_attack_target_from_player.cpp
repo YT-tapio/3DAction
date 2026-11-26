@@ -26,7 +26,7 @@ void DecideAttackTargetFromPlayer::Init()
 
 void DecideAttackTargetFromPlayer::Entry()
 {
-
+	printfDx("DecideTargetEntry\n");
 }
 
 BehaviorStatus DecideAttackTargetFromPlayer::Update()

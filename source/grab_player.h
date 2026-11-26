@@ -22,9 +22,18 @@ public:
 
 	void Exit() override;
 
+	void Debug() override;
+
 	void OnCollisionEnter(std::shared_ptr<IPhysicsEventReceiver> object) override;
 
 	std::shared_ptr<RigidBody> GetRigidBody() override;
+
+private:
+
+	/// <summary>
+	/// “–‚½‚è”»’è‚ÌêŠ‚ğXV
+	/// </summary>
+	void UpdateCollPos();
 
 private:
 
@@ -37,6 +46,7 @@ private:
 
 	VECTOR* owner_pos_;
 	VECTOR* target_pos_;
+	VECTOR coll_pos_;		// “–‚½‚è”»’è‚Ìpos
 	VECTOR dir_;
 	VECTOR vel_;
 

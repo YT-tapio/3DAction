@@ -425,7 +425,7 @@ std::shared_ptr<NodeBase> BossElude::MakeRoarNode(std::shared_ptr<EnemyBase> min
 
 	std::vector<std::shared_ptr<NodeBase>> roar_nodes;
 
-	auto roar = std::make_shared<Roar>(mine);
+	auto roar = std::make_shared<Roar>(mine,"roar");
 
 	auto roar_node = std::make_shared<ActionNode>(roar);
 	auto just_one_node = std::make_shared<JustOneNode>();
@@ -457,7 +457,7 @@ std::shared_ptr<NodeBase> BossElude::MakeSummonEnemyGroup(std::shared_ptr<EnemyB
 
 	auto summon_behavior = std::make_shared<SummonEnemyGroup>(mine, summoner_, VGet(0.f, 0.f, 0.f), "name");
 
-	auto phase_node = std::make_shared<CheckPhaseNode>(Phase::second, current_phase);
+	auto phase_node = std::make_shared<CheckPhaseNode>(Phase::first, current_phase);
 	auto summon_node = std::make_shared<ActionNode>(summon_behavior);
 	auto just_one_node = std::make_shared<JustOneNode>();
 
