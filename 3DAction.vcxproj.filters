@@ -1275,8 +1275,6 @@
     <ClCompile Include="source\target_selector.cpp">
       <Filter>ソース ファイル\target_selector</Filter>
     </ClCompile>
-    <ClCompile Include="source\grab_player.cpp">
-      <Filter>ソース ファイル\behavior</Filter>
     <ClCompile Include="source\enemy_movement_supporter.cpp">
       <Filter>ソース ファイル\enemy_movement</Filter>
     </ClCompile>
@@ -2149,8 +2147,6 @@
     <ClInclude Include="source\target_selector.h">
       <Filter>ソース ファイル\target_selector</Filter>
     </ClInclude>
-    <ClInclude Include="source\grab_player.h">
-      <Filter>ソース ファイル\behavior</Filter>
     <ClInclude Include="source\enemy_movement_supporter.h">
       <Filter>ソース ファイル\enemy_movement</Filter>
     </ClInclude>
