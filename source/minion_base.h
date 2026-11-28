@@ -53,9 +53,13 @@ private:
 
 	std::shared_ptr<NodeBase> MakePunchNode(std::shared_ptr<EnemyBase> mine);
 
-	std::shared_ptr<NodeBase> MakeRoarNode(std::shared_ptr<EnemyBase> mine);
+	std::shared_ptr<NodeBase> MakeRoarNode(std::shared_ptr<EnemyBase> mine, const std::string& anim_name);
+
+	std::shared_ptr<NodeBase> MakeEncounterRoarNode(std::shared_ptr<EnemyBase> mine);
 
 	std::shared_ptr<NodeBase> MakeDecideTargetNode(std::shared_ptr<EnemyBase> mine);
 
 	std::shared_ptr<NodeBase> MakeLookAtPlayerNode(std::shared_ptr<EnemyBase> mine);
+
+	std::shared_ptr<NodeBase> MakeGrabPlayerNode(std::shared_ptr<EnemyBase> mine);
 };

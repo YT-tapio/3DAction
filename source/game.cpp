@@ -259,6 +259,7 @@ void Game::Draw()
 	{
 		camera_->Debug();
 		player_group_->Debug();
+		enemy_controller_->Debug();
 		for (auto& obj : objects_)
 		{
 			obj->Debug();

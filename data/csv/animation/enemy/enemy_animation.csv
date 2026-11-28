@@ -14,3 +14,5 @@ charge_tackle,data/model/enemy/zako/animation/charge_tackle.mv1,0,0.65,7,0,-1,no
 death,data/model/enemy/zako/animation/enemy_zako_death.mv1,0,0.5,1000,0,-1,nothing
 roar,data/model/enemy/zako/animation/roar.mv1,0,0.73,11,0,-1,noothing
 walk,data/model/enemy/zako/animation/walking.mv1,0,0.5,3,1,-1,nothing
+grab_roar,data/model/enemy/zako/animation/grab_scream.mv1,0,0.5,13,0,-1,nothing
+grab_run,data/model/enemy/zako/animation/grab_run.mv1,0,0.5,13,1,-1,nothing

@@ -82,7 +82,17 @@ const void EnemyController::Draw() const
 		enemy_group->Draw();
 	}
 	
-	
+}
+
+const void EnemyController::Debug() const
+{
+	boss_->Debug();
+
+	for (const auto& enemy_group : enemy_groups_)
+	{
+		enemy_group->Debug();
+	}
+
 }
 
 const VECTOR EnemyController::GetBossCenterPos() const
