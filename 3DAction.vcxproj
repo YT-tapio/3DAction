@@ -172,6 +172,7 @@
     <ClCompile Include="source\check_skill_can_use.cpp" />
     <ClCompile Include="source\check_stamina.cpp" />
     <ClCompile Include="source\config_datas.cpp" />
+    <ClCompile Include="source\enemy_movement_supporter.cpp" />
     <ClCompile Include="source\execute_skill.cpp" />
     <ClCompile Include="source\font_data.cpp" />
     <ClCompile Include="source\image_popup_ui.cpp" />
@@ -397,6 +398,7 @@
     <ClInclude Include="source\check_skill_can_use.h" />
     <ClInclude Include="source\check_near_target.h" />
     <ClInclude Include="source\check_skill.h" />
+    <ClInclude Include="source\enemy_movement_supporter.h" />
     <ClInclude Include="source\execute_skill.h" />
     <ClInclude Include="source\font_data.h" />
     <ClInclude Include="source\grab_player.h" />
