@@ -111,7 +111,8 @@ void RoarTackle::RoarUpdate()
 		}
 		else
 		{
-			if (character->GetAnimator()->GetRatio("charge_tackle") > 0.95f)
+			auto ratio = character->GetAnimator()->GetRatio("charge_tackle");
+			if (ratio > 0.95f)
 			{
 				ChangeAttackInfo(AttackPhase::kDodgeTiming, character->GetPosition(), character->GetFrontDir(), 10.f);
 			}
@@ -119,6 +120,7 @@ void RoarTackle::RoarUpdate()
 		VECTOR attack_target_pos = character->GetAttackTargetPos();
 		attack_dir_ = VectorAssistant::VGetDir(character->GetPosition(), attack_target_pos);
 	}
+
 	attack_range_group_->RectangleSetDir(attack_range_ui_id_, attack_dir_);
 	attack_range_group_->RectangleSetPos(attack_range_ui_id_, owner_pos);
 }

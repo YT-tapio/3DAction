@@ -146,6 +146,12 @@ namespace VectorAssistant
 		return VGet(vec.x, 0.f, vec.z);
 	}
 
+	/// <summary>
+	/// 距離を返す
+	/// </summary>
+	/// <param name="vec"></param>
+	/// <param name="vec2"></param>
+	/// <returns></returns>
 	inline float VGetDistSize(const VECTOR& vec, const VECTOR& vec2)
 	{
 		return VSize(VSub(vec, vec2));
@@ -393,6 +399,12 @@ namespace VectorAssistant
 		return (dot > kSameDirNum);
 	}
 
+	/// <summary>
+	/// 同じ座標か
+	/// </summary>
+	/// <param name="vec1"></param>
+	/// <param name="vec2"></param>
+	/// <returns></returns>
 	inline bool IsSamePos(const VECTOR& vec1, const VECTOR& vec2)
 	{
 		// 許容範囲
@@ -413,7 +425,12 @@ namespace VectorAssistant
 	}
 
 	 
-	// 正規化しなくてもいい
+	/// <summary>
+	/// 二つのベクターから角度を求める(正規化しなくてもよい)
+	/// </summary>
+	/// <param name="vec1"></param>
+	/// <param name="vec2"></param>
+	/// <returns></returns>
 	inline float GetTwoVectorRad(const VECTOR& vec1, const VECTOR& vec2)
 	{
 		VECTOR vec1_norm = VNorm(vec1);
