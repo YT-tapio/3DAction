@@ -97,6 +97,8 @@ public:
 	/// <returns></returns>
 	const bool CanUseStamina() const;
 
+	const bool GetIsAlive() const;
+
 private:
 
 	void StaminaUpdate();

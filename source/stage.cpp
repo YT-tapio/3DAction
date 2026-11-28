@@ -15,7 +15,7 @@ Stage::Stage()
 {
 	LoadFile();
 
-	handle_ = MV1LoadModel("data/model/stage/field.mv1");
+	handle_ = MV1LoadModel("data/model/stage/stage_normal_test.mv1");
 	// “–‚½‚è”»’è—pƒ‚ƒfƒ‹
 	coll_handle_ = MV1LoadModel("data/model/stage/stage_field_collider.mv1");
 	
@@ -61,9 +61,9 @@ void Stage::Update()
 
 void Stage::Draw()
 {
-	SetUseLighting(FALSE);
+	//SetUseLighting(FALSE);
 	MV1DrawModel(handle_);
-	SetUseLighting(TRUE);
+	//SetUseLighting(TRUE);
 }
 
 void Stage::Debug()

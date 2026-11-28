@@ -25,7 +25,7 @@ public:
 	/// </summary>
 	/// <param name="move_dir">ÀÛ‚É“®‚±‚¤‚Æ‚µ‚Ä‚¢‚é•ûŒü</param>
 	/// <returns>“®‚­•ûŒü‚ğ•ÏŠ·‚µ‚½‚à‚Ì</returns>
-	VECTOR SupportMovement(EnemyBase* support_enemy, const VECTOR& target_pos,const VECTOR& move_dir);
+	VECTOR SupportMovement(EnemyBase* support_enemy, const VECTOR& target_pos);
 
 private:
 

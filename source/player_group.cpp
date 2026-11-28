@@ -53,7 +53,7 @@ void PlayerGroup::Awake(VECTOR* camera_dir,std::shared_ptr<IPlayerUIController> 
 	current_player_head_pos_ = VectorAssistant::VGetZero();
 	camera_dir_ = camera_dir;
 	players_.push_back(std::make_shared<Player>(camera_dir_, InputManager::GetInstance().GetPlayer1Input(), "attacker", player_ui_controller, shadow_creater, damage_ui_group,attack_target_repository));
-	players_.push_back(std::make_shared<Player>(camera_dir_, InputManager::GetInstance().GetPlayer2Input(), "healer", player_ui_controller, shadow_creater, damage_ui_group, attack_target_repository));
+	//players_.push_back(std::make_shared<Player>(camera_dir_, InputManager::GetInstance().GetPlayer2Input(), "healer", player_ui_controller, shadow_creater, damage_ui_group, attack_target_repository));
 	
 	// スタミナを生成
 	for (auto player : players_)

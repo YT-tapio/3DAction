@@ -53,7 +53,9 @@ BehaviorStatus ChasePlayer::Update()
 	// プレイヤーとオーナーの距離を計算
 	auto dist = VSub(*target_player_pos_, owner->GetPosition());
 	dist = VectorAssistant::VGetFlat(dist);
-	auto dir = enemy_movement_supporter->SupportMovement(enemy.get(), *target_player_pos_,VNorm(dist));
+
+	auto dir = enemy_movement_supporter->SupportMovement(enemy.get(), *target_player_pos_);
+
 	dist = VScale(dir, VSize(dist));
 	VECTOR velocity = dist;
 	if (VSize(velocity) > chase_speed_)

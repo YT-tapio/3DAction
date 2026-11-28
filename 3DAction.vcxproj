@@ -398,6 +398,7 @@
     <ClInclude Include="source\check_skill_can_use.h" />
     <ClInclude Include="source\check_near_target.h" />
     <ClInclude Include="source\check_skill.h" />
+    <ClInclude Include="source\cpplinq.hpp" />
     <ClInclude Include="source\enemy_movement_supporter.h" />
     <ClInclude Include="source\execute_skill.h" />
     <ClInclude Include="source\font_data.h" />

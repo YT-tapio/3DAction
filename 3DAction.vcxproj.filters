@@ -1278,6 +1278,9 @@
     <ClCompile Include="source\enemy_movement_supporter.cpp">
       <Filter>ソース ファイル\enemy_movement</Filter>
     </ClCompile>
+    <ClCompile Include="source\grab_player.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\application.h">
@@ -2149,6 +2152,12 @@
     </ClInclude>
     <ClInclude Include="source\enemy_movement_supporter.h">
       <Filter>ソース ファイル\enemy_movement</Filter>
+    </ClInclude>
+    <ClInclude Include="source\grab_player.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\cpplinq.hpp">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

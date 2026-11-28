@@ -252,6 +252,11 @@ const bool StatusContainer::CanUseStamina() const
 	return can_use_stamina_;
 }
 
+const bool StatusContainer::GetIsAlive() const
+{
+	return current_status_.hp > 0.f;
+}
+
 void StatusContainer::StaminaUpdate()
 {
 	// スタミナが使えないときはmaxになるまで使えない

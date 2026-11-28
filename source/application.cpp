@@ -39,9 +39,8 @@ Application::Application()
     // Effekseerを使用する場合、2DゲームでもZバッファを使用する。
     SetUseZBuffer3D(TRUE);
 
-    // Zバッファへの書き込みを有効にする。
-    // Effekseerを使用する場合、2DゲームでもZバッファを使用する。
-    SetWriteZBuffer3D(TRUE);
+    // ノーマルマップ反映のためにピクセル単位ライティングを有効化（必須）
+    SetUsePixelLighting(TRUE);
 
     // 描画先画面を裏画面にする
     SetDrawScreen(DX_SCREEN_BACK);
@@ -50,6 +49,7 @@ Application::Application()
     SetUseBackCulling(FALSE);		// バックカリングを行う
 
     SetUseSetDrawScreenSettingReset(FALSE);
+
     ModelRepository::GetInstance().Load();
     ImageRepository::GetInstance().Load();
     SceneManager::GetInstance();
