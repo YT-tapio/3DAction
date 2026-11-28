@@ -52,8 +52,8 @@
 #include"time.h"
 
 MinionBase::MinionBase(const VECTOR& pos, bool* game_start, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group, std::shared_ptr<IPopupUIGroup> damage_ui_group,
-	std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group, std::shared_ptr<AttackTargetRepository> attack_target_repository)
-	: EnemyBase(pos,game_start,enemy_ui_group,damage_ui_group,player_group,attack_range_group,attack_target_repository)
+	std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group, std::shared_ptr<EnemyMovementSupporter> movement_supporter)
+	: EnemyBase(pos,game_start,enemy_ui_group,damage_ui_group,player_group,attack_range_group,movement_supporter)
 {
 	vel_ = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
@@ -195,8 +195,10 @@ void MinionBase::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)
 
 	std::vector<std::shared_ptr<NodeBase>> action_nodes;
 	action_nodes.emplace_back(decide_target);
-	action_nodes.emplace_back(grab_roar_node);
-	action_nodes.emplace_back(grab_node);
+	//action_nodes.emplace_back(grab_roar_node);
+	//action_nodes.emplace_back(grab_node);
+	action_nodes.emplace_back(punch_node);
+	action_nodes.emplace_back(look_at_player_node);
 	auto sequence_node = std::make_shared<SequenceNode>(action_nodes);
 	std::pair<std::shared_ptr<NodeBase>, std::shared_ptr<NodeBase>> nodes;
 	nodes.first = chase_node;
@@ -222,7 +224,7 @@ std::shared_ptr<NodeBase> MinionBase::MakeChaseNode(std::shared_ptr<EnemyBase> m
 {
 	std::shared_ptr<NodeBase> node = nullptr;
 
-	auto behavior = std::make_shared<ChasePlayer>(mine, "walk", &target_player_pos_, 0.1f);
+	auto behavior = std::make_shared<ChasePlayer>(mine, movement_supporter_,"walk", &target_player_pos_, 0.1f);
 	auto decide_target = std::make_shared<DecideAttackTargetFromPlayer>(mine, player_group_, decide_target_);
 	auto decide_target_node = std::make_shared<ActionNode>(decide_target);
 	auto chase_node = std::make_shared<ActionNode>(behavior);

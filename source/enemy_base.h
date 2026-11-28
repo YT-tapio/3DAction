@@ -22,13 +22,14 @@ class IPlayerGroup;
 class IAttackRangeGroup;
 class AttackInfoHolder;
 class AttackTargetRepository;
+class EnemyMovementSupporter;
 
 class EnemyBase : public CharacterBase, public IPhysicsEventReceiver,public ITakableDamagePlayer,public IStatusHolder,public IAttackTarget
 {
 public:
 
 	EnemyBase(const VECTOR& pos,bool* game_start, std::shared_ptr<IEnemyUIGroup> enemy_ui_group,std::shared_ptr<IPopupUIGroup> damage_ui_group,
-		std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group, std::shared_ptr<AttackTargetRepository> attack_target_repository);
+		std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group, std::shared_ptr<EnemyMovementSupporter> movement_supporter);
 
 	virtual ~EnemyBase() override;
 
@@ -98,6 +99,7 @@ protected:
 	std::shared_ptr<EnemyCoolTimeController> cool_time_;
 	std::shared_ptr<StatusContainer> status_container_;
 	std::shared_ptr<HitRedBody> hit_red_body_;	// ƒqƒbƒgÔ‚­‚È‚é
+	std::shared_ptr<EnemyMovementSupporter> movement_supporter_;
 	std::shared_ptr<IEnemyUIGroup> enemy_ui_group_;
 	std::shared_ptr<IPopupUIGroup> damage_ui_group_;
 	std::shared_ptr<IPlayerGroup> player_group_;

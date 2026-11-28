@@ -1,5 +1,6 @@
 #pragma once
 #include"enemy_controller_interface.h"
+
 class EnemyBase;
 class EnemyGroup;
 
@@ -11,6 +12,7 @@ class IAttackRangeGroup;
 class IEnemyObserver;
 class EnemySummoner;
 class AttackTargetRepository;
+class EnemyMovementSupporter;
 
 class EnemyController : public IEnemyController
 {
@@ -41,6 +43,7 @@ private:
 
 	// 
 	std::shared_ptr<EnemyBase> boss_;
+	std::shared_ptr<EnemyMovementSupporter> movement_suppoter_;
 	std::shared_ptr<EnemySummoner> summoner_;
 	std::vector<std::shared_ptr<EnemyGroup>> enemy_groups_;
 	

@@ -62,7 +62,7 @@
 
 EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start,std::shared_ptr<IEnemyUIGroup> enemy_ui_group,
 	std::shared_ptr<IPopupUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group,
-	std::shared_ptr<IAttackRangeGroup> attack_range_group, std::shared_ptr<AttackTargetRepository> attack_target_repository)
+	std::shared_ptr<IAttackRangeGroup> attack_range_group, std::shared_ptr<EnemyMovementSupporter> movement_supporter)
 	: CharacterBase("enemy")
 	, IPhysicsEventReceiver()
 	, game_start_(game_start)
@@ -76,14 +76,12 @@ EnemyBase::EnemyBase(const VECTOR& pos,bool* game_start,std::shared_ptr<IEnemyUI
 	, damage_ui_group_(damage_ui_group)
 	, player_group_(player_group)
 	, attack_range_group_(attack_range_group)
+	, movement_supporter_(movement_supporter)
 {
 	decide_target_ = [this](std::string target_player_name)
 		{
 			target_player_name_ = target_player_name;
 		};
-
-	// Ž©g‚ðAttackTargetRepository‚É“o˜^
-	attack_target_repository->AddTarget(Faction::enemy, this);
 }
 
 EnemyBase::~EnemyBase()

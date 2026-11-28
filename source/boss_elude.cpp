@@ -69,8 +69,9 @@
 #include"enemy_summoner.h"
 
 BossElude::BossElude(const VECTOR& pos, bool* game_start, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group,
-	std::shared_ptr<IPopupUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group, std::shared_ptr<EnemySummoner> summoner, std::shared_ptr<AttackTargetRepository> attack_target_repository)
-	: BossBase(pos, game_start, shadow_creater,enemy_ui_group, damage_ui_group, player_group, attack_range_group,attack_target_repository)
+	std::shared_ptr<IPopupUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group, std::shared_ptr<IAttackRangeGroup> attack_range_group,
+	std::shared_ptr<EnemySummoner> summoner, std::shared_ptr<EnemyMovementSupporter> enemy_movement_supporter)
+	: BossBase(pos, game_start, shadow_creater,enemy_ui_group, damage_ui_group, player_group, attack_range_group,enemy_movement_supporter)
 {
 	vel_ = VectorAssistant::VGetZero();
 	dir_ = VectorAssistant::VGetZero();
@@ -95,7 +96,6 @@ BossElude::BossElude(const VECTOR& pos, bool* game_start, std::shared_ptr<IShado
 	summoner_ = summoner;
 	float shadow_size = 7.f;
 	shadow_creater->CreateShadow(&flat_hips_pos_, &is_active_, shadow_size);
-	
 	
 
 }
@@ -167,7 +167,6 @@ void BossElude::MakeBehaviorTree(std::shared_ptr<EnemyBase> mine)
 	auto tackle_node = MakeMultiRoarTackleNode(mine, current_phase);
 
 	auto enemy_summon_node = MakeSummonEnemyGroup(mine, current_phase);
-
 	
 
 	// ƒ‰ƒ“ƒ_ƒ€‚Ìnode‚É‘ã“ü
@@ -409,7 +408,7 @@ std::shared_ptr<NodeBase> BossElude::MakeChaseNode(std::shared_ptr<EnemyBase> mi
 {
 	std::shared_ptr<NodeBase> node = nullptr;
 
-	auto chase_player = std::make_shared<ChasePlayer>(mine, "run", &target_player_pos_, 0.5f);
+	auto chase_player = std::make_shared<ChasePlayer>(mine, movement_supporter_,"run", &target_player_pos_, 0.5f);
 	auto chase_player_node = std::make_shared<ActionNode>(chase_player);
 	auto decide_target_node = MakeDecideTargetNode(mine);
 	std::vector<std::shared_ptr<NodeBase>> nodes;

@@ -23,7 +23,7 @@ void EnemyMovementSupporter::AddResource(EnemyBase* enemy)
 	enemies_.emplace_back(enemy);
 }
 
-VECTOR EnemyMovementSupporter::SupportMovement(EnemyBase* support_enemy,const VECTOR& move_dir)
+VECTOR EnemyMovementSupporter::SupportMovement(EnemyBase* support_enemy,const VECTOR& target_pos,const VECTOR& move_dir)
 {
 	auto support_dir = move_dir;
 
@@ -35,14 +35,15 @@ VECTOR EnemyMovementSupporter::SupportMovement(EnemyBase* support_enemy,const VE
 		auto other_pos = enemy->GetPosition();
 		auto dist = VSub(other_pos, my_pos);
 		auto rad = VectorAssistant::GetTwoVectorRad(move_dir,dist);
+		const auto kInRad = 10.f;
 		// ”ÍˆÍ“à‚É“G‚ª‚¢‚é‚È‚ç‰ñ‚è‚Ş
-		if (rad < 30.f)
+		if (rad < kInRad)
 		{
 			// ‰E‚à‚µ‚­‚Í¶‚É‰ñ‚è‚Ş
 			auto cross = VectorAssistant::VGetCross(my_pos, other_pos);
 
 			// ‰ñ‚è‚ŞŠp“x(‰½‚à‚µ‚È‚¢‚È‚ç‰E)
-			auto rot_rad = 60.f;
+			auto rot_rad = 40.f;
 			// •Ï‚¦‚é
 			if (cross.y > 0.f)
 			{

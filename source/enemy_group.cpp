@@ -17,16 +17,23 @@
 #include"attack_type.h"
 #include"status.h"
 #include"status_container.h"
+#include"attack_target_repository.h"
+#include"enemy_movement_supporter.h"
 
 EnemyGroup::EnemyGroup(bool* game_start, std::shared_ptr<IShadowCreater> shadow_creater, std::shared_ptr<IEnemyUIGroup> enemy_ui_group,
 	std::shared_ptr<IPopupUIGroup> damage_ui_group, std::shared_ptr<IPlayerGroup> player_group,
-	std::shared_ptr<IAttackRangeGroup> attack_range_group,std::shared_ptr<EnemySummoner> summoner, std::shared_ptr<AttackTargetRepository> attack_target_repository)
+	std::shared_ptr<IAttackRangeGroup> attack_range_group,std::shared_ptr<EnemySummoner> summoner, 
+	std::shared_ptr<AttackTargetRepository> attack_target_repository, std::shared_ptr<EnemyMovementSupporter> movement_supporter)
 	: is_active_(FALSE)
 {
-	enemies_.emplace_back(std::make_shared<MinionBase>(VGet(20, 0, 5), game_start,shadow_creater, enemy_ui_group, damage_ui_group, player_group, attack_range_group,attack_target_repository));
-	enemies_.emplace_back(std::make_shared<MinionBase>(VGet(20, 0, 15), game_start, shadow_creater, enemy_ui_group, damage_ui_group, player_group, attack_range_group, attack_target_repository));
-	enemies_.emplace_back(std::make_shared<MinionBase>(VGet(20, 0, 25), game_start, shadow_creater, enemy_ui_group, damage_ui_group, player_group, attack_range_group, attack_target_repository));
-	
+	for (int i = 0; i < 3; i++)
+	{
+		auto pos = VGet(25, 0, 9 * (i + 1));
+		auto minion = std::make_shared<MinionBase>(pos, game_start, shadow_creater, enemy_ui_group, damage_ui_group, player_group, attack_range_group, movement_supporter);
+		attack_target_repository->AddTarget(Faction::enemy, minion.get());
+		enemies_.emplace_back(minion);
+		movement_supporter->AddResource(minion.get());
+	}
 	// ƒTƒ‚ƒi[‚É“o˜^
 	summoner->Registration("name",this);
 }
