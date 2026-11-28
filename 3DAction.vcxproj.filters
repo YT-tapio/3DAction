@@ -544,6 +544,9 @@
     <Filter Include="ソース ファイル\behavior\player_ai\avoid_condition">
       <UniqueIdentifier>{110417ec-7868-463a-a1b7-1c89d5782ea6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\enemy_movement">
+      <UniqueIdentifier>{e396518f-62c8-4077-a7f3-0e679256d6a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -1271,6 +1274,9 @@
     </ClCompile>
     <ClCompile Include="source\target_selector.cpp">
       <Filter>ソース ファイル\target_selector</Filter>
+    </ClCompile>
+    <ClCompile Include="source\enemy_movement_supporter.cpp">
+      <Filter>ソース ファイル\enemy_movement</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2140,6 +2146,9 @@
     </ClInclude>
     <ClInclude Include="source\target_selector.h">
       <Filter>ソース ファイル\target_selector</Filter>
+    </ClInclude>
+    <ClInclude Include="source\enemy_movement_supporter.h">
+      <Filter>ソース ファイル\enemy_movement</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
